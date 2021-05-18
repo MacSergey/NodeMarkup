@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -198,21 +198,6 @@ Maj X10, Ctrl X0.1</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Solide</value>
-  </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Non</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>Valider</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Oui</value>
-  </data>
-  <data name="Mod_Description" xml:space="preserve">
-    <value>Faire marquages aux intersections seulement</value>
-  </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Ceci est une version BETA, des erreurs peuvent se produire et la stabilité n'est pas garantie!</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modifier le marquage du nœud #{0}</value>
@@ -331,13 +316,9 @@ Cliquez pour modifier le marquage</value>
     <value>Sélectionnez un point pour
 créer ou supprimer une ligne</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Nouveautés dans {0}</value>
-  </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Afficher les nouveautés</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Restaurer</value>
   </data>
@@ -416,11 +397,6 @@ créer ou supprimer une ligne</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Solide</value>
   </data>
-  
-  
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Version {0}</value>
-  </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>Paramètres de notification</value>
   </data>
@@ -430,7 +406,6 @@ créer ou supprimer une ligne</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Ajouter un nouveau remplisseur</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solide</value>
   </data>
@@ -546,60 +521,6 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alignement</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>J'accepte</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Alerte de version BETA</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Obtenez la version stable</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Vous utilisez la version d'{0}. C'est une version de test avec de nouvelles fonctionnalités et cela peut contenir des erreurs qui vont casser ou supprimer vos marquages. Si vous vous êtes abonné par erreur, veuillez vous abonner à la version stable.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Langue du jeu</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Tchèque</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Allemand</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Anglais États-Unis</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Espagnol</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Finnois</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Français</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Italien</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japonais</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Néerlandais</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Polonais</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portugais</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Russe</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Chinois simplifié</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>Langue</value>
@@ -750,13 +671,9 @@ créer ou supprimer un passage piéton</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>modèle</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Erreurs lors du chargement.
 Le marquage de {0} intersections n'a pas pu être chargé.</value>
-  </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Support</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Dépannage</value>
@@ -1032,7 +949,6 @@ Voulez-vous changer le marquage manuellement ?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Glissez avec Ctrl pour bouger le point</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Cette action est irréversible.</value>
   </data>
@@ -1060,7 +976,6 @@ Voulez-vous changer le marquage manuellement ?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Attention : cet option change l'ordre de rendu des objets</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Sauvegarder en tant que ressource</value>
   </data>
@@ -1103,11 +1018,6 @@ Pour créer un préréglages, cliquez sur {0} sur le haut de la fenêtre.</value
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Charger les ressources de marquages</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Le mod a chargé avec des erreurs. 
-Il n'est pas conseillé d'utiliser le mod dans cet état car il peut avoir un comportement instable. 
-Rechargez le jeu.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Passages piétons :</value>
@@ -1173,9 +1083,6 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Couper les lignes au niveau de tout les passages piétons</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Anglais Royaume-Uni</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Réécriture de la ressource du préréglage</value>
   </data>
@@ -1205,9 +1112,6 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Ne pas sauvegarder les changements</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Annuler</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Voulez-vous enregistrer les modifications ?</value>
@@ -1246,7 +1150,6 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>préréglage</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Ce type de ligne ne prend pas en charge les règles</value>
   </data>
@@ -1256,7 +1159,6 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Auteur inconnu</value>
   </data>
-  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Erreur lors du chargement.
 Le marquage de toutes les intersections n'a pas pu être chargé.</value>
@@ -1304,9 +1206,6 @@ Cliquez pour modifier le marquage</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Sélectionnez le second point du rail</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Nombre de couleurs</value>
   </data>
@@ -1367,12 +1266,10 @@ Cliquez pour modifier le marquage</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Sélectionnez un point de fin pour une ligne ou ligne de stop</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Alignement de l'extrémité de la ligne</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Alignement du début de la ligne</value>
   </data>
-  
 </root>

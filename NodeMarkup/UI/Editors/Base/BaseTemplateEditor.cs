@@ -252,9 +252,9 @@ namespace NodeMarkup.UI.Editors
                 var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
                 messageBox.CaptionText = NodeMarkup.Localize.TemplateEditor_SaveChanges;
                 messageBox.MessageText = SaveChangesMessage;
-                messageBox.Button1Text = ModLocalize<Mod>.Yes;
-                messageBox.Button2Text = ModLocalize<Mod>.No;
-                messageBox.Button3Text = ModLocalize<Mod>.Cancel;
+                messageBox.Button1Text = CommonLocalize.MessageBox_Yes;
+                messageBox.Button2Text = CommonLocalize.MessageBox_No;
+                messageBox.Button3Text = CommonLocalize.MessageBox_Cancel;
                 messageBox.OnButton1Click = OnSave;
                 messageBox.OnButton2Click = OnNotSave;
             }

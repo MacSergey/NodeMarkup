@@ -227,7 +227,7 @@ namespace NodeMarkup
                     messageBox.CaptionText = caption;
                     messageBox.MessageText = Localize.Settings_DumpMessageSuccess;
                     messageBox.Button1Text = Localize.Settings_CopyPathToClipboard;
-                    messageBox.Button2Text = ModLocalize<Mod>.Ok;
+                    messageBox.Button2Text = CommonLocalize.MessageBox_OK;
                     messageBox.OnButton1Click = CopyToClipboard;
                     messageBox.SetButtonsRatio(2, 1);
 
@@ -281,7 +281,7 @@ namespace NodeMarkup
             var messages = SingletonMod<Mod>.Instance.GetWhatsNewMessages(new Version(1, 0));
             var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
             messageBox.CaptionText = Localize.Settings_ChangeLog;
-            messageBox.OkText = ModLocalize<Mod>.Ok;
+            messageBox.OkText = CommonLocalize.MessageBox_OK;
             messageBox.Init(messages, SingletonMod<Mod>.Instance.GetVersionString, false);
         }
 

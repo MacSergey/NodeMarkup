@@ -81,7 +81,7 @@ namespace NodeMarkup
         public override void OnLoadedError()
         {
             var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-            messageBox.MessageText = Localize.Mod_LoaledWithErrors;
+            messageBox.MessageText = CommonLocalize.Mod_LoadedWithErrors;
         }
         public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
 

@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -199,15 +199,6 @@
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>実線</value>
-  </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Yes</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>交差点や高速道路のJCT・IC内に、ラインの作成・編集が出来るようになります</value>
@@ -331,13 +322,9 @@
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>ポイントを選択して、ラインを作成・削除する</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>{0} の更新内容</value>
-  </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>新着情報を表示する</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>復元</value>
   </data>
@@ -416,11 +403,6 @@
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>ベタ塗り</value>
   </data>
-  
-  
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Version {0}</value>
-  </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>通知の設定</value>
   </data>
@@ -430,7 +412,6 @@
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>新しい塗り潰しを追加</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>2重線</value>
   </data>
@@ -547,62 +528,6 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>位置合わせ</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>同意します</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>警告 これはβ版です</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>安定版を入手</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>現在、 {0} のβ版を使用しています。
-新機能をテストするMODで、エラーやマーキングの破損・消える可能性があります。
-間違ってサブスクライブした場合は、安定版に切り替えてください。</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>ゲームの既定言語</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>チェコ語</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>ドイツ語</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>英語 - US</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>スペイン語</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>フィンランド語</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>フランス語</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>イタリア語</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>日本語</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>オランダ語</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>ポーランド語</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>ポルトガル語</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>ロシア語</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>簡体中国語</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>言語設定</value>
@@ -750,13 +675,9 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>テンプレート</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>マーキングが正常に描画されず、ロードエラーがありました。
 {0} ヶ所の交差点（ノード）で、マーキングの描画に失敗しました。</value>
-  </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>サポート</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>トラブルシューティング</value>
@@ -1032,7 +953,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Ctrl + ドラッグで、ポイントを移動</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>この操作は元に戻せません。</value>
   </data>
@@ -1060,7 +980,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：このオプションは、ゲーム内の描画順序を変更します</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>カスタムアセットで保存</value>
   </data>
@@ -1104,11 +1023,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>マーキングのカスタムアセットを読み込む</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>MODのロード中に、エラーが発生しました。
-この状態で、MODの使用はお勧め出来ません。
-ゲームを再起動してください。</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>横断歩道の数:</value>
@@ -1174,9 +1088,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>全ての横断歩道で重なるラインを除去</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>英語 - UK</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>プリセット（カスタムアセット）を上書きしますか？</value>
   </data>
@@ -1208,9 +1119,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>変更を保存しない</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>キャンセル</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>プリセット名を変更して保存しますか？</value>
@@ -1251,7 +1159,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>プリセット</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>このタイプは追加ルールをサポートしません</value>
   </data>
@@ -1261,7 +1168,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>不明な作成者</value>
   </data>
-  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>マーキングが正常に描画されず、ロードエラーがありました。
 全てのマーキングで描画に失敗しました。</value>
@@ -1309,9 +1215,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>終点側のラインやポイントを選択</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>横断歩道の色数</value>
   </data>
@@ -1372,12 +1275,10 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>ライン・停止線の終点を選択</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>拡大したポイント（終点）の位置合わせ</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>拡大したポイント（始点）の位置合わせ</value>
   </data>
-  
 </root>

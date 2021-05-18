@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -198,15 +198,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Сплошная</value>
-  </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Нет</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>ОК</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Да</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Просто сделай разметку на перекрестках</value>
@@ -332,9 +323,6 @@ Shift X10, Ctrl X0.1</value>
     <value>Выберите начальную точку
 для создания или удаления линии</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Что нового в {0}</value>
-  </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Показывать что нового</value>
   </data>
@@ -444,9 +432,6 @@ Shift X10, Ctrl X0.1</value>
 - Линии больше не отображаются когда открыты информационные оверлеи.
 - Комбинация для активации работает когда выбран другой инструмент.</value>
   </data>
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Версия {0}</value>
-  </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>Уведомления</value>
   </data>
@@ -456,7 +441,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Создать  заполнитель</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Двойная сплошная</value>
   </data>
@@ -572,60 +556,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Выравнивание</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Я согласен</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Предупреждение о BETA версии</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Получить стабильную</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Вы используете BETA версию {0}. Она предназначена для тестирования новых функций и может содержать ошибки которые приведут к поломке или удалению вашей разметки. Если вы подписались по ошибки, то перейдите на стабильную версию.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Язык игры</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Чешский</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Немецкий</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Английский США</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Испанский</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Финский</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Французский</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Итальянский</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Японский</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Голландский</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Польский</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Португальский</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Русский</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Китайский упрощенный</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>Язык</value>
@@ -793,9 +723,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Загрузка завершилась с ошибками.
 Не удалось загрузить разметку для {0} перекрестков.</value>
-  </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Поддержка</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Устранение неполадок</value>
@@ -1177,11 +1104,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Загружать маркировку из игровых ресурсов</value>
   </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Мод загрузился с ошибками.
-Не рекомендуется использовать мод в таком состояние, это может привести к непредсказуемым результатам.
-Перезагрузите игру.</value>
-  </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Переходов:</value>
   </data>
@@ -1246,9 +1168,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Обрезать линии до всех переходов</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Английский Великобритания</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Перезапись игрового ресурса трафарета</value>
   </data>
@@ -1278,9 +1197,6 @@ Shift X10, Ctrl X0.1</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Не сохранять изменения</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Отмена</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Вы хотите сохранить изменения имени трафарета?</value>

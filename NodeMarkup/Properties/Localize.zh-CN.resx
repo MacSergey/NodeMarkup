@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -198,15 +198,6 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>实线</value>
-  </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>取消</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>确认</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>确定</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>使用此工具来轻松创建交叉口地标线。</value>
@@ -330,13 +321,9 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>点选起始点来创建/擦除线段</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>{0} 版本的新功能</value>
-  </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>显示更新提示框</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>恢复</value>
   </data>
@@ -415,11 +402,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>实线</value>
   </data>
-  
-  
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>版本{0}</value>
-  </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>通知消息</value>
   </data>
@@ -429,7 +411,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>创建新填充图案</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>双实线</value>
   </data>
@@ -545,60 +526,6 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>对齐</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>我同意</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>警告：BETA版本</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>获取稳定版本</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>你在使用 {0} BETA版。此版本为测试新功能用，且可能含有会使标记破损或消失的BUG。如果是不小心订阅到了此版本，请订阅回稳定版。</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>游戏语言</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>捷克语</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>德语</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>美式英语</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>西班牙语</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>芬兰语</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>法语</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>意大利语</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>日语</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>荷兰语</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>波兰语</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>葡萄牙语</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>俄语</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>简体中文</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>语言</value>
@@ -747,13 +674,9 @@ Shift x10，Ctrl x0.1</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>模版</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>导入完毕，但出现了以下错误：
  {0} 个交叉口的地标线导入失败</value>
-  </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>支持服务</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>故障排除</value>
@@ -1029,7 +952,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>按住Ctrl拖动来移动端点</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>此操作不可撤销。</value>
   </data>
@@ -1057,7 +979,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：此设置会改变游戏渲染顺序</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>保存为资产</value>
   </data>
@@ -1101,11 +1022,6 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>载入标线资产</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Mod加载出错。
-不建议此状况下继续使用本mod，否则可能工作异常。
-请重启游戏。</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>人行横道:</value>
@@ -1171,9 +1087,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>从人行横道后生成标线</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>英式英语</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>重写预设资产</value>
   </data>
@@ -1203,9 +1116,6 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>不保存更改</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>取消</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>你想保存预设名称更改吗？</value>
@@ -1244,7 +1154,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>预设​​​​</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>此类标线不支持规则</value>
   </data>
@@ -1305,8 +1214,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>选择边线的第二个端点</value>
   </data>
-  
-  
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
     <value>- 添加了在道路节段上创建标线的功能
 - 添加了3D填充图案：路肩及草地
@@ -1400,5 +1307,4 @@ Shift x10，Ctrl x0.1</value>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>线段起点对齐</value>
   </data>
-  
 </root>

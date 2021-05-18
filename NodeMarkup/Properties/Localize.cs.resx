@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -198,15 +198,6 @@ Shift ×10, Ctrl ×0.1</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Plná</value>
-  </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Ne</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Ano</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Nástroj pro kreslení vodorovných značek do křižovatek</value>
@@ -330,13 +321,9 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Vyberte bod pro vytvoření nebo odstranění čáry</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Co je nového v {0}</value>
-  </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Zobrazovat novinky</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Obnovit</value>
   </data>
@@ -415,11 +402,6 @@ Klikněte pro změnu značení</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Plná</value>
   </data>
-  
-  
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Verze {0}</value>
-  </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>Oznámení</value>
   </data>
@@ -429,7 +411,6 @@ Klikněte pro změnu značení</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Přidat výplň</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Dvojitá plná</value>
   </data>
@@ -545,60 +526,6 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Zarovnání</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Souhlasím</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>upozornění na BETA verzi</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Získat stabilní verzi</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Používáte BETA verzi {0}. Slouží k testování nových funkcí a může obsahovat chyby které mohou poškodit nebo smazat vaše značení. Pokud nemáte zájem být součástí BETA programu, přepněte na stabilní verzi.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Jazyk hry</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Čeština</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Němčina</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Anglicky US</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Španělština</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Finština</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Francouzština</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Italština</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japonština</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Holandština</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Polština</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portugalština</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Ruština</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Zjednodušená čínština</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>Jazyk</value>
@@ -747,13 +674,9 @@ nebo odstranění přechodu</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>šablonu</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Při načítání se vyskytly chyby.
 Nepodařilo se načíst značení pro {0} křižovatek.</value>
-  </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Podpora</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Řešení problémů</value>
@@ -1029,7 +952,6 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Táhněte s Ctrl pro posun bodu</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Tuto akci nelze vrátit zpět.</value>
   </data>
@@ -1057,7 +979,6 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Pozor: Tato možnost ovlivní pořadí renderování objektů ve hře</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Uložit jako asset</value>
   </data>
@@ -1101,11 +1022,6 @@ Pro vytvoření předvolby, vyberte «{0}» v hlavičce panelu.</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Načítat assety se značením</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Načitání modu neproběhlo v pořádku.
-Spouštění modu v tomto stavu není doporučené a může vést k neočekávanému chování.
-Restartujte hru.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Přechody:</value>
@@ -1171,9 +1087,6 @@ Původní data připíší všechny existující předvolby.</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Přerušit čáry u všech přechodů</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Anglicky UK</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Přejmenovat asset</value>
   </data>
@@ -1203,9 +1116,6 @@ Původní data připíší všechny existující předvolby.</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Neukládat změny</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Zrušit</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Chcete uložit změnu názvu předvolby?</value>
@@ -1244,7 +1154,6 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>předvolba</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Tento typ čáry nepodporuje pravidla</value>
   </data>
@@ -1305,8 +1214,6 @@ Klikněte pro změnu značení</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Vyberte koncový bod koleje</value>
   </data>
-  
-  
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
     <value>- Přidána možnost značení silnic a segmentů.
 - Přidány 3D výplně "Chodník" a "Tráva".
@@ -1378,8 +1285,4 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Vyberte koncový bod čáry</value>
   </data>
-  
-  
-  
-  
 </root>

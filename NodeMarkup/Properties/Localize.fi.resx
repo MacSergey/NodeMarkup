@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -198,15 +198,6 @@ Shift X10, Ctrl X0,1</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Viiva</value>
-  </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Ei</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Kyllä</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Tee tiemerkintöjä risteyksiin</value>
@@ -330,13 +321,9 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Valitse piste luodaksesi tai poistaaksesi viivan</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Uutta modissa {0}</value>
-  </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Näytä, mikä on uutta</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Palauta</value>
   </data>
@@ -415,11 +402,6 @@ Napauta muokataksesi merkintöjä</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Kiinteä</value>
   </data>
-  
-  
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Versio {0}</value>
-  </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>Ilmoitukset</value>
   </data>
@@ -429,7 +411,6 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Lisää uusi sulkualue</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Kaksoissulkuviiva</value>
   </data>
@@ -545,60 +526,6 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Sijoittelu</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Ymmärrän</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Varoitus BETA-versiosta</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Hanki vakaa versio</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Käytät beta-versiota {0}:sta. Se on tarkoitettu uusien ominaisuuksien testaamiseen ja siinä voi olla virheitä, jotka rikkovat tai poistavat merkintöjäsi. Jos tilasit sen vahingossa, vaihda vakaaseen versioon.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Pelin kieli</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Tsekki</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Saksa</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Englanti US</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Espanja</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Suomi</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Ranska</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Italia</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japani</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Hollanti</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Puola</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portugali</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Venäjä</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Yksinkertaistettu kiina</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>Kieli</value>
@@ -747,13 +674,9 @@ poistaaksesi suojatien</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>malline</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Tallennnuksen avaamisessa tapahtui virheitä.
 {0}:n risteyksen merkintöjen lataus epäonnistui.</value>
-  </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Tuki</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Vianmääritys</value>
@@ -1029,7 +952,6 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Raahaa Ctrl pohjassa siirtääksesi pistettä</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Tätä toimintoa ei voi kumota.</value>
   </data>
@@ -1057,7 +979,6 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Varoitus: Tämä asetus muuttaa pelin piirtojärjestyksen</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Tallenna esineenä</value>
   </data>
@@ -1101,11 +1022,6 @@ Napauta {0} valikon yläreunassa luodaksesi esiasetuksen.</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Lataa tiemerkintäesineet</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Modi latautui virheellisesti.
-Ei ole suositeltavaa käyttää modia tässä tilassa, koska se voi johtaa ennalta-arvaamattomaan käyttäytymiseen.
-Käynnistä peli uudelleen.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Suojatiet:</value>
@@ -1171,9 +1087,6 @@ Palautetut esiasetukset korvaavat kaikki olemassa olevat esiasetukset.</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Lopeta viivat suojateihin</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Englanti UK</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Uudelleenkirjoita esiasetusesine</value>
   </data>
@@ -1203,9 +1116,6 @@ Palautetut esiasetukset korvaavat kaikki olemassa olevat esiasetukset.</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Hylkää muutokset</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Peruuta</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Haluatko tallentaa esiasetuksen nimen muutoksen?</value>
@@ -1244,7 +1154,6 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>esiasetuksen</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Tällainen viiva ei tue sääntöjä</value>
   </data>
@@ -1254,7 +1163,6 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Tuntematon tekijä</value>
   </data>
-  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Tallennnuksen avaamisessa tapahtui virheitä.
 Kaikkien risteyksien merkintöjen lataus epäonnistui.</value>
@@ -1302,8 +1210,6 @@ Napauta muokataksesi merkintöjä</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Valitse radan toinen piste</value>
   </data>
-  
-  
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
     <value>- Lisätty mahdollisuus tehdä merkintöjä jaokkeisiin.
 - Lisätty sulkualueiden 3D tyylit: "Päällyste" ja "Ruoho".
@@ -1375,8 +1281,4 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Valitse viivan tai pysäytysviivan päätepiste</value>
   </data>
-  
-  
-  
-  
 </root>

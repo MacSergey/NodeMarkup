@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -198,15 +198,6 @@ Shift x10, Strg x0.1</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Durchgezogen</value>
-  </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Nein</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>Ok</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Ja</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Markierungen an Kreuzungen erstellen</value>
@@ -330,9 +321,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Startpunkt wählen zum Linie erstellen oder löschen</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Was ist neu in {0}</value>
-  </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>"Was gibt es neues" zeigen</value>
   </data>
@@ -442,9 +430,6 @@ Klicken um die Markierungen zu bearbeiten</value>
 - Linien werden nicht mehr gerendert, wenn die Info-Ansichten geöffnet sind.
 - Der Aktivierungsshortcut wird nun angesprochen, wenn ein anderes Tool geöffnet wird, während das Marking Tool schon geöffnet ist.</value>
   </data>
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Version {0}</value>
-  </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>Benachrichtigungen</value>
   </data>
@@ -454,7 +439,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Neue Füllung hinzufügen</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Doppelt durchgezogen</value>
   </data>
@@ -570,60 +554,6 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Ausrichtung</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Ich stimme zu</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>BETA Version Warnhinweis</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Die stabile Version holen</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Du verwendest die BETA Version von {0}. Diese ist zum Testen neuer Funktionen gedacht und kann Fehler beinhalten, die deine erstellten Markierungen verändern oder löschen könnten. Wenn du diese Version ungewollt abonniert haben solltest, wechsele zur stabilen Version.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Spiel-Sprache</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Tschechisch</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Deutsch</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Amerikanisch-Englisch</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Spanisch</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Finnisch</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Französisch</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Italienisch</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japanisch</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Niederländisch</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Polnisch</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portugiesisch</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Russisch</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Vereinfachtes Chinesisch</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>Sprache</value>
@@ -772,13 +702,9 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>Stilvorlage</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Laden mit Fehlern beendet.
 Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
-  </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Support</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Hilfe</value>
@@ -1054,7 +980,6 @@ Möchtest du die Markierungen manuell zuordnen?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Strg halten und Ziehen um den Punkt zu verschieben</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Diese Aktion kann nicht rückgängig gemacht werden.</value>
   </data>
@@ -1138,11 +1063,6 @@ Um eine Kreuzungsvorlage zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Lade Markierungs-Objekte</value>
   </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Mod fehlerhaft geladen.
-Es wird nicht empfohlen, den Mod in diesem Status zu nutzen, da es zu unvorhersehbarem Verhalten kommen kann.
-Starte das Spiel neu.</value>
-  </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Fußgängerüberwege:</value>
   </data>
@@ -1207,9 +1127,6 @@ Die wieder hergestellten Kreuzungsvorlagen werden alle vorhandenen Kreuzungsvorl
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Linien an allen Fußgängerüberwegen beenden</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Britisch-Englisch</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Kreuzungsvorlage-Objekt überschreiben</value>
   </data>
@@ -1239,9 +1156,6 @@ Die wieder hergestellten Kreuzungsvorlagen werden alle vorhandenen Kreuzungsvorl
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Änderungen nicht speichern</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Möchtest du die Namensänderung der Kreuzungsvorlage speichern?</value>
@@ -1429,12 +1343,10 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Endpunkt für eine reguläre oder Haltelinie auswählen</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Ausrichtung des Linien-Endes</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Ausrichtung des Linien-Starts</value>
   </data>
-  
 </root>

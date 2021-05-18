@@ -199,15 +199,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Solid</value>
   </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Yes</value>
-  </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Just do make markings at intersections</value>
   </data>
@@ -330,9 +321,6 @@ Click to edit markings</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Select a point to create or delete a line</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>What's new in {0}</value>
-  </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Show what's new</value>
   </data>
@@ -442,9 +430,6 @@ Click to edit markings</value>
 - Lines will no longer render when Info View overlays are shown.
 - Activation shortcut will now trigger when another tool opens while Marking Tool is already opened.</value>
   </data>
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Version {0}</value>
-  </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>Notifications</value>
   </data>
@@ -453,9 +438,6 @@ Click to edit markings</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Add new filler</value>
-  </data>
-  <data name="Mod_WhatsNewMessageBeta" xml:space="preserve">
-    <value>Look for actual beta change log on Discord</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Double solid</value>
@@ -572,60 +554,6 @@ By registering early access, you will support the ability to develop this mod at
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alignment</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>I agree</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>BETA version warning</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Get stable version</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>You are using the BETA version of {0}. It is for testing new features and may contain errors that could break or delete your markings. If you subscribed to it by mistake, then switch to the stable version.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Game Language</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Czech</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>German</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>English US</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Spanish</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Finnish</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>French</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Italian</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japanese</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Dutch</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Polish</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portuguese</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Russian</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Chinese Simplified</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>Language</value>
@@ -791,9 +719,6 @@ create or delete a crosswalk</value>
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Load was completed with errors.
 Failed to load markings for {0} intersections.</value>
-  </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Support</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Troubleshooting</value>
@@ -1176,11 +1101,6 @@ To create a preset, click «{0}» at the panel header.</value>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Load markings assets</value>
   </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Mod loaded with errors.
-It is not recommended to use the mod in this state as it can lead to unpredictable behavior.
-Restart the game.</value>
-  </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Crosswalks:</value>
   </data>
@@ -1245,9 +1165,6 @@ The restored presets will replace all existing presets.</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Cut lines by all crosswalks</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>English UK</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Rewrite preset asset</value>
   </data>
@@ -1277,9 +1194,6 @@ The restored presets will replace all existing presets.</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Don't save changes</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Do you want to save preset name change?</value>

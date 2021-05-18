@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -198,15 +198,6 @@ Shift x10, Ctrl x0.1</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
     <value>Ciągła</value>
-  </data>
-  <data name="MessageBox_No" xml:space="preserve">
-    <value>Nie</value>
-  </data>
-  <data name="MessageBox_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="MessageBox_Yes" xml:space="preserve">
-    <value>Tak</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Po prostu twórz oznaczenia na skrzyżowaniach</value>
@@ -330,13 +321,9 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby utworzyć lub usunąć linię</value>
   </data>
-  <data name="Mod_WhatsNewCaption" xml:space="preserve">
-    <value>Co nowego w {0}</value>
-  </data>
   <data name="Settings_ShowWhatsNew" xml:space="preserve">
     <value>Pokaż "Co nowego?"</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Przywróć</value>
   </data>
@@ -415,11 +402,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Wypełnienie</value>
   </data>
-  
-  
-  <data name="Mod_WhatsNewVersion" xml:space="preserve">
-    <value>Wersja {0}</value>
-  </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>Powiadomienia</value>
   </data>
@@ -429,7 +411,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Dodaj nowe wypełnienie</value>
   </data>
-  
   <data name="LineStyle_StopDouble" xml:space="preserve">
     <value>Podwójna ciągła</value>
   </data>
@@ -545,60 +526,6 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Wyrównanie</value>
-  </data>
-  <data name="Mod_BetaWarningAgree" xml:space="preserve">
-    <value>Zgadzam się</value>
-  </data>
-  <data name="Mod_BetaWarningCaption" xml:space="preserve">
-    <value>Ostrzeżenie o wersji BETA</value>
-  </data>
-  <data name="Mod_BetaWarningGetStable" xml:space="preserve">
-    <value>Subskrybuj wersję stabilną</value>
-  </data>
-  <data name="Mod_BetaWarningMessage" xml:space="preserve">
-    <value>Używasz {0} w wersji BETA. Została ona stworzona w celu testowania nowych funkcjonalności i może zawierać błędy lub skasować wcześniej zapisane wypełnienia. Jeśli została ona zasubskrybowana przypadkiem, przejdź na wersję stabilną.</value>
-  </data>
-  <data name="Mod_LocaleGame" xml:space="preserve">
-    <value>Język gry</value>
-  </data>
-  <data name="Mod_Locale_cs" xml:space="preserve">
-    <value>Czeski</value>
-  </data>
-  <data name="Mod_Locale_de" xml:space="preserve">
-    <value>Niemiecki</value>
-  </data>
-  <data name="Mod_Locale_en" xml:space="preserve">
-    <value>Angielski - USA</value>
-  </data>
-  <data name="Mod_Locale_es" xml:space="preserve">
-    <value>Hiszpański</value>
-  </data>
-  <data name="Mod_Locale_fi" xml:space="preserve">
-    <value>Fiński</value>
-  </data>
-  <data name="Mod_Locale_fr" xml:space="preserve">
-    <value>Francuski</value>
-  </data>
-  <data name="Mod_Locale_it" xml:space="preserve">
-    <value>Włoski</value>
-  </data>
-  <data name="Mod_Locale_ja" xml:space="preserve">
-    <value>Japoński</value>
-  </data>
-  <data name="Mod_Locale_nl" xml:space="preserve">
-    <value>Holenderski</value>
-  </data>
-  <data name="Mod_Locale_pl" xml:space="preserve">
-    <value>Polski</value>
-  </data>
-  <data name="Mod_Locale_pt" xml:space="preserve">
-    <value>Portugalski</value>
-  </data>
-  <data name="Mod_Locale_ru" xml:space="preserve">
-    <value>Rosyjski</value>
-  </data>
-  <data name="Mod_Locale_zh-cn" xml:space="preserve">
-    <value>Chiński uproszczony</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>Język</value>
@@ -747,13 +674,9 @@ utworzyć lub usunąć przejście dla pieszych</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>szablon</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Wystąpiły błędy podczas ładowania danych.
 Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
-  </data>
-  <data name="Mod_Support" xml:space="preserve">
-    <value>Wsparcie</value>
   </data>
   <data name="Settings_Troubleshooting" xml:space="preserve">
     <value>Rozwiązywanie problemów</value>
@@ -1029,7 +952,6 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Przeciągnij trzymając Ctrl aby przesunąć ten punkt</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Nie będzie można cofnąć tej operacji.</value>
   </data>
@@ -1057,7 +979,6 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Ostrzeżenie: Ta opcja zmiena kolejność renderowania obiektów w grze</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Zapisz jako zasób</value>
   </data>
@@ -1101,11 +1022,6 @@ Aby, utworzyć preset, kliknij «{0}» na nagłówku panelu.</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
     <value>Załaduj assety oznaczeń</value>
-  </data>
-  <data name="Mod_LoaledWithErrors" xml:space="preserve">
-    <value>Wystąpiły błędy podczas ładowania moda.
-Nie zalecamy używania moda w tym stanie, ponieważ może to doprowadzić do nieprzewidzianego zachowania.
-Uruchom ponownie grę.</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Przejścia dla pieszych:</value>
@@ -1171,9 +1087,6 @@ Wszystkie istniejące presety zostaną zastąpione.</value>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Przetnij linie przecinające przejścia dla pieszych</value>
   </data>
-  <data name="Mod_Locale_en-gb" xml:space="preserve">
-    <value>Angielski - Wielka Brytania</value>
-  </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Zmień nazwę asseta zestawu ustawień</value>
   </data>
@@ -1203,9 +1116,6 @@ Wszystkie istniejące presety zostaną zastąpione.</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Nie zapisuj zmian</value>
-  </data>
-  <data name="MessageBox_Cancel" xml:space="preserve">
-    <value>Anuluj</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
     <value>Czy chcesz zapisać zmianę nazwy presetu?</value>
@@ -1244,7 +1154,6 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>preset</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Ten typ linii nie obsługuje reguł</value>
   </data>
@@ -1305,9 +1214,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Wybierz drugi punkt linii pomocniczej</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Liczba kolorów</value>
   </data>
@@ -1368,12 +1274,10 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Wybierz punkt końcowy dla linii zwykłej lub zatrzymania</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Wyrównanie końca linii</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Wyrównanie początku linii</value>
   </data>
-  
 </root>
