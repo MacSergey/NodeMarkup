@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Haluatko varmasti poistaa {0} "{1}"?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Vieritä hiiren rullalla vaihtaaksesi
-Shift X10, Ctrl X0,1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Käytä mallinetta</value>
   </data>
@@ -202,9 +198,6 @@ Shift X10, Ctrl X0,1</value>
   <data name="Mod_Description" xml:space="preserve">
     <value>Tee tiemerkintöjä risteyksiin</value>
   </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Tämä on BETA-versio. Virheitä voi esiintyä, eikä vakautta ole taattu!</value>
-  </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Muokkaa risteyksen #{0} merkintöjä</value>
   </data>
@@ -275,14 +268,8 @@ Palautetut merkinnät korvaavat kaikki olemassa olevat merkinnät.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Piirtoetäisyys</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Pikanäppäimet</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Vahvista ennen poistamista</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Näytä työkaluvihjeet</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>malline</value>
@@ -321,14 +308,8 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Valitse piste luodaksesi tai poistaaksesi viivan</value>
   </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Näytä, mikä on uutta</value>
-  </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Palauta</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Peruuta</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Käännä</value>
@@ -401,12 +382,6 @@ Napauta muokataksesi merkintöjä</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Kiinteä</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Ilmoitukset</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Ilmoita vain merkittävistä päivityksistä</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Lisää uusi sulkualue</value>
@@ -526,9 +501,6 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Sijoittelu</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Kieli</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Napauta luodaksesi kohtisuora viiva</value>
@@ -678,9 +650,6 @@ poistaaksesi suojatien</value>
     <value>Tallennnuksen avaamisessa tapahtui virheitä.
 {0}:n risteyksen merkintöjen lataus epäonnistui.</value>
   </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Vianmääritys</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Shakkiruudukko</value>
   </data>
@@ -771,17 +740,11 @@ poistaaksesi suojatien</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Käyttäytyminen</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Yleiset</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Ryhmittely</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Pikanäppäimet</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Tuki</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Monista</value>
@@ -966,9 +929,6 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Nollaa pisteiden siirtymät</value>
-  </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Lisää</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Nopea suojateiden reunojen luominen</value>
@@ -1241,9 +1201,6 @@ Napauta muokataksesi merkintöjä</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Jaon siirtymä</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Muutosloki</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Ryhmittele pisteet</value>

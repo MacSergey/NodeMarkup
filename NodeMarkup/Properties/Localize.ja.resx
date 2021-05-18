@@ -123,11 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>{0} - "{1}" を削除してもよろしいですか?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>ホイールのスクロールで増減
-+Shift ｘ 10倍
-+Ctrl ｘ 0.1倍</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>テンプレートを適用</value>
   </data>
@@ -203,9 +198,6 @@
   <data name="Mod_Description" xml:space="preserve">
     <value>交差点や高速道路のJCT・IC内に、ラインの作成・編集が出来るようになります</value>
   </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>これはβ版で、エラーが発生する可能性があります。安定性は保証されていません！</value>
-  </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>#{0} のノードを編集中</value>
   </data>
@@ -276,14 +268,8 @@
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>マーキングの描画距離（m）</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>ショートカットの設定</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>削除前の確認方法</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>ツールチップの表示</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>テンプレート</value>
@@ -322,14 +308,8 @@
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>ポイントを選択して、ラインを作成・削除する</value>
   </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>新着情報を表示する</value>
-  </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>復元</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>キャンセル</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>ラインを反転</value>
@@ -402,12 +382,6 @@
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>ベタ塗り</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>通知の設定</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>主要なアップデートのみ通知</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>新しい塗り潰しを追加</value>
@@ -528,9 +502,6 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>位置合わせ</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>言語設定</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>クリックして垂直線を追加</value>
@@ -679,9 +650,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>マーキングが正常に描画されず、ロードエラーがありました。
 {0} ヶ所の交差点（ノード）で、マーキングの描画に失敗しました。</value>
   </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>トラブルシューティング</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>チェス盤の横断歩道</value>
   </data>
@@ -772,17 +740,11 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>表示＆確認の設定</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>基本設定</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>グループ・タブの設定</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>ショートカット</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>サポート</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>テンプレートの複製</value>
@@ -967,9 +929,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>ポイントのオフセットを全てリセット</value>
-  </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>追加機能</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>横断歩道の基準線を一緒に設定</value>
@@ -1235,9 +1194,6 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>拡大する大きさ</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>更新履歴</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>ポイントをタブで折り畳む</value>

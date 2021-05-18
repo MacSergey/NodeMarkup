@@ -106,7 +106,7 @@ namespace NodeMarkup.Manager
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = minValue;
-            offsetProperty.WheelTip = Editor.WheelTip;
+            offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.Init();
 
             return offsetProperty;
@@ -117,7 +117,7 @@ namespace NodeMarkup.Manager
             widthProperty.Text = Localize.StyleOption_LineWidth;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = 0.1f;
-            widthProperty.WheelTip = Editor.WheelTip;
+            widthProperty.WheelTip = Settings.ShowToolTip;
             widthProperty.CheckMin = true;
             widthProperty.MinValue = 0.05f;
             widthProperty.Init();
@@ -289,7 +289,7 @@ namespace NodeMarkup.Manager
         {
             var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(Color), nameof(SecondColor));
             colorProperty.Text = Localize.StyleOption_Color;
-            colorProperty.WheelTip = Editor.WheelTip;
+            colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init();
             colorProperty.Value = SecondColor;
             colorProperty.OnValueChanged += (Color32 color) => SecondColor.Value = color;
@@ -636,7 +636,7 @@ namespace NodeMarkup.Manager
             squareSideProperty.Text = Localize.StyleOption_SquareSide;
             squareSideProperty.UseWheel = true;
             squareSideProperty.WheelStep = 0.1f;
-            squareSideProperty.WheelTip = Editor.WheelTip;
+            squareSideProperty.WheelTip = Settings.ShowToolTip;
             squareSideProperty.CheckMin = true;
             squareSideProperty.MinValue = 0.1f;
             squareSideProperty.Init();
@@ -651,7 +651,7 @@ namespace NodeMarkup.Manager
             lineCountProperty.Text = Localize.StyleOption_LineCount;
             lineCountProperty.UseWheel = true;
             lineCountProperty.WheelStep = 1;
-            lineCountProperty.WheelTip = Editor.WheelTip;
+            lineCountProperty.WheelTip = Settings.ShowToolTip;
             lineCountProperty.CheckMin = true;
             lineCountProperty.MinValue = DefaultCrosswalkLineCount;
             lineCountProperty.Init();

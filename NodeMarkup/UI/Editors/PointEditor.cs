@@ -32,7 +32,7 @@ namespace NodeMarkup.UI.Editors
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
-            Offset.WheelTip = WheelTip;
+            Offset.WheelTip = Settings.ShowToolTip;
             Offset.Init();
             Offset.Value = point.Offset;
             Offset.OnValueChanged += OffsetChanged;
@@ -51,7 +51,7 @@ namespace NodeMarkup.UI.Editors
             Shift.Text = NodeMarkup.Localize.PointEditor_SplitOffset;
             Shift.UseWheel = true;
             Shift.WheelStep = 0.1f;
-            Shift.WheelTip = WheelTip;
+            Shift.WheelTip = Settings.ShowToolTip;
             Shift.CheckMin = true;
             Shift.MinValue = 0f;
             Shift.Init();

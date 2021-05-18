@@ -710,7 +710,7 @@ namespace NodeMarkup.Manager
             angleProperty.Text = Localize.StyleOption_AngleBetween;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
-            angleProperty.WheelTip = Editor.WheelTip;
+            angleProperty.WheelTip = Settings.ShowToolTip;
             angleProperty.CheckMin = true;
             angleProperty.MinValue = 30;
             angleProperty.CheckMax = true;

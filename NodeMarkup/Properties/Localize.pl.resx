@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Czy na pewno chcesz usunąć {0} "{1}"?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Użyj kółka myszy aby zmienić wartość
-Shift x10, Ctrl x0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Zastosuj szablon</value>
   </data>
@@ -202,9 +198,6 @@ Shift x10, Ctrl x0.1</value>
   <data name="Mod_Description" xml:space="preserve">
     <value>Po prostu twórz oznaczenia na skrzyżowaniach</value>
   </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Wersja BETA, mogą pojawić się błędy oraz może działać niestabilnie!</value>
-  </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modyfikuj oznaczenia skrzyżowania #{0}</value>
   </data>
@@ -275,14 +268,8 @@ Wszystkie istniejące oznaczenia zostaną zastąpione.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Odległość renderowania</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Skróty klawiszowe</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Potwierdzaj przed usunięciem</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Pokaż podpowiedzi</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>szablon</value>
@@ -321,14 +308,8 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby utworzyć lub usunąć linię</value>
   </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Pokaż "Co nowego?"</value>
-  </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Przywróć</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Anuluj</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Odwróć</value>
@@ -401,12 +382,6 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Wypełnienie</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Powiadomienia</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Powiadamiaj tylko o ważnych aktualizacjach</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Dodaj nowe wypełnienie</value>
@@ -526,9 +501,6 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Wyrównanie</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Język</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Kliknij, aby utworzyć prostopadłą linię</value>
@@ -678,9 +650,6 @@ utworzyć lub usunąć przejście dla pieszych</value>
     <value>Wystąpiły błędy podczas ładowania danych.
 Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
   </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Rozwiązywanie problemów</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Szachownica</value>
   </data>
@@ -771,17 +740,11 @@ Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Wyświetl i używaj</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Ogólne</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Grupowanie</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Skróty klawiszowe i modyfikatory</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Wsparcie</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Kopia</value>
@@ -966,9 +929,6 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Resetuj przesunięcie wszystkich punktów</value>
-  </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Dodatkowe</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Szybkie tworzenie obramowania przejścia dla pieszych</value>
@@ -1234,9 +1194,6 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Przesunięcie podziału</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Dziennik zmian</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Grupuj punkty</value>

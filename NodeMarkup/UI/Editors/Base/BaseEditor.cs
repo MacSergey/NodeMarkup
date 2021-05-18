@@ -22,8 +22,6 @@ namespace NodeMarkup.UI.Editors
     }
     public abstract class Editor : CustomUIPanel
     {
-        public static string WheelTip => Settings.ShowToolTip ? NodeMarkup.Localize.FieldPanel_ScrollWheel : string.Empty;
-
         public NodeMarkupPanel Panel { get; private set; }
 
         public abstract string Name { get; }

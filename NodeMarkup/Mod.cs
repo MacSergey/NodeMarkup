@@ -48,7 +48,7 @@ namespace NodeMarkup
         };
 
         public override string NameRaw => "Intersection Marking Tool";
-        public override string Description => !IsBeta ? Localize.Mod_Description : Localize.Mod_DescriptionBeta;
+        public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
         public override string WorkshopUrl => StableURL;
         public override string BetaWorkshopUrl => BetaURL;
         public override CultureInfo Culture

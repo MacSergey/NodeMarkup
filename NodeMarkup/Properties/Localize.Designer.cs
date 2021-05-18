@@ -496,16 +496,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Scroll the wheel to change
-        ///Shift X10, Ctrl X0.1.
-        /// </summary>
-        public static string FieldPanel_ScrollWheel {
-            get {
-                return ResourceManager.GetString("FieldPanel_ScrollWheel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на filler.
         /// </summary>
         public static string FillerEditor_DeleteCaptionDescription {
@@ -1148,15 +1138,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на This is a BETA version, errors may occur and stability is not guaranteed!.
-        /// </summary>
-        public static string Mod_DescriptionBeta {
-            get {
-                return ResourceManager.GetString("Mod_DescriptionBeta", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Load was completed with errors.
         ///Failed to load markings for {0} intersections..
         /// </summary>
@@ -1338,15 +1319,6 @@ namespace NodeMarkup {
         public static string Mod_WhatsNewMessage1_7_1 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_7_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Additional.
-        /// </summary>
-        public static string Panel_Additional {
-            get {
-                return ResourceManager.GetString("Panel_Additional", resourceCulture);
             }
         }
         
@@ -1740,24 +1712,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Cancel.
-        /// </summary>
-        public static string Settings_Cancel {
-            get {
-                return ResourceManager.GetString("Settings_Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Change log.
-        /// </summary>
-        public static string Settings_ChangeLog {
-            get {
-                return ResourceManager.GetString("Settings_ChangeLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Copy path to clipboard.
         /// </summary>
         public static string Settings_CopyPathToClipboard {
@@ -1974,15 +1928,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на General.
-        /// </summary>
-        public static string Settings_GeneralTab {
-            get {
-                return ResourceManager.GetString("Settings_GeneralTab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Groupings.
         /// </summary>
         public static string Settings_Groupings {
@@ -2064,15 +2009,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Language.
-        /// </summary>
-        public static string Settings_Language {
-            get {
-                return ResourceManager.GetString("Settings_Language", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Load markings assets.
         /// </summary>
         public static string Settings_LoadMarkingAssets {
@@ -2087,15 +2023,6 @@ namespace NodeMarkup {
         public static string Settings_LODDistance {
             get {
                 return ResourceManager.GetString("Settings_LODDistance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Notifications.
-        /// </summary>
-        public static string Settings_Notifications {
-            get {
-                return ResourceManager.GetString("Settings_Notifications", resourceCulture);
             }
         }
         
@@ -2409,15 +2336,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Shortcuts.
-        /// </summary>
-        public static string Settings_Shortcuts {
-            get {
-                return ResourceManager.GetString("Settings_Shortcuts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Shortcuts and modifiers.
         /// </summary>
         public static string Settings_ShortcutsAndModifiersTab {
@@ -2463,38 +2381,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Notification only about major updates.
-        /// </summary>
-        public static string Settings_ShowOnlyMajor {
-            get {
-                return ResourceManager.GetString("Settings_ShowOnlyMajor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Show hints on panel.
         /// </summary>
         public static string Settings_ShowPaneltips {
             get {
                 return ResourceManager.GetString("Settings_ShowPaneltips", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Show tooltips.
-        /// </summary>
-        public static string Settings_ShowTooltips {
-            get {
-                return ResourceManager.GetString("Settings_ShowTooltips", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Show what&apos;s new.
-        /// </summary>
-        public static string Settings_ShowWhatsNew {
-            get {
-                return ResourceManager.GetString("Settings_ShowWhatsNew", resourceCulture);
             }
         }
         
@@ -2522,24 +2413,6 @@ namespace NodeMarkup {
         public static string Settings_StyleModifierWithout {
             get {
                 return ResourceManager.GetString("Settings_StyleModifierWithout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Support.
-        /// </summary>
-        public static string Settings_SupportTab {
-            get {
-                return ResourceManager.GetString("Settings_SupportTab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Troubleshooting.
-        /// </summary>
-        public static string Settings_Troubleshooting {
-            get {
-                return ResourceManager.GetString("Settings_Troubleshooting", resourceCulture);
             }
         }
         

@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Tem a certeza que quer mesmo apagar {0} "{1}"?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Faça scroll para mudar
-Shift X10, Ctrl X0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Aplicar modelo</value>
   </data>
@@ -202,9 +198,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_Description" xml:space="preserve">
     <value>Faz apenas marcações nas intersecções</value>
   </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Isto é uma versão BETA, podem ocorrer erros e não é garantida a estabilidade!</value>
-  </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Editar marcações do nó #{0}</value>
   </data>
@@ -275,14 +268,8 @@ Os dados recuperados vão substituir todas as marcações existentes.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Distância de renderização</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Atalhos</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Confirmar antes de remover</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Mostrar dicas</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modelo</value>
@@ -321,9 +308,6 @@ Clique para editar marcações</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecione um ponto para criar ou remover a uma linha</value>
   </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Mostrar as novidades</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>- Adicionado Preenchimentos. O espaço entre as linhas pode ser preenchido para indicar áreas de proibição de paragem ou condução. 3 estilos disponíveis: "Linhas", "Grelha" e "Sólido". Para criar um preenchimento pressione Alt.
 - Adicionada Linha de Paragem. Agora é possível conectar dois pontos da mesma estrada para criar uma linha de paragem. 2 estilos disponíveis: "Sólida" e "Tracejada".
@@ -337,9 +321,6 @@ Clique para editar marcações</value>
   </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Recuperar</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Cancelar</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Inverter</value>
@@ -412,12 +393,6 @@ Clique para editar marcações</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Sólida</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Notificações</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Notificar apenas sobre actualizações principais</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Adicionar novo preenchimento</value>
@@ -537,9 +512,6 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alinhamento</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Linguagem</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Clique para criar uma linha perpendicular
@@ -690,9 +662,6 @@ Verifique os pontos "De" e "Para" de outras regras.</value>
     <value>O carregamento foi completado com erros.
 O carregamento de {0} marcações falhou.</value>
   </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Resolução de problemas</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Xadrez</value>
   </data>
@@ -783,17 +752,11 @@ O carregamento de {0} marcações falhou.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Apresentação e utilização</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Geral</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Grupos</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Atalhos e modificadores</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Apoio</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Duplicar</value>
@@ -978,9 +941,6 @@ Quer aplicar as marcações manualmente?</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Repor o deslocamento de todos os pontos</value>
-  </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Adicional</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Definição rápida de bordas das passadeiras</value>
@@ -1245,9 +1205,6 @@ Clique para editar marcações</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Dividir deslocamento</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Registo de alterações</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Agrupar pontos</value>

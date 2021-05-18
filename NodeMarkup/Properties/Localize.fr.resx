@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Voulez-vous vraiment supprimer {0} "{1}" ?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Utilisez la molette pour changer
-Maj X10, Ctrl X0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Appliquer le modèle</value>
   </data>
@@ -269,14 +265,8 @@ Les données restaurées ont remplacer tout les marquages existants.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Distance d'affichage</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Raccourcis</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Confirmer avant de supprimer</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Afficher les infobulles</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modèle</value>
@@ -316,14 +306,8 @@ Cliquez pour modifier le marquage</value>
     <value>Sélectionnez un point pour
 créer ou supprimer une ligne</value>
   </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Afficher les nouveautés</value>
-  </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Restaurer</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Annuler</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Inverser</value>
@@ -396,12 +380,6 @@ créer ou supprimer une ligne</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Solide</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Paramètres de notification</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Uniquement notifier les mise à jour majeures</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Ajouter un nouveau remplisseur</value>
@@ -521,9 +499,6 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alignement</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Langue</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Cliquez pour créer une ligne perpendiculaire
@@ -675,9 +650,6 @@ créer ou supprimer un passage piéton</value>
     <value>Erreurs lors du chargement.
 Le marquage de {0} intersections n'a pas pu être chargé.</value>
   </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Dépannage</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Damiers</value>
   </data>
@@ -768,17 +740,11 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Affichage et utilisation</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Général</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Catégories</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Raccourcis</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Support</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Dupliquer</value>
@@ -963,9 +929,6 @@ Voulez-vous changer le marquage manuellement ?</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Réinitialiser tout les décalages de points</value>
-  </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Autres</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Bordures de passage piétons rapide</value>
@@ -1227,9 +1190,6 @@ Cliquez pour modifier le marquage</value>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Décalage de la division</value>
   </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Notes de mise à jour</value>
-  </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Grouper les points</value>
   </data>
@@ -1271,5 +1231,8 @@ Cliquez pour modifier le marquage</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Alignement du début de la ligne</value>
+  </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>Faire marquages aux intersections seulement</value>
   </data>
 </root>

@@ -172,7 +172,7 @@ namespace NodeMarkup.Manager
             elevationProperty.Text = Localize.FillerStyle_Elevation;
             elevationProperty.UseWheel = true;
             elevationProperty.WheelStep = 0.1f;
-            elevationProperty.WheelTip = Editor.WheelTip;
+            elevationProperty.WheelTip = Settings.ShowToolTip;
             elevationProperty.CheckMin = true;
             elevationProperty.MinValue = 0f;
             elevationProperty.CheckMax = true;

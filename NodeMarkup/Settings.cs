@@ -49,7 +49,7 @@ namespace NodeMarkup
         #endregion
 
         #region BASIC
-        protected override string GeneralTabName => Localize.Settings_GeneralTab;
+        protected override string GeneralTabName => CommonLocalize.Settings_GeneralTab;
 
         protected override void OnSettingsUI()
         {
@@ -66,7 +66,7 @@ namespace NodeMarkup
             AddBackupStyleTemplates(backupTab);
             AddBackupIntersectionTemplates(backupTab);
 
-            var supportTab = CreateTab(Localize.Settings_SupportTab);
+            var supportTab = CreateTab(CommonLocalize.Settings_SupportTab);
             AddSupport(supportTab);
 
 #if DEBUG
@@ -78,16 +78,6 @@ namespace NodeMarkup
         #endregion
 
         #region GENERAL
-
-        #region LANGUAGE
-
-        private void AddLanguage(UIHelperBase helper)
-        {
-            var group = helper.AddGroup(Localize.Settings_Language) as UIHelper;
-            AddLanguageList(group);
-        }
-
-        #endregion
 
         #region DISPLAY&USAGE
         private void AddGeneral(UIHelperBase helper)
@@ -101,7 +91,7 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
             AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
             AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
-            AddCheckBox(group, Localize.Settings_ShowTooltips, ShowToolTip);
+            AddCheckBox(group, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
             AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);
             AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
             AddCheckBox(group, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
@@ -123,24 +113,12 @@ namespace NodeMarkup
 
         #endregion
 
-        #region NOTIFICATIONS
-
-        private void AddNotifications(UIHelperBase helper)
-        {
-            var group = helper.AddGroup(Localize.Settings_Notifications) as UIHelper;
-
-            AddCheckBox(group, Localize.Settings_ShowWhatsNew, ShowWhatsNew);
-            AddCheckBox(group, Localize.Settings_ShowOnlyMajor, ShowOnlyMajor);
-        }
-
-        #endregion
-
         #endregion
 
         #region KEYMAPPING
         private void AddKeyMapping(UIHelperBase helper)
         {
-            var group = helper.AddGroup(Localize.Settings_Shortcuts) as UIHelper;
+            var group = helper.AddGroup(CommonLocalize.Settings_Shortcuts) as UIHelper;
             var keymappings = AddKeyMappingPanel(group);
             keymappings.AddKeymapping(NodeMarkupTool.ActivationShortcut);
             keymappings.AddKeymapping(NodeMarkupTool.AddRuleShortcut);
@@ -265,7 +243,7 @@ namespace NodeMarkup
 
         private void AddSupport(UIHelperBase helper)
         {
-            var group = helper.AddGroup() as UIHelper;
+            var group = helper.AddGroup();
             AddWiki(group);
             AddTroubleshooting(group);
             AddDiscord(group);
@@ -273,14 +251,14 @@ namespace NodeMarkup
         }
         private void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Mod.WikiUrl.OpenUrl());
         private void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Mod.DiscordURL.OpenUrl());
-        private void AddTroubleshooting(UIHelper helper) => AddButton(helper, Localize.Settings_Troubleshooting, () => Mod.TroubleshootingUrl.OpenUrl());
-        private void AddChangeLog(UIHelper helper) => AddButton(helper, Localize.Settings_ChangeLog, ShowChangeLog);
+        private void AddTroubleshooting(UIHelper helper) => AddButton(helper, CommonLocalize.Settings_Troubleshooting, () => Mod.TroubleshootingUrl.OpenUrl());
+        private void AddChangeLog(UIHelper helper) => AddButton(helper, CommonLocalize.Settings_ChangeLog, ShowChangeLog);
 
         private void ShowChangeLog()
         {
             var messages = SingletonMod<Mod>.Instance.GetWhatsNewMessages(new Version(1, 0));
             var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
-            messageBox.CaptionText = Localize.Settings_ChangeLog;
+            messageBox.CaptionText = CommonLocalize.Settings_ChangeLog;
             messageBox.OkText = CommonLocalize.MessageBox_OK;
             messageBox.Init(messages, SingletonMod<Mod>.Instance.GetVersionString, false);
         }

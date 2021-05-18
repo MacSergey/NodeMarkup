@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Willst du {0} "{1}" wirklich löschen?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Mausrad scrollen zum ändern
-Shift x10, Strg x0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Vorlage anwenden</value>
   </data>
@@ -202,9 +198,6 @@ Shift x10, Strg x0.1</value>
   <data name="Mod_Description" xml:space="preserve">
     <value>Markierungen an Kreuzungen erstellen</value>
   </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Dies ist eine BETA Version. Stabilität und Fehlerfreiheit sind nicht garantiert!</value>
-  </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Markierungen von Netzwerk-Knoten #{0} bearbeiten</value>
   </data>
@@ -275,14 +268,8 @@ Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</va
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Render-Distanz</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Tastenkürzel</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Löschwarnungen anzeigen</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Zeige Tooltips</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>Stilvorlage</value>
@@ -321,9 +308,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Startpunkt wählen zum Linie erstellen oder löschen</value>
   </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>"Was gibt es neues" zeigen</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>- Füllungen. Der Bereich zwischen Linien kann gefüllt werden um zu zeigen, dass ein Befahren oder Parken verboten ist. 3 Stile stehen zur Verfügung: Linien, Gitter oder Fläche. ALT gedrückt halten zum Erstellen.
 - Haltelinien. Es ist nun möglich zwei nebeneinander liegende Punkte auf der gleichen Straße zu verbinden um eine Haltelinie zu erstellen. 2 Stile verfügbar: Durchgezogen und gestrichelt.
@@ -337,9 +321,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Wiederherstellen</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Invertieren</value>
@@ -429,12 +410,6 @@ Klicken um die Markierungen zu bearbeiten</value>
 - Fehler behoben, durch den Linien unterbrochen oder geteilt erschienen - dies kam nur bei Verbindungen zwischen Autobahnen und Stadtstraßen vor.
 - Linien werden nicht mehr gerendert, wenn die Info-Ansichten geöffnet sind.
 - Der Aktivierungsshortcut wird nun angesprochen, wenn ein anderes Tool geöffnet wird, während das Marking Tool schon geöffnet ist.</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Benachrichtigungen</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Benachrichtigungen nur bei Haupt-Versions-Updates</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Neue Füllung hinzufügen</value>
@@ -554,9 +529,6 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Ausrichtung</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Sprache</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Klicken, um eine orthogonale Linie zu erstellen</value>
@@ -706,9 +678,6 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
     <value>Laden mit Fehlern beendet.
 Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
   </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Hilfe</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Schachbrett</value>
   </data>
@@ -799,17 +768,11 @@ Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Anzeige und Verwendung</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Allgemein</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Gruppen</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Tastenkürzel und Tastenkombinationen</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Support/Hilfe</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Duplizieren</value>
@@ -994,9 +957,6 @@ Möchtest du die Markierungen manuell zuordnen?</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Versätze aller Punkte zurücksetzen</value>
-  </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Weiteres</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Schnellerstellung Fußgängerüberwegeränder</value>
@@ -1303,9 +1263,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Versatz aufteilen</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Änderungsprotokoll</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Punkte gruppieren</value>

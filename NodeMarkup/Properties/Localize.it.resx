@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Vuoi veramente cancellare {0} "{1}"?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Scorri con la rotella per cambiare
-Shift X10, Ctrl X0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Applica modello</value>
   </data>
@@ -202,9 +198,6 @@ Shift X10, Ctrl X0.1</value>
   <data name="Mod_Description" xml:space="preserve">
     <value>Basta solo aggiungere le marcature alle intersezioni</value>
   </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Questa è una versione BETA, potrebbero verificarsi errori e la stabilità non è garantita!</value>
-  </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Modifica il marcatore del nodo #{0}</value>
   </data>
@@ -275,14 +268,8 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Distanza di rendering</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Scorciatoie da tastiera</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Richiedi conferma prima di eliminare</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Mostra i suggerimenti</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>modello</value>
@@ -315,9 +302,6 @@ Clicca per modificare il marcatore</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleziona un punto per creare o cancellare una linea</value>
   </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Mostra cosa c'è di nuovo</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
     <value>Riempimento. Lo spazio tra le linee può essere riempito per indicare le aree vietate per l'arresto o la guida. Sono disponibili 3 stili: Linee, Griglia e Riempimento solido. Per creare tenere premuto Alt.
 - Linee di stop. Ora è possibile collegare due punti sulla stessa strada per creare una linea di arresto. 2 stili disponibili: "Continua" e "Tratteggiata".
@@ -331,9 +315,6 @@ Clicca per modificare il marcatore</value>
   </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Ripristina</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Annulla</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Inverti</value>
@@ -426,9 +407,6 @@ Clicca per modificare il marcatore</value>
   </data>
   <data name="Settings_Notifications" xml:space="preserve">
     <value>Notifiche</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Notifica solo gli update maggiore</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Aggiungi un nuovo riempimento</value>
@@ -548,9 +526,6 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Allineamento</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Lingua</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Clicca per creare una linea perpendicolare</value>
@@ -700,9 +675,6 @@ cancellare le strisce pedonali</value>
     <value>Il caricamento è stato completato con errori.
 Impossibile caricare i contrassegni per {0} intersezioni.</value>
   </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Risoluzione problemi</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Scacchiera</value>
   </data>
@@ -793,17 +765,11 @@ Impossibile caricare i contrassegni per {0} intersezioni.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Visualizzazione ed utilizzo</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Generali</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Raggruppamento</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Scorciatoie e modificari</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Supporto</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Duplicato</value>
@@ -988,9 +954,6 @@ Vuoi applicare l'incrocio manualmente?</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Resetta tutti gli spostamenti</value>
-  </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Impostazioni aggiuntive</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Impostazione rapida bordi attraversamento pedonale</value>

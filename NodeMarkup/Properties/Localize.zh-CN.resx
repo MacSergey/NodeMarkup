@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>确定要删除 {0} "{1}" 吗?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>使用滚轮改变参数
-Shift x10，Ctrl x0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>应用模板</value>
   </data>
@@ -202,9 +198,6 @@ Shift x10，Ctrl x0.1</value>
   <data name="Mod_Description" xml:space="preserve">
     <value>使用此工具来轻松创建交叉口地标线。</value>
   </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>这是BETA测试版，可能会出现功能性错误。无法担保工作稳定！</value>
-  </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>编辑节点 #{0} 的地标线</value>
   </data>
@@ -275,14 +268,8 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>渲染距离</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>快捷键</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>删除前弹窗确认</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>显示提示</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>模版</value>
@@ -321,14 +308,8 @@ Shift x10，Ctrl x0.1</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>点选起始点来创建/擦除线段</value>
   </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>显示更新提示框</value>
-  </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>恢复</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>取消</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>翻转</value>
@@ -401,12 +382,6 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>实线</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>通知消息</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>只推送重要更新提示消息</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>创建新填充图案</value>
@@ -526,9 +501,6 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>对齐</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>语言</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>点击以创建垂直线</value>
@@ -678,9 +650,6 @@ Shift x10，Ctrl x0.1</value>
     <value>导入完毕，但出现了以下错误：
  {0} 个交叉口的地标线导入失败</value>
   </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>故障排除</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>棋盘格</value>
   </data>
@@ -771,17 +740,11 @@ Shift x10，Ctrl x0.1</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>界面及使用</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>常规设置</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>分组</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>快捷键与修饰键</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>支持服务</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>重复</value>
@@ -966,9 +929,6 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>重置全部端点偏移</value>
-  </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>附加</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>快速设置人行横道边界</value>
@@ -1245,9 +1205,6 @@ Shift x10，Ctrl x0.1</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>拆分偏移</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>更新日志</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>端点整合成组</value>

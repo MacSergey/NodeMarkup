@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace NodeMarkup.UI
             ImportButton.text = NodeMarkup.Localize.Settings_Restore;
             ImportButton.Disable();
             CancelButton = AddButton(CancelClick);
-            CancelButton.text = NodeMarkup.Localize.Settings_Cancel;
+            CancelButton.text = CommonLocalize.Settings_Cancel;
 
             AddFileList();
         }

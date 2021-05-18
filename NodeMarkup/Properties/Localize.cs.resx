@@ -123,10 +123,6 @@
   <data name="Tool_DeleteMessage" xml:space="preserve">
     <value>Opravdu chcete odstranit {0} "{1}"?</value>
   </data>
-  <data name="FieldPanel_ScrollWheel" xml:space="preserve">
-    <value>Použijte kolečko myši pro změnu hodnoty
-Shift ×10, Ctrl ×0.1</value>
-  </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
     <value>Použít šablonu</value>
   </data>
@@ -202,9 +198,6 @@ Shift ×10, Ctrl ×0.1</value>
   <data name="Mod_Description" xml:space="preserve">
     <value>Nástroj pro kreslení vodorovných značek do křižovatek</value>
   </data>
-  <data name="Mod_DescriptionBeta" xml:space="preserve">
-    <value>Toto je BETA verze, mohou se zde vyskytovat chyby a stabilita není zaručena!</value>
-  </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>Upravit značení křižovatky #{0}</value>
   </data>
@@ -275,14 +268,8 @@ Původní data připíší všechna existující značení.</value>
   <data name="Settings_RenderDistance" xml:space="preserve">
     <value>Vykreslovací vzdálenost</value>
   </data>
-  <data name="Settings_Shortcuts" xml:space="preserve">
-    <value>Klávesové zkratky</value>
-  </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Zobrazovat upozornění při odstraňování</value>
-  </data>
-  <data name="Settings_ShowTooltips" xml:space="preserve">
-    <value>Zobrazovat popisky</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>šablonu</value>
@@ -321,14 +308,8 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Vyberte bod pro vytvoření nebo odstranění čáry</value>
   </data>
-  <data name="Settings_ShowWhatsNew" xml:space="preserve">
-    <value>Zobrazovat novinky</value>
-  </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Obnovit</value>
-  </data>
-  <data name="Settings_Cancel" xml:space="preserve">
-    <value>Zrušit</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
     <value>Obrátit</value>
@@ -401,12 +382,6 @@ Klikněte pro změnu značení</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Plná</value>
-  </data>
-  <data name="Settings_Notifications" xml:space="preserve">
-    <value>Oznámení</value>
-  </data>
-  <data name="Settings_ShowOnlyMajor" xml:space="preserve">
-    <value>Oznamovat pouze o významných aktualizacích</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Přidat výplň</value>
@@ -526,9 +501,6 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Zarovnání</value>
-  </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>Jazyk</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
     <value>Klikněte pro vytvoření kolmé čáry</value>
@@ -678,9 +650,6 @@ nebo odstranění přechodu</value>
     <value>Při načítání se vyskytly chyby.
 Nepodařilo se načíst značení pro {0} křižovatek.</value>
   </data>
-  <data name="Settings_Troubleshooting" xml:space="preserve">
-    <value>Řešení problémů</value>
-  </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>Šachovnice</value>
   </data>
@@ -771,17 +740,11 @@ Nepodařilo se načíst značení pro {0} křižovatek.</value>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Zobrazení a použití</value>
   </data>
-  <data name="Settings_GeneralTab" xml:space="preserve">
-    <value>Základní nastavení</value>
-  </data>
   <data name="Settings_Groupings" xml:space="preserve">
     <value>Seskupování</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>Klávesové zkratky</value>
-  </data>
-  <data name="Settings_SupportTab" xml:space="preserve">
-    <value>Podpora</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
     <value>Duplikovat</value>
@@ -966,9 +929,6 @@ Chcete nastavit předchozí značení manuálně?</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Resetovat odsazení všech bodů</value>
-  </data>
-  <data name="Panel_Additional" xml:space="preserve">
-    <value>Další</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Rychlé nastavení krajů přechodu</value>
@@ -1245,9 +1205,6 @@ Klikněte pro změnu značení</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
     <value>Rozdělit odsazení</value>
-  </data>
-  <data name="Settings_ChangeLog" xml:space="preserve">
-    <value>Seznam změn</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Seskupovat body</value>
