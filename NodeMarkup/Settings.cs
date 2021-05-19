@@ -79,9 +79,9 @@ namespace NodeMarkup
         #region GENERAL
 
         #region DISPLAY&USAGE
-        private void AddGeneral(UIHelperBase helper)
+        private void AddGeneral(UIAdvancedHelper helper)
         {
-            var group = helper.AddGroup(Localize.Settings_DisplayAndUsage) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_DisplayAndUsage);
 
             AddFloatField(group, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
             AddFloatField(group, Localize.Settings_LODDistance, LODDistance, 300f, 0f);
@@ -98,9 +98,9 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
             AddCheckBox(group, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
         }
-        private void AddGrouping(UIHelperBase helper)
+        private void AddGrouping(UIAdvancedHelper helper)
         {
-            var group = helper.AddGroup(Localize.Settings_Groupings) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_Groupings);
 
             AddCheckBox(group, Localize.Settings_GroupPoints, GroupPoints, OnChanged);
             AddCheckBox(group, Localize.Settings_GroupLines, GroupLines, OnChanged);
@@ -115,9 +115,9 @@ namespace NodeMarkup
         #endregion
 
         #region KEYMAPPING
-        private void AddKeyMapping(UIHelperBase helper)
+        private void AddKeyMapping(UIAdvancedHelper helper)
         {
-            var group = helper.AddGroup(CommonLocalize.Settings_Shortcuts) as UIHelper;
+            var group = helper.AddGroup(CommonLocalize.Settings_Shortcuts);
             var keymappings = AddKeyMappingPanel(group);
             keymappings.AddKeymapping(NodeMarkupTool.ActivationShortcut);
             keymappings.AddKeymapping(NodeMarkupTool.AddRuleShortcut);
@@ -129,10 +129,10 @@ namespace NodeMarkup
             AddModifier<CrosswalkModifierPanel>(helper, Localize.Settings_CrosswalksModifier);
             AddModifier<FillerModifierPanel>(helper, Localize.Settings_FillersModifier);
         }
-        private void AddModifier<PanelType>(UIHelperBase helper, string title)
+        private void AddModifier<PanelType>(UIAdvancedHelper helper, string title)
             where PanelType : StyleModifierPanel
         {
-            var panel = (helper.AddGroup(title) as UIHelper).self as UIPanel;
+            var panel = helper.AddGroup(title).self as UIPanel;
             var modifier = panel.gameObject.AddComponent<PanelType>();
             modifier.OnModifierChanged += ModifierChanged;
 
@@ -142,29 +142,29 @@ namespace NodeMarkup
         #endregion
 
         #region BACKUP
-        private void AddBackupMarking(UIHelperBase helper)
+        private void AddBackupMarking(UIAdvancedHelper helper)
         {
             if (!Utilites.InGame)
                 return;
 
-            var group = helper.AddGroup(Localize.Settings_BackupMarking) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_BackupMarking);
 
             AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{NodeMarkupMessageBox.CantUndone}", () => MarkupManager.Clear());
             AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingCaption, Loader.DumpMarkingData);
             AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, $"{Localize.Settings_RestoreMarkingMessage}\n{NodeMarkupMessageBox.CantUndone}");
         }
-        private void AddBackupStyleTemplates(UIHelperBase helper)
+        private void AddBackupStyleTemplates(UIAdvancedHelper helper)
         {
-            var group = helper.AddGroup(Localize.Settings_BackupTemplates) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_BackupTemplates);
 
             AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{NodeMarkupMessageBox.CantUndone}", () => SingletonManager<StyleTemplateManager>.Instance.DeleteAll());
             AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpStyleTemplatesData);
             AddRestore<ImportStyleTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{NodeMarkupMessageBox.CantUndone}");
         }
 
-        private void AddBackupIntersectionTemplates(UIHelperBase helper)
+        private void AddBackupIntersectionTemplates(UIAdvancedHelper helper)
         {
-            var group = helper.AddGroup(Localize.Settings_BackupPresets) as UIHelper;
+            var group = helper.AddGroup(Localize.Settings_BackupPresets);
 
             AddDeleteAll(group, Localize.Settings_DeletePresetsButton, Localize.Settings_DeletePresetsCaption, $"{Localize.Settings_DeletePresetsMessage}\n{NodeMarkupMessageBox.CantUndone}", () => SingletonManager<IntersectionTemplateManager>.Instance.DeleteAll());
             AddDump(group, Localize.Settings_DumpPresetsButton, Localize.Settings_DumpPresetsCaption, Loader.DumpIntersectionTemplatesData);
@@ -240,7 +240,7 @@ namespace NodeMarkup
 
         #region SUPPORT
 
-        private void AddSupport(UIHelperBase helper)
+        private void AddSupport(UIAdvancedHelper helper)
         {
             var group = helper.AddGroup();
             AddWiki(group);
@@ -267,9 +267,9 @@ namespace NodeMarkup
         #region DEBUG
 
 #if DEBUG
-        private void AddDebug(UIHelperBase helper)
+        private void AddDebug(UIAdvancedHelper helper)
         {
-            var group = helper.AddGroup("Debug") as UIHelper;
+            var group = helper.AddGroup("Debug");
 
             AddCheckBox(group, "Alpha blend overlay", Selection.AlphaBlendOverlay);
             AddCheckBox(group, "Render overlay center", Selection.RenderOverlayCentre);
