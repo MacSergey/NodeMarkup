@@ -73,16 +73,16 @@ namespace NodeMarkup
             settings.OnSettingsUI(helper);
         }
 
-        public static bool OpenTroubleshooting()
-        {
-            TroubleshootingUrl.OpenUrl();
-            return true;
-        }
-
         public override void OnLoadedError()
         {
             var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-            messageBox.MessageText = CommonLocalize.Mod_LoadedWithErrors;
+            messageBox.OnSupportClick = OpenTroubleshooting;
+
+            static bool OpenTroubleshooting()
+            {
+                TroubleshootingUrl.OpenUrl();
+                return true;
+            }
         }
         public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
 
