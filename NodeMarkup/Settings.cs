@@ -49,7 +49,6 @@ namespace NodeMarkup
         #endregion
 
         #region BASIC
-        protected override string GeneralTabName => CommonLocalize.Settings_GeneralTab;
 
         protected override void OnSettingsUI()
         {
