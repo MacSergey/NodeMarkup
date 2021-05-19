@@ -1369,4 +1369,8 @@ Click to edit markings</value>
 - Fix load segment presets.
 - Fix default panel size.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
+    <value>- Fix 3D fillers height outside available tiles.
+- Fix creating button duplicates.</value>
+  </data>
 </root>

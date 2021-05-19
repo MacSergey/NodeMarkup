@@ -1323,6 +1323,16 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Fix 3D fillers height outside available tiles.
+        ///- Fix creating button duplicates..
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_7_2 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_7_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply between intersections.
         /// </summary>
         public static string Panel_ApplyBetweenIntersections {
