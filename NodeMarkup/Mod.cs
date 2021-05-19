@@ -73,7 +73,7 @@ namespace NodeMarkup
             settings.OnSettingsUI(helper);
         }
 
-        public override void OnLoadedError()
+        protected override void OnLoadedError()
         {
             var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
             messageBox.OnSupportClick = OpenTroubleshooting;
@@ -365,5 +365,7 @@ namespace NodeMarkup
         #endregion
 
         #endregion
+
+        class ErrorLoadedMessageBox : ErrorLoadedMessageBox<Mod> { }
     }
 }
