@@ -216,52 +216,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Localize.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-	<EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.cs.resx">
-      <Link>Properties\CommonLocalize.cs.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.de.resx">
-      <Link>Properties\CommonLocalize.de.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.en-GB.resx">
-      <Link>Properties\CommonLocalize.en-GB.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.es.resx">
-      <Link>Properties\CommonLocalize.es.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.fi.resx">
-      <Link>Properties\CommonLocalize.fi.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.fr.resx">
-      <Link>Properties\CommonLocalize.fr.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.it.resx">
-      <Link>Properties\CommonLocalize.it.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.ja.resx">
-      <Link>Properties\CommonLocalize.ja.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.nl.resx">
-      <Link>Properties\CommonLocalize.nl.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.pl.resx">
-      <Link>Properties\CommonLocalize.pl.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.pt.resx">
-      <Link>Properties\CommonLocalize.pt.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.ru.resx">
-      <Link>Properties\CommonLocalize.ru.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.zh-CN.resx">
-      <Link>Properties\CommonLocalize.zh-CN.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\ModsCommon\LocalizeShared\CommonLocalize.resx">
-      <CustomToolNamespace>ModsCommon</CustomToolNamespace>
-      <SubType>Designer</SubType>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <Link>Properties\CommonLocalize.resx</Link>
-      <LastGenOutput>CommonLocalize.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Arrows.tga" />
@@ -323,10 +277,23 @@
   <Import Project="..\ModsCommon\NetExtension\NetExtension.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\MathExtension\MathExtension.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.cs.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.de.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.en-GB.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.es.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.fi.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.fr.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.it.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.ja.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.nl.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.pl.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.pt.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.ru.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.zh-CN.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_DetectChanges="False" />
+      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
