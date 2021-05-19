@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,16 +117,147 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  
+  
+  
+  
+  
+  
+  
   <data name="StyleOption_Color" xml:space="preserve">
     <value>Colour</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>The list of templates is empty.
 To create a template, click «{0}» at the line or pedestrian crossing or filler style.</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Existing pedestrian crossing</value>
   </data>
+  
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Pedestrian Crossings</value>
   </data>
@@ -140,78 +271,295 @@ To create a pedestrian crossing hold Shift.</value>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
     <value>Pedestrian crossings</value>
   </data>
+  
+  
+  
+  
+  
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
     <value>Click to create a pedestrian crossing</value>
   </data>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>Click to delete the pedestrian crossing</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
     <value>Select the pedestrian crossing's left border</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
     <value>Select the pedestrian crossing's right border</value>
   </data>
+  
+  
+  
+  
   <data name="LineRule_LeftBorder" xml:space="preserve">
     <value>Pedestrian crossing's left border</value>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
     <value>Pedestrian crossing's right border</value>
   </data>
+  
+  
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
     <value>Select a point to
 create or delete a pedestrian crossing</value>
   </data>
+  
+  
+  
+  
   <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
     <value>Pedestrian crossing lines</value>
   </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
     <value>pedestrian crossing</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
     <value>Pedestrian crossings modifier</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
     <value>Pedestrian Crossing Borders - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
     <value>Pedestrian Crossings - {0}</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
     <value>Turn anti-clockwise</value>
   </data>
   <data name="StyleOption_AlignmentCenter" xml:space="preserve">
     <value>Centre</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>Solid in centre</value>
   </data>
+  
+  
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
     <value>Hold Shift to create a pedestrian crossing</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
     <value>Quick pedestrian crossing borders setup</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
     <value>Pedestrian
 crossings:</value>
   </data>
+  
+  
+  
+  
+  
   <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
     <value>Cut new line by pedestrian crossings</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
     <value>Cut lines by this pedestrian crossing</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
     <value>Cut lines by all pedestrian crossings</value>
   </data>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
     <value>Cut lines by all pedestrian crossings</value>
   </data>
+  
+  
+  
+  
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>To be able to set the pedestrian crossing borders, you must have lines started from the same points as the crossing</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Don't cut line by pedestrian crossing if it is their border</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

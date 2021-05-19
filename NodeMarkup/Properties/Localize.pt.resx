@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -394,6 +394,8 @@ Clique para editar marcações</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Sólida</value>
   </data>
+  
+  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Adicionar novo preenchimento</value>
   </data>
@@ -658,6 +660,7 @@ Verifique os pontos "De" e "Para" de outras regras.</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>modelo</value>
   </data>
+  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>O carregamento foi completado com erros.
 O carregamento de {0} marcações falhou.</value>
@@ -927,6 +930,7 @@ Quer aplicar as marcações manualmente?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Arraste com Ctrl para mover o ponto</value>
   </data>
+  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Esta ação não pode ser desfeita.</value>
   </data>
@@ -951,6 +955,7 @@ Quer aplicar as marcações manualmente?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Atenção: esta opção modifica a ordem de renderização de objetos do jogo</value>
   </data>
+  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Guardar asset</value>
   </data>
@@ -1125,6 +1130,7 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>predefinição</value>
   </data>
+  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Este tipo de linha não suporta regras</value>
   </data>
@@ -1185,6 +1191,9 @@ Clique para editar marcações</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selecione o segundo ponto do carril</value>
   </data>
+  
+  
+  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Quantidade de cores</value>
   </data>
@@ -1242,10 +1251,13 @@ Clique para editar marcações</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Selecione um ponto próprio para uma linha normal ou de paragem</value>
   </data>
+  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Alinhamento do fim da linha</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Alinhamento do inicio da linha</value>
   </data>
+  
+  
 </root>

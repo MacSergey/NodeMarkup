@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -308,6 +308,7 @@
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>点选起始点来创建/擦除线段</value>
   </data>
+  
   <data name="Settings_Restore" xml:space="preserve">
     <value>恢复</value>
   </data>
@@ -383,6 +384,8 @@
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>实线</value>
   </data>
+  
+  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>创建新填充图案</value>
   </data>
@@ -646,6 +649,7 @@
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>模版</value>
   </data>
+  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>导入完毕，但出现了以下错误：
  {0} 个交叉口的地标线导入失败</value>
@@ -915,6 +919,7 @@
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>按住Ctrl拖动来移动端点</value>
   </data>
+  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>此操作不可撤销。</value>
   </data>
@@ -939,6 +944,7 @@
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：此设置会改变游戏渲染顺序</value>
   </data>
+  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>保存为资产</value>
   </data>
@@ -1114,6 +1120,7 @@
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>预设​​​​</value>
   </data>
+  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>此类标线不支持规则</value>
   </data>
@@ -1174,6 +1181,8 @@
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>选择边线的第二个端点</value>
   </data>
+  
+  
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
     <value>- 添加了在道路节段上创建标线的功能
 - 添加了3D填充图案：路肩及草地
@@ -1264,4 +1273,6 @@
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>线段起点对齐</value>
   </data>
+  
+  
 </root>
