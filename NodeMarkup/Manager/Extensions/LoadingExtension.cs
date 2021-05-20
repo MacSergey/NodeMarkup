@@ -15,7 +15,7 @@ namespace NodeMarkup
 
             if (MarkupManager.HasErrors)
             {
-                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
+                var messageBox = MessageBox.Show<ErrorSupportMessageBox>();
                 messageBox.MessageText = MarkupManager.Errors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.Errors) : Localize.Mod_LoadFailedAll;
             }
 

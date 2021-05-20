@@ -50,8 +50,10 @@ namespace NodeMarkup
 
         public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
-        public override string WorkshopUrl => StableURL;
-        public override string BetaWorkshopUrl => BetaURL;
+        protected override string StableWorkshopUrl => StableURL;
+        protected override string BetaWorkshopUrl => BetaURL;
+        protected override string ModSupportUrl => TroubleshootingUrl;
+
         public override CultureInfo Culture
         {
             get => Localize.Culture;
@@ -73,17 +75,6 @@ namespace NodeMarkup
             settings.OnSettingsUI(helper);
         }
 
-        protected override void OnLoadedError()
-        {
-            var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-            messageBox.OnSupportClick = OpenTroubleshooting;
-
-            static bool OpenTroubleshooting()
-            {
-                TroubleshootingUrl.OpenUrl();
-                return true;
-            }
-        }
         public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
 
         #endregion

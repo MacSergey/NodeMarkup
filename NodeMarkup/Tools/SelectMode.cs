@@ -38,7 +38,7 @@ namespace NodeMarkup.Tools
 
             if (markup.NeedSetOrder)
             {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_RoadsWasChangedCaption;
                 messageBox.MessageText = Localize.Tool_RoadsWasChangedMessage;
                 messageBox.OnButton1Click = OnYes;

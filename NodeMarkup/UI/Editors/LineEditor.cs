@@ -225,7 +225,7 @@ namespace NodeMarkup.UI.Editors
 
             if (Settings.DeleteWarnings && Settings.DeleteWarningsType == 0)
             {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
                 messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Delete;

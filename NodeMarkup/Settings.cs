@@ -178,7 +178,7 @@ namespace NodeMarkup
 
             void Click()
             {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = caption;
                 messageBox.MessageText = message;
                 messageBox.OnButton1Click = Сonfirmed;
@@ -200,7 +200,7 @@ namespace NodeMarkup
 
                 if (result)
                 {
-                    var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
+                    var messageBox = MessageBox.Show<TwoButtonMessageBox>();
                     messageBox.CaptionText = caption;
                     messageBox.MessageText = Localize.Settings_DumpMessageSuccess;
                     messageBox.Button1Text = Localize.Settings_CopyPathToClipboard;
@@ -216,7 +216,7 @@ namespace NodeMarkup
                 }
                 else
                 {
-                    var messageBox = MessageBoxBase.ShowModal<OkMessageBox>();
+                    var messageBox = MessageBox.Show<OkMessageBox>();
                     messageBox.CaptionText = caption;
                     messageBox.MessageText = Localize.Settings_DumpMessageFailed;
                 }
@@ -229,7 +229,7 @@ namespace NodeMarkup
 
             void Click()
             {
-                var messageBox = MessageBoxBase.ShowModal<Modal>();
+                var messageBox = MessageBox.Show<Modal>();
                 messageBox.CaptionText = caption;
                 messageBox.MessageText = message;
 
@@ -256,7 +256,7 @@ namespace NodeMarkup
         private void ShowChangeLog()
         {
             var messages = SingletonMod<Mod>.Instance.GetWhatsNewMessages(new Version(1, 0));
-            var messageBox = MessageBoxBase.ShowModal<WhatsNewMessageBox>();
+            var messageBox = MessageBox.Show<WhatsNewMessageBox>();
             messageBox.CaptionText = CommonLocalize.Settings_ChangeLog;
             messageBox.OkText = CommonLocalize.MessageBox_OK;
             messageBox.Init(messages, SingletonMod<Mod>.Instance.GetVersionString, false);

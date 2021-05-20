@@ -150,7 +150,7 @@ namespace NodeMarkup.Tools
         }
         private void Exit()
         {
-            var messageBox = MessageBoxBase.ShowModal<ThreeButtonMessageBox>();
+            var messageBox = MessageBox.Show<ThreeButtonMessageBox>();
             messageBox.CaptionText = EndCaption;
             messageBox.MessageText = EndMessage;
             messageBox.Button1Text = Localize.Tool_Apply;

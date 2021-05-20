@@ -139,7 +139,7 @@ namespace NodeMarkup.Tools
         {
             SingletonMod<Mod>.Logger.Debug($"Delete all markings");
 
-            var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+            var messageBox = MessageBox.Show<YesNoMessageBox>();
             messageBox.CaptionText = Localize.Tool_ClearMarkingsCaption;
             messageBox.MessageText = string.Format($"{Localize.Tool_ClearMarkingsMessage}\n{NodeMarkupMessageBox.CantUndone}", Markup.Id);
             messageBox.OnButton1Click = Delete;
@@ -157,7 +157,7 @@ namespace NodeMarkup.Tools
 
             if (Settings.DeleteWarnings)
             {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_ResetOffsetsCaption;
                 messageBox.MessageText = $"{string.Format(Localize.Tool_ResetOffsetsMessage, Markup.Id)}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Reset;
@@ -194,7 +194,7 @@ namespace NodeMarkup.Tools
 
             void ShowModal(string additional)
             {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = string.Format(Localize.Tool_DeleteCaption, item.DeleteCaptionDescription);
                 messageBox.MessageText = $"{string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item)}\n{NodeMarkupMessageBox.CantUndone}\n\n{additional}";
                 messageBox.OnButton1Click = () =>
@@ -224,7 +224,7 @@ namespace NodeMarkup.Tools
 
             if (Settings.DeleteWarnings && !Markup.IsEmpty)
             {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_PasteMarkingsCaption;
                 messageBox.MessageText = $"{Localize.Tool_PasteMarkingsMessage}\n{NodeMarkupMessageBox.ItWillReplace}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Paste;
@@ -300,7 +300,7 @@ namespace NodeMarkup.Tools
             var segment = Markup.Id.GetSegment();
             if (Settings.DeleteWarnings)
             {
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_ApplyBetweenIntersectionsCaption;
                 messageBox.MessageText = $"{Localize.Tool_ApplyBetweenIntersectionsMessage}\n{NodeMarkupMessageBox.ItWillReplace}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Apply;
@@ -335,7 +335,7 @@ namespace NodeMarkup.Tools
             if (Settings.DeleteWarnings)
             {
                 var streetName = Singleton<NetManager>.instance.GetSegmentName(Markup.Id);
-                var messageBox = MessageBoxBase.ShowModal<YesNoMessageBox>();
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_ApplyWholeStreetCaption;
                 messageBox.MessageText = $"{string.Format(Localize.Tool_ApplyWholeStreetMessage, streetName)}\n{NodeMarkupMessageBox.ItWillReplace}\n{NodeMarkupMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Apply;
