@@ -8,4 +8,5 @@ namespace NodeMarkup.UI
         public static string CantUndone => Localize.MessageBox_CantUndone;
         public static string ItWillReplace => Localize.MessageBox_ItWillReplace;
     }
+    public class ErrorLoadedMessageBox : ErrorLoadedMessageBox<Mod> { }
 }

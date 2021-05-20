@@ -86,14 +86,6 @@ namespace NodeMarkup
         }
         public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
 
-        public void ShowLoadError()
-        {
-            if (MarkupManager.HasErrors)
-            {
-                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-                messageBox.MessageText = MarkupManager.Errors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.Errors) : Localize.Mod_LoadFailedAll;
-            }
-        }
         #endregion
 
         #region PATCHES
@@ -350,8 +342,6 @@ namespace NodeMarkup
         #endregion
 
         #endregion
-
-        class ErrorLoadedMessageBox : ErrorLoadedMessageBox<Mod> { }
     }
 
     public static class Patcher

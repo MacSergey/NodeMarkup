@@ -1,8 +1,9 @@
 ﻿using ICities;
 using ModsCommon;
+using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
-using NodeMarkup.Tools;
+using NodeMarkup.UI;
 
 namespace NodeMarkup
 {
@@ -11,7 +12,12 @@ namespace NodeMarkup
         protected override void OnLoad()
         {
             TemplateManager.Reload();
-            SingletonMod<Mod>.Instance.ShowLoadError();
+
+            if (MarkupManager.HasErrors)
+            {
+                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
+                messageBox.MessageText = MarkupManager.Errors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.Errors) : Localize.Mod_LoadFailedAll;
+            }
 
             base.OnLoad();
         }
