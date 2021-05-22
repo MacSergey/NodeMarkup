@@ -131,7 +131,7 @@ namespace NodeMarkup.UI
         public bool Control { get; set; }
         public bool Shift { get; set; }
         public bool Alt { get; set; }
-        public bool IsPressed => Control == Utilites.CtrlIsPressed && Shift == Utilites.ShiftIsPressed && Alt == Utilites.AltIsPressed;
+        public bool IsPressed => Control == Utility.CtrlIsPressed && Shift == Utility.ShiftIsPressed && Alt == Utility.AltIsPressed;
 
         public InputKeyAttribute(bool control, bool shift, bool alt)
         {

@@ -51,20 +51,20 @@ namespace NodeMarkup.Tools
 
             if (!Tool.Panel.IsHover)
             {
-                if (Utilites.OnlyAltIsPressed && Markup is ISupportFillers)
+                if (Utility.OnlyAltIsPressed && Markup is ISupportFillers)
                 {
                     Tool.SetMode(ToolModeType.MakeFiller);
                     if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
                         fillerToolMode.DisableByAlt = true;
                 }
-                else if (Utilites.OnlyShiftIsPressed && Markup is ISupportCrosswalks)
+                else if (Utility.OnlyShiftIsPressed && Markup is ISupportCrosswalks)
                     Tool.SetMode(ToolModeType.MakeCrosswalk);
             }
         }
 
         public override void OnMouseDown(Event e)
         {
-            if (!IsSelectPoint && IsHoverPoint && Utilites.CtrlIsPressed)
+            if (!IsSelectPoint && IsHoverPoint && Utility.CtrlIsPressed)
                 Tool.SetMode(ToolModeType.DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)
@@ -154,13 +154,13 @@ namespace NodeMarkup.Tools
         {
             if (IsHoverPoint)
             {
-                if (Utilites.CtrlIsPressed)
+                if (Utility.CtrlIsPressed)
                     HoverPoint.Render(new OverlayData(cameraInfo) { Width = 0.53f });
                 else
                     HoverPoint.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 0.53f });
             }
 
-            RenderPointsOverlay(cameraInfo, !Utilites.CtrlIsPressed);
+            RenderPointsOverlay(cameraInfo, !Utility.CtrlIsPressed);
 
             if (IsSelectPoint)
             {
