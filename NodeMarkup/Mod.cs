@@ -172,22 +172,24 @@ namespace NodeMarkup
         }
         private static IEnumerable<CodeInstruction> NetNode_CheckHeightOffset_Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase original)
         {
-            var heightOffset = AccessTools.Field(typeof(NetNode), nameof(NetNode.m_heightOffset));
             var updateLanes = AccessTools.Method(typeof(NetSegment), nameof(NetSegment.UpdateLanes));
 
             foreach (var instruction in instructions)
             {
-                yield return instruction;
-                if (instruction.opcode == OpCodes.Stfld && instruction.operand == heightOffset)
+                if (instruction.opcode == OpCodes.Ret)
                 {
                     yield return TranspilerUtilities.GetLDArg(original, "nodeID");
                     yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.UpdateNode)));
+                    yield return instruction;
                 }
                 else if(instruction.opcode == OpCodes.Call && instruction.operand == updateLanes)
                 {
+                    yield return instruction;
                     yield return new CodeInstruction(OpCodes.Ldloc_S, 13);
                     yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.UpdateSegment)));
                 }
+                else
+                    yield return instruction;
             }
         }
 
