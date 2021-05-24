@@ -15,7 +15,7 @@ using ModsCommon;
 
 namespace NodeMarkup.Tools
 {
-    public class SelectToolMode : BaseSelectToolMode<Mod, NodeMarkupTool>, IToolModePanel, IToolMode<ToolModeType>
+    public class SelectToolMode : BaseSelectToolMode<NodeMarkupTool>, IToolModePanel, IToolMode<ToolModeType>
     {
         public bool ShowPanel => false;
         public ToolModeType Type => ToolModeType.Select;

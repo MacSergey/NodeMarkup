@@ -372,7 +372,7 @@ namespace NodeMarkup.Tools
             var segmentId = (ushort?)startSegmentId;
             while (true)
             {
-                segmentId = ApplyToNode(nodeId.Value, segmentId.Value, nearNodeId, farNodeId, info, config, segmentGetter);
+                segmentId = ApplyToNode(nodeId.Value, segmentId.Value, nearNodeId, farNodeId, config, segmentGetter);
                 if (segmentId == null || segmentId == startSegmentId)
                     return;
 
@@ -382,7 +382,7 @@ namespace NodeMarkup.Tools
             }
         }
 
-        ushort? ApplyToNode(ushort nodeId, ushort beforeSegmentId, ushort nearNodeId, ushort farNodeId, NetInfo info, XElement config, SegmentGetter nextGetter)
+        ushort? ApplyToNode(ushort nodeId, ushort beforeSegmentId, ushort nearNodeId, ushort farNodeId, XElement config, SegmentGetter nextGetter)
         {
             var node = nodeId.GetNode();
 
@@ -667,7 +667,7 @@ namespace NodeMarkup.Tools
 
         #endregion
     }
-    public abstract class NodeMarkupToolMode : BaseToolMode<Mod, NodeMarkupTool>, IToolMode<ToolModeType>, IToolModePanel
+    public abstract class NodeMarkupToolMode : BaseToolMode<NodeMarkupTool>, IToolMode<ToolModeType>, IToolModePanel
     {
         public abstract ToolModeType Type { get; }
         public virtual bool ShowPanel => true;
@@ -691,7 +691,7 @@ namespace NodeMarkup.Tools
 
         MakeItem = MakeLine | MakeCrosswalk
     }
-    public class NodeMarkupToolThreadingExtension : BaseThreadingExtension<Mod, NodeMarkupTool> { }
-    public class NodeMarkupToolLoadingExtension : BaseToolLoadingExtension<Mod, NodeMarkupTool> { }
+    public class NodeMarkupToolThreadingExtension : BaseThreadingExtension<NodeMarkupTool> { }
+    public class NodeMarkupToolLoadingExtension : BaseToolLoadingExtension<NodeMarkupTool> { }
 
 }

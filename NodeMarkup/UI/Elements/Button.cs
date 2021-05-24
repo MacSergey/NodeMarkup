@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public class NodeMarkupButton : NetToolButton<Mod, NodeMarkupTool>
+    public class NodeMarkupButton : NetToolButton<NodeMarkupTool>
     {
         protected override Vector2 ButtonPosition => new Vector3(59, 38);
         protected override UITextureAtlas Atlas => NodeMarkupTextures.Atlas;

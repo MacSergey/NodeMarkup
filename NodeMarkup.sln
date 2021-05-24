@@ -75,6 +75,20 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PluginsShared", "ModsCommon
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DependencyShared", "ModsCommon\DependencyShared\DependencyShared.shproj", "{2873738F-AA2C-4C8A-BE06-BC59ACCA56F0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilites", "Utilites", "{72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LoggerShared", "ModsCommon\LoggerShared\LoggerShared.shproj", "{FE0AF823-F63F-4441-B28D-C0890BC0BF6A}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SingletonShared", "ModsCommon\SingletonShared\SingletonShared.shproj", "{32AEE23B-AF72-45B6-8011-5EC3B139D2DF}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AutoLayoutPanelShared", "ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.shproj", "{FC5E6F74-8408-4FD8-A46A-A7F549E30454}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CustomUIShared", "ModsCommon\CustomUIShared\CustomUIShared.shproj", "{4A794B1D-48BE-4352-92D0-9D897393587C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SimpleMessageBoxShared", "ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.shproj", "{A3055CAA-4807-4C49-973C-7B92610C25C8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WhatsNewMessageBoxShared", "ModsCommon\WhatsNewMessageBoxShared\WhatsNewMessageBoxShared.shproj", "{8431FA6D-34A1-4700-8D4F-09C9E65346E3}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ModsCommon\LocalizeShared\LocalizeShared.pl.projitems*{0814bfcf-bb66-493c-8dd9-ca17ee904afa}*SharedItemsImports = 13
@@ -85,13 +99,18 @@ Global
 		ModsCommon\DependencyShared\DependencyShared.projitems*{2873738f-aa2c-4c8a-be06-bc59acca56f0}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.nl.projitems*{29a10501-0675-4335-98b1-4c6e9bd80d53}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.es.projitems*{2accf46a-2c39-455f-a4e9-0ca7b2b86a69}*SharedItemsImports = 13
+		ModsCommon\SingletonShared\SingletonShared.projitems*{32aee23b-af72-45b6-8011-5ec3b139d2df}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.ru.projitems*{4093656f-54a7-4eb8-b021-4c18b5e16407}*SharedItemsImports = 13
+		ModsCommon\CustomUIShared\CustomUIShared.projitems*{4a794b1d-48be-4352-92d0-9d897393587c}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.it.projitems*{584b2b88-0679-4b6d-bd78-ba9719671229}*SharedItemsImports = 13
 		ModsCommon\NetExtension\NetExtension.projitems*{69f65522-1ccc-4c9f-8989-8155708c1832}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.zh-CN.projitems*{6d76ce46-51a4-4596-8e5b-03261089bedd}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.pt.projitems*{7bb4ecd0-3aa5-4dfb-9c2a-37204213c1c5}*SharedItemsImports = 13
+		ModsCommon\WhatsNewMessageBoxShared\WhatsNewMessageBoxShared.projitems*{8431fa6d-34a1-4700-8d4f-09c9e65346e3}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.en-GB.projitems*{92b146ad-f9d5-4c3b-8712-ebc5140a3f20}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.cs.projitems*{93e25ce1-9093-40bc-88a2-7362ffa44174}*SharedItemsImports = 13
+		ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\CustomUIShared\CustomUIShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\DependencyShared\DependencyShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\HeaderShared\HeaderShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\LoadExtensionShared\LoadExtensionShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
@@ -109,6 +128,7 @@ Global
 		ModsCommon\LocalizeShared\LocalizeShared.pt.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\LocalizeShared\LocalizeShared.ru.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\LocalizeShared\LocalizeShared.zh-CN.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\LoggerShared\LoggerShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\MathExtension\MathExtension.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\MessageBoxShared\MessageBoxShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\ModShared\ModsCommonShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
@@ -118,11 +138,15 @@ Global
 		ModsCommon\PropertyPanelShared\PropertyPanelShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\PropertyValueShared\PropertyValueShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\RenderExtension\RenderExtension.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\SingletonShared\SingletonShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\ToolShared\ModsToolShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\TrajectoryShared\TrajectoryShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\UIShared\ModsUIShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\WhatsNewMessageBoxShared\WhatsNewMessageBoxShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\XmlExtension\XmlExtension.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\LocalizeShared\LocalizeShared.fr.projitems*{9cb86de4-4cd4-4265-ac8b-b041707112d9}*SharedItemsImports = 13
+		ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.projitems*{a3055caa-4807-4c49-973c-7b92610c25c8}*SharedItemsImports = 13
 		ModsCommon\PropertyPanelShared\PropertyPanelShared.projitems*{abe0f508-441b-4871-a17f-3f345f5dc42b}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.ja.projitems*{b0c05991-7f01-40c4-8efb-9d765cc72534}*SharedItemsImports = 13
 		ModsCommon\LoadExtensionShared\LoadExtensionShared.projitems*{b0dea36d-46fd-4d66-9285-57e85ab0bcdf}*SharedItemsImports = 13
@@ -135,6 +159,8 @@ Global
 		ModsCommon\ToolShared\ModsToolShared.projitems*{ea585899-16c8-4ff0-ae8d-078f15a7a126}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.projitems*{f135cd5d-4cab-4347-bf44-1c6d0794a19d}*SharedItemsImports = 13
 		ModsCommon\XmlExtension\XmlExtension.projitems*{fada36db-c397-4128-9644-b477c4f50b26}*SharedItemsImports = 13
+		ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.projitems*{fc5e6f74-8408-4fd8-a46a-a7f549e30454}*SharedItemsImports = 13
+		ModsCommon\LoggerShared\LoggerShared.projitems*{fe0af823-f63f-4441-b28d-c0890bc0bf6a}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.fi.projitems*{fe34c965-7f4a-4d52-b732-2b8a85762929}*SharedItemsImports = 13
 		ModsCommon\TrajectoryShared\TrajectoryShared.projitems*{ffba673c-7990-421a-8dd3-87149c1f751b}*SharedItemsImports = 13
 	EndGlobalSection
@@ -174,21 +200,21 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
 		{24615A21-AFA6-42C0-8B7A-4FB3329B056F} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
 		{EA585899-16C8-4FF0-AE8D-078F15A7A126} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
 		{BE979510-7832-4714-95A3-305065D9DED6} = {4125F182-993C-4202-B831-6E2CF801EDBE}
 		{0BF47C3F-C968-4759-8D99-D088B0D58FBA} = {4125F182-993C-4202-B831-6E2CF801EDBE}
-		{B0DEA36D-46FD-4D66-9285-57E85AB0BCDF} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{B0DEA36D-46FD-4D66-9285-57E85AB0BCDF} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
 		{D5B649EC-0FEC-48F3-8316-6E266169CDCC} = {4125F182-993C-4202-B831-6E2CF801EDBE}
 		{ABE0F508-441B-4871-A17F-3F345F5DC42B} = {4125F182-993C-4202-B831-6E2CF801EDBE}
-		{1C75A9E1-C20A-4D45-BBD9-1FFAA6B9FF57} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
-		{FFBA673C-7990-421A-8DD3-87149C1F751B} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
-		{DB4A0C1E-E3F4-4BB4-816F-1493BF7F2FBF} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{1C75A9E1-C20A-4D45-BBD9-1FFAA6B9FF57} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
+		{FFBA673C-7990-421A-8DD3-87149C1F751B} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
+		{DB4A0C1E-E3F4-4BB4-816F-1493BF7F2FBF} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
 		{E1394815-5550-4BA4-AF65-CAD097D335A6} = {4125F182-993C-4202-B831-6E2CF801EDBE}
-		{FADA36DB-C397-4128-9644-B477C4F50B26} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
-		{69F65522-1CCC-4C9F-8989-8155708C1832} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
-		{1D245858-7544-4D78-ACA0-275F110AD04B} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{FADA36DB-C397-4128-9644-B477C4F50B26} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
+		{69F65522-1CCC-4C9F-8989-8155708C1832} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
+		{1D245858-7544-4D78-ACA0-275F110AD04B} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
 		{78F18B58-7B26-46A8-B934-FFFE6DD7B29E} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
 		{4125F182-993C-4202-B831-6E2CF801EDBE} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
 		{93E25CE1-9093-40BC-88A2-7362FFA44174} = {78F18B58-7B26-46A8-B934-FFFE6DD7B29E}
@@ -206,8 +232,15 @@ Global
 		{F135CD5D-4CAB-4347-BF44-1C6D0794A19D} = {78F18B58-7B26-46A8-B934-FFFE6DD7B29E}
 		{6D76CE46-51A4-4596-8E5B-03261089BEDD} = {78F18B58-7B26-46A8-B934-FFFE6DD7B29E}
 		{965F863B-1394-41ED-85EC-B35DC09003EB} = {78F18B58-7B26-46A8-B934-FFFE6DD7B29E}
-		{B92E01E9-0DFC-455F-8164-F68A2A602FBC} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
-		{2873738F-AA2C-4C8A-BE06-BC59ACCA56F0} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{B92E01E9-0DFC-455F-8164-F68A2A602FBC} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
+		{2873738F-AA2C-4C8A-BE06-BC59ACCA56F0} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
+		{72AF2C58-94A6-4C9B-B474-DB7FF9DFB971} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
+		{FE0AF823-F63F-4441-B28D-C0890BC0BF6A} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
+		{32AEE23B-AF72-45B6-8011-5EC3B139D2DF} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
+		{FC5E6F74-8408-4FD8-A46A-A7F549E30454} = {4125F182-993C-4202-B831-6E2CF801EDBE}
+		{4A794B1D-48BE-4352-92D0-9D897393587C} = {4125F182-993C-4202-B831-6E2CF801EDBE}
+		{A3055CAA-4807-4C49-973C-7B92610C25C8} = {4125F182-993C-4202-B831-6E2CF801EDBE}
+		{8431FA6D-34A1-4700-8D4F-09C9E65346E3} = {4125F182-993C-4202-B831-6E2CF801EDBE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		RESX_RemoveEmptyEntries = False
