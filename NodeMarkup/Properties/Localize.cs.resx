@@ -1252,8 +1252,12 @@ Klikněte pro změnu značení</value>
     <value>Vyberte koncový bod čáry</value>
   </data>
   
-  
-  
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Zarovnání konce čáry</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Zarovnání začátku čáry</value>
+  </data>
   
   
 </root>
