@@ -1373,4 +1373,8 @@ Click to edit markings</value>
     <value>- Fix 3D fillers height outside available tiles.
 - Fix creating button duplicates.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_7_3" xml:space="preserve">
+    <value>- Added missing dependencies checker.
+- Fix 3D fillers height on nodes outside available tiles.</value>
+  </data>
 </root>
