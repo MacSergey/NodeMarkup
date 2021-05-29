@@ -30,7 +30,7 @@ namespace NodeMarkup.UI.Panel
         {
             AddButton(NodeMarkupTextures.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut);
 
-            AddButton(NodeMarkupTextures.Copy, GetText(NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut), CopyClick);
+            AddButton(NodeMarkupTextures.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut);
             PasteButton = AddButton(NodeMarkupTextures.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
             AddButton(NodeMarkupTextures.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut);
 
@@ -54,11 +54,10 @@ namespace NodeMarkup.UI.Panel
                 AddPopupButton(parent, NodeMarkupTextures.WholeStreet, NodeMarkup.Localize.Panel_ApplyWholeStreet, NodeMarkupTool.ApplyWholeStreetShortcut);
             }
         }
-
-        private void CopyClick(UIComponent copyButton, UIMouseEventParameter e)
+        public override void Refresh()
         {
-            NodeMarkupTool.CopyMarkingShortcut.Press();
             SetPasteEnabled();
+            base.Refresh();
         }
         private void SetPasteEnabled() => PasteButton.isEnabled = !SingletonTool<NodeMarkupTool>.Instance.IsMarkupBufferEmpty;
     }

@@ -214,6 +214,7 @@ namespace NodeMarkup.UI.Panel
             TabStrip.SelectedTab = -1;
             SelectEditor<LinesEditor>();
         }
+        public void RefreshHeader() => Header.Refresh();
 
         #endregion
 
@@ -355,7 +356,6 @@ namespace NodeMarkup.UI.Panel
 
         #region ADDITIONAL
 
-        public bool OnShortcut(Event e) => CurrentEditor?.OnShortcut(e) == true;
         public bool OnEscape() => CurrentEditor?.OnEscape() == true;
 
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);

@@ -276,15 +276,10 @@ namespace NodeMarkup.UI.Editors
 
         #region HANDLERS
 
-        public override bool OnShortcut(Event e)
+        public void AddRuleShortcut()
         {
-            if (NodeMarkupTool.AddRuleShortcut.Press(e) && AddRuleAvailable)
-            {
+            if(AddRuleAvailable)
                 AddRule();
-                return true;
-            }
-            else
-                return false;
         }
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {

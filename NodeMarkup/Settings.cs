@@ -120,8 +120,7 @@ namespace NodeMarkup
             var group = helper.AddGroup(CommonLocalize.Settings_Shortcuts);
             var keymappings = AddKeyMappingPanel(group);
             keymappings.AddKeymapping(NodeMarkupTool.ActivationShortcut);
-            keymappings.AddKeymapping(NodeMarkupTool.AddRuleShortcut);
-            foreach (var shortcut in NodeMarkupTool.Shortcuts)
+            foreach (var shortcut in NodeMarkupTool.ToolShortcuts)
                 keymappings.AddKeymapping(shortcut);
 
             AddModifier<RegularLineModifierPanel>(helper, Localize.Settings_RegularLinesModifier);

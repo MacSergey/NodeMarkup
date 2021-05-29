@@ -50,7 +50,6 @@ namespace NodeMarkup.UI.Editors
         public abstract void RefreshEditor();
 
         public virtual void Render(RenderManager.CameraInfo cameraInfo) { }
-        public virtual bool OnShortcut(Event e) => false;
         public virtual bool OnEscape() => false;
     }
     public abstract class Editor<ItemsPanelType, ObjectType> : Editor, IEditor<ObjectType>
