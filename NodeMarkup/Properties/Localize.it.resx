@@ -148,7 +148,7 @@
     <value>Elimina regola</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Sei sicuro di voler cancellare la regola?</value>
+    <value>Vuoi cancellare questa regola?</value>
   </data>
   <data name="LineRule_From" xml:space="preserve">
     <value>Da</value>
@@ -223,22 +223,22 @@
     <value>Elimina tutte le linee del nodo</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Elimina la marcatura da tutte le intersezioni</value>
+    <value>Elimina la segnaletica orizzontale da tutte le intersezioni</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Elimina tutte le marcature</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Vuoi veramente rimuovere tutti i marcatori?</value>
+    <value>Vuoi cancellare tutta la segnaletica orizzontale?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Scarica i dati dei marcatori su file</value>
+    <value>Scarica i dati della segnaletica orizzontale su di un file</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Copia il percorso negli appunti</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Scarica dati marcatori</value>
+    <value>Scarica i dati della segnaletica orizzontale</value>
   </data>
   <data name="Settings_DumpMessageFailed" xml:space="preserve">
     <value>Scarico fallito</value>
@@ -287,7 +287,7 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
     <value>Ripulisci marcatori nodi</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Vuoi veramente rimuovere tutti i marcatori dei nodi #{0}?</value>
+    <value>Vuoi rimuovere tutta la segnaletica orizzontale dei nodi #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>Clicca per creare una linea</value>
@@ -297,7 +297,7 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
     <value>Nodo #{0}
-Clicca per modificare il marcatore</value>
+Clicca per modificare la segnaletica orizzontale</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
     <value>Seleziona un nodo o segmento per cambiare la segnaletica orizzontale</value>
@@ -764,7 +764,7 @@ Impossibile caricare i contrassegni per {0} intersezioni.</value>
     <value>Regole - {0}</value>
   </data>
   <data name="Settings_BackupTab" xml:space="preserve">
-    <value>Backup</value>
+    <value>Copie di sicurezza</value>
   </data>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Visualizzazione ed utilizzo</value>
@@ -1010,10 +1010,10 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
     <value>Nuovo preimpostato</value>
   </data>
   <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Esci dall'interfaccia di applicazione dei preset</value>
+    <value>Esci dalla modalità di applicazione dei predefiniti</value>
   </data>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Vuoi applicare un preset?</value>
+    <value>Vuoi usare un predefinito?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autore</value>
@@ -1043,10 +1043,10 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
     <value>Strade:</value>
   </data>
   <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
-    <value>Impedisci alle linee tracciate di interferire con gli attraversamenti pedonali</value>
+    <value>Taglia le nuove linee che interferiscono con le strisce pedonali</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
-    <value>Impedisci alle linee tracciate di interferire con questo attraversamento pedonale</value>
+    <value>Taglia le linee che interferiscono con queste strisce pedonali</value>
   </data>
   <data name="Settings_BackupPresets" xml:space="preserve">
     <value>Backup preimpostati</value>
@@ -1061,32 +1061,32 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
     <value>Vuoi veramente rimuovere tutti i preimpostati?</value>
   </data>
   <data name="Settings_DumpPresetsButton" xml:space="preserve">
-    <value>Salva preset nel file</value>
+    <value>Salva i predefiniti in un file</value>
   </data>
   <data name="Settings_DumpPresetsCaption" xml:space="preserve">
-    <value>Salva preset</value>
+    <value>Salva i predefiniti</value>
   </data>
   <data name="Settings_RestorePresetsButton" xml:space="preserve">
-    <value>Ripristinare preset da file</value>
+    <value>Ripristina i predefiniti da file</value>
   </data>
   <data name="Settings_RestorePresetsCaption" xml:space="preserve">
-    <value>Ripristina preset</value>
+    <value>Ripristina i predefiniti</value>
   </data>
   <data name="Settings_RestorePresetsMessage" xml:space="preserve">
-    <value>Sei sicuro di voler ripristinare i preset?
-I preset ripristinati sostituiranno tutti i preset attuali.</value>
+    <value>Vuoi ripristinare i predefiniti?
+I predefiniti ripristinati sostituiranno i predefiniti attuali.</value>
   </data>
   <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
-    <value>Ripristino preset fallito</value>
+    <value>Ripristino dei predefiniti fallito</value>
   </data>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
-    <value>Preset ripristinati correttamente</value>
+    <value>Predefiniti ripristinati con successo</value>
   </data>
   <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
-    <value>Impedire alle linee tracciate di interferire con qualsiasi attraversamento pedonale</value>
+    <value>Taglia le linee che interferiscono con qualsiasi strisce pedonali</value>
   </data>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
-    <value>Impedire alle linee tracciate di interferire con qualsiasi attraversamento pedonale</value>
+    <value>Taglia le linee che interferiscono con qualsiasi strisce pedonali</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Riscrivere l'asset del preset</value>
@@ -1100,9 +1100,15 @@ I preset ripristinati sostituiranno tutti i preset attuali.</value>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
     <value>Cambiare il nome e i valori richiede la riscrittura del file dell'asset. Continuare?</value>
   </data>
-  
-  
-  
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>Per impostare i bordi delle strisce pedonali, devi avere delle linee che partano dalla stessa posizione delle strisce pedonali</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>Per cambiare i punti "Da" e "A" e creare nuove regole, devi prima avere una o più linee che intersecano con questa linea.</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Mostra i suggerimenti sul pannello</value>
+  </data>
   <data name="HeaderPanel_Edit" xml:space="preserve">
     <value>Modifica</value>
   </data>
@@ -1112,18 +1118,37 @@ I preset ripristinati sostituiranno tutti i preset attuali.</value>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
     <value>Non salvare le modifiche</value>
   </data>
-  
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Vuoi salvare il cambiamento del nome del preset?</value>
+  </data>
   <data name="TemplateEditor_SaveChanges" xml:space="preserve">
     <value>Salva le modifiche</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Vuoi salvare il cambiamento dei valori del template?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>Il nome "{0}" è già in uso per un altro preset.
+Sei sicuro di voler avere diversi preset con lo stesso nome?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Può essere rimosso solo tramite il content manager del gioco.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Questo preset non può essere modificato. Può essere rimosso solo tramite il content manager del gioco o annulando l'iscrizione nello Steam Workshop.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Questo preset è un asset.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Può essere rimosso solo tramite il content manager del gioco.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Questo template non può essere modificato. Può essere rimosso solo tramite il content manager del gioco o annulando l'iscrizione nello Steam Workshop.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Questo template è un asset.</value>
+  </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>preset</value>
   </data>
@@ -1141,7 +1166,10 @@ I preset ripristinati sostituiranno tutti i preset attuali.</value>
     <value>Autore sconosciuto</value>
   </data>
   
-  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>Caricamento completato con errori.
+Caricamento della segnaletica orizzontale per tutti gli incroci fallito.</value>
+  </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Modifica segnaletica orizzontale del segmento #{0}</value>
   </data>
@@ -1166,16 +1194,31 @@ I preset ripristinati sostituiranno tutti i preset attuali.</value>
   <data name="Settings_LODDistance" xml:space="preserve">
     <value>Distanza LOD</value>
   </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segmento #{0}
+Seleziona per modificare la segnaletica orizzontale</value>
+  </data>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Segui la linea guida</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Linea guida sinistra</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Linea guida destra</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Selezionare il primo punto o linea della linea guida</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Selezionare il secondo punto della linea guida</value>
+  </data>
   
   
   
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Numero di colori</value>
+  </data>
   <data name="StyleOption_ColorCountOne" xml:space="preserve">
     <value>Uno</value>
   </data>
@@ -1191,21 +1234,39 @@ I preset ripristinati sostituiranno tutti i preset attuali.</value>
   <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
     <value>Dividi in due</value>
   </data>
-  
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Dividi l'offset</value>
+  </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>Raggruppare i punti</value>
   </data>
-  
-  
-  
-  
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Applica tra le intersezioni</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Applica tra le intersezioni</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Applica a tutta la strada</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Applica a tutta la strada</value>
+  </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
     <value>Questa rimpiazzerà quella già esistente.</value>
   </data>
-  
-  
-  
-  
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Applica la segnaletica orizzontale tra gli incroci</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Sei sicuro di voler applicare la segnaletica orizzontale tra gli incroci?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Applica la segnaletica orizzontale alla strada intera</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Vuoi veramente applicare la segnaletica orizzontale su tutta "{0}"?</value>
+  </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
     <value>Trascina dietro il punto per una linea perpendicolare</value>
   </data>
@@ -1213,8 +1274,12 @@ I preset ripristinati sostituiranno tutti i preset attuali.</value>
     <value>Seleziona il punto di fine per uno stop oppure una linea di stop</value>
   </data>
   
-  
-  
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Allineamento dell'estremità della linea</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Allineamento del punto d'inizio della linea</value>
+  </data>
   
   
 </root>

@@ -1274,5 +1274,8 @@
     <value>线段起点对齐</value>
   </data>
   
-  
+  <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
+    <value>- 修复了在可用地图区域格块外的3D填充高度
+- 修复了按钮重复的问题</value>
+  </data>
 </root>
