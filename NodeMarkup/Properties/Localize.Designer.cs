@@ -1333,6 +1333,16 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added missing dependencies checker.
+        ///- Fix 3D fillers height on nodes outside available tiles..
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_7_3 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_7_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply between intersections.
         /// </summary>
         public static string Panel_ApplyBetweenIntersections {
