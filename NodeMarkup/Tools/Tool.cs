@@ -693,6 +693,10 @@ namespace NodeMarkup.Tools
 
         MakeItem = MakeLine | MakeCrosswalk
     }
+    public class NodeMarkupShortcut : ToolShortcut<Mod, NodeMarkupTool, ToolModeType>
+    {
+        public NodeMarkupShortcut(string name, string labelKey, InputKey key, Action action = null, ToolModeType modeType = ToolModeType.MakeItem) : base(name, labelKey, key, action, modeType) { }
+    }
     public class NodeMarkupToolThreadingExtension : BaseThreadingExtension<NodeMarkupTool> { }
     public class NodeMarkupToolLoadingExtension : BaseToolLoadingExtension<NodeMarkupTool> { }
 
