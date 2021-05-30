@@ -232,7 +232,7 @@
     <value>Vuoi cancellare tutta la segnaletica orizzontale?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Scarica i dati della segnaletica orizzontale su di un file</value>
+    <value>Scarica i dati della segnaletica orizzontale su file</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Copia il percorso negli appunti</value>
@@ -266,7 +266,7 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
     <value>Configurazione rapida delle regole</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Distanza di rendering</value>
+    <value>Distanza di resa grafica (rendering)</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Richiedi conferma prima di eliminare</value>
@@ -300,7 +300,7 @@ I dati ripristinati sostituiranno quelli esistenti.</value>
 Clicca per modificare la segnaletica orizzontale</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
-    <value>Seleziona un nodo o segmento per cambiare la segnaletica orizzontale</value>
+    <value>Seleziona un nodo od un segmento per cambiare la segnaletica orizzontale</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Seleziona un secondo punto per creare la linea</value>
@@ -764,7 +764,7 @@ Impossibile caricare i contrassegni per {0} intersezioni.</value>
     <value>Regole - {0}</value>
   </data>
   <data name="Settings_BackupTab" xml:space="preserve">
-    <value>Copie di sicurezza</value>
+    <value>Salva impostazioni</value>
   </data>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Visualizzazione ed utilizzo</value>
@@ -1013,7 +1013,7 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
     <value>Esci dalla modalità di applicazione dei predefiniti</value>
   </data>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Vuoi usare un predefinito?</value>
+    <value>Vuoi utilizzare un predefinito?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autore</value>
@@ -1061,7 +1061,7 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
     <value>Vuoi veramente rimuovere tutti i preimpostati?</value>
   </data>
   <data name="Settings_DumpPresetsButton" xml:space="preserve">
-    <value>Salva i predefiniti in un file</value>
+    <value>Salva i predefiniti su file</value>
   </data>
   <data name="Settings_DumpPresetsCaption" xml:space="preserve">
     <value>Salva i predefiniti</value>
@@ -1107,7 +1107,7 @@ I predefiniti ripristinati sostituiranno i predefiniti attuali.</value>
     <value>Per cambiare i punti "Da" e "A" e creare nuove regole, devi prima avere una o più linee che intersecano con questa linea.</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
-    <value>Mostra i suggerimenti sul pannello</value>
+    <value>Mostra il pannello dei suggerimenti</value>
   </data>
   <data name="HeaderPanel_Edit" xml:space="preserve">
     <value>Modifica</value>
@@ -1150,10 +1150,10 @@ Sei sicuro di voler avere diversi preset con lo stesso nome?</value>
     <value>Questo template è un asset.</value>
   </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>preset</value>
+    <value>predefinito</value>
   </data>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>preset</value>
+    <value>predefinito</value>
   </data>
   
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
@@ -1168,7 +1168,7 @@ Sei sicuro di voler avere diversi preset con lo stesso nome?</value>
   
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Caricamento completato con errori.
-Caricamento della segnaletica orizzontale per tutti gli incroci fallito.</value>
+Impossibile caricare la segnaletica orizzontale delle intersezioni.</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Modifica segnaletica orizzontale del segmento #{0}</value>
@@ -1192,7 +1192,7 @@ Caricamento della segnaletica orizzontale per tutti gli incroci fallito.</value>
     <value>Pavimentazione</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
-    <value>Distanza LOD</value>
+    <value>Distanza LOD (livello di dettaglio)</value>
   </data>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Segmento #{0}
@@ -1256,16 +1256,16 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Questa rimpiazzerà quella già esistente.</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
-    <value>Applica la segnaletica orizzontale tra gli incroci</value>
+    <value>Applica la segnaletica orizzontale tra le intersezioni</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
-    <value>Sei sicuro di voler applicare la segnaletica orizzontale tra gli incroci?</value>
+    <value>Vuoi applicare la segnaletica orizzontale tra le intersezioni?</value>
   </data>
   <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
-    <value>Applica la segnaletica orizzontale alla strada intera</value>
+    <value>Applica la segnaletica orizzontale a tutta la strada</value>
   </data>
   <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
-    <value>Vuoi veramente applicare la segnaletica orizzontale su tutta "{0}"?</value>
+    <value>Vuoi applicare la segnaletica orizzontale su tutta "{0}"?</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
     <value>Trascina dietro il punto per una linea perpendicolare</value>
