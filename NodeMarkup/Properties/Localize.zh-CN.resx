@@ -213,9 +213,6 @@
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>未设置</value>
   </data>
-  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
-    <value>启用工具</value>
-  </data>
   <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>添加新规则</value>
   </data>
@@ -1278,5 +1275,8 @@
     <value>- 修复了在可用地图区域格块外的3D填充高度
 - 修复了按钮重复的问题</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_7_3" xml:space="preserve">
+    <value>- 添加了必要项缺失检查
+- 修复了可用区块外节点3D填充的高度</value>
+  </data>
 </root>

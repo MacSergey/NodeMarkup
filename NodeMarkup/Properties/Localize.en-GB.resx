@@ -219,7 +219,6 @@
   
   
   
-  
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>The list of templates is empty.
 To create a template, click «{0}» at the line or pedestrian crossing or filler style.</value>
