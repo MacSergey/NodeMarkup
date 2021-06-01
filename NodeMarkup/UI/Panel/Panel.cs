@@ -68,7 +68,6 @@ namespace NodeMarkup.UI.Panel
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }
-        private CustomUIPanel SizeChanger { get; set; }
         public List<Editor> Editors { get; } = new List<Editor>();
         public Editor CurrentEditor { get; set; }
 
@@ -176,12 +175,7 @@ namespace NodeMarkup.UI.Panel
 
             Editors.Add(editor);
         }
-        private void CreateSizeChanger()
-        {
-            SizeChanger = AddUIComponent<SizeChanger>();
-            SizeChanger.eventPositionChanged += SizeChangerPositionChanged;
-            SizeChanger.eventDoubleClick += SizeChangerDoubleClick;
-        }
+        private void CreateSizeChanger() => AddUIComponent<SizeChanger>();
 
         #endregion
 
@@ -220,12 +214,6 @@ namespace NodeMarkup.UI.Panel
 
         #region ONEVENTS
 
-        private void SizeChangerPositionChanged(UIComponent component, Vector2 value)
-        {
-            size = (Vector2)SizeChanger.relativePosition + SizeChanger.size;
-            SizeChanger.relativePosition = size - SizeChanger.size;
-        }
-        private void SizeChangerDoubleClick(UIComponent component, UIMouseEventParameter eventParam) => SetDefaulSize();
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
@@ -239,8 +227,6 @@ namespace NodeMarkup.UI.Panel
                 CurrentEditor.size = EditorSize;
                 CurrentEditor.relativePosition = EditorPosition;
             }
-            if (SizeChanger != null)
-                SizeChanger.relativePosition = size - SizeChanger.size;
 
             MakePixelPerfect();
         }
@@ -361,31 +347,5 @@ namespace NodeMarkup.UI.Panel
         public void Render(RenderManager.CameraInfo cameraInfo) => CurrentEditor?.Render(cameraInfo);
 
         #endregion
-    }
-    public class SizeChanger : CustomUIPanel
-    {
-        private bool InProgress { get; set; }
-        public SizeChanger()
-        {
-            size = new Vector2(9, 9);
-            atlas = CommonTextures.Atlas;
-            backgroundSprite = CommonTextures.ResizeSprite;
-            color = new Color32(255, 255, 255, 160);
-
-            var handle = AddUIComponent<CustomUIDragHandle>();
-            handle.size = size;
-            handle.relativePosition = Vector2.zero;
-            handle.target = this; ;
-        }
-
-        protected override void OnPositionChanged()
-        {
-            if (!InProgress)
-            {
-                InProgress = true;
-                base.OnPositionChanged();
-                InProgress = false;
-            }
-        }
     }
 }
