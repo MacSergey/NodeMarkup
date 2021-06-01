@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Resources;
 using UnityEngine.SceneManagement;
 
 namespace NodeMarkup
@@ -53,18 +54,14 @@ namespace NodeMarkup
         protected override ulong BetaWorkshopId => 2159934925ul;
         protected override string ModSupportUrl => TroubleshootingUrl;
 
-        public override CultureInfo Culture
-        {
-            get => Localize.Culture;
-            protected set => Localize.Culture = value;
-        }
-
 #if BETA
         public override bool IsBeta => true;
 #else
         public override bool IsBeta => false;
 #endif
         #endregion
+
+        protected override ResourceManager LocalizeManager => Localize.ResourceManager;
 
         #region BASIC
 
@@ -74,7 +71,7 @@ namespace NodeMarkup
             settings.OnSettingsUI(helper);
         }
 
-        public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
+        protected override void SetCulture(CultureInfo culture) => Localize.Culture = culture;
 
         #endregion
 
