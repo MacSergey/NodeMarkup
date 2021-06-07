@@ -213,9 +213,6 @@
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>No establecido</value>
   </data>
-  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
-    <value>Activar la herramienta</value>
-  </data>
   <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Añadir nueva regla de la línea</value>
   </data>

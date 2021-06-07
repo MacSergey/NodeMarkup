@@ -213,9 +213,6 @@
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Ei määritetty</value>
   </data>
-  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
-    <value>Käynnistä työkalu</value>
-  </data>
   <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Lisää uusi sääntö</value>
   </data>

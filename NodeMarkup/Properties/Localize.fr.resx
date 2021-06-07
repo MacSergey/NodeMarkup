@@ -213,9 +213,6 @@
   <data name="SelectPanel_NotSet" xml:space="preserve">
     <value>Non défini</value>
   </data>
-  <data name="Settings_ShortcutActivateTool" xml:space="preserve">
-    <value>Activer l'outil</value>
-  </data>
   <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
     <value>Ajouter une règle de ligne</value>
   </data>
@@ -223,7 +220,7 @@
     <value>Supprimer toutes les lignes du noeud</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Supprimer le marquage de tous les intersections</value>
+    <value>Supprimer le marquage de toutes les intersections</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Supprimer tous les marquages</value>
