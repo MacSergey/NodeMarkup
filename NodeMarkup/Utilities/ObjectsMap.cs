@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace NodeMarkup.Utilities
 {
-    public class ObjectsMap : BaseObjectsMap<ObjectId>
+    public class ObjectsMap : NetObjectsMap<ObjectId>
     {
         public bool IsMirror { get; }
 
@@ -28,7 +28,7 @@ namespace NodeMarkup.Utilities
         }
         public void AddPoint(int source, int target) => this[new ObjectId() { Point = source }] = new ObjectId() { Point = target };
     }
-    public class ObjectId : ModsCommon.Utilities.ObjectId
+    public class ObjectId : NetObjectId
     {
         public static long PointType = 4L << 32;
 
