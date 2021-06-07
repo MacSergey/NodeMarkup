@@ -13,7 +13,7 @@ using System.Xml.Linq;
 
 namespace NodeMarkup
 {
-    public class AssetDataExtension : BaseIntersectionAssetDataExtension<Mod, AssetDataExtension, Utilities.ObjectsMap>
+    public class AssetDataExtension : BaseNetAssetDataExtension<Mod, AssetDataExtension, Utilities.ObjectsMap>
     {
         protected override string DataId { get; } = $"{Loader.Id}.Data";
         protected override string MapId { get; } = $"{Loader.Id}.Map";

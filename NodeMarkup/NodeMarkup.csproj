@@ -298,6 +298,7 @@
   <Import Project="..\ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\WhatsNewMessageBoxShared\WhatsNewMessageBoxShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\NetObjectMapShared\NetObjectMapShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\NetAssetDataExtension\NetAssetDataExtension.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
