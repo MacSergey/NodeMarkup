@@ -139,7 +139,7 @@ namespace NodeMarkup.UI.Editors
             border.Init();
             border.OnSelect += (panel) => SelectBorder(panel);
             border.OnReset += (panel) => Tool.SetDefaultMode();
-            border.OnHover += HoverBorder;
+            border.OnEnter += HoverBorder;
             border.OnLeave += LeaveBorder;
             return border;
         }

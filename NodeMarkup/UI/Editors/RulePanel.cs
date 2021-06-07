@@ -12,8 +12,8 @@ namespace NodeMarkup.UI.Editors
 {
     public class RulePanel : PropertyGroupPanel
     {
-        public event Action<RulePanel, UIMouseEventParameter> OnHover;
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
+        public event Action<RulePanel, UIMouseEventParameter> OnLeave;
 
         private LinesEditor Editor { get; set; }
         private MarkupLine Line => Editor.EditObject;
@@ -67,8 +67,8 @@ namespace NodeMarkup.UI.Editors
             Editor = null;
             Rule = null;
 
-            OnHover = null;
             OnEnter = null;
+            OnLeave = null;
         }
         private void AddHeader()
         {
@@ -100,7 +100,7 @@ namespace NodeMarkup.UI.Editors
             edgeProperty.Position = position;
             edgeProperty.Init();
             edgeProperty.OnSelect += OnSelectPanel;
-            edgeProperty.OnHover += Editor.HoverRuleEdge;
+            edgeProperty.OnEnter += Editor.EnterRuleEdge;
             edgeProperty.OnLeave += Editor.LeaveRuleEdge;
             return edgeProperty;
         }
@@ -221,12 +221,12 @@ namespace NodeMarkup.UI.Editors
         protected override void OnMouseEnter(UIMouseEventParameter p)
         {
             base.OnMouseEnter(p);
-            OnHover?.Invoke(this, p);
+            OnEnter?.Invoke(this, p);
         }
         protected override void OnMouseLeave(UIMouseEventParameter p)
         {
             base.OnMouseLeave(p);
-            OnEnter?.Invoke(this, p);
+            OnLeave?.Invoke(this, p);
         }
     }
 }

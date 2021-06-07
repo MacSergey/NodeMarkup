@@ -145,8 +145,8 @@ namespace NodeMarkup.UI.Editors
         {
             var rulePanel = ComponentPool.Get<RulePanel>(ContentPanel.Content);
             rulePanel.Init(this, rule);
-            rulePanel.OnHover += RuleMouseHover;
-            rulePanel.OnEnter += RuleMouseLeave;
+            rulePanel.OnEnter += RuleMouseEnter;
+            rulePanel.OnLeave += RuleMouseLeave;
             return rulePanel;
         }
         private void RemoveRulePanel(RulePanel rulePanel)
@@ -258,9 +258,9 @@ namespace NodeMarkup.UI.Editors
                 return false;
             }
         }
-        public void HoverRuleEdge(RuleEdgeSelectPropertyPanel selectPanel) => HoverPartEdgePanel = selectPanel;
+        public void EnterRuleEdge(RuleEdgeSelectPropertyPanel selectPanel) => HoverPartEdgePanel = selectPanel;
         public void LeaveRuleEdge(RuleEdgeSelectPropertyPanel selectPanel) => HoverPartEdgePanel = null;
-        private void RuleMouseHover(RulePanel rulePanel, UIMouseEventParameter eventParam) => HoverRulePanel = rulePanel;
+        private void RuleMouseEnter(RulePanel rulePanel, UIMouseEventParameter eventParam) => HoverRulePanel = rulePanel;
         private void RuleMouseLeave(RulePanel rulePanel, UIMouseEventParameter eventParam)
         {
             var uiView = rulePanel.GetUIView();

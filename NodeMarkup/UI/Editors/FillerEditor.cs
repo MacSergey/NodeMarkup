@@ -83,7 +83,7 @@ namespace NodeMarkup.UI.Editors
                 else if (property is FillerRailSelectPropertyPanel railProperty)
                 {
                     railProperty.OnSelect += (panel) => SelectRail(panel);
-                    railProperty.OnHover += HoverRail;
+                    railProperty.OnEnter += HoverRail;
                     railProperty.OnLeave += LeaveRail;
                 }
             }
