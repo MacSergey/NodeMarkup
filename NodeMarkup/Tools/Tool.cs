@@ -393,7 +393,7 @@ namespace NodeMarkup.Tools
 
             if (nextSegmentId != null && nodeSegmentIds.Length == 2 && (node.m_flags & NetNode.Flags.Bend) != 0)
             {
-                var map = new Utilities.ObjectsMap();
+                var map = new ObjectsMap();
                 map.AddSegment(nearNodeId, beforeSegmentId);
                 map.AddSegment(farNodeId, nextSegmentId.Value);
                 var markup = SingletonManager<NodeMarkupManager>.Instance[nodeId];
@@ -412,7 +412,7 @@ namespace NodeMarkup.Tools
 
             var nextNodeId = segment.m_startNode == beforeNodeId ? segment.m_endNode : segment.m_startNode;
 
-            var map = new Utilities.ObjectsMap();
+            var map = new ObjectsMap();
             map.AddNode(farNodeId, beforeNodeId);
             map.AddNode(nearNodeId, nextNodeId);
             var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];

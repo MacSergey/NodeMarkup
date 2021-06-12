@@ -10,7 +10,7 @@ namespace NodeMarkup.Manager
     public static class LinePartEdge
     {
         public static string XmlName { get; } = "E";
-        public static bool FromXml(XElement config, MarkupLine mainLine, Utilities.ObjectsMap map, out ILinePartEdge supportPoint)
+        public static bool FromXml(XElement config, MarkupLine mainLine, ObjectsMap map, out ILinePartEdge supportPoint)
         {
             var type = (SupportType)config.GetAttrValue<int>("T");
             switch (type)
@@ -32,7 +32,7 @@ namespace NodeMarkup.Manager
     }
     public class EnterPointEdge : EnterSupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, Markup markup, Utilities.ObjectsMap map, out EnterPointEdge enterPoint)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out EnterPointEdge enterPoint)
         {
             var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
             if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
@@ -58,7 +58,7 @@ namespace NodeMarkup.Manager
 
     public class LinesIntersectEdge : IntersectSupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, MarkupLine mainLine, Utilities.ObjectsMap map, out LinesIntersectEdge linePoint)
+        public static bool FromXml(XElement config, MarkupLine mainLine, ObjectsMap map, out LinesIntersectEdge linePoint)
         {
             var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
             if (mainLine.Markup.TryGetLine(lineId, map, out MarkupLine line))
@@ -93,7 +93,7 @@ namespace NodeMarkup.Manager
     }
     public class CrosswalkBorderEdge : SupportPoint, ISupportPoint, ILinePartEdge, IEquatable<CrosswalkBorderEdge>
     {
-        public static bool FromXml(XElement config, MarkupLine line, Utilities.ObjectsMap map, out CrosswalkBorderEdge borderPoint)
+        public static bool FromXml(XElement config, MarkupLine line, ObjectsMap map, out CrosswalkBorderEdge borderPoint)
         {
             if (line is MarkupCrosswalkLine crosswalkLine)
             {

@@ -21,7 +21,7 @@ namespace NodeMarkup.Manager
     public static class FillerVertex
     {
         public static string XmlName { get; } = "V";
-        public static bool FromXml(XElement config, Markup markup, Utilities.ObjectsMap map, out IFillerVertex fillerVertex)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out IFillerVertex fillerVertex)
         {
             var type = (SupportType)config.GetAttrValue<int>("T");
             switch (type)
@@ -40,7 +40,7 @@ namespace NodeMarkup.Manager
     }
     public abstract class EnterFillerVertexBase : EnterSupportPoint, IFillerVertex, IEquatable<EnterFillerVertexBase>
     {
-        public static bool FromXml(XElement config, Markup markup, Utilities.ObjectsMap map, out EnterFillerVertexBase enterPoint)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out EnterFillerVertexBase enterPoint)
         {
             var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
             if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
@@ -245,7 +245,7 @@ namespace NodeMarkup.Manager
 
     public class IntersectFillerVertex : IntersectSupportPoint, IFillerVertex, IFillerLineVertex
     {
-        public static bool FromXml(XElement config, Markup markup, Utilities.ObjectsMap map, out IntersectFillerVertex linePoint)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out IntersectFillerVertex linePoint)
         {
             var lineId1 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName1);
             var lineId2 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName2);

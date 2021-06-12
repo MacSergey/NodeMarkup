@@ -166,7 +166,7 @@ namespace NodeMarkup.Manager
         }
         public override bool FromXml(XElement config)
         {
-            if (base.FromXml(config) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, new Utilities.ObjectsMap(), false, out Style style))
+            if (base.FromXml(config) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, new ObjectsMap(), false, out Style style))
             {
                 Style = style;
                 return true;
@@ -186,7 +186,7 @@ namespace NodeMarkup.Manager
 
         public XElement Data { get; private set; }
         public EnterData[] Enters { get; private set; }
-        public Utilities.ObjectsMap Map { get; } = new Utilities.ObjectsMap();
+        public ObjectsMap Map { get; } = new ObjectsMap();
 
         public int Roads => Enters.Length;
         public int Lines { get; private set; }

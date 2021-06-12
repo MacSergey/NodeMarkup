@@ -26,7 +26,7 @@ namespace NodeMarkup.Manager
             Width.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             Width.FromXml(config, DefaultCrosswalkWidth);
         }
@@ -150,7 +150,7 @@ namespace NodeMarkup.Manager
             OffsetAfter.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             OffsetBefore.FromXml(config, DefaultCrosswalkOffset);
@@ -184,7 +184,7 @@ namespace NodeMarkup.Manager
             LineWidth.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             LineWidth.FromXml(config, DefaultCrosswalkOffset);
@@ -307,7 +307,7 @@ namespace NodeMarkup.Manager
             SecondColor.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             DashLength.FromXml(config, DefaultDashLength);
@@ -385,7 +385,7 @@ namespace NodeMarkup.Manager
             Offset.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             Offset.FromXml(config, DefaultCrosswalkOffset);
@@ -475,7 +475,7 @@ namespace NodeMarkup.Manager
             SpaceLength.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             DashLength.FromXml(config, DefaultDashLength);
@@ -541,7 +541,7 @@ namespace NodeMarkup.Manager
             SpaceLength.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             DashLength.FromXml(config, DefaultDashLength);
@@ -669,7 +669,7 @@ namespace NodeMarkup.Manager
             Invert.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             SquareSide.FromXml(config, DefaultCrosswalkSquareSide);

@@ -124,7 +124,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup markup, Utilities.ObjectsMap map, out MarkupLine line, out bool invert)
+        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupLine line, out bool invert)
         {
             var lineId = config.GetAttrValue<ulong>(nameof(Id));
             if (!MarkupPointPair.FromHash(lineId, markup, map, out MarkupPointPair pointPair, out invert))
@@ -157,7 +157,7 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        public abstract void FromXml(XElement config, Utilities.ObjectsMap map, bool invert);
+        public abstract void FromXml(XElement config, ObjectsMap map, bool invert);
 
         public enum LineType
         {
@@ -305,7 +305,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             RawAlignment.FromXml(config);
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule<RegularLineStyle>.XmlName))
@@ -417,7 +417,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             if (config.Element(MarkupLineRawRule<StopLineStyle>.XmlName) is XElement ruleConfig && MarkupLineRawRule<StopLineStyle>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<StopLineStyle> rule))
                 SetRule(rule);
@@ -456,7 +456,7 @@ namespace NodeMarkup.Manager
         public override bool ContainsRule(MarkupLineRawRule rule) => false;
         protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod) { yield break; }
 
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert) { }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert) { }
     }
 
     public struct MarkupLinePair

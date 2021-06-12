@@ -90,7 +90,7 @@ namespace NodeMarkup.Manager
             Alignment.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             Offset.FromXml(config, DefaultDoubleOffset);
@@ -155,7 +155,7 @@ namespace NodeMarkup.Manager
             SpaceLength.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             DashLength.FromXml(config, DefaultDashLength);
@@ -222,7 +222,7 @@ namespace NodeMarkup.Manager
             Alignment.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             Offset.FromXml(config, DefaultDoubleOffset);
@@ -330,7 +330,7 @@ namespace NodeMarkup.Manager
             CenterSolid.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             Offset.FromXml(config, DefaultDoubleOffset);
@@ -420,7 +420,7 @@ namespace NodeMarkup.Manager
             Invert.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             Base.FromXml(config, DefaultSharkBaseLength);

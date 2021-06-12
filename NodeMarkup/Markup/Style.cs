@@ -35,7 +35,7 @@ namespace NodeMarkup.Manager
         public static float Default3DWidth => 0.3f;
         public static float Default3DHeigth => 0.3f;
 
-        public static bool FromXml<T>(XElement config, Utilities.ObjectsMap map, bool invert, out T style) where T : Style
+        public static bool FromXml<T>(XElement config, ObjectsMap map, bool invert, out T style) where T : Style
         {
             var type = IntToType(config.GetAttrValue<int>("T"));
 
@@ -113,7 +113,7 @@ namespace NodeMarkup.Manager
             Width.ToXml(config);
             return config;
         }
-        public virtual void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public virtual void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             Color.FromXml(config, DefaultColor);
             Width.FromXml(config, DefaultWidth);

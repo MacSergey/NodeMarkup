@@ -406,7 +406,7 @@ namespace NodeMarkup.Manager
             Step.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             Step.FromXml(config, DefaultStepGrid);
@@ -487,7 +487,7 @@ namespace NodeMarkup.Manager
             RightRailB.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             LeftRailA.FromXml(config);
@@ -636,7 +636,7 @@ namespace NodeMarkup.Manager
             Offset.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             Angle.FromXml(config, DefaultAngle);
@@ -770,7 +770,7 @@ namespace NodeMarkup.Manager
             Invert.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             Output.FromXml(config, 0);
             StartingFrom.FromXml(config, From.Vertex);
@@ -866,7 +866,7 @@ namespace NodeMarkup.Manager
             Offset.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, Utilities.ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             Angle.FromXml(config, DefaultAngle);
