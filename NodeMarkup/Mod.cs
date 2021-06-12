@@ -22,7 +22,6 @@ namespace NodeMarkup
     {
         #region PROPERTIES
 
-        public static string DiscordURL { get; } = "https://discord.gg/NnwhuBKMqj";
         public static string ReportBugUrl { get; } = "https://github.com/MacSergey/NodeMarkup/issues/new?assignees=&labels=NEW+ISSUE&template=bug_report.md";
         public static string WikiUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki";
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";

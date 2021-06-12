@@ -46,31 +46,37 @@ namespace NodeMarkup
         public static SavedBool GroupPointsOverlay { get; } = new SavedBool(nameof(GroupPointsOverlay), SettingsFile, true, true);
         public static SavedInt GroupPointsOverlayType { get; } = new SavedInt(nameof(GroupPointsOverlayType), SettingsFile, 0, true);
 
+        protected UIAdvancedHelper ShortcutsTab => GetTab(nameof(ShortcutsTab));
+        protected UIAdvancedHelper BackupTab => GetTab(nameof(BackupTab));
+
         #endregion
 
         #region BASIC
 
-        protected override void OnSettingsUI()
+        protected override IEnumerable<KeyValuePair<string, string>> AdditionalTabs
         {
+            get
+            {
+                yield return new KeyValuePair<string, string>(nameof(ShortcutsTab), Localize.Settings_ShortcutsAndModifiersTab);
+                yield return new KeyValuePair<string, string>(nameof(BackupTab), Localize.Settings_BackupTab);
+            }
+        }
+        protected override void FillSettings()
+        {
+            base.FillSettings();
+
             AddLanguage(GeneralTab);
             AddGeneral(GeneralTab);
             AddGrouping(GeneralTab);
             AddNotifications(GeneralTab);
 
-            var shortcutTab = CreateTab(Localize.Settings_ShortcutsAndModifiersTab);
-            AddKeyMapping(shortcutTab);
+            AddKeyMapping(ShortcutsTab);
 
-            var backupTab = CreateTab(Localize.Settings_BackupTab);
-            AddBackupMarking(backupTab);
-            AddBackupStyleTemplates(backupTab);
-            AddBackupIntersectionTemplates(backupTab);
-
-            var supportTab = CreateTab(CommonLocalize.Settings_SupportTab);
-            AddSupport(supportTab);
-
+            AddBackupMarking(BackupTab);
+            AddBackupStyleTemplates(BackupTab);
+            AddBackupIntersectionTemplates(BackupTab);
 #if DEBUG
-            var debugTab = CreateTab("Debug");
-            AddDebug(debugTab);
+            AddDebug(DebugTab);
 #endif
         }
 
@@ -237,38 +243,11 @@ namespace NodeMarkup
 
         #endregion
 
-        #region SUPPORT
-
-        private void AddSupport(UIAdvancedHelper helper)
-        {
-            var group = helper.AddGroup();
-            AddWiki(group);
-            AddTroubleshooting(group);
-            AddDiscord(group);
-            AddChangeLog(group);
-        }
-        private void AddWiki(UIHelper helper) => AddButton(helper, "Wiki", () => Mod.WikiUrl.OpenUrl());
-        private void AddDiscord(UIHelper helper) => AddButton(helper, "Discord", () => Mod.DiscordURL.OpenUrl());
-        private void AddTroubleshooting(UIHelper helper) => AddButton(helper, CommonLocalize.Settings_Troubleshooting, () => Mod.TroubleshootingUrl.OpenUrl());
-        private void AddChangeLog(UIHelper helper) => AddButton(helper, CommonLocalize.Settings_ChangeLog, ShowChangeLog);
-
-        private void ShowChangeLog()
-        {
-            var messages = SingletonMod<Mod>.Instance.GetWhatsNewMessages(new Version(1, 0));
-            var messageBox = MessageBox.Show<WhatsNewMessageBox>();
-            messageBox.CaptionText = CommonLocalize.Settings_ChangeLog;
-            messageBox.OkText = CommonLocalize.MessageBox_OK;
-            messageBox.Init(messages, SingletonMod<Mod>.Instance.GetVersionString, false);
-        }
-
-        #endregion
-
         #region DEBUG
-
 #if DEBUG
         private void AddDebug(UIAdvancedHelper helper)
         {
-            var group = helper.AddGroup("Debug");
+            var group = helper.AddGroup("Selection overlay");
 
             AddCheckBox(group, "Alpha blend overlay", Selection.AlphaBlendOverlay);
             AddCheckBox(group, "Render overlay center", Selection.RenderOverlayCentre);
@@ -276,7 +255,6 @@ namespace NodeMarkup
             AddFloatField(group, "Overlay width", Selection.OverlayWidth, 3f, 1f);
         }
 #endif
-
         #endregion
     }
 }
