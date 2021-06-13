@@ -24,10 +24,10 @@ namespace NodeMarkup.UI.Editors
         public void DeInit() => OnSelect = null;
         protected override void OnOpenPopup()
         {
-            base.OnOpenPopup();
-
             Popup.Fill(StyleGroup);
             Popup.OnSelectTemplate += PopupOnSelectTemplate;
+
+            base.OnOpenPopup();
         }
         private void PopupOnSelectTemplate(StyleTemplate template)
         {
