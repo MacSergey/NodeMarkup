@@ -340,22 +340,12 @@ namespace NodeMarkup.Manager
         {
             if (AddTemplate(GetNewName(), markup, out template))
             {
-                if (Loader.SaveScreenshot(image, template.Id))
+                if(Loader.SaveScreenshot(template, image))
                     template.Preview = image.CreateTexture();
                 return true;
             }
             else
                 return false;
-        }
-        protected override void FromXml(XElement config)
-        {
-            base.FromXml(config);
-
-            foreach (var template in Templates.Where(t => !t.IsAsset))
-            {
-                if (Loader.LoadScreenshot(template.Id, out Image image))
-                    template.Preview = image.CreateTexture();
-            }
         }
     }
 }

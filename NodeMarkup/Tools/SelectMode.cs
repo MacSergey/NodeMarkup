@@ -61,9 +61,9 @@ namespace NodeMarkup.Tools
                 return true;
             }
         }
-        protected override bool IsValidNode(ushort nodeId) => nodeId.GetNode().m_flags.CheckFlags(0, NetNode.Flags.Middle);
+        protected override bool IsValidNode(ushort nodeId) => nodeId.GetNode().m_flags.CheckFlags(NetNode.Flags.None, NetNode.Flags.Middle | NetNode.Flags.Underground);
 
-        protected override bool CheckItemClass(ItemClass itemClass) => itemClass switch
+        protected override bool CheckItemClass(ItemClass itemClass) => itemClass.m_layer == ItemClass.Layer.Default && itemClass switch
         {
             { m_service: ItemClass.Service.Road } => true,
             { m_service: ItemClass.Service.PublicTransport, m_subService: ItemClass.SubService.PublicTransportPlane } => true,

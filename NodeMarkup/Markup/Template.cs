@@ -250,6 +250,9 @@ namespace NodeMarkup.Manager
                 Crosswalks = config.GetAttrValue<int>("CC");
                 Fillers = config.GetAttrValue<int>("FC");
 
+                if (Loader.LoadScreenshot(this, out var image))
+                    Preview = image.CreateTexture();
+
                 return true;
             }
             else
@@ -300,7 +303,7 @@ namespace NodeMarkup.Manager
             }
             catch (Exception error)
             {
-                SingletonMod<Mod>.Logger.Warning("Could not get template screenshot", error);
+                SingletonMod<Mod>.Logger.Error("Could not get template screenshot", error);
                 return null;
             }
         }
