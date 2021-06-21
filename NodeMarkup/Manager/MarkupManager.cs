@@ -167,7 +167,7 @@ namespace NodeMarkup.Manager
         }
         public void ToXml(XElement config)
         {
-            foreach (var markup in Markups.Values)
+            foreach (var markup in Markups.Values.OrderBy(m => m.Id))
             {
                 try
                 {

@@ -202,7 +202,7 @@ namespace NodeMarkup.UI.Panel
             NeedUpdateOnVisible = false;
 
             Header.Text = Markup.PanelCaption;
-            Header.Type = Markup.Type;
+            Header.Init(Markup.Type);
             TabStrip.SetVisible(Markup);
             TabStrip.ArrangeTabs();
             TabStrip.SelectedTab = -1;

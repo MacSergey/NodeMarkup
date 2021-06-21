@@ -14,59 +14,60 @@ namespace NodeMarkup.UI.Panel
 {
     public class PanelHeader : HeaderMoveablePanel<PanelHeaderContent>
     {
-        public MarkupType Type
-        {
-            get => Content.Type;
-            set => Content.Type = value;
-        }
+        private MarkupType Type { get; set; }
         public bool Available { set => Content.SetAvailable(value); }
-    }
-    public class PanelHeaderContent : BasePanelHeaderContent<PanelHeaderButton, AdditionallyHeaderButton>
-    {
-        private PanelHeaderButton PasteButton { get; set; }
-        public MarkupType Type { get; set; }
 
-        protected override void AddButtons()
+        private HeaderButtonInfo<HeaderButton> PasteButton { get; }
+        private HeaderButtonInfo<HeaderButton> EdgeLinesButton { get; }
+        private HeaderButtonInfo<HeaderButton> CutButton { get; }
+        private HeaderButtonInfo<HeaderButton> BeetwenIntersectionsButton { get; }
+        private HeaderButtonInfo<HeaderButton> WholeStreetButton { get; }
+
+        public PanelHeader()
         {
-            AddButton(NodeMarkupTextures.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut);
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut));
 
-            AddButton(NodeMarkupTextures.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut);
-            PasteButton = AddButton(NodeMarkupTextures.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
-            AddButton(NodeMarkupTextures.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut);
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut));
 
-            SetPasteEnabled();
+            PasteButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
+            Content.AddButton(PasteButton);
+
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut));
+
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut));
+
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.Offset, NodeMarkup.Localize.Panel_ResetOffset, NodeMarkupTool.ResetOffsetsShortcut));
+
+            EdgeLinesButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines, NodeMarkupTool.CreateEdgeLinesShortcut);
+            Content.AddButton(EdgeLinesButton);
+
+            CutButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks, NodeMarkupTool.CutLinesByCrosswalksShortcut);
+            Content.AddButton(CutButton);
+
+            BeetwenIntersectionsButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.BeetwenIntersections, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut);
+            Content.AddButton(BeetwenIntersectionsButton);
+
+            WholeStreetButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.WholeStreet, NodeMarkup.Localize.Panel_ApplyWholeStreet, NodeMarkupTool.ApplyWholeStreetShortcut);
+            Content.AddButton(WholeStreetButton);
         }
-        protected override AdditionallyHeaderButton GetAdditionally() => AddButton<AdditionallyHeaderButton>(NodeMarkupTextures.Additionally, CommonLocalize.Panel_Additional);
 
-        protected override void AddAdditionallyButtons(UIComponent parent)
+        public void Init(MarkupType type)
         {
-            AddPopupButton(parent, NodeMarkupTextures.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut);
-            AddPopupButton(parent, NodeMarkupTextures.Offset, NodeMarkup.Localize.Panel_ResetOffset, NodeMarkupTool.ResetOffsetsShortcut);
-
-            if (Type == MarkupType.Node)
-            {
-                AddPopupButton(parent, NodeMarkupTextures.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines, NodeMarkupTool.CreateEdgeLinesShortcut);
-                AddPopupButton(parent, NodeMarkupTextures.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks, NodeMarkupTool.CutLinesByCrosswalksShortcut);
-            }
-            if (Type == MarkupType.Segment)
-            {
-                AddPopupButton(parent, NodeMarkupTextures.BeetwenIntersections, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut);
-                AddPopupButton(parent, NodeMarkupTextures.WholeStreet, NodeMarkup.Localize.Panel_ApplyWholeStreet, NodeMarkupTool.ApplyWholeStreetShortcut);
-            }
+            Type = type;
+            base.Init();
         }
+
         public override void Refresh()
         {
-            SetPasteEnabled();
+            PasteButton.Enable = !SingletonTool<NodeMarkupTool>.Instance.IsMarkupBufferEmpty;
+
+            EdgeLinesButton.Visible = Type == MarkupType.Node;
+            CutButton.Visible = Type == MarkupType.Node;
+
+            BeetwenIntersectionsButton.Visible = Type == MarkupType.Segment;
+            WholeStreetButton.Visible = Type == MarkupType.Segment;
+
             base.Refresh();
         }
-        private void SetPasteEnabled() => PasteButton.isEnabled = !SingletonTool<NodeMarkupTool>.Instance.IsMarkupBufferEmpty;
-    }
-    public class PanelHeaderButton : BasePanelHeaderButton
-    {
-        protected override UITextureAtlas IconAtlas => NodeMarkupTextures.Atlas;
-    }
-    public class AdditionallyHeaderButton : BaseAdditionallyHeaderButton
-    {
-        protected override UITextureAtlas IconAtlas => NodeMarkupTextures.Atlas;
     }
 }
