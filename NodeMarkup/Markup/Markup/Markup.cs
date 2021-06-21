@@ -88,12 +88,19 @@ namespace NodeMarkup.Manager
 
             UpdateInProgress = true;
 
-            UpdateEnters();
-            UpdateLines();
-            UpdateFillers();
-            UpdateCrosswalks();
+            try
+            {
+                UpdateEnters();
+                UpdateLines();
+                UpdateFillers();
+                UpdateCrosswalks();
 
-            RecalculateAllStyleData();
+                RecalculateAllStyleData();
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error($"Failed to update {Type} #{Id}", error);
+            }
 
             UpdateInProgress = false;
         }

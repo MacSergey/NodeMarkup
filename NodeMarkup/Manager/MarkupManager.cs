@@ -47,6 +47,11 @@ namespace NodeMarkup.Manager
         }
         public static void UpdateNode(ushort nodeId) => SingletonManager<NodeMarkupManager>.Instance.Update(nodeId);
         public static void UpdateSegment(ushort segmentId) => SingletonManager<SegmentMarkupManager>.Instance.Update(segmentId);
+        public static void UpdateAll()
+        {
+            SingletonManager<NodeMarkupManager>.Instance.UpdateAll();
+            SingletonManager<SegmentMarkupManager>.Instance.UpdateAll();
+        }
 
         public static void NetInfoInitNodeInfoPostfix(Node info)
         {
@@ -128,12 +133,15 @@ namespace NodeMarkup.Manager
             foreach (var id in ids)
             {
                 if (Markups.TryGetValue(id, out TypeMarkup markup))
-                {
-                    try { markup.Update(); }
-                    catch (Exception error) { SingletonMod<Mod>.Logger.Error($"Failed to update {Type} #{markup.Id}", error); }
-                }
+                    markup.Update();
             }
         }
+        public void UpdateAll()
+        {
+            foreach (var markup in Markups.Values)
+                markup.Update();
+        }
+
         public void Render(RenderManager.CameraInfo cameraInfo, ushort id, ref RenderManager.Instance data)
         {
             if (data.m_nextInstance != ushort.MaxValue)
@@ -200,7 +208,6 @@ namespace NodeMarkup.Manager
                     var markup = this[id];
 
                     markup.FromXml(version, markupConfig, map);
-                    AddToUpdate(markup.Id);
                 }
                 catch (NotExistItemException error)
                 {
