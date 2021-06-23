@@ -70,7 +70,6 @@ namespace NodeMarkup.Utilities
         public static string NotSave => nameof(NotSave);
         public static string Offset => nameof(Offset);
         public static string EdgeLines => nameof(EdgeLines);
-        public static string Additionally => nameof(Additionally);
         public static string Cut => nameof(Cut);
         public static string BeetwenIntersections => nameof(BeetwenIntersections);
         public static string WholeStreet => nameof(WholeStreet);
@@ -106,7 +105,7 @@ namespace NodeMarkup.Utilities
 
         private static UITextureAtlas.SpriteInfo[] Styles(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 19, 19, StyleNames).ToArray();
 
-        private static UITextureAtlas.SpriteInfo[] HeaderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Additionally, Cut, BeetwenIntersections, WholeStreet).ToArray();
+        private static UITextureAtlas.SpriteInfo[] HeaderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Cut, BeetwenIntersections, WholeStreet).ToArray();
 
         private static UITextureAtlas.SpriteInfo[] ListItem(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite).ToArray();
 
