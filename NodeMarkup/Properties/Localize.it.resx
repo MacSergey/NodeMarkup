@@ -671,7 +671,20 @@ cancellare le strisce pedonali</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>modello</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
+    <value>- Aggiunto nuovo stile di riempimento - Chevron (Caporali).
+- Aggiunte strisce pedonali. Tieni premuto Maiusc per crearli. Stili attualmente disponibili: "Attraversamento pedonale esistente", "Zebra", "Doppia zebra", "Linee continue parallele", "Linee tratteggiate parallele", "Ladder", "Solido".
+- Aggiunte linee perpendicolari. Queste linee non hanno un secondo punto, sono generate come una linea retta da un punto. Per creare una linea perpendicolare, tirare la linea nella direzione opposta all'intersezione.
+- Aggiunta la possibilità di copiare/incollare lo stile di linee, riempitivi e strisce pedonali.
+- Aggiunta la possibilità di ordinare linee e modelli per stili e tipi. Puoi modificare e disabilitare la funzione nelle impostazioni.
+- Menu di selezione del modello aggiornato.
+- Aggiunto il raggruppamento di punti vicini per una selezione più semplice. Sono disponibili due tipi di raggruppamento: in cerchio e in linea. Puoi scegliere il tipo o disabilitare la funzione nelle impostazioni.
+- Aggiunta indicazione di regole in conflitto.
+- Aggiunta la possibilità di centrare una linea continua nello stile "Solido e tratteggiato".
+- Modificato come iniziare a modificare un punto. Ora devi fare clic sul punto tenendo premuto Ctrl.
+- Aggiunta la possibilità di selezionare la lingua dello strumento diversa dalla lingua del gioco.
+- Aggiunta la lingua finlandese.</value>
+  </data>
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Il caricamento è stato completato con errori.
 Impossibile caricare i contrassegni per {0} intersezioni.</value>
@@ -941,7 +954,30 @@ Vuoi applicare l'incrocio manualmente?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Trascina con Ctrl per muovere il punto</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
+    <value>ATTENZIONE: l'impostazione dei modelli predefiniti verrà ripristinata.
+
+- Aggiunta la possibilità di copiare/incollare il contrassegno da un'intersezione esistente a un'altra intersezione esistente.
+- Ora la segnaletica non viene rimossa se si sostituisce la strada con un diverso numero di punti.
+- Aggiunto il supporto per l'editor di mappe.
+- Aggiunta la possibilità di salvare i dati di marcatura nelle risorse di intersezione.
+- Aggiunta la linea "Denti di squalo" e lo stile della linea di arresto.
+- Aggiunto lo stile della linea di arresto "Solid&amp;Dashed".
+- Aggiunto lo stile di attraversamento pedonale "Scacchiera".
+- Aggiunta la possibilità di impostare modificatori di creazione per qualsiasi stile.
+- Aggiunta la possibilità di duplicare i modelli.
+- Aggiunta la possibilità di avere diversi modelli con un nome.
+- Aggiunta l'opzione di allineamento a tutti gli stili di doppia linea.
+- Aggiunta la possibilità di avviare lo stile "Chevron" di riempimento dai bordi.
+- Aggiunta la possibilità di ricevere un avviso di eliminazione solo se influirà su altri elementi.
+- Aggiunta la possibilità di ridimensionare il pannello.
+- Aggiunta la possibilità di eseguire il backup dei modelli.
+- Aggiunta la possibilità di ripristinare tutti i punti offset.
+- Aggiunto il supporto per il mirroring di MoveIt (attendere l'aggiornamento di MoveIt).
+- Aggiorna l'algoritmo di calcolo dello stile "Chevron" di riempimento.
+- Correggi i duplicati dei vertici di riempimento nell'interfaccia di creazione.
+- Risolto il problema con le linee asimmetriche del valore di inversione dopo il caricamento.</value>
+  </data>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Questa azione non può esser annullata.</value>
   </data>
@@ -1152,7 +1188,18 @@ Sei sicuro di voler avere diversi preset con lo stesso nome?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>predefinito</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
+    <value>- Aggiunta la possibilità di salvare l'intera marcatura dell'intersezione come preimpostata e successivamente applicarla a qualsiasi altra intersezione.
+- Aggiunta la possibilità di salvare modelli e preset come risorsa e condividerli su Workshop.
+- Interfaccia utente aggiornata e prestazioni dell'interfaccia utente migliorate. Ritardo ridotto quando si cambia scheda e si selezionano elementi.
+- Ora i valori dei modelli possono essere modificati solo in modalità di modifica, cosa che impedisce modifiche accidentali ai valori.
+- Aggiunti suggerimenti sul pannello (possono essere disabilitati nelle impostazioni).
+- Aggiunta la possibilità di tagliare una nuova linea dalle strisce pedonali (può essere disabilitata nelle impostazioni).
+- Aggiunta la possibilità di modificare i valori del colore con la rotellina del mouse.
+- Corrette strade ferroviarie e monorotaia (e qualsiasi altra cosa senza punti).
+- Corretta e migliorata la sovrapposizione del gruppo di punti.
+- Aggiunta la traduzione inglese-britannica.</value>
+  </data>
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Questo tipo di linea non supporta le regole</value>
   </data>
@@ -1162,7 +1209,10 @@ Sei sicuro di voler avere diversi preset con lo stesso nome?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Autore sconosciuto</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>- Migliorati i messaggi sugli errori di caricamento dei dati.
+- Corrette e aggiornate le localizzazioni.</value>
+  </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Caricamento completato con errori.
 Impossibile caricare la segnaletica orizzontale delle intersezioni.</value>
@@ -1210,9 +1260,23 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selezionare il secondo punto della linea guida</value>
   </data>
-  
-  
-  
+  <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
+    <value>- Aggiornata la dipendenza da Harmony: risoluzione dei conflitti con altre mod che lo utilizzano</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
+    <value>- Risolta una situazione in cui i segni potevano scomparire dal salvataggio</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
+    <value>- Aggiunta la possibilità di fare segni sui segmenti.
+- Aggiunti stili 3D di riempimento: "Pavement" (Pavimentazione) e "Grass" (Erba).
+- Aggiunto lo stile 3D della linea: "Pavement" (Pavimentazione).
+- Aggiunta l'abilità di seguire i binari agli stili di riempimento "Stripes" (Striscie) e "Chevron" (Caporali).
+- Migliora le prestazioni aggiungendo LOD (Level Of Detail) ai contrassegni. La distanza LOD è impostata nelle impostazioni.
+- Aggiunto il supporto per le vie di rullaggio.
+- Risolto un conflitto con altre mod che poteva causare la mancata visualizzazione del pulsante dello strumento.
+- Risolto un conflitto con il pannello di scorrimento e la rotella di scorrimento per modificare i valori.
+- Ora non c'è differenza se inserisci un punto o una virgola nel campo del valore delle proprietà.</value>
+  </data>
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Numero di colori</value>
   </data>
@@ -1270,14 +1334,43 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Seleziona il punto di fine per uno stop oppure una linea di stop</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_7" xml:space="preserve">
+    <value>- Nuova modalità di selezione nodo/segmento. L'area di selezione segue esattamente le forme effettive dei nodi e dei segmenti, il che evita difficoltà nella selezione di nodi troppo ravvicinati.
+- Aggiunta la creazione automatica della linea durante la creazione del riempitivo. Non è più necessario aggiungere linee prima di creare il riempitivo.
+- Aggiunta la possibilità di dividere il punto in due punti virtuali, impostare lo spostamento diviso e scegliere l'allineamento delle linee. Ora è possibile continuare una linea doppia con due linee singole di separazione.
+- Aggiunto il modificatore di stile "Dagli appunti". Tieni premuto Ctrl+Alt per applicare lo stile dagli appunti a una nuova linea, regola, attraversamento pedonale o riempitivo.
+- Aggiunta la possibilità di applicare la marcatura del segmento tra due intersezioni e applicarla all'intera strada.
+- Aggiunta la possibilità di impostare il secondo colore per gli stili di attraversamento pedonale "Zebra" e "Doppia zebra".
+- Modificato il comportamento del tasto Esc. Ora è come il comportamento predefinito dello strumento di gioco. Se qualcosa viene modificato, premere Esc suggerirà un'uscita, piuttosto che chiudere lo strumento con la perdita delle modifiche.
+- Aggiunto il raggruppamento dei punti per strada nell'elenco (può essere disabilitato nelle impostazioni).
+- Corretta la posizione di sovrapposizione del connettore di linea su strade sopraelevate.
+- Correzione del calcolo degli stili di riempimento 3D.
+- Risolto errore nella modalità di marcatura copia/incolla che rendeva impossibile l'utilizzo dello strumento.
+- Corretta la posizione di scorrimento del pannello di ripristino quando si ridimensiona il pannello.
+- La modalità Crosswalk non si attiva più tenendo premuto shift quando si cambia il valore con la rotella di scorrimento.
+- Imposta la dimensione predefinita del pannello facendo doppio clic sul ridimensionatore del pannello.</value>
+  </data>
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Allineamento dell'estremità della linea</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Allineamento del punto d'inizio della linea</value>
   </data>
-  
-  
-  
+  <data name="Mod_WhatsNewMessage1_7_1" xml:space="preserve">
+    <value>- Aggiunta la possibilità di impostare l'allineamento per le linee di arresto.
+- Ordinamento di modelli aggiuntivi:
+1 - Modelli predefiniti ordinati per tipo
+2 - Altri modelli ordinati per tipo poi per nome
+3 - Altri modelli di autori ordinano per nome dell'autore, quindi per tipo, quindi per nome
+- Corretto il caricamento del preset dei segment.
+- Risolto il problema con la dimensione del pannello predefinita.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
+    <value>- Corretta l'altezza dei riempitivi 3D al di fuori delle piastrelle disponibili.
+- Risolto il problema con la creazione di duplicati dei pulsanti.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_3" xml:space="preserve">
+    <value>- Aggiunto il controllo delle dipendenze mancanti.
+- Corretta l'altezza dei riempitivi 3D sui nodi al di fuori dei riquadri disponibili.</value>
+  </data>
 </root>
