@@ -67,7 +67,7 @@ namespace NodeMarkup.UI.Editors
         {
             SingletonManager<StyleTemplateManager>.Instance.ToggleAsDefaultTemplate(EditObject);
             ItemsPanel.RefreshItems();
-            HeaderPanel.Init(EditObject);
+            HeaderPanel.Refresh();
         }
         private void Duplicate()
         {

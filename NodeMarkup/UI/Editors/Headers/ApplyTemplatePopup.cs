@@ -11,8 +11,6 @@ namespace NodeMarkup.UI.Editors
 {
     public class ApplyTemplateHeaderButton : HeaderPopupButton<ApplyTemplatePopupPanel>
     {
-        protected override UITextureAtlas IconAtlas => NodeMarkupTextures.Atlas;
-
         protected Action<StyleTemplate> OnSelect { get; set; }
 
         private Style.StyleType StyleGroup { get; set; }
@@ -21,13 +19,17 @@ namespace NodeMarkup.UI.Editors
             StyleGroup = styleGroup;
             OnSelect = onSelectTemplate;
         }
-        public void DeInit() => OnSelect = null;
-        protected override void OnOpenPopup()
+        public override void DeInit()
+        {
+            base.DeInit();
+            OnSelect = null;
+        }
+        protected override void OnPopupOpened()
         {
             Popup.Fill(StyleGroup);
             Popup.OnSelectTemplate += PopupOnSelectTemplate;
 
-            base.OnOpenPopup();
+            base.OnPopupOpened();
         }
         private void PopupOnSelectTemplate(StyleTemplate template)
         {

@@ -248,40 +248,49 @@ namespace NodeMarkup
                 return false;
             }
         }
-        public static bool SaveScreenshot(Image image, Guid id)
-        {
-            try
-            {
-                var data = image.GetFormattedImage(Image.BufferFileFormat.PNG);
-                var path = Path.Combine(ScreenshotDirectory, $"{id}.png");
-                File.WriteAllBytes(path, data);
-                return true;
-            }
-            catch (Exception error)
-            {
-                SingletonMod<Mod>.Logger.Error($"Could not save screenshot {id}", error);
-                return false;
-            }
-        }
-        public static bool LoadScreenshot(Guid id, out Image image)
+        public static bool SaveScreenshot(IntersectionTemplate template, Image image)
         {
             try
             {
                 if (!Directory.Exists(ScreenshotDirectory))
                     Directory.CreateDirectory(ScreenshotDirectory);
 
-                var path = Path.Combine(ScreenshotDirectory, $"{id}.png");
-                var data = File.ReadAllBytes(path);
-                image = new Image(data);
+                var data = image.GetFormattedImage(Image.BufferFileFormat.PNG);
+                var path = Path.Combine(ScreenshotDirectory, $"{template.Id}.png");
+                File.WriteAllBytes(path, data);
                 return true;
             }
             catch (Exception error)
             {
-                SingletonMod<Mod>.Logger.Error($"Could not load screenshot {id}", error);
+                SingletonMod<Mod>.Logger.Error($"Could not save screenshot for template \"{template}\"", error);
+                return false;
+            }
+        }
+        public static bool LoadScreenshot(IntersectionTemplate template, out Image image)
+        {
+            try
+            {
+                var path = Path.Combine(ScreenshotDirectory, $"{template.Id}.png");
+
+                if (File.Exists(path))
+                {
+                    var data = File.ReadAllBytes(path);
+                    image = new Image(data);
+                    return true;
+                }
+                else
+                {
+                    SingletonMod<Mod>.Logger.Debug($"Could not load screenshot for template \"{template}\", file {path} not exist");
+                    image = null;
+                    return false;
+                }
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error($"Could not load screenshot for template \"{template}\"", error);
                 image = null;
                 return false;
             }
-
         }
     }
 }

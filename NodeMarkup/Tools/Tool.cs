@@ -44,7 +44,7 @@ namespace NodeMarkup.Tools
         public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ShortcutApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.ApplyBetweenIntersections());
         public static NodeMarkupShortcut ApplyWholeStreetShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyWholeStreetShortcut), nameof(Localize.Settings_ShortcutApplyWholeStreet), SavedInputKey.Encode(KeyCode.B, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.ApplyWholeStreet());
 
-        public static IEnumerable<NodeMarkupShortcut> ToolShortcuts
+        public static IEnumerable<Shortcut> ToolShortcuts
         {
             get
             {
@@ -62,7 +62,7 @@ namespace NodeMarkup.Tools
                 yield return ApplyWholeStreetShortcut;
             }
         }
-        public override IEnumerable<Shortcut> Shortcuts => ToolShortcuts.Cast<Shortcut>();
+        public override IEnumerable<Shortcut> Shortcuts => ToolShortcuts;
 
         public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => GetSavedStylesModifier(i));
 

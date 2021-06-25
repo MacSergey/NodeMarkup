@@ -11,11 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class SimpleHeaderButton : HeaderButton
-    {
-        protected override UITextureAtlas IconAtlas => NodeMarkupTextures.Atlas;
-    }
-    public abstract class OptionsHeaderPanel : BaseDeletableHeaderPanel<BaseHeaderContent> { }
+    public abstract class OptionsHeaderPanel : BaseDeletableHeaderPanel<HeaderContent> { }
     public class StyleHeaderPanel : OptionsHeaderPanel
     {
         public event Action OnSaveTemplate;
@@ -23,22 +19,27 @@ namespace NodeMarkup.UI.Editors
         public event Action OnPaste;
 
         private Style.StyleType StyleGroup { get; set; }
-        private SimpleHeaderButton PasteButton { get; set; }
-        private ApplyTemplateHeaderButton ApplyTemplate { get; }
+        private HeaderButtonInfo<HeaderButton> PasteButton { get; set; }
+        private HeaderButtonInfo<ApplyTemplateHeaderButton> ApplyTemplate { get; }
 
         public StyleHeaderPanel()
         {
-            Content.AddButton<SimpleHeaderButton>(NodeMarkupTextures.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, onClick: SaveTemplateClick);
-            ApplyTemplate = Content.AddButton<ApplyTemplateHeaderButton>(NodeMarkupTextures.ApplyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
-            Content.AddButton<SimpleHeaderButton>(NodeMarkupTextures.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, onClick: CopyClick);
-            PasteButton = Content.AddButton<SimpleHeaderButton>(NodeMarkupTextures.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, onClick: PasteClick);
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, SaveTemplateClick));
+
+            ApplyTemplate = new HeaderButtonInfo<ApplyTemplateHeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.ApplyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
+            Content.AddButton(ApplyTemplate);
+
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, CopyClick));
+
+            PasteButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, PasteClick);
+            Content.AddButton(PasteButton);
         }
 
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
         {
             base.Init(isDeletable: isDeletable);
             StyleGroup = styleGroup.GetGroup();
-            ApplyTemplate.Init(StyleGroup, onSelectTemplate);
+            ApplyTemplate.Button.Init(StyleGroup, onSelectTemplate);
 
             SetPasteEnabled();
             SingletonTool<NodeMarkupTool>.Instance.OnStyleToBuffer += StyleToBuffer;
@@ -49,7 +50,7 @@ namespace NodeMarkup.UI.Editors
             if (group == StyleGroup)
                 SetPasteEnabled();
         }
-        private void SetPasteEnabled() => PasteButton.isEnabled = SingletonTool<NodeMarkupTool>.Instance.IsStyleInBuffer(StyleGroup);
+        private void SetPasteEnabled() => PasteButton.Enable = SingletonTool<NodeMarkupTool>.Instance.IsStyleInBuffer(StyleGroup);
 
         public override void DeInit()
         {
@@ -61,11 +62,11 @@ namespace NodeMarkup.UI.Editors
 
             SingletonTool<NodeMarkupTool>.Instance.OnStyleToBuffer -= StyleToBuffer;
 
-            ApplyTemplate.DeInit();
+            ApplyTemplate.Button.DeInit();
         }
-        private void SaveTemplateClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveTemplate?.Invoke();
-        private void CopyClick(UIComponent component, UIMouseEventParameter eventParam) => OnCopy?.Invoke();
-        private void PasteClick(UIComponent component, UIMouseEventParameter eventParam) => OnPaste?.Invoke();
+        private void SaveTemplateClick() => OnSaveTemplate?.Invoke();
+        private void CopyClick() => OnCopy?.Invoke();
+        private void PasteClick() => OnPaste?.Invoke();
     }
     public class CrosswalkHeaderPanel : StyleHeaderPanel
     {
@@ -73,7 +74,7 @@ namespace NodeMarkup.UI.Editors
 
         public CrosswalkHeaderPanel()
         {
-            Content.AddButton<SimpleHeaderButton>(NodeMarkupTextures.Cut, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, onClick: CutClick);
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Cut, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, CutClick));
         }
         public override void DeInit()
         {
@@ -82,7 +83,7 @@ namespace NodeMarkup.UI.Editors
             OnCut = null;
         }
 
-        private void CutClick(UIComponent component, UIMouseEventParameter eventParam) => OnCut?.Invoke();
+        private void CutClick() => OnCut?.Invoke();
     }
 
     public abstract class TemplateHeaderPanel<TemplateType> : OptionsHeaderPanel
@@ -93,54 +94,75 @@ namespace NodeMarkup.UI.Editors
         public event Action OnSave;
         public event Action OnNotSave;
 
-        private HeaderButton SaveAsAsset { get; set; }
-        private HeaderButton Edit { get; set; }
-        private HeaderButton Save { get; set; }
-        private HeaderButton NotSave { get; set; }
+        private HeaderButtonInfo<HeaderButton> SaveAsAsset { get; set; }
+        private HeaderButtonInfo<HeaderButton> Edit { get; set; }
+        private HeaderButtonInfo<HeaderButton> Save { get; set; }
+        private HeaderButtonInfo<HeaderButton> NotSave { get; set; }
 
-        private bool IsAsset { get; set; }
-        private bool CanEdit { get; set; }
+        protected TemplateType Template { get; private set; }
+        private bool IsAsset => Template.IsAsset;
+        private bool CanEdit => !IsAsset || Template.Asset.CanEdit;
 
-        public virtual bool EditMode
+        private bool _editMode;
+        public bool EditMode
         {
+            get => _editMode;
             set
             {
-                SaveAsAsset.isVisible = !IsAsset && !value;
-                Edit.isVisible = (!IsAsset || CanEdit) && !value;
-                Save.isVisible = NotSave.isVisible = value;
+                if (value != _editMode)
+                {
+                    _editMode = value;
+                    Refresh();
+                }
             }
         }
 
         public TemplateHeaderPanel() => AddButtons();
         protected virtual void AddButtons()
         {
-            Edit = Content.AddButton<SimpleHeaderButton>(NodeMarkupTextures.Edit, NodeMarkup.Localize.HeaderPanel_Edit, onClick: EditClick);
-            SaveAsAsset = Content.AddButton<SimpleHeaderButton>(NodeMarkupTextures.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, onClick: SaveAssetClick);
-            Save = Content.AddButton<SimpleHeaderButton>(NodeMarkupTextures.Save, NodeMarkup.Localize.HeaderPanel_Save, onClick: SaveClick);
-            NotSave = Content.AddButton<SimpleHeaderButton>(NodeMarkupTextures.NotSave, NodeMarkup.Localize.HeaderPanel_NotSave, onClick: NotSaveClick);
+            Edit = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Edit, NodeMarkup.Localize.HeaderPanel_Edit, EditClick);
+            Content.AddButton(Edit);
+
+            SaveAsAsset = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, SaveAssetClick);
+            Content.AddButton(SaveAsAsset);
+
+            Save = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Save, NodeMarkup.Localize.HeaderPanel_Save, SaveClick);
+            Content.AddButton(Save);
+
+            NotSave = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.NotSave, NodeMarkup.Localize.HeaderPanel_NotSave, NotSaveClick);
+            Content.AddButton(NotSave);
         }
 
         public virtual void Init(TemplateType template)
         {
             base.Init(isDeletable: false);
-
-            IsAsset = template.IsAsset;
-            CanEdit = !IsAsset || template.Asset.CanEdit;
-
-            EditMode = false;
+            Template = template;
+            Refresh();
         }
         public override void DeInit()
         {
             base.DeInit();
+            _editMode = false;
             OnSaveAsset = null;
             OnEdit = null;
             OnSave = null;
             OnNotSave = null;
         }
-        private void SaveAssetClick(UIComponent component, UIMouseEventParameter eventParam) => OnSaveAsset?.Invoke();
-        private void EditClick(UIComponent component, UIMouseEventParameter eventParam) => OnEdit?.Invoke();
-        private void SaveClick(UIComponent component, UIMouseEventParameter eventParam) => OnSave?.Invoke();
-        private void NotSaveClick(UIComponent component, UIMouseEventParameter eventParam) => OnNotSave?.Invoke();
+
+        public override void Refresh()
+        {
+            SaveAsAsset.Visible = !IsAsset && !EditMode;
+            Edit.Visible = (!IsAsset || CanEdit) && !EditMode;
+            Save.Visible = EditMode;
+            NotSave.Visible = EditMode;
+
+            base.Refresh();
+        }
+
+        private void SaveAssetClick() => OnSaveAsset?.Invoke();
+        private void EditClick() => OnEdit?.Invoke();
+        private void SaveClick() => OnSave?.Invoke();
+        private void NotSaveClick() => OnNotSave?.Invoke();
     }
 
     public class StyleTemplateHeaderPanel : TemplateHeaderPanel<StyleTemplate>
@@ -148,31 +170,24 @@ namespace NodeMarkup.UI.Editors
         public event Action OnSetAsDefault;
         public event Action OnDuplicate;
 
-        private HeaderButton SetAsDefaultButton { get; set; }
-        private HeaderButton Duplicate { get; set; }
+        private HeaderButtonInfo<HeaderButton> SetAsDefaultButton { get; set; }
+        private HeaderButtonInfo<HeaderButton> UnsetAsDefaultButton { get; set; }
+        private HeaderButtonInfo<HeaderButton> Duplicate { get; set; }
 
-        public override bool EditMode
-        {
-            set
-            {
-                base.EditMode = value;
-                SetAsDefaultButton.isVisible = Duplicate.isVisible = !value;
-            }
-        }
+        private bool IsDefault => Template.IsDefault;
 
         protected override void AddButtons()
         {
-            SetAsDefaultButton = Content.AddButton<SimpleHeaderButton>(string.Empty, null, onClick: SetAsDefaultClick);
-            Duplicate = Content.AddButton<SimpleHeaderButton>(NodeMarkupTextures.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, onClick: DuplicateClick);
+            SetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.SetDefault, NodeMarkup.Localize.HeaderPanel_SetAsDefault, SetAsDefaultClick);
+            Content.AddButton(SetAsDefaultButton);
+
+            UnsetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.UnsetDefault, NodeMarkup.Localize.HeaderPanel_UnsetAsDefault, SetAsDefaultClick);
+            Content.AddButton(UnsetAsDefaultButton);
+
+            Duplicate = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, DuplicateClick);
+            Content.AddButton(Duplicate);
 
             base.AddButtons();
-        }
-        public override void Init(StyleTemplate template)
-        {
-            base.Init(template);
-
-            SetAsDefaultButton.SetIconSprite(template.IsDefault ? NodeMarkupTextures.UnsetDefault : NodeMarkupTextures.SetDefault);
-            SetAsDefaultButton.tooltip = template.IsDefault ? NodeMarkup.Localize.HeaderPanel_UnsetAsDefault : NodeMarkup.Localize.HeaderPanel_SetAsDefault;
         }
         public override void DeInit()
         {
@@ -182,26 +197,28 @@ namespace NodeMarkup.UI.Editors
             OnDuplicate = null;
         }
 
-        private void SetAsDefaultClick(UIComponent component, UIMouseEventParameter eventParam) => OnSetAsDefault?.Invoke();
-        private void DuplicateClick(UIComponent component, UIMouseEventParameter eventParam) => OnDuplicate?.Invoke();
+        public override void Refresh()
+        {
+            SetAsDefaultButton.Visible = !IsDefault && !EditMode;
+            UnsetAsDefaultButton.Visible = IsDefault && !EditMode;
+            Duplicate.Visible = !EditMode;
+            base.Refresh();
+        }
+
+        private void SetAsDefaultClick() => OnSetAsDefault?.Invoke();
+        private void DuplicateClick() => OnDuplicate?.Invoke();
     }
     public class IntersectionTemplateHeaderPanel : TemplateHeaderPanel<IntersectionTemplate>
     {
         public event Action OnApply;
 
-        private HeaderButton Apply { get; set; }
-        public override bool EditMode
-        {
-            set
-            {
-                base.EditMode = value;
-                Apply.isVisible = !value;
-            }
-        }
+        private HeaderButtonInfo<HeaderButton> Apply { get; set; }
 
         protected override void AddButtons()
         {
-            Apply = Content.AddButton<SimpleHeaderButton>(NodeMarkupTextures.Apply, NodeMarkup.Localize.PresetEditor_ApplyPreset, onClick: ApplyClick);
+            Apply = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Apply, NodeMarkup.Localize.PresetEditor_ApplyPreset, ApplyClick);
+            Content.AddButton(Apply);
+
             base.AddButtons();
         }
         public override void DeInit()
@@ -209,6 +226,13 @@ namespace NodeMarkup.UI.Editors
             base.DeInit();
             OnApply = null;
         }
-        private void ApplyClick(UIComponent component, UIMouseEventParameter eventParam) => OnApply?.Invoke();
+
+        public override void Refresh()
+        {
+            Apply.Visible = !EditMode;
+            base.Refresh();
+        }
+
+        private void ApplyClick() => OnApply?.Invoke();
     }
 }
