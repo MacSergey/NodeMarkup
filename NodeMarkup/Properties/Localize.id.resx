@@ -232,7 +232,7 @@
     <value>Limpahkan data markah ke file</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>Salin jalur ke salinan</value>
+    <value>Salin jalur file ke salinan</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Limpahkan markah data</value>
@@ -241,7 +241,7 @@
     <value>Pelimpahan gagal</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>Penyimpanan ke file berhasil</value>
+    <value>Pelimpahan ke file berhasil</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
     <value>Pulihkan data markah dari file</value>
@@ -263,7 +263,7 @@ Markah yang dipulihkan akan menggantikan segala markah yang ada.</value>
     <value>Penyetelan aturan cepat</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Jarak pengelihatan</value>
+    <value>Jarak penglihatan</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Konfirmasi sebelum penghapusan</value>
@@ -287,7 +287,7 @@ Markah yang dipulihkan akan menggantikan segala markah yang ada.</value>
     <value>Apakah Anda yakin untuk menghapus segala markah simpang #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Klik untuk membuat garis baru</value>
+    <value>Klik untuk membuat garis</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
     <value>Klik untuk menghapus garis</value>
@@ -303,14 +303,14 @@ Klik untuk mengedit markah</value>
     <value>Pilih titik akhir untuk garis biasa</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Pilih titik untuk membuat atau menghapus sebuah garis</value>
+    <value>Pilih sebuah titik untuk membuat atau menghapus sebuah garis</value>
   </data>
   
   <data name="Settings_Restore" xml:space="preserve">
     <value>Pulihkan</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
-    <value>Balik</value>
+    <value>Balikkan</value>
   </data>
   <data name="StyleOption_Width" xml:space="preserve">
     <value>Lebar</value>
@@ -337,10 +337,10 @@ Klik untuk mengedit markah</value>
     <value>Garis-garis</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>Jaring-jaring</value>
+    <value>Jejaring</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Garis putus-putus</value>
+    <value>Putus-putus</value>
   </data>
   <data name="StyleOption_Step" xml:space="preserve">
     <value>Langkah</value>
@@ -364,7 +364,7 @@ Klik untuk mengedit markah</value>
     <value>Pilih sebuah titik untuk mulai membuat isian</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
-    <value>Pilih titik berikutnya untuk sisi</value>
+    <value>Pilih titik berikutnya untuk sisi isian</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
     <value>Pergeseran dari tengah</value>
@@ -387,10 +387,10 @@ Klik untuk mengedit markah</value>
     <value>Tambah isian baru</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Utuh dobel</value>
+    <value>Utuh ganda</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>Putus-putus dobel</value>
+    <value>Putus-putus ganda</value>
   </data>
   <data name="HeaderPanel_StyleCopy" xml:space="preserve">
     <value>Salin</value>
@@ -402,7 +402,7 @@ Klik untuk mengedit markah</value>
     <value>Panah</value>
   </data>
   <data name="StyleOption_AngleBetween" xml:space="preserve">
-    <value>Sudut diantaranya</value>
+    <value>Sudut di antaranya</value>
   </data>
   <data name="StyleOption_Turn" xml:space="preserve">
     <value>Putar</value>
@@ -413,7 +413,7 @@ Untuk membuat garis, hubungkan dua titik.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Tidak ada isian di simpang ini.
-Untuk membuat isian, tekan dan tahan Alt tekan {0}.</value>
+Untuk membuat isian, tekan dan tahan Alt atau tekan {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Tidak ada templat.
@@ -461,7 +461,7 @@ Untuk membuat templat, klik {0} pada garis atau penyebrangan atau gaya isian.</v
     <value>Penyeberangan yang sudah ada</value>
   </data>
   <data name="StyleOption_OffsetBetween" xml:space="preserve">
-    <value>Pergeseran diantaranya</value>
+    <value>Pergeseran di antaranya</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Penyeberangan</value>
@@ -486,10 +486,10 @@ Untuk membuat penyeberangan, tekan dan tahan Shift.</value>
     <value>Garis berhenti</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
-    <value>Gabungkan garis</value>
+    <value>Kelompokkan garis</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>Gabungkan templat</value>
+    <value>Kelompokkan templat</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
     <value>Klik untuk membuat penyeberangan</value>
@@ -504,7 +504,7 @@ Untuk membuat penyeberangan, tekan dan tahan Shift.</value>
     <value>Menurut jenis</value>
   </data>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
-    <value>Zebra dobel</value>
+    <value>Zebra ganda</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Lebar garis</value>
@@ -534,7 +534,7 @@ Untuk membuat penyeberangan, tekan dan tahan Shift.</value>
     <value>Pilih tepian kanan dari penyeberangan ini</value>
   </data>
   <data name="Settings_GroupPointsOverlay" xml:space="preserve">
-    <value>Hamparan gabungan titik</value>
+    <value>Hamparan kelompok titik</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
     <value>Susun dalam lingkaran</value>
@@ -543,7 +543,7 @@ Untuk membuat penyeberangan, tekan dan tahan Shift.</value>
     <value>Susun dalam garis</value>
   </data>
   <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
-    <value>Aturan ini ditumpang-tindih oleh aturan lainnya.
+    <value>Aturan ini ditumpangtindih oleh aturan lainnya.
 Cek titik "Dari" dan "Ke" aturan lainnya.</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
@@ -645,10 +645,10 @@ Pemuatan markah untuk {0} persimpangan gagal.</value>
     <value>Pengubah isian</value>
   </data>
   <data name="Settings_RegularLinesModifier" xml:space="preserve">
-    <value>Penubah garis biasa</value>
+    <value>Pengubah garis biasa</value>
   </data>
   <data name="Settings_StopLinesModifier" xml:space="preserve">
-    <value>Pengubah garis pemberhentian</value>
+    <value>Pengubah garis berhenti</value>
   </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
     <value>Belum disetel</value>
@@ -660,7 +660,7 @@ Pemuatan markah untuk {0} persimpangan gagal.</value>
     <value>Selalu</value>
   </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
-    <value>Hanya jika akan memengaruhi yang lainnya</value>
+    <value>Hanya jika akan memengaruhi lainnya</value>
   </data>
   <data name="Tool_DeleteDependence" xml:space="preserve">
     <value>Hal-hal yang berkaitan akan dihapus juga:</value>
@@ -785,7 +785,7 @@ Apakah Anda yakin untuk memiliki lebih dari satu templat dengan nama yang sama?<
     <value>Pulihkan templat</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
-    <value>Apakah Anda yakin untuk memulihkan templat??
+    <value>Apakah Anda yakin untuk memulihkan templat?
 Templat yang dipulihkan akan menggantikan semua templat yang ada.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
@@ -834,7 +834,7 @@ Templat yang dipulihkan akan menggantikan semua templat yang ada.</value>
     <value>Keluar mode edit urutan</value>
   </data>
   <data name="Tool_EndEditOrderMessage" xml:space="preserve">
-    <value>Apakah Anda ingin untuk keluar dari mode edit dan terapkan perubahan?</value>
+    <value>Apakah Anda ingin keluar dari mode edit dan terapkan perubahan?</value>
   </data>
   <data name="Tool_InfoPointsDrag" xml:space="preserve">
     <value>Seret dan lepaskan lingkaran untuk menyetel urutan titik</value>
@@ -852,13 +852,13 @@ Templat yang dipulihkan akan menggantikan semua templat yang ada.</value>
     <value>Iya</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Tahan Shift untuk membuat penyeberangan</value>
+    <value>Tekan dan tahan Shift untuk membuat penyeberangan</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
     <value>Tekan dan tahan Alt untuk membuat isian</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Tekan dan tahan Ctrl untuk mengubah titik</value>
+    <value>Tekan dan tahan Ctrl untuk menggeser titik</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -868,10 +868,10 @@ Templat yang dipulihkan akan menggantikan semua templat yang ada.</value>
     <value>Kosong</value>
   </data>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
-    <value>Buat garis pinggiran</value>
+    <value>Buat garis pinggiran persimpangan</value>
   </data>
   <data name="Panel_CreateEdgeLines" xml:space="preserve">
-    <value>Buat garis pinggiran</value>
+    <value>Buat garis pinggiran persimpangan</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
     <value>Setel ulang pergeseran semua titik</value>
@@ -890,7 +890,8 @@ Templat yang dipulihkan akan menggantikan semua templat yang ada.</value>
     <value>Simpan sebagai aset</value>
   </data>
   <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
-    <value>{0} oleh {1}</value>
+    <value>{0}
+oleh {1}</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
     <value>Tidak ada prasetelan.
@@ -997,13 +998,13 @@ Markah yang dipulihkan akan menggantikan semua prasetelan yang ada.</value>
     <value>Tuliskan kembali aset prasetelan</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>Untuk mengubah nama ini, diperlukan penulisan kembali file aset. Lanjutkan?</value>
+    <value>Untuk mengubah namanya, diperlukan penulisan kembali file aset. Lanjutkan?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
     <value>Tuliskan kembali aset templat</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Untuk mengubah nama dan nilai-nilai ini, diperlukan penulisan kembali file aset. Lanjutkan?</value>
+    <value>Untuk mengubah nama dan nilai-nilainya, diperlukan penulisan kembali file aset. Lanjutkan?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Untuk dapat mengubah tepian penyeberangan, Anda harus memiliki garis yang mulai dari titik yang sama dengan penyeberangan</value>
@@ -1030,7 +1031,7 @@ Markah yang dipulihkan akan menggantikan semua prasetelan yang ada.</value>
     <value>Simpan perubahan</value>
   </data>
   <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
-    <value>Apakah Anda ingin untuk menyimpan perubahan nilai templat?</value>
+    <value>Apakah Anda ingin menyimpan perubahan nilai templat?</value>
   </data>
   <data name="PresetEditor_NameExistMessage" xml:space="preserve">
     <value>Nama "{0}" telah digunakan oleh prasetelan lainnya.
@@ -1104,7 +1105,7 @@ Pemuatan markah untuk semua persimpangan gagal.</value>
 Klik untuk mengedit markah</value>
   </data>
   <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Ikuti panduan</value>
+    <value>Ikuti pemandu</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
     <value>Pemandu kiri</value>
@@ -1113,10 +1114,10 @@ Klik untuk mengedit markah</value>
     <value>Pemandu kanan</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
-    <value>Pilih titik pertama panduan atau garis sebagai panduan</value>
+    <value>Pilih titik pertama pemandu atau garis sebagai pemandu</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
-    <value>Pilih titik kedua panduan</value>
+    <value>Pilih titik kedua pemandu</value>
   </data>
   
   
@@ -1140,10 +1141,10 @@ Klik untuk mengedit markah</value>
     <value>Dipisah menjadi dua</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
-    <value>Pisahkan pergeseran</value>
+    <value>Pemisahan pergeseran</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
-    <value>Gabungkan titik</value>
+    <value>Kelompokkan titik</value>
   </data>
   <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
     <value>Terapkan di antara persimpangan</value>
@@ -1152,10 +1153,10 @@ Klik untuk mengedit markah</value>
     <value>Terapkan di antara persimpangan</value>
   </data>
   <data name="Panel_ApplyWholeStreet" xml:space="preserve">
-    <value>Terapkan ke jalan ujung ke ujung</value>
+    <value>Terapkan ke jalan dari ujung ke ujung</value>
   </data>
   <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
-    <value>Terapkan ke jalan ujung ke ujung</value>
+    <value>Terapkan ke jalan dari ujung ke ujung</value>
   </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
     <value>Ini akan menggantikan markah yang sudah ada.</value>
@@ -1167,7 +1168,7 @@ Klik untuk mengedit markah</value>
     <value>Apakah Anda yakin untuk menerapkan markah di antara persimpangan?</value>
   </data>
   <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
-    <value>Terapkan markah ke jalan ujung ke ujung</value>
+    <value>Terapkan markah ke jalan dari ujung ke ujung</value>
   </data>
   <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
     <value>Apakah anda yakin untuk menerapkan markah ke keseluruhan jalan "{0}"?</value>
