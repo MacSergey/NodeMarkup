@@ -1190,4 +1190,10 @@ Klik untuk mengedit markah</value>
   
   
   
+  
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Trotoar</value>
+  </data>
+  
+  
 </root>

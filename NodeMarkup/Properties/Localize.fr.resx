@@ -1248,4 +1248,16 @@ Cliquez pour modifier le marquage</value>
   
   
   
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Cacher les noms des rues lors de l'utilisation</value>
+  </data>
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Trottoir</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Cliquer sur Ctrl pour sélectionner le passage piéton</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Cliquer sur Ctrl pour sélectionner la ligne</value>
+  </data>
 </root>

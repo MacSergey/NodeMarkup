@@ -1310,4 +1310,10 @@ Klicken um die Markierungen zu bearbeiten</value>
   
   
   
+  
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Randstein</value>
+  </data>
+  
+  
 </root>

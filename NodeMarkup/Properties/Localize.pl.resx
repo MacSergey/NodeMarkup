@@ -1249,4 +1249,12 @@ Kliknij aby edytować oznaczenia</value>
   
   
   
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Ukryj nazwy ulic w czasie używania narzędzia</value>
+  </data>
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Chodnik</value>
+  </data>
+  
+  
 </root>

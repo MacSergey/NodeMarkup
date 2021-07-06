@@ -1379,4 +1379,16 @@ Click to edit markings</value>
 - Fixed bug when nodes with marking after loading had a wrong shape.
 - Added Indonesian translation.</value>
   </data>
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Hide street names while using tool</value>
+  </data>
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Pavement</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Click with Ctrl to select the crosswalk</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Click with Ctrl to select the line</value>
+  </data>
 </root>

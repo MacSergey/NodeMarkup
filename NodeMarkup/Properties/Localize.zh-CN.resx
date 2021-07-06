@@ -1279,5 +1279,17 @@
     <value>- 添加了必要项缺失检查
 - 修复了可用区块外节点3D填充的高度</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_7_4" xml:space="preserve">
+    <value>- 修复了预设缩略图的存读问题
+- 修复了带有标线的节点在加载后出现的形状错误
+- 添加了印尼语翻译</value>
+  </data>
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>使用工具时隐藏路名</value>
+  </data>
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>路肩</value>
+  </data>
+  
   
 </root>

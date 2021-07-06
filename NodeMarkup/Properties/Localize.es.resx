@@ -1247,4 +1247,10 @@ Haga clic para editar las marcas</value>
   
   
   
+  
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Acera</value>
+  </data>
+  
+  
 </root>

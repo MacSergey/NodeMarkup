@@ -1247,4 +1247,10 @@ Klik om de markering te wijzigen</value>
   
   
   
+  
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Bestrating</value>
+  </data>
+  
+  
 </root>

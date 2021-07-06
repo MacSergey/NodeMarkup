@@ -1373,5 +1373,17 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>- Aggiunto il controllo delle dipendenze mancanti.
 - Corretta l'altezza dei riempitivi 3D sui nodi al di fuori dei riquadri disponibili.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_7_4" xml:space="preserve">
+    <value>- Risolto il problema con lo screenshot dei preset di salvataggio e caricamento.
+- Risolto bug quando i nodi con marcatura dopo il caricamento avevano una forma sbagliata.
+- Aggiunta traduzione indonesiana.</value>
+  </data>
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Nascondi i nomi delle strade durante l'utilizzo dello strumento</value>
+  </data>
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Marciapiede</value>
+  </data>
+  
   
 </root>

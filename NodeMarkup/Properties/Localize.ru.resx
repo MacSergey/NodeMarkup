@@ -1382,4 +1382,16 @@
 - Исправлен баг, который делал узлы с маркировкой неправильной формы после загрузки.
 - Добавлен перевод на индонезийский.</value>
   </data>
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Скрывать названия улиц во время использования</value>
+  </data>
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Тротуар</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Нажмите c Ctrl для выбора перехода</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Нажмите c Ctrl для выбора линии</value>
+  </data>
 </root>

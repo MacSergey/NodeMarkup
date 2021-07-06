@@ -1259,4 +1259,10 @@ Klikněte pro změnu značení</value>
   
   
   
+  
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Chodník</value>
+  </data>
+  
+  
 </root>

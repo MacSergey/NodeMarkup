@@ -1250,4 +1250,10 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   
   
   
+  
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>舗装（3Dスタイル）</value>
+  </data>
+  
+  
 </root>

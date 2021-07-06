@@ -1259,4 +1259,10 @@ Clique para editar marcações</value>
   
   
   
+  
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Pavimento</value>
+  </data>
+  
+  
 </root>
