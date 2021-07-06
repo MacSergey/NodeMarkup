@@ -1374,4 +1374,9 @@ Click to edit markings</value>
     <value>- Added missing dependencies checker.
 - Fix 3D fillers height on nodes outside available tiles.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_7_4" xml:space="preserve">
+    <value>- Fixed save and load presets' screenshot.
+- Fixed bug when nodes with marking after loading had a wrong shape.
+- Added Indonesian translation.</value>
+  </data>
 </root>
