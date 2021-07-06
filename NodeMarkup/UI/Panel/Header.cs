@@ -55,7 +55,7 @@ namespace NodeMarkup.UI.Panel
         public void Init(MarkupType type)
         {
             Type = type;
-            base.Init(height);
+            base.Init(null);
         }
 
         public override void Refresh()
