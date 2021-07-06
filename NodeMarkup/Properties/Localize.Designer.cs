@@ -1343,6 +1343,17 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Fixed save and load presets&apos; screenshot.
+        ///- Fixed bug when nodes with marking after loading had a wrong shape.
+        ///- Added Indonesian translation..
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_7_4 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_7_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply between intersections.
         /// </summary>
         public static string Panel_ApplyBetweenIntersections {
