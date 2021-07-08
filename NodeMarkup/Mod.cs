@@ -62,6 +62,7 @@ namespace NodeMarkup
         #endregion
 
         protected override ResourceManager LocalizeManager => Localize.ResourceManager;
+        protected override bool NeedMonoDevelopImpl => true;
 
         #region BASIC
 
