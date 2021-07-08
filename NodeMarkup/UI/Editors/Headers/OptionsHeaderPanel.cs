@@ -62,8 +62,6 @@ namespace NodeMarkup.UI.Editors
             OnPaste = null;
 
             SingletonTool<NodeMarkupTool>.Instance.OnStyleToBuffer -= StyleToBuffer;
-
-            ApplyTemplate.Button.DeInit();
         }
         private void SaveTemplateClick() => OnSaveTemplate?.Invoke();
         private void CopyClick() => OnCopy?.Invoke();
