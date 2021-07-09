@@ -130,6 +130,7 @@ namespace NodeMarkup
             success &= Patch_NetManagerReleas_SegmentImplementation();
             success &= Patch_NetManager_SimulationStepImpl_Prefix();
             success &= Patch_NetManager_SimulationStepImpl_Postfix();
+            success &= Patch_NetManager_EndOverlay_Prefix();
         }
 
         private bool Patch_NetManagerRelease_NodeImplementation()
@@ -149,6 +150,14 @@ namespace NodeMarkup
         private bool Patch_NetManager_SimulationStepImpl_Postfix()
         {
             return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.Update), typeof(NetManager), "SimulationStepImpl");
+        }
+        private bool Patch_NetManager_EndOverlay_Prefix()
+        {
+            return AddPrefix(typeof(Mod), nameof(Mod.NetManagerEndOverlay), typeof(NetManager), "EndOverlayImpl");
+        }
+        private static bool NetManagerEndOverlay()
+        {
+            return !SingletonTool<NodeMarkupTool>.Instance.enabled || !Settings.HideStreetName;
         }
 
         #endregion

@@ -2040,6 +2040,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Hide street names while using tool.
+        /// </summary>
+        public static string Settings_HideStreetName {
+            get {
+                return ResourceManager.GetString("Settings_HideStreetName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Load markings assets.
         /// </summary>
         public static string Settings_LoadMarkingAssets {

@@ -36,6 +36,7 @@ namespace NodeMarkup
         public static SavedBool QuickBorderSetup { get; } = new SavedBool(nameof(QuickBorderSetup), SettingsFile, true, true);
         public static SavedBool CutLineByCrosswalk { get; } = new SavedBool(nameof(CutLineByCrosswalk), SettingsFile, true, true);
         public static SavedBool NotCutBordersByCrosswalk { get; } = new SavedBool(nameof(NotCutBordersByCrosswalk), SettingsFile, true, true);
+        public static SavedBool HideStreetName { get; } = new SavedBool(nameof(HideStreetName), SettingsFile, true, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
         public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
 
@@ -103,6 +104,7 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
             AddCheckBox(group, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
             AddCheckBox(group, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
+            AddCheckBox(group, Localize.Settings_HideStreetName, HideStreetName);
         }
         private void AddGrouping(UIAdvancedHelper helper)
         {
