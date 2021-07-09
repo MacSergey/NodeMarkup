@@ -21,40 +21,6 @@ namespace NodeMarkup.Utilities
         public static string NotApplyButton => nameof(NotApplyButton);
         public static string ResetButton => nameof(ResetButton);
 
-        private static string[] StyleNames { get; } = new string[]
-            {
-                nameof(Style.StyleType.LineSolid),
-                nameof(Style.StyleType.LineDashed),
-                nameof(Style.StyleType.LineDoubleSolid),
-                nameof(Style.StyleType.LineDoubleDashed),
-                nameof(Style.StyleType.LineSolidAndDashed),
-                nameof(Style.StyleType.LineSharkTeeth),
-                nameof(Style.StyleType.LinePavement),
-
-                nameof(Style.StyleType.StopLineSolid),
-                nameof(Style.StyleType.StopLineDashed),
-                nameof(Style.StyleType.StopLineDoubleSolid),
-                nameof(Style.StyleType.StopLineDoubleDashed),
-                nameof(Style.StyleType.StopLineSolidAndDashed),
-                nameof(Style.StyleType.StopLineSharkTeeth),
-
-                nameof(Style.StyleType.FillerStripe),
-                nameof(Style.StyleType.FillerGrid),
-                nameof(Style.StyleType.FillerSolid),
-                nameof(Style.StyleType.FillerChevron),
-                nameof(Style.StyleType.FillerPavement),
-                nameof(Style.StyleType.FillerGrass),
-
-                nameof(Style.StyleType.CrosswalkExistent),
-                nameof(Style.StyleType.CrosswalkZebra),
-                nameof(Style.StyleType.CrosswalkDoubleZebra),
-                nameof(Style.StyleType.CrosswalkParallelSolidLines),
-                nameof(Style.StyleType.CrosswalkParallelDashedLines),
-                nameof(Style.StyleType.CrosswalkLadder),
-                nameof(Style.StyleType.CrosswalkSolid),
-                nameof(Style.StyleType.CrosswalkChessBoard),
-            };
-
         public static string AddTemplate => nameof(AddTemplate);
         public static string ApplyTemplate => nameof(ApplyTemplate);
         public static string Copy => nameof(Copy);
@@ -89,7 +55,10 @@ namespace NodeMarkup.Utilities
         private static Dictionary<string, TextureHelper.SpriteParamsGetter> Files { get; } = new Dictionary<string, TextureHelper.SpriteParamsGetter>
         {
             {nameof(OrderButtons), OrderButtons},
-            {nameof(Styles), Styles},
+            {nameof(StylesLines), StylesLines},
+            {nameof(StylesStopLines), StylesStopLines},
+            {nameof(StylesCrosswalks), StylesCrosswalks},
+            {nameof(StylesFillers), StylesFillers},
             {nameof(HeaderButtons), HeaderButtons},
             {nameof(ListItem), ListItem},
             {nameof(Button), Button},
@@ -103,7 +72,20 @@ namespace NodeMarkup.Utilities
 
         private static UITextureAtlas.SpriteInfo[] OrderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 50, 50, TurnLeftButton, FlipButton, TurnRightButton, ApplyButton, NotApplyButton, ResetButton).ToArray();
 
-        private static UITextureAtlas.SpriteInfo[] Styles(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 19, 19, StyleNames).ToArray();
+        private static UITextureAtlas.SpriteInfo[] Styles<TypeStyle>(int texWidth, int texHeight, Rect rect)
+            where TypeStyle : Enum
+        {
+            var sprites = EnumExtension.GetEnumValues<TypeStyle>().Select(v => ((Style.StyleType)(object)v).ToString()).ToArray();
+            return TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 19, 19, sprites).ToArray();
+        }
+
+        private static UITextureAtlas.SpriteInfo[] StylesLines(int texWidth, int texHeight, Rect rect) => Styles<RegularLineStyle.RegularLineType>(texWidth, texHeight, rect);
+
+        private static UITextureAtlas.SpriteInfo[] StylesStopLines(int texWidth, int texHeight, Rect rect) => Styles<StopLineStyle.StopLineType>(texWidth, texHeight, rect);
+
+        private static UITextureAtlas.SpriteInfo[] StylesCrosswalks(int texWidth, int texHeight, Rect rect) => Styles<CrosswalkStyle.CrosswalkType>(texWidth, texHeight, rect);
+
+        private static UITextureAtlas.SpriteInfo[] StylesFillers(int texWidth, int texHeight, Rect rect) => Styles<FillerStyle.FillerType>(texWidth, texHeight, rect);
 
         private static UITextureAtlas.SpriteInfo[] HeaderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Cut, BeetwenIntersections, WholeStreet).ToArray();
 

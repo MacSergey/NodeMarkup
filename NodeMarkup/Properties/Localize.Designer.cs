@@ -1084,6 +1084,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Pavement.
+        /// </summary>
+        public static string LineStyle_StopPavement {
+            get {
+                return ResourceManager.GetString("LineStyle_StopPavement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Shark teeth.
         /// </summary>
         public static string LineStyle_StopSharkTeeth {

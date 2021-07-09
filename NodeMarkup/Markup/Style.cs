@@ -310,6 +310,9 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             StopLineSharkTeeth,
 
+            [Description(nameof(Localize.LineStyle_StopPavement))]
+            StopLinePavement,
+
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
             StopLineBuffer = Markup.Item.StopLine + 0x100 - 1,

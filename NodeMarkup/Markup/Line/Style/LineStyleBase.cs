@@ -54,6 +54,10 @@ namespace NodeMarkup.Manager
         PropertyValue<float> DashLength { get; }
         PropertyValue<float> SpaceLength { get; }
     }
+    public interface I3DLine
+    {
+        PropertyValue<float> Elevation { get; }
+    }
 
     public abstract class LineStyle : Style<LineStyle>
     {
@@ -134,6 +138,22 @@ namespace NodeMarkup.Manager
             alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment.Value = value;
             return alignmentProperty;
         }
+        protected FloatPropertyPanel AddElevationProperty(I3DLine line3DStyle, UIComponent parent)
+        {
+            var elevationProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            elevationProperty.Text = Localize.LineStyle_Elevation;
+            elevationProperty.UseWheel = true;
+            elevationProperty.WheelStep = 0.1f;
+            elevationProperty.CheckMin = true;
+            elevationProperty.MinValue = 0f;
+            elevationProperty.CheckMax = true;
+            elevationProperty.MaxValue = 1f;
+            elevationProperty.Init();
+            elevationProperty.Value = line3DStyle.Elevation;
+            elevationProperty.OnValueChanged += (float value) => line3DStyle.Elevation.Value = value;
+
+            return elevationProperty;
+        }
     }
     public abstract class LineStyle<StyleType> : LineStyle
         where StyleType : LineStyle<StyleType>
@@ -158,6 +178,9 @@ namespace NodeMarkup.Manager
         };
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
+
+        public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod) => line is MarkupRegularLine regularLine ? Calculate(regularLine, trajectory, lod) : new MarkupStyleParts();
+        protected abstract IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod);
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
@@ -215,6 +238,7 @@ namespace NodeMarkup.Manager
             {StopLineType.DoubleDashed, new DoubleDashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
             {StopLineType.SolidAndDashed, new SolidAndDashedStopLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
             {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
+            {StopLineType.Pavement, new PavementStopLineStyle(Default3DWidth, Default3DHeigth) },
         };
 
         public StopLineStyle(Color32 color, float width) : base(color, width) { }
@@ -252,6 +276,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             SharkTeeth = StyleType.StopLineSharkTeeth,
+
+            [Description(nameof(Localize.LineStyle_StopPavement))]
+            Pavement = StyleType.StopLinePavement,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]

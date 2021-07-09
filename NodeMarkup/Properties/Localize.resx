@@ -1382,4 +1382,7 @@ Click to edit markings</value>
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Hide street names while using tool</value>
   </data>
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Pavement</value>
+  </data>
 </root>

@@ -17,7 +17,7 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyLineStyle() => new SolidLineStyle(Color, Width);
 
-        public override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             var borders = line.Borders;
             return new MarkupStyleParts(StyleHelper.CalculateSolid(trajectory, lod, GetDashes));
@@ -123,7 +123,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Width, DashLength))
                 return new MarkupStyleParts();
@@ -259,7 +259,7 @@ namespace NodeMarkup.Manager
             Invert.Value = value == Manager.Alignment.Right;
         }
 
-        public override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             var solidOffset = CenterSolid ? 0 : Invert ? Offset : -Offset;
             var dashedOffset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
@@ -372,7 +372,7 @@ namespace NodeMarkup.Manager
             Space = GetSpaceProperty(space);
             Invert = GetInvertProperty(true);
         }
-        public override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Height, Base))
                 return new MarkupStyleParts();

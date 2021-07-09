@@ -267,10 +267,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Styles.tga" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\StylesCrosswalks.tga" />
+    <EmbeddedResource Include="Resources\StylesFillers.tga" />
+    <EmbeddedResource Include="Resources\StylesLines.tga" />
+    <EmbeddedResource Include="Resources\StylesStopLines.tga" />
   </ItemGroup>
   <Import Project="..\ModsCommon\ModShared\ModsCommonShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\ToolShared\ModsToolShared.projitems" Label="Shared" />
@@ -315,7 +316,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_DetectChanges="False" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
