@@ -21,7 +21,16 @@ namespace NodeMarkup.Tools
         public ToolModeType Type => ToolModeType.Select;
 
 
-        public override string GetToolInfo() => IsHoverNode ? string.Format(Localize.Tool_InfoHoverNode, HoverNode.Id) : (IsHoverSegment ? string.Format(Localize.Tool_InfoHoverSegment, HoverSegment.Id) : Localize.Tool_SelectInfo);
+        public override string GetToolInfo()
+        {
+            if (IsHoverNode)
+                return string.Format(Localize.Tool_InfoHoverNode, HoverNode.Id) + GetStepOverInfo();
+            else if (IsHoverSegment)
+                return string.Format(Localize.Tool_InfoHoverSegment, HoverSegment.Id) + GetStepOverInfo();
+            else
+                return Localize.Tool_SelectInfo;
+        }
+        private string GetStepOverInfo() => NodeMarkupTool.SelectionStepOverShortcut.NotSet? string.Empty : "\n\n" + string.Format(CommonLocalize.Tool_InfoSelectionStepOver, NodeMarkupTool.SelectionStepOverShortcut.InputKey);
 
         public override void OnPrimaryMouseClicked(Event e)
         {
