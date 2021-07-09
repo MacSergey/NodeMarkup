@@ -326,4 +326,51 @@ namespace NodeMarkup.Manager
             Space.FromXml(config, DefaultSharkSpaceLength);
         }
     }
+
+    public abstract class StopLine3DStyle : StopLineStyle, IWidthStyle, I3DLine
+    {
+        protected abstract MaterialType MaterialType { get; }
+        public PropertyValue<float> Elevation { get; }
+
+        public StopLine3DStyle(float width, float elevation) : base(default, width)
+        {
+            Elevation = GetElevationProperty(elevation);
+        }
+        public override void CopyTo(LineStyle target)
+        {
+            base.CopyTo(target);
+            if (target is I3DLine line3DTarget)
+                line3DTarget.Elevation.Value = Elevation;
+        }
+
+        protected override IStyleData Calculate(MarkupStopLine line, ITrajectory trajectory, MarkupLOD lod) => new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
+
+        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        {
+            base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddElevationProperty(this, parent));
+        }
+
+        public override XElement ToXml()
+        {
+            var config = BaseToXml();
+            Width.ToXml(config);
+            Elevation.ToXml(config);
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            Width.FromXml(config, Default3DWidth);
+            Elevation.FromXml(config, Default3DHeigth);
+        }
+    }
+    public class PavementStopLineStyle : StopLine3DStyle
+    {
+        public override StyleType Type { get; } = StyleType.StopLinePavement;
+        protected override MaterialType MaterialType => MaterialType.Pavement;
+
+        public PavementStopLineStyle(float width, float elevation) : base(width, elevation) { }
+
+        public override StopLineStyle CopyLineStyle() => new PavementStopLineStyle(Width, Elevation);
+    }
 }

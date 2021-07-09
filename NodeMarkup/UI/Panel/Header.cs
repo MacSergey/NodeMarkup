@@ -51,10 +51,11 @@ namespace NodeMarkup.UI.Panel
             Content.AddButton(WholeStreetButton);
         }
 
+        public void Init(float height) => base.Init(height);
         public void Init(MarkupType type)
         {
             Type = type;
-            base.Init();
+            base.Init(null);
         }
 
         public override void Refresh()

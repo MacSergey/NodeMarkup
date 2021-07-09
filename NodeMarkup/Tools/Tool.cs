@@ -27,6 +27,7 @@ namespace NodeMarkup.Tools
         #region STATIC
 
         public static NodeMarkupShortcut ActivationShortcut { get; } = new NodeMarkupShortcut(nameof(ActivationShortcut), nameof(CommonLocalize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
+        public static NodeMarkupShortcut SelectionStepOverShortcut { get; } = new NodeMarkupShortcut(nameof(SelectionStepOverShortcut), nameof(CommonLocalize.Settings_ShortcutSelectionStepOver), SavedInputKey.Encode(KeyCode.Space, true, false, false), () => SingletonTool<NodeMarkupTool>.Instance.SelectionStepOver(), ToolModeType.Select);
         public static NodeMarkupShortcut AddRuleShortcut { get; } = new NodeMarkupShortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false), () =>
         {
             if (SingletonItem<NodeMarkupPanel>.Instance.CurrentEditor is UI.Editors.LinesEditor linesEditor)
@@ -48,6 +49,7 @@ namespace NodeMarkup.Tools
         {
             get
             {
+                yield return SelectionStepOverShortcut;
                 yield return AddRuleShortcut;
                 yield return DeleteAllShortcut;
                 yield return ResetOffsetsShortcut;
@@ -135,6 +137,11 @@ namespace NodeMarkup.Tools
                 if (NextMode is MakeFillerToolMode fillerToolMode)
                     fillerToolMode.DisableByAlt = false;
             }
+        }
+        private void SelectionStepOver()
+        {
+            if (Mode is SelectToolMode selectMode)
+                selectMode.IgnoreSelected();
         }
         private void DeleteAllMarking()
         {

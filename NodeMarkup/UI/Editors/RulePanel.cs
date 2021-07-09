@@ -151,6 +151,8 @@ namespace NodeMarkup.UI.Editors
 
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
+            Style.UseWheel = true;
+            Style.WheelTip = true;
             Style.SelectedObject = Rule.Style.Value.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }

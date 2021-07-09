@@ -152,6 +152,8 @@ namespace NodeMarkup.UI.Editors
             Style = ComponentPool.Get<CrosswalkPropertyPanel>(PropertiesPanel, nameof(Style));
             Style.Text = NodeMarkup.Localize.Editor_Style;
             Style.Init();
+            Style.UseWheel = true;
+            Style.WheelTip = true;
             Style.SelectedObject = EditObject.Style.Value.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }

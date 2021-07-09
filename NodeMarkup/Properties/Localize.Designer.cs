@@ -1084,6 +1084,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Pavement.
+        /// </summary>
+        public static string LineStyle_StopPavement {
+            get {
+                return ResourceManager.GetString("LineStyle_StopPavement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Shark teeth.
         /// </summary>
         public static string LineStyle_StopSharkTeeth {
@@ -2036,6 +2045,15 @@ namespace NodeMarkup {
         public static string Settings_GroupTemplatesByType {
             get {
                 return ResourceManager.GetString("Settings_GroupTemplatesByType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Hide street names while using tool.
+        /// </summary>
+        public static string Settings_HideStreetName {
+            get {
+                return ResourceManager.GetString("Settings_HideStreetName", resourceCulture);
             }
         }
         
@@ -3381,6 +3399,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Click with Ctrl to select the crosswalk.
+        /// </summary>
+        public static string Tool_InfoSelectCrosswalk {
+            get {
+                return ResourceManager.GetString("Tool_InfoSelectCrosswalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Select endpoint.
         /// </summary>
         public static string Tool_InfoSelectCrosswalkEndPoint {
@@ -3396,6 +3423,15 @@ namespace NodeMarkup {
         public static string Tool_InfoSelectCrosswalkStartPoint {
             get {
                 return ResourceManager.GetString("Tool_InfoSelectCrosswalkStartPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Click with Ctrl to select the line.
+        /// </summary>
+        public static string Tool_InfoSelectLine {
+            get {
+                return ResourceManager.GetString("Tool_InfoSelectLine", resourceCulture);
             }
         }
         

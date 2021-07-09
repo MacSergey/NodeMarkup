@@ -37,12 +37,13 @@ namespace NodeMarkup.UI.Editors
 
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
         {
-            base.Init(isDeletable: isDeletable);
             StyleGroup = styleGroup.GetGroup();
             ApplyTemplate.Button.Init(StyleGroup, onSelectTemplate);
 
             SetPasteEnabled();
             SingletonTool<NodeMarkupTool>.Instance.OnStyleToBuffer += StyleToBuffer;
+
+            base.Init(isDeletable: isDeletable);
         }
 
         private void StyleToBuffer(Style.StyleType group)
@@ -61,8 +62,6 @@ namespace NodeMarkup.UI.Editors
             OnPaste = null;
 
             SingletonTool<NodeMarkupTool>.Instance.OnStyleToBuffer -= StyleToBuffer;
-
-            ApplyTemplate.Button.DeInit();
         }
         private void SaveTemplateClick() => OnSaveTemplate?.Invoke();
         private void CopyClick() => OnCopy?.Invoke();
@@ -135,9 +134,8 @@ namespace NodeMarkup.UI.Editors
 
         public virtual void Init(TemplateType template)
         {
-            base.Init(isDeletable: false);
             Template = template;
-            Refresh();
+            base.Init(isDeletable: false);
         }
         public override void DeInit()
         {
