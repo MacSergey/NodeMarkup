@@ -1247,10 +1247,16 @@ Klik om de markering te wijzigen</value>
   
   
   
-  
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Verberg straatnamen tijdens het gebruik van IMT</value>
+  </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>Bestrating</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Klik met Ctrl om een oversteekplaats te selecteren</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Klik met Ctrl om een lijn te selecteren</value>
+  </data>
 </root>

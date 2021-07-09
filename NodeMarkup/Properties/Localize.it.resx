@@ -1384,6 +1384,10 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>Marciapiede</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Click+Ctrl per selezionare l'attraversamento pedonale</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Click+Ctrl per selezionare la linea</value>
+  </data>
 </root>

@@ -1290,6 +1290,10 @@
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>路肩</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>按住Ctrl点击来选中人行横道</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>按住Ctrl点击来选中线</value>
+  </data>
 </root>

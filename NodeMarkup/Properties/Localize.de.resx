@@ -1310,10 +1310,16 @@ Klicken um die Markierungen zu bearbeiten</value>
   
   
   
-  
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Straßennamen während der Verwendung ausblenden</value>
+  </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>Randstein</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Strg+Klick um den Überweg auszuwählen</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Strg+Klick um die Linie auszuwählen</value>
+  </data>
 </root>

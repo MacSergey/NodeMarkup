@@ -217,7 +217,7 @@
     <value>新規ルールを追加</value>
   </data>
   <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
-    <value>ノードのマーキングを全て削除</value>
+    <value>マーキングを全て削除</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
     <value>全ての交差点からマーキングを削除</value>
@@ -281,10 +281,10 @@
     <value>新規テンプレート</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>ノード内のマーキングを全て消去</value>
+    <value>マーキングを全て消去</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>ノード #{0} のマーキングを全て削除してもよろしいですか?</value>
+    <value>ノード（セグメント） #{0} のマーキングを全て削除してもよろしいですか?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>クリックしてラインの追加</value>
@@ -408,11 +408,11 @@
     <value>左右に回転</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
-    <value>交差点（ノード）にラインの設定がありません。
+    <value>どこにもラインの設定がありません。
 2つのポイントを繋げて作りましょう。</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>交差点（ノード）に塗り潰しの設定がありません。
+    <value>どこにも塗り潰しの設定がありません。
 Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
@@ -522,7 +522,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
     <value>横断歩道</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>交差点（ノード）に、横断歩道の設定がありません。
+    <value>どこにも横断歩道の設定がありません。
 Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
@@ -649,7 +649,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>マーキングが正常に描画されず、ロードエラーがありました。
-{0} ヶ所の交差点（ノード）で、マーキングの描画に失敗しました。</value>
+{0} ヶ所のノードやセグメントで、マーキングの描画に失敗しました。</value>
   </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>チェス盤の横断歩道</value>
@@ -694,16 +694,16 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>本当にマーキングを貼り付けますか？</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
-    <value>横断歩道のキー設定</value>
+    <value>横断歩道のキーバインド</value>
   </data>
   <data name="Settings_FillersModifier" xml:space="preserve">
-    <value>塗り潰しのキー設定</value>
+    <value>塗り潰しのキーバインド</value>
   </data>
   <data name="Settings_RegularLinesModifier" xml:space="preserve">
-    <value>ラインのキー設定</value>
+    <value>ラインのキーバインド</value>
   </data>
   <data name="Settings_StopLinesModifier" xml:space="preserve">
-    <value>停止線のキー設定</value>
+    <value>停止線のキーバインド</value>
   </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
     <value>未設定</value>
@@ -769,7 +769,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>ポイントのオフセットを全てリセット</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>ノード #{0} にある、ポイントのオフセットを全てリセットしますか？</value>
+    <value>ノード（セグメント） #{0} にある、ポイントのオフセットを全てリセットしますか？</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>円周上のポイントをD&amp;Dで、道路側のマーキングの順序を入れ替え
@@ -908,13 +908,13 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>Yes</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Shift押下で、横断歩道の作成</value>
+    <value>Shiftキー押下で、横断歩道の作成</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Alt押下で、塗り潰しを開始</value>
+    <value>Altキー押下で、塗り潰しを開始</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Ctrl + ドラッグで、ポイントを移動</value>
+    <value>Ctrlキー + ドラッグで、ポイントを移動</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1219,7 +1219,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>通り全体にマーキングを一括適用</value>
   </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
-    <value>既存であるノード内のマーキングは、全て置き換えます。</value>
+    <value>既存であるマーキングは、全て置き換えます。</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
     <value>交差点間でマーキングを一括で適用します</value>
@@ -1250,10 +1250,16 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   
   
   
-  
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>ツール使用時に道路名を非表示</value>
+  </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>舗装（3Dスタイル）</value>
   </data>
-  
-  
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Ctrlキー + クリックで、横断歩道を選択</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Ctrlキー + クリックで、ラインを選択</value>
+  </data>
 </root>
