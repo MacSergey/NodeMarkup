@@ -3399,6 +3399,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Click with Ctrl to select the crosswalk.
+        /// </summary>
+        public static string Tool_InfoSelectCrosswalk {
+            get {
+                return ResourceManager.GetString("Tool_InfoSelectCrosswalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Select endpoint.
         /// </summary>
         public static string Tool_InfoSelectCrosswalkEndPoint {
@@ -3414,6 +3423,15 @@ namespace NodeMarkup {
         public static string Tool_InfoSelectCrosswalkStartPoint {
             get {
                 return ResourceManager.GetString("Tool_InfoSelectCrosswalkStartPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Click with Ctrl to select the line.
+        /// </summary>
+        public static string Tool_InfoSelectLine {
+            get {
+                return ResourceManager.GetString("Tool_InfoSelectLine", resourceCulture);
             }
         }
         

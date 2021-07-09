@@ -1385,4 +1385,10 @@ Click to edit markings</value>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>Pavement</value>
   </data>
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Click with Ctrl to select the crosswalk</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Click with Ctrl to select the line</value>
+  </data>
 </root>

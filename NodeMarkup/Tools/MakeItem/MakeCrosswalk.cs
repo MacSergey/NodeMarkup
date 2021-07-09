@@ -40,8 +40,13 @@ namespace NodeMarkup.Tools
             {
                 var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
 
-                if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
-                    Tool.DeleteItem(line, OnDelete);
+                if (Tool.Markup.TryGetLine(pointPair, out MarkupCrosswalkLine line))
+                {
+                    if (Utility.OnlyCtrlIsPressed)
+                        Panel.EditCrosswalk(line.Crosswalk);
+                    else
+                        Tool.DeleteItem(line, OnDelete);
+                }
                 else
                 {
                     var style = Tool.GetStyleByModifier<CrosswalkStyle, CrosswalkStyle.CrosswalkType>(CrosswalkStyle.CrosswalkType.Zebra);
@@ -128,7 +133,7 @@ namespace NodeMarkup.Tools
         {
             var bezier = new Line3(SelectPoint.Position, HoverPoint.Position).GetBezier();
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistLine(pointPair) ? Colors.Red : Colors.Green;
+            var color = Tool.Markup.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
 
             bezier.RenderBezier(new OverlayData(cameraInfo) { Color = color, Width = MarkupCrosswalkPoint.Shift * 2, Cut = true });
         }
