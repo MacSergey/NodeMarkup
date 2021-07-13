@@ -49,8 +49,8 @@ namespace NodeMarkup.Manager
         public static void UpdateSegment(ushort segmentId) => SingletonManager<SegmentMarkupManager>.Instance.Update(segmentId);
         public static void UpdateAll()
         {
-            SingletonManager<NodeMarkupManager>.Instance.UpdateAll();
-            SingletonManager<SegmentMarkupManager>.Instance.UpdateAll();
+            SingletonManager<NodeMarkupManager>.Instance.AddAllToUpdate();
+            SingletonManager<SegmentMarkupManager>.Instance.AddAllToUpdate();
         }
 
         public static void NetInfoInitNodeInfoPostfix(Node info)
@@ -136,10 +136,12 @@ namespace NodeMarkup.Manager
                     markup.Update();
             }
         }
-        public void UpdateAll()
+        public void AddAllToUpdate()
         {
-            foreach (var markup in Markups.Values)
-                markup.Update();
+            SingletonMod<Mod>.Logger.Debug($"Update all {typeof(TypeMarkup).Name} markings");
+
+            foreach (var id in Markups.Keys)
+                AddToUpdate(id);
         }
 
         public void Render(RenderManager.CameraInfo cameraInfo, ushort id, ref RenderManager.Instance data)
@@ -147,10 +149,10 @@ namespace NodeMarkup.Manager
             if (data.m_nextInstance != ushort.MaxValue)
                 return;
 
-            if (!TryGetMarkup(id, out TypeMarkup markup))
+            if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
                 return;
 
-            if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
+            if (!TryGetMarkup(id, out TypeMarkup markup))
                 return;
 
             if (markup.NeedRecalculateDrawData)
