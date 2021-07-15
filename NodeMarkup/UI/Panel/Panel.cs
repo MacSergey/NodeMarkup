@@ -12,40 +12,19 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Panel
 {
-    public class NodeMarkupPanel : CustomUIPanel
+    public class NodeMarkupPanel : ToolPanel<Mod, NodeMarkupTool, NodeMarkupPanel>
     {
-        public static void CreatePanel()
-        {
-            SingletonMod<Mod>.Logger.Debug($"Create panel");
-            UIView.GetAView().AddUIComponent(typeof(NodeMarkupPanel));
-            SingletonMod<Mod>.Logger.Debug($"Panel created");
-        }
-        public static void RemovePanel()
-        {
-            SingletonMod<Mod>.Logger.Debug($"Remove panel");
-            if (SingletonItem<NodeMarkupPanel>.Instance is NodeMarkupPanel panel)
-            {
-                panel.Hide();
-                Destroy(panel);
-                SingletonItem<NodeMarkupPanel>.Instance = null;
-                SingletonMod<Mod>.Logger.Debug($"Panel removed");
-            }
-        }
-
         #region PROPERTIES
 
-        private static Vector2 DefaultPosition { get; } = new Vector2(100f, 100f);
-
-        public bool Active
+        public override bool Active
         {
-            get => enabled && isVisible;
+            get => base.Active;
             set
             {
                 if (value == Active)
                     return;
 
-                enabled = value;
-                isVisible = value;
+                base.Active = value;
 
                 if (value)
                 {
@@ -63,17 +42,12 @@ namespace NodeMarkup.UI.Panel
         private float Width => 550f;
 
         public Markup Markup { get; private set; }
-        private bool NeedUpdateOnVisible { get; set; }
-        public bool IsHover => (isVisible && this.IsHover(SingletonTool<NodeMarkupTool>.Instance.MousePosition)) || components.Any(c => c.isVisible && c.IsHover(SingletonTool<NodeMarkupTool>.Instance.MousePosition));
+        private bool NeedRefreshOnVisible { get; set; }
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }
         public List<Editor> Editors { get; } = new List<Editor>();
         public Editor CurrentEditor { get; set; }
-
-        private float HeaderHeight => 42f;
-        private Vector2 EditorSize => size - new Vector2(0, Header.height + TabStrip.height);
-        private Vector2 EditorPosition => new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
 
         public bool Available
         {
@@ -83,6 +57,7 @@ namespace NodeMarkup.UI.Panel
                 TabStrip.SetAvailable(value);
             }
         }
+        protected override bool NeedRefresh => base.NeedRefresh && NeedRefreshOnVisible;
 
         #endregion
 
@@ -90,8 +65,6 @@ namespace NodeMarkup.UI.Panel
 
         public override void Awake()
         {
-            base.Awake();
-
             SingletonItem<NodeMarkupPanel>.Instance = this;
 
             atlas = TextureHelper.InGameAtlas;
@@ -105,32 +78,19 @@ namespace NodeMarkup.UI.Panel
 
             minimumSize = GetSize(400);
 
-            Active = false;
+            base.Awake();
         }
         public override void Start()
         {
             base.Start();
 
-            SetDefaultPosition();
             SetDefaulSize();
             minimumSize = GetSize(200);
         }
         public override void OnEnable()
         {
             base.OnEnable();
-
-            CheckPosition();
             UpdatePanel();
-        }
-        private void CheckPosition()
-        {
-            if (absolutePosition.x < 0 || absolutePosition.y < 0)
-                SetDefaultPosition();
-        }
-        private void SetDefaultPosition()
-        {
-            SingletonMod<Mod>.Logger.Debug($"Set default panel position");
-            absolutePosition = DefaultPosition;
         }
         private void SetDefaulSize()
         {
@@ -186,9 +146,9 @@ namespace NodeMarkup.UI.Panel
             if ((Markup = markup) != null)
             {
                 if (isVisible)
-                    UpdatePanelOnVisible();
+                    RefreshPanel();
                 else
-                    NeedUpdateOnVisible = true;
+                    NeedRefreshOnVisible = true;
             }
         }
         public void UpdatePanel()
@@ -197,9 +157,9 @@ namespace NodeMarkup.UI.Panel
             foreach (var editor in Editors)
                 editor.UpdateEditor();
         }
-        private void UpdatePanelOnVisible()
+        public override void RefreshPanel()
         {
-            NeedUpdateOnVisible = false;
+            NeedRefreshOnVisible = false;
 
             Header.Text = Markup.PanelCaption;
             Header.Init(Markup.Type);
@@ -216,25 +176,22 @@ namespace NodeMarkup.UI.Panel
 
         protected override void OnSizeChanged()
         {
-            base.OnSizeChanged();
-
             if (Header != null)
                 Header.width = width;
             if (TabStrip != null)
                 TabStrip.width = width;
             if (CurrentEditor != null)
-            {
-                CurrentEditor.size = EditorSize;
-                CurrentEditor.relativePosition = EditorPosition;
-            }
+                SetEditorSize(CurrentEditor);
+
+            base.OnSizeChanged();
 
             MakePixelPerfect();
         }
-        protected override void OnVisibilityChanged()
+        private void SetEditorSize(Editor editor)
         {
-            base.OnVisibilityChanged();
-            if (isVisible && NeedUpdateOnVisible)
-                UpdatePanelOnVisible();
+            var position = new Vector2(0, TabStrip.relativePosition.y + TabStrip.height);
+            editor.relativePosition = position;
+            editor.size = size - position;
         }
         private void OnSelectedTabChanged(int index) => CurrentEditor = SelectEditor(index);
 
@@ -251,8 +208,7 @@ namespace NodeMarkup.UI.Panel
 
                 var selectEditor = Editors[index];
                 selectEditor.Active = true;
-                selectEditor.size = EditorSize;
-                selectEditor.relativePosition = EditorPosition;
+                SetEditorSize(selectEditor);
                 return selectEditor;
             }
             else

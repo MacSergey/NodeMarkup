@@ -11,6 +11,7 @@ namespace NodeMarkup
     {
         protected override void OnLoad()
         {
+            MarkupManager.UpdateAll();
             TemplateManager.Reload();
 
             if (MarkupManager.HasErrors)

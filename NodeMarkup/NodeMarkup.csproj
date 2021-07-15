@@ -103,6 +103,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnifiedUILib">
+      <HintPath>..\..\UnifiedUI\UnifiedUILib\bin\Debug\net35\UnifiedUILib.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -226,9 +229,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Localize.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UUIButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Arrows.tga" />
+    <EmbeddedResource Include="Resources\Arrows.png" />
     <EmbeddedResource Include="Resources\ListItem.png" />
     <EmbeddedResource Include="Resources\SharkTooth.png" />
     <EmbeddedResource Include="Resources\Button.png" />
@@ -268,10 +272,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\StylesCrosswalks.tga" />
-    <EmbeddedResource Include="Resources\StylesFillers.tga" />
-    <EmbeddedResource Include="Resources\StylesLines.tga" />
-    <EmbeddedResource Include="Resources\StylesStopLines.tga" />
+    <EmbeddedResource Include="Resources\StylesCrosswalks.png" />
+    <EmbeddedResource Include="Resources\StylesFillers.png" />
+    <EmbeddedResource Include="Resources\StylesLines.png" />
+    <EmbeddedResource Include="Resources\StylesStopLines.png" />
   </ItemGroup>
   <Import Project="..\ModsCommon\ModShared\ModsCommonShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\ToolShared\ModsToolShared.projitems" Label="Shared" />
@@ -313,6 +317,8 @@
   <Import Project="..\ModsCommon\NetAssetDataExtension\NetAssetDataExtension.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\ColorsShared\ColorsShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.id.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\UUIRegisterShared\UUIRegisterShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\ToolPanelShared\ToolPanelShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
