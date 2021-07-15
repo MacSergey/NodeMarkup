@@ -138,7 +138,7 @@ namespace NodeMarkup.Manager
         }
         public void AddAllToUpdate()
         {
-            SingletonMod<Mod>.Logger.Debug($"Update all {typeof(TypeMarkup).Name} markings");
+            SingletonMod<Mod>.Logger.Debug($"Update all {Type} markings");
 
             foreach (var id in Markups.Keys)
                 AddToUpdate(id);

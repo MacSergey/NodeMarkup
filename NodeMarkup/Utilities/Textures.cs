@@ -49,6 +49,11 @@ namespace NodeMarkup.Utilities
         public static string IconActive => nameof(IconActive);
         public static string IconHover => nameof(IconHover);
 
+        public static string UUINormal => nameof(UUINormal);
+        public static string UUIHovered => nameof(UUIHovered);
+        public static string UUIPressed => nameof(UUIPressed);
+        //public static string UUIDisabled => nameof(UUIDisabled);
+
         public static string ArrowDown { get; } = nameof(ArrowDown);
         public static string ArrowRight { get; } = nameof(ArrowRight);
 
@@ -62,6 +67,7 @@ namespace NodeMarkup.Utilities
             {nameof(HeaderButtons), HeaderButtons},
             {nameof(ListItem), ListItem},
             {nameof(Button), Button},
+            {nameof(UUIButton), UUIButton},
             {nameof(Arrows), Arrows},
         };
 
@@ -93,6 +99,7 @@ namespace NodeMarkup.Utilities
 
         private static UITextureAtlas.SpriteInfo[] Button(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover).ToArray();
 
+        private static UITextureAtlas.SpriteInfo[] UUIButton(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 40, 40, UUINormal, UUIHovered, UUIPressed/*, UUIDisabled*/).ToArray();
 
         private static UITextureAtlas.SpriteInfo[] Arrows(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 32, 32, ArrowDown, ArrowRight).ToArray();
 
