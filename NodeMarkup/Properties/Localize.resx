@@ -1391,4 +1391,16 @@ Click to edit markings</value>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Click with Ctrl to select the line</value>
   </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>Gravel</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>Cliff</value>
+  </data>
+  <data name="FillerStyle_Ruining" xml:space="preserve">
+    <value>Ruining</value>
+  </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Offset from lines</value>
+  </data>
 </root>

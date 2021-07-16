@@ -1262,4 +1262,14 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Ctrlキー + クリックで、ラインを選択</value>
   </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>砂利（3Dスタイル）</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>崖（3Dスタイル）</value>
+  </data>
+  <data name="FillerStyle_Ruining" xml:space="preserve">
+    <value>荒れ地（3Dスタイル）</value>
+  </data>
+  
 </root>

@@ -1296,4 +1296,16 @@
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>按住Ctrl点击来选中线</value>
   </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>砂砾</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>悬崖</value>
+  </data>
+  <data name="FillerStyle_Ruining" xml:space="preserve">
+    <value>碎地</value>
+  </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>从边线回缩</value>
+  </data>
 </root>

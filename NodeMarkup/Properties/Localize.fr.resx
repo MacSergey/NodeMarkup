@@ -1255,9 +1255,21 @@ Cliquez pour modifier le marquage</value>
     <value>Trottoir</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Cliquer sur Ctrl pour sélectionner le passage piéton</value>
+    <value>Cliquez sur Ctrl pour sélectionner le passage piéton</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Cliquer sur Ctrl pour sélectionner la ligne</value>
+    <value>Cliquez sur Ctrl pour sélectionner la ligne</value>
+  </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>Gravier</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>Falaise</value>
+  </data>
+  <data name="FillerStyle_Ruining" xml:space="preserve">
+    <value>Détérioré</value>
+  </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Écart depuis les lignes</value>
   </data>
 </root>

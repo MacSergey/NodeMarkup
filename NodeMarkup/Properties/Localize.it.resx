@@ -1390,4 +1390,14 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Click+Ctrl per selezionare la linea</value>
   </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>Ghiaia</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>Scogliera</value>
+  </data>
+  <data name="FillerStyle_Ruining" xml:space="preserve">
+    <value>Rovine</value>
+  </data>
+  
 </root>

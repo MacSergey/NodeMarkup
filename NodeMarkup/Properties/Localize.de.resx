@@ -1322,4 +1322,12 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Strg+Klick um die Linie auszuwählen</value>
   </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>Kies</value>
+  </data>
+  
+  
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Abstand von den Linien</value>
+  </data>
 </root>
