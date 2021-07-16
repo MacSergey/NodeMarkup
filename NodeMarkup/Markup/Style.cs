@@ -346,6 +346,15 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Grass))]
             FillerGrass,
 
+            [Description(nameof(Localize.FillerStyle_Gravel))]
+            FillerGravel,
+
+            [Description(nameof(Localize.FillerStyle_Ruining))]
+            FillerRuining,
+
+            [Description(nameof(Localize.FillerStyle_Cliff))]
+            FillerCliff,
+
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
             FillerBuffer = Markup.Item.Filler + 0x100 - 1,

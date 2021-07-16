@@ -36,20 +36,21 @@ namespace NodeMarkup.Manager
                 triangulationTarget.Elevation.Value = Elevation;
         }
 
-        public override IStyleData Calculate(MarkupFiller filler, MarkupLOD lod)
+        public override IEnumerable<IStyleData> Calculate(MarkupFiller filler, MarkupLOD lod)
         {
             var trajectories = GetTrajectories(filler);
             var parts = GetParts(trajectories, lod);
 
             var points = parts.SelectMany(p => p).Select(t => t.StartPosition).ToArray();
             if (points.Length < 3)
-                return null;
+                yield break;
 
             var triangles = Triangulator.Triangulate(points, PolygonDirection.ClockWise);
             if (triangles == null)
-                return null;
+                yield break;
 
-            return new MarkupStylePolygonMesh(filler.Markup.Height, Elevation, parts.Select(g => g.Count).ToArray(), points, triangles, MaterialType);
+            yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType);
+            yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, parts.Select(g => g.Count).ToArray(), points, MaterialType.Pavement);
         }
         private List<ITrajectory> GetTrajectories(MarkupFiller filler)
         {
@@ -165,7 +166,38 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
             components.Add(AddElevationProperty(this, parent));
+#if DEBUG
+            //var material = GetVectorProperty(parent, "Material");
+            //var textureA = GetVectorProperty(parent, "TextureA");
+            //var textureB = GetVectorProperty(parent, "TextureB");
+
+            //material.Value = (RenderHelper.MaterialLib[MaterialType].GetTexture("_APRMap") as Texture2D).GetPixel(0, 0);
+            //textureA.Value = RenderHelper.SurfaceALib[MaterialType].GetPixel(0, 0);
+            //textureB.Value = RenderHelper.SurfaceBLib[MaterialType].GetPixel(0, 0);
+
+            //material.OnValueChanged += MaterialValueChanged;
+            //textureA.OnValueChanged += TextureAValueChanged;
+            //textureB.OnValueChanged += TextureBValueChanged;
+
+            //components.Add(material);
+            //components.Add(textureA);
+            //components.Add(textureB);
+
+            //void MaterialValueChanged(Color32 value)
+            //{
+            //    RenderHelper.MaterialLib[MaterialType] = RenderHelper.CreateRoadMaterial(TextureHelper.CreateTexture(128, 128, UnityEngine.Color.white), TextureHelper.CreateTexture(128, 128, value));
+            //}
+            //void TextureAValueChanged(Color32 value)
+            //{
+            //    RenderHelper.SurfaceALib[MaterialType] = TextureHelper.CreateTexture(512, 512, value);
+            //}
+            //void TextureBValueChanged(Color32 value)
+            //{
+            //    RenderHelper.SurfaceBLib[MaterialType] = TextureHelper.CreateTexture(512, 512, value);
+            //}
+#endif
         }
+
         private static FloatPropertyPanel AddElevationProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent)
         {
             var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Elevation));
@@ -182,6 +214,13 @@ namespace NodeMarkup.Manager
             elevationProperty.OnValueChanged += (float value) => triangulationStyle.Elevation.Value = value;
 
             return elevationProperty;
+        }
+        private ColorPropertyPanel GetVectorProperty(UIComponent parent, string name)
+        {
+            var vector = ComponentPool.Get<ColorPropertyPanel>(parent);
+            vector.Init();
+            vector.Text = name;
+            return vector;
         }
 
         public override XElement ToXml()
@@ -213,5 +252,32 @@ namespace NodeMarkup.Manager
         public GrassFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
 
         public override FillerStyle CopyStyle() => new GrassFillerStyle(Color, Width, MedianOffset, Elevation);
+    }
+    public class GravelFillerStyle : TriangulationFillerStyle
+    {
+        public override StyleType Type => StyleType.FillerGravel;
+        protected override MaterialType MaterialType => MaterialType.Gravel;
+
+        public GravelFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
+
+        public override FillerStyle CopyStyle() => new GravelFillerStyle(Color, Width, MedianOffset, Elevation);
+    }
+    public class RuiningFillerStyle : TriangulationFillerStyle
+    {
+        public override StyleType Type => StyleType.FillerRuining;
+        protected override MaterialType MaterialType => MaterialType.Ruining;
+
+        public RuiningFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
+
+        public override FillerStyle CopyStyle() => new RuiningFillerStyle(Color, Width, MedianOffset, Elevation);
+    }
+    public class CliffFillerStyle : TriangulationFillerStyle
+    {
+        public override StyleType Type => StyleType.FillerCliff;
+        protected override MaterialType MaterialType => MaterialType.Cliff;
+
+        public CliffFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
+
+        public override FillerStyle CopyStyle() => new CliffFillerStyle(Color, Width, MedianOffset, Elevation);
     }
 }

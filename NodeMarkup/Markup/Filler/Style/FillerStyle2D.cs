@@ -42,7 +42,10 @@ namespace NodeMarkup.Manager
     {
         public Filler2DStyle(Color32 color, float width, float medianOffset) : base(color, width, medianOffset) { }
 
-        public sealed override IStyleData Calculate(MarkupFiller filler, MarkupLOD lod) => new MarkupStyleParts(CalculateProcess(filler, lod));
+        public sealed override IEnumerable<IStyleData> Calculate(MarkupFiller filler, MarkupLOD lod)
+        {
+            yield return new MarkupStyleParts(CalculateProcess(filler, lod));
+        }
         protected virtual IEnumerable<MarkupStylePart> CalculateProcess(MarkupFiller filler, MarkupLOD lod)
         {
             var contour = filler.IsMedian ? SetMedianOffset(filler) : filler.Contour.TrajectoriesProcessed.ToArray();

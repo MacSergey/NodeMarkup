@@ -560,6 +560,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Cliff.
+        /// </summary>
+        public static string FillerStyle_Cliff {
+            get {
+                return ResourceManager.GetString("FillerStyle_Cliff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Elevation.
         /// </summary>
         public static string FillerStyle_Elevation {
@@ -574,6 +583,15 @@ namespace NodeMarkup {
         public static string FillerStyle_Grass {
             get {
                 return ResourceManager.GetString("FillerStyle_Grass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Gravel.
+        /// </summary>
+        public static string FillerStyle_Gravel {
+            get {
+                return ResourceManager.GetString("FillerStyle_Gravel", resourceCulture);
             }
         }
         
@@ -601,6 +619,15 @@ namespace NodeMarkup {
         public static string FillerStyle_Pavement {
             get {
                 return ResourceManager.GetString("FillerStyle_Pavement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ruining.
+        /// </summary>
+        public static string FillerStyle_Ruining {
+            get {
+                return ResourceManager.GetString("FillerStyle_Ruining", resourceCulture);
             }
         }
         

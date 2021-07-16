@@ -34,6 +34,9 @@ namespace NodeMarkup.Manager
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
             {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
             {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
+            {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
+            {FillerType.Ruining, new RuiningFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
+            {FillerType.Cliff, new CliffFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
         };
 
         public PropertyValue<float> MedianOffset { get; }
@@ -65,7 +68,7 @@ namespace NodeMarkup.Manager
                 components.Add(AddMedianOffsetProperty(parent));
         }
 
-        public abstract IStyleData Calculate(MarkupFiller filler, MarkupLOD lod);
+        public abstract IEnumerable<IStyleData> Calculate(MarkupFiller filler, MarkupLOD lod);
 
         public ITrajectory[] SetMedianOffset(MarkupFiller filler)
         {
@@ -207,6 +210,15 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.FillerStyle_Grass))]
             Grass = StyleType.FillerGrass,
+
+            [Description(nameof(Localize.FillerStyle_Gravel))]
+            Gravel = StyleType.FillerGravel,
+
+            [Description(nameof(Localize.FillerStyle_Ruining))]
+            Ruining = StyleType.FillerRuining,
+
+            [Description(nameof(Localize.FillerStyle_Cliff))]
+            Cliff = StyleType.FillerCliff,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]

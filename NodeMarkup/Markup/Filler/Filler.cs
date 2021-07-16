@@ -17,7 +17,7 @@ namespace NodeMarkup.Manager
         public FillerContour Contour { get; }
 
         public PropertyValue<FillerStyle> Style { get; }
-        public LodDictionary<IStyleData> StyleData { get; } = new LodDictionary<IStyleData>();
+        public LodDictionaryArray<IStyleData> StyleData { get; } = new LodDictionaryArray<IStyleData>();
         public bool IsMedian => Contour.IsMedian;
 
         public string XmlSection => XmlName;
@@ -48,7 +48,7 @@ namespace NodeMarkup.Manager
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
                 RecalculateStyleData(lod);
         }
-        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = Style.Value.Calculate(this, lod);
+        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = Style.Value.Calculate(this, lod).ToArray();
 
         public Dependences GetDependences() => new Dependences();
 

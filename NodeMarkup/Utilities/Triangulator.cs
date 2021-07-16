@@ -41,7 +41,7 @@ namespace NodeMarkup.Utilities
                 var prev = vertex.GetPrevious();
                 var next = vertex.GetNext();
 
-                var triangle = Direction == PolygonDirection.ClockWise ? new Triangle(next.Value.Index, vertex.Value.Index, prev.Value.Index) : new Triangle(prev.Value.Index, vertex.Value.Index, next.Value.Index);
+                var triangle = new Triangle(next.Value.Index, vertex.Value.Index, prev.Value.Index);
                 Triangles.Add(triangle);
                 Ears.Remove(vertex);
                 Vertices.Remove(vertex);
@@ -148,9 +148,18 @@ namespace NodeMarkup.Utilities
 
         public IEnumerable<int> GetVertices(PolygonDirection direction)
         {
-            yield return A;
-            yield return B;
-            yield return C;
+            if (direction == PolygonDirection.ClockWise)
+            {
+                yield return C;
+                yield return B;
+                yield return A;
+            }
+            else
+            {
+                yield return A;
+                yield return B;
+                yield return C;
+            }
         }
 
         public override string ToString() => $"{A}-{B}-{C}";
