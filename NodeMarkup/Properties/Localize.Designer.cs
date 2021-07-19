@@ -623,11 +623,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Ruining.
+        ///   Ищет локализованную строку, похожую на Ruined.
         /// </summary>
-        public static string FillerStyle_Ruining {
+        public static string FillerStyle_Ruined {
             get {
-                return ResourceManager.GetString("FillerStyle_Ruining", resourceCulture);
+                return ResourceManager.GetString("FillerStyle_Ruined", resourceCulture);
             }
         }
         

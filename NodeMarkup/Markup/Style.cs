@@ -352,7 +352,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.FillerStyle_Gravel))]
             FillerGravel,
 
-            [Description(nameof(Localize.FillerStyle_Ruining))]
+            [Description(nameof(Localize.FillerStyle_Ruined))]
             FillerRuined,
 
             [Description(nameof(Localize.FillerStyle_Cliff))]
