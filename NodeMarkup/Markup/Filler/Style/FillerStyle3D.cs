@@ -19,28 +19,49 @@ namespace NodeMarkup.Manager
     {
         protected abstract MaterialType MaterialType { get; }
 
-        public float MinAngle => 10f;
-        public float MinLength => 2f;
+        public float MinAngle => 5f;
+        public float MinLength => 1f;
         public float MaxLength => 10f;
         public PropertyValue<float> Elevation { get; }
+        public PropertyValue<float> CornerRadius { get; }
+        public PropertyValue<float> MedianCornerRadius { get; }
 
-        public TriangulationFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset)
+        public TriangulationFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset)
         {
             Elevation = GetElevationProperty(elevation);
+            CornerRadius = GetCornerRadiusProperty(cornerRadius);
+            MedianCornerRadius = GetMedianCornerRadiusProperty(medianCornerRadius);
         }
 
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
             if (target is TriangulationFillerStyle triangulationTarget)
+            {
                 triangulationTarget.Elevation.Value = Elevation;
+                triangulationTarget.CornerRadius.Value = CornerRadius;
+                triangulationTarget.MedianCornerRadius.Value = MedianCornerRadius;
+            }
         }
 
-        public override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<ITrajectory>> contours, MarkupLOD lod)
+        protected override List<List<FillerContour.Part>> GetContours(MarkupFiller filler)
+        {
+            var contours = base.GetContours(filler);
+
+            var roundedContours = new List<List<FillerContour.Part>>();
+            foreach (var contour in contours)
+            {
+                var rounded = StyleHelper.SetCornerRadius(contour, CornerRadius, MedianCornerRadius);
+                roundedContours.Add(rounded);
+            }
+
+            return roundedContours;
+        }
+        public override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
             foreach (var contour in contours)
             {
-                var trajectories = contour;
+                var trajectories = contour.Select(i => i.Trajectory).ToList();
                 if (trajectories.GetDirection() == TrajectoryHelper.Direction.CounterClockWise)
                     trajectories = trajectories.Select(t => t.Invert()).Reverse().ToList();
 
@@ -123,6 +144,13 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
             components.Add(AddElevationProperty(this, parent));
+
+            if (!isTemplate)
+            {
+                components.Add(AddCornerRadiusProperty(this, parent));
+                if (filler.IsMedian)
+                    components.Add(AddMedianCornerRadiusProperty(this, parent));
+            }
 #if DEBUG
             //var material = GetVectorProperty(parent, "Material");
             //var textureA = GetVectorProperty(parent, "TextureA");
@@ -172,6 +200,40 @@ namespace NodeMarkup.Manager
 
             return elevationProperty;
         }
+        private static FloatPropertyPanel AddCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent)
+        {
+            var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CornerRadius));
+            cornerRadiusProperty.Text = "Corner radius";
+            cornerRadiusProperty.UseWheel = true;
+            cornerRadiusProperty.WheelStep = 0.1f;
+            cornerRadiusProperty.WheelTip = Settings.ShowToolTip;
+            cornerRadiusProperty.CheckMin = true;
+            cornerRadiusProperty.MinValue = 0f;
+            cornerRadiusProperty.CheckMax = true;
+            cornerRadiusProperty.MaxValue = 10f;
+            cornerRadiusProperty.Init();
+            cornerRadiusProperty.Value = triangulationStyle.CornerRadius;
+            cornerRadiusProperty.OnValueChanged += (float value) => triangulationStyle.CornerRadius.Value = value;
+
+            return cornerRadiusProperty;
+        }
+        private static FloatPropertyPanel AddMedianCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent)
+        {
+            var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCornerRadius));
+            cornerRadiusProperty.Text = "Corner radius on medians";
+            cornerRadiusProperty.UseWheel = true;
+            cornerRadiusProperty.WheelStep = 0.1f;
+            cornerRadiusProperty.WheelTip = Settings.ShowToolTip;
+            cornerRadiusProperty.CheckMin = true;
+            cornerRadiusProperty.MinValue = 0f;
+            cornerRadiusProperty.CheckMax = true;
+            cornerRadiusProperty.MaxValue = 10f;
+            cornerRadiusProperty.Init();
+            cornerRadiusProperty.Value = triangulationStyle.MedianCornerRadius;
+            cornerRadiusProperty.OnValueChanged += (float value) => triangulationStyle.MedianCornerRadius.Value = value;
+
+            return cornerRadiusProperty;
+        }
         private ColorPropertyPanel GetVectorProperty(UIComponent parent, string name)
         {
             var vector = ComponentPool.Get<ColorPropertyPanel>(parent);
@@ -184,12 +246,16 @@ namespace NodeMarkup.Manager
         {
             var config = base.ToXml();
             Elevation.ToXml(config);
+            CornerRadius.ToXml(config);
+            MedianCornerRadius.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
             Elevation.FromXml(config, DefaultElevation);
+            CornerRadius.FromXml(config, DefaultCornerRadius);
+            MedianCornerRadius.FromXml(config, DefaultCornerRadius);
         }
     }
     public class PavementFillerStyle : TriangulationFillerStyle
@@ -197,44 +263,44 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerPavement;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
-        public PavementFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset, elevation) { }
+        public PavementFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
 
-        public override FillerStyle CopyStyle() => new PavementFillerStyle(Color, Width, LineOffset, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new PavementFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
     }
     public class GrassFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerGrass;
         protected override MaterialType MaterialType => MaterialType.Grass;
 
-        public GrassFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset, elevation) { }
+        public GrassFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
 
-        public override FillerStyle CopyStyle() => new GrassFillerStyle(Color, Width, LineOffset, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new GrassFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
     }
     public class GravelFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerGravel;
         protected override MaterialType MaterialType => MaterialType.Gravel;
 
-        public GravelFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset, elevation) { }
+        public GravelFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
 
-        public override FillerStyle CopyStyle() => new GravelFillerStyle(Color, Width, LineOffset, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new GravelFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
     }
     public class RuinedFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerRuined;
         protected override MaterialType MaterialType => MaterialType.Ruined;
 
-        public RuinedFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset, elevation) { }
+        public RuinedFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
 
-        public override FillerStyle CopyStyle() => new RuinedFillerStyle(Color, Width, LineOffset, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new RuinedFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
     }
     public class CliffFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerCliff;
         protected override MaterialType MaterialType => MaterialType.Cliff;
 
-        public CliffFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset, elevation) { }
+        public CliffFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
 
-        public override FillerStyle CopyStyle() => new CliffFillerStyle(Color, Width, LineOffset, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new CliffFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
     }
 }

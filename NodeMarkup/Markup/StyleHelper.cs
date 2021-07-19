@@ -341,7 +341,7 @@ namespace NodeMarkup.Manager
 
             return result;
         }
-        public static List<List<ITrajectory>> SetOffset(List<FillerContour.Part> originalParts, float offset, float medianOffset)
+        public static List<List<FillerContour.Part>> SetOffset(List<FillerContour.Part> originalParts, float offset, float medianOffset)
         {
             var direction = originalParts.Select(i => i.Trajectory).GetDirection();
 
@@ -351,7 +351,7 @@ namespace NodeMarkup.Manager
             var partOfPart = GetParts(parts, intersections);
             var contours = GetContours(partOfPart);
 
-            var result = new List<List<ITrajectory>>();
+            var result = new List<List<FillerContour.Part>>();
             foreach (var contour in contours)
             {
                 if (contour.Direction == direction)
@@ -517,7 +517,7 @@ namespace NodeMarkup.Manager
                 var intersection = intersections[i];
                 for (var j = 0; j < intersection.Count - 1; j += 1)
                 {
-                    var part = new TrajectoryPart(parts[i].Trajectory, intersection[j], intersection[j + 1]);
+                    var part = new TrajectoryPart(parts[i], intersection[j], intersection[j + 1]);
                     partOfParts[i].Add(part);
                 }
             }
@@ -559,6 +559,101 @@ namespace NodeMarkup.Manager
 
             return countours;
         }
+        public static List<FillerContour.Part> SetCornerRadius(List<FillerContour.Part> originalParts, float lineRadius, float medianRadius)
+        {
+            var parts = new List<FillerContour.Part>(originalParts);
+
+            for (var i = 0; i < parts.Count; i += 1)
+            {
+                if (SetRadius(i, parts, lineRadius, medianRadius))
+                    i += 1;
+            }
+
+            return parts;
+        }
+        private static bool SetRadius(int i, List<FillerContour.Part> parts, float lineRadius, float medianRadius)
+        {
+            var j = (i + 1) % parts.Count;
+            var radius = (parts[i].IsEnter || parts[j].IsEnter) ? medianRadius : lineRadius;
+            if (radius <= 0f)
+                return false;
+
+            var iParts = CalculateSolid(parts[i].Trajectory, 5, 1f, 40f);
+            var jParts = CalculateSolid(parts[j].Trajectory, 5, 1f, 40f);
+
+            var width = Math.Max(iParts.Count, jParts.Count);
+            width = (width % 2 == 0 ? width : width + 1) / 2;
+            var sum = iParts.Count + jParts.Count - 1;
+            var center = Vector3.zero;
+            var firstDir = Vector3.zero;
+            var secondDir = Vector3.zero;
+
+            for (var k = 0; k < width; k += 1)
+            {
+                for (var l = k * 2; l < sum; l += 1)
+                {
+                    var first = (l / 2) + k + (l % 2);
+                    var second = (l / 2) - k;
+
+                    if (first < iParts.Count && second < jParts.Count)
+                    {
+                        if (CheckRadius(iParts[iParts.Count - 1 - first], jParts[second], radius, ref center, ref firstDir, ref secondDir))
+                        {
+                            AddRadius(i, j, parts, radius, center, firstDir, secondDir);
+                            return true;
+                        }
+                    }
+                    if (first != second && first < jParts.Count && second < iParts.Count)
+                    {
+                        if (CheckRadius(iParts[iParts.Count - 1 - second], jParts[first], radius, ref center, ref firstDir, ref secondDir))
+                        {
+                            AddRadius(i, j, parts, radius, center, firstDir, secondDir);
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        private static bool CheckRadius(ITrajectory first, ITrajectory second, float radius, ref Vector3 center, ref Vector3 firstDir, ref Vector3 secondDir)
+        {
+            var angle = Vector3.Angle(first.Direction.MakeFlat(), second.Direction.MakeFlat());
+            var sqrDelta = 2 * radius * radius * (1f - Mathf.Cos((180 - angle) * Mathf.Deg2Rad));
+            var a = (XZ(first.StartPosition) - XZ(second.EndPosition)).sqrMagnitude;
+            var b = (XZ(first.EndPosition) - XZ(second.StartPosition)).sqrMagnitude;
+
+            if ((a < sqrDelta && b < sqrDelta) || (a > sqrDelta && b > sqrDelta))
+                return false;
+
+            first = new StraightTrajectory(first.StartPosition.MakeFlat(), first.EndPosition.MakeFlat(), false);
+            second = new StraightTrajectory(second.StartPosition.MakeFlat(), second.EndPosition.MakeFlat(), false);
+
+            if (!Intersection.CalculateSingle(first, second, out var firstT, out var secondT))
+                return false;
+
+            var position = (first.Position(firstT) + second.Position(secondT)) / 2f;
+            var direction = (first.Direction - second.Direction).normalized * (firstT < 0 ? 1f : -1f);
+            var distance = radius / Mathf.Cos(angle / 2f * Mathf.Deg2Rad);
+
+            center = position + direction * distance;
+            firstDir = first.Direction.Turn90(true);
+            secondDir = second.Direction.Turn90(true);
+            return true;
+        }
+        private static void AddRadius(int i, int j, List<FillerContour.Part> parts, float radius, Vector3 center, Vector3 firstDir, Vector3 secondDir)
+        {
+            var firstInter = Intersection.CalculateSingle(parts[i].Trajectory, new StraightTrajectory(center, center + firstDir, false), out var firstT, out _);
+            var secondInter = Intersection.CalculateSingle(new StraightTrajectory(center, center + secondDir, false), parts[j].Trajectory, out _, out var secondT);
+            if (firstInter && secondInter)
+            {
+                parts[i] = new FillerContour.Part(parts[i].Trajectory.Cut(0f, firstT), parts[i].IsEnter);
+                parts[j] = new FillerContour.Part(parts[j].Trajectory.Cut(secondT, 1f), parts[j].IsEnter);
+
+                var corner = new BezierTrajectory(parts[i].Trajectory.EndPosition, -parts[i].Trajectory.EndDirection, parts[j].Trajectory.StartPosition, -parts[j].Trajectory.StartDirection);
+
+                parts.Insert(j, new FillerContour.Part(corner));
+            }
+        }
         private class TrajectoryIntersect
         {
             public static IntersectComparer Comparer { get; } = new IntersectComparer();
@@ -591,13 +686,13 @@ namespace NodeMarkup.Manager
         }
         private class TrajectoryPart
         {
-            public ITrajectory Trajectory { get; }
+            public FillerContour.Part Part { get; }
             public TrajectoryIntersect Start { get; }
             public TrajectoryIntersect End { get; }
-            public ITrajectory Processed => Trajectory.Cut(Start.T, End.T);
-            public TrajectoryPart(ITrajectory trajectory, TrajectoryIntersect start, TrajectoryIntersect end)
+            public FillerContour.Part Processed => new FillerContour.Part(Part.Trajectory.Cut(Start.T, End.T), Part.IsEnter);
+            public TrajectoryPart(FillerContour.Part part, TrajectoryIntersect start, TrajectoryIntersect end)
             {
-                Trajectory = trajectory;
+                Part = part;
                 Start = start;
                 End = end;
             }
@@ -610,11 +705,11 @@ namespace NodeMarkup.Manager
             {
                 get
                 {
-                    var processed = this.Select(i => i.Processed).ToArray();
+                    var processed = this.Select(i => i.Processed.Trajectory).ToArray();
                     return processed.GetDirection();
                 }
             }
-            public List<ITrajectory> Processed => this.Select(i => i.Processed).ToList();
+            public List<FillerContour.Part> Processed => this.Select(i => i.Processed).ToList();
         }
     }
 }

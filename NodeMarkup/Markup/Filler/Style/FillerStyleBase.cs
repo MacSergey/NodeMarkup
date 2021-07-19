@@ -25,6 +25,7 @@ namespace NodeMarkup.Manager
         public static float StripeDefaultWidth => 0.5f;
         public static float DefaultAngleBetween => 90f;
         public static float DefaultElevation => 0.3f;
+        public static float DefaultCornerRadius => 0f;
         public static bool DefaultFollowRails => false;
 
         public static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
@@ -33,11 +34,11 @@ namespace NodeMarkup.Manager
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
-            {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation)},
-            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation)},
-            {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation)},
-            {FillerType.Ruined, new RuinedFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation)},
-            {FillerType.Cliff, new CliffFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation)},
+            {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
+            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
+            {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
+            {FillerType.Ruined, new RuinedFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
+            {FillerType.Cliff, new CliffFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
         };
 
         public PropertyValue<float> MedianOffset { get; }
@@ -80,9 +81,7 @@ namespace NodeMarkup.Manager
 
         public LodDictionaryArray<IStyleData> Calculate(MarkupFiller filler)
         {
-            var originalContour = filler.Contour.Parts.ToList();
-            var contours = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
-
+            var contours = GetContours(filler);
             var data = new LodDictionaryArray<IStyleData>();
 
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
@@ -90,51 +89,13 @@ namespace NodeMarkup.Manager
 
             return data;
         }
-        public abstract IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<ITrajectory>> contours, MarkupLOD lod);
-
-        public ITrajectory[] SetMedianOffset(MarkupFiller filler)
+        protected virtual List<List<FillerContour.Part>> GetContours(MarkupFiller filler)
         {
-            var lineParts = filler.Contour.RawParts;
-            var trajectories = filler.Contour.TrajectoriesRaw;
-
-            for (var i = 0; i < lineParts.Length; i += 1)
-            {
-                if (trajectories[i] == null)
-                    continue;
-
-                var line = lineParts[i].Line;
-                if (line is MarkupEnterLine)
-                    continue;
-
-                var prevI = i == 0 ? lineParts.Length - 1 : i - 1;
-                if (lineParts[prevI].Line is MarkupEnterLine && trajectories[prevI] != null)
-                {
-                    trajectories[i] = Shift(trajectories[i]);
-                    trajectories[prevI] = new StraightTrajectory(trajectories[prevI].StartPosition, trajectories[i].StartPosition);
-                }
-
-                var nextI = i + 1 == lineParts.Length ? 0 : i + 1;
-                if (lineParts[nextI].Line is MarkupEnterLine && trajectories[nextI] != null)
-                {
-                    trajectories[i] = Shift(trajectories[i].Invert()).Invert();
-                    trajectories[nextI] = new StraightTrajectory(trajectories[i].EndPosition, trajectories[nextI].EndPosition);
-                }
-
-                ITrajectory Shift(ITrajectory trajectory)
-                {
-                    var newT = trajectory.Travel(0, MedianOffset);
-                    return trajectory.Cut(newT, 1);
-                }
-            }
-
-            return trajectories.Where(t => t != null).ToArray();
+            var originalContour = filler.Contour.Parts.ToList();
+            var contours = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
+            return contours;
         }
-
-        protected float GetOffset(Intersection intersect, float offset)
-        {
-            var sin = Mathf.Sin(intersect.Angle);
-            return sin != 0 ? offset / sin : 1000f;
-        }
+        public abstract IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod);
 
         public virtual void Render(MarkupFiller filler, OverlayData data) { }
 

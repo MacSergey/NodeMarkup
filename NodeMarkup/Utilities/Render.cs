@@ -26,8 +26,8 @@ namespace NodeMarkup.Utilities
         };
         public static Dictionary<MaterialType, Texture2D> SurfaceALib { get; } = new Dictionary<MaterialType, Texture2D>()
         {
-            { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(0, 255, 127, 127)) },
-            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 127)) },
+            { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
+            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
             { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 127)) },
             { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 127)) },
             { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 191, 127)) },

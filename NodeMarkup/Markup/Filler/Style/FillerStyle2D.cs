@@ -42,11 +42,11 @@ namespace NodeMarkup.Manager
     {
         public Filler2DStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset) { }
 
-        public sealed override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<ITrajectory>> contours, MarkupLOD lod)
+        public sealed override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
             yield return new MarkupStyleParts(CalculateProcess(filler, contours, lod));
         }
-        protected virtual IEnumerable<MarkupStylePart> CalculateProcess(MarkupFiller filler, List<List<ITrajectory>> contours, MarkupLOD lod)
+        protected virtual IEnumerable<MarkupStylePart> CalculateProcess(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
             var originalContour = filler.Contour.TrajectoriesProcessed.ToArray();
             var rails = GetRails(filler, originalContour).ToArray();
@@ -154,15 +154,15 @@ namespace NodeMarkup.Manager
                 yield return new PartItem(itemPos, itemDir, itemWidth, isBothDir);
             }
         }
-        protected IEnumerable<MarkupStylePart> GetDashes(PartItem item, List<List<ITrajectory>> contours)
+        protected IEnumerable<MarkupStylePart> GetDashes(PartItem item, List<List<FillerContour.Part>> contours)
         {
             var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
 
             var intersectSet = new HashSet<Intersection>();
             foreach (var contour in contours)
             {
-                foreach (var trajectory in contour)
-                    intersectSet.AddRange(Intersection.Calculate(straight, trajectory));
+                foreach (var contourPart in contour)
+                    intersectSet.AddRange(Intersection.Calculate(straight, contourPart.Trajectory));
             }
 
             var intersects = intersectSet.OrderBy(i => i, Intersection.FirstComparer).ToArray();
