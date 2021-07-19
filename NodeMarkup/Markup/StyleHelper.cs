@@ -341,7 +341,7 @@ namespace NodeMarkup.Manager
 
             return result;
         }
-        public static List<List<FillerContour.Part>> SetOffset(List<FillerContour.Part> originalParts, float offset, float medianOffset)
+        public static List<List<ITrajectory>> SetOffset(List<FillerContour.Part> originalParts, float offset, float medianOffset)
         {
             var direction = originalParts.Select(i => i.Trajectory).GetDirection();
 
@@ -351,14 +351,11 @@ namespace NodeMarkup.Manager
             var partOfPart = GetParts(parts, intersections);
             var contours = GetContours(partOfPart);
 
-            var result = new List<List<FillerContour.Part>>();
+            var result = new List<List<ITrajectory>>();
             foreach (var contour in contours)
             {
                 if (contour.Direction == direction)
-                {
-                    var processed = contour.Select(i => new FillerContour.Part(i.Processed)).ToList();
-                    result.Add(processed);
-                }
+                    result.Add(contour.Processed);
             }
 
             return result;
@@ -410,7 +407,7 @@ namespace NodeMarkup.Manager
                     }
                     else if (Intersection.CalculateSingle(first.Trajectory, second.Trajectory, out var firstT, out var secondT))
                     {
-                        if (first.Trajectory.Length * firstT < 0.1f || second.Trajectory.Length * secondT < 0.1f)
+                        if (first.Trajectory.Length * (1f - firstT) < 0.1f || second.Trajectory.Length * secondT < 0.1f)
                         {
                             first = new FillerContour.Part(first.Trajectory.Cut(0f, firstT), first.IsEnter);
                             parts[i] = first;
@@ -434,7 +431,7 @@ namespace NodeMarkup.Manager
                 {
                     if (Intersection.CalculateSingle(first.Trajectory, second.Trajectory, out var firstT, out var secondT))
                     {
-                        if (first.Trajectory.Length * firstT < 0.1f || second.Trajectory.Length * secondT < 0.1f)
+                        if (first.Trajectory.Length * (1f - firstT) < 0.1f || second.Trajectory.Length * secondT < 0.1f)
                         {
                             first = new FillerContour.Part(first.Trajectory.Cut(0f, firstT), first.IsEnter);
                             parts[i] = first;
@@ -617,6 +614,7 @@ namespace NodeMarkup.Manager
                     return processed.GetDirection();
                 }
             }
+            public List<ITrajectory> Processed => this.Select(i => i.Processed).ToList();
         }
     }
 }

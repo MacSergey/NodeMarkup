@@ -13,7 +13,7 @@ namespace NodeMarkup.Manager
 {
     public abstract class Filler3DStyle : FillerStyle
     {
-        public Filler3DStyle(Color32 color, float width, float medianOffset) : base(color, width, medianOffset) { }
+        public Filler3DStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset) { }
     }
     public abstract class TriangulationFillerStyle : Filler3DStyle
     {
@@ -24,7 +24,7 @@ namespace NodeMarkup.Manager
         public float MaxLength => 10f;
         public PropertyValue<float> Elevation { get; }
 
-        public TriangulationFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset)
+        public TriangulationFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset)
         {
             Elevation = GetElevationProperty(elevation);
         }
@@ -36,14 +36,11 @@ namespace NodeMarkup.Manager
                 triangulationTarget.Elevation.Value = Elevation;
         }
 
-        public override IEnumerable<IStyleData> Calculate(MarkupFiller filler, MarkupLOD lod)
+        public override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<ITrajectory>> contours, MarkupLOD lod)
         {
-            var contour = filler.Contour.Parts.ToList();
-            var processed = StyleHelper.SetOffset(contour, Offset, MedianOffset);
-
-            foreach (var item in processed)
+            foreach (var contour in contours)
             {
-                var trajectories = item.Select(c => c.Trajectory).ToList();
+                var trajectories = contour;
                 if (trajectories.GetDirection() == TrajectoryHelper.Direction.CounterClockWise)
                     trajectories = trajectories.Select(t => t.Invert()).Reverse().ToList();
 
@@ -200,44 +197,44 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerPavement;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
-        public PavementFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
+        public PavementFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset, elevation) { }
 
-        public override FillerStyle CopyStyle() => new PavementFillerStyle(Color, Width, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new PavementFillerStyle(Color, Width, LineOffset, MedianOffset, Elevation);
     }
     public class GrassFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerGrass;
         protected override MaterialType MaterialType => MaterialType.Grass;
 
-        public GrassFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
+        public GrassFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset, elevation) { }
 
-        public override FillerStyle CopyStyle() => new GrassFillerStyle(Color, Width, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new GrassFillerStyle(Color, Width, LineOffset, MedianOffset, Elevation);
     }
     public class GravelFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerGravel;
         protected override MaterialType MaterialType => MaterialType.Gravel;
 
-        public GravelFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
+        public GravelFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset, elevation) { }
 
-        public override FillerStyle CopyStyle() => new GravelFillerStyle(Color, Width, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new GravelFillerStyle(Color, Width, LineOffset, MedianOffset, Elevation);
     }
     public class RuinedFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerRuined;
         protected override MaterialType MaterialType => MaterialType.Ruined;
 
-        public RuinedFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
+        public RuinedFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset, elevation) { }
 
-        public override FillerStyle CopyStyle() => new RuinedFillerStyle(Color, Width, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new RuinedFillerStyle(Color, Width, LineOffset, MedianOffset, Elevation);
     }
     public class CliffFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerCliff;
         protected override MaterialType MaterialType => MaterialType.Cliff;
 
-        public CliffFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
+        public CliffFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation) : base(color, width, lineOffset, medianOffset, elevation) { }
 
-        public override FillerStyle CopyStyle() => new CliffFillerStyle(Color, Width, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new CliffFillerStyle(Color, Width, LineOffset, MedianOffset, Elevation);
     }
 }

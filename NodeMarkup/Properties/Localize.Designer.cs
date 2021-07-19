@@ -2639,6 +2639,15 @@ namespace NodeMarkup {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Offset from lines.
         /// </summary>
+        public static string StyleOption_LineOffset {
+            get {
+                return ResourceManager.GetString("StyleOption_LineOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Offset from lines.
+        /// </summary>
         public static string StyleOption_LinesOffset {
             get {
                 return ResourceManager.GetString("StyleOption_LinesOffset", resourceCulture);

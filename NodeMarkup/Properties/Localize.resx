@@ -1400,4 +1400,7 @@ Click to edit markings</value>
   <data name="FillerStyle_Ruining" xml:space="preserve">
     <value>Ruining</value>
   </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Offset from lines</value>
+  </data>
 </root>

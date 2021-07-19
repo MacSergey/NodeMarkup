@@ -13,6 +13,7 @@ namespace NodeMarkup.Manager
 {
     public interface IFillerStyle : IStyle
     {
+        PropertyValue<float> LineOffset { get; }
         PropertyValue<float> MedianOffset { get; }
     }
     public abstract class FillerStyle : Style<FillerStyle>, IFillerStyle
@@ -30,29 +31,32 @@ namespace NodeMarkup.Manager
         {
             {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset,  DefaultFollowRails)},
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
-            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset)},
-            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
-            {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
-            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
-            {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
-            {FillerType.Ruined, new RuinedFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
-            {FillerType.Cliff, new CliffFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
+            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset, DefaultOffset)},
+            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
+            {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation)},
+            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation)},
+            {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation)},
+            {FillerType.Ruined, new RuinedFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation)},
+            {FillerType.Cliff, new CliffFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation)},
         };
 
         public PropertyValue<float> MedianOffset { get; }
-        public PropertyValue<float> Offset { get; }
+        public PropertyValue<float> LineOffset { get; }
 
-        public FillerStyle(Color32 color, float width, float medianOffset) : base(color, width)
+        public FillerStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width)
         {
             MedianOffset = GetMedianOffsetProperty(medianOffset);
-            Offset = new PropertyStructValue<float>(StyleChanged, 0f);
+            LineOffset = GetLineOffsetProperty(lineOffset);
         }
 
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
             if (target is IFillerStyle fillerTarget)
+            {
                 fillerTarget.MedianOffset.Value = MedianOffset;
+                fillerTarget.LineOffset.Value = LineOffset;
+            }
         }
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
@@ -68,13 +72,25 @@ namespace NodeMarkup.Manager
         {
             if (!isTemplate)
             {
-                components.Add(AddOffsetProperty(parent));
+                components.Add(AddLineOffsetProperty(parent));
                 if (filler.IsMedian)
                     components.Add(AddMedianOffsetProperty(parent));
             }
         }
 
-        public abstract IEnumerable<IStyleData> Calculate(MarkupFiller filler, MarkupLOD lod);
+        public LodDictionaryArray<IStyleData> Calculate(MarkupFiller filler)
+        {
+            var originalContour = filler.Contour.Parts.ToList();
+            var contours = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
+
+            var data = new LodDictionaryArray<IStyleData>();
+
+            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+                data[lod] = Calculate(filler, contours, lod).ToArray();
+
+            return data;
+        }
+        public abstract IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<ITrajectory>> contours, MarkupLOD lod);
 
         public ITrajectory[] SetMedianOffset(MarkupFiller filler)
         {
@@ -134,18 +150,18 @@ namespace NodeMarkup.Manager
             MedianOffset.FromXml(config, DefaultOffset);
         }
 
-        protected FloatPropertyPanel AddOffsetProperty(UIComponent parent)
+        protected FloatPropertyPanel AddLineOffsetProperty(UIComponent parent)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Offset));
-            offsetProperty.Text = Localize.StyleOption_Offset;
+            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(LineOffset));
+            offsetProperty.Text = Localize.StyleOption_LineOffset;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.WheelTip = Settings.ShowToolTip;
-            //offsetProperty.CheckMin = true;
-            //offsetProperty.MinValue = 0f;
+            offsetProperty.CheckMin = true;
+            offsetProperty.MinValue = 0f;
             offsetProperty.Init();
-            offsetProperty.Value = Offset;
-            offsetProperty.OnValueChanged += (float value) => Offset.Value = value;
+            offsetProperty.Value = LineOffset;
+            offsetProperty.OnValueChanged += (float value) => LineOffset.Value = value;
 
             return offsetProperty;
         }
@@ -156,8 +172,8 @@ namespace NodeMarkup.Manager
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.WheelTip = Settings.ShowToolTip;
-            //offsetProperty.CheckMin = true;
-            //offsetProperty.MinValue = 0f;
+            offsetProperty.CheckMin = true;
+            offsetProperty.MinValue = 0f;
             offsetProperty.Init();
             offsetProperty.Value = MedianOffset;
             offsetProperty.OnValueChanged += (float value) => MedianOffset.Value = value;
@@ -166,7 +182,7 @@ namespace NodeMarkup.Manager
         }
         protected FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent)
         {
-            var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(MedianOffset), nameof(rotateStyle.Angle));
+            var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(rotateStyle.Angle));
             angleProperty.Text = Localize.StyleOption_Angle;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
@@ -184,7 +200,7 @@ namespace NodeMarkup.Manager
         }
         protected FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent)
         {
-            var stepProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(MedianOffset), nameof(periodicStyle.Step));
+            var stepProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(periodicStyle.Step));
             stepProperty.Text = Localize.StyleOption_Step;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
@@ -196,21 +212,6 @@ namespace NodeMarkup.Manager
             stepProperty.OnValueChanged += (float value) => periodicStyle.Step.Value = value;
 
             return stepProperty;
-        }
-        protected FloatPropertyPanel AddOffsetProperty(IOffsetFiller offsetStyle, UIComponent parent)
-        {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(offsetStyle.Offset));
-            offsetProperty.Text = Localize.StyleOption_Offset;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0f;
-            offsetProperty.Init();
-            offsetProperty.Value = offsetStyle.Offset;
-            offsetProperty.OnValueChanged += (float value) => offsetStyle.Offset.Value = value;
-
-            return offsetProperty;
         }
 
         public enum FillerType

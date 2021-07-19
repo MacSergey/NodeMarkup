@@ -40,16 +40,16 @@ namespace NodeMarkup.Manager
 
     public abstract class Filler2DStyle : FillerStyle
     {
-        public Filler2DStyle(Color32 color, float width, float medianOffset) : base(color, width, medianOffset) { }
+        public Filler2DStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset) { }
 
-        public sealed override IEnumerable<IStyleData> Calculate(MarkupFiller filler, MarkupLOD lod)
+        public sealed override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<ITrajectory>> contours, MarkupLOD lod)
         {
-            yield return new MarkupStyleParts(CalculateProcess(filler, lod));
+            yield return new MarkupStyleParts(CalculateProcess(filler, contours, lod));
         }
-        protected virtual IEnumerable<MarkupStylePart> CalculateProcess(MarkupFiller filler, MarkupLOD lod)
+        protected virtual IEnumerable<MarkupStylePart> CalculateProcess(MarkupFiller filler, List<List<ITrajectory>> contours, MarkupLOD lod)
         {
-            var contour = filler.IsMedian ? SetMedianOffset(filler) : filler.Contour.TrajectoriesProcessed.ToArray();
-            var rails = GetRails(filler, contour).ToArray();
+            var originalContour = filler.Contour.TrajectoriesProcessed.ToArray();
+            var rails = GetRails(filler, originalContour).ToArray();
 
             foreach (var rail in rails)
             {
@@ -57,12 +57,11 @@ namespace NodeMarkup.Manager
 
                 foreach (var partItem in partItems)
                 {
-                    foreach (var dash in GetDashes(partItem, contour))
+                    foreach (var dash in GetDashes(partItem, contours))
                         yield return dash;
                 }
             }
         }
-
 
         protected abstract IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour);
         protected Rect GetRect(ITrajectory[] contour)
@@ -144,7 +143,7 @@ namespace NodeMarkup.Manager
             width /= coef;
             itemStep = itemWidth / coef;
         }
-        protected IEnumerable<PartItem> GetPartItems(StraightTrajectory part, float angle, int itemsCount, float itemWidth, float itemStep, float offset = 0f, bool isBothDir = true)
+        protected IEnumerable<PartItem> GetPartItems(StraightTrajectory part, float angle, int itemsCount, float itemWidth, float itemStep, bool isBothDir = true)
         {
             var itemDir = part.Direction.TurnDeg(angle, true);
 
@@ -152,16 +151,19 @@ namespace NodeMarkup.Manager
             for (var i = 0; i < itemsCount; i += 1)
             {
                 var itemPos = part.StartPosition + (start + itemStep * i) * part.StartDirection;
-                yield return new PartItem(itemPos, itemDir, itemWidth, offset, isBothDir);
+                yield return new PartItem(itemPos, itemDir, itemWidth, isBothDir);
             }
         }
-        protected IEnumerable<MarkupStylePart> GetDashes(PartItem item, ITrajectory[] contour)
+        protected IEnumerable<MarkupStylePart> GetDashes(PartItem item, List<List<ITrajectory>> contours)
         {
             var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
 
             var intersectSet = new HashSet<Intersection>();
-            foreach (var trajectory in contour)
-                intersectSet.AddRange(Intersection.Calculate(straight, trajectory));
+            foreach (var contour in contours)
+            {
+                foreach (var trajectory in contour)
+                    intersectSet.AddRange(Intersection.Calculate(straight, trajectory));
+            }
 
             var intersects = intersectSet.OrderBy(i => i, Intersection.FirstComparer).ToArray();
 
@@ -176,11 +178,12 @@ namespace NodeMarkup.Manager
 
             for (var i = 1; i < intersects.Length; i += 2)
             {
-                if (!GetDashesT(item, intersects, i, beforeT, beforeIsPriority, afterT, afterIsPriority, out float input, out float output))
-                    continue;
-                if (!GetStylePartParams(item, intersects, i, input, output, out Vector3 start, out Vector3 end))
-                    continue;
-                yield return new MarkupStylePart(start, end, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
+                if (GetDashesT(item, intersects, i, beforeT, beforeIsPriority, afterT, afterIsPriority, out float input, out float output))
+                {
+                    var start = item.Position + item.Direction * input;
+                    var end = item.Position + item.Direction * output;
+                    yield return new MarkupStylePart(start, end, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
+                }
             }
         }
         private bool GetDashesT(PartItem item, Intersection[] intersects, int i, float beforeT, bool beforeIsPriority, float afterT, bool afterIsPriority, out float input, out float output)
@@ -223,26 +226,6 @@ namespace NodeMarkup.Manager
             }
             static bool Skip(float t, bool isPriority, float input, float output) => isPriority && ((t < 0f && input < t) || (t > 0f && output > t));
         }
-        private bool GetStylePartParams(PartItem item, Intersection[] intersects, int i, float input, float output, out Vector3 start, out Vector3 end)
-        {
-            start = item.Position + item.Direction * input;
-            end = item.Position + item.Direction * output;
-
-            if (item.Offset != 0)
-            {
-                var startOffset = GetOffset(intersects[i - 1], item.Offset);
-                var endOffset = GetOffset(intersects[i], item.Offset);
-
-                if ((end - start).magnitude - Width < startOffset + endOffset)
-                    return false;
-
-                var isStartToEnd = output >= input;
-                start += item.Direction * (isStartToEnd ? startOffset : -startOffset);
-                end += item.Direction * (isStartToEnd ? -endOffset : endOffset);
-            }
-
-            return true;
-        }
 
         protected class RailLine : List<ITrajectory> { }
         protected class PartItem
@@ -250,17 +233,15 @@ namespace NodeMarkup.Manager
             public Vector3 Position { get; }
             public Vector3 Direction { get; }
             public float Width { get; }
-            public float Offset { get; }
             public bool IsBothDir { get; }
             public StraightTrajectory Before { get; set; }
             public StraightTrajectory After { get; set; }
 
-            public PartItem(Vector3 position, Vector3 direction, float width, float offset, bool isBothDir)
+            public PartItem(Vector3 position, Vector3 direction, float width, bool isBothDir)
             {
                 Position = position;
                 Direction = direction;
                 Width = width;
-                Offset = offset;
                 IsBothDir = isBothDir;
             }
         }
@@ -269,7 +250,7 @@ namespace NodeMarkup.Manager
     {
         public PropertyValue<float> Step { get; }
 
-        public PeriodicFillerStyle(Color32 color, float width, float step, float medianOffset) : base(color, width, medianOffset)
+        public PeriodicFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
         {
             Step = GetStepProperty(step);
         }
@@ -428,7 +409,7 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> LeftRailB { get; }
         public PropertyValue<int> RightRailB { get; }
 
-        public RailFillerStyle(Color32 color, float width, float step, float medianOffset) : base(color, width, step, medianOffset)
+        public RailFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset) : base(color, width, step, lineOffset, medianOffset)
         {
             LeftRailA = GetLeftRailAProperty(0);
             LeftRailB = GetLeftRailBProperty(1);
@@ -500,30 +481,25 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class StripeFillerStyle : RailFillerStyle, IFollowRailFiller, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
+    public class StripeFillerStyle : RailFillerStyle, IFollowRailFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerStripe;
 
         public PropertyValue<float> Angle { get; }
-        public PropertyValue<float> Offset { get; }
         public PropertyValue<bool> FollowRails { get; }
 
-        public StripeFillerStyle(Color32 color, float width, float medianOffset, float angle, float step, float offset, bool followRails = false) : base(color, width, step, medianOffset)
+        public StripeFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angle, float step, bool followRails = false) : base(color, width, step, lineOffset, medianOffset)
         {
             Angle = GetAngleProperty(angle);
-            Offset = GetOffsetProperty(offset);
             FollowRails = GetFollowRailsProperty(followRails);
         }
-        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, DefaultOffset, DefaultAngle, Step, Offset, FollowRails);
+        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, LineOffset, DefaultOffset, DefaultAngle, Step, FollowRails);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
 
             if (target is IRotateFiller rotateTarget)
                 rotateTarget.Angle.Value = Angle;
-
-            if (target is IOffsetFiller offsetTarget)
-                offsetTarget.Offset.Value = Offset;
 
             if (target is IFollowRailFiller followRailTarget)
                 followRailTarget.FollowRails.Value = FollowRails;
@@ -534,8 +510,6 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
                 components.Add(AddAngleProperty(this, parent));
-
-            components.Add(AddOffsetProperty(this, parent));
 
             if (!isTemplate)
             {
@@ -614,7 +588,7 @@ namespace NodeMarkup.Manager
             {
                 var before = GetPartBorder(endBorders, startBorders[i], i, false);
                 var after = GetPartBorder(startBorders, endBorders[i], i, true);
-                foreach (var item in GetPartItems(parts[i], angle, itemsCount, itemWidth, itemStep, Offset))
+                foreach (var item in GetPartItems(parts[i], angle, itemsCount, itemWidth, itemStep))
                 {
                     item.Before = before;
                     item.After = after;
@@ -636,7 +610,6 @@ namespace NodeMarkup.Manager
             var config = base.ToXml();
             Angle.ToXml(config);
             FollowRails.ToXml(config);
-            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -644,7 +617,6 @@ namespace NodeMarkup.Manager
             base.FromXml(config, map, invert);
             Angle.FromXml(config, DefaultAngle);
             FollowRails.FromXml(config, DefaultFollowRails);
-            Offset.FromXml(config, DefaultOffset);
         }
     }
     public class ChevronFillerStyle : RailFillerStyle, IWidthStyle, IColorStyle
@@ -656,7 +628,7 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> Output { get; }
         public PropertyEnumValue<From> StartingFrom { get; }
 
-        public ChevronFillerStyle(Color32 color, float width, float medianOffset, float angleBetween, float step) : base(color, width, step, medianOffset)
+        public ChevronFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angleBetween, float step) : base(color, width, step, lineOffset, medianOffset)
         {
             AngleBetween = GetAngleBetweenProperty(angleBetween);
             Invert = GetInvertProperty(false);
@@ -665,7 +637,7 @@ namespace NodeMarkup.Manager
             StartingFrom = GetStartingFromProperty(From.Vertex);
         }
 
-        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, MedianOffset, AngleBetween, Step);
+        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, LineOffset, DefaultOffset, AngleBetween, Step);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
@@ -709,7 +681,7 @@ namespace NodeMarkup.Manager
         }
         protected FloatPropertyPanel AddAngleBetweenProperty(UIComponent parent)
         {
-            var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(MedianOffset), nameof(AngleBetween));
+            var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(AngleBetween));
             angleProperty.Text = Localize.StyleOption_AngleBetween;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
@@ -806,22 +778,20 @@ namespace NodeMarkup.Manager
             Edge = 1
         }
     }
-    public class GridFillerStyle : Filler2DStyle, IPeriodicFiller, IOffsetFiller, IRotateFiller, IWidthStyle, IColorStyle
+    public class GridFillerStyle : Filler2DStyle, IPeriodicFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerGrid;
 
         public PropertyValue<float> Angle { get; }
         public PropertyValue<float> Step { get; }
-        public PropertyValue<float> Offset { get; }
 
-        public GridFillerStyle(Color32 color, float width, float angle, float step, float offset, float medianOffset) : base(color, width, medianOffset)
+        public GridFillerStyle(Color32 color, float width, float angle, float step, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
         {
             Angle = GetAngleProperty(angle);
             Step = GetStepProperty(step);
-            Offset = GetOffsetProperty(offset);
         }
 
-        public override FillerStyle CopyStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, Offset, DefaultOffset);
+        public override FillerStyle CopyStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, LineOffset, DefaultOffset);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
@@ -831,9 +801,6 @@ namespace NodeMarkup.Manager
 
             if (target is IPeriodicFiller periodicTarget)
                 periodicTarget.Step.Value = Step;
-
-            if (target is IOffsetFiller offsetTarget)
-                offsetTarget.Offset.Value = Offset;
         }
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -841,7 +808,6 @@ namespace NodeMarkup.Manager
             components.Add(AddStepProperty(this, parent));
             if (!isTemplate)
                 components.Add(AddAngleProperty(this, parent));
-            components.Add(AddOffsetProperty(this, parent));
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
@@ -856,7 +822,7 @@ namespace NodeMarkup.Manager
             GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
             foreach (var part in GetParts(rail, width, width * (Step - 1)))
             {
-                foreach (var item in GetPartItems(part, 90f, itemsCount, itemWidth, itemStep, Offset))
+                foreach (var item in GetPartItems(part, 90f, itemsCount, itemWidth, itemStep))
                     yield return item;
             }
         }
@@ -866,7 +832,6 @@ namespace NodeMarkup.Manager
             var config = base.ToXml();
             Angle.ToXml(config);
             Step.ToXml(config);
-            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -874,7 +839,6 @@ namespace NodeMarkup.Manager
             base.FromXml(config, map, invert);
             Angle.FromXml(config, DefaultAngle);
             Step.FromXml(config, DefaultStepGrid);
-            Offset.FromXml(config, DefaultOffset);
         }
     }
     public class SolidFillerStyle : Filler2DStyle, IColorStyle
@@ -883,9 +847,9 @@ namespace NodeMarkup.Manager
 
         public override StyleType Type => StyleType.FillerSolid;
 
-        public SolidFillerStyle(Color32 color, float medianOffset) : base(color, DefaultSolidWidth, medianOffset) { }
+        public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset) : base(color, DefaultSolidWidth, lineOffset, medianOffset) { }
 
-        public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, DefaultOffset);
+        public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, LineOffset, DefaultOffset);
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
         {
