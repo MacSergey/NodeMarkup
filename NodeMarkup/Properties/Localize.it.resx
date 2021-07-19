@@ -1396,8 +1396,14 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="FillerStyle_Cliff" xml:space="preserve">
     <value>Scogliera</value>
   </data>
-  <data name="FillerStyle_Ruining" xml:space="preserve">
+  <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Rovine</value>
   </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Spostamento dalle linee</value>
+  </data>
+  
+  
+  
   
 </root>

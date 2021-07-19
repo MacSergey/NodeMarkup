@@ -379,7 +379,7 @@
     <value>Выберите следующую точку контура</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Отступ от раздел. полосы</value>
+    <value>Отступ от разделительной полосы</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Копировать</value>
@@ -1400,8 +1400,22 @@
   <data name="FillerStyle_Cliff" xml:space="preserve">
     <value>Скала</value>
   </data>
-  <data name="FillerStyle_Ruining" xml:space="preserve">
+  <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Руины</value>
   </data>
-  
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Отступ от линий</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>Радиус скругления углов</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>Радиус скругления углов у разделительной полосы</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>Размер бордюра</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>Размер бордюра у разделительной полосы</value>
+  </data>
 </root>

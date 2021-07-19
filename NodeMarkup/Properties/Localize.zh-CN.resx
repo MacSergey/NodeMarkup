@@ -1302,10 +1302,22 @@
   <data name="FillerStyle_Cliff" xml:space="preserve">
     <value>悬崖</value>
   </data>
-  <data name="FillerStyle_Ruining" xml:space="preserve">
-    <value>碎地</value>
+  <data name="FillerStyle_Ruined" xml:space="preserve">
+    <value>砂石</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
     <value>从边线回缩</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>拐角半径</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>隔离带拐角半径</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>路肩大小</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>隔离带路肩大小</value>
   </data>
 </root>

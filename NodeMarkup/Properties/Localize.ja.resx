@@ -349,7 +349,7 @@
     <value>角度</value>
   </data>
   <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>塗り潰し部分のオフセット</value>
+    <value>ライン側のオフセット</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>このポイントから塗り潰しを開始</value>
@@ -367,7 +367,7 @@
     <value>次のポイントを選択</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>分離帯部分のオフセット</value>
+    <value>分離帯側のオフセット</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>コピー</value>
@@ -1068,7 +1068,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
     <value>追加ルールの作成方法
-ラインの始点と終点を変更したい場合は、他のラインと交差する必要があります。</value>
+始点や終点を変更したい場合は、他のラインが交差する必要があります。</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
     <value>パネル内にTipsを表示</value>
@@ -1268,8 +1268,22 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="FillerStyle_Cliff" xml:space="preserve">
     <value>崖（3Dスタイル）</value>
   </data>
-  <data name="FillerStyle_Ruining" xml:space="preserve">
+  <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>荒れ地（3Dスタイル）</value>
   </data>
-  
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>ライン側のオフセット</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>角丸の半径（ライン側）</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>角丸の半径（分離帯側）</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>縁石の幅（ライン側）</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>縁石の幅（分離帯側）</value>
+  </data>
 </root>

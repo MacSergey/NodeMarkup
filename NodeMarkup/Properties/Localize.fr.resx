@@ -1266,10 +1266,22 @@ Cliquez pour modifier le marquage</value>
   <data name="FillerStyle_Cliff" xml:space="preserve">
     <value>Falaise</value>
   </data>
-  <data name="FillerStyle_Ruining" xml:space="preserve">
+  <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Détérioré</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
     <value>Écart depuis les lignes</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>Rayon du coin</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>Rayon du coin à la médiane</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>Taille du trottoir</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>Taille du trottoir à la médiane</value>
   </data>
 </root>
