@@ -1266,9 +1266,7 @@ Cliquez pour modifier le marquage</value>
   <data name="FillerStyle_Cliff" xml:space="preserve">
     <value>Falaise</value>
   </data>
-  <data name="FillerStyle_Ruining" xml:space="preserve">
-    <value>Détérioré</value>
-  </data>
+  
   <data name="StyleOption_LineOffset" xml:space="preserve">
     <value>Écart depuis les lignes</value>
   </data>

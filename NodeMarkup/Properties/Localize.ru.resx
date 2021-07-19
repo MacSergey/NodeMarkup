@@ -1400,8 +1400,10 @@
   <data name="FillerStyle_Cliff" xml:space="preserve">
     <value>Скала</value>
   </data>
-  <data name="FillerStyle_Ruining" xml:space="preserve">
+  <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Руины</value>
   </data>
-  
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Отступ от линий</value>
+  </data>
 </root>
