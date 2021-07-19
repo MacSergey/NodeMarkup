@@ -12,20 +12,37 @@ namespace NodeMarkup.Utilities
 {
     public static class RenderHelper
     {
-        public static Dictionary<MaterialType, Material> MaterialLib { get; private set; } = Init();
-        private static Dictionary<MaterialType, Material> Init()
+        public static Dictionary<MaterialType, Material> MaterialLib { get; private set; } = new Dictionary<MaterialType, Material>()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            return new Dictionary<MaterialType, Material>()
-            {
-                { MaterialType.RectangleLines, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white))},
-                { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
-                { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), assembly.LoadTextureFromAssembly("SharkTooth"))},
-                { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black)) },
-                { MaterialType.Grass, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), CreateSplitUVTexture(128,128)) },
-            };
-        }
-        public static Texture SurfaceTexture { get; } = TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127));
+            { MaterialType.RectangleLines, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white))},
+            { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
+            { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), Assembly.GetExecutingAssembly().LoadTextureFromAssembly("SharkTooth"))},
+            { MaterialType.Pavement, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black)) },
+            { MaterialType.Grass, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(255, 0, 0, 255)))},
+            { MaterialType.Gravel, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            { MaterialType.Asphalt, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(0, 255, 255, 255)))},
+            { MaterialType.Ruined, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            { MaterialType.Cliff, CreateRoadMaterial(TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+        };
+        public static Dictionary<MaterialType, Texture2D> SurfaceALib { get; } = new Dictionary<MaterialType, Texture2D>()
+        {
+            { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
+            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
+            { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 127)) },
+            { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 127)) },
+            { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 191, 127)) },
+            { MaterialType.Cliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 191)) },
+        };
+        public static Dictionary<MaterialType, Texture2D> SurfaceBLib { get; } = new Dictionary<MaterialType, Texture2D>()
+        {
+            { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 255, 0)) },
+            { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.Cliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+        };
+
 
         public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
         private static int[] VerticesIdxs { get; } = new int[]
@@ -151,23 +168,10 @@ namespace NodeMarkup.Utilities
             if (apr != null)
                 material.SetTexture("_APRMap", apr);
 
-            material.EnableKeyword("TERRAIN_SURFACE_ON");
+            //material.EnableKeyword("TERRAIN_SURFACE_ON");
             material.EnableKeyword("NET_SEGMENT");
 
             return material;
-        }
-
-        public static Texture2D CreateSplitUVTexture(int height, int width)
-        {
-            var texture = new Texture2D(height, width) { name = "Markup" };
-            for (var i = 0; i < width; i += 1)
-            {
-                var color = i < width / 2 ? new Color(1f, 1f, 0f, 1f) : Color.black;
-                for (var j = 0; j < height; j += 1)
-                    texture.SetPixel(i, j, color);
-            }
-            texture.Apply();
-            return texture;
         }
 
         public static Texture2D CreateChessBoardTexture()
@@ -200,6 +204,10 @@ namespace NodeMarkup.Utilities
         Triangle,
         Pavement,
         Grass,
+        Gravel,
+        Asphalt,
+        Ruined,
+        Cliff,
     }
 
     public interface IDrawData
@@ -307,7 +315,8 @@ namespace NodeMarkup.Utilities
             instance.m_materialBlock.SetMatrix(instance.ID_RightMatrix, Right);
             instance.m_materialBlock.SetVector(instance.ID_MeshScale, Scale);
 
-            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, RenderHelper.SurfaceTexture);
+            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, /*RenderHelper.SurfaceTexture*/ RenderHelper.SurfaceALib[MaterialType]);
+            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, /*RenderHelper.SurfaceTexture*/ RenderHelper.SurfaceBLib[MaterialType]);
 
             Graphics.DrawMesh(Mesh, Position, Quaternion.identity, RenderHelper.MaterialLib[MaterialType], 0, null, 0, instance.m_materialBlock);
         }
@@ -324,74 +333,37 @@ namespace NodeMarkup.Utilities
                 yield return (i >= from && i < from + count ? -1 : 1) * normals[i];
         }
     }
-    public class MarkupStylePolygonMesh : MarkupStyleMesh
+    public abstract class BaseMarkupStylePolygonMesh : MarkupStyleMesh
     {
         protected override float MeshHalfWidth => 20f;
         protected override float MeshHalfLength => 20f;
-        private Vector3[] Vertices { get; }
-        private int[] Triangles { get; }
-        private Vector2[] UV { get; }
-        private int TopPoints { get; }
+        private Vector3[] Vertices { get; set; }
+        private int[] Triangles { get; set; }
+        private Vector2[] UV { get; set; }
 
-        public MarkupStylePolygonMesh(float height, float elevation, int[] groups, Vector3[] points, int[] polygons, MaterialType materialType)
+        public void Init(float height, float elevation, Vector3[] vertices, int[] triangles, MaterialType materialType)
         {
-            var vertices = points.ToList();
-            var triangles = polygons.ToList();
-            var uv = new List<Vector2>();
-            TopPoints = points.Length;
-
-            var minMax = Rect.MinMaxRect(vertices.Min(p => p.x), vertices.Min(p => p.z), vertices.Max(p => p.x), vertices.Max(p => p.z));
+            var minMax = GetMinMax(vertices);
             var position = new Vector3(minMax.center.x, height, minMax.center.y);
-
-            for (var i = 0; i < triangles.Count; i += 3)
-            {
-                var temp = triangles[i];
-                triangles[i] = triangles[i + 2];
-                triangles[i + 2] = temp;
-            }
 
             var xRatio = MeshHalfWidth / minMax.width;
             var yRatio = MeshHalfLength / minMax.height;
-            for (var i = 0; i < vertices.Count; i += 1)
+
+            Vertices = new Vector3[vertices.Length];
+            UV = new Vector2[vertices.Length];
+            for (var i = 0; i < vertices.Length; i += 1)
             {
-                vertices[i] = new Vector3((vertices[i].x - minMax.center.x) * xRatio, vertices[i].y - position.y + elevation, (vertices[i].z - minMax.center.y) * yRatio);
-                uv.Add(new Vector2((vertices[i].x / MeshHalfWidth + 1f) * 0.2f + 0.05f, (vertices[i].z / MeshHalfLength + 1f) * 0.5f));
+                Vertices[i] = new Vector3((vertices[i].x - minMax.center.x) * xRatio, vertices[i].y - position.y + elevation, (vertices[i].z - minMax.center.y) * yRatio);
+                UV[i] = new Vector2((vertices[i].x / MeshHalfWidth + 1f) * 0.5f, (vertices[i].z / MeshHalfLength + 1f) * 0.5f);
             }
 
-            var index = 0;
-            for (var i = 0; i < groups.Length; i += 1)
-            {
-                for (var j = 0; j <= groups[i]; j += 1)
-                {
-                    var point = vertices[index % points.Length];
-
-                    vertices.Add(point);
-                    vertices.Add(point - new Vector3(0f, elevation, 0f));
-                    uv.Add(new Vector2(0.75f, 0.5f));
-                    uv.Add(new Vector2(0.75f, 0.5f));
-
-                    if (j != 0)
-                    {
-                        triangles.Add(vertices.Count - 4);
-                        triangles.Add(vertices.Count - 1);
-                        triangles.Add(vertices.Count - 2);
-
-                        triangles.Add(vertices.Count - 1);
-                        triangles.Add(vertices.Count - 4);
-                        triangles.Add(vertices.Count - 3);
-                    }
-                    index += 1;
-                }
-                index -= 1;
-            }
-
-            Vertices = vertices.ToArray();
-            Triangles = triangles.ToArray();
-            UV = uv.ToArray();
+            Triangles = new int[triangles.Length];
+            triangles.CopyTo(Triangles, 0);
 
             CalculateMatrix(minMax.width, minMax.height, out Matrix4x4 left, out Matrix4x4 right);
             Init(position, left, right, materialType);
         }
+
         private void CalculateMatrix(float width, float height, out Matrix4x4 left, out Matrix4x4 right)
         {
             var bezierL = new Bezier3()
@@ -412,6 +384,7 @@ namespace NodeMarkup.Utilities
             left = NetSegment.CalculateControlMatrix(bezierL.a, bezierL.b, bezierL.c, bezierL.d, bezierR.a, bezierR.b, bezierR.c, bezierR.d, Vector3.zero, 0.05f);
             right = NetSegment.CalculateControlMatrix(bezierR.a, bezierR.b, bezierR.c, bezierR.d, bezierL.a, bezierL.b, bezierL.c, bezierL.d, Vector3.zero, 0.05f);
         }
+        protected Rect GetMinMax(Vector3[] points) => Rect.MinMaxRect(points.Min(p => p.x), points.Min(p => p.z), points.Max(p => p.x), points.Max(p => p.z));
         protected override Mesh GetMesh()
         {
             var mesh = new Mesh
@@ -422,10 +395,51 @@ namespace NodeMarkup.Utilities
                 bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
             };
             mesh.RecalculateNormals();
-            mesh.normals = FixNormals(mesh.normals, 0, TopPoints).ToArray();
             mesh.RecalculateTangents();
 
             return mesh;
+        }
+    }
+    public class MarkupStylePolygonTopMesh : BaseMarkupStylePolygonMesh
+    {
+        public MarkupStylePolygonTopMesh(float height, float elevation, Vector3[] points, int[] polygons, MaterialType materialType)
+        {
+            Init(height, elevation, points, polygons, materialType);
+        }
+    }
+    public class MarkupStylePolygonSideMesh : BaseMarkupStylePolygonMesh
+    {
+        public MarkupStylePolygonSideMesh(float height, float elevation, int[] groups, Vector3[] points, MaterialType materialType)
+        {
+            var vertices = new List<Vector3>();
+            var triangles = new List<int>();
+
+            var index = 0;
+            for (var i = 0; i < groups.Length; i += 1)
+            {
+                for (var j = 0; j <= groups[i]; j += 1)
+                {
+                    var point = points[index % points.Length];
+
+                    vertices.Add(point);
+                    vertices.Add(point - new Vector3(0f, elevation, 0f));
+
+                    if (j != 0)
+                    {
+                        triangles.Add(vertices.Count - 4);
+                        triangles.Add(vertices.Count - 1);
+                        triangles.Add(vertices.Count - 2);
+
+                        triangles.Add(vertices.Count - 1);
+                        triangles.Add(vertices.Count - 4);
+                        triangles.Add(vertices.Count - 3);
+                    }
+                    index += 1;
+                }
+                index -= 1;
+            }
+
+            Init(height, elevation, vertices.ToArray(), triangles.ToArray(), materialType);
         }
     }
     public class MarkupStyleLineMesh : MarkupStyleMesh

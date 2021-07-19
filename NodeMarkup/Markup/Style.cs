@@ -210,6 +210,7 @@ namespace NodeMarkup.Manager
         protected PropertyColorValue GetColorProperty(Color32 defaultValue) => new PropertyColorValue("C", StyleChanged, defaultValue);
         protected PropertyColorValue GetSecondColorProperty(Color32 defaultValue) => new PropertyColorValue("SC", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetWidthProperty(float defaultValue) => new PropertyStructValue<float>("W", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetLineOffsetProperty(float defaultValue) => new PropertyStructValue<float>("O", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetOffsetProperty(float defaultValue) => new PropertyStructValue<float>("O", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetMedianOffsetProperty(float defaultValue) => new PropertyStructValue<float>("MO", StyleChanged, defaultValue);
         protected PropertyEnumValue<Alignment> GetAlignmentProperty(Alignment defaultValue) => new PropertyEnumValue<Alignment>("A", StyleChanged, defaultValue);
@@ -233,6 +234,8 @@ namespace NodeMarkup.Manager
         protected PropertyStructValue<float> GetAngleBetweenProperty(float defaultValue) => new PropertyStructValue<float>("A", StyleChanged, defaultValue);
         protected PropertyEnumValue<ChevronFillerStyle.From> GetStartingFromProperty(ChevronFillerStyle.From defaultValue) => new PropertyEnumValue<ChevronFillerStyle.From>("SF", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetElevationProperty(float defaultValue) => new PropertyStructValue<float>("E", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetCornerRadiusProperty(float defaultValue) => new PropertyStructValue<float>("CR", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetMedianCornerRadiusProperty(float defaultValue) => new PropertyStructValue<float>("MCR", StyleChanged, defaultValue);
         protected PropertyStructValue<int> GetLeftRailAProperty(int defaultValue) => new PropertyStructValue<int>("LRA", StyleChanged, defaultValue);
         protected PropertyStructValue<int> GetLeftRailBProperty(int defaultValue) => new PropertyStructValue<int>("LRB", StyleChanged, defaultValue);
         protected PropertyStructValue<int> GetRightRailAProperty(int defaultValue) => new PropertyStructValue<int>("RRA", StyleChanged, defaultValue);
@@ -345,6 +348,15 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.FillerStyle_Grass))]
             FillerGrass,
+
+            [Description(nameof(Localize.FillerStyle_Gravel))]
+            FillerGravel,
+
+            [Description(nameof(Localize.FillerStyle_Ruining))]
+            FillerRuined,
+
+            [Description(nameof(Localize.FillerStyle_Cliff))]
+            FillerCliff,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]

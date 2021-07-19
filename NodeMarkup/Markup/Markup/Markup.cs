@@ -352,7 +352,7 @@ namespace NodeMarkup.Manager
                 var drawData = new List<IDrawData>();
 
                 Seporate(Lines.SelectMany(l => l.StyleData[lod]));
-                Seporate(Fillers.Select(f => f.StyleData[lod]));
+                Seporate(Fillers.SelectMany(f => f.StyleData[lod]));
                 Seporate(Crosswalks.Select(c => c.StyleData[lod]));
 
                 drawData.AddRange(RenderBatch.FromDashes(dashes));
