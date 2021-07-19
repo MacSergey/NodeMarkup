@@ -38,59 +38,28 @@ namespace NodeMarkup.Manager
 
         public override IEnumerable<IStyleData> Calculate(MarkupFiller filler, MarkupLOD lod)
         {
-            var trajectories = GetTrajectories(filler);
-            var parts = GetParts(trajectories, lod);
+            var contour = filler.Contour.Parts.ToList();
+            var processed = StyleHelper.SetOffset(contour, Offset, MedianOffset);
 
-            var points = parts.SelectMany(p => p).Select(t => t.StartPosition).ToArray();
-            if (points.Length < 3)
-                yield break;
-
-            var triangles = Triangulator.Triangulate(points, PolygonDirection.ClockWise);
-            if (triangles == null)
-                yield break;
-
-            yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType);
-            yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, parts.Select(g => g.Count).ToArray(), points, MaterialType.Pavement);
-        }
-        private List<ITrajectory> GetTrajectories(MarkupFiller filler)
-        {
-            var contour = filler.IsMedian ? SetMedianOffset(filler).ToList() : filler.Contour.TrajectoriesProcessed.ToList();
-
-            if (contour.Count > 3)
+            foreach (var item in processed)
             {
-                for (var i = 0; i < contour.Count; i += 1)
-                {
-                    for (var j = 2; j < contour.Count - 1; j += 1)
-                    {
-                        var x = i;
-                        var y = (i + j) % contour.Count;
-                        var intersect = Intersection.CalculateSingle(contour[x], contour[y]);
-                        if (intersect.IsIntersect && (intersect.FirstT > 0.5f || intersect.SecondT < 0.5f))
-                        {
-                            contour[x] = contour[x].Cut(0f, intersect.FirstT);
-                            contour[y] = contour[y].Cut(intersect.SecondT, 1f);
+                var trajectories = item.Select(c => c.Trajectory).ToList();
+                if (trajectories.GetDirection() == TrajectoryHelper.Direction.CounterClockWise)
+                    trajectories = trajectories.Select(t => t.Invert()).Reverse().ToList();
 
-                            if (y > x)
-                            {
-                                var count = y - (x + 1);
-                                contour.RemoveRange(x + 1, count);
-                                j -= count;
-                            }
-                            else
-                            {
-                                contour.RemoveRange(x + 1, contour.Count - (x + 1));
-                                contour.RemoveRange(0, y);
-                                i -= y;
-                            }
-                        }
-                    }
-                }
+                var parts = GetParts(trajectories, lod);
+
+                var points = parts.SelectMany(p => p).Select(t => t.StartPosition).ToArray();
+                if (points.Length < 3)
+                    yield break;
+
+                var triangles = Triangulator.Triangulate(points, TrajectoryHelper.Direction.ClockWise);
+                if (triangles == null)
+                    yield break;
+
+                yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType);
+                yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, parts.Select(g => g.Count).ToArray(), points, MaterialType.Pavement);
             }
-
-            if (GetDirection(contour) == PolygonDirection.CounterClockWise)
-                contour = contour.Select(t => t.Invert()).Reverse().ToList();
-
-            return contour;
         }
         private List<List<ITrajectory>> GetParts(List<ITrajectory> trajectories, MarkupLOD lod)
         {
@@ -151,15 +120,6 @@ namespace NodeMarkup.Manager
             }
 
             return false;
-        }
-
-        private PolygonDirection GetDirection(List<ITrajectory> contour)
-        {
-            var isClockWise = 0;
-            for (var i = 0; i < contour.Count; i += 1)
-                isClockWise += (Vector3.Cross(-contour[i].Direction, contour[(i + 1) % contour.Count].Direction).y < 0) ? 1 : -1;
-
-            return isClockWise >= 0 ? PolygonDirection.ClockWise : PolygonDirection.CounterClockWise;
         }
 
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
@@ -262,14 +222,14 @@ namespace NodeMarkup.Manager
 
         public override FillerStyle CopyStyle() => new GravelFillerStyle(Color, Width, MedianOffset, Elevation);
     }
-    public class RuiningFillerStyle : TriangulationFillerStyle
+    public class RuinedFillerStyle : TriangulationFillerStyle
     {
-        public override StyleType Type => StyleType.FillerRuining;
-        protected override MaterialType MaterialType => MaterialType.Ruining;
+        public override StyleType Type => StyleType.FillerRuined;
+        protected override MaterialType MaterialType => MaterialType.Ruined;
 
-        public RuiningFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
+        public RuinedFillerStyle(Color32 color, float width, float medianOffset, float elevation) : base(color, width, medianOffset, elevation) { }
 
-        public override FillerStyle CopyStyle() => new RuiningFillerStyle(Color, Width, MedianOffset, Elevation);
+        public override FillerStyle CopyStyle() => new RuinedFillerStyle(Color, Width, MedianOffset, Elevation);
     }
     public class CliffFillerStyle : TriangulationFillerStyle
     {

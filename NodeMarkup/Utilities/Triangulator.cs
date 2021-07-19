@@ -8,19 +8,19 @@ namespace NodeMarkup.Utilities
 {
     public class Triangulator
     {
-        public static int[] Triangulate(IEnumerable<Vector3> points, PolygonDirection direction) => Triangulate(points.Select(p => XZ(p)), direction);
-        public static int[] Triangulate(IEnumerable<Vector2> points, PolygonDirection direction)
+        public static int[] Triangulate(IEnumerable<Vector3> points, TrajectoryHelper.Direction direction) => Triangulate(points.Select(p => XZ(p)), direction);
+        public static int[] Triangulate(IEnumerable<Vector2> points, TrajectoryHelper.Direction direction)
         {
             var triangulator = new Triangulator(points, direction);
             return triangulator.Triangulate();
         }
 
-        private PolygonDirection Direction { get; }
+        private TrajectoryHelper.Direction Direction { get; }
         private LinkedList<Vertex> Vertices { get; }
         private HashSet<LinkedListNode<Vertex>> Ears { get; } = new HashSet<LinkedListNode<Vertex>>();
         private List<Triangle> Triangles { get; } = new List<Triangle>();
 
-        private Triangulator(IEnumerable<Vector2> points, PolygonDirection direction)
+        private Triangulator(IEnumerable<Vector2> points, TrajectoryHelper.Direction direction)
         {
             Vertices = new LinkedList<Vertex>(points.Select((p, i) => new Vertex(p, i)));
             Direction = direction;
@@ -103,11 +103,6 @@ namespace NodeMarkup.Utilities
 
         }
     }
-    public enum PolygonDirection
-    {
-        ClockWise,
-        CounterClockWise
-    }
 
     internal class Vertex
     {
@@ -121,13 +116,13 @@ namespace NodeMarkup.Utilities
             Index = index;
         }
 
-        public void SetConvex(Vertex prev, Vertex next, PolygonDirection direction)
+        public void SetConvex(Vertex prev, Vertex next, TrajectoryHelper.Direction direction)
         {
             var a = Position - prev.Position;
             var b = next.Position - Position;
 
             var sign = (int)Mathf.Sign(a.x * b.y - a.y * b.x);
-            IsConvex = sign >= 0 ^ direction == PolygonDirection.ClockWise;
+            IsConvex = sign >= 0 ^ direction == TrajectoryHelper.Direction.ClockWise;
         }
 
         public override string ToString() => $"{Index}:{Position} ({(IsConvex ? "Conver" : "Reflex")})";
@@ -146,9 +141,9 @@ namespace NodeMarkup.Utilities
             C = c;
         }
 
-        public IEnumerable<int> GetVertices(PolygonDirection direction)
+        public IEnumerable<int> GetVertices(TrajectoryHelper.Direction direction)
         {
-            if (direction == PolygonDirection.ClockWise)
+            if (direction == TrajectoryHelper.Direction.ClockWise)
             {
                 yield return C;
                 yield return B;

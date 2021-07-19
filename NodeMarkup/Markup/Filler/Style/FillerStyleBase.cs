@@ -35,15 +35,17 @@ namespace NodeMarkup.Manager
             {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
             {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
             {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
-            {FillerType.Ruining, new RuiningFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
+            {FillerType.Ruined, new RuinedFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
             {FillerType.Cliff, new CliffFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultElevation)},
         };
 
         public PropertyValue<float> MedianOffset { get; }
+        public PropertyValue<float> Offset { get; }
 
         public FillerStyle(Color32 color, float width, float medianOffset) : base(color, width)
         {
             MedianOffset = GetMedianOffsetProperty(medianOffset);
+            Offset = new PropertyStructValue<float>(StyleChanged, 0f);
         }
 
         public override void CopyTo(FillerStyle target)
@@ -64,8 +66,12 @@ namespace NodeMarkup.Manager
         }
         public virtual void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            if (!isTemplate && filler.IsMedian)
-                components.Add(AddMedianOffsetProperty(parent));
+            if (!isTemplate)
+            {
+                components.Add(AddOffsetProperty(parent));
+                if (filler.IsMedian)
+                    components.Add(AddMedianOffsetProperty(parent));
+            }
         }
 
         public abstract IEnumerable<IStyleData> Calculate(MarkupFiller filler, MarkupLOD lod);
@@ -107,6 +113,7 @@ namespace NodeMarkup.Manager
 
             return trajectories.Where(t => t != null).ToArray();
         }
+
         protected float GetOffset(Intersection intersect, float offset)
         {
             var sin = Mathf.Sin(intersect.Angle);
@@ -127,6 +134,21 @@ namespace NodeMarkup.Manager
             MedianOffset.FromXml(config, DefaultOffset);
         }
 
+        protected FloatPropertyPanel AddOffsetProperty(UIComponent parent)
+        {
+            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Offset));
+            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.UseWheel = true;
+            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.WheelTip = Settings.ShowToolTip;
+            //offsetProperty.CheckMin = true;
+            //offsetProperty.MinValue = 0f;
+            offsetProperty.Init();
+            offsetProperty.Value = Offset;
+            offsetProperty.OnValueChanged += (float value) => Offset.Value = value;
+
+            return offsetProperty;
+        }
         private FloatPropertyPanel AddMedianOffsetProperty(UIComponent parent)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianOffset));
@@ -134,8 +156,8 @@ namespace NodeMarkup.Manager
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0f;
+            //offsetProperty.CheckMin = true;
+            //offsetProperty.MinValue = 0f;
             offsetProperty.Init();
             offsetProperty.Value = MedianOffset;
             offsetProperty.OnValueChanged += (float value) => MedianOffset.Value = value;
@@ -215,7 +237,7 @@ namespace NodeMarkup.Manager
             Gravel = StyleType.FillerGravel,
 
             [Description(nameof(Localize.FillerStyle_Ruining))]
-            Ruining = StyleType.FillerRuining,
+            Ruined = StyleType.FillerRuined,
 
             [Description(nameof(Localize.FillerStyle_Cliff))]
             Cliff = StyleType.FillerCliff,

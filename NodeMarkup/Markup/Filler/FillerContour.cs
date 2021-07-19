@@ -56,6 +56,7 @@ namespace NodeMarkup.Manager
 
         public List<ITrajectory> TrajectoriesRaw => GetTrajectories(RawParts);
         public List<ITrajectory> TrajectoriesProcessed => GetTrajectories(ProcessedParts);
+        public TrajectoryHelper.Direction Direction => TrajectoriesRaw.GetDirection();
 
         public bool IsMedian
         {
@@ -68,6 +69,17 @@ namespace NodeMarkup.Manager
                 }
 
                 return false;
+            }
+        }
+        public IEnumerable<Part> Parts
+        {
+            get
+            {
+                foreach (var rawPart in RawParts)
+                {
+                    if (rawPart.GetTrajectory(out ITrajectory trajectory))
+                        yield return new Part(trajectory, rawPart.Line is MarkupEnterLine);
+                }
             }
         }
 
@@ -429,8 +441,8 @@ namespace NodeMarkup.Manager
             var trajectories = new List<ITrajectory>(parts.Length);
             foreach (var part in parts)
             {
-                part.GetTrajectory(out ITrajectory trajectory);
-                trajectories.Add(trajectory);
+                if (part.GetTrajectory(out ITrajectory trajectory))
+                    trajectories.Add(trajectory);
             }
             return trajectories;
         }
@@ -500,14 +512,27 @@ namespace NodeMarkup.Manager
 
         public void Render(OverlayData data)
         {
-            foreach (var trajectory in TrajectoriesRaw)
-                trajectory?.Render(data);
+            foreach (var part in Parts)
+                part.Trajectory.Render(data);
         }
 
         private class Comparer : IEqualityComparer<IFillerVertex>
         {
             public bool Equals(IFillerVertex x, IFillerVertex y) => x.Equals(y);
             public int GetHashCode(IFillerVertex vertex) => vertex.GetHashCode();
+        }
+        public struct Part
+        {
+            public ITrajectory Trajectory { get; set; }
+            public bool IsEnter { get; }
+
+            public Part(ITrajectory trajectory, bool isEnter = false)
+            {
+                Trajectory = trajectory;
+                IsEnter = isEnter;
+            }
+
+            public override string ToString() => $"{Trajectory} {IsEnter}";
         }
     }
 
