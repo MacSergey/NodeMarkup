@@ -1265,8 +1265,6 @@ Klik om de markering te wijzigen</value>
   <data name="FillerStyle_Cliff" xml:space="preserve">
     <value>Klif</value>
   </data>
-  <data name="FillerStyle_Ruining" xml:space="preserve">
-    <value>Geruïneerd</value>
-  </data>
+  
   
 </root>
