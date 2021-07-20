@@ -28,7 +28,8 @@ namespace NodeMarkup.Manager
         public MarkupPoint Start => PointPair.First;
         public MarkupPoint End => PointPair.Second;
         public virtual bool IsSupportRules => false;
-        public bool IsEnterLine => PointPair.IsSomeEnter;
+        public bool IsEnterLine => PointPair.IsSameEnter;
+        public bool IsSame => PointPair.IsSame;
         public bool IsNormal => PointPair.IsNormal;
         public bool IsStopLine => PointPair.IsStopLine;
         public bool IsCrosswalk => PointPair.IsCrosswalk;
@@ -434,6 +435,8 @@ namespace NodeMarkup.Manager
 
         public virtual Alignment StartAlignment { get; private set; } = Alignment.Centre;
         public virtual Alignment EndAlignment { get; private set; } = Alignment.Centre;
+
+        public bool IsDot => IsSame && StartAlignment == EndAlignment;
 
 
         public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, MarkupPointPair.FromPoints(first, second, out bool invert), false)
