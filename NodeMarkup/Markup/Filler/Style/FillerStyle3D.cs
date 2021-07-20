@@ -196,6 +196,14 @@ namespace NodeMarkup.Manager
             //{
             //    RenderHelper.SurfaceBLib[MaterialType] = TextureHelper.CreateTexture(512, 512, value);
             //}
+
+            //static ColorPropertyPanel GetVectorProperty(UIComponent parent, string name)
+            //{
+            //    var vector = ComponentPool.Get<ColorPropertyPanel>(parent);
+            //    vector.Init();
+            //    vector.Text = name;
+            //    return vector;
+            //}
 #endif
         }
 
@@ -249,13 +257,6 @@ namespace NodeMarkup.Manager
             cornerRadiusProperty.OnValueChanged += (float value) => triangulationStyle.MedianCornerRadius.Value = value;
 
             return cornerRadiusProperty;
-        }
-        private ColorPropertyPanel GetVectorProperty(UIComponent parent, string name)
-        {
-            var vector = ComponentPool.Get<ColorPropertyPanel>(parent);
-            vector.Init();
-            vector.Text = name;
-            return vector;
         }
 
         public override XElement ToXml()
@@ -340,34 +341,6 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        //public override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
-        //{
-        //    if (lod == MarkupLOD.LOD1 || (CurbSize == 0f && MedianCurbSize == 0f))
-        //    {
-        //        foreach (var data in base.Calculate(filler, contours, lod))
-        //            yield return data;
-        //    }
-        //    else
-        //    {
-        //        foreach (var contour in contours)
-        //        {
-        //            if (Triangulate(contour, lod, out var points, out var triangles, out var groups))
-        //            {
-        //                yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType.Pavement);
-        //                yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, groups, points, MaterialType.Pavement);
-        //            }
-        //        }
-        //        foreach (var contour in contours)
-        //        {
-        //            var insideCurbs = StyleHelper.SetOffset(contour, CurbSize, MedianCurbSize);
-        //            foreach(var insideCurb in insideCurbs)
-        //            {
-        //                if (Triangulate(insideCurb, lod, out var points, out var triangles, out _))
-        //                    yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation + 0.01f, points, triangles, MaterialType);
-        //            }
-        //        }
-        //    }
-        //}
 
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
