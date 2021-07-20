@@ -1403,4 +1403,16 @@ Click to edit markings</value>
   <data name="StyleOption_LineOffset" xml:space="preserve">
     <value>Offset from lines</value>
   </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>Corner radius</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>Corner radius on medians</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>Curb size</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>Curb size on medians</value>
+  </data>
 </root>
