@@ -199,7 +199,7 @@
     <value>Untuk membuat markah pada persimpangan</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
-    <value>Edit markah simpangan #{0}</value>
+    <value>Edit markah titik hubung #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>titik</value>
@@ -297,7 +297,7 @@ Markah yang dipulihkan akan menggantikan segala markah yang ada.</value>
 Klik untuk mengedit markah</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
-    <value>Pilih sebuah simpang atau ruas untuk mengubah markahnya</value>
+    <value>Pilih sebuah titik hubung atau bagian jalan untuk mengubah markahnya</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Pilih titik akhir untuk garis biasa</value>
@@ -1190,19 +1190,41 @@ Klik untuk mengedit markah</value>
   
   
   
-  
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Hilangkan nama jalan saat menggunakan alat</value>
+  </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>Trotoar</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Klik dengan menahan Ctrl untuk memilih penyeberangan</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Klik dengan menahan Ctrl untuk memilih garis</value>
+  </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>Kerikil</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>Jurang</value>
+  </data>
+  <data name="FillerStyle_Ruined" xml:space="preserve">
+    <value>Rusak</value>
+  </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Pergeseran dari garis</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>Radius sudut</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>Radius sudut pada median</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>Besar trotoar</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>Besar trotoar pada median</value>
+  </data>
   
 </root>

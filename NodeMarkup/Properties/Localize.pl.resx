@@ -1255,15 +1255,35 @@ Kliknij aby edytować oznaczenia</value>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>Chodnik</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Naciśnij trzymając Ctrl aby wybrać przejście dla pieszych</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Naciśnij trzymając Ctrl aby wybrać linię</value>
+  </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>Żwir</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>Klif</value>
+  </data>
+  <data name="FillerStyle_Ruined" xml:space="preserve">
+    <value>Zrujnowany</value>
+  </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Odstęp od linii</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>Zaokrąglenie rogów</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>Zaokrąglenie rogów na pasach rozdzielających</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>Wielkość krawężnika</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>Wielkość krawężnika na pasach rozdzielających</value>
+  </data>
   
 </root>

@@ -349,7 +349,7 @@
     <value>角度</value>
   </data>
   <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>ライン側のオフセット</value>
+    <value>オフセット（ライン側）</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>このポイントから塗り潰しを開始</value>
@@ -367,7 +367,7 @@
     <value>次のポイントを選択</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>分離帯側のオフセット</value>
+    <value>オフセット（分離帯側）</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>コピー</value>
@@ -1272,7 +1272,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>荒れ地（3Dスタイル）</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>ライン側のオフセット</value>
+    <value>オフセット（ライン側）</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>角丸の半径（ライン側）</value>

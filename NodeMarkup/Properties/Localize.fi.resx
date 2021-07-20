@@ -1268,15 +1268,29 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Napauta Ctrl pohjassa valitaksesi viiva</value>
   </data>
-  
-  
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>Sora</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>Kallio</value>
+  </data>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Tärveltynyt</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Etäisyys viivoista</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>Kulmasäde</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>Kulmasäde keskikaistaleesta</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>Reunakiven koko</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>Reunakiven koko keskikaistaleesta</value>
+  </data>
   
 </root>

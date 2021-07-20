@@ -148,7 +148,7 @@
     <value>Supprimer cette règle</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer la règle ?</value>
+    <value>Voulez-vous vraiment supprimer cette règle ?</value>
   </data>
   <data name="LineRule_From" xml:space="preserve">
     <value>De</value>
@@ -1252,7 +1252,7 @@ Cliquez pour modifier le marquage</value>
     <value>Cacher les noms des rues lors de l'utilisation</value>
   </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
-    <value>Trottoir</value>
+    <value>Béton</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
     <value>Cliquez sur Ctrl pour sélectionner le passage piéton</value>
@@ -1276,13 +1276,13 @@ Cliquez pour modifier le marquage</value>
     <value>Rayon du coin</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Rayon du coin à la médiane</value>
+    <value>Rayon du coin depuis séparateur</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>Taille du trottoir</value>
+    <value>Taille de bordure</value>
   </data>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Taille du trottoir à la médiane</value>
+    <value>Taille de bordure depuis séparateur</value>
   </data>
   
 </root>

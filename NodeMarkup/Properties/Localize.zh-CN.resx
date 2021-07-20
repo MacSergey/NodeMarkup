@@ -1320,5 +1320,19 @@
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
     <value>隔离带路肩大小</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
+    <value>- 如同 MoveIt模组，添加了跳跃选择被覆盖住节点功能。Ctrl+空格键以跳跃选择。按键可以自定义。
+- 新加入了路肩3D填充
+- 新增了3D填充圆角选项
+- 新增了3D填充从边线偏移的选项
+- 新增了填充选项：砂砾，砂石和悬崖
+- 新增了路面停止线选项
+- 新增了实体填充遵循引导线的选项。现可以在斜坡上创建实体填充。
+- 新增了按下ctrl来选中线或人行横道
+- 新增了对Linux用户的警告
+- 新增了使用滚轮改变样式的功能
+- 新增了使用mod时隐藏路名的功能。可以在选项里更改。
+- 新增UnifiedUI按钮图标
+- 修复了选择模版图标</value>
+  </data>
 </root>
