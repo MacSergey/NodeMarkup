@@ -327,6 +327,7 @@ namespace NodeMarkup.Utilities
             yield return this;
         }
         protected abstract Mesh GetMesh();
+        protected static IEnumerable<Vector3> FixNormals(Vector3[] normals) => FixNormals(normals, 0, normals.Length);
         protected static IEnumerable<Vector3> FixNormals(Vector3[] normals, int from, int count)
         {
             for (var i = 0; i < normals.Length; i += 1)
@@ -340,6 +341,8 @@ namespace NodeMarkup.Utilities
         private Vector3[] Vertices { get; set; }
         private int[] Triangles { get; set; }
         private Vector2[] UV { get; set; }
+
+        protected virtual bool NeedFixNormals => false;
 
         public void Init(float height, float elevation, Vector3[] vertices, int[] triangles, MaterialType materialType)
         {
@@ -395,6 +398,8 @@ namespace NodeMarkup.Utilities
                 bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
             };
             mesh.RecalculateNormals();
+            if (NeedFixNormals)
+                mesh.normals = FixNormals(mesh.normals).ToArray();
             mesh.RecalculateTangents();
 
             return mesh;
@@ -402,6 +407,7 @@ namespace NodeMarkup.Utilities
     }
     public class MarkupStylePolygonTopMesh : BaseMarkupStylePolygonMesh
     {
+        protected override bool NeedFixNormals => true;
         public MarkupStylePolygonTopMesh(float height, float elevation, Vector3[] points, int[] polygons, MaterialType materialType)
         {
             Init(height, elevation, points, polygons, materialType);
@@ -612,7 +618,7 @@ namespace NodeMarkup.Utilities
 
     public class RenderBatch : IDrawData
     {
-        public static float MeshHeight => 3f;
+        public static float MeshHeight => 5f;
         public MaterialType MaterialType { get; }
         public int Count { get; }
         public Vector4[] Locations { get; }

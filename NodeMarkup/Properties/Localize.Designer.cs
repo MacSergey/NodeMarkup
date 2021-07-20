@@ -569,6 +569,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Corner radius.
+        /// </summary>
+        public static string FillerStyle_CornerRadius {
+            get {
+                return ResourceManager.GetString("FillerStyle_CornerRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Curb size.
+        /// </summary>
+        public static string FillerStyle_CurbSize {
+            get {
+                return ResourceManager.GetString("FillerStyle_CurbSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Elevation.
         /// </summary>
         public static string FillerStyle_Elevation {
@@ -610,6 +628,24 @@ namespace NodeMarkup {
         public static string FillerStyle_Group {
             get {
                 return ResourceManager.GetString("FillerStyle_Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Corner radius on medians.
+        /// </summary>
+        public static string FillerStyle_MedianCornerRadius {
+            get {
+                return ResourceManager.GetString("FillerStyle_MedianCornerRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Curb size on medians.
+        /// </summary>
+        public static string FillerStyle_MedianCurbSize {
+            get {
+                return ResourceManager.GetString("FillerStyle_MedianCurbSize", resourceCulture);
             }
         }
         

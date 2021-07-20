@@ -357,8 +357,9 @@ namespace NodeMarkup.Manager
         public ulong Hash { get; }
         public MarkupPoint First { get; }
         public MarkupPoint Second { get; }
-        public bool IsSomeEnter => First.Enter == Second.Enter;
-        public bool IsStopLine => IsSomeEnter && First.Type == MarkupPoint.PointType.Enter && Second.Type == MarkupPoint.PointType.Enter;
+        public bool IsSameEnter => First.Enter == Second.Enter;
+        public bool IsSame => First == Second;
+        public bool IsStopLine => IsSameEnter && First.Type == MarkupPoint.PointType.Enter && Second.Type == MarkupPoint.PointType.Enter;
         public bool IsNormal => First.Type == MarkupPoint.PointType.Normal || Second.Type == MarkupPoint.PointType.Normal;
         public bool IsCrosswalk => First.Type == MarkupPoint.PointType.Crosswalk && Second.Type == MarkupPoint.PointType.Crosswalk;
         public bool IsSplit => First.IsSplit || Second.IsSplit;
@@ -376,7 +377,7 @@ namespace NodeMarkup.Manager
         public bool ContainsPoint(MarkupPoint point) => First == point || Second == point;
         public bool ContainsEnter(Enter enter) => First.Enter == enter || Second.Enter == enter;
         public MarkupPoint GetOther(MarkupPoint point) => ContainsPoint(point) ? (point == First ? Second : First) : null;
-        public MarkupLine.LineType DefaultType => IsSomeEnter ? MarkupLine.LineType.Stop : MarkupLine.LineType.Regular;
+        public MarkupLine.LineType DefaultType => IsSameEnter ? MarkupLine.LineType.Stop : MarkupLine.LineType.Regular;
 
         public override string ToString() => $"{First}—{Second}";
 

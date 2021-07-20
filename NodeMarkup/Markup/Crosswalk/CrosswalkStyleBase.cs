@@ -52,12 +52,6 @@ namespace NodeMarkup.Manager
 
         public abstract IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod);
 
-        protected float GetOffset(Intersection intersect, float offset)
-        {
-            var tan = Mathf.Tan(intersect.Angle);
-            return tan != 0 ? offset / tan : 1000f;
-        }
-
         protected FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
         {
             var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.DashLength));
@@ -114,6 +108,15 @@ namespace NodeMarkup.Manager
                 var endPosition = position + direction * end;
 
                 yield return new MarkupStylePart(startPosition, endPosition, direction, width, color);
+            }
+
+            static float GetOffset(Intersection intersect, float offset)
+            {
+                var firstDir = intersect.First.Tangent(intersect.FirstT);
+                var secondDir = intersect.Second.Tangent(intersect.SecondT);
+                var angel = Vector3.Angle(firstDir, secondDir);
+                var tan = Mathf.Tan(angel);
+                return tan != 0 ? offset / tan : 1000f;
             }
         }
 

@@ -145,7 +145,7 @@ namespace NodeMarkup.Manager
         }
         protected IEnumerable<PartItem> GetPartItems(StraightTrajectory part, float angle, int itemsCount, float itemWidth, float itemStep, bool isBothDir = true)
         {
-            var itemDir = part.Direction.TurnDeg(angle, true);
+            var itemDir = part.Direction.MakeFlat().TurnDeg(angle, true);
 
             var start = (part.Length - itemStep * (itemsCount - 1)) / 2;
             for (var i = 0; i < itemsCount; i += 1)
@@ -154,18 +154,37 @@ namespace NodeMarkup.Manager
                 yield return new PartItem(itemPos, itemDir, itemWidth, isBothDir);
             }
         }
-        protected IEnumerable<MarkupStylePart> GetDashes(PartItem item, List<List<FillerContour.Part>> contours)
+        protected virtual IEnumerable<MarkupStylePart> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithoutOrder(item, contours); 
+        protected Intersection[] GetDashesIntersects(StraightTrajectory itemStraight, List<List<FillerContour.Part>> contours)
         {
-            var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
-
             var intersectSet = new HashSet<Intersection>();
             foreach (var contour in contours)
             {
                 foreach (var contourPart in contour)
-                    intersectSet.AddRange(Intersection.Calculate(straight, contourPart.Trajectory));
+                    intersectSet.AddRange(Intersection.Calculate(itemStraight, contourPart.Trajectory));
             }
 
             var intersects = intersectSet.OrderBy(i => i, Intersection.FirstComparer).ToArray();
+            return intersects;
+        }
+        protected IEnumerable<MarkupStylePart> GetDashesWithoutOrder(PartItem item, List<List<FillerContour.Part>> contours)
+        {
+            var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
+            var intersects = GetDashesIntersects(straight, contours);
+
+            for (var i = 1; i < intersects.Length; i += 2)
+            {
+                var start = intersects[i - 1];
+                var end = intersects[i];
+                var startPos = start.Second.Position(start.SecondT);
+                var endPos = end.Second.Position(end.SecondT);
+                yield return new MarkupStylePart(startPos, endPos, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
+            }
+        }
+        protected IEnumerable<MarkupStylePart> GetDashesWithOrder(PartItem item, List<List<FillerContour.Part>> contours)
+        {
+            var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
+            var intersects = GetDashesIntersects(straight, contours);
 
             var beforeIntersect = Intersection.CalculateSingle(straight, item.Before);
             var afterIntersect = Intersection.CalculateSingle(straight, item.After);
@@ -395,12 +414,6 @@ namespace NodeMarkup.Manager
             base.FromXml(config, map, invert);
             Step.FromXml(config, DefaultStepGrid);
         }
-
-        public enum RailType
-        {
-            Left,
-            Right
-        }
     }
     public abstract class RailFillerStyle : PeriodicFillerStyle, IRailFiller
     {
@@ -430,32 +443,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected void AddRailProperty(FillerContour contour, UIComponent parent, out FillerRailSelectPropertyPanel leftRailProperty, out FillerRailSelectPropertyPanel rightRailProperty)
-        {
-            leftRailProperty = AddRailProperty(contour, parent, "LeftRail", LeftRailA, LeftRailB, RailType.Left, Localize.StyleOption_LeftRail);
-            rightRailProperty = AddRailProperty(contour, parent, "RightRail", RightRailA, RightRailB, RailType.Right, Localize.StyleOption_RightRail);
-
-            leftRailProperty.OtherRail = rightRailProperty;
-            rightRailProperty.OtherRail = leftRailProperty;
-        }
-
-        private FillerRailSelectPropertyPanel AddRailProperty(FillerContour contour, UIComponent parent, string name, PropertyValue<int> railA, PropertyValue<int> railB, RailType railType, string label)
-        {
-            var rail = new FillerRail(contour.GetCorrectIndex(railA), contour.GetCorrectIndex(railB));
-            var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent, name);
-            railProperty.Text = label;
-            railProperty.Init(railType);
-            railProperty.Value = rail;
-            railProperty.OnValueChanged += RailPropertyChanged;
-            return railProperty;
-
-            void RailPropertyChanged(FillerRail rail)
-            {
-                railA.Value = rail.A;
-                railB.Value = rail.B;
-            }
-        }
-
+        protected override IEnumerable<MarkupStylePart> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithOrder(item, contours);
         protected override void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right)
         {
             left = contour.GetRail(LeftRailA, LeftRailB, RightRailA, RightRailB);
@@ -515,8 +503,8 @@ namespace NodeMarkup.Manager
             {
                 var vertexCount = filler.Contour.ProcessedCount;
 
-                var followRails = AddFollowRailsProperty(parent);
-                AddRailProperty(filler.Contour, parent, out var leftRail, out var rightRail);
+                var followRails = AddFollowRailsProperty(this, parent);
+                AddRailProperty(this, filler.Contour, parent, out var leftRail, out var rightRail);
                 var turn = AddTurnProperty(parent);
 
                 components.Add(followRails);
@@ -542,16 +530,6 @@ namespace NodeMarkup.Manager
                     rightRail.Value = (rightRail.Value + 1) % vertexCount;
                 }
             }
-        }
-
-        protected BoolListPropertyPanel AddFollowRailsProperty(UIComponent parent)
-        {
-            var followRailsProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(FollowRails));
-            followRailsProperty.Text = Localize.StyleOption_FollowRails;
-            followRailsProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
-            followRailsProperty.SelectedObject = FollowRails;
-            followRailsProperty.OnSelectObjectChanged += (bool value) => FollowRails.Value = value;
-            return followRailsProperty;
         }
         protected static ButtonPanel AddTurnProperty(UIComponent parent)
         {
@@ -657,7 +635,7 @@ namespace NodeMarkup.Manager
             components.Add(AddAngleBetweenProperty(parent));
             if (!isTemplate)
             {
-                AddRailProperty(filler.Contour, parent, out var leftRail, out var rightRail);
+                AddRailProperty(this, filler.Contour, parent, out var leftRail, out var rightRail);
                 var turnAndInvert = AddInvertAndTurnProperty(parent, out int invertIndex, out int turnIndex);
 
                 components.Add(leftRail);
@@ -841,28 +819,112 @@ namespace NodeMarkup.Manager
             Step.FromXml(config, DefaultStepGrid);
         }
     }
-    public class SolidFillerStyle : Filler2DStyle, IColorStyle
+    public class SolidFillerStyle : Filler2DStyle, IRailFiller, IFollowRailFiller, IColorStyle
     {
         public static float DefaultSolidWidth { get; } = 0.2f;
 
         public override StyleType Type => StyleType.FillerSolid;
 
-        public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset) : base(color, DefaultSolidWidth, lineOffset, medianOffset) { }
+        public PropertyValue<int> LeftRailA { get; }
+        public PropertyValue<int> RightRailA { get; }
+        public PropertyValue<int> LeftRailB { get; }
+        public PropertyValue<int> RightRailB { get; }
+        public PropertyValue<bool> FollowRails { get; }
+
+        public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset, bool followRails = false) : base(color, DefaultSolidWidth, lineOffset, medianOffset)
+        {
+            LeftRailA = GetLeftRailAProperty(0);
+            LeftRailB = GetLeftRailBProperty(1);
+            RightRailA = GetRightRailAProperty(1);
+            RightRailB = GetRightRailBProperty(2);
+            FollowRails = GetFollowRailsProperty(followRails);
+        }
 
         public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, LineOffset, DefaultOffset);
+        public override void CopyTo(FillerStyle target)
+        {
+            base.CopyTo(target);
+
+            if (target is IRailFiller railTarget)
+            {
+                railTarget.LeftRailA.Value = LeftRailA;
+                railTarget.LeftRailB.Value = LeftRailB;
+                railTarget.RightRailA.Value = RightRailA;
+                railTarget.RightRailB.Value = RightRailB;
+            }
+            if (target is IFollowRailFiller followRailTarget)
+                followRailTarget.FollowRails.Value = FollowRails;
+        }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
         {
             var rect = GetRect(contour);
-            yield return new RailLine() { GetRail(rect, filler.Markup.Height, 0) };
+
+            if (FollowRails)
+            {
+                var left = filler.Contour.GetRail(LeftRailA, LeftRailB, RightRailA, RightRailB);
+                var right = filler.Contour.GetRail(RightRailA, RightRailB, LeftRailA, LeftRailB);
+                var startPos = (right.EndPosition + left.StartPosition) / 2;
+                var endPos = (right.StartPosition + left.EndPosition) / 2;
+                var angle = (endPos - startPos).Turn90(true).AbsoluteAngle() * Mathf.Rad2Deg;
+                yield return new RailLine() { GetRail(rect, filler.Markup.Height, angle) };
+            }
+            else
+                yield return new RailLine() { GetRail(rect, filler.Markup.Height, 0) };
         }
         protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
         {
-            var part = rail.First() as StraightTrajectory;
-            var width = part.Length;
-            GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
-            foreach (var item in GetPartItems(part, 90f, itemsCount, itemWidth, itemStep))
-                yield return item;
+            foreach(var part in rail.OfType<StraightTrajectory>())
+            {
+                var width = part.Length;
+                GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
+                foreach (var item in GetPartItems(part, 90f, itemsCount, itemWidth, itemStep))
+                    yield return item;
+            }
+        }
+
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        {
+            base.GetUIComponents(filler, components, parent, isTemplate);
+
+            if (!isTemplate)
+            {
+                var followRails = AddFollowRailsProperty(this, parent);
+                AddRailProperty(this, filler.Contour, parent, out var leftRail, out var rightRail);
+
+                components.Add(followRails);
+                components.Add(leftRail);
+                components.Add(rightRail);
+
+                followRails.OnSelectObjectChanged += ChangeRailsVisible;
+                ChangeRailsVisible(followRails.SelectedObject);
+
+                void ChangeRailsVisible(bool followRails)
+                {
+                    leftRail.isVisible = followRails;
+                    rightRail.isVisible = followRails;
+                }
+            }
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            LeftRailA.ToXml(config);
+            LeftRailB.ToXml(config);
+            RightRailA.ToXml(config);
+            RightRailB.ToXml(config);
+            FollowRails.ToXml(config);
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            base.FromXml(config, map, invert);
+            LeftRailA.FromXml(config);
+            LeftRailB.FromXml(config);
+            RightRailA.FromXml(config);
+            RightRailB.FromXml(config);
+            FollowRails.FromXml(config, DefaultFollowRails);
         }
     }
 }

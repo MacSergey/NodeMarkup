@@ -75,10 +75,13 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                foreach (var rawPart in RawParts)
+                foreach (var part in RawParts)
                 {
-                    if (rawPart.GetTrajectory(out ITrajectory trajectory))
-                        yield return new Part(trajectory, rawPart.Line is MarkupEnterLine);
+                    if (part.Line is MarkupEnterLine enterLine && enterLine.IsDot)
+                        continue;
+
+                    if (part.GetTrajectory(out ITrajectory trajectory))
+                        yield return new Part(trajectory, part.Line is MarkupEnterLine);
                 }
             }
         }
