@@ -1426,6 +1426,22 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added selection step over like in MoveIt. Press Ctrl+Space to step over (you can rebind in mod options).
+        ///- Added curbs to filler 3D styles.
+        ///- Added rounded corners to filler 3D styles.
+        ///- Added offset from lines to filler 3D styles.
+        ///- Added filler styles: Gravel, Ruined, Cliff.
+        ///- Added pavement stop line style.
+        ///- Added option &quot;Follow guide lines&quot; for solid filler, so now possible make solid fillers on sloped segments.
+        ///- Added the ability to click with Ctrl to select line or crosswalk instend of dele [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_8 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply between intersections.
         /// </summary>
         public static string Panel_ApplyBetweenIntersections {
