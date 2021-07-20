@@ -343,21 +343,26 @@ namespace NodeMarkup.Manager
         }
         public static List<List<FillerContour.Part>> SetOffset(List<FillerContour.Part> originalParts, float offset, float medianOffset)
         {
-            var direction = originalParts.Select(i => i.Trajectory).GetDirection();
-
-            var parts = Move(originalParts, direction, offset, medianOffset);
-            Connect(parts, originalParts, offset, medianOffset);
-            var intersections = GetIntersections(parts);
-            var partOfPart = GetParts(parts, intersections);
-            var contours = GetContours(partOfPart);
-
             var result = new List<List<FillerContour.Part>>();
-            foreach (var contour in contours)
-            {
-                if (contour.Direction == direction)
-                    result.Add(contour.Processed);
-            }
 
+            if (offset <= 0f && medianOffset <= 0f)
+                result.Add(new List<FillerContour.Part>(originalParts));
+            else
+            {
+                var direction = originalParts.Select(i => i.Trajectory).GetDirection();
+
+                var parts = Move(originalParts, direction, offset, medianOffset);
+                Connect(parts, originalParts, offset, medianOffset);
+                var intersections = GetIntersections(parts);
+                var partOfPart = GetParts(parts, intersections);
+                var contours = GetContours(partOfPart);
+
+                foreach (var contour in contours)
+                {
+                    if (contour.Direction == direction)
+                        result.Add(contour.Processed);
+                }
+            }
             return result;
         }
         private static List<FillerContour.Part> Move(List<FillerContour.Part> originalParts, TrajectoryHelper.Direction direction, float offset, float medianOffset)
@@ -397,13 +402,16 @@ namespace NodeMarkup.Manager
                 {
                     if ((second.IsEnter ? medianOffset : offset) != 0)
                     {
-                        var nextCount = (count + 1) % originalParts.Count;
-                        var firstTrajectory = new StraightTrajectory(first.Trajectory.EndPosition, originalParts[count].Trajectory.EndPosition);
-                        var secondTrajectory = new StraightTrajectory(originalParts[nextCount].Trajectory.StartPosition, second.Trajectory.StartPosition);
+                        if ((first.Trajectory.EndPosition - second.Trajectory.StartPosition).sqrMagnitude > 0.0001f)
+                        {
+                            var nextCount = (count + 1) % originalParts.Count;
+                            var firstTrajectory = new StraightTrajectory(first.Trajectory.EndPosition, originalParts[count].Trajectory.EndPosition);
+                            var secondTrajectory = new StraightTrajectory(originalParts[nextCount].Trajectory.StartPosition, second.Trajectory.StartPosition);
 
-                        AddToList(parts, i + 1, new FillerContour.Part(firstTrajectory));
-                        AddToList(parts, i + 2, new FillerContour.Part(secondTrajectory));
-                        i += 2;
+                            AddToList(parts, i + 1, new FillerContour.Part(firstTrajectory));
+                            AddToList(parts, i + 2, new FillerContour.Part(secondTrajectory));
+                            i += 2;
+                        }
                     }
                     else if (Intersection.CalculateSingle(first.Trajectory, second.Trajectory, out var firstT, out var secondT))
                     {
@@ -563,10 +571,13 @@ namespace NodeMarkup.Manager
         {
             var parts = new List<FillerContour.Part>(originalParts);
 
-            for (var i = 0; i < parts.Count; i += 1)
+            if (lineRadius > 0f || medianRadius > 0f)
             {
-                if (SetRadius(i, parts, lineRadius, medianRadius))
-                    i += 1;
+                for (var i = 0; i < parts.Count; i += 1)
+                {
+                    if (SetRadius(i, parts, lineRadius, medianRadius))
+                        i += 1;
+                }
             }
 
             return parts;
@@ -654,6 +665,7 @@ namespace NodeMarkup.Manager
                 parts.Insert(j, new FillerContour.Part(corner));
             }
         }
+
         private class TrajectoryIntersect
         {
             public static IntersectComparer Comparer { get; } = new IntersectComparer();
