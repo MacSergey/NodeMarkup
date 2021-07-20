@@ -306,8 +306,7 @@ namespace NodeMarkup.Manager
                 var contours = GetOffsetContours(new List<List<FillerContour.Part>>() { originalContour }, LineOffset, MedianOffset);
                 var roundedContours = GetRoundedContours(contours, CornerRadius, MedianCornerRadius);
 
-                var curbContours = GetOffsetContours(contours, CurbSize, MedianCurbSize);
-                var curbRoundedContours = GetRoundedContours(curbContours, Mathf.Max(CornerRadius - CurbSize, 0f), Mathf.Max(MedianCornerRadius - MedianCurbSize, 0f));
+                var curbRoundedContours = GetOffsetContours(roundedContours, CurbSize, MedianCurbSize);
 
                 var data = new LodDictionaryArray<IStyleData>();
 
