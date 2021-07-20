@@ -1,4 +1,5 @@
-﻿using ModsCommon.Utilities;
+﻿using ModsCommon;
+using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,12 @@ namespace NodeMarkup.Manager
         {
             var result = new List<ITrajectory>();
             CalculateSolid(0, trajectory, trajectory.DeltaAngle, minAngle, minLength, maxLength, t => result.Add(t));
+            return result;
+        }
+        public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, float minAngle, float minLength, float maxLength, Func<ITrajectory, Result> calculateParts)
+        {
+            var result = new List<Result>();
+            CalculateSolid(0, trajectory, trajectory.DeltaAngle, minAngle, minLength, maxLength, t => result.Add(calculateParts(t)));
             return result;
         }
 
@@ -589,8 +596,8 @@ namespace NodeMarkup.Manager
             if (radius <= 0f)
                 return false;
 
-            var iParts = CalculateSolid(parts[i].Trajectory, 5, 1f, 40f);
-            var jParts = CalculateSolid(parts[j].Trajectory, 5, 1f, 40f);
+            var iParts = CalculateSolid(parts[i].Trajectory, 5, 1f, 40f, Calculate);
+            var jParts = CalculateSolid(parts[j].Trajectory, 5, 1f, 40f, Calculate);
 
             var width = Math.Max(iParts.Count, jParts.Count);
             width = (width % 2 == 0 ? width : width + 1) / 2;
@@ -610,7 +617,7 @@ namespace NodeMarkup.Manager
                     {
                         if (CheckRadius(iParts[iParts.Count - 1 - first], jParts[second], radius, ref center, ref firstDir, ref secondDir))
                         {
-                            AddRadius(i, j, parts, radius, center, firstDir, secondDir);
+                            AddRadius(i, j, parts, center, firstDir, secondDir);
                             return true;
                         }
                     }
@@ -618,24 +625,20 @@ namespace NodeMarkup.Manager
                     {
                         if (CheckRadius(iParts[iParts.Count - 1 - second], jParts[first], radius, ref center, ref firstDir, ref secondDir))
                         {
-                            AddRadius(i, j, parts, radius, center, firstDir, secondDir);
+                            AddRadius(i, j, parts, center, firstDir, secondDir);
                             return true;
                         }
                     }
                 }
             }
+
             return false;
+
+            static StraightTrajectory Calculate(ITrajectory trajectory) => trajectory as StraightTrajectory ?? new StraightTrajectory(trajectory.StartPosition, trajectory.EndPosition);
         }
-        private static bool CheckRadius(ITrajectory first, ITrajectory second, float radius, ref Vector3 center, ref Vector3 firstDir, ref Vector3 secondDir)
+        private static bool CheckRadius(StraightTrajectory first, StraightTrajectory second, float radius, ref Vector3 center, ref Vector3 firstDir, ref Vector3 secondDir)
         {
-            var angle = Vector3.Angle(first.Direction.MakeFlat(), second.Direction.MakeFlat());
-            var sqrDelta = 2 * radius * radius * (1f - Mathf.Cos((180 - angle) * Mathf.Deg2Rad));
-            var a = (XZ(first.StartPosition) - XZ(second.EndPosition)).sqrMagnitude;
-            var b = (XZ(first.EndPosition) - XZ(second.StartPosition)).sqrMagnitude;
-
-            if ((a < sqrDelta && b < sqrDelta) || (a > sqrDelta && b > sqrDelta))
-                return false;
-
+            var angleA = Vector3.Angle(first.Direction.MakeFlat(), second.Direction.MakeFlat());
             first = new StraightTrajectory(first.StartPosition.MakeFlat(), first.EndPosition.MakeFlat(), false);
             second = new StraightTrajectory(second.StartPosition.MakeFlat(), second.EndPosition.MakeFlat(), false);
 
@@ -644,14 +647,19 @@ namespace NodeMarkup.Manager
 
             var position = (first.Position(firstT) + second.Position(secondT)) / 2f;
             var direction = (first.Direction - second.Direction).normalized * (firstT < 0 ? 1f : -1f);
-            var distance = radius / Mathf.Cos(angle / 2f * Mathf.Deg2Rad);
+            var distance = radius / Mathf.Cos(angleA / 2f * Mathf.Deg2Rad);
 
             center = position + direction * distance;
             firstDir = first.Direction.Turn90(true);
             secondDir = second.Direction.Turn90(true);
-            return true;
+
+            var firstInter = Intersection.CalculateSingle(first, new StraightTrajectory(center, center + firstDir, false));
+            var secondInter = Intersection.CalculateSingle(second, new StraightTrajectory(center, center + secondDir, false));
+            return firstInter.IsIntersect && CorrectT(firstInter.FirstT, first.Length) && secondInter.IsIntersect && CorrectT(secondInter.FirstT, second.Length);
+
+            static bool CorrectT(float t, float length) => -0.01f / length < t && t < 1f + 0.01f / length;
         }
-        private static void AddRadius(int i, int j, List<FillerContour.Part> parts, float radius, Vector3 center, Vector3 firstDir, Vector3 secondDir)
+        private static void AddRadius(int i, int j, List<FillerContour.Part> parts, Vector3 center, Vector3 firstDir, Vector3 secondDir)
         {
             var firstInter = Intersection.CalculateSingle(parts[i].Trajectory, new StraightTrajectory(center, center + firstDir, false), out var firstT, out _);
             var secondInter = Intersection.CalculateSingle(new StraightTrajectory(center, center + secondDir, false), parts[j].Trajectory, out _, out var secondT);
