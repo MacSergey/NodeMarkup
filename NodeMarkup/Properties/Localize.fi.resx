@@ -287,10 +287,10 @@ Palautetut merkinnät korvaavat kaikki olemassa olevat merkinnät.</value>
     <value>Haluatko varmasti poistaa kaikki risteyksen #{0} tiemerkinnät?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Napauta luodaksesi viivan</value>
+    <value>Napauta luodaksesi viiva</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Napauta poistaaksesi viivan</value>
+    <value>Napauta poistaaksesi viiva</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
     <value>Risteys #{0}
@@ -322,10 +322,10 @@ Napauta muokataksesi merkintöjä</value>
     <value>Viiva</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
-    <value>Napauta poistaaksesi pysäytysviivan</value>
+    <value>Napauta poistaaksesi pysäytysviiva</value>
   </data>
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
-    <value>Napauta luodaksesi pysäytysviivan</value>
+    <value>Napauta luodaksesi pysäytysviiva</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
     <value>Sulkualueet</value>
@@ -352,10 +352,10 @@ Napauta muokataksesi merkintöjä</value>
     <value>Etäisyys viivoista</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
-    <value>Napauta aloittaaksesi sulkualueen luomisen</value>
+    <value>Napauta luodaksesi sulkualue</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
-    <value>Napauta viimeistelläksesi sulkualueen luomisen</value>
+    <value>Napauta viimeistelläksesi sulkualue</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
     <value>Napauta valitaksesi ääriviivan seuraava piste</value>
@@ -417,7 +417,7 @@ Luodaksesi sulkualueen, pidä Alt-näppäintä pohjassa tai paina {0}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Malleja ei ole.
-Napauta {0} viivan, suojatien tai sulkualueen tyylissä luodaksesi mallin.</value>
+Napauta {0} viivan, suojatien tai sulkualueen tyylissä luodaksesi malli.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
     <value>Aktivoi avaimella</value>
@@ -506,7 +506,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
     <value>Napauta luodaksesi kohtisuora viiva</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
-    <value>Napauta poistaaksesi kohtisuoran viivan</value>
+    <value>Napauta poistaaksesi kohtisuoran viiva</value>
   </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
     <value>Raidat</value>
@@ -546,10 +546,10 @@ Pidä Shift-näppäintä pohjassa luodaksesi suojatien.</value>
     <value>Ryhmittele mallit</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
-    <value>Napauta luodaksesi suojatien</value>
+    <value>Napauta luodaksesi suojatie</value>
   </data>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
-    <value>Napauta poistaaksesi suojatien</value>
+    <value>Napauta poistaaksesi suojatie</value>
   </data>
   <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
     <value>Tyylin mukaan</value>
@@ -772,7 +772,7 @@ poistaaksesi suojatien</value>
     <value>Haluatko varmasti nollata kaikkien risteyksen #{0} pisteiden siirtymät?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
-    <value>Raahaa ja pudota ympyröitä asettaaksesi teiden järjestyksen
+    <value>Raahaa ja pudota ympyröitä asettaaksesi teiden järjestys
 Napauta ympurää muokataksesi pisteiden järjestystä</value>
   </data>
   <data name="Tool_InfoRoadsDrop" xml:space="preserve">
@@ -951,7 +951,7 @@ Tekijä: {1}</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
     <value>Esiasetuslista on tyhjä.
-Napauta {0} valikon yläreunassa luodaksesi esiasetuksen.</value>
+Napauta {0} valikon yläreunassa luodaksesi esiasetus.</value>
   </data>
   <data name="PresetEditor_Presets" xml:space="preserve">
     <value>Esiasetukset</value>
@@ -1256,14 +1256,23 @@ Napauta muokataksesi merkintöjä</value>
   
   
   
-  
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Piilota katujen nimet, kun työkalu on käytössä</value>
+  </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>Päällyste</value>
   </data>
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Napauta Ctrl pohjassa valitaksesi suojatie</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Napauta Ctrl pohjassa valitaksesi viiva</value>
+  </data>
   
   
-  
-  
+  <data name="FillerStyle_Ruined" xml:space="preserve">
+    <value>Tärveltynyt</value>
+  </data>
   
   
   

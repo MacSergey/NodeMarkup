@@ -1286,4 +1286,5 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
     <value>縁石の幅（分離帯側）</value>
   </data>
+  
 </root>
