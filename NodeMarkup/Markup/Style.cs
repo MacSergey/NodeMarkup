@@ -236,6 +236,8 @@ namespace NodeMarkup.Manager
         protected PropertyStructValue<float> GetElevationProperty(float defaultValue) => new PropertyStructValue<float>("E", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetCornerRadiusProperty(float defaultValue) => new PropertyStructValue<float>("CR", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetMedianCornerRadiusProperty(float defaultValue) => new PropertyStructValue<float>("MCR", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetCurbSizeProperty(float defaultValue) => new PropertyStructValue<float>("CS", StyleChanged, defaultValue);
+        protected PropertyStructValue<float> GetMedianCurbSizeProperty(float defaultValue) => new PropertyStructValue<float>("MCS", StyleChanged, defaultValue);
         protected PropertyStructValue<int> GetLeftRailAProperty(int defaultValue) => new PropertyStructValue<int>("LRA", StyleChanged, defaultValue);
         protected PropertyStructValue<int> GetLeftRailBProperty(int defaultValue) => new PropertyStructValue<int>("LRB", StyleChanged, defaultValue);
         protected PropertyStructValue<int> GetRightRailAProperty(int defaultValue) => new PropertyStructValue<int>("RRA", StyleChanged, defaultValue);

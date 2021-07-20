@@ -26,6 +26,7 @@ namespace NodeMarkup.Manager
         public static float DefaultAngleBetween => 90f;
         public static float DefaultElevation => 0.3f;
         public static float DefaultCornerRadius => 0f;
+        public static float DefaultCurbSize => 0f;
         public static bool DefaultFollowRails => false;
 
         public static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
@@ -35,10 +36,10 @@ namespace NodeMarkup.Manager
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
             {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
-            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
-            {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
-            {FillerType.Ruined, new RuinedFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
-            {FillerType.Cliff, new CliffFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
+            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
+            {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
+            {FillerType.Ruined, new RuinedFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
+            {FillerType.Cliff, new CliffFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
         };
 
         public PropertyValue<float> MedianOffset { get; }
@@ -79,7 +80,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public LodDictionaryArray<IStyleData> Calculate(MarkupFiller filler)
+        public virtual LodDictionaryArray<IStyleData> Calculate(MarkupFiller filler)
         {
             var contours = GetContours(filler);
             var data = new LodDictionaryArray<IStyleData>();
@@ -92,10 +93,22 @@ namespace NodeMarkup.Manager
         protected virtual List<List<FillerContour.Part>> GetContours(MarkupFiller filler)
         {
             var originalContour = filler.Contour.Parts.ToList();
-            var contours = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
+            var contours = GetOffsetContours(new List<List<FillerContour.Part>>() { originalContour }, LineOffset, MedianOffset);
             return contours;
         }
         public abstract IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod);
+        protected List<List<FillerContour.Part>> GetOffsetContours(List<List<FillerContour.Part>> contours, float lineOffset, float medianOffset)
+        {
+            var offsetContours = new List<List<FillerContour.Part>>();
+
+            foreach (var contour in contours)
+            {
+                var offseted = StyleHelper.SetOffset(contour, lineOffset, medianOffset);
+                offsetContours.AddRange(offseted);
+            }
+
+            return offsetContours;
+        }
 
         public virtual void Render(MarkupFiller filler, OverlayData data) { }
 

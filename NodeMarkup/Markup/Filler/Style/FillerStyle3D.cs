@@ -47,11 +47,17 @@ namespace NodeMarkup.Manager
         protected override List<List<FillerContour.Part>> GetContours(MarkupFiller filler)
         {
             var contours = base.GetContours(filler);
+            var roundedContours = GetRoundedContours(contours, CornerRadius, MedianCornerRadius);
 
+            return roundedContours;
+        }
+        protected List<List<FillerContour.Part>> GetRoundedContours(List<List<FillerContour.Part>> contours, float radius, float medianRadius)
+        {
             var roundedContours = new List<List<FillerContour.Part>>();
+
             foreach (var contour in contours)
             {
-                var rounded = StyleHelper.SetCornerRadius(contour, CornerRadius, MedianCornerRadius);
+                var rounded = StyleHelper.SetCornerRadius(contour, radius, medianRadius);
                 roundedContours.Add(rounded);
             }
 
@@ -61,23 +67,33 @@ namespace NodeMarkup.Manager
         {
             foreach (var contour in contours)
             {
-                var trajectories = contour.Select(i => i.Trajectory).ToList();
-                if (trajectories.GetDirection() == TrajectoryHelper.Direction.CounterClockWise)
-                    trajectories = trajectories.Select(t => t.Invert()).Reverse().ToList();
-
-                var parts = GetParts(trajectories, lod);
-
-                var points = parts.SelectMany(p => p).Select(t => t.StartPosition).ToArray();
-                if (points.Length < 3)
-                    yield break;
-
-                var triangles = Triangulator.Triangulate(points, TrajectoryHelper.Direction.ClockWise);
-                if (triangles == null)
-                    yield break;
-
-                yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType);
-                yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, parts.Select(g => g.Count).ToArray(), points, MaterialType.Pavement);
+                if (Triangulate(contour, lod, out var points, out var triangles, out var groups))
+                {
+                    yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType);
+                    yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, groups, points, MaterialType.Pavement);
+                }
             }
+        }
+        protected bool Triangulate(List<FillerContour.Part> contour, MarkupLOD lod, out Vector3[] points, out int[] triangles, out int[] groups)
+        {
+            var trajectories = contour.Select(i => i.Trajectory).ToList();
+            if (trajectories.GetDirection() == TrajectoryHelper.Direction.CounterClockWise)
+                trajectories = trajectories.Select(t => t.Invert()).Reverse().ToList();
+
+            var parts = GetParts(trajectories, lod);
+
+            points = parts.SelectMany(p => p).Select(t => t.StartPosition).ToArray();
+            if (points.Length < 3)
+            {
+                points = null;
+                triangles = null;
+                groups = null;
+                return false;
+            }
+
+            triangles = Triangulator.Triangulate(points, TrajectoryHelper.Direction.ClockWise);
+            groups = parts.Select(g => g.Count).ToArray();
+            return triangles != null;
         }
         private List<List<ITrajectory>> GetParts(List<ITrajectory> trajectories, MarkupLOD lod)
         {
@@ -203,7 +219,7 @@ namespace NodeMarkup.Manager
         private static FloatPropertyPanel AddCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent)
         {
             var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CornerRadius));
-            cornerRadiusProperty.Text = "Corner radius";
+            cornerRadiusProperty.Text = Localize.FillerStyle_CornerRadius;
             cornerRadiusProperty.UseWheel = true;
             cornerRadiusProperty.WheelStep = 0.1f;
             cornerRadiusProperty.WheelTip = Settings.ShowToolTip;
@@ -220,7 +236,7 @@ namespace NodeMarkup.Manager
         private static FloatPropertyPanel AddMedianCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent)
         {
             var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCornerRadius));
-            cornerRadiusProperty.Text = "Corner radius on medians";
+            cornerRadiusProperty.Text = Localize.FillerStyle_MedianCornerRadius;
             cornerRadiusProperty.UseWheel = true;
             cornerRadiusProperty.WheelStep = 0.1f;
             cornerRadiusProperty.WheelTip = Settings.ShowToolTip;
@@ -258,6 +274,161 @@ namespace NodeMarkup.Manager
             MedianCornerRadius.FromXml(config, DefaultCornerRadius);
         }
     }
+    public abstract class CurbTriangulationFillerStyle : TriangulationFillerStyle
+    {
+        public PropertyValue<float> CurbSize { get; }
+        public PropertyValue<float> MedianCurbSize { get; }
+
+        public CurbTriangulationFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius)
+        {
+            CurbSize = GetCurbSizeProperty(curbSize);
+            MedianCurbSize = GetMedianCurbSizeProperty(medianCurbSize);
+        }
+
+        public override void CopyTo(FillerStyle target)
+        {
+            base.CopyTo(target);
+            if (target is CurbTriangulationFillerStyle curbTarget)
+            {
+                curbTarget.CurbSize.Value = CurbSize;
+                curbTarget.MedianCurbSize.Value = MedianCurbSize;
+            }
+        }
+        public override LodDictionaryArray<IStyleData> Calculate(MarkupFiller filler)
+        {
+            if (CurbSize == 0f && MedianCurbSize == 0f)
+                return base.Calculate(filler);
+            else
+            {
+                var originalContour = filler.Contour.Parts.ToList();
+
+                var contours = GetOffsetContours(new List<List<FillerContour.Part>>() { originalContour }, LineOffset, MedianOffset);
+                var roundedContours = GetRoundedContours(contours, CornerRadius, MedianCornerRadius);
+
+                var curbContours = GetOffsetContours(contours, CurbSize, MedianCurbSize);
+                var curbRoundedContours = GetRoundedContours(curbContours, Mathf.Max(CornerRadius - CurbSize, 0f), Mathf.Max(MedianCornerRadius - MedianCurbSize, 0f));
+
+                var data = new LodDictionaryArray<IStyleData>();
+
+                foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+                    data[lod] = Calculate(filler, roundedContours, curbRoundedContours, lod).ToArray();
+
+                return data;
+            }
+        }
+        private IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, List<List<FillerContour.Part>> curbContours, MarkupLOD lod)
+        {
+            if (lod == MarkupLOD.LOD1)
+            {
+                foreach (var data in base.Calculate(filler, contours, lod))
+                    yield return data;
+            }
+            else
+            {
+                foreach (var contour in contours)
+                {
+                    if (Triangulate(contour, lod, out var points, out var triangles, out var groups))
+                    {
+                        yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType.Pavement);
+                        yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, groups, points, MaterialType.Pavement);
+                    }
+                }
+                foreach (var contour in curbContours)
+                {
+                    if (Triangulate(contour, lod, out var points, out var triangles, out _))
+                        yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation + 0.01f, points, triangles, MaterialType);
+                }
+            }
+        }
+        //public override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
+        //{
+        //    if (lod == MarkupLOD.LOD1 || (CurbSize == 0f && MedianCurbSize == 0f))
+        //    {
+        //        foreach (var data in base.Calculate(filler, contours, lod))
+        //            yield return data;
+        //    }
+        //    else
+        //    {
+        //        foreach (var contour in contours)
+        //        {
+        //            if (Triangulate(contour, lod, out var points, out var triangles, out var groups))
+        //            {
+        //                yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType.Pavement);
+        //                yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, groups, points, MaterialType.Pavement);
+        //            }
+        //        }
+        //        foreach (var contour in contours)
+        //        {
+        //            var insideCurbs = StyleHelper.SetOffset(contour, CurbSize, MedianCurbSize);
+        //            foreach(var insideCurb in insideCurbs)
+        //            {
+        //                if (Triangulate(insideCurb, lod, out var points, out var triangles, out _))
+        //                    yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation + 0.01f, points, triangles, MaterialType);
+        //            }
+        //        }
+        //    }
+        //}
+
+        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        {
+            base.GetUIComponents(filler, components, parent, isTemplate);
+
+            if (!isTemplate)
+            {
+                components.Add(AddCurbSizeProperty(this, parent));
+                if (filler.IsMedian)
+                    components.Add(AddMedianCurbSizeProperty(this, parent));
+            }
+        }
+        private static FloatPropertyPanel AddCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent)
+        {
+            var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CurbSize));
+            curbSizeProperty.Text = Localize.FillerStyle_CurbSize;
+            curbSizeProperty.UseWheel = true;
+            curbSizeProperty.WheelStep = 0.1f;
+            curbSizeProperty.WheelTip = Settings.ShowToolTip;
+            curbSizeProperty.CheckMin = true;
+            curbSizeProperty.MinValue = 0f;
+            curbSizeProperty.CheckMax = true;
+            curbSizeProperty.MaxValue = 10f;
+            curbSizeProperty.Init();
+            curbSizeProperty.Value = curbStyle.CurbSize;
+            curbSizeProperty.OnValueChanged += (float value) => curbStyle.CurbSize.Value = value;
+
+            return curbSizeProperty;
+        }
+        private static FloatPropertyPanel AddMedianCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent)
+        {
+            var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCurbSize));
+            curbSizeProperty.Text = Localize.FillerStyle_MedianCurbSize;
+            curbSizeProperty.UseWheel = true;
+            curbSizeProperty.WheelStep = 0.1f;
+            curbSizeProperty.WheelTip = Settings.ShowToolTip;
+            curbSizeProperty.CheckMin = true;
+            curbSizeProperty.MinValue = 0f;
+            curbSizeProperty.CheckMax = true;
+            curbSizeProperty.MaxValue = 10f;
+            curbSizeProperty.Init();
+            curbSizeProperty.Value = curbStyle.MedianCurbSize;
+            curbSizeProperty.OnValueChanged += (float value) => curbStyle.MedianCurbSize.Value = value;
+
+            return curbSizeProperty;
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            CurbSize.ToXml(config);
+            MedianCurbSize.ToXml(config);
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            base.FromXml(config, map, invert);
+            CurbSize.FromXml(config, DefaultCurbSize);
+            MedianCurbSize.FromXml(config, DefaultCurbSize);
+        }
+    }
     public class PavementFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerPavement;
@@ -267,40 +438,40 @@ namespace NodeMarkup.Manager
 
         public override FillerStyle CopyStyle() => new PavementFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
     }
-    public class GrassFillerStyle : TriangulationFillerStyle
+    public class GrassFillerStyle : CurbTriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerGrass;
         protected override MaterialType MaterialType => MaterialType.Grass;
 
-        public GrassFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
+        public GrassFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
-        public override FillerStyle CopyStyle() => new GrassFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
+        public override FillerStyle CopyStyle() => new GrassFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius, CurbSize, DefaultCurbSize);
     }
-    public class GravelFillerStyle : TriangulationFillerStyle
+    public class GravelFillerStyle : CurbTriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerGravel;
         protected override MaterialType MaterialType => MaterialType.Gravel;
 
-        public GravelFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
+        public GravelFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
-        public override FillerStyle CopyStyle() => new GravelFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
+        public override FillerStyle CopyStyle() => new GravelFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius, CurbSize, DefaultCurbSize);
     }
-    public class RuinedFillerStyle : TriangulationFillerStyle
+    public class RuinedFillerStyle : CurbTriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerRuined;
         protected override MaterialType MaterialType => MaterialType.Ruined;
 
-        public RuinedFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
+        public RuinedFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
-        public override FillerStyle CopyStyle() => new RuinedFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
+        public override FillerStyle CopyStyle() => new RuinedFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius, CurbSize, DefaultCurbSize);
     }
-    public class CliffFillerStyle : TriangulationFillerStyle
+    public class CliffFillerStyle : CurbTriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerCliff;
         protected override MaterialType MaterialType => MaterialType.Cliff;
 
-        public CliffFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
+        public CliffFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
-        public override FillerStyle CopyStyle() => new CliffFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
+        public override FillerStyle CopyStyle() => new CliffFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius, CurbSize, DefaultCurbSize);
     }
 }
