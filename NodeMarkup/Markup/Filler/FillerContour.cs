@@ -58,19 +58,7 @@ namespace NodeMarkup.Manager
         public List<ITrajectory> TrajectoriesProcessed => GetTrajectories(ProcessedParts);
         public TrajectoryHelper.Direction Direction => TrajectoriesRaw.GetDirection();
 
-        public bool IsMedian
-        {
-            get
-            {
-                for (var i = 0; i < VertexCount; i += 1)
-                {
-                    if (SupportPoints[i] is EnterFillerVertexBase enterVertex1 && SupportPoints[(i + 1) % VertexCount] is EnterFillerVertexBase enterVertex2 && enterVertex1.Enter == enterVertex2.Enter)
-                        return true;
-                }
-
-                return false;
-            }
-        }
+        public bool IsMedian => Parts.Any(p => p.IsEnter);
         public IEnumerable<Part> Parts
         {
             get
