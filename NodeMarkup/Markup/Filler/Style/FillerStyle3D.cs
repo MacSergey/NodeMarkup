@@ -337,7 +337,7 @@ namespace NodeMarkup.Manager
                 foreach (var contour in curbContours)
                 {
                     if (Triangulate(contour, lod, out var points, out var triangles, out _))
-                        yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation + 0.01f, points, triangles, MaterialType);
+                        yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation + 0.03f, points, triangles, MaterialType);
                 }
             }
         }

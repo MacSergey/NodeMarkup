@@ -187,6 +187,39 @@ namespace NodeMarkup.Manager
 
             return stepProperty;
         }
+        protected BoolListPropertyPanel AddFollowRailsProperty(IFollowRailFiller followRailStyle, UIComponent parent)
+        {
+            var followRailsProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(followRailStyle.FollowRails));
+            followRailsProperty.Text = Localize.StyleOption_FollowRails;
+            followRailsProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
+            followRailsProperty.SelectedObject = followRailStyle.FollowRails;
+            followRailsProperty.OnSelectObjectChanged += (bool value) => followRailStyle.FollowRails.Value = value;
+            return followRailsProperty;
+        }
+        protected void AddRailProperty(IRailFiller railStyle, FillerContour contour, UIComponent parent, out FillerRailSelectPropertyPanel leftRailProperty, out FillerRailSelectPropertyPanel rightRailProperty)
+        {
+            leftRailProperty = AddRailProperty(contour, parent, "LeftRail", railStyle.LeftRailA, railStyle.LeftRailB, RailType.Left, Localize.StyleOption_LeftRail);
+            rightRailProperty = AddRailProperty(contour, parent, "RightRail", railStyle.RightRailA, railStyle.RightRailB, RailType.Right, Localize.StyleOption_RightRail);
+
+            leftRailProperty.OtherRail = rightRailProperty;
+            rightRailProperty.OtherRail = leftRailProperty;
+        }
+        private FillerRailSelectPropertyPanel AddRailProperty(FillerContour contour, UIComponent parent, string name, PropertyValue<int> railA, PropertyValue<int> railB, RailType railType, string label)
+        {
+            var rail = new FillerRail(contour.GetCorrectIndex(railA), contour.GetCorrectIndex(railB));
+            var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent, name);
+            railProperty.Text = label;
+            railProperty.Init(railType);
+            railProperty.Value = rail;
+            railProperty.OnValueChanged += RailPropertyChanged;
+            return railProperty;
+
+            void RailPropertyChanged(FillerRail rail)
+            {
+                railA.Value = rail.A;
+                railB.Value = rail.B;
+            }
+        }
 
         public enum FillerType
         {
@@ -220,6 +253,11 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
             Buffer = StyleType.FillerBuffer,
+        }
+        public enum RailType
+        {
+            Left,
+            Right
         }
     }
 }

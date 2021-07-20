@@ -12,7 +12,7 @@ namespace NodeMarkup.Utilities
     {
         public MarkupLinePair Pair { get; private set; }
         public Vector3 Position => (Pair.First.Trajectory.Position(FirstT) + Pair.Second.Trajectory.Position(SecondT)) / 2;
-        protected MarkupLinesIntersect(MarkupLinePair pair, float firstT, float secondT, float angle) : base(firstT, secondT, angle)
+        protected MarkupLinesIntersect(MarkupLinePair pair, float firstT, float secondT) : base(firstT, secondT)
         {
             Pair = pair;
         }
@@ -33,7 +33,7 @@ namespace NodeMarkup.Utilities
 
                 var intersect = CalculateSingle(firstTrajectory, secondTrajectory);
                 if (intersect.IsIntersect)
-                    return new MarkupLinesIntersect(pair, intersect.FirstT, intersect.SecondT, intersect.Angle);
+                    return new MarkupLinesIntersect(pair, intersect.FirstT, intersect.SecondT);
             }
 
             return new MarkupLinesIntersect(pair);

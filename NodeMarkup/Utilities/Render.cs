@@ -618,7 +618,7 @@ namespace NodeMarkup.Utilities
 
     public class RenderBatch : IDrawData
     {
-        public static float MeshHeight => 3f;
+        public static float MeshHeight => 5f;
         public MaterialType MaterialType { get; }
         public int Count { get; }
         public Vector4[] Locations { get; }
