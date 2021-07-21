@@ -16,11 +16,6 @@ namespace NodeMarkup.Manager
         public static float MinAngleDelta { get; } = 5f;
         public static float MinLength { get; } = 1f;
         public static float MaxLength { get; } = 10f;
-        private static Dictionary<MarkupLOD, float> LodScale { get; } = new Dictionary<MarkupLOD, float>()
-        {
-            { MarkupLOD.LOD0, 1f },
-            { MarkupLOD.LOD1, 4f }
-        };
         private static int MaxDepth => 5;
 
         public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, Func<ITrajectory, Result> calculateParts, float? minAngle = null, float? minLength = null, float? maxLength = null)
@@ -36,7 +31,7 @@ namespace NodeMarkup.Manager
 
         private static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, float? minAngle, float? minLength, float? maxLength, Action<List<Result>, ITrajectory> addToResult)
         {
-            var lodScale = LodScale[lod];
+            var lodScale = lod == MarkupLOD.LOD0 ? 1f : 4f;
             var result = new List<Result>();
 
             CalculateSolid(0, trajectory, trajectory.DeltaAngle, (minAngle ?? MinAngleDelta) * lodScale, (minLength ?? MinLength) * lodScale, (maxLength ?? MaxLength) * lodScale, t => addToResult(result, t));
