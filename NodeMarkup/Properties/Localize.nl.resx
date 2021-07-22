@@ -1267,8 +1267,12 @@ Klik om de markering te wijzigen</value>
   </data>
   
   
-  
-  
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>Hoekradius</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>Hoekradius op mediaan</value>
+  </data>
   
   
   

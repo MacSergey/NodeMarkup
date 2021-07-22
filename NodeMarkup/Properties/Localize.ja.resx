@@ -1158,7 +1158,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>舗装（3Dスタイル）</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
-    <value>LODの描画距離</value>
+    <value>LOD（3Dスタイル）の描画距離（m）</value>
   </data>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>セグメント #{0}

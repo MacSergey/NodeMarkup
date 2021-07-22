@@ -1250,16 +1250,16 @@ Kliknij aby edytować oznaczenia</value>
   
   
   <data name="Settings_HideStreetName" xml:space="preserve">
-    <value>Ukryj nazwy ulic w czasie używania narzędzia</value>
+    <value>Ukryj nazwy ulic podczas używania narzędzia</value>
   </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>Chodnik</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Naciśnij trzymając Ctrl aby wybrać przejście dla pieszych</value>
+    <value>Przytrzymaj Ctrl i naciśnij, aby wybrać chodnik</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Naciśnij trzymając Ctrl aby wybrać linię</value>
+    <value>Przytrzymaj Ctrl i naciśnij, aby wybrać linię</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Żwir</value>

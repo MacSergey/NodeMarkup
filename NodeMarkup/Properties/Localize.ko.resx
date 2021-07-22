@@ -117,123 +117,1116 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_DeleteCaption" xml:space="preserve">
+    <value>{0} 삭제하기</value>
+  </data>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>정말로 {0} "{1}"을 삭제할까요?</value>
+  </data>
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>템플릿 적용하기</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>템플릿으로 저장</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>기본값으로 저장</value>
+  </data>
+  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
+    <value>기본값으로 저장 취소</value>
+  </data>
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>규칙 추가</value>
+  </data>
+  <data name="StyleOption_Color" xml:space="preserve">
+    <value>색상</value>
+  </data>
+  <data name="StyleOption_DashedLength" xml:space="preserve">
+    <value>점선 길이</value>
+  </data>
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>규칙 삭제하기</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>이 규칙을 정말로 삭제할까요?</value>
+  </data>
+  <data name="LineRule_From" xml:space="preserve">
+    <value>시작점</value>
+  </data>
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>만들 규칙의 시작점을 선택하세요</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>만들 규칙의 끝점을 선택하세요</value>
+  </data>
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>선</value>
+  </data>
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>선</value>
+  </data>
+  <data name="StyleOption_Offset" xml:space="preserve">
+    <value>오프셋</value>
+  </data>
+  <data name="StyleOption_SpaceLength" xml:space="preserve">
+    <value>점선 간격</value>
+  </data>
+  <data name="Editor_Style" xml:space="preserve">
+    <value>스타일</value>
+  </data>
+  <data name="LineRule_To" xml:space="preserve">
+    <value>끝점</value>
+  </data>
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>{0}과의 교차점</value>
+  </data>
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>점 {0}</value>
+  </data>
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>점선</value>
+  </data>
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>쌍점선</value>
+  </data>
+  <data name="LineStyle_DoubleSolid" xml:space="preserve">
+    <value>쌍실선</value>
+  </data>
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>실선</value>
+  </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>교차로에 마킹 만들기</value>
+  </data>
+  <data name="Panel_NodeCaption" xml:space="preserve">
+    <value>노드 #{0}의 마킹 수정</value>
+  </data>
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>점</value>
+  </data>
+  <data name="PointEditor_Offset" xml:space="preserve">
+    <value>오프셋</value>
+  </data>
+  <data name="PointEditor_Points" xml:space="preserve">
+    <value>점</value>
+  </data>
+  <data name="SelectPanel_NotSet" xml:space="preserve">
+    <value>설정되지 않음</value>
+  </data>
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
+    <value>선에 새 규칙 추가</value>
+  </data>
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
+    <value>노드의 모든 선 삭제</value>
+  </data>
+  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
+    <value>모든 교차로의 마킹 전부 삭제</value>
+  </data>
+  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
+    <value>모든 마킹 삭제</value>
+  </data>
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>정말로 모든 마킹을 삭제하시겠습니까?</value>
+  </data>
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>마킹한 내역을 파일로 내보내기</value>
+  </data>
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
+    <value>경로를 클립보드에 복사하기</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>마킹 내역 내보내기</value>
+  </data>
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
+    <value>내보내기 실패</value>
+  </data>
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
+    <value>성공적으로 파일에 저장하였습니다</value>
+  </data>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>파일으로 마킹한 내역 복원하기</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>마킹 내역 복원하기</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>정말로 마킹을 복원하시겠습니까?
+복원한 마킹이 기존 마킹에 덮어씌워질 것입니다.</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>마킹 복원에 실패했습니다</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>마킹이 성공적으로 복원되었습니다</value>
+  </data>
+  <data name="Settings_QuickRuleSetup" xml:space="preserve">
+    <value>빠른 규칙 설정</value>
+  </data>
+  <data name="Settings_RenderDistance" xml:space="preserve">
+    <value>렌더링 거리</value>
+  </data>
+  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
+    <value>삭제하기 전 확인하기</value>
+  </data>
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>템플릿</value>
+  </data>
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>이름</value>
+  </data>
+  <data name="TemplateEditor_Templates" xml:space="preserve">
+    <value>템플릿</value>
+  </data>
+  <data name="Template_NewTemplate" xml:space="preserve">
+    <value>새 템플릿</value>
+  </data>
+  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
+    <value>노드 마킹 삭제</value>
+  </data>
+  <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
+    <value>정말로 노드 #{0}의 마킹을 모두 삭제할까요?</value>
+  </data>
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>다음을 클릭해 생성하세요</value>
+  </data>
+  <data name="Tool_InfoDeleteLine" xml:space="preserve">
+    <value>클릭해 선을 삭제하세요</value>
+  </data>
+  <data name="Tool_InfoHoverNode" xml:space="preserve">
+    <value>노드 #{0}
+수정하려면 클릭하세요</value>
+  </data>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>노드나 세그먼트를 선택해 마킹을 수정하세요</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>일반 선의 끝점 선택</value>
+  </data>
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>만들거나 지울 선의 시작점을 선택하세요</value>
+  </data>
+  
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>복원</value>
+  </data>
+  <data name="StyleOption_Invert" xml:space="preserve">
+    <value>반전</value>
+  </data>
+  <data name="StyleOption_Width" xml:space="preserve">
+    <value>두께</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>실선+점선 쌍선</value>
+  </data>
+  <data name="LineStyle_StopSolid" xml:space="preserve">
+    <value>실선</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>클릭해 정지선을 삭제하세요</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>클릭해 정지선을 생성하세요</value>
+  </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>필러</value>
+  </data>
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>필러</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>줄무늬</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>격자</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>점선</value>
+  </data>
+  <data name="StyleOption_Step" xml:space="preserve">
+    <value>스텝</value>
+  </data>
+  <data name="StyleOption_Angle" xml:space="preserve">
+    <value>회전각</value>
+  </data>
+  <data name="StyleOption_LinesOffset" xml:space="preserve">
+    <value>선으로부터 오프셋</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>클릭해 필러 생성을 시작하세요</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>클릭해 필러 생성을 끝내세요</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>클릭해 윤곽선의 다음 점을 선택하세요</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>점을 하나 골라 필러 생성을 시작하세요</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>윤곽선의 다음 점을 선택하세요</value>
+  </data>
+  <data name="StyleOption_MedianOffset" xml:space="preserve">
+    <value>중앙으로부터 오프셋</value>
+  </data>
+  <data name="Editor_ColorCopy" xml:space="preserve">
+    <value>복사</value>
+  </data>
+  <data name="Editor_ColorPaste" xml:space="preserve">
+    <value>붙여넣기</value>
+  </data>
+  <data name="Editor_ColorDefault" xml:space="preserve">
+    <value>기본값</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>실선</value>
+  </data>
+  
+  
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
+    <value>새 필러 추가</value>
+  </data>
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>쌍실선</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>쌍점선</value>
+  </data>
+  <data name="HeaderPanel_StyleCopy" xml:space="preserve">
+    <value>복사</value>
+  </data>
+  <data name="HeaderPanel_StylePaste" xml:space="preserve">
+    <value>붙여넣기</value>
+  </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>V자</value>
+  </data>
+  <data name="StyleOption_AngleBetween" xml:space="preserve">
+    <value>사잇각</value>
+  </data>
+  <data name="StyleOption_Turn" xml:space="preserve">
+    <value>회전</value>
+  </data>
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>아직 교차로에 선이 없습니다.
+어떤 두 점이나 골라서 연결해 선을 만드세요.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>아직 교차로에 필러가 없습니다.
+alt키를 꾹 누르거나 {0}을(를) 한번 눌러 필러를 만드세요.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>아직 템플릿을 저장하지 않았습니다.
+템플릿을 새로 만드려면 선이나 횡단보도 혹은 필러 스타일에서 «{0}»를 누르세요.</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="StyleOption_Alignment" xml:space="preserve">
+    <value>정렬 위치</value>
+  </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>클릭해 평행한 선을 생성하세요</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>클릭해 평행한 선을 삭제하세요</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>줄무늬</value>
+  </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>기존 횡단보도</value>
+  </data>
+  <data name="StyleOption_OffsetBetween" xml:space="preserve">
+    <value>사이 오프셋</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>횡단보도</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>아직 교차로에 횡단보도가 없습니다.
+횡단보도를 만드려면 Shift키를 누르세요.</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>횡단보도</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>횡단보도</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>필러</value>
+  </data>
+  <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
+    <value>일반 선</value>
+  </data>
+  <data name="LineStyle_StopLinesGroup" xml:space="preserve">
+    <value>정지선</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>선 그룹화</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>템플릿 그룹화</value>
+  </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>클릭해 횡단보도를 생성하세요</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>클릭해 횡단보도를 삭제하세요</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>스타일별로</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>유형별로</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>쌍줄무늬</value>
+  </data>
+  <data name="StyleOption_LineWidth" xml:space="preserve">
+    <value>두께</value>
+  </data>
+  <data name="StyleOption_OffsetAfter" xml:space="preserve">
+    <value>뒷쪽 오프셋</value>
+  </data>
+  <data name="StyleOption_OffsetBefore" xml:space="preserve">
+    <value>앞쪽 오프셋</value>
+  </data>
+  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
+    <value>차선에 평행하게 생성</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>평행한 실선</value>
+  </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>왼쪽 끝</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>오른쪽 끝</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>횡단보도의 왼쪽 끝을 선택하세요</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>횡단보도의 오른쪽 끝을 선택하세요</value>
+  </data>
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
+    <value>점 오버레이 그룹화</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>원형으로 그룹화하기</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>선 위에 그룹화하기</value>
+  </data>
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>이 규칙은 다른 규칙과 겹칩니다.
+다른 규칙의 시작점과 끝점을 확인하세요.</value>
+  </data>
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>횡단보도 왼쪽 끝</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>횡단보도 오른쪽 끝</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>초기화</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>끝점 선택</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>점을 선택해 횡단보도를
+만들거나 삭제하세요</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>평행한 점선</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>사다리</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>템플릿 없음</value>
+  </data>
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>실선</value>
+  </data>
+  <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
+    <value>횡단보도 선</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>횡단보도</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>필러</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>선</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>점</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>템플릿</value>
+  </data>
+  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>로드 중에 에러가 있습니다.
+교차로 {0}의 마킹을 로딩하지 못했습니다.</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>체스판</value>
+  </data>
+  <data name="StyleOption_LineCount" xml:space="preserve">
+    <value>선의 수</value>
+  </data>
+  <data name="StyleOption_SharkToothBase" xml:space="preserve">
+    <value>삼각형 베이스</value>
+  </data>
+  <data name="StyleOption_SharkToothHeight" xml:space="preserve">
+    <value>삼각형 높이</value>
+  </data>
+  <data name="StyleOption_SharkToothSpace" xml:space="preserve">
+    <value>삼각형 간격</value>
+  </data>
+  <data name="StyleOption_SquareSide" xml:space="preserve">
+    <value>사각형쪽 면</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>삼각형</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>삼각형</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>실선+점선 쌍선</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>마킹 삭제</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>마킹 복사</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>마킹 붙여넣기</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>마킹 붙여넣기</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>정말로 모든 마킹을 붙여넣기 하시겠습니까?</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>횡단보도 단축키</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>필러 단축키</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>일반 선 단축키</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>정지선 단축키</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>설정되지 않음</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>수정 없이</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>항상</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>다른 것에 영향을 줄 때만</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>이에 의존하는 다른 것도 삭제됩니다:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>횡단보도 보더 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>횡단보도 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>필러 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>선 - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>규칙 - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>백업</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>마킹 렌더 및 사용 설정</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>그룹화</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>단축키 및 편집기</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>복제하기</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>목사</value>
+  </data>
+  <data name="StyleOption_Edge" xml:space="preserve">
+    <value>모서리</value>
+  </data>
+  <data name="StyleOption_StartingFrom" xml:space="preserve">
+    <value>시작점</value>
+  </data>
+  <data name="StyleOption_Vertex" xml:space="preserve">
+    <value>꼭짓점</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>모든 점 오프셋 초기화</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>모든 점 오프셋 초기화</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>정말로 노드 #{0}의 점 위치 오프셋을 모두 삭제할까요?</value>
+  </data>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>작은 원을 드래그해 길의 순서를 변경하거나
+각각을 클릭해 각 길의 점 순서를 변경하세요</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>원을 점의 안/밖으로 이동시켜 도로의 순서를 설정/취소하세요</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>마킹 복사</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>마킹 붙여넣기</value>
+  </data>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>순서 반전</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>시계 방향으로 회전</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>시계 반대방향으로 회전</value>
+  </data>
+  <data name="StyleOption_AlignmentCenter" xml:space="preserve">
+    <value>중앙</value>
+  </data>
+  <data name="StyleOption_AlignmentLeft" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
+  <data name="StyleOption_AlignmentRight" xml:space="preserve">
+    <value>오른쪽</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>이름 없는 템플릿</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>이름 이미 사용 중</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>"{0}"이라는 이름이 이미 사용중입니다.
+여러 템플릿이 한 이름을 사용할 수 있는데, 그렇게 할까요?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>마킹 백업</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>템플릿 백업</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>모든 템플릿 제거</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>모든 템플릿 제거</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>정말로 모든 템플릿을 삭제하시겠습니까?</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>템플릿을 파일로 내보내기</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>템플릿 내보내기</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>파일에서 템플릿 복원하기</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>템플릿 복원</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>정말로 템플릿을 복원하시겠습니까?
+복원한 템플릿이 기존 템플릿에 덮어씌워질 것입니다.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>템플릿 복원 실패</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>템플릿이 성공적으로 복원되었습니다</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>적용하기</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>계속하기</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>붙여넣기 모드 종료</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>이대로 적용하고 붙여넣기 모드에서 나가시겠습니까?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>적용하지 않기</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>적용하기</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>적용하지 않기</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>초기화</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>마킹 순서 변경하기</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>마킹 순서 변경하기</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>도로가 변경되었습니다</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>이 교차로의 도로가 변경되어 기존 마킹을 자동으로 적용할 수 없습니다.
+마킹을 직접 적용하시겠습니까?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>순서 변경 모드 나가기</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>이대로 적용하고 편집에서 나가시겠습니까?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>점을 드래그해 점의 순서를 변경하세요</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>원을 점의 안/밖으로 이동시켜 점의 순서를 설정/취소하세요</value>
+  </data>
+  <data name="StyleOption_SolidInCenter" xml:space="preserve">
+    <value>중앙에 실선</value>
+  </data>
+  <data name="StyleOption_No" xml:space="preserve">
+    <value>아니오</value>
+  </data>
+  <data name="StyleOption_Yes" xml:space="preserve">
+    <value>예</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Shift를 꾹 눌러 횡단보도를 만드세요</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Alt를 꾹 눌러 필러를 만드세요</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Ctrl을 누른 채로 드래그해 점을 옮기세요</value>
+  </data>
+  
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>이 작업은 취소할 수 없습니다.</value>
+  </data>
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>빈 선</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>새 모서리 생성</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>새 모서리 생성</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>모든 점 오프셋 초기화</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>빠른 횡단보도 범위 설정</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>철로 아래에 마킹 두기</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>경고: 이 옵션은 게임 내 오브젝트의 렌더 순서를 변경할 수 있습니다</value>
+  </data>
+  
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>에셋으로 저장</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+{1} 제작</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>아직 프리셋을 저장하지 않았습니다.
+프리셋을 새로 만드려면 패널 헤더에서 «{0}»를 누르세요.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>프리셋</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>프리셋으로 저장</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>프리셋으로 저장</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>프리셋 없음</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>프리셋 적용</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>새 프리셋</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>프리셋 적용 모드 나가기</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>프리셋을 적용하시겠습니까?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>만든이</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>재시작 후 적용됩니다</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>마킹 에셋 불러오기</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>횡단보도:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>필러:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>선:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>스크린샷 없음</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>길 #{0}의 점:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>도로:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>새 선을 횡단보도로 나누기</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>이 횡단보도로 선 나누기</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>프리셋 백업하기</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>프리셋 전부 삭제</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>프리셋 전부 삭제</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>정말로 모든 프리셋을 삭제하시겠습니까?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>프리셋을 파일로 내보내기</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>프리셋 파일로 내보내기</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>프리셋 복원하기</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>프리셋 복원</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>정말로 프리셋을 복원하시겠습니까?
+복원한 프리셋이 기존 프리셋에 덮어씌워질 것입니다.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>프리셋 복원 실패</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>프리셋이 성공적으로 복원되었습니다</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>모든 횡단보도로 선 자르기</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>모든 횡단보도로 선 자르기</value>
+  </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>프리셋 에셋 재작성</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>이름을 바꾸기 위해서는 에셋을 재작성해야 합니다. 계속할까요?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>템플릿 에셋 재작성</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>이름이나 내용을 바꾸기 위해서는 에셋을 재작성해야 합니다. 계속할까요?</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>횡단보도의 모서리를 설정하려면 선이 횡단보도의 점과 같은 곳에서 출발해야 합니다</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>규칙의 시작점과 끝점을 바꾸어 다른 규칙을 추가하려면 우선 다른 선이 이 선과 만나야 합니다.</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>패널에서 힌트 보기</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>수정</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>변경 사항 저장</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>변경 사항 저장 안 함</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>프리셋의 이름 수정을 저장할까요?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>변경 사항 저장</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>템플릿의 내용 변화를 저장하시겠습니까?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>"{0}"이라는 이름이 이미 사용중입니다.
+여러 프리셋이 한 이름을 사용할 수 있는데, 그렇게 할까요?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>게임의 컨텐츠 관리자에서만 삭제할 수 있습니다.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>이 프리셋은 수정할 수 없습니다. 컨텐츠 매니저에서 삭제하거나 워크샵에서 구독을 취소해야 합니다.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>이 프리셋은 에셋입니다.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>게임의 컨텐츠 관리자에서만 삭제할 수 있습니다.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>이 템플릿은 수정할 수 없습니다. 컨텐츠 매니저에서 삭제하거나 워크샵에서 구독을 취소해야 합니다.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>이 템플릿은 에셋입니다.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>프리셋</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>프리셋</value>
+  </data>
+  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>해당 선 종류는 규칙을 지원하지 않습니다.</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>횡단보도의 모서리는 자르지 않기</value>
+  </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>제작자를 알 수 없습니다</value>
+  </data>
+  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>로드 중에 에러가 있습니다.
+모든 교차로의 마킹을 로딩하지 못했습니다.</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>세그먼트 #{0}의 마킹 수정</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>잔디</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>인도 포장</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>고도</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>고도</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>잔디</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>인도 포장</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>LOD 거리</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>세그먼트 #{0}
+수정하려면 클릭하세요</value>
+  </data>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>가이드 따르기</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>왼쪽 가이드</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>오른쪽 가이드</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>가이드의 첫 점 혹은 선을 선택하세요</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>가이드의 두 번째 점을 선택하세요</value>
+  </data>
+  
+  
+  
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>색상</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>클립보드로부터</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>선 정렬</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>2개로 나누기</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>오프셋 나누기</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>점 그룹화</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>두 교차로 사이에 적용</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>두 교차로 사이에 적용</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>길 전체에 적용</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>길 전체에 적용</value>
+  </data>
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>기존 마킹을 덮어씌울 것입니다.</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>두 교차로 사이에 마킹 적용하기</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>정말로 두 교차로 사이에 마킹을 적용하시겠습니까?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>길 전체에 마킹 적용</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>정말로 "{0}" 전체에 마킹을 적용하시겠습니까?</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>점 뒤를 드래그해 평행선 생성</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>일반 선이나 정지선의 끝점 선택</value>
+  </data>
+  
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>선 끝 정렬</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>선 시작 정렬</value>
+  </data>
+  
+  
+  
+  
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>도구 사용 중에는 길의 이름 숨기기</value>
+  </data>
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>인도 포장</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Ctrl을 누른 채로 클릭해해 횡단보도를 선택하세요</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Ctrl을 누른 채 클릭해 선을 선택하세요</value>
+  </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>자갈</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>절벽</value>
+  </data>
+  <data name="FillerStyle_Ruined" xml:space="preserve">
+    <value>폐허 잔디</value>
+  </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>선으로부터 오프셋</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>모서리 반경</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>중앙에서 가장자리 반경:</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>연석 크기</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>중앙에서 연석 크기</value>
+  </data>
   
 </root>
