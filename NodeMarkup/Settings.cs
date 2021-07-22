@@ -248,6 +248,8 @@ namespace NodeMarkup
 
         #region DEBUG
 #if DEBUG
+        public static SavedBool ShowNodeContour { get; } = new SavedBool(nameof(ShowNodeContour), string.Empty, false);
+
         private void AddDebug(UIAdvancedHelper helper)
         {
             var group = helper.AddGroup("Selection overlay");
@@ -256,6 +258,9 @@ namespace NodeMarkup
             AddCheckBox(group, "Render overlay center", Selection.RenderOverlayCentre);
             AddCheckBox(group, "Render overlay borders", Selection.RenderOverlayBorders);
             AddFloatField(group, "Overlay width", Selection.OverlayWidth, 3f, 1f);
+
+            var groupOther = helper.AddGroup("Nodes");
+            AddCheckBox(groupOther, "Show node contour", ShowNodeContour);
         }
 #endif
         #endregion

@@ -184,6 +184,13 @@ namespace NodeMarkup.Tools
             }
 
             Panel.Render(cameraInfo);
+#if DEBUG
+            if(Settings.ShowNodeContour && Tool.Markup is Manager.NodeMarkup markup)
+            {
+                foreach (var line in markup.Contour)
+                    line.Render(new OverlayData(cameraInfo));
+            }
+#endif
         }
 
         private void RenderRegularConnectLine(RenderManager.CameraInfo cameraInfo)

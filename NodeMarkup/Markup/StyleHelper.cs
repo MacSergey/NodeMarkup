@@ -212,10 +212,10 @@ namespace NodeMarkup.Manager
 
             foreach (var border in borders)
             {
-                for (var i = 0; i < vertex.Length; i += 2)
+                for (var i = 1; i < vertex.Length; i += 2)
                 {
-                    var start = Intersection.CalculateSingle(border, vertex[i]);
-                    var end = Intersection.CalculateSingle(border, vertex[i + 1]);
+                    var start = Intersection.CalculateSingle(border, vertex[i - 1]);
+                    var end = Intersection.CalculateSingle(border, vertex[i]);
 
                     if (start.IsIntersect && end.IsIntersect)
                         return false;
@@ -223,21 +223,20 @@ namespace NodeMarkup.Manager
                     if (!start.IsIntersect && !end.IsIntersect)
                         continue;
 
-                    var intersect = Intersection.CalculateSingle(border, new StraightTrajectory(vertex[i].EndPosition, vertex[i + 1].EndPosition));
-                    if (intersect.IsIntersect)
+                    if (Intersection.CalculateSingle(border, new StraightTrajectory(vertex[i - 1].EndPosition, vertex[i].EndPosition), out _, out var t))
                     {
                         if (start.IsIntersect)
-                            from = Mathf.Max(from, intersect.SecondT);
+                            from = Mathf.Max(from, t);
                         else if (end.IsIntersect)
-                            to = Mathf.Min(to, intersect.SecondT);
+                            to = Mathf.Min(to, t);
                     }
                 }
             }
 
             if (from != 0f || to != 1f)
             {
-                var dir = part.Angle.Direction();
-                var line = new StraightTrajectory(part.Position + dir * (part.Length / 2), part.Position - dir * (part.Length / 2)).Cut(from, to);
+                var dir = part.Angle.Direction() * (part.Length / 2);
+                var line = new StraightTrajectory(part.Position + dir, part.Position - dir).Cut(from, to);
                 part = new MarkupStylePart(line.StartPosition, line.EndPosition, line.Direction, part.Width, part.Color);
             }
             return true;
@@ -652,7 +651,7 @@ namespace NodeMarkup.Manager
             var secondInter = Intersection.CalculateSingle(second, new StraightTrajectory(center, center + secondDir, false));
             return firstInter.IsIntersect && CorrectT(firstInter.FirstT, first.Length) && secondInter.IsIntersect && CorrectT(secondInter.FirstT, second.Length);
 
-            static bool CorrectT(float t, float length) => -0.01f / length < t && t < 1f + 0.01f / length;
+            static bool CorrectT(float t, float length) => -0.05f / length < t && t < 1f + 0.05f / length;
         }
         private static void AddRadius(int i, int j, List<FillerContour.Part> parts, Vector3 center, Vector3 firstDir, Vector3 secondDir)
         {

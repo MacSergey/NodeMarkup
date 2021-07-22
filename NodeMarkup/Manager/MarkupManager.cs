@@ -49,8 +49,8 @@ namespace NodeMarkup.Manager
         public static void UpdateSegment(ushort segmentId) => SingletonManager<SegmentMarkupManager>.Instance.Update(segmentId);
         public static void UpdateAll()
         {
-            SingletonManager<NodeMarkupManager>.Instance.AddAllToUpdate();
-            SingletonManager<SegmentMarkupManager>.Instance.AddAllToUpdate();
+            SingletonManager<NodeMarkupManager>.Instance.UpdateAll();
+            SingletonManager<SegmentMarkupManager>.Instance.UpdateAll();
         }
 
         public static void NetInfoInitNodeInfoPostfix(Node info)
@@ -136,7 +136,8 @@ namespace NodeMarkup.Manager
                     markup.Update();
             }
         }
-        public void AddAllToUpdate()
+        public void UpdateAll() => SimulationManager.instance.AddAction(UpdateAllImpl);
+        private void UpdateAllImpl()
         {
             SingletonMod<Mod>.Logger.Debug($"Update all {Type} markings");
 

@@ -67,7 +67,7 @@ namespace NodeMarkup.Manager
         }
         public bool GetBorder(MarkupEnterPoint point, out ITrajectory line)
         {
-            if (point.IsFirst && Markup.GetBordersLine(this, Prev, out line))
+            if (point.IsFirst && Markup.GetBordersLine(Prev, this, out line))
                 return true;
             else if (point.IsLast && Markup.GetBordersLine(this, Next, out line))
                 return true;
