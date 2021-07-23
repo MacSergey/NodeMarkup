@@ -67,7 +67,7 @@ namespace NodeMarkup.Manager
         public static void Import(XElement config)
         {
             Clear();
-            FromXml(config, new ObjectsMap());
+            FromXml(config, new ObjectsMap(), true);
         }
         public static XElement ToXml()
         {
@@ -81,14 +81,14 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static void FromXml(XElement config, ObjectsMap map)
+        public static void FromXml(XElement config, ObjectsMap map, bool needUpdate)
         {
             Errors = 0;
 
             var version = GetVersion(config);
 
-            SingletonManager<NodeMarkupManager>.Instance.FromXml(config, map, version);
-            SingletonManager<SegmentMarkupManager>.Instance.FromXml(config, map, version);
+            SingletonManager<NodeMarkupManager>.Instance.FromXml(config, map, version, needUpdate);
+            SingletonManager<SegmentMarkupManager>.Instance.FromXml(config, map, version, needUpdate);
         }
         private static Version GetVersion(XElement config)
         {
@@ -136,13 +136,16 @@ namespace NodeMarkup.Manager
                     markup.Update();
             }
         }
-        public void UpdateAll() => SimulationManager.instance.AddAction(UpdateAllImpl);
-        private void UpdateAllImpl()
+        public void UpdateAll()
         {
             SingletonMod<Mod>.Logger.Debug($"Update all {Type} markings");
 
-            foreach (var id in Markups.Keys)
-                AddToUpdate(id);
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var toUpdate = Markups.Keys.ToArray();
+            Update(toUpdate);
+            sw.Stop();
+
+            SingletonMod<Mod>.Logger.Debug($"{toUpdate.Length} {Type} markings updated in {sw.ElapsedMilliseconds}ms");
         }
 
         public void Render(RenderManager.CameraInfo cameraInfo, ushort id, ref RenderManager.Instance data)
@@ -191,7 +194,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public void FromXml(XElement config, ObjectsMap map, Version version)
+        public void FromXml(XElement config, ObjectsMap map, Version version, bool needUpdate)
         {
             var tryGet = MapTryGet(map);
             foreach (var markupConfig in config.Elements(XmlName))
@@ -210,7 +213,7 @@ namespace NodeMarkup.Manager
 
                     var markup = this[id];
 
-                    markup.FromXml(version, markupConfig, map);
+                    markup.FromXml(version, markupConfig, map, needUpdate);
                 }
                 catch (NotExistItemException error)
                 {

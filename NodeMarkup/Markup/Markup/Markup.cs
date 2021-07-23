@@ -625,7 +625,7 @@ namespace NodeMarkup.Manager
             return config;
         }
 
-        public virtual void FromXml(Version version, XElement config, ObjectsMap map)
+        public virtual void FromXml(Version version, XElement config, ObjectsMap map, bool needUpdate = true)
         {
             LoadInProgress = true;
 
@@ -668,7 +668,8 @@ namespace NodeMarkup.Manager
 
             LoadInProgress = false;
 
-            Update();
+            if (needUpdate)
+                Update();
         }
 
         #endregion

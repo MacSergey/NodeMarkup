@@ -12,7 +12,7 @@ namespace NodeMarkup.Utilities
     {
         protected override string Id => Loader.Id;
         protected override XElement GetSaveData() => MarkupManager.ToXml();
-        protected override void SetLoadData(XElement config) => MarkupManager.FromXml(config, new ObjectsMap());
+        protected override void SetLoadData(XElement config) => MarkupManager.FromXml(config, new ObjectsMap(), false);
         protected override void OnLoadFailed() => MarkupManager.SetFailed();
         protected override void OnSaveFailed(string config) => Loader.SaveToFile(Loader.MarkingName, config, out _);
     }

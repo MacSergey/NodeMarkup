@@ -66,12 +66,12 @@ namespace NodeMarkup.Manager
             var j = EntersList.IndexOf(second);
             return BetweenEnters.TryGetValue(i, j, out line);
         }
-        public override void FromXml(Version version, XElement config, ObjectsMap map)
+        public override void FromXml(Version version, XElement config, ObjectsMap map, bool needUpdate = true)
         {
             if (version < new Version("1.2"))
                 map = VersionMigration.Befor1_2(this, map);
 
-            base.FromXml(version, config, map);
+            base.FromXml(version, config, map, needUpdate);
         }
 
         protected class EnterDic<T> : Dictionary<int, T>
