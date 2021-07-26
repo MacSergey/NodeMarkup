@@ -97,7 +97,6 @@ namespace NodeMarkup.Tools
         {
             base.InitProcess();
             NodeMarkupPanel.CreatePanel();
-            RegisterUUI();
         }
         protected override IEnumerable<IToolMode<ToolModeType>> GetModes()
         {

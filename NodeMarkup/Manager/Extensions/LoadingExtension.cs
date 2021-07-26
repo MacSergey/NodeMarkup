@@ -3,6 +3,7 @@ using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using NodeMarkup.UI;
 
 namespace NodeMarkup
@@ -20,6 +21,8 @@ namespace NodeMarkup
                 messageBox.Init<Mod>();
                 messageBox.MessageText = MarkupManager.Errors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.Errors) : Localize.Mod_LoadFailedAll;
             }
+
+            SingletonTool<NodeMarkupTool>.Instance.RegisterUUI();
 
             base.OnLoad();
         }
