@@ -28,7 +28,7 @@ namespace NodeMarkup.Tools
 
         public override void OnToolUpdate()
         {
-            if (DisableByAlt && !Utility.AltIsPressed && Contour.IsEmpty)
+            if (DisableByAlt && !Utility.OnlyAltIsPressed && Contour.IsEmpty)
                 Tool.SetDefaultMode();
             else
                 FillerPointsSelector.OnUpdate();

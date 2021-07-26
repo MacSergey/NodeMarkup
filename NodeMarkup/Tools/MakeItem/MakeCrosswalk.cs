@@ -26,7 +26,7 @@ namespace NodeMarkup.Tools
         {
             base.OnToolUpdate();
 
-            if (!IsSelectPoint && !Utility.ShiftIsPressed)
+            if (!IsSelectPoint && !Utility.OnlyShiftIsPressed)
                 Tool.SetDefaultMode();
         }
         public override void OnPrimaryMouseClicked(Event e)
