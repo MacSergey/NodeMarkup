@@ -76,25 +76,28 @@ If you want to help improve existing translations or you want to translate into 
 [HR][/HR]
 [h1]Thank you for your help in development, testing and translation:[/h1]
 [list]
-[*]algernon
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2015611172]Allystrya[/url] (workshop and wiki description)
-[*][url=https://steamcommunity.com/profiles/76561198855893485]Almi[/url] (workshop and wiki description)
-[*]boformer
-[*]BlazerKnight171 (Italian translation)
-[*][url=https://steamcommunity.com/id/chameleonlifede/]Chamëleon[/url] (Logodesign)
-[*]Claude_Speed (Chinese translation)
-[*][url=https://steamcommunity.com/id/Dogg_One]Dogg1[/url] (Finnish translation)
-[*]Egi
-[*][url=https://steamcommunity.com/id/gocaspro13/]GOCAS[/url] (Portugal translation)
-[*][url=https://steamcommunity.com/id/jurrijnp]JurrijnP[/url] (Dutch translation)
-[*]kian.zarrin
+[*] algernon
+[*] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2015611172]Allystrya[/url] (workshop and wiki description)
+[*] [url=https://steamcommunity.com/profiles/76561198855893485]Almi[/url] (workshop and wiki description)
+[*] boformer
+[*] BlazerKnight171 (Italian translation)
+[*] [url=https://steamcommunity.com/id/chameleonlifede/]Chamëleon[/url] (Logodesign)
+[*] Claude_Speed (Chinese translation)
+[*] [url=https://steamcommunity.com/id/Dogg_One]Dogg1[/url] (Finnish translation)
+[*] Egi
+[*] [url=http://instagram.com/fizzy_lafizz]Fizzy_LaFizz[/url] (Indonesian translation)
+[*] [url=https://steamcommunity.com/id/gocaspro13/]GOCAS[/url] (Portugal translation)
+[*] [url=https://steamcommunity.com/id/jurrijnp]JurrijnP[/url] (Dutch translation)
+[*] kian.zarrin
 [*][url=https://steamcommunity.com/profiles/76561198141193559]krzychu124[/url]
-[*]milanbarath (Czech translation)
+[*] milanbarath (Czech translation)
 [*] [url=https://steamcommunity.com/id/mrlojnat/]MrLojnat[/url] (French translation)
-[*]RaeTheGit 
-[*]raistlin46 (Italian translation)
+[*] Pixelclone (English UK translation)
+[*] RaeTheGit 
+[*] raistlin46 (Italian translation)
 [*] [url=https://steamcommunity.com/id/shg166yh/]shg166[/url] (Japanese translation)
-[*]Silchuki14 (French translation)
-[*][url=https://steamcommunity.com/id/quboid/myworkshopfiles/?appid=255710]Quboid[/url] 
-[*]ΣʋιʅѺɱҽɠα (French translation)
+[*] Silchuki14 (French translation)
+[*] [url=https://steamcommunity.com/id/Syvies/]Syvies[/url] (French translation)
+[*] [url=https://steamcommunity.com/id/quboid/myworkshopfiles/?appid=255710]Quboid[/url] 
+[*] ΣʋιʅѺɱҽɠα (French translation)
 [/list]
