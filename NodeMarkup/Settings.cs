@@ -248,14 +248,19 @@ namespace NodeMarkup
 
         #region DEBUG
 #if DEBUG
+        public static SavedBool ShowNodeContour { get; } = new SavedBool(nameof(ShowNodeContour), string.Empty, false);
+
         private void AddDebug(UIAdvancedHelper helper)
         {
-            var group = helper.AddGroup("Selection overlay");
+            var overlayGroup = helper.AddGroup("Selection overlay");
 
-            AddCheckBox(group, "Alpha blend overlay", Selection.AlphaBlendOverlay);
-            AddCheckBox(group, "Render overlay center", Selection.RenderOverlayCentre);
-            AddCheckBox(group, "Render overlay borders", Selection.RenderOverlayBorders);
-            AddFloatField(group, "Overlay width", Selection.OverlayWidth, 3f, 1f);
+            Selection.AddAlphaBlendOverlay(overlayGroup);
+            Selection.AddRenderOverlayCentre(overlayGroup);
+            Selection.AddRenderOverlayBorders(overlayGroup);
+            Selection.AddBorderOverlayWidth(overlayGroup);
+
+            var groupOther = helper.AddGroup("Nodes");
+            AddCheckBox(groupOther, "Show node contour", ShowNodeContour);
         }
 #endif
         #endregion

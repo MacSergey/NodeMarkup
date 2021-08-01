@@ -73,7 +73,7 @@ namespace NodeMarkup.Tools
         #region PROPERTIES
 
         protected override IToolMode DefaultMode => ToolModes[ToolModeType.Select];
-        protected override bool ShowToolTip => (Settings.ShowToolTip || Mode.Type == ToolModeType.Select) && !Panel.IsHover;
+        protected override bool ShowToolTip => base.ShowToolTip && (Settings.ShowToolTip || Mode.Type == ToolModeType.Select);
         public override Shortcut Activation => ActivationShortcut;
 
         public Markup Markup { get; private set; }
@@ -97,7 +97,6 @@ namespace NodeMarkup.Tools
         {
             base.InitProcess();
             NodeMarkupPanel.CreatePanel();
-            RegisterUUI();
         }
         protected override IEnumerable<IToolMode<ToolModeType>> GetModes()
         {

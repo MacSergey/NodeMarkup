@@ -20,7 +20,7 @@ namespace NodeMarkup.Manager
         protected abstract MaterialType MaterialType { get; }
 
         public float MinAngle => 5f;
-        public float MinLength => 1f;
+        public float MinLength => 0.3f;
         public float MaxLength => 10f;
         public PropertyValue<float> Elevation { get; }
         public PropertyValue<float> CornerRadius { get; }
