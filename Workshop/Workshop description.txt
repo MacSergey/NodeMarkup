@@ -78,7 +78,8 @@ If you want to help improve existing translations or you want to translate into 
 [list]
 [*] algernon
 [*] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2015611172]Allystrya[/url] (workshop and wiki description)
-[*] [url=https://steamcommunity.com/profiles/76561198855893485]Almi[/url] (workshop and wiki description)
+[*] [url=https://steamcommunity.com/profiles/76561198855893485]Almi[/url] (Spanish translation, workshop&wiki description)
+[*] Annyeong1 (Korean translation)
 [*] boformer
 [*] BlazerKnight171 (Italian translation)
 [*] [url=https://steamcommunity.com/id/chameleonlifede/]Chamëleon[/url] (Logodesign)
