@@ -1265,13 +1265,17 @@ Klik om de markering te wijzigen</value>
   <data name="FillerStyle_Cliff" xml:space="preserve">
     <value>Klif</value>
   </data>
-  
-  
+  <data name="FillerStyle_Ruined" xml:space="preserve">
+    <value>Geruïneerd</value>
+  </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Afstand van lijnen</value>
+  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
-    <value>Hoekradius</value>
+    <value>Hoekstraal</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Hoekradius op mediaan</value>
+    <value>Hoekstraal op mediaan</value>
   </data>
   
   
