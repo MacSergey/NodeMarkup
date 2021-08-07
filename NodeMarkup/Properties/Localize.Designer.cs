@@ -1442,6 +1442,16 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Buttons in paste mode moved ouside of circle.
+        ///- Added Korean translation..
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_8_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_8_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply between intersections.
         /// </summary>
         public static string Panel_ApplyBetweenIntersections {

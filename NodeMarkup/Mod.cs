@@ -29,6 +29,7 @@ namespace NodeMarkup
         protected override string IdRaw => nameof(NodeMarkup);
         public override List<Version> Versions { get; } = new List<Version>
         {
+            new Version("1.8.1"),
             new Version("1.8"),
             new Version("1.7.4"),
             new Version("1.7.3"),
