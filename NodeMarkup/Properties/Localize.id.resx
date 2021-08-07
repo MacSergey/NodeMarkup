@@ -305,7 +305,17 @@ Klik untuk mengedit markah</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Pilih sebuah titik untuk membuat atau menghapus sebuah garis</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
+    <value>- Isian. Ruangan di antara garis-garis dapat diisi untuk menunjukkan tempat dimana tidak diperbolahken berhenti atau menyetir. 3 gaya tersedia: Garis-garis, jaring dan utuh. Untuk membuatkannya, tahan Alt.
+- Garis pemberhentian. Anda dapat menghubungkan dua titik pada jalan yang sama untuk membuat garis pemberhentian. 2 gaya tersedia: "Utuh" dan "Putus-putus".
+- Gaya garis baru: "Utuh dan putus-putus".
+- Garis dan templat dalam daftar sekarang memiliki gambar yang menunjukkan gaya dan warna.
+- Markah sekarang akan disalinkan jika jalan disalinkan menggunakan MoveIt (fungsi tidak akan tersedia hingga mod MoveIt diperbarui).
+- Opsi salin dan tempel untuk warna garis telah ditambahkan.
+- Mengupgrade jalan ke jalan yang berbeda dengan jumlah lajur yang sama akan memelihara markahnya.
+- Bagian garis dengan aturan akan disorot jika cursor mouse berada di atas aturan tersebut di panel edit.
+- Terjemahan Bahasa Cina Sederhana telah ditambahkan.</value>
+  </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Pulihkan</value>
   </data>
@@ -381,7 +391,11 @@ Klik untuk mengedit markah</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Utuh</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>- Tekan dan tahan Alt, Ctrl, dan Shift telah diperbaiki pada Mac OS dan Linux.
+- Gaya garis pemberhentian "Utuh ganda" dan "Putus-putus ganda" telah ditambah.
+- Terjemahan Bahasa Italia dan Portugis telah ditambah.</value>
+  </data>
   
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Tambah isian baru</value>
@@ -1226,5 +1240,6 @@ Klik untuk mengedit markah</value>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
     <value>Besar trotoar pada median</value>
   </data>
+  
   
 </root>
