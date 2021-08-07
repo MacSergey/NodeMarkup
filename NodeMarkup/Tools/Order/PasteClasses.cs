@@ -143,7 +143,7 @@ namespace NodeMarkup.Tools
                 }
             }
             else
-                Position.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.Gray, Width = BoundsSize, AlphaBlend = false });
+                Position.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.Gray192, Width = BoundsSize, AlphaBlend = false });
         }
         public abstract Vector3 GetSourcePosition(SourceType source);
     }

@@ -12,26 +12,22 @@ namespace NodeMarkup.UI
 
         private int IndexX { get; }
         private int OfX { get; }
-        private int IndexY { get; }
-        private int OfY { get; }
         private Texture2D Texture { get; }
         private Rect Coords { get; }
         private Rect Position { get; set; }
 
 
-        public GUIButton(int indexX, int ofX, int indexY, int ofY, Texture2D texture, Rect coords)
+        public GUIButton(int indexX, int ofX, Texture2D texture, Rect coords)
         {
             IndexX = indexX;
             OfX = ofX;
-            IndexY = indexY;
-            OfY = ofY;
             Texture = texture;
             Coords = coords;
         }
 
         public void Update(Vector2 screenPos)
         {
-            Position = GetPosition(screenPos, IndexX, OfX, IndexY, OfY);
+            Position = GetPosition(screenPos, IndexX, OfX);
         }
         public void CheckClick(Vector2 mouse)
         {
@@ -42,12 +38,11 @@ namespace NodeMarkup.UI
 
         public void OnGUI(Event e) => GUI.DrawTextureWithTexCoords(Position, Texture, Coords);
 
-        private Rect GetPosition(Vector2 centre, int iX, int ofX, int iY, int ofY)
+        private Rect GetPosition(Vector2 centre, int iX, int ofX)
         {
             var sumX = ofX * Size + (ofX - 1) * Padding;
             var x = centre.x - sumX / 2 + (iX - 1) * (Size + Padding);
-            var sumY = ofY * Size + (ofY - 1) * Padding;
-            var y = centre.y - sumY / 2 + (iY - 1) * (Size + Padding);
+            var y = centre.y - Size - Padding;
             return new Rect(x, y, Size, Size);
         }
     }
