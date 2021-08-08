@@ -22,8 +22,6 @@ namespace NodeMarkup
                 messageBox.MessageText = MarkupManager.Errors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.Errors) : Localize.Mod_LoadFailedAll;
             }
 
-            SingletonTool<NodeMarkupTool>.Instance.RegisterUUI();
-
             base.OnLoad();
         }
         protected override void OnUnload()
