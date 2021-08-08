@@ -711,6 +711,6 @@ namespace NodeMarkup.Tools
         public NodeMarkupShortcut(string name, string labelKey, InputKey key, Action action = null, ToolModeType modeType = ToolModeType.MakeItem) : base(name, labelKey, key, action, modeType) { }
     }
     public class NodeMarkupToolThreadingExtension : BaseUUIThreadingExtension<NodeMarkupTool> { }
-    public class NodeMarkupToolLoadingExtension : BaseToolLoadingExtension<NodeMarkupTool> { }
+    public class NodeMarkupToolLoadingExtension : BaseUUIToolLoadingExtension<NodeMarkupTool> { }
 
 }
