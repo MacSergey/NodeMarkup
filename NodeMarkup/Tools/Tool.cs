@@ -312,7 +312,11 @@ namespace NodeMarkup.Tools
             if (Markup.Type != MarkupType.Segment)
                 return;
 
-            var segment = Markup.Id.GetSegment();
+            ref var segment = ref Markup.Id.GetSegment();
+            var startNode = segment.m_startNode;
+            var endNode = segment.m_endNode;
+            var info = segment.Info;
+
             if (Settings.DeleteWarnings)
             {
                 var messageBox = MessageBox.Show<YesNoMessageBox>();
@@ -327,16 +331,21 @@ namespace NodeMarkup.Tools
             bool Apply()
             {
                 var config = Markup.ToXml();
-                this.Apply(Markup.Id, segment.m_startNode, segment.m_endNode, segment.Info, config, SegmentGetter);
-                this.Apply(Markup.Id, segment.m_endNode, segment.m_startNode, segment.Info, config, SegmentGetter);
+                this.Apply(Markup.Id, startNode, endNode, info, config, SegmentGetter);
+                this.Apply(Markup.Id, endNode, startNode, info, config, SegmentGetter);
                 return true;
             }
 
             ushort? SegmentGetter(ushort[] segmentIds, ushort beforeSegmentId)
             {
-                var id = segmentIds[segmentIds[0] == beforeSegmentId ? 1 : 0];
-                var nextSegment = id.GetSegment();
-                return nextSegment.Info == segment.Info ? id : null;
+                if (segmentIds.Length != 2)
+                    return null;
+                else
+                {
+                    var id = segmentIds[segmentIds[0] == beforeSegmentId ? 1 : 0];
+                    var nextSegment = id.GetSegment();
+                    return nextSegment.Info == info ? id : null;
+                }
             }
         }
         private void ApplyWholeStreet()
@@ -346,7 +355,12 @@ namespace NodeMarkup.Tools
             if (Markup.Type != MarkupType.Segment)
                 return;
 
-            var segment = Markup.Id.GetSegment();
+            ref var segment = ref Markup.Id.GetSegment();
+            var startNode = segment.m_startNode;
+            var endNode = segment.m_endNode;
+            var info = segment.Info;
+            var nameSeed = segment.m_nameSeed;
+
             if (Settings.DeleteWarnings)
             {
                 var streetName = Singleton<NetManager>.instance.GetSegmentName(Markup.Id);
@@ -361,8 +375,8 @@ namespace NodeMarkup.Tools
             bool Apply()
             {
                 var config = Markup.ToXml();
-                this.Apply(Markup.Id, segment.m_startNode, segment.m_endNode, segment.Info, config, SegmentGetter);
-                this.Apply(Markup.Id, segment.m_endNode, segment.m_startNode, segment.Info, config, SegmentGetter);
+                this.Apply(Markup.Id, startNode, endNode, info, config, SegmentGetter);
+                this.Apply(Markup.Id, endNode, startNode, info, config, SegmentGetter);
                 return true;
             }
 
@@ -373,8 +387,8 @@ namespace NodeMarkup.Tools
                     if (id == beforeSegmentId)
                         continue;
 
-                    var nextSegment = id.GetSegment();
-                    if (nextSegment.Info == segment.Info && nextSegment.m_nameSeed == segment.m_nameSeed)
+                    ref var nextSegment = ref id.GetSegment();
+                    if (nextSegment.Info == info && nextSegment.m_nameSeed == nameSeed)
                         return id;
                 }
                 return null;
@@ -385,21 +399,29 @@ namespace NodeMarkup.Tools
         {
             var nodeId = (ushort?)nearNodeId;
             var segmentId = (ushort?)startSegmentId;
-            while (true)
+
+            var nodes = new HashSet<ushort>();
+            var segments = new HashSet<ushort>() { startSegmentId };
+
+            while (nodes.Count < NetManager.MAX_NODE_COUNT && segments.Count < NetManager.MAX_SEGMENT_COUNT)
             {
                 segmentId = ApplyToNode(nodeId.Value, segmentId.Value, nearNodeId, farNodeId, config, segmentGetter);
-                if (segmentId == null || segmentId == startSegmentId)
-                    return;
+                if (segmentId != null && !segments.Contains(segmentId.Value))
+                    segments.Add(segmentId.Value);
+                else
+                    break;
 
                 nodeId = ApplyToSegment(segmentId.Value, nodeId.Value, nearNodeId, farNodeId, info, config);
-                if (nodeId == null)
-                    return;
+                if (nodeId != null && !nodes.Contains(nodeId.Value))
+                    nodes.Add(nodeId.Value);                
+                else
+                    break;
             }
         }
 
         ushort? ApplyToNode(ushort nodeId, ushort beforeSegmentId, ushort nearNodeId, ushort farNodeId, XElement config, SegmentGetter nextGetter)
         {
-            var node = nodeId.GetNode();
+            ref var node = ref nodeId.GetNode();
 
             var nodeSegmentIds = node.SegmentIds().ToArray();
             var nextSegmentId = nextGetter(nodeSegmentIds, beforeSegmentId);
@@ -419,7 +441,7 @@ namespace NodeMarkup.Tools
 
         ushort? ApplyToSegment(ushort segmentId, ushort beforeNodeId, ushort nearNodeId, ushort farNodeId, NetInfo info, XElement config)
         {
-            var segment = segmentId.GetSegment();
+            ref var segment = ref segmentId.GetSegment();
             if (segment.Info != info)
                 return null;
 
