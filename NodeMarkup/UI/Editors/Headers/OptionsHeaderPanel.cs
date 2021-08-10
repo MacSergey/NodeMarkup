@@ -92,18 +92,20 @@ namespace NodeMarkup.UI.Editors
         public event Action OnEdit;
         public event Action OnSave;
         public event Action OnNotSave;
+        public event Action OnDiscard;
 
         private HeaderButtonInfo<HeaderButton> SaveAsAsset { get; set; }
         private HeaderButtonInfo<HeaderButton> Edit { get; set; }
         private HeaderButtonInfo<HeaderButton> Save { get; set; }
         private HeaderButtonInfo<HeaderButton> NotSave { get; set; }
+        private HeaderButtonInfo<HeaderButton> Discard { get; set; }
 
         protected TemplateType Template { get; private set; }
         private bool IsAsset => Template.IsAsset;
         private bool CanEdit => !IsAsset || Template.Asset.CanEdit;
 
-        private bool _editMode;
-        public bool EditMode
+        private EditMode _editMode;
+        public EditMode EditMode
         {
             get => _editMode;
             set
@@ -130,6 +132,9 @@ namespace NodeMarkup.UI.Editors
 
             NotSave = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.NotSave, NodeMarkup.Localize.HeaderPanel_NotSave, NotSaveClick);
             Content.AddButton(NotSave);
+
+            Discard = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Clear, NodeMarkup.Localize.HeaderPanel_Discard, DiscardClick);
+            Content.AddButton(Discard);
         }
 
         public virtual void Init(TemplateType template)
@@ -140,19 +145,21 @@ namespace NodeMarkup.UI.Editors
         public override void DeInit()
         {
             base.DeInit();
-            _editMode = false;
+            _editMode = EditMode.Default;
             OnSaveAsset = null;
             OnEdit = null;
             OnSave = null;
             OnNotSave = null;
+            OnDiscard = null;
         }
 
         public override void Refresh()
         {
-            SaveAsAsset.Visible = !IsAsset && !EditMode;
-            Edit.Visible = (!IsAsset || CanEdit) && !EditMode;
-            Save.Visible = EditMode;
-            NotSave.Visible = EditMode;
+            SaveAsAsset.Visible = !IsAsset && EditMode == EditMode.Default;
+            Edit.Visible = (!IsAsset || CanEdit) && EditMode == EditMode.Default;
+            Save.Visible = EditMode != EditMode.Default;
+            NotSave.Visible = EditMode == EditMode.Edit;
+            Discard.Visible = EditMode == EditMode.Create;
 
             base.Refresh();
         }
@@ -161,6 +168,7 @@ namespace NodeMarkup.UI.Editors
         private void EditClick() => OnEdit?.Invoke();
         private void SaveClick() => OnSave?.Invoke();
         private void NotSaveClick() => OnNotSave?.Invoke();
+        private void DiscardClick() => OnDiscard?.Invoke();
     }
 
     public class StyleTemplateHeaderPanel : TemplateHeaderPanel<StyleTemplate>
@@ -197,9 +205,9 @@ namespace NodeMarkup.UI.Editors
 
         public override void Refresh()
         {
-            SetAsDefaultButton.Visible = !IsDefault && !EditMode;
-            UnsetAsDefaultButton.Visible = IsDefault && !EditMode;
-            Duplicate.Visible = !EditMode;
+            SetAsDefaultButton.Visible = !IsDefault && EditMode == EditMode.Default;
+            UnsetAsDefaultButton.Visible = IsDefault && EditMode == EditMode.Default;
+            Duplicate.Visible = EditMode == EditMode.Default;
             base.Refresh();
         }
 
@@ -227,7 +235,7 @@ namespace NodeMarkup.UI.Editors
 
         public override void Refresh()
         {
-            Apply.Visible = !EditMode;
+            Apply.Visible = EditMode == EditMode.Default;
             base.Refresh();
         }
 

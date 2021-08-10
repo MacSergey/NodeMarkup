@@ -75,14 +75,15 @@ namespace NodeMarkup.UI.Editors
         protected override void OnObjectDelete(MarkupLine line)
         {
             var fillers = Markup.GetLineFillers(line).ToArray();
-            Markup.RemoveLine(line);
-
-            base.OnObjectDelete(line);
 
             if (line is MarkupCrosswalkLine crosswalkLine)
                 Panel.DeleteCrosswalk(crosswalkLine.Crosswalk);
             foreach (var filler in fillers)
                 Panel.DeleteFiller(filler);
+
+            Markup.RemoveLine(line);
+
+            base.OnObjectDelete(line);
         }
         protected override void OnClear()
         {

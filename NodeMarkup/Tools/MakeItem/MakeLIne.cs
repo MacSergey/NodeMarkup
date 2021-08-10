@@ -81,7 +81,7 @@ namespace NodeMarkup.Tools
                 if (Tool.Markup.TryGetLine(pointPair, out MarkupLine line))
                 {
                     if (Utility.OnlyCtrlIsPressed)
-                        Panel.EditLine(line);
+                        Panel.SelectLine(line);
                     else
                         Tool.DeleteItem(line, OnDelete);
                 }
@@ -89,13 +89,13 @@ namespace NodeMarkup.Tools
                 {
                     var style = Tool.GetStyleByModifier<StopLineStyle, StopLineStyle.StopLineType>(StopLineStyle.StopLineType.Solid);
                     var newLine = Tool.Markup.AddStopLine(pointPair, style);
-                    Panel.EditLine(newLine);
+                    Panel.SelectLine(newLine);
                 }
                 else
                 {
                     var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(RegularLineStyle.RegularLineType.Dashed, true);
                     var newLine = Tool.Markup.AddRegularLine(pointPair, style);
-                    Panel.EditLine(newLine);
+                    Panel.SelectLine(newLine);
                 }
 
                 SelectPoint = null;
@@ -104,8 +104,15 @@ namespace NodeMarkup.Tools
         }
         private void OnDelete(MarkupLine line)
         {
-            Tool.Markup.RemoveLine(line);
+            var fillers = Markup.GetLineFillers(line).ToArray();
+
+            if (line is MarkupCrosswalkLine crosswalkLine)
+                Panel.DeleteCrosswalk(crosswalkLine.Crosswalk);
+            foreach (var filler in fillers)
+                Panel.DeleteFiller(filler);
+
             Panel.DeleteLine(line);
+            Tool.Markup.RemoveLine(line);
         }
         protected override IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore)
         {

@@ -47,6 +47,7 @@ namespace NodeMarkup.UI.Panel
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }
         public List<Editor> Editors { get; } = new List<Editor>();
+        public Editor PrevEditor { get; set; }
         public Editor CurrentEditor { get; set; }
 
         public bool Available
@@ -193,7 +194,11 @@ namespace NodeMarkup.UI.Panel
             editor.relativePosition = position;
             editor.size = size - position;
         }
-        private void OnSelectedTabChanged(int index) => CurrentEditor = SelectEditor(index);
+        private void OnSelectedTabChanged(int index)
+        {
+            PrevEditor = CurrentEditor;
+            CurrentEditor = SelectEditor(index);
+        }
 
         #endregion
 
@@ -219,6 +224,14 @@ namespace NodeMarkup.UI.Panel
             var editorIndex = Editors.FindIndex((e) => e.GetType() == typeof(EditorType));
             TabStrip.SelectedTab = editorIndex;
             return Editors[editorIndex] as EditorType;
+        }
+        public void SelectPrevEditor()
+        {
+            if(PrevEditor is Editor editor)
+            {
+                var editorIndex = Editors.IndexOf(editor);
+                TabStrip.SelectedTab = editorIndex;
+            }
         }
 
         #endregion
@@ -260,7 +273,7 @@ namespace NodeMarkup.UI.Panel
 
         #region EDIT OBJECT
 
-        private EditorType EditObject<EditorType, ItemType>(ItemType item)
+        private EditorType SelectObject<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
             where ItemType : class, ISupport, IDeletable
         {
@@ -272,21 +285,21 @@ namespace NodeMarkup.UI.Panel
             editor?.Edit(item);
             return editor;
         }
-        public void EditPoint(MarkupEnterPoint point) => EditObject<PointsEditor, MarkupEnterPoint>(point);
-        public void EditLine(MarkupLine line) => EditObject<LinesEditor, MarkupLine>(line);
+        public void SelectPoint(MarkupEnterPoint point) => SelectObject<PointsEditor, MarkupEnterPoint>(point);
+        public void SelectLine(MarkupLine line) => SelectObject<LinesEditor, MarkupLine>(line);
+        public void SelectCrosswalk(MarkupCrosswalk crosswalk) => SelectObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {
-            AddLine(crosswalk.CrosswalkLine);
-            var editor = EditObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
+            var editor = SelectObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
             editor?.BorderSetup();
         }
-        public void EditFiller(MarkupFiller filler) => EditObject<FillerEditor, MarkupFiller>(filler);
+        public void SelectFiller(MarkupFiller filler) => SelectObject<FillerEditor, MarkupFiller>(filler);
 
         private void EditTemplate<EditorType, TemplateType>(TemplateType template, bool editName)
             where EditorType : Editor, IEditor<TemplateType>, ITemplateEditor<TemplateType>
             where TemplateType : Template
         {
-            var editor = EditObject<EditorType, TemplateType>(template);
+            var editor = SelectObject<EditorType, TemplateType>(template);
             if (editName && editor != null)
                 editor.EditName();
         }

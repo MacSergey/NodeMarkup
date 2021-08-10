@@ -24,11 +24,11 @@ namespace NodeMarkup.Tools
             var position = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
             Line2.Intersect(XZ(DragPoint.Position), XZ(DragPoint.Position + DragPoint.Enter.CornerDir), XZ(position), XZ(position + normal), out float offsetChange, out _);
             DragPoint.Offset.Value = (DragPoint.Offset + offsetChange * Mathf.Sin(DragPoint.Enter.CornerAndNormalAngle)).RoundToNearest(0.01f);
-            Panel.EditPoint(DragPoint);
+            Panel.SelectPoint(DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)
         {
-            Panel.EditPoint(DragPoint);
+            Panel.SelectPoint(DragPoint);
             Tool.SetDefaultMode();
         }
 

@@ -57,7 +57,7 @@ namespace NodeMarkup.UI.Editors
 
             ReloadAdditionalProperties();
 
-            SetEditable();
+            SetEditable(Editors.EditMode.Default);
         }
         protected override void OnClear()
         {
@@ -79,7 +79,7 @@ namespace NodeMarkup.UI.Editors
 
             EditMode = false;
             if (Active && EditObject is TemplateType)
-                SetEditable();
+                SetEditable(Editors.EditMode.Default);
         }
 
         protected virtual void AddHeader()
@@ -90,6 +90,7 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.OnEdit += StartEditTemplate;
             HeaderPanel.OnSave += SaveChanges;
             HeaderPanel.OnNotSave += NotSaveChanges;
+            HeaderPanel.OnDiscard += DiscardTemplate;
         }
         private void AddWarning()
         {
@@ -143,11 +144,12 @@ namespace NodeMarkup.UI.Editors
                 OnObjectSelect(EditObject);
             }
         }
-        private void StartEditTemplate()
+        private void StartEditTemplate() => StartEditTemplate(Editors.EditMode.Edit);
+        private void StartEditTemplate(EditMode mode)
         {
             EditMode = true;
             HasChanges = false;
-            SetEditable();
+            SetEditable(mode);
             Tool.SetMode(ToolMode);
         }
         public override bool OnEscape()
@@ -165,11 +167,12 @@ namespace NodeMarkup.UI.Editors
 
         #region EDIT TEMPLATE
 
-        protected virtual void SetEditable()
+        protected virtual void SetEditable(EditMode mode)
         {
-            Panel.Available = AvailableItems = !EditMode;
-            HeaderPanel.EditMode = NameProperty.EnableControl = EditMode;
-            Warning.isVisible = Settings.ShowPanelTip && EditObject.IsAsset && !EditMode;
+            Panel.Available = AvailableItems = mode == Editors.EditMode.Default;
+            NameProperty.EnableControl = mode != Editors.EditMode.Default;
+            HeaderPanel.EditMode = mode;
+            Warning.isVisible = Settings.ShowPanelTip && EditObject.IsAsset && mode == Editors.EditMode.Default;
 
             foreach (var aditional in Aditional)
                 aditional.EnableControl = EditMode;
@@ -177,7 +180,7 @@ namespace NodeMarkup.UI.Editors
 
         public void EditName()
         {
-            StartEditTemplate();
+            StartEditTemplate(Editors.EditMode.Create);
             NameProperty.Edit();
         }
 
@@ -186,7 +189,7 @@ namespace NodeMarkup.UI.Editors
         {
             EditMode = false;
             HasChanges = false;
-            SetEditable();
+            SetEditable(Editors.EditMode.Default);
             Tool.SetDefaultMode();
         }
 
@@ -245,6 +248,13 @@ namespace NodeMarkup.UI.Editors
         }
         protected virtual void OnNotApplyChanges() => NameProperty.Value = EditObject.Name;
 
+        private void DiscardTemplate()
+        {
+            EndEditTemplate();
+            OnObjectDelete(EditObject);
+            Panel.SelectPrevEditor();
+        }
+
         public void Cancel()
         {
             if (HasChanges)
@@ -274,6 +284,13 @@ namespace NodeMarkup.UI.Editors
         }
 
         #endregion
+
+    }
+    public enum EditMode
+    {
+        Default = 1,
+        Edit = 2,
+        Create = 4,
     }
 
     public abstract class EditTemplateMode<TemplateType> : NodeMarkupToolMode

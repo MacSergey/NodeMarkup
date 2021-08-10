@@ -71,7 +71,7 @@ namespace NodeMarkup.Tools
                     var style = Tool.GetStyleByModifier<FillerStyle, FillerStyle.FillerType>(FillerStyle.FillerType.Stripe);
                     var filler = new MarkupFiller(Contour, style);
                     Markup.AddFiller(filler);
-                    Panel.EditFiller(filler);
+                    Panel.SelectFiller(filler);
                     Tool.SetDefaultMode();
                     return;
                 }

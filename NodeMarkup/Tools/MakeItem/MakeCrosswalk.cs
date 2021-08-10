@@ -43,7 +43,7 @@ namespace NodeMarkup.Tools
                 if (Tool.Markup.TryGetLine(pointPair, out MarkupCrosswalkLine line))
                 {
                     if (Utility.OnlyCtrlIsPressed)
-                        Panel.EditCrosswalk(line.Crosswalk);
+                        Panel.SelectCrosswalk(line.Crosswalk);
                     else
                         Tool.DeleteItem(line, OnDelete);
                 }
@@ -51,6 +51,7 @@ namespace NodeMarkup.Tools
                 {
                     var style = Tool.GetStyleByModifier<CrosswalkStyle, CrosswalkStyle.CrosswalkType>(CrosswalkStyle.CrosswalkType.Zebra);
                     var newCrosswalkLine = Tool.Markup.AddCrosswalkLine(pointPair, style);
+                    Panel.AddLine(newCrosswalkLine);
                     Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);
                 }
 
@@ -60,9 +61,9 @@ namespace NodeMarkup.Tools
         }
         private void OnDelete(MarkupLine line)
         {
-            Tool.Markup.RemoveLine(line);
             Panel.DeleteCrosswalk((line as MarkupCrosswalkLine).Crosswalk);
             Panel.DeleteLine(line);
+            Tool.Markup.RemoveLine(line);
         }
         protected override IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore)
         {

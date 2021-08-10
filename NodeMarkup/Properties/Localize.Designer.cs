@@ -704,6 +704,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Discard.
+        /// </summary>
+        public static string HeaderPanel_Discard {
+            get {
+                return ResourceManager.GetString("HeaderPanel_Discard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Duplicate.
         /// </summary>
         public static string HeaderPanel_Duplicate {
