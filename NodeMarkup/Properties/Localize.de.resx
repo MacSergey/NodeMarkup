@@ -1348,4 +1348,7 @@ Klicken um die Markierungen zu bearbeiten</value>
   </data>
   
   
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Verwerfen</value>
+  </data>
 </root>

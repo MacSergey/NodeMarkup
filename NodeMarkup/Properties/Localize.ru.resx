@@ -1437,4 +1437,7 @@
     <value>- Кнопки в режиме вставки разметки на перекресток перемещены за пределы круга.
 - Добавлен перевод на корейский.</value>
   </data>
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
 </root>

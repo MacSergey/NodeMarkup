@@ -1244,10 +1244,28 @@ Cliquez pour modifier le marquage</value>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Alignement du début de la ligne</value>
   </data>
-  
-  
-  
-  
+  <data name="Mod_WhatsNewMessage1_7_1" xml:space="preserve">
+    <value>- Ajout de la possibilité de définir l'alignement des lignes d'arrêt.
+- Tri des modèles supplémentaires :
+	1 - Modèles par défaut triés par type;
+	2 - Autres modèles classés par type puis par nom;
+	3 - Autres modèles d'autres auteurs triés par nom d'auteur puis par type puis par nom.
+- Correction du chargement des préréglages de segment.
+- Correction de la taille par défaut du panneau.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
+    <value>- Correction de la hauteur des remplissages 3D en dehors des zones disponibles.
+- Correction du doublons de boutons.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_3" xml:space="preserve">
+    <value>- Ajout d'un vérificateur de dépendances manquantes.
+- Correction de la hauteur des remplissages 3D sur les nœuds en dehors des zones disponibles.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_4" xml:space="preserve">
+    <value>- Correction de la capture d'écran de sauvegarde et utilisation des préréglages.
+- Correction d'un bug lorsque qu'après chargement, les nœuds avec marquage avaient une mauvaise forme.
+- Ajout de la traduction indonésienne.</value>
+  </data>
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Cacher les noms des rues lors de l'utilisation</value>
   </data>
@@ -1284,6 +1302,25 @@ Cliquez pour modifier le marquage</value>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
     <value>Taille de bordure depuis séparateur</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
+    <value>- Ajout d'un pas de sélection comme dans MoveIt. Appuyez sur Ctrl+Espace pour passer au suivant (vous pouvez relier dans les options du mod).
+- Ajout de bordures aux styles 3D de remplissage.
+- Ajout de coins arrondis aux styles 3D de remplissage.
+- Ajout d'un décalage depuis les lignes aux styles 3D de remplissage.
+- Ajout de styles de remplissage : Gravier, Détérioré, Falaise.
+- Ajout de l'option "Suivre les lignes de guidage" pour le remplissage solide, il est donc désormais possible de créer des remplissages solides sur des segments inclinés.
+- Ajout de la possibilité de cliquer avec Ctrl pour sélectionner une ligne ou un passage piétons au lieu de le supprimer.
+- Ajout d'un avertissement pour les utilisateurs de Linux concernant les bibliothèques manquantes.
+- Ajout de la possibilité de changer de style avec la molette de la souris.
+- Ajout de la possibilité de masquer les noms de rue lors de l'utilisation de l'outil. Peut être désactivé dans les options du mod.
+- Ajout d'une nouvelle icône pour UUI.
+- Correction de l'icône du bouton de sélection de modèle.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_8_1" xml:space="preserve">
+    <value>- Les boutons en mode coller ont été déplacés en dehors du cercle.
+- Ajout de la traduction coréenne.</value>
+  </data>
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
 </root>
