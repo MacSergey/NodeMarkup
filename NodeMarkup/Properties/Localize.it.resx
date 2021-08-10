@@ -438,7 +438,7 @@ Per creare una linea connetti due punti.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Non ci sono ancora riempimenti in questa intersezione.
-Per creare uno riempimento, tieni premuto Alt o premi {0}.</value>
+Per creare uno riempimento, tieni premuto {0} o premi {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista dei modelli è vuota.
@@ -547,7 +547,7 @@ Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Non ci sono attualmente strisce pedonali a questo incrocio.
-Per crearli tieni premuto Shift.</value>
+Per crearli tieni premuto {0}.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>strisce pedonali</value>
@@ -946,13 +946,13 @@ Vuoi applicare l'incrocio manualmente?</value>
     <value>Si</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Tieni premuto Shift per impostare le strisce pedonali</value>
+    <value>Tieni premuto {0} per impostare le strisce pedonali</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Tieni premuto Alt per impostare il riempimento</value>
+    <value>Tieni premuto {0} per impostare il riempimento</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Trascina con Ctrl per muovere il punto</value>
+    <value>Trascina con {0} per muovere il punto</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>ATTENZIONE: l'impostazione dei modelli predefiniti verrà ripristinata.
@@ -1385,10 +1385,10 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Marciapiede</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Click+Ctrl per selezionare l'attraversamento pedonale</value>
+    <value>Click+{0} per selezionare l'attraversamento pedonale</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Click+Ctrl per selezionare la linea</value>
+    <value>Click+{0} per selezionare la linea</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Ghiaia</value>
@@ -1414,7 +1414,26 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
     <value>Dimensone cordolo sulle mediane</value>
   </data>
-  
-  
-  
+  <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
+    <value>- Aggiunto passaggio di selezione come in MoveIt. Premi Ctrl + Spazio per scavalcare (puoi ricollegarti nelle opzioni mod).
+- Aggiunti cordoli per riempire gli stili 3D.
+- Aggiunti angoli arrotondati per riempire gli stili 3D.
+- Aggiunto offset dalle linee agli stili 3D di riempimento.
+- Aggiunti stili di riempimento: Ghiaia, Rovina, Scogliera.
+- Aggiunto lo stile della linea di arresto del marciapiede.
+- Aggiunta l'opzione "Segui le linee guida" per il riempimento solido, quindi ora è possibile creare riempitivi solidi su segmenti inclinati.
+- Aggiunta la possibilità di fare clic con Ctrl per selezionare la linea o il passaggio pedonale anziché eliminarlo.
+- Aggiunto avviso per gli utenti Linux sulle librerie mancanti.
+- Aggiunta la possibilità di cambiare stile tramite la rotella di scorrimento.
+- Aggiunta la possibilità di nascondere i nomi delle strade durante l'utilizzo dello strumento. Può essere disabilitato nelle opzioni mod.
+- Aggiunta nuova icona per il pulsante UUI.
+- Risolto il problema con l'icona del pulsante Seleziona modello.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_8_1" xml:space="preserve">
+    <value>- Pulsanti in modalità incolla spostati fuori dal cerchio.
+- Aggiunta traduzione coreana.</value>
+  </data>
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Scarta</value>
+  </data>
 </root>

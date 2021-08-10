@@ -413,7 +413,7 @@ Pro vytvoření čáry spojte dva body.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Na této křižovatce nejsou žádné výplňě.
-Pro vytvoření výplně držte Alt, nebo stiskněte {0}.</value>
+Pro vytvoření výplně držte {0}, nebo stiskněte {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Nejsou vytvořeny žádné šablony.
@@ -522,7 +522,7 @@ Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete v
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Na této křižovatce nejsou žádné přechody.
-Pro vytvoření přechodu podržte Shift.</value>
+Pro vytvoření přechodu podržte {0}.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>přechod</value>
@@ -907,14 +907,10 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="StyleOption_Yes" xml:space="preserve">
     <value>Ano</value>
   </data>
-  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>+Shift pro vytvoření přechodu</value>
-  </data>
-  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>+Alt pro vytvoření výplně</value>
-  </data>
+  
+  
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Táhněte s Ctrl pro posun bodu</value>
+    <value>Táhněte s {0} pro posun bodu</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1259,21 +1255,45 @@ Klikněte pro změnu značení</value>
   
   
   
-  
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Skrýt názvy ulic při používání nástroje</value>
+  </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>Chodník</value>
   </data>
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Podržte {0} pro výběr přechodu</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Podržte {0} pro výběr čáry</value>
+  </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>Štěrk</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>Útes</value>
+  </data>
+  <data name="FillerStyle_Ruined" xml:space="preserve">
+    <value>Suť</value>
+  </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Odsazení od čar</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>Zaoblení rohů</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>Zaoblení rohů u mediánů</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>Šířka obrubníku</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>Šířka obrubníku u mediánů</value>
+  </data>
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Zahodit</value>
+  </data>
 </root>

@@ -413,7 +413,7 @@
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>此交叉路口没有填充图案。
-按住Alt或点按 {0} 以创建填充图案.</value>
+按住{0}或点按 {1} 以创建填充图案.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>没有模板可选。
@@ -522,7 +522,7 @@
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>此交叉路口没有人行道。
-按住Shift以创建人行道。</value>
+按住{0}以创建人行道。</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>人行横道</value>
@@ -908,13 +908,13 @@
     <value>确定</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>按住Shift创建人行横道</value>
+    <value>按住{0}创建人行横道</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>按住Alt创建填充图案</value>
+    <value>按住{0}创建填充图案</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>按住Ctrl拖动来移动端点</value>
+    <value>按住{0}拖动来移动端点</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1291,10 +1291,10 @@
     <value>路肩</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>按住Ctrl点击来选中人行横道</value>
+    <value>按住{0}点击来选中人行横道</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>按住Ctrl点击来选中线</value>
+    <value>按住{0}点击来选中线</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>砂砾</value>
@@ -1339,5 +1339,7 @@
     <value>- 粘贴模式按钮移至圆圈以外
 - 添加了韩语翻译</value>
   </data>
-  
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>不保存</value>
+  </data>
 </root>

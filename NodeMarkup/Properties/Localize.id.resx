@@ -427,7 +427,7 @@ Untuk membuat garis, hubungkan dua titik.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Tidak ada isian di simpang ini.
-Untuk membuat isian, tekan dan tahan Alt atau tekan {0}.</value>
+Untuk membuat isian, tekan dan tahan {0} atau tekan {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Tidak ada templat.
@@ -482,7 +482,7 @@ Untuk membuat templat, klik {0} pada garis atau penyebrangan atau gaya isian.</v
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Tidak ada penyeberangan di persimpangan ini.
-Untuk membuat penyeberangan, tekan dan tahan Shift.</value>
+Untuk membuat penyeberangan, tekan dan tahan {0}.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>penyeberangan</value>
@@ -866,13 +866,13 @@ Templat yang dipulihkan akan menggantikan semua templat yang ada.</value>
     <value>Iya</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Tekan dan tahan Shift untuk membuat penyeberangan</value>
+    <value>Tekan dan tahan {0} untuk membuat penyeberangan</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Tekan dan tahan Alt untuk membuat isian</value>
+    <value>Tekan dan tahan {0} untuk membuat isian</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Tekan dan tahan Ctrl untuk menggeser titik</value>
+    <value>Tekan dan tahan {0} untuk menggeser titik</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1211,10 +1211,10 @@ Klik untuk mengedit markah</value>
     <value>Trotoar</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Klik dengan menahan Ctrl untuk memilih penyeberangan</value>
+    <value>Klik dengan menahan {0} untuk memilih penyeberangan</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Klik dengan menahan Ctrl untuk memilih garis</value>
+    <value>Klik dengan menahan {0} untuk memilih garis</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Kerikil</value>

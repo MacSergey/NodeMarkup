@@ -413,7 +413,7 @@ Para crear una línea, conecta dos puntos.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Todavía no hay rellenos en este cruce.
-Para crear un relleno, mantenga Alt o presione {0}.</value>
+Para crear un relleno, mantenga {0} o presione {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista de plantillas está vacía.
@@ -522,7 +522,7 @@ Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Todavía no hay pasos de peatones en este cruce.
-Para crear un paso de peatones, mantenga Mayús.</value>
+Para crear un paso de peatones, mantenga {0}.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>paso de peatones</value>
@@ -907,13 +907,13 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
     <value>Sí</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Mantenga Mayús para crear un paso de peatones</value>
+    <value>Mantenga {0} para crear un paso de peatones</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Mantenga Alt para crear un relleno</value>
+    <value>Mantenga {0} para crear un relleno</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Arrastre con Ctrl para mover el punto</value>
+    <value>Arrastre con {0} para mover el punto</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1254,10 +1254,10 @@ Haga clic para editar las marcas</value>
     <value>Pavimento</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Haga clic con la tecla Ctrl para seleccionar el paso de peatones</value>
+    <value>Haga clic con la tecla {0} para seleccionar el paso de peatones</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Haga clic con la tecla Ctrl para seleccionar la línea</value>
+    <value>Haga clic con la tecla {0} para seleccionar la línea</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Grava</value>
@@ -1285,5 +1285,7 @@ Haga clic para editar las marcas</value>
   </data>
   
   
-  
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Descartar</value>
+  </data>
 </root>

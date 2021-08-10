@@ -413,7 +413,7 @@ Yhdistä kaksi pistettä luodaksesi viivan.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Risteyksessä ei ole vielä sulkualueita.
-Luodaksesi sulkualueen, pidä Alt-näppäintä pohjassa tai paina {0}.</value>
+Luodaksesi sulkualueen, pidä {0}-näppäintä pohjassa tai paina {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Malleja ei ole.
@@ -522,7 +522,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Risteyksessä ei ole vielä suojateitä.
-Pidä Shift-näppäintä pohjassa luodaksesi suojatien.</value>
+Pidä {0}-näppäintä pohjassa luodaksesi suojatien.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>suojatie</value>
@@ -908,13 +908,13 @@ Haluatko asettaa merkinnät manuaalisest?</value>
     <value>Kyllä</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Pidä Shift-näppäintä pohjassa luodaksesi suojatien</value>
+    <value>Pidä {0}-näppäintä pohjassa luodaksesi suojatien</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Pidä Alt-näppäintä pohjassa luodaksesi sulkualueen</value>
+    <value>Pidä {0}-näppäintä pohjassa luodaksesi sulkualueen</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Raahaa Ctrl pohjassa siirtääksesi pistettä</value>
+    <value>Raahaa {0} pohjassa siirtääksesi pistettä</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1263,10 +1263,10 @@ Napauta muokataksesi merkintöjä</value>
     <value>Päällyste</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Napauta Ctrl pohjassa valitaksesi suojatie</value>
+    <value>Napauta {0} pohjassa valitaksesi suojatie</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Napauta Ctrl pohjassa valitaksesi viiva</value>
+    <value>Napauta {0} pohjassa valitaksesi viiva</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Sora</value>

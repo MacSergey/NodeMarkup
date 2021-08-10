@@ -438,7 +438,7 @@ To create a line connect two points.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>There are no fillers at this intersection yet.
-To create a filler hold Alt or press {0}.</value>
+To create a filler hold {0} or press {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>The list of templates is empty.
@@ -547,7 +547,7 @@ By registering early access, you will support the ability to develop this mod at
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>There are no crosswalks at this intersection yet.
-To create a crosswalk hold Shift.</value>
+To create a crosswalk hold {0}.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>crosswalk</value>
@@ -946,13 +946,13 @@ Do you want to apply the markings manually?</value>
     <value>Yes</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Hold Shift to create a crosswalk</value>
+    <value>Hold {0} to create a crosswalk</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Hold Alt to create a filler</value>
+    <value>Hold {0} to create a filler</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Drag with Ctrl to move the point</value>
+    <value>Drag with {0} to move the point</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>WARNING: Default templates setting will be reset.
@@ -1386,10 +1386,10 @@ Click to edit markings</value>
     <value>Pavement</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Click with Ctrl to select the crosswalk</value>
+    <value>Click with {0} to select the crosswalk</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Click with Ctrl to select the line</value>
+    <value>Click with {0} to select the line</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Gravel</value>

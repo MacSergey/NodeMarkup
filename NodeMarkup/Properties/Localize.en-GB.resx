@@ -260,10 +260,7 @@ To create a template, click «{0}» at the line or pedestrian crossing or filler
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Pedestrian Crossings</value>
   </data>
-  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>There are no pedestrian crossings at this intersection yet.
-To create a pedestrian crossing hold Shift.</value>
-  </data>
+  
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>pedestrian crossing</value>
   </data>
@@ -425,9 +422,7 @@ create or delete a pedestrian crossing</value>
   </data>
   
   
-  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Hold Shift to create a pedestrian crossing</value>
-  </data>
+  
   
   
   

@@ -413,7 +413,7 @@
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>どこにも塗り潰しの設定がありません。
-Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
+{0}キーを押すか {1} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>テンプレートの一覧は空です。
@@ -523,7 +523,7 @@ Altキーを押すか {0} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>どこにも横断歩道の設定がありません。
-Shiftキーを押して、横断歩道を作成しましょう。</value>
+{0}キーを押して、横断歩道を作成しましょう。</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>横断歩道</value>
@@ -908,13 +908,13 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>Yes</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Shiftキー押下で、横断歩道の作成</value>
+    <value>{0}キー押下で、横断歩道の作成</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Altキー押下で、塗り潰しを開始</value>
+    <value>{0}キー押下で、塗り潰しを開始</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Ctrlキー + ドラッグで、ポイントを移動</value>
+    <value>{0}キー + ドラッグで、ポイントを移動</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1257,10 +1257,10 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
     <value>舗装（3Dスタイル）</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Ctrlキー + クリックで、横断歩道を選択</value>
+    <value>{0}キー + クリックで、横断歩道を選択</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Ctrlキー + クリックで、ラインを選択</value>
+    <value>{0}キー + クリックで、ラインを選択</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>砂利（3Dスタイル）</value>
@@ -1288,5 +1288,7 @@ Shiftキーを押して、横断歩道を作成しましょう。</value>
   </data>
   
   
-  
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>破棄</value>
+  </data>
 </root>

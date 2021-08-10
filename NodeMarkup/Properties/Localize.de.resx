@@ -438,7 +438,7 @@ Zum Erstellen einer Linie zwei Punkte miteinander verbinden.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Es befinden sich noch keine Füllungen auf dieser Kreuzung.
-Zum Erstellen einer Füllung halte ALT oder drücke {0}.</value>
+Zum Erstellen einer Füllung halte {0} oder drücke {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Die Liste mit Stilvorlagen ist leer.
@@ -547,7 +547,7 @@ Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Mög
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Es befinden sich noch keine Fußgängerüberweg-Markierungen auf dieser Kreuzung.
-Zum Erstellen einer Fußgängerüberweg-Markierung Shift gedrückt halten.</value>
+Zum Erstellen einer Fußgängerüberweg-Markierung {0} gedrückt halten.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>Fußgängerüberweg</value>
@@ -933,13 +933,13 @@ Möchtest du die Markierungen manuell zuordnen?</value>
     <value>Ja</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Shift halten erstellt eine Fußgängerüberweg-Markierung</value>
+    <value>{0} halten erstellt eine Fußgängerüberweg-Markierung</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Alt halten um eine Füllung zu erstellen</value>
+    <value>{0} halten um eine Füllung zu erstellen</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Strg halten und Ziehen um den Punkt zu verschieben</value>
+    <value>{0} halten und Ziehen um den Punkt zu verschieben</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1317,10 +1317,10 @@ Klicken um die Markierungen zu bearbeiten</value>
     <value>Randstein</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Strg+Klick um den Überweg auszuwählen</value>
+    <value>{0}+Klick um den Überweg auszuwählen</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Strg+Klick um die Linie auszuwählen</value>
+    <value>{0}+Klick um die Linie auszuwählen</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Kies</value>

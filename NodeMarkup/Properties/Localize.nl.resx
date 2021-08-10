@@ -414,7 +414,7 @@ Verbind twee punten om een lijn te maken.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Er zijn nog geen opvullingen bij dit kruispunt.
-Houdt Alt ingedrukt of klik {0} om een opvulling te maken.</value>
+Houdt {0} ingedrukt of klik {1} om een opvulling te maken.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>De lijst met sjablonen is leeg.
@@ -523,7 +523,7 @@ Door je te registreren voor vroegtijdige toegang help je bij het behouden van de
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Er zijn nog geen zebrapaden op deze kruising.
-Houd Shift ingedrukt om een zebrapad te maken.</value>
+Houd {0} ingedrukt om een zebrapad te maken.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>zebrapad</value>
@@ -909,13 +909,13 @@ Wil je de markering handmatig toepassen?</value>
     <value>Ja</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Houd Shift ingedrukt om een zebrapad te creëren</value>
+    <value>Houd {0} ingedrukt om een zebrapad te creëren</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Houd Alt ingedrukt om een opvulling te creëren</value>
+    <value>Houd {0} ingedrukt om een opvulling te creëren</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Houd control ingedrukt om het punt te verslepen</value>
+    <value>Houd {0} ingedrukt om het punt te verslepen</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1254,10 +1254,10 @@ Klik om de markering te wijzigen</value>
     <value>Bestrating</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Klik met Ctrl om een oversteekplaats te selecteren</value>
+    <value>Klik met {0} om een oversteekplaats te selecteren</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Klik met Ctrl om een lijn te selecteren</value>
+    <value>Klik met {0} om een lijn te selecteren</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Grind</value>

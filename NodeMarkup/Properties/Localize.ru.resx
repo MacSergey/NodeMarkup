@@ -440,7 +440,7 @@
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>У этого перекрестка еще нет заполнителей.
-Для создания заполнителя удерживайте Alt или нажмите {0}.</value>
+Для создания заполнителя удерживайте {0} или нажмите {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Список шаблонов пуст.
@@ -549,7 +549,7 @@
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>У этого перекрестка еще нет переходов.
-Для создания перехода удерживайте Shift.</value>
+Для создания перехода удерживайте {0}.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>переход</value>
@@ -950,13 +950,13 @@
     <value>Да</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Зажмите Shift для создания перехода</value>
+    <value>Зажмите {0} для создания перехода</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Зажмите Alt для создания заполнителя</value>
+    <value>Зажмите {0} для создания заполнителя</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Зажмите Ctrl чтобы перетащить точку</value>
+    <value>Зажмите {0} чтобы перетащить точку</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>ПРЕДУПРЕЖДЕНИЕ: Настройки шаблонов по умолчанию будут сброшены.
@@ -1389,10 +1389,10 @@
     <value>Тротуар</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Нажмите c Ctrl для выбора перехода</value>
+    <value>Нажмите c {0} для выбора перехода</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Нажмите c Ctrl для выбора линии</value>
+    <value>Нажмите c {0} для выбора линии</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Гравий</value>

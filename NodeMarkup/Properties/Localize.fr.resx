@@ -414,7 +414,7 @@ Pour créer une ligne, connectez deux points.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Il n'y a pas de remplisseurs à cet intersection.
-Pour créer un remplisseur, maintenez Alt ou appuyez sur {0}.</value>
+Pour créer un remplisseur, maintenez {0} ou appuyez sur {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La liste des modèles est vide.
@@ -525,7 +525,7 @@ En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même v
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Il n'y a pas de passages piétons à cette intersection.
-Pour créer un passage piéton, maintenez Maj.</value>
+Pour créer un passage piéton, maintenez {0}.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>passage piéton</value>
@@ -911,13 +911,13 @@ Voulez-vous changer le marquage manuellement ?</value>
     <value>Oui</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Maintenez Maj pour créer un passage piéton</value>
+    <value>Maintenez {0} pour créer un passage piéton</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Maintenir Alt pour créer un remplisseur</value>
+    <value>Maintenir {0} pour créer un remplisseur</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Glissez avec Ctrl pour bouger le point</value>
+    <value>Glissez avec {0} pour bouger le point</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1273,10 +1273,10 @@ Cliquez pour modifier le marquage</value>
     <value>Béton</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Cliquez sur Ctrl pour sélectionner le passage piéton</value>
+    <value>Cliquez sur {0} pour sélectionner le passage piéton</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Cliquez sur Ctrl pour sélectionner la ligne</value>
+    <value>Cliquez sur {0} pour sélectionner la ligne</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Gravier</value>
