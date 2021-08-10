@@ -282,7 +282,7 @@ namespace NodeMarkup.Tools
                 }
 
                 if (line != null)
-                    Panel.EditLine(line);
+                    Panel.SelectLine(line);
             }
         }
         private void SaveAsIntersectionTemplate()

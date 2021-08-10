@@ -1434,4 +1434,7 @@ Click to edit markings</value>
     <value>- Buttons in paste mode moved ouside of circle.
 - Added Korean translation.</value>
   </data>
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Discard</value>
+  </data>
 </root>
