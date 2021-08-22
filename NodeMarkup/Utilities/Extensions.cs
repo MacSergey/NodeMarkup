@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Globalization;
 using ColossalFramework.PlatformServices;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.UI;
@@ -17,21 +18,10 @@ namespace NodeMarkup.Utilities
         public static string Description<T>(this T value) where T : Enum => value.Description<T, Mod>();
         public static string Description(this StyleModifier modifier)
         {
-            var localeID = "KEYNAME";
-
             if (modifier.GetAttr<DescriptionAttribute, StyleModifier>() is DescriptionAttribute description)
                 return Localize.ResourceManager.GetString(description.Description, Localize.Culture);
             else if (modifier.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute inputKey)
-            {
-                var modifierStrings = new List<string>();
-                if (inputKey.Control)
-                    modifierStrings.Add(Locale.Get(localeID, KeyCode.LeftControl.ToString()));
-                if (inputKey.Shift)
-                    modifierStrings.Add(Locale.Get(localeID, KeyCode.LeftShift.ToString()));
-                if (inputKey.Alt)
-                    modifierStrings.Add(Locale.Get(localeID, KeyCode.LeftAlt.ToString()));
-                return string.Join("+", modifierStrings.ToArray());
-            }
+                return LocalizeExtension.GetModifiers(inputKey.Control, inputKey.Alt, inputKey.Shift);
             else
                 return modifier.ToString();
         }
