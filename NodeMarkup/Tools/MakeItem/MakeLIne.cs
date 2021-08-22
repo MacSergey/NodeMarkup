@@ -21,11 +21,11 @@ namespace NodeMarkup.Tools
             if (!IsSelectPoint)
             {
                 tips.Add(Localize.Tool_InfoSelectLineStartPoint);
-                tips.Add(string.Format(Localize.Tool_InfoStartDragPointMode, LocalizeExtension.Ctrl));
+                tips.Add(string.Format(Localize.Tool_InfoStartDragPointMode, LocalizeExtension.Ctrl.AddInfoColor()));
                 if (Markup is ISupportFillers)
-                    tips.Add(string.Format(Localize.Tool_InfoStartCreateFiller, LocalizeExtension.Alt));
+                    tips.Add(string.Format(Localize.Tool_InfoStartCreateFiller, LocalizeExtension.Alt.AddInfoColor()));
                 if (Markup is ISupportCrosswalks)
-                    tips.Add(string.Format(Localize.Tool_InfoStartCreateCrosswalk, LocalizeExtension.Shift));
+                    tips.Add(string.Format(Localize.Tool_InfoStartCreateCrosswalk, LocalizeExtension.Shift.AddInfoColor()));
             }
             else if (IsHoverPoint)
                 tips.Add(base.GetToolInfo());

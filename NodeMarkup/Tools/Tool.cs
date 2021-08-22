@@ -675,7 +675,7 @@ namespace NodeMarkup.Tools
                 var general = (Style.StyleType)(object)style;
                 var modifier = (StyleModifier)StylesModifier[general].value;
                 if (modifier != StyleModifier.NotSet)
-                    yield return $"{general.Description()} - {modifier.Description()}";
+                    yield return $"{general.Description()} - {modifier.Description().AddInfoColor()}";
             }
         }
 

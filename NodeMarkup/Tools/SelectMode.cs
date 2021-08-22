@@ -30,7 +30,7 @@ namespace NodeMarkup.Tools
             else
                 return Localize.Tool_SelectInfo;
         }
-        private string GetStepOverInfo() => NodeMarkupTool.SelectionStepOverShortcut.NotSet? string.Empty : "\n\n" + string.Format(CommonLocalize.Tool_InfoSelectionStepOver, NodeMarkupTool.SelectionStepOverShortcut.InputKey);
+        private string GetStepOverInfo() => NodeMarkupTool.SelectionStepOverShortcut.NotSet? string.Empty : "\n\n" + string.Format(CommonLocalize.Tool_InfoSelectionStepOver, Colors.AddInfoColor(NodeMarkupTool.SelectionStepOverShortcut));
 
         public override void OnPrimaryMouseClicked(Event e)
         {
