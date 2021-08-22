@@ -20,9 +20,14 @@ namespace NodeMarkup.UI.Editors
 
         protected override ItemType AddObjectImpl(ObjectType editObject)
         {
-            var group = GetGroup(editObject);
-            var index = FindIndex(editObject, group);
-            return AddObjectImpl(editObject, (index >= 0 ? index : ~index) + 1);
+            if (GroupingEnable)
+            {
+                var group = GetGroup(editObject);
+                var index = FindIndex(editObject, group);
+                return AddObjectImpl(editObject, (index >= 0 ? index : ~index) + 1);
+            }
+            else
+                return base.AddObjectImpl(editObject);
         }
         protected override ItemType AddObjectImpl(ObjectType editObject, int zOrder)
         {
