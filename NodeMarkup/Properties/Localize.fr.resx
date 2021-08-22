@@ -413,7 +413,7 @@ créer ou supprimer une ligne</value>
 Pour créer une ligne, connectez deux points.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>Il n'y a pas de remplisseurs à cet intersection.
+    <value>Il n'y a pas de remplisseurs à cette intersection.
 Pour créer un remplisseur, maintenez {0} ou appuyez sur {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">

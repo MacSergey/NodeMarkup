@@ -118,1174 +118,1117 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Tool_DeleteCaption" xml:space="preserve">
-    <value>Eliminar {0}</value>
+    <value>{0} silinecek</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>¿De verdad quieres eliminar {0} "{1}"?</value>
+    <value>{0} ve {1} verileri silinecek, istiyor musunuz?</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Aplicar plantilla</value>
+    <value>Şablonu uygula</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Guardar como plantilla</value>
+    <value>Şablon olarak kaydet</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>Establecer como predeterminado</value>
+    <value>Varsayılan olarak ayarla</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Desmarcar como predeterminado</value>
+    <value>Varsayılan verisini kaldır</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Añadir la regla</value>
+    <value>Kural ekle</value>
   </data>
   <data name="StyleOption_Color" xml:space="preserve">
-    <value>Color</value>
+    <value>Renkler</value>
   </data>
   <data name="StyleOption_DashedLength" xml:space="preserve">
-    <value>Longitud de trazos</value>
+    <value>Gösterge uzunluğu</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Eliminar la regla</value>
+    <value>Kuralı sil</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>¿De verdad quieres eliminar la regla?</value>
+    <value>Bu kuralı gerçekten silmek ister misiniz?</value>
   </data>
   <data name="LineRule_From" xml:space="preserve">
-    <value>Desde</value>
+    <value>Kaynak</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Seleccione el punto "Desde" de la regla</value>
+    <value>Kuralın başlangıç noktasını seç</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Seleccione el punto "Hasta" de la regla</value>
+    <value>Kuralın bitiş noktasını seç</value>
   </data>
   <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>línea</value>
+    <value>şerit</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>Líneas</value>
+    <value>Şeritler</value>
   </data>
   <data name="StyleOption_Offset" xml:space="preserve">
-    <value>Desplazamiento</value>
+    <value>Ortala</value>
   </data>
   <data name="StyleOption_SpaceLength" xml:space="preserve">
-    <value>Longitud del espacio</value>
+    <value>Alan uzunluğu</value>
   </data>
   <data name="Editor_Style" xml:space="preserve">
-    <value>Estilo</value>
+    <value>Tarz</value>
   </data>
   <data name="LineRule_To" xml:space="preserve">
-    <value>Hasta</value>
+    <value>Nereye</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Intersección con {0}</value>
+    <value>{0} ile kesişim</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Punto propio {0}</value>
+    <value>Kendinden köşeli konum: {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Discontinua</value>
+    <value>Kesikli</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Discontinua Doble</value>
+    <value>Çift kesikli</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Continua doble</value>
+    <value>Çift dolu</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Continua</value>
+    <value>Dolu</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Solo haga las marcas en las intersecciones</value>
+    <value>Kesişimlerde işaretler koy</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
-    <value>Editar las marcas del node #{0}</value>
+    <value>#{0} nolu düğümün işaretlerini değiştir</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>punto</value>
+    <value>nokta</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
-    <value>Desplazamiento</value>
+    <value>Dengele</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>Puntos</value>
+    <value>Noktalar</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>No establecido</value>
+    <value>Belirlenmemiş</value>
   </data>
   <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
-    <value>Añadir nueva regla de la línea</value>
+    <value>Yeni şerit kuralı ekle</value>
   </data>
   <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
-    <value>Eliminar todas las líneas del nodo</value>
+    <value>Tüm düğüm şeritlerini silin</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Eliminar las marcas de todas las intersecciones</value>
+    <value>Kesişim işaretlerini sil</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Eliminar todas las marcas</value>
+    <value>Tüm işaretler siliniyor</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>¿De verdad quieres borrar todas las marcas?</value>
+    <value>Tüm işaretler kaldırılıyor, emin misiniz?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Exportar las marcas al archivo</value>
+    <value>İşaret verilerini dosyaya aktar</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>Copiar la ruta al portapapeles</value>
+    <value>Dosya yolunu panoya kopyala</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Exportar las marcas</value>
+    <value>İşaret verisi aktarıldı</value>
   </data>
   <data name="Settings_DumpMessageFailed" xml:space="preserve">
-    <value>Exportación fallida</value>
+    <value>Aktarım tamamlanamadı</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>Exportación guardada con éxito</value>
+    <value>Dosya başarıyla kaydedildi</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
-    <value>Recuperar marcas desde archivo</value>
+    <value>İşaret bilgilerini dosyadan yükle</value>
   </data>
   <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
-    <value>Recuperar marcas</value>
+    <value>Yedek verileri geri yükle</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
-    <value>¿De verdad deseas recuperar los datos?
-Los datos restaurados reemplazarán todas las marcas existentes.</value>
+    <value>İşaret yedeğini yüklemek istediğinize emin misiniz?
+Yeni işaretler eskilerinin yerine geçecektir.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
-    <value>Recuperación fallida</value>
+    <value>İşaret verisi ger yükleme başarısız oldu</value>
   </data>
   <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
-    <value>Las marcas se han recuperado con éxito</value>
+    <value>İşaret verisi başarıyla aktarıldı</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Configuración rápida de la regla</value>
+    <value>Hızlı kural kurulumu</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Distancia de renderizado</value>
+    <value>Gösterim mesafesi</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Confirmar antes de eliminar</value>
+    <value>Silmeden önce onaylayın</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>plantilla</value>
+    <value>şablon</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>Nombre</value>
+    <value>İsim</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Plantillas</value>
+    <value>Şablonlar</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
-    <value>Nueva plantilla</value>
+    <value>Yeni şablon</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Eliminar las marcas del nodo</value>
+    <value>Düğüm işaretlerini temizle</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>¿De verdad quieres eliminar todas las marcas del nodo #{0}?</value>
+    <value>#{0} düğümünün işaretleri silinecek, emin misiniz?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Haga clic para crear una línea</value>
+    <value>Bir şerit oluşturmak için tıklayın</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Haga clic para borrar la línea</value>
+    <value>Bir şerit silmek için tıklayın</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Nodo #{0}
-Haga clic para editar las marcas</value>
+    <value>#{0} düğümü
+İşaretleri düzenlemek için tıklayın</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
-    <value>Seleccione un nodo o un segmento para editar las marcas</value>
+    <value>İşaretleri değiştirmek için düğüm veya kesişim seçin</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Seleccione punto final para línea normal</value>
+    <value>Sıradan şerit için bitme noktası seçin</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Seleccione el punto para crear o eliminar la línea</value>
+    <value>Şeriti silmek veya oluşturmak için nokta seçin</value>
   </data>
   
   <data name="Settings_Restore" xml:space="preserve">
-    <value>Recuperar</value>
+    <value>Geri yükle</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
-    <value>Invertir</value>
+    <value>Ters çevir</value>
   </data>
   <data name="StyleOption_Width" xml:space="preserve">
-    <value>Ancho</value>
+    <value>Genişlik</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>Doble Combinada</value>
+    <value>Dolu ve kesikli</value>
   </data>
   <data name="LineStyle_StopSolid" xml:space="preserve">
-    <value>Continua</value>
+    <value>Dolu</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
-    <value>Haga clic para borrar la línea transversal</value>
+    <value>Son şeriti silmek için tıklayın</value>
   </data>
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
-    <value>Haga clic para crear una línea transversal</value>
+    <value>Son şerit oluşturmak için tıklayın</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>Rellenos</value>
+    <value>Dolgu</value>
   </data>
   <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>relleno</value>
+    <value>dolgu</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
-    <value>Franjas</value>
+    <value>Şeritler</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>Cuadrícula</value>
+    <value>Izgara</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Discontinua</value>
+    <value>Kesik çizgili</value>
   </data>
   <data name="StyleOption_Step" xml:space="preserve">
-    <value>Grado</value>
+    <value>Adım</value>
   </data>
   <data name="StyleOption_Angle" xml:space="preserve">
-    <value>Ángulo</value>
+    <value>Açı</value>
   </data>
   <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Desplazamiento desde las líneas</value>
+    <value>Şeritleri ayarla</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
-    <value>Haga clic para comenzar a crear un relleno</value>
+    <value>Şeridi silmek veya oluşturmak için nokta seçin</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
-    <value>Haga clic para terminar de crear el relleno</value>
+    <value>Dolgu oluşturmayı bitirmek için tıklayın</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
-    <value>Haga clic para seleccionar el siguiente punto en el contorno</value>
+    <value>Yol ayrımındaki yeni notayı seçmek için tıkla</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Seleccione un punto para comenzar a crear el relleno</value>
+    <value>Dolgu oluşturmaya başlamak için bir nokta seçin</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
-    <value>Seleccione el siguiente punto en el contorno</value>
+    <value>Yol ayrımındaki yeni notayı seç</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Desplazamiento desde la mediana</value>
+    <value>Medyandan uzantı</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
-    <value>Copiar</value>
+    <value>Kopyala</value>
   </data>
   <data name="Editor_ColorPaste" xml:space="preserve">
-    <value>Pegar</value>
+    <value>Yapıştır</value>
   </data>
   <data name="Editor_ColorDefault" xml:space="preserve">
-    <value>Predeterminado</value>
+    <value>Varsayılan</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Continua</value>
+    <value>Dolu</value>
   </data>
   
   
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
-    <value>Añadir nuevo relleno</value>
+    <value>Yeni dolgu ekle</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Continua doble</value>
+    <value>Çift dolu</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>Discontinua Doble</value>
+    <value>Çift kesikli</value>
   </data>
   <data name="HeaderPanel_StyleCopy" xml:space="preserve">
-    <value>Copiar</value>
+    <value>Kopyala</value>
   </data>
   <data name="HeaderPanel_StylePaste" xml:space="preserve">
-    <value>Pegar</value>
+    <value>Yapıştır</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>Cebreado</value>
+    <value>V kesişimi</value>
   </data>
   <data name="StyleOption_AngleBetween" xml:space="preserve">
-    <value>Ángulo entre</value>
+    <value>Arasındaki açı</value>
   </data>
   <data name="StyleOption_Turn" xml:space="preserve">
-    <value>Girar</value>
+    <value>Çevir</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
-    <value>Todavía no hay líneas en este cruce.
-Para crear una línea, conecta dos puntos.</value>
+    <value>Bu kesişimde şeritler yok.
+Oluşturmak için iki nokta seçin.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>Todavía no hay rellenos en este cruce.
-Para crear un relleno, mantener presionada la tecla {0} o presione {1}.</value>
+    <value>Bu kesişimde dolgu yok.
+Oluşturmak için {0} tuşuna basılı tutun veya {1} tuşunu kullanın.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>La lista de plantillas está vacía.
-Para crear una plantilla, haga clic en «{0}» en el estilo de línea, paso de peatones o relleno.</value>
+    <value>Şablonların listesi boş.
+Yeni şablon oluşturmak için bir şerit, yaya geçidi veya dolguya {0} tuşuyla tıklayın.</value>
   </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Activar con clave</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Activación fallida</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Activación finalizada con éxito</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Esta función no está disponible</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>La función «{0}» actualmente solo está disponible para el acceso anticipado de Patreons.
-Estará disponible para todos más tarde.
-Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod a la misma velocidad.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Obtener acceso anticipado</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Su ID de acceso</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Clave de acceso</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Activar</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Activación del acceso anticipado</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Para activar el acceso anticipado, debe ingresar una clave</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Anular</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>La clave que ha introducido no es válida</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Procesando la vinculación...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Vincular la cuenta de Patreon</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Vincular la cuenta de Patreon</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>La cuenta de Patreon no se puede vincular porque denegó la solicitud de acceso.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Se ha producido un error al vincular la cuenta, inténtelo de nuevo.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Su cuenta está vinculada, pero no tiene acceso anticipado.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Puede cerrar esta página y volver al juego.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Anular</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Estado: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Activado</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>No activado</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Gracias por su apoyo, ahora puede disfrutar de todas las funciones.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Acceso anticipado</value>
-  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="StyleOption_Alignment" xml:space="preserve">
-    <value>Alineamiento</value>
+    <value>Hizalanma</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Haga clic para crear una línea perpendicular</value>
+    <value>Dik şerit oluşturmak için tıklayın</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
-    <value>Haga clic para eliminar la línea perpendicular</value>
+    <value>Dik şerit silmek için tıklayın</value>
   </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
-    <value>Cebra</value>
+    <value>Zebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
-    <value>Paso de peatones existente</value>
+    <value>Varolan yaya geçidi</value>
   </data>
   <data name="StyleOption_OffsetBetween" xml:space="preserve">
-    <value>Desplazamiento detrás</value>
+    <value>Ara uzantı</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
-    <value>Paso de Peatones</value>
+    <value>Yaya geçitleri</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>Todavía no hay pasos de peatones en este cruce.
-Para crear un paso de peatones, mantener presionada la tecla {0}.</value>
+    <value>Bu kesişimde hiç yaya geçidi yok.
+Oluşturmak için {0} tuşuna basılı tutun.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>paso de peatones</value>
+    <value>yaya geçidi</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
-    <value>Paso de Peatones</value>
+    <value>Yaya geçitleri</value>
   </data>
   <data name="FillerStyle_Group" xml:space="preserve">
-    <value>Rellenos</value>
+    <value>Dolgu</value>
   </data>
   <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
-    <value>Líneas normales</value>
+    <value>Sıradan şerit</value>
   </data>
   <data name="LineStyle_StopLinesGroup" xml:space="preserve">
-    <value>Líneas transversales</value>
+    <value>Şeritleri durdur</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
-    <value>Agrupar líneas</value>
+    <value>Grup şeritleri</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>Agrupar rellenos</value>
+    <value>Grup şablonları</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
-    <value>Haga clic para crear un paso de peatones</value>
+    <value>Yaya geçidi oluşturmak için tuşuna basın</value>
   </data>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
-    <value>Haga clic para borrar un paso de peatones</value>
+    <value>Yaya geçidi silmek için tıklayın</value>
   </data>
   <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
-    <value>Por estilo</value>
+    <value>Stil kullanarak</value>
   </data>
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
-    <value>Por tipo</value>
+    <value>Tip kullanarak</value>
   </data>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
-    <value>Cebra doble</value>
+    <value>Çift zebra</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
-    <value>Ancho de línea</value>
+    <value>Şerit kalınlığı</value>
   </data>
   <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Desplazamiento delante</value>
+    <value>Sonraki uzantı</value>
   </data>
   <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Desplazamiento detrás</value>
+    <value>Önceki uzantı</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Paralelo a los carriles</value>
+    <value>Yola paralel</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
-    <value>Líneas paralelas continuas</value>
+    <value>Paralel dolu çizgiler</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
-    <value>Borde izquierdo</value>
+    <value>Sol sınır</value>
   </data>
   <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
-    <value>Borde derecho</value>
+    <value>Sağ sınır</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
-    <value>Seleccione el borde izquierdo del paso de peatones</value>
+    <value>Yaya geçidinin sol sınırını seç</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
-    <value>Seleccione el borde derecho del paso de peatones</value>
+    <value>Yaya geçidinin sağ sınırını seç</value>
   </data>
   <data name="Settings_GroupPointsOverlay" xml:space="preserve">
-    <value>Agrupar el resaltado de puntos</value>
+    <value>Grup noktalarının hizası</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
-    <value>Organizar en un círculo</value>
+    <value>Daire olarak düzenle</value>
   </data>
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
-    <value>Organizar en una línea</value>
+    <value>Şerit olarak düzenle</value>
   </data>
   <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
-    <value>La regla está superpuesta por otra regla.
-Compruebe los puntos "Desde" y "Hasta" de otra regla.</value>
+    <value>Bu kural başka bir kuralla çatışıyor.
+Diğer kuralın başlangıç ve bitiş noktalarına bakın.</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
-    <value>Borde izquierdo del paso de peatones</value>
+    <value>Kaldırımın sol sınırı</value>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
-    <value>Borde derecho del paso de peatones</value>
+    <value>Kaldırımın sağ sınırı</value>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
-    <value>Restablecer</value>
+    <value>Sıfırla</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
-    <value>Seleccione el punto final</value>
+    <value>Bitiş noktası seç</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
-    <value>Seleccione el punto para
-crear o eliminar el paso de peatones</value>
+    <value>Yaya geçidi silmek veya oluşturmak için bir noktaya tıklayın</value>
   </data>
   <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
-    <value>Líneas paralelas discontinuas</value>
+    <value>Paralel boşluklu çizgiler</value>
   </data>
   <data name="CrosswalkStyle_Ladder" xml:space="preserve">
-    <value>Escalera</value>
+    <value>Merdiven</value>
   </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
-    <value>No hay plantillas</value>
+    <value>Şablon yok</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
-    <value>Continua</value>
+    <value>Dolu</value>
   </data>
   <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
-    <value>Líneas de paso de peatones</value>
+    <value>Yaya geçidi çizgileri</value>
   </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>paso de peatones</value>
+    <value>yaya geçidi</value>
   </data>
   <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>relleno</value>
+    <value>dolgu</value>
   </data>
   <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>línea</value>
+    <value>şerit</value>
   </data>
   <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>punto</value>
+    <value>nokta</value>
   </data>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>plantilla</value>
+    <value>şablon</value>
   </data>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
-    <value>La carga se completó con errores. Fallo al cargar las marcas para {0} intersecciones.</value>
+    <value>Yükleme sırasında hata oldu.
+Tüm {0} kesişiminin işaretleri yüklenemedi.</value>
   </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
-    <value>Tablero de ajedrez</value>
+    <value>Satranç tahtası</value>
   </data>
   <data name="StyleOption_LineCount" xml:space="preserve">
-    <value>Número de líneas</value>
+    <value>Şerit sayısı</value>
   </data>
   <data name="StyleOption_SharkToothBase" xml:space="preserve">
-    <value>Base del triángulo</value>
+    <value>Üçgen alanı</value>
   </data>
   <data name="StyleOption_SharkToothHeight" xml:space="preserve">
-    <value>Altura del triángulo</value>
+    <value>Üçgen yüksekliği</value>
   </data>
   <data name="StyleOption_SharkToothSpace" xml:space="preserve">
-    <value>Espacio entre</value>
+    <value>Arasındaki boşluk</value>
   </data>
   <data name="StyleOption_SquareSide" xml:space="preserve">
-    <value>Lado del cuadrado</value>
+    <value>Kare tarafı</value>
   </data>
   <data name="LineStyle_SharkTeeth" xml:space="preserve">
-    <value>Dientes de tiburón</value>
+    <value>Balık dişi</value>
   </data>
   <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
-    <value>Dientes de tiburón</value>
+    <value>Balık dişi</value>
   </data>
   <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
-    <value>Doble Combinada</value>
+    <value>Dolu ve kesikli</value>
   </data>
   <data name="Panel_ClearMarking" xml:space="preserve">
-    <value>Eliminar marcas</value>
+    <value>İşaretleri temizle</value>
   </data>
   <data name="Panel_CopyMarking" xml:space="preserve">
-    <value>Copiar marcas</value>
+    <value>İşaretleri kopyala</value>
   </data>
   <data name="Panel_PasteMarking" xml:space="preserve">
-    <value>Pegar marcas</value>
+    <value>İşaretleri yapıştır</value>
   </data>
   <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
-    <value>Pegar marcas</value>
+    <value>İşaretleri yapıştır</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>¿De verdad quieres pegar las marcas?</value>
+    <value>İşaretleri yapıştırılacak, emin misiniz?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
-    <value>Modificador de pasos de peatones</value>
+    <value>Yaya geçidi düzenleme</value>
   </data>
   <data name="Settings_FillersModifier" xml:space="preserve">
-    <value>Modificador de rellenos</value>
+    <value>Dolgu özellikleri</value>
   </data>
   <data name="Settings_RegularLinesModifier" xml:space="preserve">
-    <value>Modificador de líneas normales</value>
+    <value>Düzgün şerit düzenleme</value>
   </data>
   <data name="Settings_StopLinesModifier" xml:space="preserve">
-    <value>Modificador de líneas transversales</value>
+    <value>Şerit düzenlemeyi bırak</value>
   </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
-    <value>No establecido</value>
+    <value>Belirlenmemiş</value>
   </data>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
-    <value>Sin modificador</value>
+    <value>Düzenleyici olmadan</value>
   </data>
   <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
-    <value>Siempre</value>
+    <value>Her zaman</value>
   </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
-    <value>Sólo si afecta a otros elementos</value>
+    <value>Yalnızda diğer eşyaları etkilediğinde</value>
   </data>
   <data name="Tool_DeleteDependence" xml:space="preserve">
-    <value>Los elementos dependientes también se eliminarán:</value>
+    <value>Ayrıca bağlı eşyalar kaldırılacak:</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
-    <value>Confines del paso de peatones - {0}</value>
+    <value>Yaya geçidi kenarı - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
-    <value>Pasos de peatones - {0}</value>
+    <value>Yaya geçidi - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
-    <value>Rellenos - {0}</value>
+    <value>Dolgu - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceLines" xml:space="preserve">
-    <value>Líneas - {0}</value>
+    <value>Şeritler - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceRules" xml:space="preserve">
-    <value>Reglas - {0}</value>
+    <value>Kurallar - {0}</value>
   </data>
   <data name="Settings_BackupTab" xml:space="preserve">
-    <value>Copia de seguridad</value>
+    <value>Yedekleme</value>
   </data>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
-    <value>Visualización y uso</value>
+    <value>Görünüm ve kullanım</value>
   </data>
   <data name="Settings_Groupings" xml:space="preserve">
-    <value>Agrupaciones</value>
+    <value>Gruplandırma</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
-    <value>Atajos y modificadores</value>
+    <value>Kısayollar ve değiştiriciler</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
-    <value>Duplicar</value>
+    <value>Çoğalt</value>
   </data>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
-    <value>Copiar</value>
+    <value>Kopyala</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
-    <value>Borde</value>
+    <value>Kenar</value>
   </data>
   <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Comienza desde</value>
+    <value>Başlangıç noktası</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
-    <value>Vértice</value>
+    <value>Köşe</value>
   </data>
   <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
-    <value>Restablecer el desplazamiento de todos los puntos</value>
+    <value>Tüm nokta uzantılarını sıfırla</value>
   </data>
   <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
-    <value>Restablecer el desplazamiento de todos los puntos</value>
+    <value>Tüm nokta uzantılarını sıfırla</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>¿De verdad deseas restablecer el desplazamiento de todos los puntos del nodo #{0}?</value>
+    <value>#{0} düğümüne bağlı tüm noktaları sıfırlanacak, emin misin?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
-    <value>Arrastre y suelte círculos para establecer el orden de las carreteras
-Haga clic en el círculo para editar el orden de los puntos de la carretera</value>
+    <value>Yol kurallarını kurmak için sürükleyip bırakın
+Daireye dokunarak yol noktalarının sırasını ayarlayın</value>
   </data>
   <data name="Tool_InfoRoadsDrop" xml:space="preserve">
-    <value>Coloque el círculo dentro/fuera del objetivo para establecer/cancelar el orden de las carreteras</value>
+    <value>Daireyi içeri / dışarı bırakarak nokta kurallarını kurabilir / iptal edebilirsiniz</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
-    <value>Copiar marcas</value>
+    <value>İşaretleri kopyala</value>
   </data>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
-    <value>Pegar marcas</value>
+    <value>İşaretleri yapıştır</value>
   </data>
   <data name="Tool_InfoInverseOrder" xml:space="preserve">
-    <value>Invertir el orden</value>
+    <value>Terse çevir</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
-    <value>Girar en sentido horario</value>
+    <value>Saat yönünde çevir</value>
   </data>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
-    <value>Girar en sentido antihorario</value>
+    <value>Saat yönünün tersine çevir</value>
   </data>
   <data name="StyleOption_AlignmentCenter" xml:space="preserve">
-    <value>Centro</value>
+    <value>Merkez</value>
   </data>
   <data name="StyleOption_AlignmentLeft" xml:space="preserve">
-    <value>Izquierdo</value>
+    <value>Sol</value>
   </data>
   <data name="StyleOption_AlignmentRight" xml:space="preserve">
-    <value>Derecho</value>
+    <value>Sağ</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
-    <value>Plantilla sin nombre</value>
+    <value>İsimsiz şablon</value>
   </data>
   <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
-    <value>El nombre ya está en uso</value>
+    <value>İsim zaten kullanıldı</value>
   </data>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
-    <value>El nombre "{0}" ya lo utiliza otra plantilla.
-¿Está seguro de que desea tener varias plantillas con el mismo nombre?</value>
+    <value>{0} ismi başka bir şablonda var.
+Aynı isimde iki şablon istediğinize emin misiniz?</value>
   </data>
   <data name="Settings_BackupMarking" xml:space="preserve">
-    <value>Copia de seguridad de las marcas</value>
+    <value>İşaretleri yedekle</value>
   </data>
   <data name="Settings_BackupTemplates" xml:space="preserve">
-    <value>Copia de seguridad de las plantillas</value>
+    <value>Şablonları yedekle</value>
   </data>
   <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
-    <value>Eliminar todas plantillas</value>
+    <value>Tüm şablonları sil</value>
   </data>
   <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
-    <value>Eliminar todas plantillas</value>
+    <value>Tüm şablonları sil</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>¿De verdad quieres borrar todas las plantillas?</value>
+    <value>Tüm şablonları kaldırmak istiyor musunuz?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
-    <value>Exportar las plantillas al archivo</value>
+    <value>Şablonları dosyaya aktar</value>
   </data>
   <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
-    <value>Exportar las plantillas</value>
+    <value>Şablonları aktar</value>
   </data>
   <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
-    <value>Recuperar plantillas desde archivo</value>
+    <value>Şablonları dosyadan geri yükle</value>
   </data>
   <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
-    <value>Recuperar plantillas</value>
+    <value>Şablonları geri yükle</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
-    <value>¿De verdad deseas recuperar las plantillas?
-Las plantillas restauradas reemplazarán todas las plantillas existentes.</value>
+    <value>Şablonları yüklemek istediğinize emin misiniz?
+Yeni şablonlar eskilerinin yerine geçecektir.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
-    <value>Recuperación fallida</value>
+    <value>Şablon geri yüklenemedi</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
-    <value>Las plantillas se han recuperado con éxito</value>
+    <value>Şablon yeniden yüklendi</value>
   </data>
   <data name="Tool_Apply" xml:space="preserve">
-    <value>Aplicar</value>
+    <value>Uygula</value>
   </data>
   <data name="Tool_Continue" xml:space="preserve">
-    <value>Continuar</value>
+    <value>Devam</value>
   </data>
   <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Salir del modo pegar</value>
+    <value>Moddan çıkış yapılıyor</value>
   </data>
   <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>¿Quieres salir del modo pegar y aplicar un cambio?</value>
+    <value>Düzenleme modundan çıkıp değişiklikleri uygulamak ister misiniz?</value>
   </data>
   <data name="Tool_NotApply" xml:space="preserve">
-    <value>No aplicar</value>
+    <value>Uygulama</value>
   </data>
   <data name="Tool_InfoPasteApply" xml:space="preserve">
-    <value>Aplicar</value>
+    <value>Uygula</value>
   </data>
   <data name="Tool_infoPasteNotApply" xml:space="preserve">
-    <value>No aplicar</value>
+    <value>Uygulanmasın</value>
   </data>
   <data name="Tool_InfoPasteReset" xml:space="preserve">
-    <value>Restablecer</value>
+    <value>Sıfırla</value>
   </data>
   <data name="Panel_EditMarking" xml:space="preserve">
-    <value>Editar orden de las marcas</value>
+    <value>İşaretlerin sırasını ayarla</value>
   </data>
   <data name="Settings_ShortcutEditMarking" xml:space="preserve">
-    <value>Cambiar orden de las marcas</value>
+    <value>İşaretlerin sırasını değiştir</value>
   </data>
   <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
-    <value>Las carreteras han cambiado</value>
+    <value>Yollar değişti</value>
   </data>
   <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
-    <value>Las carreteras en este cruce han cambiado, por lo que las marcas existentes no se puede aplicar automáticamente.
-¿Quieres aplicar las marcas manualmente?</value>
+    <value>Bu kesişimdeki yollar değişti, var olan işaretler otomatik uygulanamaz.
+İşaretleri elle uygulamak ister misiniz?</value>
   </data>
   <data name="Tool_EndEditOrderCaption" xml:space="preserve">
-    <value>Salir del modo de edición del orden</value>
+    <value>Düzenleme modundan çıkın</value>
   </data>
   <data name="Tool_EndEditOrderMessage" xml:space="preserve">
-    <value>¿Quieres salir del modo de edición y aplicar un nuevo orden?</value>
+    <value>Düzenleme modundan çıkıp değişiklikleri uygulamak ister misiniz?</value>
   </data>
   <data name="Tool_InfoPointsDrag" xml:space="preserve">
-    <value>Arrastre y suelte el círculo para establecer el orden de los puntos</value>
+    <value>Noktaların sırası için daireyi tutup bırakın</value>
   </data>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
-    <value>Coloque el círculo dentro/fuera del objetivo para establecer/cancelar el orden de los puntos</value>
+    <value>Daireyi içeri / dışarı bırakarak nokta kurallarını kurabilir / iptal edebilirsiniz</value>
   </data>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
-    <value>Continua en el centro</value>
+    <value>Merkezi dolu</value>
   </data>
   <data name="StyleOption_No" xml:space="preserve">
-    <value>No</value>
+    <value>Hayır</value>
   </data>
   <data name="StyleOption_Yes" xml:space="preserve">
-    <value>Sí</value>
+    <value>Evet</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Mantener presionada la tecla {0} para crear un paso de peatones</value>
+    <value>Yaya geçidi oluşturmak için {0} tuşuna basılı tutun</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Mantener presionada la tecla {0} para crear un relleno</value>
+    <value>Dolgu oluşturmak için {0} tuşuna basılı tutun</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Arrastrar con la tecla {0} para mover el punto</value>
+    <value>Noktayı {0} kullanarak sürükleyin</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
-    <value>No se puede deshacer esta acción.</value>
+    <value>Bu işlem geri alınamaz.</value>
   </data>
   <data name="LineStyle_Empty" xml:space="preserve">
-    <value>Vacía</value>
+    <value>Boş</value>
   </data>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
-    <value>Crear líneas de los bordes</value>
+    <value>Kenar şeritleri oluştur</value>
   </data>
   <data name="Panel_CreateEdgeLines" xml:space="preserve">
-    <value>Crear líneas de los bordes</value>
+    <value>Kenar şeritleri oluştur</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
-    <value>Restablecer el desplazamiento de todos los puntos</value>
+    <value>Tüm nokta merkezlerini sıfırla</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
-    <value>Configuración rápida de bordes del paso de peatones</value>
+    <value>Hızlı yaya geçidi kenarı ayarla</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Las marcas debajo del carril</value>
+    <value>Yol altı işaretler</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
-    <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>
+    <value>Dikkat: bu özellik oyundaki parçaların görüntüleme mesafesini değiştirir</value>
   </data>
   
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
-    <value>Guardar como recurso</value>
+    <value>Kaydet</value>
   </data>
   <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
-    <value>{0}
-de {1}</value>
+    <value>{1} kullanıcısından {0}</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
-    <value>La lista de preajustes está vacía.
-Para crear un preajuste, haga clic en «{0}» en la cabecera del panel.</value>
+    <value>Ön ayarlar listesi boş.
+Yeni ön ayar oluşturmak için panel başlığında {0} tuşunu kullanın.</value>
   </data>
   <data name="PresetEditor_Presets" xml:space="preserve">
-    <value>Preajustes</value>
+    <value>Ön ayarlar</value>
   </data>
   <data name="Panel_SaveAsPreset" xml:space="preserve">
-    <value>Guardar como preajuste</value>
+    <value>Ön ayar olarak kaydet</value>
   </data>
   <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
-    <value>Guardar como preajuste</value>
+    <value>Ön ayar olarak kaydet</value>
   </data>
   <data name="HeaderPanel_NoPresets" xml:space="preserve">
-    <value>No hay preajustes</value>
+    <value>Sablon yok</value>
   </data>
   <data name="PresetEditor_ApplyPreset" xml:space="preserve">
-    <value>Aplicar preajuste</value>
+    <value>Ön ayar uygula</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
-    <value>Nuevo preajuste</value>
+    <value>Yeni ön ayar</value>
   </data>
   <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Salir del modo de aplicación de preajustes</value>
+    <value>Ön ayar modunda çık</value>
   </data>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>¿Quiere aplicar un preajuste?</value>
+    <value>Ön ayar uygulamak ister misiniz?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
-    <value>Autor</value>
+    <value>Tasarımcı</value>
   </data>
   <data name="Settings_ApplyAfterRestart" xml:space="preserve">
-    <value>Se aplica después del reinicio del juego</value>
+    <value>Oyun yeniden başlatıldıktan sonra uygula</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
-    <value>Cargar recursos de marcas</value>
+    <value>İşaretleri yükle</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
-    <value>Pasos de peatones:</value>
+    <value>Yaya geçitleri:</value>
   </data>
   <data name="PresetInfo_Fillers" xml:space="preserve">
-    <value>Rellenos:</value>
+    <value>Dolgu:</value>
   </data>
   <data name="PresetInfo_Lines" xml:space="preserve">
-    <value>Líneas:</value>
+    <value>Şeritler:</value>
   </data>
   <data name="PresetInfo_NoScreenshot" xml:space="preserve">
-    <value>No hay captura de pantalla</value>
+    <value>Ekran görüntüsü yok</value>
   </data>
   <data name="PresetInfo_RoadPoints" xml:space="preserve">
-    <value>Puntos de carretera #{0}:</value>
+    <value>Yol puanı: #{0}</value>
   </data>
   <data name="PresetInfo_Roads" xml:space="preserve">
-    <value>Carreteras:</value>
+    <value>Yollar:</value>
   </data>
   <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
-    <value>Cortar nueva línea por los pasos de peatones</value>
+    <value>Yeni şeriti yaya geçidinden kes</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
-    <value>Cortar líneas por este paso de peatones</value>
+    <value>Şeritleri bu yaya geçidinden kes</value>
   </data>
   <data name="Settings_BackupPresets" xml:space="preserve">
-    <value>Copia de seguridad de preajustes</value>
+    <value>Ön ayarları yedekle</value>
   </data>
   <data name="Settings_DeletePresetsButton" xml:space="preserve">
-    <value>Borrar todos los preajustes</value>
+    <value>Tüm ön tanımlı ayarları sil</value>
   </data>
   <data name="Settings_DeletePresetsCaption" xml:space="preserve">
-    <value>Borrar todos los preajustes</value>
+    <value>Tüm ön tanımlı ayarları sil</value>
   </data>
   <data name="Settings_DeletePresetsMessage" xml:space="preserve">
-    <value>¿De verdad quieres borrar todos los preajustes?</value>
+    <value>Tüm ön ayarları kaldırmak istiyor musunuz?</value>
   </data>
   <data name="Settings_DumpPresetsButton" xml:space="preserve">
-    <value>Exportar los preajustes al archivo</value>
+    <value>Ön ayarları dosyaya yükle</value>
   </data>
   <data name="Settings_DumpPresetsCaption" xml:space="preserve">
-    <value>Exportar los preajustes</value>
+    <value>Ön ayarları yükle</value>
   </data>
   <data name="Settings_RestorePresetsButton" xml:space="preserve">
-    <value>Recuperar preajustes desde archivo</value>
+    <value>Ön ayarları geri yükle</value>
   </data>
   <data name="Settings_RestorePresetsCaption" xml:space="preserve">
-    <value>Recuperar los preajustes</value>
+    <value>Ön ayaları yeniden yükle</value>
   </data>
   <data name="Settings_RestorePresetsMessage" xml:space="preserve">
-    <value>¿De verdad deseas recuperar los preajustes?
-Los preajustes restaurados reemplazarán todos los preajustes existentes.</value>
+    <value>Ön ayarları yüklemek istediğinize emin misiniz?
+Yeni ön ayarlar eskilerinin yerine geçecektir.</value>
   </data>
   <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
-    <value>Recuperación fallida</value>
+    <value>Ön ayar geri yüklenemedi</value>
   </data>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
-    <value>Los preajustes se han recuperado con éxito</value>
+    <value>Ön ayar başarıyla aktarıldı</value>
   </data>
   <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
-    <value>Cortar líneas por todos pasos de peatones</value>
+    <value>Şeritleri tüm yaya geçidinden kes</value>
   </data>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
-    <value>Cortar líneas por todos pasos de peatones</value>
+    <value>Şeritleri tüm yaya geçidinden kes</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>Reescribir recurso de preajuste</value>
+    <value>Ön ayar varlığını tekrar yaz</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>Para cambiar su nombre, es necesario reescribir el archivo de recursos. ¿Seguir?</value>
+    <value>Dosyanın ismini değiştirmek tekrar yazmayı gerektirir, emin misiniz?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>Reescribir recurso de plantilla</value>
+    <value>Şablon bilgileri yeniden yazılıyor</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Para cambiar su nombre y valores, es necesario reescribir el archivo de recursos. ¿Seguir?</value>
+    <value>Dosyanın ismini ve değerlerini değiştirmek tekrar yazmayı gerektirir, emin misiniz?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
-    <value>Para poder establecer los bordes del paso de peatones, debe tener líneas que comienzan desde los mismos puntos que el paso de peatones</value>
+    <value>Yaya geçidi sınırları koyabilmek için, noktalarınız kaldırımla aynı yerden başlamalıdır</value>
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
-    <value>Debe tener líneas que se crucen con esta línea para poder cambiar los puntos "Desde" y "Hasta" de la regla y crear reglas adicionales.</value>
+    <value>Kaynak ve hedef kuralını değiştirmek ve yeni kural eklemek için bu yolla kesişen şeritler olmalı.</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
-    <value>Mostrar sugerencias en el panel</value>
+    <value>Panelde ipuçları göster</value>
   </data>
   <data name="HeaderPanel_Edit" xml:space="preserve">
-    <value>Editar</value>
+    <value>Düzenle</value>
   </data>
   <data name="HeaderPanel_Save" xml:space="preserve">
-    <value>Guardar los cambios</value>
+    <value>Değişikleri kaydet</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
-    <value>No guarde los cambios</value>
+    <value>Değişiklikleri kaydetme</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
-    <value>¿Quieres guardar el cambio del nombre del preajuste?</value>
+    <value>Ön ayarların ismi değişecek, emin misiniz?</value>
   </data>
   <data name="TemplateEditor_SaveChanges" xml:space="preserve">
-    <value>Guardar los cambios</value>
+    <value>Değişikleri kaydet</value>
   </data>
   <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
-    <value>¿Quieres guardar los cambios en los valores de la plantilla?</value>
+    <value>Şablon değişikliklerini kaydetmek ister misiniz?</value>
   </data>
   <data name="PresetEditor_NameExistMessage" xml:space="preserve">
-    <value>El nombre "{0}" ya lo utiliza otro preajuste.
-¿Está seguro de que desea tener varios preajustes con el mismo nombre?</value>
+    <value>Bu ön ayar için verdiğiniz {0} ismi zaten kullanımda.
+Aynı isimde birden fazla ön ayar istediğinize emin misiniz?</value>
   </data>
   <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>Solo se puede eliminar del administrador de contenido del juego.</value>
+    <value>Dosya yalnızda oyunun dosya yöneticisinden silinebilir.</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Este preajusto no se puede modificar. Solo se puede eliminar del administrador de contenido del juego o cancelar la suscripción en Steam Workshop.</value>
+    <value>Bu ön ayar değiştirilememektedir. Yalnızca oyunun dosya yöneticisinden silebilir veya Steam Atölyesinden aboneliğinizi kaldırabilirsiniz.</value>
   </data>
   <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
-    <value>Este preajusto es un recurso.</value>
+    <value>Bu ön ayar bir dosyaya bağlı.</value>
   </data>
   <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>Solo se puede eliminar del administrador de contenido del juego.</value>
+    <value>Dosya yalnızda oyunun dosya yöneticisinden silinebilir.</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Esta plantilla no se puede modificar. Solo se puede eliminar del administrador de contenido del juego o cancelar la suscripción en Steam Workshop.</value>
+    <value>Bu ön ayar değiştirilememektedir. Yalnızca oyunun dosya yöneticisinden silebilir veya Steam Atölyesinden aboneliğinizi kaldırabilirsiniz.</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
-    <value>Esta plantilla es un recurso.</value>
+    <value>Bu ön ayar bir dosyaya bağlı.</value>
   </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>preajusto</value>
+    <value>ön ayar</value>
   </data>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>preajusto</value>
+    <value>ön ayar</value>
   </data>
   
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
-    <value>Este tipo de línea no apoya reglas</value>
+    <value>Bu şerit kurallara uygun değil</value>
   </data>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
-    <value>No corte línea por paso de peatones si es su confine</value>
+    <value>Şeritleri eğer kenarları yaya geçidindeyse kesmeyin</value>
   </data>
   <data name="Template_UnknownAuthor" xml:space="preserve">
-    <value>Autor desconocido</value>
+    <value>Bilinmeyen yazar</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>- Mejorados mensajes de errores al cargar datos de marcado.
-- Traducciones fijas y actualizadas.</value>
-  </data>
+  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>La carga se completó con errores. Fallo al cargar las marcas para todas las {0} intersecciones.</value>
+    <value>Yükleme sırasında hata oldu.
+Tüm kesişimlerin işaretleri yüklenemedi.</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
-    <value>Editar las marcas del segmento #{0}</value>
+    <value>#{0} sektörünün işaretlerini değiştir</value>
   </data>
   <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Césped</value>
+    <value>Çimen</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Acera</value>
+    <value>Kaldırım</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
-    <value>Elevación</value>
+    <value>Yükseklik</value>
   </data>
   <data name="LineStyle_Elevation" xml:space="preserve">
-    <value>Elevación</value>
+    <value>Yükseklik</value>
   </data>
   <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Césped</value>
+    <value>Çimen</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
-    <value>Acera</value>
+    <value>Kaldırım</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
-    <value>Distancia LOD</value>
+    <value>Yüksekliğe bağlı görüş mesafesi</value>
   </data>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
-    <value>Segmento #{0}
-Haga clic para editar las marcas</value>
+    <value>#{0} Sektörü
+İşaretleri düzenlemek için tıklayın</value>
   </data>
   <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Sigue las pautas</value>
+    <value>Rehberi takip edin</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Pauta izquierda</value>
+    <value>Sol rehber</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Pauta derecha</value>
+    <value>Sağ rehber</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
-    <value>Seleccione el primer punto de la pauta o una línea como pauta</value>
+    <value>İlk rehber noktasını veya bir şeriti rehber olarak seçmek için tıkla</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
-    <value>Seleccione el segundo punto de la pauta</value>
+    <value>Rehber için ikinci bir nokta seçin</value>
   </data>
   
   
   
   <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Numero de colores</value>
+    <value>Renk sayısı</value>
   </data>
   <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Uno</value>
+    <value>Bir</value>
   </data>
   <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Dos</value>
+    <value>İki</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
-    <value>Desde el portapapeles</value>
+    <value>Panodan</value>
   </data>
   <data name="LineEditor_LineAlignment" xml:space="preserve">
-    <value>Alineamento de línea</value>
+    <value>Şeriti hizala</value>
   </data>
   <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
-    <value>Dividir en dos</value>
+    <value>İkiye böl</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
-    <value>Desplazamiento del puntos divididos</value>
+    <value>Merkezi böl</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
-    <value>Agrupar puntos</value>
+    <value>Nokta grupları</value>
   </data>
   <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
-    <value>Aplicar entre intersecciones</value>
+    <value>Kesişimler arasında uygula</value>
   </data>
   <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
-    <value>Aplicar entre intersecciones</value>
+    <value>Kesişimler arasında uygula</value>
   </data>
   <data name="Panel_ApplyWholeStreet" xml:space="preserve">
-    <value>Aplicar a toda la calle</value>
+    <value>Tüm caddeye uygula</value>
   </data>
   <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
-    <value>Aplicar a toda la calle</value>
+    <value>Tüm sokağa uygula</value>
   </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
-    <value>Reemplazará las marcas existentes.</value>
+    <value>Bunu yapmak var olan işaretleri değiştirecektir.</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
-    <value>Aplicar marcas entre intersecciones</value>
+    <value>Kesişimler arasına işaret uygula</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
-    <value>¿De verdad quieres applicar marcas entre intersecciones?</value>
+    <value>Gerçekten kesişimler arasında işaret uygulamak istiyor musunuz?</value>
   </data>
   <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
-    <value>Aplicar marcas a toda la calle</value>
+    <value>İşaretleri tüm caddeye uygula</value>
   </data>
   <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
-    <value>¿De verdad quieres applicar marcas a toda "{0}"?</value>
+    <value>{0} bölgesinin tamamına işaret uygulanacak, emin misiniz?</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
-    <value>Arrastre detrás del punto para línea perpendicular</value>
+    <value>Dik şeritler için noktanın arkasına tutup sürükleyin</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
-    <value>Seleccione punto final para línea normal o transversal</value>
+    <value>Düz şerit veya şerit sonu için bitme noktası seçin</value>
   </data>
   
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
-    <value>Alineamento de extremo de línea</value>
+    <value>Şerit sonunu hizala</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
-    <value>Alineamento de inicio de línea</value>
+    <value>Şerit başını hizala</value>
   </data>
   
   
   
   
   <data name="Settings_HideStreetName" xml:space="preserve">
-    <value>Esconder nombres de vías al usar la herramienta</value>
+    <value>Aracı kullanırken sokak isimlerini kapat</value>
   </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
-    <value>Pavimento</value>
+    <value>Kaldırım</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Clic con la tecla {0} para seleccionar el paso de peatones</value>
+    <value>Yaya geçidi seçmek için {0} tuşuyla beraber tıklayın</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Clic con la tecla {0} para seleccionar la línea</value>
+    <value>Şeritleri seçmek için {0} tuşuyla beraber tıklayın</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Grava</value>
+    <value>Çakıl</value>
   </data>
   <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Acantilado</value>
+    <value>Uçurum</value>
   </data>
   <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Arruinada</value>
+    <value>Harabe olmuş</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Desplazamiento desde líneas</value>
+    <value>Şeritleri ayarla</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
-    <value>Radio de esquina</value>
+    <value>Köşe yarıçapı</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Radio de esquina en las medianas</value>
+    <value>Medyanın kenar çapı</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>Tamaño del bordillo</value>
+    <value>Kaldırım Genişliği</value>
   </data>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Tamaño del bordillo en las medianas</value>
+    <value>Medyanlardaki kaldırım genişliği</value>
   </data>
   
   
   <data name="HeaderPanel_Discard" xml:space="preserve">
-    <value>Descartar</value>
+    <value>Çıkart</value>
   </data>
 </root>
