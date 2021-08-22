@@ -157,9 +157,9 @@ namespace NodeMarkup.UI.Editors
                 ItemsPanel.SelectObject(null);
         }
 
-        public virtual void Add(ObjectType deleteObject)
+        public virtual void Add(ObjectType addObject)
         {
-            ItemsPanel.AddObject(deleteObject);
+            ItemsPanel.AddObject(addObject);
             SwitchEmptyMessage();
         }
         public virtual void Delete(ObjectType deleteObject)
