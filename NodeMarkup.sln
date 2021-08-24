@@ -105,6 +105,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ToolPanelShared", "ModsComm
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeShared.ko", "ModsCommon\LocalizeShared\LocalizeShared.ko.shproj", "{D75D6301-BF72-4211-837A-0CA68FC63BD1}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeShared.tr", "ModsCommon\LocalizeShared\LocalizeShared.tr.shproj", "{622BD7D2-4AF0-4338-B138-E0C9129D278D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ModsCommon\LocalizeShared\LocalizeShared.pl.projitems*{0814bfcf-bb66-493c-8dd9-ca17ee904afa}*SharedItemsImports = 13
@@ -124,6 +126,7 @@ Global
 		ModsCommon\MultyAtlasButton\MultyAtlasButton.projitems*{423f5152-7a64-4db3-9979-74d61efe365a}*SharedItemsImports = 13
 		ModsCommon\CustomUIShared\CustomUIShared.projitems*{4a794b1d-48be-4352-92d0-9d897393587c}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.it.projitems*{584b2b88-0679-4b6d-bd78-ba9719671229}*SharedItemsImports = 13
+		ModsCommon\LocalizeShared\LocalizeShared.tr.projitems*{622bd7d2-4af0-4338-b138-e0c9129d278d}*SharedItemsImports = 13
 		ModsCommon\NetExtension\NetExtension.projitems*{69f65522-1ccc-4c9f-8989-8155708c1832}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.zh-CN.projitems*{6d76ce46-51a4-4596-8e5b-03261089bedd}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.pt.projitems*{7bb4ecd0-3aa5-4dfb-9c2a-37204213c1c5}*SharedItemsImports = 13
@@ -151,6 +154,7 @@ Global
 		ModsCommon\LocalizeShared\LocalizeShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\LocalizeShared\LocalizeShared.pt.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\LocalizeShared\LocalizeShared.ru.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\LocalizeShared\LocalizeShared.tr.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\LocalizeShared\LocalizeShared.zh-CN.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\LoggerShared\LoggerShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\MathExtension\MathExtension.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
@@ -280,13 +284,14 @@ Global
 		{0D1F0D85-8CD7-4D10-9737-173027D169CE} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
 		{26556E31-5639-4425-9BAD-B0079296BCE2} = {4125F182-993C-4202-B831-6E2CF801EDBE}
 		{D75D6301-BF72-4211-837A-0CA68FC63BD1} = {78F18B58-7B26-46A8-B934-FFFE6DD7B29E}
+		{622BD7D2-4AF0-4338-B138-E0C9129D278D} = {78F18B58-7B26-46A8-B934-FFFE6DD7B29E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2000/1/1
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
-		RESX_ExcelExportMode = MultipleSheets
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ConfirmAddLanguageFile = True
 		RESX_RemoveEmptyEntries = False
+		RESX_ConfirmAddLanguageFile = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ExcelExportMode = MultipleSheets
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		BuildVersion_StartDate = 2000/1/1
 	EndGlobalSection
 EndGlobal
