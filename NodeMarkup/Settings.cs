@@ -98,6 +98,7 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
             AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
             AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
+            AddToolButton<NodeMarkupTool, NodeMarkupButton>(group);
             AddCheckBox(group, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
             AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);
             AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
