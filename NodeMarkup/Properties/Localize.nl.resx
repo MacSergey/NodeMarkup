@@ -1277,10 +1277,64 @@ Klik om de markering te wijzigen</value>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
     <value>Hoekstraal op mediaan</value>
   </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>Kromming grootte</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>Kromming grootte op medianen</value>
+  </data>
   
   
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Ontdoen</value>
+  </data>
   
-  
-  
-  
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Sorteringen</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Sortering voorinstellingen</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Op naam</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Op weg aantal, daarna op naam</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Op auteur, daarna bij type en vervolgens op naam</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Op naam, daarna op type</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Op type, daarna op naam</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Sorteer de sjablonen</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Op auteur, daarna op type en vervolgens op naam</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Op naam, daarna op type</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Op type, daarna op naam</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Weergeef standaard sjablonen bovenaan de toepassingenlijst</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Sorteer de sjablonen in de toepassingenlijst</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Verlichting bij het aanpassen van markeringen tijdens de nacht</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Verlichting sterkte</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Gameplay</value>
+  </data>
 </root>

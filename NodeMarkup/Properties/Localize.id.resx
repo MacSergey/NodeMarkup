@@ -1242,6 +1242,46 @@ Klik untuk mengedit markah</value>
   </data>
   
   
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Buangkan</value>
+  </data>
+  
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Pengurutan</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Urutkan prasetelan</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Dengan nama</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Dengan jumlah jalanan, terus dengan nama</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Dengan pengarang, terus dengan jenis, terus dengan nama</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Dengan nama, terus dengan jenis</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Dengan jenis, terus dengan nama</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Urutkan templat</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Berdasarkan pengarang, lalu jenis, lalu nama</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Berdasarkan nama, lalu berdasarkan jenis</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Berdasarkan jenis, lalu berdasarkan nama</value>
+  </data>
+  
+  
+  
   
   
 </root>

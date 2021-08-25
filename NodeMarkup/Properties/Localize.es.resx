@@ -1289,4 +1289,52 @@ Haga clic para editar las marcas</value>
     <value>Descartar</value>
   </data>
   
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Ordenar</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Ordenar preajustes</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Por nombres</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Por número de carreteras, luego por nombres</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Por autor, luego por tipo, luego por nombre</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Por nombre, luego por tipo</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Por tipo, luego por nombre</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Ordenar plantillas</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Por autor, luego por tipo, luego por nombre</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Por nombre, luego por tipo</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Por tipo, luego por nombre</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Mostrar plantillas predeterminadas al comienzo de la lista</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Ordenar plantillas en lista de preajustes</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Iluminación al editar marcas en la noche</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Intensidad de la luz</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Modo de juego</value>
+  </data>
 </root>

@@ -1232,4 +1232,52 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
     <value>Çıkart</value>
   </data>
   
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Sıralamalar</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Ön ayarları ayıkla</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>İsme göre</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Önce yol sayısı sonra isme göre</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Önce yaratıcı sonra yol sayısı sonra isme göre</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Önce isme sonra türe göre</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Önce türe sonra isme göre</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Şablonları sırala</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Önce yaratıcı sonra türüne sayısı sonra isme göre</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Önce isme sonra türe göre</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Önce türe sonra isme göre</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Varsayılan şablonları en yukarıda göster</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Şablonları uygulama listesinde sırala</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Akşam için işıklandırma</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Aydınlatma şiddeti</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Oynanış</value>
+  </data>
 </root>

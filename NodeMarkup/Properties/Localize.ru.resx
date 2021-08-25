@@ -1448,4 +1448,52 @@
 - Исправлена группировка линий.
 - Добавлен перевод на турецкий.</value>
   </data>
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Сортировки</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Сортировка шаблонов</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>По названию</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>По количеству дорог, затем по названию</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>По автору, затем по типу, затем по названию</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>По названию, затем по типу</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>По типу, затем по названию</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Сортировка шаблонов</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>По автору, затем по типу, затем по названию</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>По названию, затем по типу</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>По типу, затем по названию</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Показывать шаблоны по умолчанию в начале списка "Применить шаблон"</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Сортировка шаблонов в списке "Применить шаблон"</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Освещение перекрестка во время редактирования разметки ночью</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Интенсивность освещения</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Игровой процесс</value>
+  </data>
 </root>

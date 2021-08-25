@@ -1342,5 +1342,60 @@
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>不保存</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_8_2" xml:space="preserve">
+    <value>- 添加了创建样本/预设后的取消按钮
+- 工具提示加入了彩色文字
+- 使用UnifiedUI mod的话加入了隐藏原mod按钮的功能
+- 修复了项目移除后不会从列表中消失的问题
+- 修复了线段分组
+- 新增了土耳其语翻译</value>
+  </data>
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>排序预设：</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>按名称</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>按道路计数，再按名称</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>按作者名称，再按类别，再按名称</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>按名称，再按类别</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>按类别，再按名称</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>模版排序</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>按作者名称，再按类别，再按名称</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>按名称，再按类别</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>按类别，再按名称</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>默认模版总是显示在列表顶上</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>将应用列表中的模版排序</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>夜间标线发光</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>发光强度</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>游戏设置</value>
+  </data>
 </root>

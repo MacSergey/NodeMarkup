@@ -1352,4 +1352,52 @@ Klicken um die Markierungen zu bearbeiten</value>
     <value>Verwerfen</value>
   </data>
   
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Sortierungen</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Kreuzungsvorlagen sortieren</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Nach Namen</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Nach Anzahl der Straßen, dann nach Namen</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Nach Author, dann nach Typ, dann nach Name</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Nach Name, dann nach Typ</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Nach Typ, dann nach Namen</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Stilvorlagen sortieren</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Nach Author, dann nach Typ, dann nach Name</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Nach Name, dann nach Typ</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Nach Typ, dann nach Namen</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Zeige Standard Vorlagen oben in der Liste an</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Sortiere Vorlagen in der Anwendeliste</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Beleuchtung der Editiermarkierung in der Nacht</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Beleuchtungsstärke</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Spielmechanik</value>
+  </data>
 </root>
