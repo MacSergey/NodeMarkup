@@ -98,7 +98,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на There are no crosswalks at this intersection yet.
-        ///To create a crosswalk hold Shift..
+        ///To create a crosswalk hold {0}..
         /// </summary>
         public static string CrosswalkEditor_EmptyMessage {
             get {
@@ -515,7 +515,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на There are no fillers at this intersection yet.
-        ///To create a filler hold Alt or press {0}..
+        ///To create a filler hold {0} or press {1}..
         /// </summary>
         public static string FillerEditor_EmptyMessage {
             get {
@@ -1457,6 +1457,20 @@ namespace NodeMarkup {
         public static string Mod_WhatsNewMessage1_8_1 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_8_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added discard button after create template/preset.
+        ///- Added colored text to tooltips.
+        ///- Added the ability to hide original mod button in toolbar If you use UUI mod.
+        ///- Fixed not removed items from list when this items were removed.
+        ///- Fixed line grouping.
+        ///- Added Turkish translation..
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_8_2 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_8_2", resourceCulture);
             }
         }
         
@@ -2510,7 +2524,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Only if will affect others items.
+        ///   Ищет локализованную строку, похожую на Only if it affects other items.
         /// </summary>
         public static string Settings_ShowDeleteWarningsOnlyDependences {
             get {
@@ -3506,7 +3520,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Click with Ctrl to select the crosswalk.
+        ///   Ищет локализованную строку, похожую на Click with {0} to select the crosswalk.
         /// </summary>
         public static string Tool_InfoSelectCrosswalk {
             get {
@@ -3534,7 +3548,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Click with Ctrl to select the line.
+        ///   Ищет локализованную строку, похожую на Click with {0} to select the line.
         /// </summary>
         public static string Tool_InfoSelectLine {
             get {
@@ -3579,7 +3593,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Hold Shift to create a crosswalk.
+        ///   Ищет локализованную строку, похожую на Hold {0} to create a crosswalk.
         /// </summary>
         public static string Tool_InfoStartCreateCrosswalk {
             get {
@@ -3588,7 +3602,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Hold Alt to create a filler.
+        ///   Ищет локализованную строку, похожую на Hold {0} to create a filler.
         /// </summary>
         public static string Tool_InfoStartCreateFiller {
             get {
@@ -3597,7 +3611,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Drag with Ctrl to move the point.
+        ///   Ищет локализованную строку, похожую на Drag with {0} to move the point.
         /// </summary>
         public static string Tool_InfoStartDragPointMode {
             get {
