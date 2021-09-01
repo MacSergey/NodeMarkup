@@ -58,10 +58,20 @@ namespace NodeMarkup.UI.Editors
 
         public override int Compare(IntersectionTemplate x, IntersectionTemplate y)
         {
-            int result;
-            if ((result = x.Roads.CompareTo(y.Roads)) == 0)
-                result = x.Name.CompareTo(y.Name);
+            var result = 0;
+
+            if (Settings.SortPresetsType == 0)
+            {
+                if ((result = SortByRoads(x, y)) == 0)
+                    result = SortByName(x, y);
+            }
+            else if (Settings.SortPresetsType == 1)
+                result = SortByName(x, y);
+
             return result;
+
+            static int SortByRoads(IntersectionTemplate x, IntersectionTemplate y) => x.Roads.CompareTo(y.Roads);
+            static int SortByName(IntersectionTemplate x, IntersectionTemplate y) => x.Name.CompareTo(y.Name);
         }
 
         protected override void ItemHover(IntersectionTemplateItem item)

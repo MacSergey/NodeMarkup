@@ -47,6 +47,10 @@ namespace NodeMarkup
         public static SavedInt GroupTemplatesType { get; } = new SavedInt(nameof(GroupTemplatesType), SettingsFile, 0, true);
         public static SavedBool GroupPointsOverlay { get; } = new SavedBool(nameof(GroupPointsOverlay), SettingsFile, true, true);
         public static SavedInt GroupPointsOverlayType { get; } = new SavedInt(nameof(GroupPointsOverlayType), SettingsFile, 0, true);
+        public static SavedInt SortTemplatesType { get; } = new SavedInt(nameof(SortTemplatesType), SettingsFile, 0, true);
+        public static SavedInt SortPresetsType { get; } = new SavedInt(nameof(SortPresetsType), SettingsFile, 0, true);
+        public static SavedInt SortApplyType { get; } = new SavedInt(nameof(SortApplyType), SettingsFile, 0, true);
+        public static SavedBool DefaultTemlatesFirst { get; } = new SavedBool(nameof(DefaultTemlatesFirst), SettingsFile, true, true);
 
         protected UIAdvancedHelper ShortcutsTab => GetTab(nameof(ShortcutsTab));
         protected UIAdvancedHelper BackupTab => GetTab(nameof(BackupTab));
@@ -70,6 +74,7 @@ namespace NodeMarkup
             AddLanguage(GeneralTab);
             AddGeneral(GeneralTab);
             AddGrouping(GeneralTab);
+            AddSorting(GeneralTab);
             AddNotifications(GeneralTab);
 
             AddKeyMapping(ShortcutsTab);
@@ -116,6 +121,18 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_GroupLines, GroupLines, OnChanged);
             AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnChanged);
             AddCheckboxPanel(group, Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
+
+            static void OnChanged() => SingletonItem<NodeMarkupPanel>.Instance.UpdatePanel();
+        }
+        private void AddSorting(UIAdvancedHelper helper)
+        {
+            var group = helper.AddGroup(Localize.Settings_Sortings);
+
+            AddCheckboxPanel(group, Localize.Settings_SortPresetType, SortPresetsType, new string[] { Localize.Settings_SortPresetByRoadCount, Localize.Settings_SortPresetByNames }, OnChanged);
+            AddCheckboxPanel(group, Localize.Settings_SortTemplateType, SortTemplatesType, new string[] { Localize.Settings_SortTemplateByAuthor, Localize.Settings_SortTemplateByType, Localize.Settings_SortTemplateByNames }, OnChanged);
+            AddCheckboxPanel(group, Localize.Settings_SortApplyType, SortApplyType, new string[] { Localize.Settings_SortApplyByAuthor, Localize.Settings_SortApplyByType, Localize.Settings_SortApplyByNames });
+            AddCheckBox(group, Localize.Settings_SortApplyDefaultFirst, DefaultTemlatesFirst);
+
 
             static void OnChanged() => SingletonItem<NodeMarkupPanel>.Instance.UpdatePanel();
         }

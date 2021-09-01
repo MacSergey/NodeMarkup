@@ -1445,4 +1445,43 @@ Click to edit markings</value>
 - Fixed line grouping.
 - Added Turkish translation.</value>
   </data>
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Sortings</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Sort presets</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>By names</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>By road count, then by names</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>By author, then by type, then by name</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>By name, then by type</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>By type, then by name</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Sort templates</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>By author, then by type, then by name</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>By name, then by type</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>By type, then by name</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Show default templates at top of apply list</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Sort templates in apply list</value>
+  </data>
 </root>

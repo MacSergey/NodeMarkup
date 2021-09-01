@@ -91,13 +91,30 @@ namespace NodeMarkup.UI.Editors
         public override bool GroupingEnable => Settings.GroupTemplates.value;
         public override int Compare(StyleTemplate x, StyleTemplate y)
         {
-            int result;
+            var result = 0;
 
-            if ((result = (x.Asset?.Author ?? string.Empty).CompareTo(y.Asset?.Author ?? string.Empty)) == 0)
-                if ((result = x.Style.Type.CompareTo(y.Style.Type)) == 0)
-                    result = x.Name.CompareTo(y.Name);
+            if (Settings.SortTemplatesType == 0)
+            {
+                if ((result = SortByAuthor(x, y)) == 0)
+                    if ((result = SortByType(x, y)) == 0)
+                        result = SortByName(x, y);
+            }
+            else if (Settings.SortTemplatesType == 1)
+            {
+                if ((result = SortByType(x, y)) == 0)
+                    result = SortByName(x, y);
+            }
+            else if (Settings.SortTemplatesType == 2)
+            {
+                if ((result = SortByName(x, y)) == 0)
+                    result = SortByType(x, y);
+            }
 
             return result;
+
+            static int SortByAuthor(StyleTemplate x, StyleTemplate y) => (x.Asset?.Author ?? string.Empty).CompareTo(y.Asset?.Author ?? string.Empty);
+            static int SortByType(StyleTemplate x, StyleTemplate y) => x.Style.Type.CompareTo(y.Style.Type);
+            static int SortByName(StyleTemplate x, StyleTemplate y) => x.Name.CompareTo(y.Name);
         }
         public override int Compare(Style.StyleType x, Style.StyleType y) => x.CompareTo(y);
 

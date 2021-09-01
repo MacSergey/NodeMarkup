@@ -4,6 +4,7 @@ using ModsCommon.UI;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -40,10 +41,11 @@ namespace NodeMarkup.UI.Editors
     public class ApplyTemplatePopupPanel : PopupPanel
     {
         public event Action<StyleTemplate> OnSelectTemplate;
+        private static TemplateComparer Comparer { get; } = new TemplateComparer();
 
         public void Fill(Style.StyleType group)
         {
-            var templates = SingletonManager<StyleTemplateManager>.Instance.GetTemplates(group).OrderByDescending(t => t.IsDefault).ThenBy(t => t.Asset?.Author ?? string.Empty).ThenBy(t => t.Style.Type).ThenBy(t => t.Name).ToArray();
+            var templates = SingletonManager<StyleTemplateManager>.Instance.GetTemplates(group).OrderBy(t => t, Comparer).ToArray();
             if (!templates.Any())
             {
                 var emptyLabel = Content.AddUIComponent<CustomUILabel>();
@@ -68,6 +70,42 @@ namespace NodeMarkup.UI.Editors
         {
             if (component is TemplatePopupItem item)
                 OnSelectTemplate?.Invoke(item.Object);
+        }
+
+        private class TemplateComparer : IComparer<StyleTemplate>
+        {
+            public int Compare(StyleTemplate x, StyleTemplate y)
+            {
+                var result = Settings.DefaultTemlatesFirst ? SortByDefault(x, y) : 0;
+
+                if (result == 0)
+                {
+                    if (Settings.SortApplyType == 0)
+                    {
+                        if ((result = SortByAuthor(x, y)) == 0)
+                            if ((result = SortByType(x, y)) == 0)
+                                result = SortByName(x, y);
+                    }
+                    else if (Settings.SortApplyType == 1)
+                    {
+                        if ((result = SortByType(x, y)) == 0)
+                            result = SortByName(x, y);
+                    }
+                    else if (Settings.SortApplyType == 2)
+                    {
+                        if ((result = SortByName(x, y)) == 0)
+                            result = SortByType(x, y);
+                    }
+                }
+
+                return result;
+
+
+                static int SortByDefault(StyleTemplate x, StyleTemplate y) => -x.IsDefault.CompareTo(y.IsDefault);
+                static int SortByAuthor(StyleTemplate x, StyleTemplate y) => (x.Asset?.Author ?? string.Empty).CompareTo(y.Asset?.Author ?? string.Empty);
+                static int SortByType(StyleTemplate x, StyleTemplate y) => x.Style.Type.CompareTo(y.Style.Type);
+                static int SortByName(StyleTemplate x, StyleTemplate y) => x.Name.CompareTo(y.Name);
+            }
         }
     }
 

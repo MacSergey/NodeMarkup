@@ -2542,6 +2542,123 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на By author, then by type, then by name.
+        /// </summary>
+        public static string Settings_SortApplyByAuthor {
+            get {
+                return ResourceManager.GetString("Settings_SortApplyByAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на By name, then by type.
+        /// </summary>
+        public static string Settings_SortApplyByNames {
+            get {
+                return ResourceManager.GetString("Settings_SortApplyByNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на By type, then by name.
+        /// </summary>
+        public static string Settings_SortApplyByType {
+            get {
+                return ResourceManager.GetString("Settings_SortApplyByType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Show default templates at top of apply list.
+        /// </summary>
+        public static string Settings_SortApplyDefaultFirst {
+            get {
+                return ResourceManager.GetString("Settings_SortApplyDefaultFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Sort templates in apply list.
+        /// </summary>
+        public static string Settings_SortApplyType {
+            get {
+                return ResourceManager.GetString("Settings_SortApplyType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Sortings.
+        /// </summary>
+        public static string Settings_Sortings {
+            get {
+                return ResourceManager.GetString("Settings_Sortings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на By names.
+        /// </summary>
+        public static string Settings_SortPresetByNames {
+            get {
+                return ResourceManager.GetString("Settings_SortPresetByNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на By road count, then by names.
+        /// </summary>
+        public static string Settings_SortPresetByRoadCount {
+            get {
+                return ResourceManager.GetString("Settings_SortPresetByRoadCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Sort presets.
+        /// </summary>
+        public static string Settings_SortPresetType {
+            get {
+                return ResourceManager.GetString("Settings_SortPresetType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на By author, then by type, then by name.
+        /// </summary>
+        public static string Settings_SortTemplateByAuthor {
+            get {
+                return ResourceManager.GetString("Settings_SortTemplateByAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на By name, then by type.
+        /// </summary>
+        public static string Settings_SortTemplateByNames {
+            get {
+                return ResourceManager.GetString("Settings_SortTemplateByNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на By type, then by name.
+        /// </summary>
+        public static string Settings_SortTemplateByType {
+            get {
+                return ResourceManager.GetString("Settings_SortTemplateByType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Sort templates.
+        /// </summary>
+        public static string Settings_SortTemplateType {
+            get {
+                return ResourceManager.GetString("Settings_SortTemplateType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Stop lines modifier.
         /// </summary>
         public static string Settings_StopLinesModifier {
