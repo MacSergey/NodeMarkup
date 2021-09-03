@@ -2080,6 +2080,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Gameplay.
+        /// </summary>
+        public static string Settings_Gameplay {
+            get {
+                return ResourceManager.GetString("Settings_Gameplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Groupings.
         /// </summary>
         public static string Settings_Groupings {
@@ -2166,6 +2175,24 @@ namespace NodeMarkup {
         public static string Settings_HideStreetName {
             get {
                 return ResourceManager.GetString("Settings_HideStreetName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Illumination of editing marking at night.
+        /// </summary>
+        public static string Settings_IlluminationAtNight {
+            get {
+                return ResourceManager.GetString("Settings_IlluminationAtNight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Illumination intensity.
+        /// </summary>
+        public static string Settings_IlluminationIntensity {
+            get {
+                return ResourceManager.GetString("Settings_IlluminationIntensity", resourceCulture);
             }
         }
         

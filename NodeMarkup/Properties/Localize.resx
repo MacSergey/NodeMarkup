@@ -1484,4 +1484,13 @@ Click to edit markings</value>
   <data name="Settings_SortApplyType" xml:space="preserve">
     <value>Sort templates in apply list</value>
   </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Illumination of editing marking at night</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Illumination intensity</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Gameplay</value>
+  </data>
 </root>

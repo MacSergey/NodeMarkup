@@ -78,5 +78,7 @@ namespace NodeMarkup.Tools
             { m_service: ItemClass.Service.PublicTransport, m_subService: ItemClass.SubService.PublicTransportPlane } => true,
             _ => false,
         };
+
+        public override void RenderGeometry(RenderManager.CameraInfo cameraInfo) => RenderLight(cameraInfo);
     }
 }

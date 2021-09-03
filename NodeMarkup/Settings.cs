@@ -51,6 +51,8 @@ namespace NodeMarkup
         public static SavedInt SortPresetsType { get; } = new SavedInt(nameof(SortPresetsType), SettingsFile, 0, true);
         public static SavedInt SortApplyType { get; } = new SavedInt(nameof(SortApplyType), SettingsFile, 0, true);
         public static SavedBool DefaultTemlatesFirst { get; } = new SavedBool(nameof(DefaultTemlatesFirst), SettingsFile, true, true);
+        public static SavedBool IlluminationAtNight { get; } = new SavedBool(nameof(IlluminationAtNight), SettingsFile, true, true);
+        public static SavedInt IlluminationIntensity { get; } = new SavedInt(nameof(IlluminationIntensity), SettingsFile, 10, true);
 
         protected UIAdvancedHelper ShortcutsTab => GetTab(nameof(ShortcutsTab));
         protected UIAdvancedHelper BackupTab => GetTab(nameof(BackupTab));
@@ -105,13 +107,25 @@ namespace NodeMarkup
             AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddToolButton<NodeMarkupTool, NodeMarkupButton>(group);
             AddCheckBox(group, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
-            AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);
-            AddCheckboxPanel(group, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
-            AddCheckBox(group, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
-            AddCheckBox(group, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
-            AddCheckBox(group, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
-            AddCheckBox(group, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
+            AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);          
             AddCheckBox(group, Localize.Settings_HideStreetName, HideStreetName);
+
+            UIPanel intensityField = null;
+            AddCheckBox(group, Localize.Settings_IlluminationAtNight, IlluminationAtNight, OnIlluminationChanged);
+            intensityField = AddIntField(group, Localize.Settings_IlluminationIntensity, IlluminationIntensity, 10, 1, 30, padding: 25);          
+            OnIlluminationChanged();
+
+            var gameplayGroup = helper.AddGroup(Localize.Settings_Gameplay);
+            AddCheckboxPanel(gameplayGroup, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
+            AddCheckBox(gameplayGroup, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
+            AddCheckBox(gameplayGroup, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
+            AddCheckBox(gameplayGroup, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
+            AddCheckBox(gameplayGroup, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
+
+            void OnIlluminationChanged()
+            {
+                intensityField.isVisible = IlluminationAtNight;
+            }
         }
         private void AddGrouping(UIAdvancedHelper helper)
         {
@@ -267,6 +281,7 @@ namespace NodeMarkup
         #region DEBUG
 #if DEBUG
         public static SavedBool ShowNodeContour { get; } = new SavedBool(nameof(ShowNodeContour), string.Empty, false);
+        public static SavedFloat IlluminationDelta { get; } = new SavedFloat(nameof(IlluminationDelta), SettingsFile, 1f, true);
 
         private void AddDebug(UIAdvancedHelper helper)
         {
@@ -279,6 +294,7 @@ namespace NodeMarkup
 
             var groupOther = helper.AddGroup("Nodes");
             AddCheckBox(groupOther, "Show node contour", ShowNodeContour);
+            AddFloatField(groupOther, "Delta", IlluminationDelta, 1f);
         }
 #endif
         #endregion

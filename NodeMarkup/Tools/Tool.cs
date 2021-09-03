@@ -413,7 +413,7 @@ namespace NodeMarkup.Tools
 
                 nodeId = ApplyToSegment(segmentId.Value, nodeId.Value, nearNodeId, farNodeId, info, config);
                 if (nodeId != null && !nodes.Contains(nodeId.Value))
-                    nodes.Add(nodeId.Value);                
+                    nodes.Add(nodeId.Value);
                 else
                     break;
             }
@@ -710,6 +710,24 @@ namespace NodeMarkup.Tools
         public virtual bool ShowPanel => true;
         protected NodeMarkupPanel Panel => SingletonItem<NodeMarkupPanel>.Instance;
         public Markup Markup => Tool.Markup;
+
+        public override void RenderGeometry(RenderManager.CameraInfo cameraInfo)
+        {
+            if (Settings.IlluminationAtNight)
+            {
+                var lightSystem = Singleton<RenderManager>.instance.lightSystem;
+                var intensity = Settings.IlluminationIntensity * MathUtils.SmoothStep(0.9f, 0.1f, lightSystem.DayLightIntensity);
+                if (intensity > 0.001f)
+                {
+#if DEBUG
+                    var position = Markup.CenterPosition + Vector3.up * Markup.CenterRadius * Settings.IlluminationDelta;
+#else
+                    var position = Markup.CenterPosition + Vector3.up * Markup.CenterRadius * 1.41f;
+#endif
+                    lightSystem.DrawLight(LightType.Spot, position, Vector3.down, Vector3.zero, Color.white, intensity, Markup.CenterRadius * 2f, 90f, 1f, false);
+                }
+            }
+        }
     }
     public enum ToolModeType
     {
