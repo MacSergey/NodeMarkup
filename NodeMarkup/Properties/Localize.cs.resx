@@ -907,8 +907,12 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="StyleOption_Yes" xml:space="preserve">
     <value>Ano</value>
   </data>
-  
-  
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Podržte {0} Shift pro vytvoření přechodu</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Podržte {0} pro vytvoření výplně</value>
+  </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Táhněte s {0} pro posun bodu</value>
   </data>
@@ -1296,5 +1300,21 @@ Klikněte pro změnu značení</value>
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Zahodit</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 </root>

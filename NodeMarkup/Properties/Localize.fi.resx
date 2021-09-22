@@ -1294,6 +1294,56 @@ Napauta muokataksesi merkintöjä</value>
   </data>
   
   
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Hylkää</value>
+  </data>
   
-  
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Järjestely</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Järjestä esiasetukset</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Nimen mukaan</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Teiden määrän ja nimen mukaan</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Tekijän, tyypin ja nimen mukaan</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Nimen ja tyypin mukaan</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Tyypin ja nimen mukaan</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Järjestä mallit</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Tekijän, tyypin ja nimen mukaan</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Nimen ja tyypin mukaan</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Tyypin ja nimen mukaan</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Näytä oletukset listan alussa</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Lajittele mallit luettelossa</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Valo merkintöjen muokkaamiseen öisin</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Valon voimakkuus</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Pelaaminen</value>
+  </data>
 </root>

@@ -1436,5 +1436,60 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Scarta</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_8_2" xml:space="preserve">
+    <value>- Aggiunto il pulsante di scarto dopo aver creato il modello/predefinito.
+- Aggiunto testo colorato ai suggerimenti.
+- Aggiunta la possibilità di nascondere il pulsante mod originale nella barra degli strumenti Se usi il mod UUI.
+- Risolto il problema con gli elementi non rimossi dall'elenco quando questi elementi venivano rimossi.
+- Raggruppamento linea fissa.
+- Aggiunta la traduzione in turco.</value>
+  </data>
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Ordinamento</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Ordina predefiniti</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Per nome</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Per conteggio delle strade, poi per nomi</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Per autore, poi per tipo, poi per nome</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Per nome, poi per tipo</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Per tipo, poi per nome</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Ordina modelli</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Per autore, poi per tipo, poi per nome</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Per nome, poi per tipo</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Per tipo, poi per nome</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Mostra i modelli predefiniti in cima all'elenco delle applicazioni</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Ordina i modelli nell'elenco delle applicazioni</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Illuminazione dell'editore del marcatore, di notte</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Intensità illuminazione</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Dinamica di gioco</value>
+  </data>
 </root>

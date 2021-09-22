@@ -1287,6 +1287,56 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   
   
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Odrzuć</value>
+  </data>
   
-  
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Sortowania</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Presety sortowań</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Według nazwy</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Według liczby dróg, potem nazwy</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Według autora, potem typu, potem nazwy</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Według nazwy, potem typu</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Według typu, potem nazwy</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Sortuj szablony</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Według autora, potem typu, potem nazwy</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Według nazwy, potem typu</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Według typu, potem nazwy</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Pokazuj domyślne szablony na górze listy zastosowywania</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Sortuj szablony w liście zastosowywania</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Podświetlenie edytowanego oznaczenia w nocy</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Intensywność podświetlenia</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Rozgrywka</value>
+  </data>
 </root>

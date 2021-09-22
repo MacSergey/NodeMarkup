@@ -1324,4 +1324,52 @@ Cliquez pour modifier le marquage</value>
     <value>Annuler</value>
   </data>
   
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Tris</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Trier les préréglages</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Par nom</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Par le nombre de routes, puis par nom</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Par l'auteur, puis par le type et puis le nom</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Par le nom, puis par le type</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Par le type, puis par le nom</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Trier les modèles</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Par auteur, puis par type et puis par nom</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Par nom, puis par type</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Par type, puis par nom</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Afficher les modèles par défaut en haut de la liste</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Trier les modèles dans la liste</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Illumination de l'édition du marquage la nuit</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Intensité lumineuse</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Jouabilité</value>
+  </data>
 </root>

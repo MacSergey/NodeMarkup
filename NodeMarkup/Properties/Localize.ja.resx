@@ -121,10 +121,10 @@
     <value>{0} を削除しますか？</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>{0} - "{1}" を削除してもよろしいですか?</value>
+    <value>{0} - "{1}" を削除してもよろしいですか？</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>テンプレートを適用</value>
+    <value>テンプレートの適用</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
     <value>テンプレートの保存</value>
@@ -172,7 +172,7 @@
     <value>空白の長さ</value>
   </data>
   <data name="Editor_Style" xml:space="preserve">
-    <value>ラインの種類</value>
+    <value>スタイル</value>
   </data>
   <data name="LineRule_To" xml:space="preserve">
     <value>終点</value>
@@ -226,7 +226,7 @@
     <value>マップ上にある全てのマーキングを削除</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>マップ上にある、全てのマーキングを削除してもよろしいですか?</value>
+    <value>マップ上にある、全てのマーキングを削除してもよろしいですか？</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
     <value>マーキングデータをファイルに保存</value>
@@ -238,10 +238,10 @@
     <value>マーキングデータのダンプ出力</value>
   </data>
   <data name="Settings_DumpMessageFailed" xml:space="preserve">
-    <value>ダンプ出力に失敗しました</value>
+    <value>ダンプ出力に失敗しました。</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>ダンプ出力は正常に行われました</value>
+    <value>ダンプ出力は正常に行われました。</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
     <value>マーキングデータをファイルから復元</value>
@@ -254,16 +254,16 @@
 復元すると、既存のマーキングデータを全て置き換えます。</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
-    <value>マーキングデータの復元に失敗しました</value>
+    <value>マーキングデータの復元に失敗しました。</value>
   </data>
   <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
-    <value>マーキングデータの復元に成功しました</value>
+    <value>マーキングデータの復元に成功しました。</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
     <value>追加ルールのクイックセットアップ</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>マーキングの描画距離（m）</value>
+    <value>マーキングの描画距離(m)</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>削除前の確認方法</value>
@@ -284,7 +284,7 @@
     <value>マーキングを全て消去</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>ノード（セグメント） #{0} のマーキングを全て削除してもよろしいですか?</value>
+    <value>ノード(セグメント) #{0} のマーキングを全て削除してもよろしいですか？</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
     <value>クリックしてラインの追加</value>
@@ -297,13 +297,13 @@
 クリックしてマーキングの編集</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
-    <value>マーキングを編集する、ノード・セグメントを選択します</value>
+    <value>マーキングを編集したい、ノード・セグメントを選択</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>ラインの終点を選択</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>ポイントを選択して、ラインを作成・削除する</value>
+    <value>ポイントを選択して、ラインを作成＆削除</value>
   </data>
   
   <data name="Settings_Restore" xml:space="preserve">
@@ -349,13 +349,13 @@
     <value>角度</value>
   </data>
   <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>オフセット（ライン側）</value>
+    <value>オフセット(ライン側)</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>このポイントから塗り潰しを開始</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
-    <value>終点（開始）のポイントを選択して、塗り潰しを作成</value>
+    <value>終点(開始)のポイントを選択して、塗り潰しを作成</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
     <value>このポイントを選択して、次のポイントへ移動</value>
@@ -367,7 +367,7 @@
     <value>次のポイントを選択</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>オフセット（分離帯側）</value>
+    <value>オフセット(分離帯側)</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>コピー</value>
@@ -413,7 +413,7 @@
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>どこにも塗り潰しの設定がありません。
-{0}キーを押すか {1} で、塗り潰しを始めましょう。</value>
+{0} + 押下 or {1} で、塗り潰しを始めましょう。</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>テンプレートの一覧は空です。
@@ -523,7 +523,7 @@
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>どこにも横断歩道の設定がありません。
-{0}キーを押して、横断歩道を作成しましょう。</value>
+{0} + 押下で、横断歩道を作成しましょう。</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>横断歩道</value>
@@ -599,7 +599,7 @@
   </data>
   <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
     <value>追加したルールが重なっています。
-他と重なっている、始点と終点のポイントを確認してください。</value>
+重なっている、始点と終点のポイントを確認してください。</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
     <value>左側の基準線</value>
@@ -614,7 +614,7 @@
     <value>終点側のポイントを選択</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
-    <value>ポイントを選択して、横断歩道の作成・削除する</value>
+    <value>ポイントを選択して、横断歩道の作成＆削除</value>
   </data>
   <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
     <value>2本の破線</value>
@@ -655,7 +655,7 @@
     <value>チェス盤の横断歩道</value>
   </data>
   <data name="StyleOption_LineCount" xml:space="preserve">
-    <value>四角形の数</value>
+    <value>正方形の数</value>
   </data>
   <data name="StyleOption_SharkToothBase" xml:space="preserve">
     <value>三角形の長さ</value>
@@ -667,7 +667,7 @@
     <value>空白の長さ</value>
   </data>
   <data name="StyleOption_SquareSide" xml:space="preserve">
-    <value>四角形の大きさ</value>
+    <value>正方形の大きさ</value>
   </data>
   <data name="LineStyle_SharkTeeth" xml:space="preserve">
     <value>サメの歯型</value>
@@ -742,7 +742,7 @@
     <value>表示＆確認の設定</value>
   </data>
   <data name="Settings_Groupings" xml:space="preserve">
-    <value>グループ・タブの設定</value>
+    <value>グループ＆タブの設定</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
     <value>ショートカット</value>
@@ -769,7 +769,7 @@
     <value>ポイントのオフセットを全てリセット</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>ノード（セグメント） #{0} にある、ポイントのオフセットを全てリセットしますか？</value>
+    <value>ノード(セグメント) #{0} にある、ポイントのオフセットを全てリセットしますか？</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
     <value>円周上のポイントをD&amp;Dで、道路側のマーキングの順序を入れ替え
@@ -844,10 +844,10 @@
 復元すると、既存のテンプレートを全て置き換えます。</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
-    <value>テンプレートの復元に失敗しました</value>
+    <value>テンプレートの復元に失敗しました。</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
-    <value>テンプレートの復元に成功しました</value>
+    <value>テンプレートの復元に成功しました。</value>
   </data>
   <data name="Tool_Apply" xml:space="preserve">
     <value>適用する</value>
@@ -856,7 +856,7 @@
     <value>作業を継続</value>
   </data>
   <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>マーキングの貼り付けモードを終了します</value>
+    <value>マーキングの貼り付けモードを終了</value>
   </data>
   <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
     <value>貼り付けモードを終了して、変更したマーキングを適用しますか？</value>
@@ -883,11 +883,11 @@
     <value>道路が変更・アップグレードされました</value>
   </data>
   <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
-    <value>交差点と接続する道路が変わって、マーキングが自動的に適用できません。
-マーキングの順序を手動で調整・適用しますか？</value>
+    <value>交差点の構成や道路の種類が変わって、マーキングが自動的に適用できません。
+マーキングの順序を手動で調整＆適用しますか？</value>
   </data>
   <data name="Tool_EndEditOrderCaption" xml:space="preserve">
-    <value>マーキングの編集モードを終了します</value>
+    <value>マーキングの編集モードを終了</value>
   </data>
   <data name="Tool_EndEditOrderMessage" xml:space="preserve">
     <value>編集モードを終了して、変更したマーキングを適用しますか？</value>
@@ -908,13 +908,13 @@
     <value>Yes</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>{0}キー押下で、横断歩道の作成</value>
+    <value>{0} ＆ 押下で、横断歩道の作成</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>{0}キー押下で、塗り潰しを開始</value>
+    <value>{0} ＆ 押下で、塗り潰しを開始</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>{0}キー + ドラッグで、ポイントを移動</value>
+    <value>{0} + ドラッグで、ポイントを移動</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1039,10 +1039,10 @@
 復元すると、既存のプリセットを全て置き換えます。</value>
   </data>
   <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
-    <value>プリセットの復元に失敗しました</value>
+    <value>プリセットの復元に失敗しました。</value>
   </data>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
-    <value>プリセットの復元に成功しました</value>
+    <value>プリセットの復元に成功しました。</value>
   </data>
   <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
     <value>全ての横断歩道で重なるラインを除去</value>
@@ -1051,13 +1051,13 @@
     <value>全ての横断歩道で重なるラインを除去</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>プリセット（カスタムアセット）を上書きしますか？</value>
+    <value>プリセット(カスタムアセット)を上書きしますか？</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
     <value>名前の変更は、カスタムアセットのファイルを上書きします。</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>テンプレート（カスタムアセット）を上書きしますか？</value>
+    <value>テンプレート(カスタムアセット)を上書きしますか？</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
     <value>名前や内容の変更は、カスタムアセットのファイルを上書きします。</value>
@@ -1068,7 +1068,7 @@
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
     <value>追加ルールの作成方法
-始点や終点を変更したい場合は、他のラインが交差する必要があります。</value>
+始点や終点を変更したい場合は、他のラインと交差が必要です。</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
     <value>パネル内にTipsを表示</value>
@@ -1096,7 +1096,7 @@
 重複したプリセットを保存しても良いですか？</value>
   </data>
   <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>削除方法はコンテンツマネージャーから行います</value>
+    <value>削除方法はコンテンツマネージャーから行います。</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
     <value>編集不可になり、削除はコンテンツマネージャーから行います。
@@ -1106,7 +1106,7 @@
     <value>このプリセットはカスタムアセットです。</value>
   </data>
   <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>削除方法はコンテンツマネージャーから行います</value>
+    <value>削除方法はコンテンツマネージャーから行います。</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
     <value>編集不可になり、削除はコンテンツマネージャーから行います。
@@ -1123,7 +1123,7 @@
   </data>
   
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
-    <value>このタイプは追加ルールをサポートしません</value>
+    <value>このタイプは追加ルールをサポートしません。</value>
   </data>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>横断歩道の基準線に指定したラインは除去しない</value>
@@ -1140,10 +1140,10 @@
     <value>#{0} のセグメントを編集中</value>
   </data>
   <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>芝生（3Dスタイル）</value>
+    <value>芝生(3Dスタイル)</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>舗装（3Dスタイル）</value>
+    <value>舗装(3Dスタイル)</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>高さ・厚み</value>
@@ -1152,13 +1152,13 @@
     <value>高さ・厚み</value>
   </data>
   <data name="LineStyle_Grass" xml:space="preserve">
-    <value>芝生（3Dスタイル）</value>
+    <value>芝生(3Dスタイル)</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
-    <value>舗装（3Dスタイル）</value>
+    <value>舗装(3Dスタイル)</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
-    <value>LOD（3Dスタイル）の描画距離（m）</value>
+    <value>LOD(3Dスタイル)の描画距離(m)</value>
   </data>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>セグメント #{0}
@@ -1168,10 +1168,10 @@
     <value>ラインやポイントを基準に描画</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>始点（左側）の基準</value>
+    <value>始点(左側)の基準</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>終点（右側）の基準</value>
+    <value>終点(右側)の基準</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>始点側のラインやポイントを選択</value>
@@ -1222,29 +1222,29 @@
     <value>既存であるマーキングは、全て置き換えます。</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
-    <value>交差点間でマーキングを一括で適用します</value>
+    <value>交差点間でマーキングを一括適用</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
     <value>交差点間を繋ぐ道路で、マーキングを一括で適用しますか？</value>
   </data>
   <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
-    <value>通り全体にマーキングを一括で適用します</value>
+    <value>通り全体にマーキングを一括適用</value>
   </data>
   <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
     <value>{0} で設定された通り全体に、マーキングを一括で適用しますか？</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
-    <value>垂直線は道路の後方へ移動</value>
+    <value>垂直線はポイントの後方へドラッグして作成</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>ライン・停止線の終点を選択</value>
   </data>
   
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
-    <value>拡大したポイント（終点）の位置合わせ</value>
+    <value>拡大したポイント(終点)の位置合わせ</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
-    <value>拡大したポイント（始点）の位置合わせ</value>
+    <value>拡大したポイント(始点)の位置合わせ</value>
   </data>
   
   
@@ -1254,37 +1254,37 @@
     <value>ツール使用時に道路名を非表示</value>
   </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
-    <value>舗装（3Dスタイル）</value>
+    <value>舗装(3Dスタイル)</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>{0}キー + クリックで、横断歩道を選択</value>
+    <value>{0} + クリックで、横断歩道を選択</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>{0}キー + クリックで、ラインを選択</value>
+    <value>{0} + クリックで、ラインを選択</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>砂利（3Dスタイル）</value>
+    <value>砂利(3Dスタイル)</value>
   </data>
   <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>崖（3Dスタイル）</value>
+    <value>崖(3Dスタイル)</value>
   </data>
   <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>荒れ地（3Dスタイル）</value>
+    <value>荒れ地(3Dスタイル)</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>オフセット（ライン側）</value>
+    <value>オフセット(ライン側)</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
-    <value>角丸の半径（ライン側）</value>
+    <value>角丸の半径(ライン側)</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>角丸の半径（分離帯側）</value>
+    <value>角丸の半径(分離帯側)</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>縁石の幅（ライン側）</value>
+    <value>縁石の幅(ライン側)</value>
   </data>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>縁石の幅（分離帯側）</value>
+    <value>縁石の幅(分離帯側)</value>
   </data>
   
   
@@ -1292,4 +1292,52 @@
     <value>破棄</value>
   </data>
   
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>ソートの方法</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>プリセットのソート</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>名前順</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>接続道路の数 → 名前順</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>作者順 → タイプ順 → 名前順</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>名前順 → タイプ順</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>タイプ順 → 名前順</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>テンプレートのソート</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>作者順 → タイプ順 → 名前順</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>名前順 → タイプ順</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>タイプ順 → 名前順</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>テンプレートの適用部分で、デフォルトを先頭表示</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>テンプレートを適用部分のソート</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>夜間のマーキング編集時にライトを点灯</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>ライトの明るさ</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>ゲームプレイ</value>
+  </data>
 </root>
