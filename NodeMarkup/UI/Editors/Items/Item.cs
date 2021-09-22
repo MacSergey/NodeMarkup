@@ -106,7 +106,6 @@ namespace NodeMarkup.UI.Editors
         public virtual void Init(ObjectType editObject)
         {
             Object = editObject;
-            DeleteButton.isVisible = ShowDelete;
 
             Refresh();
             OnSizeChanged();
@@ -134,6 +133,7 @@ namespace NodeMarkup.UI.Editors
 
         public virtual void Refresh()
         {
+            DeleteButton.isVisible = ShowDelete;
             Text = Object.ToString();
             SetColors();
         }

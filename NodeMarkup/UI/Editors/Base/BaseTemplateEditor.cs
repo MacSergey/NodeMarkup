@@ -138,12 +138,14 @@ namespace NodeMarkup.UI.Editors
 
         private void SaveAsset()
         {
-            if (TemplateManager<TemplateType>.Instance.MakeAsset(EditObject))
+            if (SaveAsset(EditObject))
             {
                 RefreshSelectedItem();
-                OnObjectSelect(EditObject);
+                OnItemSelect(EditObject);
             }
         }
+        protected abstract bool SaveAsset(TemplateType template);
+
         private void StartEditTemplate() => StartEditTemplate(Editors.EditMode.Edit);
         private void StartEditTemplate(EditMode mode)
         {

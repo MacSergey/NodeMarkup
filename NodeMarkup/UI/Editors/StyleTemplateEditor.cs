@@ -84,6 +84,7 @@ namespace NodeMarkup.UI.Editors
             base.OnNotApplyChanges();
             CopyStyle();
         }
+        protected override bool SaveAsset(StyleTemplate template) => SingletonManager<StyleTemplateManager>.Instance.MakeAsset(template);
     }
 
     public class StyleTemplateItemsPanel : ItemsGroupPanel<StyleTemplateItem, StyleTemplate, StyleTemplateGroup, Style.StyleType>

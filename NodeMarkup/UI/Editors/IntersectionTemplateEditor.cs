@@ -50,6 +50,7 @@ namespace NodeMarkup.UI.Editors
             HeaderPanel.OnApply += Apply;
         }
         private void Apply() => Tool.ApplyIntersectionTemplate(EditObject);
+        protected override bool SaveAsset(IntersectionTemplate template) => SingletonManager<IntersectionTemplateManager>.Instance.MakeAsset(template);
     }
 
     public class IntersectionTemplateItemsPanel : ItemsPanel<IntersectionTemplateItem, IntersectionTemplate>
