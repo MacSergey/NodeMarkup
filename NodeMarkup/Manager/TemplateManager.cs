@@ -60,8 +60,6 @@ namespace NodeMarkup.Manager
     public abstract class TemplateManager<TemplateType> : TemplateManager
         where TemplateType : Template<TemplateType>
     {
-        public static TemplateManager<TemplateType> Instance { get; protected set; }
-
         protected abstract string DefaultName { get; }
         protected Dictionary<Guid, TemplateType> TemplatesDictionary { get; } = new Dictionary<Guid, TemplateType>();
         public IEnumerable<TemplateType> Templates => TemplatesDictionary.Values;
