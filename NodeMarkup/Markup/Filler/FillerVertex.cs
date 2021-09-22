@@ -93,13 +93,14 @@ namespace NodeMarkup.Manager
             else
                 return base.GetT(line, out t);
         }
-        public MarkupLine GetCommonLine(IFillerVertex other) => other switch
+        public virtual MarkupLine GetCommonLine(IFillerVertex other) => other switch
         {
             EnterFillerVertexBase otherE when Enter == otherE.Enter => new MarkupEnterLine(Point.Markup, Point, otherE.Point, Alignment, otherE.Alignment),
             EnterFillerVertexBase otherE when Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is MarkupLine line => line,
             EnterFillerVertexBase otherE when Enter.Markup.EntersCount > 2 && ((Enter.Next == otherE.Enter && Point.IsLast && otherE.Point.IsFirst) || (Enter.Prev == otherE.Enter && Point.IsFirst && otherE.Point.IsLast)) => new MarkupEnterLine(Point.Markup, Point, otherE.Point, Alignment, otherE.Alignment),
             EnterFillerVertexBase otherE => new MarkupFillerTempLine(Point.Markup, Point, otherE.Point, alignment: Point.IsSplit ? Alignment : (otherE.Point.IsSplit ? otherE.Alignment.Invert() : Alignment.Centre)),
-            IntersectFillerVertex otherI => otherI.LinePair.First.ContainsPoint(Point) ? otherI.LinePair.First : otherI.LinePair.Second,
+            IntersectFillerVertex otherI when otherI.LinePair.First.ContainsPoint(Point) => otherI.LinePair.First,
+            IntersectFillerVertex otherI when otherI.LinePair.Second.ContainsPoint(Point) => otherI.LinePair.Second,
             _ => null,
         };
 
@@ -228,6 +229,14 @@ namespace NodeMarkup.Manager
 
             base.Update();
         }
+
+        public override MarkupLine GetCommonLine(IFillerVertex other)
+        {
+            if (other is IntersectFillerVertex otherI && otherI.LinePair.ContainLine(Line))
+                return Line;
+            else
+                return base.GetCommonLine(other);
+        }
         public bool Contains(MarkupLine line) => Line == line;
 
         bool IEquatable<IFillerVertex>.Equals(IFillerVertex other) => other is LineEndFillerVertex otherEnd && Equals(otherEnd);
@@ -271,8 +280,10 @@ namespace NodeMarkup.Manager
         {
             return other switch
             {
-                EnterSupportPoint otherE => First.ContainsPoint(otherE.Point) ? First : Second,
-                IntersectSupportPoint otherI => LinePair.ContainLine(otherI.LinePair.First) ? otherI.LinePair.First : otherI.LinePair.Second,
+                IntersectFillerVertex otherI when LinePair.ContainLine(otherI.LinePair.First) => otherI.LinePair.First,
+                IntersectFillerVertex otherI when LinePair.ContainLine(otherI.LinePair.Second) => otherI.LinePair.Second,
+                EnterFillerVertexBase otherE when First.ContainsPoint(otherE.Point) && First.GetAlignment(otherE.Point) == otherE.Alignment => First,
+                EnterFillerVertexBase otherE when Second.ContainsPoint(otherE.Point) && Second.GetAlignment(otherE.Point) == otherE.Alignment => Second,
                 _ => null,
             };
         }

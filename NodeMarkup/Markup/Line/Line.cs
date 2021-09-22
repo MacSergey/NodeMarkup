@@ -483,8 +483,17 @@ namespace NodeMarkup.Manager
                 if (First.IsCrosswalk && Second.IsCrosswalk && First.Start.Enter == Second.Start.Enter)
                     return false;
 
-                if (First.ContainsPoint(Second.Start) || First.ContainsPoint(Second.End))
+                if (First.Start == Second.Start && First.GetAlignment(First.Start) == Second.GetAlignment(Second.Start))
                     return false;
+                if (First.Start == Second.End && First.GetAlignment(First.Start) == Second.GetAlignment(Second.End))
+                    return false;
+                if (First.End == Second.Start && First.GetAlignment(First.End) == Second.GetAlignment(Second.Start))
+                    return false;
+                if (First.End == Second.End && First.GetAlignment(First.End) == Second.GetAlignment(Second.End))
+                    return false;
+
+                //if (First.ContainsPoint(Second.Start) || First.ContainsPoint(Second.End))
+                //    return false;
 
                 if (IsBorder(First, Second) || IsBorder(Second, First))
                     return true;

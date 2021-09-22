@@ -267,7 +267,17 @@ namespace NodeMarkup.Manager
                     break;
             }
         }
-        static LineEndFillerVertex FixVertex(EnterFillerVertexBase enterVertex, IntersectFillerVertex intersectVertex) => FixVertexByLine(enterVertex, intersectVertex.LinePair.GetLine(enterVertex.Point) as MarkupRegularLine);
+        static LineEndFillerVertex FixVertex(EnterFillerVertexBase enterVertex, IntersectFillerVertex intersectVertex)
+        {
+            if (intersectVertex.LinePair.First.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.First.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
+                return FixVertexByLine(enterVertex, intersectVertex.LinePair.First as MarkupRegularLine);
+
+            else if (intersectVertex.LinePair.Second.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.Second.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
+                return FixVertexByLine(enterVertex, intersectVertex.LinePair.Second as MarkupRegularLine);
+
+            else
+                return FixVertexByLine(enterVertex, intersectVertex.LinePair.GetLine(enterVertex.Point) as MarkupRegularLine);
+        }
         static LineEndFillerVertex FixVertexByLine(EnterFillerVertexBase enterVertex, MarkupRegularLine line) => new LineEndFillerVertex(enterVertex.Point, line);
 
         public void Remove()
