@@ -114,7 +114,7 @@ namespace NodeMarkup.Manager
             {
                 var firstDir = intersect.First.Tangent(intersect.FirstT);
                 var secondDir = intersect.Second.Tangent(intersect.SecondT);
-                var angel = Vector3.Angle(firstDir, secondDir);
+                var angel = Vector3.Angle(firstDir, secondDir) * Mathf.Deg2Rad;
                 var tan = Mathf.Tan(angel);
                 return tan != 0 ? offset / tan : 1000f;
             }
