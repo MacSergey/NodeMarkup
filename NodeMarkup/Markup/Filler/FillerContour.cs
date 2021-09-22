@@ -463,7 +463,9 @@ namespace NodeMarkup.Manager
         {
             var trajectories = TrajectoriesProcessed.ToArray();
 
-            if (Mathf.Abs(b - a) == 1)
+            if (trajectories.Length == 0)
+                return null;
+            else if (Mathf.Abs(b - a) == 1)
                 return trajectories[Math.Min(a, b)];
             else if (Mathf.Abs(b - a) == trajectories.Length - 1)
                 return trajectories.Last();

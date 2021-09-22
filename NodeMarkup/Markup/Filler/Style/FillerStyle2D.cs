@@ -292,12 +292,14 @@ namespace NodeMarkup.Manager
             var rect = GetRect(contour);
             var rail = new RailLine();
             var halfAngelRad = GetAngle() * Mathf.Deg2Rad;
-            var middleLine = GetMiddleLine(filler.Contour);
-            if (GetBeforeMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineBefore))
-                rail.Add(lineBefore.Invert());
-            rail.Add(middleLine);
-            if (GetAfterMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineAfter))
-                rail.Add(lineAfter);
+            if (GetMiddleLine(filler.Contour) is ITrajectory middleLine)
+            {
+                if (GetBeforeMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineBefore))
+                    rail.Add(lineBefore.Invert());
+                rail.Add(middleLine);
+                if (GetAfterMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineAfter))
+                    rail.Add(lineAfter);
+            }
 
             yield return rail;
         }
@@ -305,6 +307,8 @@ namespace NodeMarkup.Manager
         private ITrajectory GetMiddleLine(FillerContour contour)
         {
             GetRails(contour, out ITrajectory left, out ITrajectory right);
+            if (left == null || right == null)
+                return null;
 
             var leftLength = left.Length;
             var rightLength = right.Length;
@@ -397,10 +401,10 @@ namespace NodeMarkup.Manager
             GetRails(filler.Contour, out ITrajectory left, out ITrajectory right);
 
             data.Color = Colors.Green;
-            left.Render(data);
+            left?.Render(data);
 
             data.Color = Colors.Red;
-            right.Render(data);
+            right?.Render(data);
         }
 
         public override XElement ToXml()
