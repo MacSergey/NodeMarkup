@@ -1279,9 +1279,19 @@ Klik untuk mengedit markah</value>
   <data name="Settings_SortApplyByType" xml:space="preserve">
     <value>Berdasarkan jenis, lalu berdasarkan nama</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Tampilkan templat standar di awal apply list</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Sortir templat di apply list</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Penerangan saat mengedit markah pada malam hari</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Intensitas penerangan</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Game</value>
+  </data>
 </root>
