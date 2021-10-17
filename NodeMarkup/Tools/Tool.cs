@@ -79,7 +79,7 @@ namespace NodeMarkup.Tools
         public Markup Markup { get; private set; }
 
         public NodeMarkupPanel Panel => SingletonItem<NodeMarkupPanel>.Instance;
-        public IntersectionTemplate MarkupBuffer { get; private set; }
+        public IntersectionTemplate MarkupBuffer { get; internal set; }
         public bool IsMarkupBufferEmpty => MarkupBuffer == null;
         private Dictionary<Style.StyleType, Style> StyleBuffer { get; } = new Dictionary<Style.StyleType, Style>();
 
