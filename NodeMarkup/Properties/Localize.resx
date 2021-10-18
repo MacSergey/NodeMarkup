@@ -1493,4 +1493,10 @@ Click to edit markings</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Gameplay</value>
   </data>
+  <data name="Tool_InfoCopyMarkingApply" xml:space="preserve">
+    <value>Hold {0} and click {1} to apply copied marking</value>
+  </data>
+  <data name="Tool_InfoCopyMarkingGet" xml:space="preserve">
+    <value>Hold {0} and click {1} to copy marking</value>
+  </data>
 </root>
