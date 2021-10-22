@@ -1499,4 +1499,10 @@ Click to edit markings</value>
   <data name="Tool_InfoCopyMarkingGet" xml:space="preserve">
     <value>Hold {0} and click {1} to copy marking</value>
   </data>
+  <data name="StyleOption_BackgroundColor" xml:space="preserve">
+    <value>Background color</value>
+  </data>
+  <data name="StyleOption_BackgroundEnabled" xml:space="preserve">
+    <value>Enable background color</value>
+  </data>
 </root>

@@ -2776,6 +2776,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Background color.
+        /// </summary>
+        public static string StyleOption_BackgroundColor {
+            get {
+                return ResourceManager.GetString("StyleOption_BackgroundColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Enable background color.
+        /// </summary>
+        public static string StyleOption_BackgroundEnabled {
+            get {
+                return ResourceManager.GetString("StyleOption_BackgroundEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Color.
         /// </summary>
         public static string StyleOption_Color {

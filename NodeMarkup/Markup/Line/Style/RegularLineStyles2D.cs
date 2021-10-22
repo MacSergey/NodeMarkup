@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
@@ -105,14 +106,18 @@ namespace NodeMarkup.Manager
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
+        public PropertyValue<bool> BackgroundEnabled { get; }
+        public PropertyColorValue BackgroundColor { get; }
 
-        public DashedLineStyle(Color32 color, float width, float dashLength, float spaceLength) : base(color, width)
+        public DashedLineStyle(Color32 color, float width, float dashLength, float spaceLength, bool backgroundEnabled, Color32 backgroundColor) : base(color, width)
         {
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
+            BackgroundEnabled = GetBackgroundEnabled(backgroundEnabled);
+            BackgroundColor = GetBackgroundColor(backgroundColor);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
+        public override RegularLineStyle CopyLineStyle() => new DashedLineStyle(Color, Width, DashLength, SpaceLength, BackgroundEnabled, BackgroundColor);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -129,7 +134,15 @@ namespace NodeMarkup.Manager
                 return new MarkupStyleParts();
 
             var borders = line.Borders;
-            return new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, GetDashes));
+            var parts = new List<MarkupStylePart>();
+            if (BackgroundEnabled)
+                parts.AddRange(StyleHelper.CalculateSolid(trajectory, lod, CalculateSolidDash));
+            parts.AddRange(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, GetDashes));
+
+            return new MarkupStyleParts(parts);
+
+            IEnumerable<MarkupStylePart> CalculateSolidDash(ITrajectory lineTrajectory)
+                => CalculateSolid(trajectory, borders);
 
             IEnumerable<MarkupStylePart> GetDashes(ITrajectory trajectory, float startT, float endT)
                 => CalculateDashes(trajectory, startT, endT, borders);
@@ -141,11 +154,49 @@ namespace NodeMarkup.Manager
                 yield return dash;
         }
 
+        protected virtual IEnumerable<MarkupStylePart> CalculateSolid(ITrajectory trajectory, LineBorders borders)
+        {
+            if (StyleHelper.CalculateSolidPart(borders, trajectory, 0, Width, BackgroundColor, out MarkupStylePart back))
+                yield return back;
+        }
+
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddDashLengthProperty(this, parent));
             components.Add(AddSpaceLengthProperty(this, parent));
+
+            var backgroundBool = AddBoolProperty(parent);
+            var backgroundColor = AddColorProperty(parent);
+            backgroundBool.OnSelectObjectChanged += ChangeBackgroundColorVisible;
+            ChangeBackgroundColorVisible(backgroundBool.SelectedObject);
+            components.Add(backgroundBool);
+            components.Add(backgroundColor);
+
+            BoolListPropertyPanel AddBoolProperty(UIComponent parent)
+            {
+                var boolProperty = ComponentPool.GetBefore<BoolListPropertyPanel>(parent, nameof(BackgroundColor), nameof(BackgroundEnabled));
+                boolProperty.Text = Localize.StyleOption_BackgroundEnabled;
+                boolProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes, false);
+                boolProperty.SelectedObject = BackgroundEnabled;
+                boolProperty.OnSelectObjectChanged += (value) => BackgroundEnabled.Value = value;
+
+                return boolProperty;
+            }
+
+            UI.ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent)
+            {
+                var colorProperty = ComponentPool.Get<UI.ColorAdvancedPropertyPanel>(parent, nameof(BackgroundColor));
+                colorProperty.Text = Localize.StyleOption_BackgroundColor;
+                colorProperty.WheelTip = Settings.ShowToolTip;
+                colorProperty.Init();
+                colorProperty.Value = BackgroundColor;
+                colorProperty.OnValueChanged += (Color32 color) => BackgroundColor.Value = color;
+
+                return colorProperty;
+            }
+
+            void ChangeBackgroundColorVisible(bool useSecondColor) => backgroundColor.isVisible = useSecondColor;
         }
 
         public override XElement ToXml()
@@ -153,6 +204,8 @@ namespace NodeMarkup.Manager
             var config = base.ToXml();
             DashLength.ToXml(config);
             SpaceLength.ToXml(config);
+            BackgroundEnabled.ToXml(config);
+            BackgroundColor.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -160,6 +213,8 @@ namespace NodeMarkup.Manager
             base.FromXml(config, map, invert);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
+            BackgroundEnabled.FromXml(config, BackgroundEnabled);
+            BackgroundColor.FromXml(config, BackgroundColor);
         }
     }
     public class DoubleDashedLineStyle : DashedLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine
@@ -169,13 +224,13 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Offset { get; }
         public PropertyEnumValue<Alignment> Alignment { get; }
 
-        public DoubleDashedLineStyle(Color32 color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
+        public DoubleDashedLineStyle(Color32 color, float width, float dashLength, float spaceLength, float offset, bool backgroundEnabled, Color32 backgroundColor) : base(color, width, dashLength, spaceLength, backgroundEnabled, backgroundColor)
         {
             Offset = GetOffsetProperty(offset);
             Alignment = GetAlignmentProperty(Manager.Alignment.Centre);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override RegularLineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset, BackgroundEnabled, BackgroundColor);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -208,6 +263,44 @@ namespace NodeMarkup.Manager
             if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLength, secondOffset, Width, Color, out MarkupStylePart secondDash))
                 yield return secondDash;
         }
+
+        protected override IEnumerable<MarkupStylePart> CalculateSolid(ITrajectory trajectory, LineBorders borders)
+        {
+            var firstOffset = Alignment.Value switch
+            {
+                Manager.Alignment.Left => 2 * Offset,
+                Manager.Alignment.Centre => Offset,
+                Manager.Alignment.Right => 0,
+                _ => 0,
+            };
+            var secondOffset = Alignment.Value switch
+            {
+                Manager.Alignment.Left => 0,
+                Manager.Alignment.Centre => -Offset,
+                Manager.Alignment.Right => -2 * Offset,
+                _ => 0,
+            };
+
+            if (StyleHelper.CalculateSolidPart(borders, trajectory, firstOffset, Width, BackgroundColor, out MarkupStylePart firstBack))
+                yield return firstBack;
+
+            if (StyleHelper.CalculateSolidPart(borders, trajectory, secondOffset, Width, BackgroundColor, out MarkupStylePart secondBack))
+                yield return secondBack;
+        }
+
+        //public static MarkupStylePart CalculateDashedPart(ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color)
+        //{
+        //    if (offset == 0)
+        //        return CalculateDashedPart(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero, width, color);
+        //    else
+        //    {
+        //        var startOffset = trajectory.Tangent(startT).Turn90(true).normalized * offset;
+        //        var endOffset = trajectory.Tangent(endT).Turn90(true).normalized * offset;
+        //        return CalculateDashedPart(trajectory, startT, endT, dashLength, startOffset, endOffset, width, color);
+        //    }
+        //}
+
+
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);

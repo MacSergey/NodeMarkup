@@ -67,6 +67,8 @@ namespace NodeMarkup.Manager
         }
 
         public static Color32 DefaultColor { get; } = new Color32(136, 136, 136, 224);
+        public static Color32 DefaultBackgroundColor { get; } = new Color32(102, 102, 102, 255);
+        public static bool DefaultBackgroundEnabled { get; } = false;
         public static float DefaultWidth { get; } = 0.15f;
 
         protected virtual float WidthWheelStep { get; } = 0.01f;
@@ -226,6 +228,8 @@ namespace NodeMarkup.Manager
         protected PropertyStructValue<float> GetLineWidthProperty(float defaultValue) => new PropertyStructValue<float>("LW", StyleChanged, defaultValue);
         protected PropertyBoolValue GetParallelProperty(bool defaultValue) => new PropertyBoolValue("P", StyleChanged, defaultValue);
         protected PropertyBoolValue GetUseSecondColorProperty(bool defaultValue) => new PropertyBoolValue("USC", StyleChanged, defaultValue);
+        protected PropertyBoolValue GetBackgroundEnabled(bool defaultValue) => new PropertyBoolValue("BGE", StyleChanged, defaultValue);
+        protected PropertyColorValue GetBackgroundColor(Color32 defaultValue) => new PropertyColorValue("BGC", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetSquareSideProperty(float defaultValue) => new PropertyStructValue<float>("SS", StyleChanged, defaultValue);
         protected PropertyStructValue<int> GetLineCountProperty(int defaultValue) => new PropertyStructValue<int>("LC", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetAngleProperty(float defaultValue) => new PropertyStructValue<float>("A", StyleChanged, defaultValue);
