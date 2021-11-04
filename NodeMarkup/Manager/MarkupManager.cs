@@ -125,6 +125,9 @@ namespace NodeMarkup.Manager
                 return markup;
             }
         }
+
+        public bool HasMarkup(ushort id) => Markups.ContainsKey(id);
+
         protected abstract TypeMarkup NewMarkup(ushort id);
 
         protected abstract void AddToUpdate(ushort id);
