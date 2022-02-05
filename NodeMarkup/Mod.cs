@@ -291,7 +291,7 @@ namespace NodeMarkup
 
             return LoadingTranspiler(instructions, OpCodes.Stloc_S, 12, additional);
         }
-        private static IEnumerable<CodeInstruction> LoadingTranspiler(IEnumerable<CodeInstruction> instructions, OpCode startOc, int startOp, CodeInstruction[] additional)
+        private static IEnumerable<CodeInstruction> LoadingTranspiler(IEnumerable<CodeInstruction> instructions, OpCode startOc, int startVarIndex, CodeInstruction[] additional)
         {
             var enumerator = instructions.GetEnumerator();
 
@@ -300,7 +300,7 @@ namespace NodeMarkup
                 var instruction = enumerator.Current;
                 yield return instruction;
 
-                if (instruction.opcode == startOc && instruction.operand is LocalBuilder local && local.LocalIndex == startOp)
+                if (instruction.opcode == startOc && instruction.operand is LocalBuilder local && local.LocalIndex == startVarIndex)
                     break;
             }
 
