@@ -1711,6 +1711,42 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Close fit.
+        /// </summary>
+        public static string PresetEditor_PresetFit_Close {
+            get {
+                return ResourceManager.GetString("PresetEditor_PresetFit_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Perfect fit.
+        /// </summary>
+        public static string PresetEditor_PresetFit_Perfect {
+            get {
+                return ResourceManager.GetString("PresetEditor_PresetFit_Perfect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Poor fit.
+        /// </summary>
+        public static string PresetEditor_PresetFit_Poor {
+            get {
+                return ResourceManager.GetString("PresetEditor_PresetFit_Poor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Possible fit.
+        /// </summary>
+        public static string PresetEditor_PresetFit_Possible {
+            get {
+                return ResourceManager.GetString("PresetEditor_PresetFit_Possible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на This preset is an asset..
         /// </summary>
         public static string PresetEditor_PresetIsAsset {
@@ -2139,6 +2175,15 @@ namespace NodeMarkup {
         public static string Settings_GroupPointsOverlay {
             get {
                 return ResourceManager.GetString("Settings_GroupPointsOverlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Group presets.
+        /// </summary>
+        public static string Settings_GroupPresets {
+            get {
+                return ResourceManager.GetString("Settings_GroupPresets", resourceCulture);
             }
         }
         

@@ -1493,4 +1493,19 @@ Click to edit markings</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Gameplay</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Group presets</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Close fit</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Perfect fit</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Poor fit</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Possible fit</value>
+  </data>
 </root>
