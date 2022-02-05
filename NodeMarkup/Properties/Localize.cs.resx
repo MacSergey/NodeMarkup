@@ -1317,4 +1317,22 @@ Klikněte pro změnu značení</value>
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Vrátit odsazení</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Uložit odsazení</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Název silnice</value>
+  </data>
 </root>

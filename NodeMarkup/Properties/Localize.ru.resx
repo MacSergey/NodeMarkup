@@ -1496,4 +1496,40 @@
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Игровой процесс</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Группировать трафареты</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Почти похдодят</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Идеально подходят</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Не подходят</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Возможно подходят</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Разметка под железнодорожным переездом</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Длина зазора</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Период зазора</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Использовать зазор</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Сбросить сдвиги</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Сохранить сдвиги</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Название дороги</value>
+  </data>
 </root>

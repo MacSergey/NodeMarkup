@@ -1337,4 +1337,40 @@ Haga clic para editar las marcas</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Modo de juego</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Ajustes de grupo</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Ajuste cercano</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Ajuste perfecto</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Ajuste pobre</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Ajuste posible</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Marcas por debajo de cruces de nivel</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Distancia entre secciones</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Número de secciones</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Usar separación</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Revertir desplazamientos</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Guardar desplazamientos</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Nombre de carretera</value>
+  </data>
 </root>

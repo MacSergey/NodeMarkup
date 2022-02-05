@@ -413,7 +413,7 @@ Yhdistä kaksi pistettä luodaksesi viivan.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
     <value>Risteyksessä ei ole vielä sulkualueita.
-Luodaksesi sulkualueen, pidä {0}-näppäintä pohjassa tai paina {1}.</value>
+Luodaksesi sulkualue, pidä {0}-näppäintä pohjassa tai paina {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Malleja ei ole.
@@ -522,7 +522,7 @@ Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nop
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>Risteyksessä ei ole vielä suojateitä.
-Pidä {0}-näppäintä pohjassa luodaksesi suojatien.</value>
+Pidä {0}-näppäintä pohjassa luodaksesi suojatie.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>suojatie</value>
@@ -908,10 +908,10 @@ Haluatko asettaa merkinnät manuaalisest?</value>
     <value>Kyllä</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Pidä {0}-näppäintä pohjassa luodaksesi suojatien</value>
+    <value>Pidä {0}-näppäintä pohjassa luodaksesi suojatie</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Pidä {0}-näppäintä pohjassa luodaksesi sulkualueen</value>
+    <value>Pidä {0}-näppäintä pohjassa luodaksesi sulkualue</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Raahaa {0} pohjassa siirtääksesi pistettä</value>
@@ -1263,10 +1263,10 @@ Napauta muokataksesi merkintöjä</value>
     <value>Päällyste</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Napauta {0} pohjassa valitaksesi suojatie</value>
+    <value>Napauta {0} valitaksesi suojatie</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Napauta {0} pohjassa valitaksesi viiva</value>
+    <value>Napauta {0} valitaksesi viiva</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Sora</value>
@@ -1345,5 +1345,41 @@ Napauta muokataksesi merkintöjä</value>
   </data>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Pelaaminen</value>
+  </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Ryhmittele esiasetukset</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Sopii melkein</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Sopii täydellisesti</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Sopii huonosti</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Sopii mahdollisesti</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Merkinnät tasoristeysten alla</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Välimatka</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Välien jakso</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Käytä väliä</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Palauta siirtymät</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Tallenna siirtymät</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Tien nimi</value>
   </data>
 </root>

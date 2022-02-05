@@ -1400,4 +1400,40 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Spielmechanik</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Gruppen-Vorlagen</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Passend</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Passgenau</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Kaum passend</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Möglicherweise passend</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Markierungen unter Bahnübergängen</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Lückenlänge</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Lückenintervall</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Lücken verwenden</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Versätze zurücksetzen</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Versätze speichern</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Straßenname</value>
+  </data>
 </root>

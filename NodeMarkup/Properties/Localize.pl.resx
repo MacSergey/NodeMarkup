@@ -1339,4 +1339,38 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Rozgrywka</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Grupuj presety</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Bliskie dopasowanie</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Idealne dopasowanie</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Słabe dopasowanie</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Możliwe dopasowanie</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Oznaczenia poniżej poziomu skrzyżowania</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Długość przerwy</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Powtarzanie przerwy</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Używaj przerwy</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Zresetuj przesunięcia</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Zapisz przesunięcia</value>
+  </data>
+  
 </root>

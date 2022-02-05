@@ -1398,4 +1398,38 @@
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>游戏设置</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>将预设分组</value>
+  </data>
+  
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>完美符合</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>欠佳符合</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>可能符合</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>在平交道下显示标线</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>间隔长度</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>间隔区间</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>使用间隔</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>重置偏移</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>保存偏移</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>道路名称</value>
+  </data>
 </root>

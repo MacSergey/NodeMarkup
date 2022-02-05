@@ -1372,4 +1372,40 @@ Cliquez pour modifier le marquage</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Jouabilité</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Grouper les préréglages</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Bonne correspondance</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Parfaite correspondance</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Faible correspondance</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Possible correspondance</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Marquage sous les passages à niveau</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Longueur des espaces</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Fréquence des espaces</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Utiliser des espaces</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Réinitialiser le décalage</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Sauvegarder le décalage</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Nom de la route</value>
+  </data>
 </root>

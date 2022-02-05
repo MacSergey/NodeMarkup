@@ -1282,4 +1282,40 @@
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>게임 플레이</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>프리셋 그룹화</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>좋은 핏</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>완벽한 핏</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>나쁜 핏</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>가능한 핏</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>레벨 횡단보도 아래에 마킹</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>빈 공간 길이</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>빈 공간 간격</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>빈 공간 사용</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>오프셋 되돌리기</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>오프셋 초기화</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>길 이름</value>
+  </data>
 </root>

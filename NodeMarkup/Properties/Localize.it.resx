@@ -1492,4 +1492,40 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Dinamica di gioco</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Gruppo preselezioni</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Calzante</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Perfetto</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Scarso</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Possibile</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Segnaletica sotto i passaggi a livello</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Lunghezza del tratteggio</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Distanza del tratteggio</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Usa tratteggio</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Ripristina spostamenti</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Salva spostamenti</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Nome della strada</value>
+  </data>
 </root>

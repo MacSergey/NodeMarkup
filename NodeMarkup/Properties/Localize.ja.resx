@@ -1340,4 +1340,40 @@
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>ゲームプレイ</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>プリセットをタブで折り畳む</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>寸詰まりの一致</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>完全に一致</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>不一致</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>部分的に一致</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>踏切下部でマーキングを描画</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>ギャップの間隔</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>ギャップの回数</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>ギャップを追加</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>オフセットを戻す</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>オフセットを保存</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>道路の名前</value>
+  </data>
 </root>
