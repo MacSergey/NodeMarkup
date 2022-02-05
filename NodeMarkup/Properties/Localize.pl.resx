@@ -908,7 +908,7 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
     <value>Tak</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Przytrzymaj {0} - aby utworzyć przejście dla pieszych</value>
+    <value>Przytrzymaj {0}, aby utworzyć przejście dla pieszych</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
     <value>Przytrzymaj {0} - aby utworzyć wypełnienie</value>

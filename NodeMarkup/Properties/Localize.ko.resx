@@ -1234,20 +1234,52 @@
     <value>취소</value>
   </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>정렬</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>정렬 프리셋</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>이름 순</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>도로 수, 이름 순</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>제작자, 종류, 이름 순</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>이름, 종류 순</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>종류, 이름 순</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>템플릿 정렬</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>제작자, 종류, 이름 순</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>이름, 종류 순</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>종류, 이름 순</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>기본 템플릿을 리스트 맨 위에 표시</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>리스트 내 템플릿 정렬</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>야간에 마킹 밝게 하기</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>발광 밝기</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>게임 플레이</value>
+  </data>
 </root>
