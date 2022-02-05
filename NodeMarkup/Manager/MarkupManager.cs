@@ -53,9 +53,14 @@ namespace NodeMarkup.Manager
             SingletonManager<SegmentMarkupManager>.Instance.UpdateAll();
         }
 
-        public static void NetInfoInitNodeInfoPostfix(Node info)
+        public static void NetInfoInitNodeInfoPostfix_Rail(Node info)
         {
             if (info.m_nodeMaterial.shader.name == "Custom/Net/TrainBridge")
+                info.m_nodeMaterial.renderQueue = 2470;
+        }
+        public static void NetInfoInitNodeInfoPostfix_LevelCrossing(Node info)
+        {
+            if (info.m_flagsRequired.IsFlagSet(NetNode.Flags.LevelCrossing))
                 info.m_nodeMaterial.renderQueue = 2470;
         }
         public static void NetInfoInitSegmentInfoPostfix(Segment info)

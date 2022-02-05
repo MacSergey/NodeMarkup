@@ -226,13 +226,20 @@ namespace NodeMarkup
         {
             if (Settings.RailUnderMarking)
             {
-                success &= Patch_NetInfo_NodeInitNodeInfo();
+                success &= Patch_NetInfo_NodeInitNodeInfo_Rail();
                 success &= Patch_NetInfo_InitSegmentInfo();
             }
+            if(Settings.LevelCrossingUnderMarking)
+                success &= Patch_NetInfo_NodeInitNodeInfo_LevelCrossing();
+
         }
-        private bool Patch_NetInfo_NodeInitNodeInfo()
+        private bool Patch_NetInfo_NodeInitNodeInfo_Rail()
         {
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix), typeof(NetInfo), "InitNodeInfo");
+            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix_Rail), typeof(NetInfo), "InitNodeInfo");
+        }
+        private bool Patch_NetInfo_NodeInitNodeInfo_LevelCrossing()
+        {
+            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix_LevelCrossing), typeof(NetInfo), "InitNodeInfo");
         }
         private bool Patch_NetInfo_InitSegmentInfo()
         {

@@ -2242,6 +2242,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Markings under level crossings.
+        /// </summary>
+        public static string Settings_LevelCrossingUnderMarking {
+            get {
+                return ResourceManager.GetString("Settings_LevelCrossingUnderMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Load markings assets.
         /// </summary>
         public static string Settings_LoadMarkingAssets {

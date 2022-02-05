@@ -1508,4 +1508,7 @@ Click to edit markings</value>
   <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
     <value>Possible fit</value>
   </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Markings under level crossings</value>
+  </data>
 </root>
