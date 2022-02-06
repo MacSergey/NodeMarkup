@@ -2893,6 +2893,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Gap length.
+        /// </summary>
+        public static string StyleOption_GapLength {
+            get {
+                return ResourceManager.GetString("StyleOption_GapLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Gap period.
+        /// </summary>
+        public static string StyleOption_GapPeriod {
+            get {
+                return ResourceManager.GetString("StyleOption_GapPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invert.
         /// </summary>
         public static string StyleOption_Invert {
@@ -3096,6 +3114,15 @@ namespace NodeMarkup {
         public static string StyleOption_Turn {
             get {
                 return ResourceManager.GetString("StyleOption_Turn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Use gap.
+        /// </summary>
+        public static string StyleOption_UseGap {
+            get {
+                return ResourceManager.GetString("StyleOption_UseGap", resourceCulture);
             }
         }
         
