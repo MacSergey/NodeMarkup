@@ -1,4 +1,5 @@
-﻿using ModsCommon.UI;
+﻿using ModsCommon;
+using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
@@ -14,17 +15,35 @@ namespace NodeMarkup.UI.Editors
         public override string EmptyMessage => string.Empty;
         public override Type SupportType { get; } = typeof(ISupportPoints);
 
+        protected PropertyGroupPanel TemplatePanel { get; private set; }
+
         private FloatPropertyPanel Offset { get; set; }
         private BoolListPropertyPanel Split { get; set; }
         private FloatPropertyPanel Shift { get; set; }
 
         protected override IEnumerable<MarkupEnterPoint> GetObjects() => Markup.Enters.SelectMany(e => e.Points);
+        protected override void OnObjectSelect(MarkupEnterPoint point)
+        {
+            base.OnObjectSelect(point);
+
+            TemplatePanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
+            TemplatePanel.StopLayout();
+            FillTemplatePanel(point);
+            TemplatePanel.StartLayout();
+            TemplatePanel.Init();
+        }
+
 
         protected override void OnFillPropertiesPanel(MarkupEnterPoint point)
         {
             AddOffset(point);
             AddSplit(point);
             AddShift(point);
+        }
+        private void FillTemplatePanel(MarkupEnterPoint point)
+        {
+            AddRoad(point);
+            AddTemplate(point);
         }
         private void AddOffset(MarkupEnterPoint point)
         {
@@ -59,12 +78,58 @@ namespace NodeMarkup.UI.Editors
             Shift.OnValueChanged += (value) => point.SplitOffset.Value = value;
             Shift.isVisible = point.Split;
         }
+        private void AddRoad(MarkupEnterPoint point)
+        {
+            var roadNameProperty = ComponentPool.Get<StringPropertyPanel>(TemplatePanel, "Road");
+            roadNameProperty.Text = NodeMarkup.Localize.PointEditor_RoadName;
+            roadNameProperty.FieldWidth = 230;
+            roadNameProperty.EnableControl = false;
+            roadNameProperty.Init();
+            roadNameProperty.Value = point.Enter.GetSegment().Info.name;
+        }
+        private void AddTemplate(MarkupEnterPoint point)
+        {
+            var buttonsPanel = ComponentPool.Get<ButtonsPanel>(TemplatePanel, "Buttons");
+            var saveIndex = buttonsPanel.AddButton(NodeMarkup.Localize.PointEditor_SaveOffsets);
+            var revertIndex = buttonsPanel.AddButton(NodeMarkup.Localize.PointEditor_RevertOffsets);
+            buttonsPanel.Init();
+
+            SetEnable();
+
+            buttonsPanel.OnButtonClick += OnButtonClick;
+
+            void OnButtonClick(int index)
+            {
+                if (index == saveIndex)
+                {
+                    var invert = point.Enter.IsLaneInvert;
+                    var offsets = point.Enter.Points.Select(p => invert ? -p.Offset : p.Offset);
+                    if (invert)
+                        offsets = offsets.Reverse();
+
+                    SingletonManager<RoadTemplateManager>.Instance.SaveOffsets(point.Enter.RoadName, offsets.ToArray());
+                    SetEnable();
+                }
+                else if (index == revertIndex)
+                {
+                    SingletonManager<RoadTemplateManager>.Instance.RevertOffsets(point.Enter.RoadName);
+                    SetEnable();
+                }
+            }
+            void SetEnable()
+            {
+                buttonsPanel[revertIndex].isEnabled = SingletonManager<RoadTemplateManager>.Instance.Contains(point.Enter.RoadName);
+            }
+        }
+
         protected override void OnClear()
         {
             base.OnClear();
             Offset = null;
             Split = null;
             Shift = null;
+
+            TemplatePanel = null;
         }
         protected override void OnObjectUpdate(MarkupEnterPoint editObject)
         {

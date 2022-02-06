@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ModsBridge;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
@@ -34,6 +35,7 @@ namespace NodeMarkup.Manager
         public Vector3 LastPointSide { get; private set; }
         public StraightTrajectory Line { get; private set; }
         public bool LanesChanged => GetSegment().m_lanes != FirstLane;
+        public string RoadName => GetSegment().Info.name;
 
         public IEnumerable<DriveLane> DriveLanes
         {
@@ -119,11 +121,12 @@ namespace NodeMarkup.Manager
 
             var points = sources.Select(s => new MarkupEnterPoint(this, s)).ToArray();
             EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
+            ResetPoints();
         }
 
-        protected abstract ushort GetSegmentId();
-        protected abstract ref NetSegment GetSegment();
-        protected abstract bool GetIsStartSide();
+        public abstract ushort GetSegmentId();
+        public abstract ref NetSegment GetSegment();
+        public abstract bool GetIsStartSide();
         public virtual bool TryGetPoint(byte pointNum, MarkupPoint.PointType type, out MarkupPoint point)
         {
             if (type == MarkupPoint.PointType.Enter && EnterPointsDic.TryGetValue(pointNum, out MarkupEnterPoint enterPoint))
@@ -184,8 +187,22 @@ namespace NodeMarkup.Manager
 
         public void ResetPoints()
         {
-            foreach (var point in Points)
-                point.Reset();
+            var points = Points.ToArray();
+            if (SingletonManager<RoadTemplateManager>.Instance.TryGetOffsets(RoadName, out var offsets))
+            {
+                for (var i = 0; i < Math.Min(offsets.Length, points.Length); i += 1)
+                {
+                    if (IsLaneInvert)
+                        points[points.Length - 1 - i].Offset.Value = -offsets[i];
+                    else
+                        points[i].Offset.Value = offsets[i];
+                }
+            }
+            else
+            {
+                foreach (var point in points)
+                    point.Reset();
+            }
         }
         public Vector3 GetPosition(float offset) => Position + offset / TranformCoef * CornerDir;
         public void Render(OverlayData data)

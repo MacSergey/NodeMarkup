@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class TemplateManager : IManager
+    public abstract class DataManager : IManager
     {
         public static ulong UserId { get; } = PlatformService.active ? PlatformService.user.userID.AsUInt64 : 0;
         protected static Dictionary<ulong, string> Authors { get; } = new Dictionary<ulong, string>();
@@ -37,25 +37,33 @@ namespace NodeMarkup.Manager
         }
 
         public abstract SavedString Saved { get; }
-
-        public abstract void AddTemplate(Template template);
-        public abstract void Load();
+        protected abstract void LoadData();
+        protected abstract void SaveData();
+        protected abstract void ClearData();
 
         public static void Reload()
         {
             SingletonMod<Mod>.Logger.Debug($"{nameof(TemplateManager)} {nameof(Reload)}");
 
-            SingletonManager<StyleTemplateManager>.Instance.Load();
-            SingletonManager<IntersectionTemplateManager>.Instance.Load();
+            SingletonManager<StyleTemplateManager>.Instance.LoadData();
+            SingletonManager<IntersectionTemplateManager>.Instance.LoadData();
+            SingletonManager<RoadTemplateManager>.Instance.LoadData();
         }
         public static void Clear()
         {
             SingletonMod<Mod>.Logger.Debug($"{nameof(TemplateManager)} {nameof(Clear)}");
 
-            SingletonManager<StyleTemplateManager>.Instance.Clear(true);
-            SingletonManager<IntersectionTemplateManager>.Instance.Clear(true);
+            SingletonManager<StyleTemplateManager>.Instance.ClearData();
+            SingletonManager<IntersectionTemplateManager>.Instance.ClearData();
+            SingletonManager<RoadTemplateManager>.Instance.ClearData();
             Authors.Clear();
         }
+    }
+
+    public abstract class TemplateManager : DataManager
+    {
+        public abstract void AddTemplate(Template template);
+        public void Load() => LoadData();
     }
     public abstract class TemplateManager<TemplateType> : TemplateManager
         where TemplateType : Template<TemplateType>
@@ -71,10 +79,10 @@ namespace NodeMarkup.Manager
             if (template.IsAsset)
                 Loader.SaveTemplateAsset(template.Asset);
             else
-                Save();
+                SaveData();
         }
 
-        public override void Load()
+        protected override void LoadData()
         {
             try
             {
@@ -93,7 +101,7 @@ namespace NodeMarkup.Manager
                 SingletonMod<Mod>.Logger.Error($"Could not load {typeof(TemplateType).Name}", error);
             }
         }
-        protected void Save()
+        protected override void SaveData()
         {
             try
             {
@@ -107,8 +115,9 @@ namespace NodeMarkup.Manager
                 SingletonMod<Mod>.Logger.Error($"Could not save {typeof(TemplateType).Name}", error);
             }
         }
+        protected override void ClearData() => Clear(true);
 
-        public virtual void Clear(bool clearAssets = false)
+        protected virtual void Clear(bool clearAssets = false)
         {
             if (clearAssets)
                 TemplatesDictionary.Clear();
@@ -122,7 +131,7 @@ namespace NodeMarkup.Manager
         public void DeleteAll()
         {
             Clear();
-            Save();
+            SaveData();
         }
 
         public bool MakeAsset(TemplateType template)
@@ -133,7 +142,7 @@ namespace NodeMarkup.Manager
             var asset = new TemplateAsset(template);
             var saved = Loader.SaveTemplateAsset(asset);
             if (saved)
-                Save();
+                SaveData();
 
             return saved;
         }
@@ -181,7 +190,7 @@ namespace NodeMarkup.Manager
             TemplatesDictionary.Remove(template.Id);
             OnDeleteTemplate(template);
 
-            Save();
+            SaveData();
         }
         protected virtual void OnDeleteTemplate(TemplateType template) { }
 
@@ -243,7 +252,7 @@ namespace NodeMarkup.Manager
         {
             template = CreateInstance(name, item);
             AddTemplate(template);
-            Save();
+            SaveData();
             return true;
         }
         protected abstract TemplateType CreateInstance(string name, Item item);
@@ -259,7 +268,7 @@ namespace NodeMarkup.Manager
 
         protected override StyleTemplate CreateInstance(string name, Style style) => new StyleTemplate(name, style);
 
-        public override void Clear(bool clearAssets = false)
+        protected override void Clear(bool clearAssets = false)
         {
             base.Clear(clearAssets);
 
@@ -286,7 +295,7 @@ namespace NodeMarkup.Manager
             else
                 DefaultTemplates[template.Style.Type] = template.Id;
 
-            Save();
+            SaveData();
         }
 
         public T GetDefault<T>(Style.StyleType type) where T : Style
@@ -338,12 +347,110 @@ namespace NodeMarkup.Manager
         {
             if (AddTemplate(GetNewName(), markup, out template))
             {
-                if(Loader.SaveScreenshot(template, image))
+                if (Loader.SaveScreenshot(template, image))
                     template.Preview = image.CreateTexture();
                 return true;
             }
             else
                 return false;
         }
+    }
+
+    public class RoadTemplateManager : DataManager
+    {
+        public override SavedString Saved => Settings.Roads;
+        private Dictionary<string, float[]> Templates { get; set; } = new Dictionary<string, float[]>();
+
+        public bool TryGetOffsets(string name, out float[] offsets) => Templates.TryGetValue(name, out offsets);
+        public void SaveOffsets(string name, float[] offsets)
+        {
+            Templates[name] = offsets;
+            SaveData();
+        }
+        public void RevertOffsets(string name)
+        {
+            Templates.Remove(name);
+            SaveData();
+        }
+        public bool Contains(string name) => Templates.ContainsKey(name);
+
+        protected override void LoadData()
+        {
+            try
+            {
+                ClearData();
+                var xml = Saved.value;
+                if (!string.IsNullOrEmpty(xml))
+                {
+                    var config = XmlExtension.Parse(xml);
+                    FromXml(config);
+                }
+
+                SingletonMod<Mod>.Logger.Debug($"Road templates was loaded: {Templates.Count} items");
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error($"Could not load road templates", error);
+            }
+        }
+
+        protected override void SaveData()
+        {
+            try
+            {
+                var config = Loader.GetString(ToXml());
+                Saved.value = config;
+
+                SingletonMod<Mod>.Logger.Debug($"Road templates was saved: {Templates.Count} items");
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error($"Could not save road templates", error);
+            }
+        }
+        protected override void ClearData()
+        {
+            Templates.Clear();
+        }
+
+        #region XML
+
+        private XElement ToXml()
+        {
+            var config = new XElement("C");
+
+            foreach (var template in Templates)
+            {
+                var roadConfig = new XElement("R");
+                roadConfig.AddAttr("N", template.Key);
+                roadConfig.AddAttr("O", string.Join("|", template.Value.Select(v => v.ToString("0.###")).ToArray()));
+                config.Add(roadConfig);
+            }
+
+            return config;
+        }
+
+        private void FromXml(XElement config)
+        {
+            foreach (var templateConfig in config.Elements("R"))
+            {
+                var name = templateConfig.GetAttrValue("N", string.Empty);
+                if (string.IsNullOrEmpty(name))
+                    continue;
+
+                var values = new List<float>();
+                var valuesStr = templateConfig.GetAttrValue("O", string.Empty);
+                foreach (var str in valuesStr.Split('|'))
+                {
+                    if (float.TryParse(str, out var value))
+                        values.Add(value);
+                }
+
+                if (values.Count > 0)
+                    Templates[name] = values.ToArray();
+            }
+        }
+
+        #endregion
     }
 }

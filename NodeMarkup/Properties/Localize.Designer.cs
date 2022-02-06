@@ -1619,6 +1619,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Revert offsets.
+        /// </summary>
+        public static string PointEditor_RevertOffsets {
+            get {
+                return ResourceManager.GetString("PointEditor_RevertOffsets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Road name.
+        /// </summary>
+        public static string PointEditor_RoadName {
+            get {
+                return ResourceManager.GetString("PointEditor_RoadName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save offsets.
+        /// </summary>
+        public static string PointEditor_SaveOffsets {
+            get {
+                return ResourceManager.GetString("PointEditor_SaveOffsets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Split into two.
         /// </summary>
         public static string PointEditor_SplitIntoTwo {

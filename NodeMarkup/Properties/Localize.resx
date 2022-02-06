@@ -1520,4 +1520,13 @@ Click to edit markings</value>
   <data name="StyleOption_UseGap" xml:space="preserve">
     <value>Use gap</value>
   </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Revert offsets</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Save offsets</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Road name</value>
+  </data>
 </root>
