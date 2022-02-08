@@ -45,8 +45,21 @@ namespace NodeMarkup.Manager
                 var info = segment.Info;
                 var lanes = segment.GetLaneIds().ToArray();
 
-                foreach (var index in (IsLaneInvert ? info.m_sortedLanes : info.m_sortedLanes.Reverse()).Where(s => info.m_lanes[s].IsDriveLane()))
-                    yield return new DriveLane(this, lanes[index], info.m_lanes[index]);
+                foreach (var index in IsLaneInvert ? info.m_sortedLanes : info.m_sortedLanes.Reverse())
+                {
+                    var lane = info.m_lanes[index];
+                    if (lane.IsDriveLane())
+                    {
+                        var driveLane = new DriveLane(this, lanes[index], lane);
+                        if (lane.IsTaxiway())
+                        {
+                            yield return driveLane;
+                            yield return driveLane;
+                        }
+                        else
+                            yield return driveLane;
+                    }
+                }
             }
         }
         protected Dictionary<byte, MarkupEnterPoint> EnterPointsDic { get; private set; } = new Dictionary<byte, MarkupEnterPoint>();

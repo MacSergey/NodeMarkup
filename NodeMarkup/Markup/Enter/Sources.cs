@@ -43,13 +43,23 @@ namespace NodeMarkup.Manager
 
         private void GetMiddlePositionAndDirection(float offset, out Vector3 position, out Vector3 direction)
         {
-            RightLane.NetLane.CalculatePositionAndDirection(Enter.T, out Vector3 rightPos, out Vector3 rightDir);
-            LeftLane.NetLane.CalculatePositionAndDirection(Enter.T, out Vector3 leftPos, out Vector3 leftDir);
+            if (RightLane == LeftLane)
+            {
+                RightLane.NetLane.CalculatePositionAndDirection(Enter.T, out position, out direction);
+                direction = direction.normalized * Enter.SideSign;
+            }
+            else
+            {
+                RightLane.NetLane.CalculatePositionAndDirection(Enter.T, out Vector3 rightPos, out Vector3 rightDir);
+                LeftLane.NetLane.CalculatePositionAndDirection(Enter.T, out Vector3 leftPos, out Vector3 leftDir);
 
-            direction = ((rightDir + leftDir) / (Enter.SideSign * 2)).normalized;
+                direction = ((rightDir + leftDir) / (Enter.SideSign * 2)).normalized;
 
-            var part = (RightLane.HalfWidth + SideDelta / 2) / CenterDelte;
-            position = Vector3.Lerp(rightPos, leftPos, part) + Enter.CornerDir * (offset / Enter.TranformCoef);
+                var part = (RightLane.HalfWidth + SideDelta / 2) / CenterDelte;
+                position = Vector3.Lerp(rightPos, leftPos, part);
+            }
+
+            position += Enter.CornerDir * (offset / Enter.TranformCoef);
         }
         private void GetEdgePositionAndDirection(MarkupPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
         {
@@ -79,6 +89,10 @@ namespace NodeMarkup.Manager
             if (GetIsEdge(leftLane, rightLane))
             {
                 yield return new NetInfoPointSource(enter, leftLane, rightLane, rightLane == null ? MarkupPoint.LocationType.RightEdge : MarkupPoint.LocationType.LeftEdge);
+            }
+            else if (leftLane == rightLane)
+            {
+                yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkupPoint.LocationType.Between);
             }
             else if (GetSideDelta(leftLane, rightLane) >= (leftLane.HalfWidth + rightLane.HalfWidth) / 2)
             {

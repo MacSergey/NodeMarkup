@@ -637,6 +637,15 @@ namespace NodeMarkup.Manager
         {
             LoadInProgress = true;
 
+#if BETA
+            if (version < new Version("1.8.0.761"))
+                map = VersionMigration.Befor1_9(this, map);
+#else
+            if (version < new Version("1.9"))
+                map = VersionMigration.Befor1_9(this, map);
+#endif
+
+
             foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
                 MarkupPoint.FromXml(pointConfig, this, map);
 
