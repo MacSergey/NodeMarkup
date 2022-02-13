@@ -118,21 +118,36 @@ namespace NodeMarkup.Manager
             var background = assembly.LoadTextureFromAssembly(name);
             var logo = assembly.LoadTextureFromAssembly(Style.Type.ToString());
 
-            var widthShift = (background.width - logo.width) / 2;
-            var heightShift = (background.height - logo.height) / 2;
+            if (background == null)
+                return null;
 
-            var sc = (Color)Style.Color.Value.GetStyleIconColor();
-
-            for (var i = 0; i < logo.width; i += 1)
+            else if (logo != null)
             {
-                for (var j = 0; j < logo.height; j += 1)
+                var widthShift = (background.width - logo.width) / 2;
+                var heightShift = (background.height - logo.height) / 2;
+
+                var styleColor = (Color)Style.Color.Value.GetStyleIconColor();
+                var isColor = Style is IColorStyle;
+
+                for (var i = 0; i < logo.width; i += 1)
                 {
-                    var lc = logo.GetPixel(i, j);
-                    var bc = background.GetPixel(i + widthShift, j + heightShift);
-                    if (lc.a != 0)
+                    for (var j = 0; j < logo.height; j += 1)
                     {
-                        var color = new Color(Blend(bc.r, sc.r, lc.a), Blend(bc.g, sc.g, lc.a), Blend(bc.b, sc.b, lc.a), 1);
-                        background.SetPixel(i + widthShift, j + heightShift, color);
+                        var logoColor = logo.GetPixel(i, j);
+                        var backColor = background.GetPixel(i + widthShift, j + heightShift);
+                        if (logoColor.a != 0)
+                        {
+                            if (isColor)
+                            {
+                                var color = new Color(Blend(backColor.r, styleColor.r, logoColor.a), Blend(backColor.g, styleColor.g, logoColor.a), Blend(backColor.b, styleColor.b, logoColor.a), 1);
+                                background.SetPixel(i + widthShift, j + heightShift, color);
+                            }
+                            else
+                            {
+                                var color = new Color(Blend(backColor.r, logoColor.r, logoColor.a), Blend(backColor.g, logoColor.g, logoColor.a), Blend(backColor.b, logoColor.b, logoColor.a), 1);
+                                background.SetPixel(i + widthShift, j + heightShift, color);
+                            }
+                        }
                     }
                 }
             }

@@ -1,4 +1,5 @@
-﻿using NodeMarkup.Manager;
+﻿using ColossalFramework;
+using NodeMarkup.Manager;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -30,6 +31,33 @@ namespace NodeMarkup.Utilities
 
             return map;
         }
+        public static ObjectsMap Befor1_9(Markup markup, ObjectsMap map)
+        {
+            if (map == null)
+                map = new ObjectsMap();
+
+            foreach (var enter in markup.Enters)
+            {
+                ref var segment = ref enter.GetSegment();
+                if (segment.Info.m_vehicleTypes.IsFlagSet(VehicleInfo.VehicleType.Plane))
+                {
+                    var sourceId = MarkupPoint.GetId(enter.Id, 2, MarkupPoint.PointType.Enter);
+                    var targetId = MarkupPoint.GetId(enter.Id, 3, MarkupPoint.PointType.Enter);
+                    map.AddPoint(sourceId, targetId);
+
+                    sourceId = MarkupPoint.GetId(enter.Id, 2, MarkupPoint.PointType.Crosswalk);
+                    targetId = MarkupPoint.GetId(enter.Id, 3, MarkupPoint.PointType.Crosswalk);
+                    map.AddPoint(sourceId, targetId);
+
+                    sourceId = MarkupPoint.GetId(enter.Id, 2, MarkupPoint.PointType.Normal);
+                    targetId = MarkupPoint.GetId(enter.Id, 3, MarkupPoint.PointType.Normal);
+                    map.AddPoint(sourceId, targetId);
+                }
+            }
+
+            return map;
+        }
+
         private static Dictionary<byte, byte> Correction01Dic { get; } = new Dictionary<byte, byte>();
         public static Color32 CorrectColor01(Color32 color)
         {

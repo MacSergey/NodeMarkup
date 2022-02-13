@@ -201,18 +201,28 @@ namespace NodeMarkup.Manager
         public PropertyBoolValue UseSecondColor { get; }
         public PropertyColorValue SecondColor { get; }
 
+        public PropertyValue<bool> UseGap { get; }
+        public PropertyValue<float> GapLength { get; }
+        public PropertyValue<int> GapPeriod { get; }
+
+
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width, crosswalk);
         protected float GetLengthCoef(float length, MarkupCrosswalk crosswalk) => length / (Parallel ? 1 : Mathf.Sin(crosswalk.CornerAndNormalAngle));
 
-        public ZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool parallel) : base(color, width, offsetBefore, offsetAfter)
+        public ZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel) : base(color, width, offsetBefore, offsetAfter)
         {
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
             Parallel = GetParallelProperty(parallel);
+
             UseSecondColor = GetUseSecondColorProperty(useSecondColor);
             SecondColor = GetSecondColorProperty(UseSecondColor ? secondColor : color);
+
+            UseGap = GetUseGapProperty(useGap);
+            GapLength = GetGapLengthProperty(gapLength);
+            GapPeriod = GetGapPeriodProperty(gapPeriod);
         }
-        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, UseSecondColor, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel);
+        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, UseSecondColor, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
@@ -221,6 +231,10 @@ namespace NodeMarkup.Manager
             {
                 zebraTarget.UseSecondColor.Value = UseSecondColor;
                 zebraTarget.SecondColor.Value = SecondColor;
+
+                zebraTarget.UseGap.Value = UseGap;
+                zebraTarget.GapLength.Value = GapLength;
+                zebraTarget.GapPeriod.Value = GapPeriod;
             }
 
             if (target is IDashedCrosswalk dashedTarget)
@@ -238,21 +252,47 @@ namespace NodeMarkup.Manager
             var offset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
 
             var coef = Mathf.Sin(crosswalk.CornerAndNormalAngle);
-            var dashLength = Parallel ? DashLength / coef : DashLength;
-            var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
-            var direction = Parallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
             var borders = crosswalk.BorderTrajectories;
             var index = 0;
-
+            var direction = Parallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
             var trajectory = crosswalk.GetFullTrajectory(offset, direction);
 
-            return StyleHelper.CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
-
-            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+            if (!UseGap)
             {
-                index += 1;
-                foreach (var part in CalculateCroswalkPart(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength, GetColor(index)))
-                    yield return part;
+                var dashLength = Parallel ? DashLength / coef : DashLength;
+                var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
+
+                return StyleHelper.CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
+
+                IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+                {
+                    index += 1;
+                    foreach (var part in CalculateCroswalkPart(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength, GetColor(index)))
+                        yield return part;
+                }
+            }
+            else
+            {
+                var groupLength = (DashLength * GapPeriod + SpaceLength * (GapPeriod - 1));
+                var dashT = DashLength / groupLength;
+                var spaceT = SpaceLength / groupLength;
+
+                groupLength /= (Parallel ? coef : 1f);
+                var gapLength = GapLength / (Parallel ? coef : 1f);
+
+                return StyleHelper.CalculateDashed(trajectory, groupLength, gapLength, CalculateDashes);
+
+                IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+                {
+                    index += 1;
+                    for (var i = 0; i < GapPeriod; i += 1)
+                    {
+                        var partStartT = startT + (endT - startT) * (dashT + spaceT) * i;
+                        var partEndT = partStartT + (endT - startT) * dashT;
+                        foreach (var part in CalculateCroswalkPart(crosswalkTrajectory, partStartT, partEndT, direction, borders, Width, DashLength, GetColor(index)))
+                            yield return part;
+                    }
+                }
             }
         }
         protected Color32 GetColor(int index) => UseSecondColor && index % 2 != 0 ? SecondColor : Color;
@@ -270,9 +310,24 @@ namespace NodeMarkup.Manager
 
             components.Add(AddDashLengthProperty(this, parent));
             components.Add(AddSpaceLengthProperty(this, parent));
+
+            var useGap = AddUseGapProperty(parent);
+            var gapLength = AddGapLengthProperty(parent);
+            var gapPeriod = AddGapPeriodProperty(parent);
+            components.Add(useGap);
+            components.Add(gapLength);
+            components.Add(gapPeriod);
+            useGap.OnSelectObjectChanged += ChangeGapVisible;
+            ChangeGapVisible(useGap.SelectedObject);
+
             components.Add(AddParallelProperty(this, parent));
 
             void ChangeSecondColorVisible(bool useSecondColor) => secondColor.isVisible = useSecondColor;
+            void ChangeGapVisible(bool useGap)
+            {
+                gapLength.isVisible = useGap;
+                gapPeriod.isVisible = useGap;
+            }
         }
 
         protected BoolListPropertyPanel AddUseSecondColorProperty(UIComponent parent)
@@ -297,6 +352,47 @@ namespace NodeMarkup.Manager
             return colorProperty;
         }
 
+        protected BoolListPropertyPanel AddUseGapProperty(UIComponent parent)
+        {
+            var useGapProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(UseGap));
+            useGapProperty.Text = Localize.StyleOption_UseGap;
+            useGapProperty.Init();
+            useGapProperty.SelectedObject = UseGap;
+            useGapProperty.OnSelectObjectChanged += (value) => UseGap.Value = value;
+
+            return useGapProperty;
+        }
+        protected FloatPropertyPanel AddGapLengthProperty(UIComponent parent)
+        {
+            var gapLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(GapLength));
+            gapLengthProperty.Text = Localize.StyleOption_GapLength;
+            gapLengthProperty.UseWheel = true;
+            gapLengthProperty.WheelStep = 0.1f;
+            gapLengthProperty.WheelTip = Settings.ShowToolTip;
+            gapLengthProperty.CheckMin = true;
+            gapLengthProperty.MinValue = 0.1f;
+            gapLengthProperty.Init();
+            gapLengthProperty.Value = GapLength;
+            gapLengthProperty.OnValueChanged += (float value) => GapLength.Value = value;
+
+            return gapLengthProperty;
+        }
+        protected IntPropertyPanel AddGapPeriodProperty(UIComponent parent)
+        {
+            var gapPeriodProperty = ComponentPool.Get<IntPropertyPanel>(parent, nameof(GapPeriod));
+            gapPeriodProperty.Text = Localize.StyleOption_GapPeriod;
+            gapPeriodProperty.UseWheel = true;
+            gapPeriodProperty.WheelStep = 1;
+            gapPeriodProperty.WheelTip = Settings.ShowToolTip;
+            gapPeriodProperty.CheckMin = true;
+            gapPeriodProperty.MinValue = DefaultCrosswalkLineCount;
+            gapPeriodProperty.Init();
+            gapPeriodProperty.Value = GapPeriod;
+            gapPeriodProperty.OnValueChanged += (int value) => GapPeriod.Value = value;
+
+            return gapPeriodProperty;
+        }
+
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -305,6 +401,9 @@ namespace NodeMarkup.Manager
             Parallel.ToXml(config);
             UseSecondColor.ToXml(config);
             SecondColor.ToXml(config);
+            UseGap.ToXml(config);
+            GapLength.ToXml(config);
+            GapPeriod.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -315,6 +414,9 @@ namespace NodeMarkup.Manager
             Parallel.FromXml(config, true);
             UseSecondColor.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
+            UseGap.FromXml(config, false);
+            GapLength.FromXml(config, DefaultSpaceLength);
+            GapPeriod.FromXml(config, DefaulCrosswalkGapPeriod);
         }
     }
     public class DoubleZebraCrosswalkStyle : ZebraCrosswalkStyle, ICrosswalkStyle, IDoubleCrosswalk
@@ -323,13 +425,13 @@ namespace NodeMarkup.Manager
 
         public PropertyValue<float> Offset { get; }
 
-        public DoubleZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool parallel, float offset) :
-            base(color, secondColor, useSecondColor, width, offsetBefore, offsetAfter, dashLength, spaceLength, parallel)
+        public DoubleZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel, float offset) :
+            base(color, secondColor, useSecondColor, width, offsetBefore, offsetAfter, dashLength, spaceLength, useGap, gapLength, gapPeriod, parallel)
         {
             Offset = GetOffsetProperty(offset);
         }
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width * 2 + Offset, crosswalk);
-        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, UseSecondColor, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, Parallel, Offset);
+        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, UseSecondColor, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel, Offset);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
@@ -345,8 +447,6 @@ namespace NodeMarkup.Manager
             var secondOffset = -crosswalk.NormalDir * (middleOffset + deltaOffset);
 
             var coef = Mathf.Sin(crosswalk.CornerAndNormalAngle);
-            var dashLength = Parallel ? DashLength / coef : DashLength;
-            var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
             var direction = Parallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
             var borders = crosswalk.BorderTrajectories;
             var index = 0;
@@ -354,19 +454,54 @@ namespace NodeMarkup.Manager
             var trajectoryFirst = crosswalk.GetFullTrajectory(middleOffset - deltaOffset, direction);
             var trajectorySecond = crosswalk.GetFullTrajectory(middleOffset + deltaOffset, direction);
 
-            foreach (var dash in StyleHelper.CalculateDashed(trajectoryFirst, dashLength, spaceLength, CalculateDashes))
-                yield return dash;
-
-            index = 0;
-
-            foreach (var dash in StyleHelper.CalculateDashed(trajectorySecond, dashLength, spaceLength, CalculateDashes))
-                yield return dash;
-
-            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+            if (!UseGap)
             {
-                index += 1;
-                foreach (var part in CalculateCroswalkPart(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength, GetColor(index)))
-                    yield return part;
+                var dashLength = Parallel ? DashLength / coef : DashLength;
+                var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
+
+                foreach (var dash in StyleHelper.CalculateDashed(trajectoryFirst, dashLength, spaceLength, CalculateDashes))
+                    yield return dash;
+
+                index = 0;
+
+                foreach (var dash in StyleHelper.CalculateDashed(trajectorySecond, dashLength, spaceLength, CalculateDashes))
+                    yield return dash;
+
+                IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+                {
+                    index += 1;
+                    foreach (var part in CalculateCroswalkPart(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength, GetColor(index)))
+                        yield return part;
+                }
+            }
+            else
+            {
+                var groupLength = (DashLength * GapPeriod + SpaceLength * (GapPeriod - 1));
+                var dashT = DashLength / groupLength;
+                var spaceT = SpaceLength / groupLength;
+
+                groupLength /= (Parallel ? coef : 1f);
+                var gapLength = GapLength / (Parallel ? coef : 1f);
+
+                foreach (var dash in StyleHelper.CalculateDashed(trajectoryFirst, groupLength, gapLength, CalculateDashes))
+                    yield return dash;
+
+                index = 0;
+
+                foreach (var dash in StyleHelper.CalculateDashed(trajectorySecond, groupLength, gapLength, CalculateDashes))
+                    yield return dash;
+
+                IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+                {
+                    index += 1;
+                    for (var i = 0; i < GapPeriod; i += 1)
+                    {
+                        var partStartT = startT + (endT - startT) * (dashT + spaceT) * i;
+                        var partEndT = partStartT + (endT - startT) * dashT;
+                        foreach (var part in CalculateCroswalkPart(crosswalkTrajectory, partStartT, partEndT, direction, borders, Width, DashLength, GetColor(index)))
+                            yield return part;
+                    }
+                }
             }
         }
 

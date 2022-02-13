@@ -78,8 +78,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override ushort GetSegmentId() => Id;
-        protected override ref NetSegment GetSegment() => ref Id.GetSegment();
-        protected override bool GetIsStartSide() => GetSegment().m_startNode == Markup.Id;
+        public override ushort GetSegmentId() => Id;
+        public override ref NetSegment GetSegment() => ref Id.GetSegment();
+        public override bool GetIsStartSide() => GetSegment().m_startNode == Markup.Id;
     }
 }

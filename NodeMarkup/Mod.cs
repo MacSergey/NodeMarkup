@@ -226,13 +226,20 @@ namespace NodeMarkup
         {
             if (Settings.RailUnderMarking)
             {
-                success &= Patch_NetInfo_NodeInitNodeInfo();
+                success &= Patch_NetInfo_NodeInitNodeInfo_Rail();
                 success &= Patch_NetInfo_InitSegmentInfo();
             }
+            if(Settings.LevelCrossingUnderMarking)
+                success &= Patch_NetInfo_NodeInitNodeInfo_LevelCrossing();
+
         }
-        private bool Patch_NetInfo_NodeInitNodeInfo()
+        private bool Patch_NetInfo_NodeInitNodeInfo_Rail()
         {
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix), typeof(NetInfo), "InitNodeInfo");
+            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix_Rail), typeof(NetInfo), "InitNodeInfo");
+        }
+        private bool Patch_NetInfo_NodeInitNodeInfo_LevelCrossing()
+        {
+            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix_LevelCrossing), typeof(NetInfo), "InitNodeInfo");
         }
         private bool Patch_NetInfo_InitSegmentInfo()
         {
@@ -291,7 +298,7 @@ namespace NodeMarkup
 
             return LoadingTranspiler(instructions, OpCodes.Stloc_S, 12, additional);
         }
-        private static IEnumerable<CodeInstruction> LoadingTranspiler(IEnumerable<CodeInstruction> instructions, OpCode startOc, int startOp, CodeInstruction[] additional)
+        private static IEnumerable<CodeInstruction> LoadingTranspiler(IEnumerable<CodeInstruction> instructions, OpCode startOc, int startVarIndex, CodeInstruction[] additional)
         {
             var enumerator = instructions.GetEnumerator();
 
@@ -300,7 +307,7 @@ namespace NodeMarkup
                 var instruction = enumerator.Current;
                 yield return instruction;
 
-                if (instruction.opcode == startOc && instruction.operand is LocalBuilder local && local.LocalIndex == startOp)
+                if (instruction.opcode == startOc && instruction.operand is LocalBuilder local && local.LocalIndex == startVarIndex)
                     break;
             }
 

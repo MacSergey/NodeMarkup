@@ -1619,6 +1619,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Revert offsets.
+        /// </summary>
+        public static string PointEditor_RevertOffsets {
+            get {
+                return ResourceManager.GetString("PointEditor_RevertOffsets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Road name.
+        /// </summary>
+        public static string PointEditor_RoadName {
+            get {
+                return ResourceManager.GetString("PointEditor_RoadName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save offsets.
+        /// </summary>
+        public static string PointEditor_SaveOffsets {
+            get {
+                return ResourceManager.GetString("PointEditor_SaveOffsets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Split into two.
         /// </summary>
         public static string PointEditor_SplitIntoTwo {
@@ -1707,6 +1734,42 @@ namespace NodeMarkup {
         public static string PresetEditor_NameExistMessage {
             get {
                 return ResourceManager.GetString("PresetEditor_NameExistMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Close fit.
+        /// </summary>
+        public static string PresetEditor_PresetFit_Close {
+            get {
+                return ResourceManager.GetString("PresetEditor_PresetFit_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Perfect fit.
+        /// </summary>
+        public static string PresetEditor_PresetFit_Perfect {
+            get {
+                return ResourceManager.GetString("PresetEditor_PresetFit_Perfect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Poor fit.
+        /// </summary>
+        public static string PresetEditor_PresetFit_Poor {
+            get {
+                return ResourceManager.GetString("PresetEditor_PresetFit_Poor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Possible fit.
+        /// </summary>
+        public static string PresetEditor_PresetFit_Possible {
+            get {
+                return ResourceManager.GetString("PresetEditor_PresetFit_Possible", resourceCulture);
             }
         }
         
@@ -2143,6 +2206,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Group presets.
+        /// </summary>
+        public static string Settings_GroupPresets {
+            get {
+                return ResourceManager.GetString("Settings_GroupPresets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Group templates.
         /// </summary>
         public static string Settings_GroupTemplates {
@@ -2193,6 +2265,15 @@ namespace NodeMarkup {
         public static string Settings_IlluminationIntensity {
             get {
                 return ResourceManager.GetString("Settings_IlluminationIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Markings under level crossings.
+        /// </summary>
+        public static string Settings_LevelCrossingUnderMarking {
+            get {
+                return ResourceManager.GetString("Settings_LevelCrossingUnderMarking", resourceCulture);
             }
         }
         
@@ -2839,6 +2920,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Gap length.
+        /// </summary>
+        public static string StyleOption_GapLength {
+            get {
+                return ResourceManager.GetString("StyleOption_GapLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Gap period.
+        /// </summary>
+        public static string StyleOption_GapPeriod {
+            get {
+                return ResourceManager.GetString("StyleOption_GapPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Invert.
         /// </summary>
         public static string StyleOption_Invert {
@@ -3042,6 +3141,15 @@ namespace NodeMarkup {
         public static string StyleOption_Turn {
             get {
                 return ResourceManager.GetString("StyleOption_Turn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Use gap.
+        /// </summary>
+        public static string StyleOption_UseGap {
+            get {
+                return ResourceManager.GetString("StyleOption_UseGap", resourceCulture);
             }
         }
         

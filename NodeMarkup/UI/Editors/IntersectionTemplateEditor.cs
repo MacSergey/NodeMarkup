@@ -2,8 +2,11 @@
 using ModsCommon;
 using ModsCommon.UI;
 using NodeMarkup.Manager;
+using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
@@ -53,9 +56,11 @@ namespace NodeMarkup.UI.Editors
         protected override bool SaveAsset(IntersectionTemplate template) => SingletonManager<IntersectionTemplateManager>.Instance.MakeAsset(template);
     }
 
-    public class IntersectionTemplateItemsPanel : ItemsPanel<IntersectionTemplateItem, IntersectionTemplate>
+    public class IntersectionTemplateItemsPanel : ItemsGroupPanel<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateGroup, IntersectionTemplateFit>
     {
         private PreviewPanel Preview { get; set; }
+
+        public override bool GroupingEnable => Settings.GroupPresets.value;
 
         public override int Compare(IntersectionTemplate x, IntersectionTemplate y)
         {
@@ -84,7 +89,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddPreview(IntersectionTemplateItem item)
         {
-            if (item == SelectItem)
+            if (item == SelectItem || Preview != null)
                 return;
 
             Editor.AvailableContent = false;
@@ -111,7 +116,96 @@ namespace NodeMarkup.UI.Editors
             ComponentPool.Free(Preview);
             Preview = null;
         }
+        public override void RefreshItems()
+        {
+            base.RefreshItems();
+            RemovePreview();
+        }
+
+        protected override IntersectionTemplateFit SelectGroup(IntersectionTemplate editObject)
+        {
+            if (editObject.Enters.Length != Tool.Markup.EntersCount)
+                return IntersectionTemplateFit.Poor;
+            else if (PointsMatch(editObject, Tool.Markup))
+                return IntersectionTemplateFit.Close;
+            else if (SimilarWidth(editObject, Tool.Markup))
+                return IntersectionTemplateFit.Possible;
+            else
+                return IntersectionTemplateFit.Poor;
+        }
+        private bool PointsMatch(IntersectionTemplate template, Markup markup)
+        {
+            var templatePoints = template.Enters.Select(e => e.Points).ToArray();
+            var markupPoints = markup.Enters.Select(e => e.PointCount).ToArray();
+            if (markupPoints.Length == templatePoints.Length)
+            {
+                for (int i = 0; i < 2; i += 1)
+                {
+                    for (int start = 0; start < templatePoints.Length; start += 1)
+                    {
+                        if (templatePoints.Skip(start).Concat(templatePoints.Take(start)).SequenceEqual(markupPoints))
+                            return true;
+                    }
+                    templatePoints = templatePoints.Reverse().ToArray();
+                }
+            }
+            return false;
+        }
+
+        private bool SimilarWidth(IntersectionTemplate template, Markup markup)
+        {
+            var templatePoints = template.Enters.Select(e => e.Points).ToArray();
+            var markupPoints = markup.Enters.Select(e => e.PointCount).ToArray();
+            if (markupPoints.Length == templatePoints.Length)
+            {
+                for (int i = 0; i < 2; i += 1)
+                {
+                    for (int start = 0; start < templatePoints.Length; start += 1)
+                    {
+                        var templateRotated = templatePoints.Skip(start).Concat(templatePoints.Take(start));
+
+                        int maxDiff = 0;
+                        bool hasGreater = false;
+                        bool hasLesser = false;
+                        int index = 0;
+
+                        foreach (var tp in templateRotated)
+                        {
+                            var diff = tp - markupPoints[index++];
+                            hasGreater |= diff > 0;
+                            hasLesser |= diff < 0;
+                            maxDiff = Math.Max(Math.Abs(diff), maxDiff);
+                            if (maxDiff > 1 || (hasGreater && hasLesser))
+                                break;
+                        }
+                        if (maxDiff <= 1 && !(hasGreater && hasLesser))
+                            return true;
+                    }
+                    templatePoints = templatePoints.Reverse().ToArray();
+                }
+            }
+            return false;
+        }
+
+        protected override string GroupName(IntersectionTemplateFit group) => group.Description();
+
+        public override int Compare(IntersectionTemplateFit x, IntersectionTemplateFit y) => x.CompareTo(y);
     }
+    public enum IntersectionTemplateFit
+    {
+        [Description(nameof(Localize.PresetEditor_PresetFit_Perfect))]
+        Perfect,
+
+        [Description(nameof(Localize.PresetEditor_PresetFit_Close))]
+        Close,
+
+        [Description(nameof(Localize.PresetEditor_PresetFit_Possible))]
+        Possible,
+
+        [Description(nameof(Localize.PresetEditor_PresetFit_Poor))]
+        Poor,
+    }
+
     public class IntersectionTemplateItem : EditItem<IntersectionTemplate, IntersectionTemplateIcon>
     {
         public override bool ShowDelete => !Object.IsAsset;
@@ -145,7 +239,7 @@ namespace NodeMarkup.UI.Editors
                 CountLabel.size = size;
         }
     }
-    public class IntersectionTemplateGroup : EditGroup<bool, IntersectionTemplateItem, IntersectionTemplate> { }
+    public class IntersectionTemplateGroup : EditGroup<IntersectionTemplateFit, IntersectionTemplateItem, IntersectionTemplate> { }
     public class EditIntersectionTemplateMode : EditTemplateMode<IntersectionTemplate> { }
     public class PreviewPanel : PropertyGroupPanel
     {

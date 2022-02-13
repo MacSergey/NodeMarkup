@@ -101,7 +101,6 @@ namespace NodeMarkup.UI.Editors
         Action LinePropertiesVisibleAction { get; set; }
         private void AddLineProperties(MarkupLine editObject)
         {
-
             LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
             LineProperties.Init();
 

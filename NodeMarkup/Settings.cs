@@ -29,6 +29,7 @@ namespace NodeMarkup
         public static SavedFloat LODDistance { get; } = new SavedFloat(nameof(LODDistance), SettingsFile, 300f, true);
         public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
+        public static SavedBool LevelCrossingUnderMarking { get; } = new SavedBool(nameof(LevelCrossingUnderMarking), SettingsFile, true, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool ShowPanelTip { get; } = new SavedBool(nameof(ShowPanelTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
@@ -40,10 +41,12 @@ namespace NodeMarkup
         public static SavedBool HideStreetName { get; } = new SavedBool(nameof(HideStreetName), SettingsFile, true, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
         public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
+        public static SavedString Roads { get; } = new SavedString(nameof(Roads), SettingsFile, string.Empty, true);
 
         public static SavedBool GroupPoints { get; } = new SavedBool(nameof(GroupPoints), SettingsFile, true, true);
         public static SavedBool GroupLines { get; } = new SavedBool(nameof(GroupLines), SettingsFile, false, true);
         public static SavedBool GroupTemplates { get; } = new SavedBool(nameof(GroupTemplates), SettingsFile, true, true);
+        public static SavedBool GroupPresets { get; } = new SavedBool(nameof(GroupPresets), SettingsFile, true, true);
         public static SavedInt GroupTemplatesType { get; } = new SavedInt(nameof(GroupTemplatesType), SettingsFile, 0, true);
         public static SavedBool GroupPointsOverlay { get; } = new SavedBool(nameof(GroupPointsOverlay), SettingsFile, true, true);
         public static SavedInt GroupPointsOverlayType { get; } = new SavedInt(nameof(GroupPointsOverlayType), SettingsFile, 0, true);
@@ -105,6 +108,9 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
             AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
             AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
+            AddCheckBox(group, Localize.Settings_LevelCrossingUnderMarking, LevelCrossingUnderMarking);
+            AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
+            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddToolButton<NodeMarkupTool, NodeMarkupButton>(group);
             AddCheckBox(group, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
             AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);          
@@ -134,6 +140,7 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_GroupPoints, GroupPoints, OnChanged);
             AddCheckBox(group, Localize.Settings_GroupLines, GroupLines, OnChanged);
             AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnChanged);
+            AddCheckBox(group, Localize.Settings_GroupPresets, GroupPresets, OnChanged);
             AddCheckboxPanel(group, Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
 
             static void OnChanged() => SingletonItem<NodeMarkupPanel>.Instance.UpdatePanel();

@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ModsBridge;
+using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
@@ -34,6 +35,7 @@ namespace NodeMarkup.Manager
         public Vector3 LastPointSide { get; private set; }
         public StraightTrajectory Line { get; private set; }
         public bool LanesChanged => GetSegment().m_lanes != FirstLane;
+        public string RoadName => GetSegment().Info.name;
 
         public IEnumerable<DriveLane> DriveLanes
         {
@@ -43,8 +45,21 @@ namespace NodeMarkup.Manager
                 var info = segment.Info;
                 var lanes = segment.GetLaneIds().ToArray();
 
-                foreach (var index in (IsLaneInvert ? info.m_sortedLanes : info.m_sortedLanes.Reverse()).Where(s => info.m_lanes[s].IsDriveLane()))
-                    yield return new DriveLane(this, lanes[index], info.m_lanes[index]);
+                foreach (var index in IsLaneInvert ? info.m_sortedLanes : info.m_sortedLanes.Reverse())
+                {
+                    var lane = info.m_lanes[index];
+                    if (lane.IsDriveLane())
+                    {
+                        var driveLane = new DriveLane(this, lanes[index], lane);
+                        if (lane.IsTaxiway())
+                        {
+                            yield return driveLane;
+                            yield return driveLane;
+                        }
+                        else
+                            yield return driveLane;
+                    }
+                }
             }
         }
         protected Dictionary<byte, MarkupEnterPoint> EnterPointsDic { get; private set; } = new Dictionary<byte, MarkupEnterPoint>();
@@ -119,11 +134,12 @@ namespace NodeMarkup.Manager
 
             var points = sources.Select(s => new MarkupEnterPoint(this, s)).ToArray();
             EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
+            ResetPoints();
         }
 
-        protected abstract ushort GetSegmentId();
-        protected abstract ref NetSegment GetSegment();
-        protected abstract bool GetIsStartSide();
+        public abstract ushort GetSegmentId();
+        public abstract ref NetSegment GetSegment();
+        public abstract bool GetIsStartSide();
         public virtual bool TryGetPoint(byte pointNum, MarkupPoint.PointType type, out MarkupPoint point)
         {
             if (type == MarkupPoint.PointType.Enter && EnterPointsDic.TryGetValue(pointNum, out MarkupEnterPoint enterPoint))
@@ -184,8 +200,22 @@ namespace NodeMarkup.Manager
 
         public void ResetPoints()
         {
-            foreach (var point in Points)
-                point.Reset();
+            var points = Points.ToArray();
+            if (SingletonManager<RoadTemplateManager>.Instance.TryGetOffsets(RoadName, out var offsets))
+            {
+                for (var i = 0; i < Math.Min(offsets.Length, points.Length); i += 1)
+                {
+                    if (IsLaneInvert)
+                        points[points.Length - 1 - i].Offset.Value = -offsets[i];
+                    else
+                        points[i].Offset.Value = offsets[i];
+                }
+            }
+            else
+            {
+                foreach (var point in points)
+                    point.Reset();
+            }
         }
         public Vector3 GetPosition(float offset) => Position + offset / TranformCoef * CornerDir;
         public void Render(OverlayData data)
