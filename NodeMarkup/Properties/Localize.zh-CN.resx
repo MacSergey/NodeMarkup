@@ -1401,7 +1401,9 @@
   <data name="Settings_GroupPresets" xml:space="preserve">
     <value>将预设分组</value>
   </data>
-  
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>紧密配合</value>
+  </data>
   <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
     <value>完美符合</value>
   </data>

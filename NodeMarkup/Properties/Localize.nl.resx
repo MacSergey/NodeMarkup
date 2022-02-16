@@ -1278,75 +1278,99 @@ Klik om de markering te wijzigen</value>
     <value>Hoekstraal op mediaan</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>Kromming grootte</value>
+    <value>Stoeprand hoogte</value>
   </data>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Kromming grootte op medianen</value>
+    <value>Stoeprand hoogte op middenbermen</value>
   </data>
   
   
   <data name="HeaderPanel_Discard" xml:space="preserve">
-    <value>Ontdoen</value>
+    <value>Weggooien</value>
   </data>
   
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Sorteringen</value>
   </data>
   <data name="Settings_SortPresetType" xml:space="preserve">
-    <value>Sortering voorinstellingen</value>
+    <value>Voorinstellingen sorteren</value>
   </data>
   <data name="Settings_SortPresetByNames" xml:space="preserve">
     <value>Op naam</value>
   </data>
   <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
-    <value>Op weg aantal, daarna op naam</value>
+    <value>Op aantal wegen, dan op naam</value>
   </data>
   <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
-    <value>Op auteur, daarna bij type en vervolgens op naam</value>
+    <value>Op auteur, dan op type, dan op naam</value>
   </data>
   <data name="Settings_SortTemplateByNames" xml:space="preserve">
-    <value>Op naam, daarna op type</value>
+    <value>Op naam, dan op type</value>
   </data>
   <data name="Settings_SortTemplateByType" xml:space="preserve">
-    <value>Op type, daarna op naam</value>
+    <value>Op naam, dan op type</value>
   </data>
   <data name="Settings_SortTemplateType" xml:space="preserve">
-    <value>Sorteer de sjablonen</value>
+    <value>Sjablonen sorteren</value>
   </data>
   <data name="Settings_SortApplyByAuthor" xml:space="preserve">
-    <value>Op auteur, daarna op type en vervolgens op naam</value>
+    <value>Op auteur, dan op type, dan op naam</value>
   </data>
   <data name="Settings_SortApplyByNames" xml:space="preserve">
-    <value>Op naam, daarna op type</value>
+    <value>Op naam, dan op type</value>
   </data>
   <data name="Settings_SortApplyByType" xml:space="preserve">
-    <value>Op type, daarna op naam</value>
+    <value>Op type, dan op naam</value>
   </data>
   <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
-    <value>Weergeef standaard sjablonen bovenaan de toepassingenlijst</value>
+    <value>Toon standaardsjablonen bovenaan de lijst</value>
   </data>
   <data name="Settings_SortApplyType" xml:space="preserve">
-    <value>Sorteer de sjablonen in de toepassingenlijst</value>
+    <value>Sjablonen sorteren in de lijst</value>
   </data>
   <data name="Settings_IlluminationAtNight" xml:space="preserve">
-    <value>Verlichting bij het aanpassen van markeringen tijdens de nacht</value>
+    <value>Verlichting van bewerkingsmarkering in de nacht</value>
   </data>
   <data name="Settings_IlluminationIntensity" xml:space="preserve">
-    <value>Verlichting sterkte</value>
+    <value>Verlichtingssterkte</value>
   </data>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Gameplay</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Voorinstellingen groeperen</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Past nauwelijks</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Past perfect</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Past slecht</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Past mogelijk</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Markeringen onder spoorwegovergangen</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Lengte van tussenruimte</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Frequentie van tussenruimte</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Gebruik van tussenruimte</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Reset offsets</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Bewaar offsets</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Straatnaam</value>
+  </data>
 </root>

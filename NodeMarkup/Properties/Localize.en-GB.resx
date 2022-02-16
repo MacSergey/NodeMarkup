@@ -117,29 +117,69 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_DeleteCaption" xml:space="preserve">
+    <value>Delete {0}</value>
+  </data>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>Are you sure you want to delete {0} "{1}"?</value>
+  </data>
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>Apply template</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>Save as template</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>Set as default</value>
+  </data>
+  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
+    <value>Remove from default</value>
+  </data>
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>Add rule</value>
+  </data>
   <data name="StyleOption_Color" xml:space="preserve">
     <value>Colour</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_DashedLength" xml:space="preserve">
+    <value>Dash lenght</value>
+  </data>
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>Delete rule</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the rule?</value>
+  </data>
+  <data name="LineRule_From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>Select the rule's from point</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>Select the rule's "To" point</value>
+  </data>
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>line</value>
+  </data>
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>Lines</value>
+  </data>
+  <data name="StyleOption_Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="StyleOption_SpaceLength" xml:space="preserve">
+    <value>Space lenght</value>
+  </data>
+  <data name="Editor_Style" xml:space="preserve">
+    <value>Style</value>
+  </data>
+  <data name="LineRule_To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>Intersection with {0}</value>
+  </data>
   
   
   

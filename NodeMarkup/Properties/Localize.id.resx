@@ -1295,15 +1295,25 @@ Klik untuk mengedit markah</value>
     <value>Game</value>
   </data>
   
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Lumayan cocok</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Cocok dgn sempurna</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Kurang cocok</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Mungkin cocok</value>
+  </data>
   
   
   
   
   
   
-  
-  
-  
-  
-  
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Nama jalan</value>
+  </data>
 </root>

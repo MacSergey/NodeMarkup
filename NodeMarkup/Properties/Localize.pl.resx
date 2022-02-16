@@ -522,7 +522,7 @@ Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju te
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
     <value>To skrzyżowanie nie ma jeszcze przejścia dla pieszych.
-Aby utworzyć przejście dla pieszych przytrzymaj klawisz {0}.</value>
+Aby utworzyć przejście dla pieszych, przytrzymaj klawisz {0}.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>przejście dla pieszych</value>
@@ -911,10 +911,10 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
     <value>Przytrzymaj {0}, aby utworzyć przejście dla pieszych</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Przytrzymaj {0} - aby utworzyć wypełnienie</value>
+    <value>Przytrzymaj {0}, aby utworzyć wypełnienie</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Przeciągnij trzymając {0} aby przesunąć ten punkt</value>
+    <value>Przeciągnij, trzymając {0}, aby przesunąć ten punkt</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1355,7 +1355,7 @@ Kliknij aby edytować oznaczenia</value>
     <value>Możliwe dopasowanie</value>
   </data>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
-    <value>Oznaczenia poniżej poziomu skrzyżowania</value>
+    <value>Oznakowanie pod przejazdami kolejowymi</value>
   </data>
   <data name="StyleOption_GapLength" xml:space="preserve">
     <value>Długość przerwy</value>
@@ -1372,5 +1372,7 @@ Kliknij aby edytować oznaczenia</value>
   <data name="PointEditor_SaveOffsets" xml:space="preserve">
     <value>Zapisz przesunięcia</value>
   </data>
-  
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Nazwa drogi</value>
+  </data>
 </root>
