@@ -1529,4 +1529,17 @@ Click to edit markings</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Road name</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_9" xml:space="preserve">
+    <value>- Added the ability to save points offset values for each roads.
+- Added gap option to zebra and double zebra crosswalk styles. It allows to set different space each N dashes.
+- Added intersection points to lines from one splited point with different alignment.
+- Added settings of sorting templates, presets and applying list.
+- Added template grouping by fit (Perfect/Close/Possible/Poor).
+- Added illumination to marking while editing at night.
+- Added illumination to cursor like default game tool.
+- Added option for placing markings under level crossings. Can be disabled in mod settings.
+- Added third (middle) point to taxiways/runways.
+- Fixed error while saving template as asset.
+- Fixed crosswalks calculation error.</value>
+  </data>
 </root>

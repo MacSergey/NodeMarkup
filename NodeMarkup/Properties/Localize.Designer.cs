@@ -1475,6 +1475,22 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added the ability to save points offset values for each roads.
+        ///- Added gap option to zebra and double zebra crosswalk styles. It allows to set different space each N dashes.
+        ///- Added intersection points to lines from one splited point with different alignment.
+        ///- Added settings of sorting templates, presets and applying list.
+        ///- Added template grouping by fit (Perfect/Close/Possible/Poor).
+        ///- Added illumination to marking while editing at night.
+        ///- Added illumination to cursor like default game tool.
+        ///-  [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_9 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply between intersections.
         /// </summary>
         public static string Panel_ApplyBetweenIntersections {
