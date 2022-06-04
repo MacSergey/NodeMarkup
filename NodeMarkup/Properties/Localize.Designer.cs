@@ -1084,6 +1084,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Prop.
+        /// </summary>
+        public static string LineStyle_Prop {
+            get {
+                return ResourceManager.GetString("LineStyle_Prop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Regular lines.
         /// </summary>
         public static string LineStyle_RegularLinesGroup {
@@ -1188,6 +1197,15 @@ namespace NodeMarkup {
         public static string LineStyle_StopSolidAndDashed {
             get {
                 return ResourceManager.GetString("LineStyle_StopSolidAndDashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Tree.
+        /// </summary>
+        public static string LineStyle_Tree {
+            get {
+                return ResourceManager.GetString("LineStyle_Tree", resourceCulture);
             }
         }
         
@@ -3022,6 +3040,60 @@ namespace NodeMarkup {
         public static string StyleOption_No {
             get {
                 return ResourceManager.GetString("StyleOption_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Angle.
+        /// </summary>
+        public static string StyleOption_ObjectAngle {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Elevation.
+        /// </summary>
+        public static string StyleOption_ObjectElevation {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectElevation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Name.
+        /// </summary>
+        public static string StyleOption_ObjectName {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Scale.
+        /// </summary>
+        public static string StyleOption_ObjectScale {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Shift.
+        /// </summary>
+        public static string StyleOption_ObjectShift {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Step.
+        /// </summary>
+        public static string StyleOption_ObjectStep {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectStep", resourceCulture);
             }
         }
         

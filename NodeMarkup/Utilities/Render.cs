@@ -212,7 +212,7 @@ namespace NodeMarkup.Utilities
 
     public interface IDrawData
     {
-        public void Draw(RenderManager.Instance data);
+        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data);
     }
 
     public enum MarkupLOD
@@ -305,7 +305,7 @@ namespace NodeMarkup.Utilities
             MaterialType = materialType;
         }
 
-        public void Draw(RenderManager.Instance data)
+        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
         {
             var instance = Singleton<NetManager>.instance;
 
@@ -616,6 +616,53 @@ namespace NodeMarkup.Utilities
         }
     }
 
+    public struct MarkupStylePropItem
+    {
+        public Vector3 position;
+        public float angle;
+        public float scale;
+    }
+    public abstract class BaseMarkupStyleProp<PrefabType> : IStyleData, IDrawData
+        where PrefabType : PrefabInfo
+    {
+        public PrefabType Info { get; private set; }
+        protected MarkupStylePropItem[] Items { get; private set; }
+
+        public BaseMarkupStyleProp(PrefabType info, MarkupStylePropItem[] items)
+        {
+            Info = info;
+            Items = items;
+        }
+
+        public IEnumerable<IDrawData> GetDrawData()
+        {
+            yield return this;
+        }
+
+        public abstract void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data);
+    }
+    public class MarkupStyleProp : BaseMarkupStyleProp<PropInfo>
+    {
+        public MarkupStyleProp(PropInfo info, MarkupStylePropItem[] items) : base(info, items) { }
+
+        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
+        {
+            var instance = new InstanceID() { };
+            foreach (var item in Items)
+                PropInstance.RenderInstance(cameraInfo, Info, instance, item.position, item.scale, item.angle, Info.GetColor(ref SimulationManager.instance.m_randomizer), new Vector4(), true);
+        }
+    }
+    public class MarkupStyleTree : BaseMarkupStyleProp<TreeInfo>
+    {
+        public MarkupStyleTree(TreeInfo info, MarkupStylePropItem[] items) : base(info, items) { }
+
+        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
+        {
+            foreach (var item in Items)
+                TreeInstance.RenderInstance(cameraInfo, Info, item.position, item.scale, 1f, new Vector4());
+        }
+    }
+
     public class RenderBatch : IDrawData
     {
         public static float MeshHeight => 5f;
@@ -691,7 +738,7 @@ namespace NodeMarkup.Utilities
 
         public override string ToString() => $"{Count}: {Size}";
 
-        public void Draw(RenderManager.Instance data)
+        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
         {
             var instance = Singleton<PropManager>.instance;
             var materialBlock = instance.m_materialBlock;

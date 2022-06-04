@@ -34,7 +34,7 @@ namespace NodeMarkup.UI.Editors
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool SupportRules => EditObject is MarkupRegularLine;
         public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
-        private bool AddRuleAvailable => CanDivide || EditObject?.Rules.Any() == false;
+        private bool AddRuleAvailable => EditObject.IsSupportRules/*CanDivide || EditObject?.Rules.Any() == false*/;
         public bool IsSplit => EditObject.PointPair.IsSplit;
 
         private RuleEdgeSelectPropertyPanel HoverPartEdgePanel { get; set; }
@@ -185,7 +185,7 @@ namespace NodeMarkup.UI.Editors
             if (CanDivide && Settings.QuickRuleSetup)
                 SetupRule(rulePanel);
 
-            RefreshSelectedItem();
+            RefreshEditor();
         }
         private void RefreshRulePanels()
         {
