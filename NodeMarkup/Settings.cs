@@ -143,7 +143,7 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_GroupPresets, GroupPresets, OnChanged);
             AddCheckboxPanel(group, Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
 
-            static void OnChanged() => SingletonItem<NodeMarkupPanel>.Instance.UpdatePanel();
+            static void OnChanged() => SingletonItem<NodeMarkupPanel>.Instance?.UpdatePanel();
         }
         private void AddSorting(UIAdvancedHelper helper)
         {
@@ -155,7 +155,7 @@ namespace NodeMarkup
             AddCheckBox(group, Localize.Settings_SortApplyDefaultFirst, DefaultTemlatesFirst);
 
 
-            static void OnChanged() => SingletonItem<NodeMarkupPanel>.Instance.UpdatePanel();
+            static void OnChanged() => SingletonItem<NodeMarkupPanel>.Instance?.UpdatePanel();
         }
 
         #endregion
