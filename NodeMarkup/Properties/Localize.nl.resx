@@ -1374,4 +1374,28 @@ Klik om de markering te wijzigen</value>
     <value>Straatnaam</value>
   </data>
   
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Prop</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Boom</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Hoek</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Hoogte</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>Naam</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Schaal</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Stap</value>
+  </data>
 </root>

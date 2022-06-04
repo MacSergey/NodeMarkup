@@ -1374,4 +1374,28 @@ Haga clic para editar las marcas</value>
     <value>Nombre de carretera</value>
   </data>
   
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Decoración</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Árbol</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Ángulo</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Elevación</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Escala</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Desplazar</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Grado</value>
+  </data>
 </root>

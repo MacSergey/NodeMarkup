@@ -1545,4 +1545,28 @@
 - Испрвлена ошибка при сохранение шаблона как ассета.
 - Исправлен ошибка при расчете пешеходных переходов.</value>
   </data>
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Реквизит</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Деревья</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Угол</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Подъем</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Масштаб</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Сдвиг</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Шаг</value>
+  </data>
 </root>

@@ -1437,4 +1437,28 @@ Klicken um die Markierungen zu bearbeiten</value>
     <value>Straßenname</value>
   </data>
   
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Dekoration</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Baum</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Winkel</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Höhe</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Skalierung</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Verschiebung</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Schritt</value>
+  </data>
 </root>

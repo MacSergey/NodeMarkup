@@ -1377,4 +1377,28 @@
     <value>道路の名前</value>
   </data>
   
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Prop</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>ツリー</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>角度</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>高さ</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>縮尺</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>シフト</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>間隔</value>
+  </data>
 </root>
