@@ -75,6 +75,7 @@ namespace NodeMarkup.Manager
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(doubleStyle.Offset));
             offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.WheelTip = Settings.ShowToolTip;
@@ -90,6 +91,7 @@ namespace NodeMarkup.Manager
         {
             var baseProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Base));
             baseProperty.Text = Localize.StyleOption_SharkToothBase;
+            baseProperty.Format = Localize.NumberFormat_Meter;
             baseProperty.UseWheel = true;
             baseProperty.WheelStep = 0.1f;
             baseProperty.WheelTip = Settings.ShowToolTip;
@@ -105,6 +107,7 @@ namespace NodeMarkup.Manager
         {
             var heightProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Height));
             heightProperty.Text = Localize.StyleOption_SharkToothHeight;
+            heightProperty.Format = Localize.NumberFormat_Meter;
             heightProperty.UseWheel = true;
             heightProperty.WheelStep = 0.1f;
             heightProperty.WheelTip = Settings.ShowToolTip;
@@ -120,6 +123,7 @@ namespace NodeMarkup.Manager
         {
             var spaceProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Space));
             spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
+            spaceProperty.Format = Localize.NumberFormat_Meter;
             spaceProperty.UseWheel = true;
             spaceProperty.WheelStep = 0.1f;
             spaceProperty.WheelTip = Settings.ShowToolTip;
@@ -194,7 +198,7 @@ namespace NodeMarkup.Manager
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
-            {RegularLineType.Prop, new PropLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
+            {RegularLineType.Prop, new PropLineStyle(string.Empty, PropLineStyle.DefaultColorOption, PropLineStyle.DefaultColor, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
             {RegularLineType.Tree, new TreeLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
         };
 

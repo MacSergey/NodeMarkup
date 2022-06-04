@@ -49,6 +49,7 @@ namespace NodeMarkup.UI.Editors
         {
             Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Offset));
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
+            Offset.Format = NodeMarkup.Localize.NumberFormat_Meter;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
             Offset.WheelTip = Settings.ShowToolTip;
@@ -68,6 +69,7 @@ namespace NodeMarkup.UI.Editors
         {
             Shift = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Shift));
             Shift.Text = NodeMarkup.Localize.PointEditor_SplitOffset;
+            Shift.Format = NodeMarkup.Localize.NumberFormat_Meter;
             Shift.UseWheel = true;
             Shift.WheelStep = 0.1f;
             Shift.WheelTip = Settings.ShowToolTip;

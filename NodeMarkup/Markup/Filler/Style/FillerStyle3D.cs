@@ -211,6 +211,7 @@ namespace NodeMarkup.Manager
         {
             var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Elevation));
             elevationProperty.Text = Localize.FillerStyle_Elevation;
+            elevationProperty.Format = Localize.NumberFormat_Meter;
             elevationProperty.UseWheel = true;
             elevationProperty.WheelStep = 0.1f;
             elevationProperty.WheelTip = Settings.ShowToolTip;
@@ -228,6 +229,7 @@ namespace NodeMarkup.Manager
         {
             var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CornerRadius));
             cornerRadiusProperty.Text = Localize.FillerStyle_CornerRadius;
+            cornerRadiusProperty.Format = Localize.NumberFormat_Meter;
             cornerRadiusProperty.UseWheel = true;
             cornerRadiusProperty.WheelStep = 0.1f;
             cornerRadiusProperty.WheelTip = Settings.ShowToolTip;
@@ -245,6 +247,7 @@ namespace NodeMarkup.Manager
         {
             var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCornerRadius));
             cornerRadiusProperty.Text = Localize.FillerStyle_MedianCornerRadius;
+            cornerRadiusProperty.Text = Localize.NumberFormat_Meter;
             cornerRadiusProperty.UseWheel = true;
             cornerRadiusProperty.WheelStep = 0.1f;
             cornerRadiusProperty.WheelTip = Settings.ShowToolTip;
@@ -356,6 +359,7 @@ namespace NodeMarkup.Manager
         {
             var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CurbSize));
             curbSizeProperty.Text = Localize.FillerStyle_CurbSize;
+            curbSizeProperty.Format = Localize.NumberFormat_Meter;
             curbSizeProperty.UseWheel = true;
             curbSizeProperty.WheelStep = 0.1f;
             curbSizeProperty.WheelTip = Settings.ShowToolTip;
@@ -373,6 +377,7 @@ namespace NodeMarkup.Manager
         {
             var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCurbSize));
             curbSizeProperty.Text = Localize.FillerStyle_MedianCurbSize;
+            curbSizeProperty.Format = Localize.NumberFormat_Meter;
             curbSizeProperty.UseWheel = true;
             curbSizeProperty.WheelStep = 0.1f;
             curbSizeProperty.WheelTip = Settings.ShowToolTip;

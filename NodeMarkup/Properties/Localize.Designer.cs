@@ -1509,6 +1509,33 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}°.
+        /// </summary>
+        public static string NumberFormat_Degree {
+            get {
+                return ResourceManager.GetString("NumberFormat_Degree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}m.
+        /// </summary>
+        public static string NumberFormat_Meter {
+            get {
+                return ResourceManager.GetString("NumberFormat_Meter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}%.
+        /// </summary>
+        public static string NumberFormat_Percent {
+            get {
+                return ResourceManager.GetString("NumberFormat_Percent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Apply between intersections.
         /// </summary>
         public static string Panel_ApplyBetweenIntersections {
@@ -2900,6 +2927,42 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Variant #1.
+        /// </summary>
+        public static string StyleOption_Color1 {
+            get {
+                return ResourceManager.GetString("StyleOption_Color1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Variant #2.
+        /// </summary>
+        public static string StyleOption_Color2 {
+            get {
+                return ResourceManager.GetString("StyleOption_Color2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Variant #3.
+        /// </summary>
+        public static string StyleOption_Color3 {
+            get {
+                return ResourceManager.GetString("StyleOption_Color3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Variant #4.
+        /// </summary>
+        public static string StyleOption_Color4 {
+            get {
+                return ResourceManager.GetString("StyleOption_Color4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Color count.
         /// </summary>
         public static string StyleOption_ColorCount {
@@ -2923,6 +2986,33 @@ namespace NodeMarkup {
         public static string StyleOption_ColorCountTwo {
             get {
                 return ResourceManager.GetString("StyleOption_ColorCountTwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Custom.
+        /// </summary>
+        public static string StyleOption_ColorCustom {
+            get {
+                return ResourceManager.GetString("StyleOption_ColorCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Color variant.
+        /// </summary>
+        public static string StyleOption_ColorOption {
+            get {
+                return ResourceManager.GetString("StyleOption_ColorOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Random.
+        /// </summary>
+        public static string StyleOption_ColorRandom {
+            get {
+                return ResourceManager.GetString("StyleOption_ColorRandom", resourceCulture);
             }
         }
         

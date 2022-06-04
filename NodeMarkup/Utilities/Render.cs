@@ -618,9 +618,10 @@ namespace NodeMarkup.Utilities
 
     public struct MarkupStylePropItem
     {
-        public Vector3 position;
-        public float angle;
-        public float scale;
+        public Vector3 Position;
+        public float Angle;
+        public float Scale;
+        public Color32 Color;
     }
     public abstract class BaseMarkupStyleProp<PrefabType> : IStyleData, IDrawData
         where PrefabType : PrefabInfo
@@ -649,7 +650,7 @@ namespace NodeMarkup.Utilities
         {
             var instance = new InstanceID() { };
             foreach (var item in Items)
-                PropInstance.RenderInstance(cameraInfo, Info, instance, item.position, item.scale, item.angle, Info.GetColor(ref SimulationManager.instance.m_randomizer), new Vector4(), true);
+                PropInstance.RenderInstance(cameraInfo, Info, instance, item.Position, item.Scale, item.Angle, item.Color , new Vector4(), true);
         }
     }
     public class MarkupStyleTree : BaseMarkupStyleProp<TreeInfo>
@@ -659,7 +660,7 @@ namespace NodeMarkup.Utilities
         public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
         {
             foreach (var item in Items)
-                TreeInstance.RenderInstance(cameraInfo, Info, item.position, item.scale, 1f, new Vector4());
+                TreeInstance.RenderInstance(cameraInfo, Info, item.Position, item.Scale, 1f, new Vector4());
         }
     }
 

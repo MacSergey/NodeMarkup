@@ -130,6 +130,7 @@ namespace NodeMarkup.Manager
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(LineOffset));
             offsetProperty.Text = Localize.StyleOption_LineOffset;
+            offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.WheelTip = Settings.ShowToolTip;
@@ -145,6 +146,7 @@ namespace NodeMarkup.Manager
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianOffset));
             offsetProperty.Text = Localize.StyleOption_MedianOffset;
+            offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.WheelTip = Settings.ShowToolTip;
@@ -160,6 +162,7 @@ namespace NodeMarkup.Manager
         {
             var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(rotateStyle.Angle));
             angleProperty.Text = Localize.StyleOption_Angle;
+            angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
             angleProperty.WheelTip = Settings.ShowToolTip;

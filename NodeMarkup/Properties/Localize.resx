@@ -1566,4 +1566,34 @@ Click to edit markings</value>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>Step</value>
   </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Variant #1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Variant #2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Variant #3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Variant #4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Color variant</value>
+  </data>
 </root>

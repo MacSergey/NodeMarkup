@@ -665,6 +665,7 @@ namespace NodeMarkup.Manager
         {
             var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(AngleBetween));
             angleProperty.Text = Localize.StyleOption_AngleBetween;
+            angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
             angleProperty.WheelTip = Settings.ShowToolTip;
