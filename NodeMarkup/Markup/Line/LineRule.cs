@@ -20,17 +20,21 @@ namespace NodeMarkup.Manager
             get => base.To.Value as ILinePartEdge;
             set => base.To.Value = value;
         }
-        public bool IsOverlapped
+        public virtual bool CanOverlap => false;
+        public virtual bool IsOverlapped
         {
             get
             {
+                if (CanOverlap)
+                    return false;
+
                 if (!GetFromT(out float thisFromT) || !GetToT(out float thisToT))
                     return false;
 
                 var thisMin = Mathf.Min(thisFromT, thisToT);
                 var thisMax = Mathf.Max(thisFromT, thisToT);
 
-                return Line.Rules.Any(r => r != this && r.GetFromT(out float fromT) && r.GetToT(out float toT) && Mathf.Min(fromT, toT) <= thisMin && thisMax <= Mathf.Max(fromT, toT));
+                return Line.Rules.Any(r => r != this && !r.CanOverlap && r.GetFromT(out float fromT) && r.GetToT(out float toT) && Mathf.Min(fromT, toT) <= thisMin && thisMax <= Mathf.Max(fromT, toT));
             }
         }
 
@@ -56,6 +60,8 @@ namespace NodeMarkup.Manager
             get => base.Style.Value as StyleType;
             set => base.Style.Value = value;
         }
+        public override bool CanOverlap => Style.CanOverlap;
+
         public override string XmlSection => XmlName;
 
         public MarkupLineRawRule(MarkupLine line, StyleType style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, style, from, to) { }
@@ -81,7 +87,10 @@ namespace NodeMarkup.Manager
                     rule.End = first;
                 }
 
-                Add(rules, rule);
+                if (rawRule.CanOverlap)
+                    rules.Add(rule);
+                else
+                    Add(rules, rule);
             }
 
             return rules.ToArray();

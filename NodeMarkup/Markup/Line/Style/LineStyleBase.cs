@@ -67,6 +67,8 @@ namespace NodeMarkup.Manager
 
         protected virtual float LodLength => 0.5f;
         protected virtual float LodWidth => 0.15f;
+        public virtual bool CanOverlap => false;
+
         protected bool CheckDashedLod(MarkupLOD lod, float width, float length) => lod != MarkupLOD.LOD1 || width > LodWidth || length > LodLength;
 
         protected FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent)
@@ -158,6 +160,23 @@ namespace NodeMarkup.Manager
     public abstract class LineStyle<StyleType> : LineStyle
         where StyleType : LineStyle<StyleType>
     {
+        public static float DefaultDoubleOffset => 0.15f;
+
+        public static float DefaultSharkBaseLength => 0.5f;
+        public static float DefaultSharkSpaceLength => 0.5f;
+        public static float DefaultSharkHeight => 0.6f;
+
+        public static float Default3DWidth => 0.3f;
+        public static float Default3DHeigth => 0.3f;
+
+        public static float DefaultObjectStep => 5f;
+        public static float DefaultObjectAngle=> 0f;
+        public static float DefaultObjectShift => 0f;
+        public static float DefaultObjectScale => 1f;
+        public static float DefaultObjectElevation => 0f;
+        public static float DefaultObjectOffsetBefore => 0f;
+        public static float DefaultObjectOffsetAfter => 0f;
+
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public override LineStyle CopyStyle() => CopyLineStyle();
@@ -175,6 +194,8 @@ namespace NodeMarkup.Manager
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
+            {RegularLineType.Prop, new PropLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectShift, DefaultObjectScale, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
+            {RegularLineType.Tree, new TreeLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectShift, DefaultObjectScale, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
         };
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
@@ -215,6 +236,12 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             Pavement = StyleType.LinePavement,
+
+            [Description(nameof(Localize.LineStyle_Prop))]
+            Prop = StyleType.LineProp,
+
+            [Description(nameof(Localize.LineStyle_Tree))]
+            Tree = StyleType.LineTree,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]

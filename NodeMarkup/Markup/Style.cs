@@ -26,14 +26,6 @@ namespace NodeMarkup.Manager
     {
         public static float DefaultDashLength => 1.5f;
         public static float DefaultSpaceLength => 1.5f;
-        public static float DefaultDoubleOffset => 0.15f;
-
-        public static float DefaultSharkBaseLength => 0.5f;
-        public static float DefaultSharkSpaceLength => 0.5f;
-        public static float DefaultSharkHeight => 0.6f;
-
-        public static float Default3DWidth => 0.3f;
-        public static float Default3DHeigth => 0.3f;
 
         public static bool FromXml<T>(XElement config, ObjectsMap map, bool invert, out T style) where T : Style
         {
@@ -207,6 +199,34 @@ namespace NodeMarkup.Manager
             return buttonsPanel;
         }
 
+        protected enum PropertyNames
+        {
+            C, //Color
+            SC, //SecondColor
+            W, //Width
+            O, //Offset
+            MO, //MedianOffset
+            A, //Alignment, Angle
+            DL, //Dash length
+            SL, //Space length
+            I, //Invert
+            CS, //Solid in center
+            B, //Base
+            H, //Height
+            S, //Space
+            OB, //OffsetBefore
+            OA, //OffsetAfter
+            LW, //Crosswalk line width
+            P, //Parallel
+            USC, //Use second color
+            UG, //Use gap
+            GL, //Gap length
+            GP, //Gap period
+            SS, //Square side
+            LC, //Line count
+            
+        }
+
         protected PropertyColorValue GetColorProperty(Color32 defaultValue) => new PropertyColorValue("C", StyleChanged, defaultValue);
         protected PropertyColorValue GetSecondColorProperty(Color32 defaultValue) => new PropertyColorValue("SC", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetWidthProperty(float defaultValue) => new PropertyStructValue<float>("W", StyleChanged, defaultValue);
@@ -283,6 +303,15 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             LinePavement,
+
+            [NotItem]
+            RegularPropLine = Regular3DLine + 0x10,
+
+            [Description(nameof(Localize.LineStyle_Prop))]
+            LineProp,
+
+            [Description(nameof(Localize.LineStyle_Tree))]
+            LineTree,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]

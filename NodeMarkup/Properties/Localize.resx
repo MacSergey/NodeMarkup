@@ -1542,4 +1542,28 @@ Click to edit markings</value>
 - Fixed error while saving template as asset.
 - Fixed crosswalks calculation error.</value>
   </data>
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Prop</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Tree</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Elevation</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Step</value>
+  </data>
 </root>

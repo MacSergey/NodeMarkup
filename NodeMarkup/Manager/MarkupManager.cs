@@ -168,14 +168,14 @@ namespace NodeMarkup.Manager
                 markup.RecalculateDrawData();
 
             if (cameraInfo.CheckRenderDistance(data.m_position, Settings.LODDistance))
-                Render(markup, data, MarkupLOD.LOD0);
+                Render(cameraInfo, markup, data, MarkupLOD.LOD0);
             else if (cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
-                Render(markup, data, MarkupLOD.LOD1);
+                Render(cameraInfo, markup, data, MarkupLOD.LOD1);
         }
-        private void Render(TypeMarkup markup, RenderManager.Instance data, MarkupLOD lod)
+        private void Render(RenderManager.CameraInfo cameraInfo, TypeMarkup markup, RenderManager.Instance data, MarkupLOD lod)
         {
             foreach (var item in markup.DrawData[lod])
-                item.Draw(data);
+                item.Draw(cameraInfo, data);
         }
 
         public void Remove(ushort id) => Markups.Remove(id);
