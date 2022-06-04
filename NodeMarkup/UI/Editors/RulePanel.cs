@@ -209,7 +209,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void AfterStyleChanged()
         {
-            Editor.RefreshSelectedItem();
+            Editor.RefreshEditor();
             StopLayout();
             ClearStyleProperties();
             AddStyleProperties();

@@ -71,7 +71,7 @@ namespace NodeMarkup.Manager
 
             foreach (var rawRule in rawRules)
             {
-                var rule = new MarkupLineRule(rawRule.Style);
+                var rule = new MarkupLineRule(rawRule);
 
                 if (!rawRule.GetFromT(out float first) || !rawRule.GetToT(out float second) || first == second)
                     continue;
@@ -87,57 +87,64 @@ namespace NodeMarkup.Manager
                     rule.End = first;
                 }
 
-                if (rawRule.CanOverlap)
-                    rules.Add(rule);
-                else
-                    Add(rules, rule);
+                 Add(rules, rule);
             }
 
             return rules.ToArray();
         }
         private static void Add(List<MarkupLineRule> rules, MarkupLineRule newRule)
         {
-            var i = 0;
-            while (i < rules.Count)
+            if (!newRule.CanOverlap)
             {
-                var rule = rules[i];
-                if (newRule.End <= rule.Start)
+                var i = 0;
+                while (i < rules.Count)
                 {
-                    rules.Insert(i, newRule);
-                    return;
+                    var rule = rules[i];
+
+                    if (rule.CanOverlap)
+                    {
+                        i += 1;
+                        continue;
+                    }
+
+                    if (newRule.End <= rule.Start)
+                    {
+                        rules.Insert(i, newRule);
+                        return;
+                    }
+                    else if (newRule.Start < rule.Start && newRule.End < rule.End && rule.Start <= newRule.End)
+                    {
+                        var middle = (rule.Start + newRule.End) / 2;
+                        rule.Start = middle;
+                        newRule.End = middle;
+                        rules.Insert(i, newRule);
+                        return;
+                    }
+                    else if (newRule.Start <= rule.Start && newRule.End == rule.End)
+                    {
+                        rules[i] = newRule;
+                        return;
+                    }
+                    else if (rule.Start <= newRule.Start && newRule.End <= rule.End)
+                    {
+                        return;
+                    }
+                    else if (newRule.Start == rule.Start && rule.End < newRule.End)
+                    {
+                        rules.RemoveAt(i);
+                        continue;
+                    }
+                    else if (rule.Start < newRule.Start && rule.End < newRule.End && newRule.Start <= rule.End)
+                    {
+                        var middle = (newRule.Start + rule.End) / 2;
+                        rule.End = middle;
+                        newRule.Start = middle;
+                        i += 1;
+                        continue;
+                    }
+                    else
+                        i += 1;
                 }
-                else if (newRule.Start < rule.Start && newRule.End < rule.End && rule.Start <= newRule.End)
-                {
-                    var middle = (rule.Start + newRule.End) / 2;
-                    rule.Start = middle;
-                    newRule.End = middle;
-                    rules.Insert(i, newRule);
-                    return;
-                }
-                else if (newRule.Start <= rule.Start && newRule.End == rule.End)
-                {
-                    rules[i] = newRule;
-                    return;
-                }
-                else if (rule.Start <= newRule.Start && newRule.End <= rule.End)
-                {
-                    return;
-                }
-                else if (newRule.Start == rule.Start && rule.End < newRule.End)
-                {
-                    rules.RemoveAt(i);
-                    continue;
-                }
-                else if (rule.Start < newRule.Start && rule.End < newRule.End && newRule.Start <= rule.End)
-                {
-                    var middle = (newRule.Start + rule.End) / 2;
-                    rule.End = middle;
-                    newRule.Start = middle;
-                    i += 1;
-                    continue;
-                }
-                else
-                    i += 1;
             }
 
             rules.Add(newRule);
@@ -169,19 +176,14 @@ namespace NodeMarkup.Manager
         public float Start;
         public float End;
         public LineStyle LineStyle;
+        public bool CanOverlap;
 
-        public MarkupLineRule(LineStyle lineStyle)
+        public MarkupLineRule(MarkupLineRawRule rawRule, float start = 0f, float end = 1f)
         {
-            LineStyle = lineStyle;
-            Start = 0;
-            End = 1;
-        }
-
-        public MarkupLineRule(float start, float end, LineStyle lineStyle)
-        {
+            LineStyle = rawRule.Style;
             Start = start;
             End = end;
-            LineStyle = lineStyle;
+            CanOverlap = rawRule.CanOverlap;
         }
     }
 }

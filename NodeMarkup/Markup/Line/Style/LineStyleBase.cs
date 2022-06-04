@@ -194,8 +194,8 @@ namespace NodeMarkup.Manager
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
-            {RegularLineType.Prop, new PropLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectShift, DefaultObjectScale, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
-            {RegularLineType.Tree, new TreeLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectShift, DefaultObjectScale, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
+            {RegularLineType.Prop, new PropLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
+            {RegularLineType.Tree, new TreeLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
         };
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
