@@ -1401,4 +1401,49 @@
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>間隔</value>
   </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>バリエーション #1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>バリエーション #2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>バリエーション #3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>バリエーション #4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>ランダム</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>カラーバリエーション</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>歩道にクリッピング</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>角度</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>装飾系のネットワーク</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>幅のスケール</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>リピートの距離</value>
+  </data>
 </root>

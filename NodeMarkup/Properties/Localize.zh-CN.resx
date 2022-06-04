@@ -1128,8 +1128,8 @@
     <value>未知作者</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>-改善了加载错误弹窗信息
--纠正及更新了翻译文档</value>
+    <value>[UPDATED] 改善了加载错误弹窗信息
+[FIXED] 纠正及更新了翻译文档</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>导入完毕，但出现了以下错误：
@@ -1181,15 +1181,15 @@
   
   
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
-    <value>- 添加了在道路节段上创建标线的功能
-- 添加了3D填充图案：路肩及草地
-- 添加了3D线段样式：路肩
-- 添加了条纹和锯齿形填充向边线垂直的功能
-- 添加了地标线的LOD（精细模型可视距离）以提升性能。LOD距离可在设置菜单内更改
-- 添加了对机场滑行道的支持
-- 修复了与其他mod冲突导致工具图标不显示的问题
-- 修复了用滚轮修改数据时滚动窗口的冲突问题
-- 填写数字时既可使用逗号或句号为小数点</value>
+    <value>[NEW] 添加了在道路节段上创建标线的功能
+[NEW] 添加了3D填充图案：路肩及草地
+[NEW] 添加了3D线段样式：路肩
+[NEW] 添加了条纹和锯齿形填充向边线垂直的功能
+[NEW] 添加了地标线的LOD（精细模型可视距离）以提升性能。LOD距离可在设置菜单内更改
+[NEW] 添加了对机场滑行道的支持
+[FIXED] 修复了与其他mod冲突导致工具图标不显示的问题
+[FIXED] 修复了用滚轮修改数据时滚动窗口的冲突问题
+[UPDATED] 填写数字时既可使用逗号或句号为小数点</value>
   </data>
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>颜色数量：</value>
@@ -1249,20 +1249,20 @@
     <value>点选终点来创建一般线或停止线</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7" xml:space="preserve">
-    <value>- 全新节点/段落选择模式。选择节点/段落时，高亮地区会遵循节点/段落的实际形状，以避免密集地区无法精准点选的情况
-- 现在创建填充图案时会自动创建边线，无需创建图案前先画好标线
-- 添加了把端点分割成两个端点的功能，还可更改分割偏移及对齐方向。现在可以用两根单线延续道路上的双线
-- 添加了样式修饰键“从剪贴板粘贴”：按住Ctrl+Alt可从剪贴板应用标线，规则，人行道或填充图案样式
-- 添加了将段落标线及图案应用在两个路口之间或整条大道的功能
-- 添加了可以给单斑马线或双斑马线添加第二种颜色的功能
-- 更改了Esc键属性 - 更加符合游戏内工具默认行为。在编辑时按下Esc会弹出提示是否关闭工具，不会突然关闭工具造成数据流失
-- 添加了按照道路给端点分组的功能（设置中可关闭）
-- 修复了高架道路上的端点捕捉位置
-- 修复了3D填充图案计算方式
-- 修复了会导致工具卡住的复制/粘贴模式错误
-- 修复了更改面板大小后的滚动条位置
-- 修复了按住shift同时用滚轮改变参数时误激活人行道模式的错误
-- 现可双击改变面板大小按钮来恢复默认大小</value>
+    <value>[NEW] 全新节点/段落选择模式。选择节点/段落时，高亮地区会遵循节点/段落的实际形状，以避免密集地区无法精准点选的情况
+[NEW] 现在创建填充图案时会自动创建边线，无需创建图案前先画好标线
+[NEW] 添加了把端点分割成两个端点的功能，还可更改分割偏移及对齐方向。现在可以用两根单线延续道路上的双线
+[NEW] 添加了样式修饰键“从剪贴板粘贴”：按住Ctrl+Alt可从剪贴板应用标线，规则，人行道或填充图案样式
+[NEW] 添加了将段落标线及图案应用在两个路口之间或整条大道的功能
+[NEW] 添加了可以给单斑马线或双斑马线添加第二种颜色的功能
+[UPDATED] 更改了Esc键属性 - 更加符合游戏内工具默认行为。在编辑时按下Esc会弹出提示是否关闭工具，不会突然关闭工具造成数据流失
+[NEW] 添加了按照道路给端点分组的功能（设置中可关闭）
+[FIXED] 修复了高架道路上的端点捕捉位置
+[FIXED] 修复了3D填充图案计算方式
+[FIXED] 修复了会导致工具卡住的复制/粘贴模式错误
+[FIXED] 修复了更改面板大小后的滚动条位置
+[UPDATED] 修复了按住shift同时用滚轮改变参数时误激活人行道模式的错误
+[NEW] 现可双击改变面板大小按钮来恢复默认大小</value>
   </data>
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>线段终点对齐</value>
@@ -1272,17 +1272,17 @@
   </data>
   
   <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
-    <value>- 修复了在可用地图区域格块外的3D填充高度
-- 修复了按钮重复的问题</value>
+    <value>[FIXED] 修复了在可用地图区域格块外的3D填充高度
+[FIXED] 修复了按钮重复的问题</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_3" xml:space="preserve">
-    <value>- 添加了必要项缺失检查
-- 修复了可用区块外节点3D填充的高度</value>
+    <value>[NEW] 添加了必要项缺失检查
+[FIXED] 修复了可用区块外节点3D填充的高度</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_4" xml:space="preserve">
-    <value>- 修复了预设缩略图的存读问题
-- 修复了带有标线的节点在加载后出现的形状错误
-- 添加了印尼语翻译</value>
+    <value>[FIXED] 修复了预设缩略图的存读问题
+[FIXED] 修复了带有标线的节点在加载后出现的形状错误
+[TRANSLATION] 添加了印尼语翻译</value>
   </data>
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>使用工具时隐藏路名</value>
@@ -1321,34 +1321,34 @@
     <value>隔离带路肩大小</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
-    <value>- 如同 MoveIt模组，添加了跳跃选择被覆盖住节点功能。Ctrl+空格键以跳跃选择。按键可以自定义。
-- 新加入了路肩3D填充
-- 新增了3D填充圆角选项
-- 新增了3D填充从边线偏移的选项
-- 新增了填充选项：砂砾，砂石和悬崖
-- 新增了路面停止线选项
-- 新增了实体填充遵循引导线的选项。现可以在斜坡上创建实体填充。
-- 新增了按下ctrl来选中线或人行横道
-- 新增了对Linux用户的警告
-- 新增了使用滚轮改变样式的功能
-- 新增了使用mod时隐藏路名的功能。可以在选项里更改。
-- 新增UnifiedUI按钮图标
-- 修复了选择模版图标</value>
+    <value>[NEW] 如同 MoveIt模组，添加了跳跃选择被覆盖住节点功能。Ctrl+空格键以跳跃选择。按键可以自定义。
+[NEW] 新加入了路肩3D填充
+[NEW] 新增了3D填充圆角选项
+[NEW] 新增了3D填充从边线偏移的选项
+[NEW] 新增了填充选项：砂砾，砂石和悬崖
+[NEW] 新增了路面停止线选项
+[NEW] 新增了实体填充遵循引导线的选项。现可以在斜坡上创建实体填充。
+[NEW] 新增了按下ctrl来选中线或人行横道
+[NEW] 新增了对Linux用户的警告
+[NEW] 新增了使用滚轮改变样式的功能
+[NEW] 新增了使用mod时隐藏路名的功能。可以在选项里更改。
+[NEW] 新增UnifiedUI按钮图标
+[FIXED] 修复了选择模版图标</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8_1" xml:space="preserve">
-    <value>- 粘贴模式按钮移至圆圈以外
-- 添加了韩语翻译</value>
+    <value>[UPDATED] 粘贴模式按钮移至圆圈以外
+[TRANSLATION] 添加了韩语翻译</value>
   </data>
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>不保存</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8_2" xml:space="preserve">
-    <value>- 添加了创建样本/预设后的取消按钮
-- 工具提示加入了彩色文字
-- 使用UnifiedUI mod的话加入了隐藏原mod按钮的功能
-- 修复了项目移除后不会从列表中消失的问题
-- 修复了线段分组
-- 新增了土耳其语翻译</value>
+    <value>[NEW] 添加了创建样本/预设后的取消按钮
+[NEW] 工具提示加入了彩色文字
+[NEW] 使用UnifiedUI mod的话加入了隐藏原mod按钮的功能
+[FIXED] 修复了项目移除后不会从列表中消失的问题
+[FIXED] 修复了线段分组
+[TRANSLATION] 新增了土耳其语翻译</value>
   </data>
   <data name="Settings_Sortings" xml:space="preserve">
     <value>排序</value>
@@ -1434,6 +1434,21 @@
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>道路名称</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

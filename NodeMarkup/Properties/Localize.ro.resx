@@ -1343,4 +1343,49 @@ Apăsați pentru a modifica marcajele</value>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>Flux</value>
   </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}º</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Varianta Nr.1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Varianta Nr.2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Varianta Nr.3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Varianta Nr.4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Personalizat</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Variantă culoare</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>Scurtează trotuarul</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Unghi</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Rețea decorativă</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Raport lățime</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Distanță de repetare</value>
+  </data>
 </root>

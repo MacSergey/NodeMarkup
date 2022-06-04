@@ -306,15 +306,15 @@ Clique para editar marcações</value>
     <value>Selecione um ponto para criar ou remover a uma linha</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
-    <value>- Adicionado Preenchimentos. O espaço entre as linhas pode ser preenchido para indicar áreas de proibição de paragem ou condução. 3 estilos disponíveis: "Linhas", "Grelha" e "Sólido". Para criar um preenchimento pressione Alt.
-- Adicionada Linha de Paragem. Agora é possível conectar dois pontos da mesma estrada para criar uma linha de paragem. 2 estilos disponíveis: "Sólida" e "Tracejada".
-- Adicionado estilo de linha: "Sólida &amp; Tracejada".
-- Adicionado icons que mostram o estilo e a cor.
-- Marcações são agora copiadas ao copiar as estradas com MoveIt (funcionalidade só estará disponível aquando o MoveIt for actualizado).
-- Adicionada opção para copiar e colar cor das linhas.
-- Melhorar uma estrada para um diferente com o mesmo número de vias agora preserva as marcações.
-- O segmento de uma linha agora é realçado quando paira com o rato no painel de edição daquela regra.
-- Adicionada tradução para Chinês Simplificado.</value>
+    <value>[NEW] Adicionado Preenchimentos. O espaço entre as linhas pode ser preenchido para indicar áreas de proibição de paragem ou condução. 3 estilos disponíveis: "Linhas", "Grelha" e "Sólido". Para criar um preenchimento pressione Alt.
+[NEW] Adicionada Linha de Paragem. Agora é possível conectar dois pontos da mesma estrada para criar uma linha de paragem. 2 estilos disponíveis: "Sólida" e "Tracejada".
+[NEW] Adicionado estilo de linha: "Sólida &amp; Tracejada".
+[NEW] Adicionado icons que mostram o estilo e a cor.
+[NEW] Marcações são agora copiadas ao copiar as estradas com MoveIt (funcionalidade só estará disponível aquando o MoveIt for actualizado).
+[NEW] Adicionada opção para copiar e colar cor das linhas.
+[UPDATED] Melhorar uma estrada para um diferente com o mesmo número de vias agora preserva as marcações.
+[NEW] O segmento de uma linha agora é realçado quando paira com o rato no painel de edição daquela regra.
+[TRANSLATION] Adicionada tradução para Chinês Simplificado.</value>
   </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Recuperar</value>
@@ -1138,8 +1138,8 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
     <value>Autor desconhecido</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>- Improve mensagens sobre erros no carregamento de dados.
-- Linguagens corrigidas e atualizadas.</value>
+    <value>[UPDATED] Improve mensagens sobre erros no carregamento de dados.
+[FIXED] Linguagens corrigidas e atualizadas.</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>O carregamento foi completado com erros.
@@ -1349,6 +1349,21 @@ Clique para editar marcações</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Jogabilidade</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

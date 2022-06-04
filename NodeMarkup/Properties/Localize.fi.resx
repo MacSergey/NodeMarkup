@@ -1178,15 +1178,15 @@ Napauta muokataksesi merkintöjä</value>
   
   
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
-    <value>- Lisätty mahdollisuus tehdä merkintöjä jaokkeisiin.
-- Lisätty sulkualueiden 3D tyylit: "Päällyste" ja "Ruoho".
-- Lisätty viivan 3D tyyli: "Päällyste".
-- Lisätty mahdollisuus seurata ratoja sulkualueiden tyyleille "Raidat" ja "Chevron".
-- Suorituskykyä parannetty lisäämällä yksityiskohtien tasot merkinnöille. Yksityiskohtien piirtoetäisyyttä voi muuttaa asetuksissa.
-- Lisätty tuki lentokenttien rullausteille.
-- Korjattu ristiriitoja muiden modien kanssa, jotka voivat aiheuttaa työkalun napin katoamisen.
-- Korjattu ristiriita arvojen muuttamisen hiiren rullalla ja valikon rullaamisen välillä.
-- Nyt työkalun valikossa toimivat sekä pilkku että piste</value>
+    <value>[NEW] Lisätty mahdollisuus tehdä merkintöjä jaokkeisiin.
+[NEW] Lisätty sulkualueiden 3D tyylit: "Päällyste" ja "Ruoho".
+[NEW] Lisätty viivan 3D tyyli: "Päällyste".
+[NEW] Lisätty mahdollisuus seurata ratoja sulkualueiden tyyleille "Raidat" ja "Chevron".
+[NEW] Suorituskykyä parannetty lisäämällä yksityiskohtien tasot merkinnöille. Yksityiskohtien piirtoetäisyyttä voi muuttaa asetuksissa.
+[NEW] Lisätty tuki lentokenttien rullausteille.
+[FIXED] Korjattu ristiriitoja muiden modien kanssa, jotka voivat aiheuttaa työkalun napin katoamisen.
+[FIXED] Korjattu ristiriita arvojen muuttamisen hiiren rullalla ja valikon rullaamisen välillä.
+[UPDATED] Nyt työkalun valikossa toimivat sekä pilkku että piste.</value>
   </data>
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Värien määrä</value>
@@ -1382,6 +1382,21 @@ Napauta muokataksesi merkintöjä</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Tien nimi</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

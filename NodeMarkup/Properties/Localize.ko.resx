@@ -1319,12 +1319,71 @@
     <value>길 이름</value>
   </data>
   
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>프롭</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>나무</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>회전각</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>고도</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>이름</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>스케일</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>이동</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>스텝</value>
+  </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>1번 변형</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>2번 변형</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>3번 변형</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>4번 변형</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>사용자 지정</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>랜덤</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>색상 변형</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>보도 클리핑</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>회전각</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>네트워크 장식</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>두께 스케일</value>
+  </data>
   
 </root>

@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"></xsd:import>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="name" type="xsd:string"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -306,15 +306,15 @@ Click to edit markings</value>
     <value>Select a point to create or delete a line</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
-    <value>- Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
-- Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: "Solid" and "Dashed".
-- New line style: "Solid &amp; Dashed".
-- Lines and templates in the list now have icons that show style and colour.
-- Markings will be now copied when the road is copied with MoveIt (function will not become available until MoveIt mod is updated).
-- Added Copy and Paste options for line colour.
-- Upgrading the road to a different road with the same amount of lanes will now preserve the markings.
-- Line segment with the rule will be highlighted when hovering over the edit panel of that rule.
-- Added Simplified Chinese translation.</value>
+    <value>[NEW] Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
+[NEW] Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: "Solid" and "Dashed".
+[NEW] New line style: "Solid &amp; Dashed".
+[NEW] Lines and templates in the list now have icons that show style and colour.
+[NEW] Markings will be now copied when the road is copied with MoveIt (function will not become available until MoveIt mod is updated).
+[NEW] Added Copy and Paste options for line colour.
+[UPDATED] Upgrading the road to a different road with the same amount of lanes will now preserve the markings.
+[NEW] Line segment with the rule will be highlighted when hovering over the edit panel of that rule.
+[TRANSLATION] Added Simplified Chinese translation.</value>
   </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Restore</value>
@@ -392,21 +392,21 @@ Click to edit markings</value>
     <value>Solid</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>- Fix hold Alt, Ctrl and Shift buttons on Mac OS and Linux.
-- Added "Double solid" and "Double Dashed" stop line styles.
-- Added Italian and Portuguese translations.</value>
+    <value>[FIXED] Fix hold Alt, Ctrl and Shift buttons on Mac OS and Linux.
+[NEW] Added "Double solid" and "Double Dashed" stop line styles.
+[TRANSLATION] Added Italian and Portuguese translations.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
-    <value>- "What`s New" message this will pop-up one time after an update and can be disabled in the Options menu.
-- Added the following translations:  Czech, Dutch, French, German, Japanese, Polish, Russian, and Spanish (Please contact the mod author to assist with translation into your own language).
-- End Points can now be dragged from one to another by holding Ctrl.
-- Backups - In the Options menu the marking data on a map can now be backed up by dumping to a file and then importing it. This is necessary if you need to disable the mod, make a new save without the mod, and then need to recovery all markings.
-- There will now be a popup warning when deleting items.  This applies to lines, rules and templates. This can be disabled in the options.
-- New shortcut added for adding a new rule - Shift+Ctrl+A (remappable).
-- Quick Rule setup: After adding a new rule the interface for selecting its start and end points now opens automatically. You no longer need to click the "From" and "To" areas. This can be disabled in the options.
-- Fixed issue with lines appearing to be broken or split - only occurred at highway and city road transitions.
-- Lines will no longer render when Info View overlays are shown.
-- Activation shortcut will now trigger when another tool opens while Marking Tool is already opened.</value>
+    <value>[UPDATED] "What`s New" message will pop-up one time after an update and can be disabled in the Options menu.
+[TRANSLATION] Added the following translations:  Czech, Dutch, French, German, Japanese, Polish, Russian, and Spanish.
+[NEW] End Points can now be dragged from one to another by holding Ctrl.
+[NEW] Backups - In the Options menu the marking data on a map can now be backed up by dumping to a file and then importing it. This is necessary if you need to disable the mod, make a new save without the mod, and then need to recovery all markings.
+[NEW] There will now be a popup warning when deleting items.  This applies to lines, rules and templates. This can be disabled in the options.
+[NEW] New shortcut added for adding a new rule - Shift+Ctrl+A (remappable).
+[NEW] Quick Rule setup: After adding a new rule the interface for selecting its start and end points now opens automatically. You no longer need to click the "From" and "To" areas. This can be disabled in the options.
+[FIXED] Fixed issue with lines appearing to be broken or split - only occurred at highway and city road transitions.
+[UPDATED] Lines will no longer render when Info View overlays are shown.
+[UPDATED] Activation shortcut will now trigger when another tool opens while Marking Tool is already opened.</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Add new filler</value>
@@ -672,18 +672,18 @@ create or delete a crosswalk</value>
     <value>template</value>
   </data>
   <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
-    <value>- Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
-- Added crosswalks. Hold Shift to create them. Currently available Styles: "Existing crosswalk", "Zebra", "Double Zebra", "Parallel solid lines", "Parallel dashed lines", "Ladder", "Solid".
-- Added perpendicular lines. These lines don't have second point, they are generated as a straight line from one point. To create perpendicular line, pull the line in the opposite direction from the intersection.
-- Added the ability to copy/paste style of lines, fillers, and crosswalks.
-- Added ability to sort lines and templates by styles and types. You can modify and disable the function in the settings.
-- Updated template selection menu.
-- Added grouping of nearby points for easier selection. There are two types of grouping available: in a circle and in a line. You can pick the type or disable the function in the settings.
-- Added indication of conflicting rules.
-- Added the ability to center a solid line in the "Solid &amp; Dashed" style.
-- Changed how to begin editing a point. Now you need to click on the point while holding Ctrl.
-- Added the ability to select tool's language different from the game language.
-- Added Finnish language.</value>
+    <value>[NEW] Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
+[NEW] Added crosswalks. Hold Shift to create them. Currently available Styles: "Existing crosswalk", "Zebra", "Double Zebra", "Parallel solid lines", "Parallel dashed lines", "Ladder", "Solid".
+[NEW] Added perpendicular lines. These lines don't have second point, they are generated as a straight line from one point. To create perpendicular line, pull the line in the opposite direction from the intersection.
+[NEW] Added the ability to copy/paste style of lines, fillers, and crosswalks.
+[NEW] Added ability to sort lines and templates by styles and types. You can modify and disable the function in the settings.
+[UPDATED] Updated template selection menu.
+[NEW] Added grouping of nearby points for easier selection. There are two types of grouping available: in a circle and in a line. You can pick the type or disable the function in the settings.
+[NEW] Added indication of conflicting rules.
+[NEW] Added the ability to center a solid line in the "Solid &amp; Dashed" style.
+[UPDATED] Changed how to begin editing a point. Now you need to click on the point while holding Ctrl.
+[NEW] Added the ability to select tool's language different from the game language.
+[TRANSLATION] Added Finnish translation.</value>
   </data>
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Load was completed with errors.
@@ -955,28 +955,27 @@ Do you want to apply the markings manually?</value>
     <value>Drag with {0} to move the point</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
-    <value>WARNING: Default templates setting will be reset.
-
-- Added the ability to copy/paste marking from one exist intersection to another exist intersection.
-- Now the marking is not removed if you replace the road with a different number of points.
-- Added map editor support.
-- Added the ability to save marking data in intersection assets.
-- Added "Shark teeth" line and stop line style.
-- Added "Solid&amp;Dashed" stop line style.
-- Added "Chess board" crosswalk style.
-- Added the ability to set create modifiers for any styles.
-- Added the ability to duplicate templates.
-- Added the ability to have several templates with some name.
-- Added Alignment option to all double line styles.
-- Added the ability to start filler "Chevron" style from edges.
-- Added the ability to get delete warning only if will affect others items.
-- Added the ability to resize panel.
-- Added the ability to backup templates.
-- Added the ability to reset all points offset.
-- Added MoveIt mirroring support (wait MoveIt update).
-- Update filler "Chevron" style calculation algorithm.
-- Fix filler vertex duplicates in create interface.
-- Fix asym lines wrong invert value after load.</value>
+    <value>[WARNING] Default templates setting will be reset.
+[NEW] Added the ability to copy/paste marking from one exist intersection to another exist intersection.
+[UPDATED] Now the marking is not removed if you replace the road with a different number of points.
+[NEW] Added map editor support.
+[NEW] Added the ability to save marking data in intersection assets.
+[NEW] Added "Shark teeth" line and stop line style.
+[NEW] Added "Solid&amp;Dashed" stop line style.
+[NEW] Added "Chess board" crosswalk style.
+[NEW] Added the ability to set create modifiers for any styles.
+[NEW] Added the ability to duplicate templates.
+[NEW] Added the ability to have several templates with some name.
+[NEW] Added Alignment option to all double line styles.
+[NEW] Added the ability to start filler "Chevron" style from edges.
+[NEW] Added the ability to get delete warning only if will affect others items.
+[NEW] Added the ability to resize panel.
+[NEW] Added the ability to backup templates.
+[NEW] Added the ability to reset all points offset.
+[NEW] Added MoveIt mirroring support (wait MoveIt update).
+[UPDATED] Update filler "Chevron" style calculation algorithm.
+[FIXED] Fix filler vertex duplicates in create interface.
+[FIXED] Fix asym lines wrong invert value after load.</value>
   </data>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>This action cannot be undone.</value>
@@ -1003,16 +1002,16 @@ Do you want to apply the markings manually?</value>
     <value>Warning: this option changes game objects render order</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
-    <value>- Added the ability to draw marking under tracks. This can be disabled in the options. WARNING: This option change game objects render order.
-- Added modifier to create a empty line (without rules).
-- Added the ability to create all edge lines at once (line from road last point to next road first point).
-- Lines no longer climb on pavement. Work only for lines from the first or last road point.
-- Added "Quick crosswalk option setup" - automatically open border selection interface after create crosswalk like line's "Quick rule setup". This can be disabled in the options.
-- Added panel additional options menu.
-- Fix left mouse click on selection node.
-- Fix panel out of screen.
-- Hover overlay color changed from white to light blue to avoid merging with the markup.
-- Crosswalk line no longer creates unnecessary intersections. You may need to set crosswalk borders for already created crosswalks.</value>
+    <value>[NEW] Added the ability to draw marking under tracks. This can be disabled in the options. WARNING: This option change game objects render order.
+[NEW] Added modifier to create a empty line (without rules).
+[NEW] Added the ability to create all edge lines at once (line from road last point to next road first point).
+[NEW] Lines no longer climb on pavement. Work only for lines from the first or last road point.
+[NEW] Added "Quick crosswalk option setup" - automatically open border selection interface after create crosswalk like line's "Quick rule setup". This can be disabled in the options.
+[NEW] Added panel additional options menu.
+[FIXED] Fix left mouse click on selection node.
+[FIXED] Fix panel out of screen.
+[UPDATED] Hover overlay color changed from white to light blue to avoid merging with the markup.
+[UPDATED] Crosswalk line no longer creates unnecessary intersections. You may need to set crosswalk borders for already created crosswalks.</value>
   </data>
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Save as asset</value>
@@ -1190,16 +1189,16 @@ Are you sure you want to have multiple presets with the same name?</value>
     <value>preset</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
-    <value>- Added the ability to save whole intersection marking as preset and after apply to any other intersection.
-- Added the ability to save templates and presets as asset and share it over Workshop.
-- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
-- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
-- Added panel tips (can be disable in settings).
-- Added the ability to cut new line by crosswalks (can be disable in settings).
-- Added the ability to change color values with mouse wheel.
-- Fix train and monorail roads (and any else without points).
-- Fix and improve points group overlay.
-- Added English-UK translation.</value>
+    <value>[NEW] Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+[NEW] Added the ability to save templates and presets as asset and share it over Workshop.
+[UPDATED] Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+[UPDATED] Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+[NEW] Added panel tips (can be disable in settings).
+[NEW] Added the ability to cut new line by crosswalks (can be disable in settings).
+[NEW] Added the ability to change color values with mouse wheel.
+[FIXED] Fix train and monorail roads.
+[FIXED] Fix and improve points group overlay.
+[TRANSLATION] Added English-UK translation.</value>
   </data>
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>This line type doesn't support rules</value>
@@ -1211,8 +1210,8 @@ Are you sure you want to have multiple presets with the same name?</value>
     <value>Unknown author</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>- Improve messages about load data errors.
-- Fix and update localizes.</value>
+    <value>[UPDATED] Improve messages about load data errors.
+[FIXED] Fix and update localizes.</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Load was completed with errors.
@@ -1262,21 +1261,21 @@ Click to edit markings</value>
     <value>Select a guide's second point</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
-    <value>- Update Harmony dependence: resolving conflicts with others mods that use it</value>
+    <value>[UPDATED] Update Harmony dependence: resolving conflicts with others mods that use it</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
-    <value>- Fixed a situation where markings could disappear from saving</value>
+    <value>[FIXED] Fixed a situation where markings could disappear from saving</value>
   </data>
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
-    <value>- Added the ability to make markings on segments.
-- Added filler 3D styles: "Pavement" and "Grass".
-- Added line 3D style: "Pavement".
-- Added the ability follow rails to filler styles "Stripes" and "Chevron".
-- Improve performance by added LOD (Level Of Detail) to markings. The LOD distance is set in the settings.
-- Added support taxiways.
-- Fixed a conflict with other mods that could cause the tool button to not appear.
-- Fixed a conflict with scroll panel and scroll wheel to change values.
-- Now there is no difference that you enter a dot or a comma in the properties value field.</value>
+    <value>[NEW] Added the ability to make markings on segments.
+[NEW] Added filler 3D styles: "Pavement" and "Grass".
+[NEW] Added line 3D style: "Pavement".
+[NEW] Added the ability follow rails to filler styles "Stripes" and "Chevron".
+[NEW] Improve performance by added LOD (Level Of Detail) to markings. The LOD distance is set in the settings.
+[NEW] Added support taxiways.
+[FIXED] Fixed a conflict with other mods that could cause the tool button to not appear.
+[FIXED] Fixed a conflict with scroll panel and scroll wheel to change values.
+[UPDATED] Now there is no difference that you enter a dot or a comma in the properties value field.</value>
   </data>
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Color count</value>
@@ -1336,20 +1335,20 @@ Click to edit markings</value>
     <value>Select endpoint for regular or stop line</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7" xml:space="preserve">
-    <value>- New node/segment selection mode. The selection area exactly follows the actual shapes of the nodes and segments that prevents difficulties with selecting too close together nodes.
-- Added automatic line creation when create filler. No more need add lines before create filler.
-- Added the ability to split point to two virtual points, set split shift and choose lines alignment. Now possible continue one double line with two separating single lines.
-- Added style modifier "From clipboard". Hold Ctrl+Alt to apply style from clipboard to new line, rule, crosswalk or filler.
-- Added the ability to apply segment marking between two intersections and apply to whole street.
-- Added the ability set second color for "Zebra" and "Double zebra" crosswalk styles.
-- Changed press escape key behavior. Now it's like default game tool behavior. If something is being edited, then press escape will suggest an exit, rather than closing the tool with the loss of changes.
-- Added point grouping by road in list (can be disable in settings).
-- Fix line connector overlay position on elevated roads.
-- Fix 3D filler styles calculation.
-- Fix error in copy/paste marking mode that made it impossible to use the tool.
-- Fix reset panel scroll position when resize panel.
-- Crosswalk mode no more activate by hold shift when change value by scroll wheel.
-- Set panel default size by double click on panel resizer.</value>
+    <value>[NEW] New node/segment selection mode. The selection area exactly follows the actual shapes of the nodes and segments that prevents difficulties with selecting too close together nodes.
+[NEW] Added automatic line creation when create filler. No more need add lines before create filler.
+[NEW] Added the ability to split point to two virtual points, set split shift and choose lines alignment. Now possible continue one double line with two separating single lines.
+[NEW] Added style modifier "From clipboard". Hold Ctrl+Alt to apply style from clipboard to new line, rule, crosswalk or filler.
+[NEW] Added the ability to apply segment marking between two intersections and apply to whole street.
+[NEW] Added the ability set second color for "Zebra" and "Double zebra" crosswalk styles.
+[UPDATED] Changed press escape key behavior. Now it's like default game tool behavior. If something is being edited, then press escape will suggest an exit, rather than closing the tool with the loss of changes.
+[NEW] Added point grouping by road in list (can be disable in settings).
+[FIXED] Fix line connector overlay position on elevated roads.
+[FIXED] Fix 3D filler styles calculation.
+[FIXED] Fix error in copy/paste marking mode that made it impossible to use the tool.
+[FIXED] Fix reset panel scroll position when resize panel.
+[UPDATED] Crosswalk mode no more activate by hold shift when change value by scroll wheel.
+[NEW] Set panel default size by double click on panel resizer.</value>
   </data>
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Line end alignment</value>
@@ -1358,26 +1357,26 @@ Click to edit markings</value>
     <value>Line start alignment</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_1" xml:space="preserve">
-    <value>- Added the ability to set alignment for stop lines.
-- Additional templates sort: 
-	1 - Default templates sorted by type
-	2 - Other templates sorted by type then by name
-	3 - Other author templates sort by author name then by type then by name
-- Fix load segment presets.
-- Fix default panel size.</value>
+    <value>[NEW] Added the ability to set alignment for stop lines.
+[NEW] Additional templates sort: 
+---1 - Default templates sorted by type
+---2 - Other templates sorted by type then by name
+---3 - Other author templates sort by author name then by type then by name
+[FIXED] Fix load segment presets.
+[FIXED] Fix default panel size.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
-    <value>- Fix 3D fillers height outside available tiles.
-- Fix creating button duplicates.</value>
+    <value>[FIXED] Fix 3D fillers height outside available tiles.
+[FIXED] Fix creating button duplicates.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_3" xml:space="preserve">
-    <value>- Added missing dependencies checker.
-- Fix 3D fillers height on nodes outside available tiles.</value>
+    <value>[NEW] Added missing dependencies checker.
+[FIXED] Fix 3D fillers height on nodes outside available tiles.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_4" xml:space="preserve">
-    <value>- Fixed save and load presets' screenshot.
-- Fixed bug when nodes with marking after loading had a wrong shape.
-- Added Indonesian translation.</value>
+    <value>[FIXED] Fixed save and load presets' screenshot.
+[FIXED] Fixed bug when nodes with marking after loading had a wrong shape.
+[TRANSLATION] Added Indonesian translation.</value>
   </data>
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Hide street names while using tool</value>
@@ -1416,34 +1415,34 @@ Click to edit markings</value>
     <value>Curb size on medians</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
-    <value>- Added selection step over like in MoveIt. Press Ctrl+Space to step over (you can rebind in mod options).
-- Added curbs to filler 3D styles.
-- Added rounded corners to filler 3D styles.
-- Added offset from lines to filler 3D styles.
-- Added filler styles: Gravel, Ruined, Cliff.
-- Added pavement stop line style.
-- Added option "Follow guide lines" for solid filler, so now possible make solid fillers on sloped segments.
-- Added the ability to click with Ctrl to select line or crosswalk instend of delete its.
-- Added warning for Linux users about missing libraries.
-- Added the ability to change style by scroll wheel.
-- Added the ability to hide street names while using tool. Can be disabled in mod options.
-- Added new icon for UUI button.
-- Fixed select template button icon.</value>
+    <value>[NEW] Added selection step over like in MoveIt. Press Ctrl+Space to step over (you can rebind in mod options).
+[NEW] Added curbs to filler 3D styles.
+[NEW] Added rounded corners to filler 3D styles.
+[NEW] Added offset from lines to filler 3D styles.
+[NEW] Added filler styles: Gravel, Ruined, Cliff.
+[NEW] Added pavement stop line style.
+[NEW] Added option "Follow guide lines" for solid filler, so now possible make solid fillers on sloped segments.
+[NEW] Added the ability to click with Ctrl to select line or crosswalk instend of delete its.
+[NEW] Added warning for Linux users about missing libraries.
+[NEW] Added the ability to change style by scroll wheel.
+[NEW] Added the ability to hide street names while using tool. Can be disabled in mod options.
+[NEW] Added new icon for UUI button.
+[FIXED] Fixed select template button icon.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8_1" xml:space="preserve">
-    <value>- Buttons in paste mode moved ouside of circle.
-- Added Korean translation.</value>
+    <value>[UPDATED] Buttons on paste mode moved ouside of circle.
+[TRANSLATION] Added Korean translation.</value>
   </data>
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Discard</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8_2" xml:space="preserve">
-    <value>- Added discard button after create template/preset.
-- Added colored text to tooltips.
-- Added the ability to hide original mod button in toolbar If you use UUI mod.
-- Fixed not removed items from list when this items were removed.
-- Fixed line grouping.
-- Added Turkish translation.</value>
+    <value>[NEW] Added discard button after create template/preset.
+[NEW] Added colored text to tooltips.
+[NEW] Added the ability to hide original mod button in toolbar If you use UUI mod.
+[FIXED] Fixed not removed items from list when this items were removed.
+[FIXED] Fixed line grouping.
+[TRANSLATION] Added Turkish translation.</value>
   </data>
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Sortings</value>
@@ -1530,17 +1529,17 @@ Click to edit markings</value>
     <value>Road name</value>
   </data>
   <data name="Mod_WhatsNewMessage1_9" xml:space="preserve">
-    <value>- Added the ability to save points offset values for each roads.
-- Added gap option to zebra and double zebra crosswalk styles. It allows to set different space each N dashes.
-- Added intersection points to lines from one splited point with different alignment.
-- Added settings of sorting templates, presets and applying list.
-- Added template grouping by fit (Perfect/Close/Possible/Poor).
-- Added illumination to marking while editing at night.
-- Added illumination to cursor like default game tool.
-- Added option for placing markings under level crossings. Can be disabled in mod settings.
-- Added third (middle) point to taxiways/runways.
-- Fixed error while saving template as asset.
-- Fixed crosswalks calculation error.</value>
+    <value>[NEW] Added the ability to save points offset values for each roads.
+[NEW] Added gap option to zebra and double zebra crosswalk styles. It allows to set different space each N dashes.
+[NEW] Added intersection points to lines from one splited point with different alignment.
+[NEW] Added settings of sorting templates, presets and applying list.
+[NEW] Added template grouping by fit (Perfect/Close/Possible/Poor).
+[NEW] Added illumination to marking while editing at night.
+[NEW] Added illumination to cursor like default game tool.
+[NEW] Added option for placing markings under level crossings. Can be disabled in mod settings.
+[NEW] Added third (middle) point to taxiways/runways.
+[FIXED] Fixed error while saving template as asset.
+[FIXED] Fixed crosswalks calculation error.</value>
   </data>
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Prop</value>
@@ -1565,5 +1564,50 @@ Click to edit markings</value>
   </data>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>Step</value>
+  </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Variant #1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Variant #2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Variant #3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Variant #4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Color variant</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>Clip sidewalk</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Decorative network</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Width scale</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Repeat distance</value>
   </data>
 </root>

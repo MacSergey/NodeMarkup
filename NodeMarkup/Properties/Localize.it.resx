@@ -306,15 +306,15 @@ Clicca per modificare la segnaletica orizzontale</value>
     <value>Seleziona un punto per creare o cancellare una linea</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
-    <value>Riempimento. Lo spazio tra le linee può essere riempito per indicare le aree vietate per l'arresto o la guida. Sono disponibili 3 stili: Linee, Griglia e Riempimento solido. Per creare tenere premuto Alt.
-- Linee di stop. Ora è possibile collegare due punti sulla stessa strada per creare una linea di arresto. 2 stili disponibili: "Continua" e "Tratteggiata".
-- Nuovo stile di linea: "Continua e tratteggiata".
-- Le linee e i modelli nell'elenco ora hanno icone che mostrano stile e colore.
-- I cmarcatori verranno ora copiati quando la strada viene copiata con MoveIt (la funzione non sarà disponibile fino all'aggiornamento della mod MoveIt).
-- Aggiunte opzioni Copia e Incolla per il colore della linea.
-- L'aggiornamento della strada a una strada diversa con lo stesso numero di corsie ora conserverà i segni.
-- Il segmento di linea con la regola verrà evidenziato quando si passa sopra il riquadro di modifica di quella regola.
-- Aggiunta traduzione in cinese semplificato.</value>
+    <value>[NEW] - Riempimento. Lo spazio tra le linee può essere riempito per indicare le aree vietate per l'arresto o la guida. Sono disponibili 3 stili: Linee, Griglia e Riempimento solido. Per creare tenere premuto Alt.
+[NEW] Linee di stop. Ora è possibile collegare due punti sulla stessa strada per creare una linea di arresto. 2 stili disponibili: "Continua" e "Tratteggiata".
+[NEW] Nuovo stile di linea: "Continua e tratteggiata".
+[NEW] Le linee e i modelli nell'elenco ora hanno icone che mostrano stile e colore.
+[NEW] I cmarcatori verranno ora copiati quando la strada viene copiata con MoveIt (la funzione non sarà disponibile fino all'aggiornamento della mod MoveIt).
+[NEW] Aggiunte opzioni Copia e Incolla per il colore della linea.
+[UPDATED] L'aggiornamento della strada a una strada diversa con lo stesso numero di corsie ora conserverà i segni.
+[NEW] Il segmento di linea con la regola verrà evidenziato quando si passa sopra il riquadro di modifica di quella regola.
+[TRANSLATION] Aggiunta traduzione in cinese semplificato.</value>
   </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Ripristina</value>
@@ -392,21 +392,21 @@ Clicca per modificare la segnaletica orizzontale</value>
     <value>Continua</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>- Correttii pulsanti Alt, Ctrl e Shift su Mac OS e Linux.
-- Aggiunti gli stili di linea di stop "Doppia continua" e "Doppia tratteggiata".
-- Aggiunte traduzioni in italiano e portoghese.</value>
+    <value>[FIXED] Correttii pulsanti Alt, Ctrl e Shift su Mac OS e Linux.
+[NEW] Aggiunti gli stili di linea di stop "Doppia continua" e "Doppia tratteggiata".
+[TRANSLATION] Aggiunte traduzioni in italiano e portoghese.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
-    <value>- Il messaggio "Novità - What's New" verrà visualizzato una volta dopo un aggiornamento e può essere disabilitato nel menu Opzioni.
-- Aggiunte le seguenti traduzioni: ceco, olandese, francese, tedesco, giapponese, polacco, russo e spagnolo (si prega di contattare l'autore della mod per aiutare con la traduzione nella propria lingua).
-- Ora è possibile trascinare i punti finali da uno dall'altro tenendo premuto Ctrl.
-- Backup: nel menu Opzioni è ora possibile eseguire il backup dei dati di marcatura su una mappa scaricando su un file e quindi importandolo. Ciò è necessario se servisse disabilitare la mod, effettuare un nuovo salvataggio senza la mod e quindi ripristinare tutti i contrassegni.
-- Ora verrà visualizzato un avviso popup quando si eliminano elementi. Questo vale per linee, regole e modelli. Questo può essere disabilitato nelle opzioni.
-- Aggiunta nuova scorciatoia per l'aggiunta di una nuova regola - Maiusc + Ctrl + A (rimappabile).
-- Impostazione rapida della regola: dopo aver aggiunto una nuova regola, l'interfaccia per la selezione dei punti iniziale e finale ora si apre automaticamente. Non è più necessario fare clic sulle aree "Da" e "A". Questo può essere disabilitato nelle opzioni.
-- Risolto il problema con le linee che sembravano essere spezzate o divise - si verificava solo nelle transizioni autostradali e stradali.
-- Le linee non verranno più visualizzate quando sono mostrate le informazioni della visualizzazione delle sovrapposizioni.
-- La scorciatoia di attivazione ora si attiverà quando si apre un altro strumento mentre lo strumento di marcatura è già aperto.</value>
+    <value>[UPDATED] Il messaggio "Novità - What's New" verrà visualizzato una volta dopo un aggiornamento e può essere disabilitato nel menu Opzioni.
+[TRANSLATION] Aggiunte le seguenti traduzioni: ceco, olandese, francese, tedesco, giapponese, polacco, russo e spagnolo.
+[NEW] Ora è possibile trascinare i punti finali da uno dall'altro tenendo premuto Ctrl.
+[NEW] Backup: nel menu Opzioni è ora possibile eseguire il backup dei dati di marcatura su una mappa scaricando su un file e quindi importandolo. Ciò è necessario se servisse disabilitare la mod, effettuare un nuovo salvataggio senza la mod e quindi ripristinare tutti i contrassegni.
+[NEW] Ora verrà visualizzato un avviso popup quando si eliminano elementi. Questo vale per linee, regole e modelli. Questo può essere disabilitato nelle opzioni.
+[NEW] Aggiunta nuova scorciatoia per l'aggiunta di una nuova regola - Maiusc + Ctrl + A (rimappabile).
+[NEW] Impostazione rapida della regola: dopo aver aggiunto una nuova regola, l'interfaccia per la selezione dei punti iniziale e finale ora si apre automaticamente. Non è più necessario fare clic sulle aree "Da" e "A". Questo può essere disabilitato nelle opzioni.
+[FIXED] Risolto il problema con le linee che sembravano essere spezzate o divise - si verificava solo nelle transizioni autostradali e stradali.
+[UPDATED] Le linee non verranno più visualizzate quando sono mostrate le informazioni della visualizzazione delle sovrapposizioni.
+[UPDATED] La scorciatoia di attivazione ora si attiverà quando si apre un altro strumento mentre lo strumento di marcatura è già aperto.</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Aggiungi un nuovo riempimento</value>
@@ -437,8 +437,8 @@ Clicca per modificare la segnaletica orizzontale</value>
 Per creare una linea connetti due punti.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>Non ci sono ancora riempimenti in questa intersezione.
-Per creare uno riempimento, tieni premuto {0} o premi {1}.</value>
+    <value>Non ci sono ancora riempimenti in questo incrocio.
+Per creare un riempimento, tieni premuto {0} o premi {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista dei modelli è vuota.
@@ -672,18 +672,18 @@ cancellare le strisce pedonali</value>
     <value>modello</value>
   </data>
   <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
-    <value>- Aggiunto nuovo stile di riempimento - Chevron (Caporali).
-- Aggiunte strisce pedonali. Tieni premuto Maiusc per crearli. Stili attualmente disponibili: "Attraversamento pedonale esistente", "Zebra", "Doppia zebra", "Linee continue parallele", "Linee tratteggiate parallele", "Ladder", "Solido".
-- Aggiunte linee perpendicolari. Queste linee non hanno un secondo punto, sono generate come una linea retta da un punto. Per creare una linea perpendicolare, tirare la linea nella direzione opposta all'intersezione.
-- Aggiunta la possibilità di copiare/incollare lo stile di linee, riempitivi e strisce pedonali.
-- Aggiunta la possibilità di ordinare linee e modelli per stili e tipi. Puoi modificare e disabilitare la funzione nelle impostazioni.
-- Menu di selezione del modello aggiornato.
-- Aggiunto il raggruppamento di punti vicini per una selezione più semplice. Sono disponibili due tipi di raggruppamento: in cerchio e in linea. Puoi scegliere il tipo o disabilitare la funzione nelle impostazioni.
-- Aggiunta indicazione di regole in conflitto.
-- Aggiunta la possibilità di centrare una linea continua nello stile "Solido e tratteggiato".
-- Modificato come iniziare a modificare un punto. Ora devi fare clic sul punto tenendo premuto Ctrl.
-- Aggiunta la possibilità di selezionare la lingua dello strumento diversa dalla lingua del gioco.
-- Aggiunta la lingua finlandese.</value>
+    <value>[NEW] Aggiunto nuovo stile di riempimento - Chevron (Caporali).
+[NEW] Aggiunte strisce pedonali. Tieni premuto Maiusc per crearli. Stili attualmente disponibili: "Attraversamento pedonale esistente", "Zebra", "Doppia zebra", "Linee continue parallele", "Linee tratteggiate parallele", "Ladder", "Solido".
+[NEW] Aggiunte linee perpendicolari. Queste linee non hanno un secondo punto, sono generate come una linea retta da un punto. Per creare una linea perpendicolare, tirare la linea nella direzione opposta all'intersezione.
+[NEW] Aggiunta la possibilità di copiare/incollare lo stile di linee, riempitivi e strisce pedonali.
+[NEW] Aggiunta la possibilità di ordinare linee e modelli per stili e tipi. Puoi modificare e disabilitare la funzione nelle impostazioni.
+[UPDATED] Menu di selezione del modello aggiornato.
+[NEW] Aggiunto il raggruppamento di punti vicini per una selezione più semplice. Sono disponibili due tipi di raggruppamento: in cerchio e in linea. Puoi scegliere il tipo o disabilitare la funzione nelle impostazioni.
+[NEW] Aggiunta indicazione di regole in conflitto.
+[NEW] Aggiunta la possibilità di centrare una linea continua nello stile "Solido e tratteggiato".
+[UPDATED] Modificato come iniziare a modificare un punto. Ora devi fare clic sul punto tenendo premuto Ctrl.
+[NEW] Aggiunta la possibilità di selezionare la lingua dello strumento diversa dalla lingua del gioco.
+[TRANSLATION] Aggiunta la lingua finlandese.</value>
   </data>
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Il caricamento è stato completato con errori.
@@ -955,28 +955,27 @@ Vuoi applicare l'incrocio manualmente?</value>
     <value>Trascina con {0} per muovere il punto</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
-    <value>ATTENZIONE: l'impostazione dei modelli predefiniti verrà ripristinata.
-
-- Aggiunta la possibilità di copiare/incollare il contrassegno da un'intersezione esistente a un'altra intersezione esistente.
-- Ora la segnaletica non viene rimossa se si sostituisce la strada con un diverso numero di punti.
-- Aggiunto il supporto per l'editor di mappe.
-- Aggiunta la possibilità di salvare i dati di marcatura nelle risorse di intersezione.
-- Aggiunta la linea "Denti di squalo" e lo stile della linea di arresto.
-- Aggiunto lo stile della linea di arresto "Solid&amp;Dashed".
-- Aggiunto lo stile di attraversamento pedonale "Scacchiera".
-- Aggiunta la possibilità di impostare modificatori di creazione per qualsiasi stile.
-- Aggiunta la possibilità di duplicare i modelli.
-- Aggiunta la possibilità di avere diversi modelli con un nome.
-- Aggiunta l'opzione di allineamento a tutti gli stili di doppia linea.
-- Aggiunta la possibilità di avviare lo stile "Chevron" di riempimento dai bordi.
-- Aggiunta la possibilità di ricevere un avviso di eliminazione solo se influirà su altri elementi.
-- Aggiunta la possibilità di ridimensionare il pannello.
-- Aggiunta la possibilità di eseguire il backup dei modelli.
-- Aggiunta la possibilità di ripristinare tutti i punti offset.
-- Aggiunto il supporto per il mirroring di MoveIt (attendere l'aggiornamento di MoveIt).
-- Aggiorna l'algoritmo di calcolo dello stile "Chevron" di riempimento.
-- Correggi i duplicati dei vertici di riempimento nell'interfaccia di creazione.
-- Risolto il problema con le linee asimmetriche del valore di inversione dopo il caricamento.</value>
+    <value>[WARNING] l'impostazione dei modelli predefiniti verrà ripristinata.
+[NEW] Aggiunta la possibilità di copiare/incollare il contrassegno da un'intersezione esistente a un'altra intersezione esistente.
+[UPDATED] Ora la segnaletica non viene rimossa se si sostituisce la strada con un diverso numero di punti.
+[NEW] Aggiunto il supporto per l'editor di mappe.
+[NEW] Aggiunta la possibilità di salvare i dati di marcatura nelle risorse di intersezione.
+[NEW] Aggiunta la linea "Denti di squalo" e lo stile della linea di arresto.
+[NEW] Aggiunto lo stile della linea di arresto "Solid&amp;Dashed".
+[NEW] Aggiunto lo stile di attraversamento pedonale "Scacchiera".
+[NEW] Aggiunta la possibilità di impostare modificatori di creazione per qualsiasi stile.
+[NEW] Aggiunta la possibilità di duplicare i modelli.
+[NEW] Aggiunta la possibilità di avere diversi modelli con un nome.
+[NEW] Aggiunta l'opzione di allineamento a tutti gli stili di doppia linea.
+[NEW] Aggiunta la possibilità di avviare lo stile "Chevron" di riempimento dai bordi.
+[NEW] Aggiunta la possibilità di ricevere un avviso di eliminazione solo se influirà su altri elementi.
+[NEW] Aggiunta la possibilità di ridimensionare il pannello.
+[NEW] Aggiunta la possibilità di eseguire il backup dei modelli.
+[NEW] Aggiunta la possibilità di ripristinare tutti i punti offset.
+[NEW] Aggiunto il supporto per il mirroring di MoveIt (attendere l'aggiornamento di MoveIt).
+[UPDATED] Aggiorna l'algoritmo di calcolo dello stile "Chevron" di riempimento.
+[FIXED] Correggi i duplicati dei vertici di riempimento nell'interfaccia di creazione.
+[FIXED] Risolto il problema con le linee asimmetriche del valore di inversione dopo il caricamento.</value>
   </data>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Questa azione non può esser annullata.</value>
@@ -1003,15 +1002,15 @@ Vuoi applicare l'incrocio manualmente?</value>
     <value>Attenzione: Questa opzione cambia l'ordine di render degli oggetti</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
-    <value>- Aggiunta l'abilità di disegnare le marcature sotto al tracciato. Queste possono esser disabilitate dalle opzioni. ATTENZIONE: Questa opzione cambia l'ordine di render degli oggetti di gioco.
-- Aggiunto modificatore per creare una linea vuota (senza regole).
-- Aggiunta la possibilità di creare i bordi a tutte le linee in una volta (da un capo all'altro della strada)
-- Aggiunta "Configurazione rapida dell'opzione attraversamento pedonale" - apre automaticamente l'interfaccia di selezione del bordo dopo aver creato il passaggio pedonale simile a "Configurazione rapida delle regole". Questo può essere disabilitato nelle opzioni.
-- Aggiunto menù opzioni addizionali.
-- Fixato il click sinistro del mouse nella selezione del nodo.
-- Fixato il pannello fuori dallo schermo.
-- Il colore della sovrapposizione al passaggio del mouse è cambiato da bianco ad azzurro per evitare la fusione con il markup.
-- La linea dell'attraversamento pedonale non crea più incroci non necessari. Potrebbe essere necessario impostare i bordi delle strisce pedonali per quelle già esistenti.</value>
+    <value>[NEW] Aggiunta l'abilità di disegnare le marcature sotto al tracciato. Queste possono esser disabilitate dalle opzioni. ATTENZIONE: Questa opzione cambia l'ordine di render degli oggetti di gioco.
+[NEW] Aggiunto modificatore per creare una linea vuota (senza regole).
+[NEW] Aggiunta la possibilità di creare i bordi a tutte le linee in una volta (da un capo all'altro della strada)
+[NEW] Aggiunta "Configurazione rapida dell'opzione attraversamento pedonale" - apre automaticamente l'interfaccia di selezione del bordo dopo aver creato il passaggio pedonale simile a "Configurazione rapida delle regole". Questo può essere disabilitato nelle opzioni.
+[NEW] Aggiunto menù opzioni addizionali.
+[FIXED] Fixato il click sinistro del mouse nella selezione del nodo.
+[FIXED] Fixato il pannello fuori dallo schermo.
+[UPDATED] Il colore della sovrapposizione al passaggio del mouse è cambiato da bianco ad azzurro per evitare la fusione con il markup.
+[UPDATED] La linea dell'attraversamento pedonale non crea più incroci non necessari. Potrebbe essere necessario impostare i bordi delle strisce pedonali per quelle già esistenti.</value>
   </data>
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Salva come risorsa</value>
@@ -1189,16 +1188,16 @@ Sei sicuro di voler avere diversi preset con lo stesso nome?</value>
     <value>predefinito</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
-    <value>- Aggiunta la possibilità di salvare l'intera marcatura dell'intersezione come preimpostata e successivamente applicarla a qualsiasi altra intersezione.
-- Aggiunta la possibilità di salvare modelli e preset come risorsa e condividerli su Workshop.
-- Interfaccia utente aggiornata e prestazioni dell'interfaccia utente migliorate. Ritardo ridotto quando si cambia scheda e si selezionano elementi.
-- Ora i valori dei modelli possono essere modificati solo in modalità di modifica, cosa che impedisce modifiche accidentali ai valori.
-- Aggiunti suggerimenti sul pannello (possono essere disabilitati nelle impostazioni).
-- Aggiunta la possibilità di tagliare una nuova linea dalle strisce pedonali (può essere disabilitata nelle impostazioni).
-- Aggiunta la possibilità di modificare i valori del colore con la rotellina del mouse.
-- Corrette strade ferroviarie e monorotaia (e qualsiasi altra cosa senza punti).
-- Corretta e migliorata la sovrapposizione del gruppo di punti.
-- Aggiunta la traduzione inglese-britannica.</value>
+    <value>[NEW] Aggiunta la possibilità di salvare l'intera marcatura dell'intersezione come preimpostata e successivamente applicarla a qualsiasi altra intersezione.
+[NEW] Aggiunta la possibilità di salvare modelli e preset come risorsa e condividerli su Workshop.
+[UPDATED] Interfaccia utente aggiornata e prestazioni dell'interfaccia utente migliorate. Ritardo ridotto quando si cambia scheda e si selezionano elementi.
+[UPDATED] Ora i valori dei modelli possono essere modificati solo in modalità di modifica, cosa che impedisce modifiche accidentali ai valori.
+[NEW] Aggiunti suggerimenti sul pannello (possono essere disabilitati nelle impostazioni).
+[NEW] Aggiunta la possibilità di tagliare una nuova linea dalle strisce pedonali (può essere disabilitata nelle impostazioni).
+[NEW] Aggiunta la possibilità di modificare i valori del colore con la rotellina del mouse.
+[FIXED] Corrette strade ferroviarie e monorotaia (e qualsiasi altra cosa senza punti).
+[FIXED] Corretta e migliorata la sovrapposizione del gruppo di punti.
+[TRANSLATION] Aggiunta la traduzione inglese-britannica.</value>
   </data>
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Questo tipo di linea non supporta le regole</value>
@@ -1210,8 +1209,8 @@ Sei sicuro di voler avere diversi preset con lo stesso nome?</value>
     <value>Autore sconosciuto</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>- Migliorati i messaggi sugli errori di caricamento dei dati.
-- Corrette e aggiornate le localizzazioni.</value>
+    <value>[UPDATED] Migliorati i messaggi sugli errori di caricamento dei dati.
+[FIXED] Corrette e aggiornate le localizzazioni.</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Caricamento completato con errori.
@@ -1261,21 +1260,21 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Selezionare il secondo punto della linea guida</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
-    <value>- Aggiornata la dipendenza da Harmony: risoluzione dei conflitti con altre mod che lo utilizzano</value>
+    <value>[UPDATED] Aggiornata la dipendenza da Harmony: risoluzione dei conflitti con altre mod che lo utilizzano</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
-    <value>- Risolta una situazione in cui i segni potevano scomparire dal salvataggio</value>
+    <value>[FIXED] Risolta una situazione in cui i segni potevano scomparire dal salvataggio</value>
   </data>
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
-    <value>- Aggiunta la possibilità di fare segni sui segmenti.
-- Aggiunti stili 3D di riempimento: "Pavement" (Pavimentazione) e "Grass" (Erba).
-- Aggiunto lo stile 3D della linea: "Pavement" (Pavimentazione).
-- Aggiunta l'abilità di seguire i binari agli stili di riempimento "Stripes" (Striscie) e "Chevron" (Caporali).
-- Migliora le prestazioni aggiungendo LOD (Level Of Detail) ai contrassegni. La distanza LOD è impostata nelle impostazioni.
-- Aggiunto il supporto per le vie di rullaggio.
-- Risolto un conflitto con altre mod che poteva causare la mancata visualizzazione del pulsante dello strumento.
-- Risolto un conflitto con il pannello di scorrimento e la rotella di scorrimento per modificare i valori.
-- Ora non c'è differenza se inserisci un punto o una virgola nel campo del valore delle proprietà.</value>
+    <value>[NEW] Aggiunta la possibilità di fare segni sui segmenti.
+[NEW] Aggiunti stili 3D di riempimento: "Pavement" (Pavimentazione) e "Grass" (Erba).
+[NEW] Aggiunto lo stile 3D della linea: "Pavement" (Pavimentazione).
+[NEW] Aggiunta l'abilità di seguire i binari agli stili di riempimento "Stripes" (Striscie) e "Chevron" (Caporali).
+[NEW] Migliora le prestazioni aggiungendo LOD (Level Of Detail) ai contrassegni. La distanza LOD è impostata nelle impostazioni.
+[NEW] Aggiunto il supporto per le vie di rullaggio.
+[FIXED] Risolto un conflitto con altre mod che poteva causare la mancata visualizzazione del pulsante dello strumento.
+[FIXED] Risolto un conflitto con il pannello di scorrimento e la rotella di scorrimento per modificare i valori.
+[UPDATED] Ora non c'è differenza se inserisci un punto o una virgola nel campo del valore delle proprietà.</value>
   </data>
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Numero di colori</value>
@@ -1335,20 +1334,20 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Seleziona il punto di fine per uno stop oppure una linea di stop</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7" xml:space="preserve">
-    <value>- Nuova modalità di selezione nodo/segmento. L'area di selezione segue esattamente le forme effettive dei nodi e dei segmenti, il che evita difficoltà nella selezione di nodi troppo ravvicinati.
-- Aggiunta la creazione automatica della linea durante la creazione del riempitivo. Non è più necessario aggiungere linee prima di creare il riempitivo.
-- Aggiunta la possibilità di dividere il punto in due punti virtuali, impostare lo spostamento diviso e scegliere l'allineamento delle linee. Ora è possibile continuare una linea doppia con due linee singole di separazione.
-- Aggiunto il modificatore di stile "Dagli appunti". Tieni premuto Ctrl+Alt per applicare lo stile dagli appunti a una nuova linea, regola, attraversamento pedonale o riempitivo.
-- Aggiunta la possibilità di applicare la marcatura del segmento tra due intersezioni e applicarla all'intera strada.
-- Aggiunta la possibilità di impostare il secondo colore per gli stili di attraversamento pedonale "Zebra" e "Doppia zebra".
-- Modificato il comportamento del tasto Esc. Ora è come il comportamento predefinito dello strumento di gioco. Se qualcosa viene modificato, premere Esc suggerirà un'uscita, piuttosto che chiudere lo strumento con la perdita delle modifiche.
-- Aggiunto il raggruppamento dei punti per strada nell'elenco (può essere disabilitato nelle impostazioni).
-- Corretta la posizione di sovrapposizione del connettore di linea su strade sopraelevate.
-- Correzione del calcolo degli stili di riempimento 3D.
-- Risolto errore nella modalità di marcatura copia/incolla che rendeva impossibile l'utilizzo dello strumento.
-- Corretta la posizione di scorrimento del pannello di ripristino quando si ridimensiona il pannello.
-- La modalità Crosswalk non si attiva più tenendo premuto shift quando si cambia il valore con la rotella di scorrimento.
-- Imposta la dimensione predefinita del pannello facendo doppio clic sul ridimensionatore del pannello.</value>
+    <value>[NEW] Nuova modalità di selezione nodo/segmento. L'area di selezione segue esattamente le forme effettive dei nodi e dei segmenti, il che evita difficoltà nella selezione di nodi troppo ravvicinati.
+[NEW] Aggiunta la creazione automatica della linea durante la creazione del riempitivo. Non è più necessario aggiungere linee prima di creare il riempitivo.
+[NEW] Aggiunta la possibilità di dividere il punto in due punti virtuali, impostare lo spostamento diviso e scegliere l'allineamento delle linee. Ora è possibile continuare una linea doppia con due linee singole di separazione.
+[NEW] Aggiunto il modificatore di stile "Dagli appunti". Tieni premuto Ctrl+Alt per applicare lo stile dagli appunti a una nuova linea, regola, attraversamento pedonale o riempitivo.
+[NEW] Aggiunta la possibilità di applicare la marcatura del segmento tra due intersezioni e applicarla all'intera strada.
+[NEW] Aggiunta la possibilità di impostare il secondo colore per gli stili di attraversamento pedonale "Zebra" e "Doppia zebra".
+[UPDATED] Modificato il comportamento del tasto Esc. Ora è come il comportamento predefinito dello strumento di gioco. Se qualcosa viene modificato, premere Esc suggerirà un'uscita, piuttosto che chiudere lo strumento con la perdita delle modifiche.
+[NEW] Aggiunto il raggruppamento dei punti per strada nell'elenco (può essere disabilitato nelle impostazioni).
+[FIXED] Corretta la posizione di sovrapposizione del connettore di linea su strade sopraelevate.
+[FIXED] Correzione del calcolo degli stili di riempimento 3D.
+[FIXED] Risolto errore nella modalità di marcatura copia/incolla che rendeva impossibile l'utilizzo dello strumento.
+[FIXED] Corretta la posizione di scorrimento del pannello di ripristino quando si ridimensiona il pannello.
+[UPDATED] La modalità Crosswalk non si attiva più tenendo premuto shift quando si cambia il valore con la rotella di scorrimento.
+[NEW] Imposta la dimensione predefinita del pannello facendo doppio clic sul ridimensionatore del pannello.</value>
   </data>
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Allineamento dell'estremità della linea</value>
@@ -1357,26 +1356,26 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Allineamento del punto d'inizio della linea</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_1" xml:space="preserve">
-    <value>- Aggiunta la possibilità di impostare l'allineamento per le linee di arresto.
-- Ordinamento di modelli aggiuntivi:
-1 - Modelli predefiniti ordinati per tipo
-2 - Altri modelli ordinati per tipo poi per nome
-3 - Altri modelli di autori ordinano per nome dell'autore, quindi per tipo, quindi per nome
-- Corretto il caricamento del preset dei segment.
-- Risolto il problema con la dimensione del pannello predefinita.</value>
+    <value>[NEW] Aggiunta la possibilità di impostare l'allineamento per le linee di arresto.
+[NEW] Ordinamento di modelli aggiuntivi:
+---1 - Modelli predefiniti ordinati per tipo
+---2 - Altri modelli ordinati per tipo poi per nome
+---3 - Altri modelli di autori ordinano per nome dell'autore, quindi per tipo, quindi per nome
+[FIXED] Corretto il caricamento del preset dei segment.
+[FIXED] Risolto il problema con la dimensione del pannello predefinita.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
-    <value>- Corretta l'altezza dei riempitivi 3D al di fuori delle piastrelle disponibili.
-- Risolto il problema con la creazione di duplicati dei pulsanti.</value>
+    <value>[FIXED] Corretta l'altezza dei riempitivi 3D al di fuori delle piastrelle disponibili.
+[FIXED] Risolto il problema con la creazione di duplicati dei pulsanti.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_3" xml:space="preserve">
-    <value>- Aggiunto il controllo delle dipendenze mancanti.
-- Corretta l'altezza dei riempitivi 3D sui nodi al di fuori dei riquadri disponibili.</value>
+    <value>[NEW] Aggiunto il controllo delle dipendenze mancanti.
+[FIXED] Corretta l'altezza dei riempitivi 3D sui nodi al di fuori dei riquadri disponibili.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_4" xml:space="preserve">
-    <value>- Risolto il problema con lo screenshot dei preset di salvataggio e caricamento.
-- Risolto bug quando i nodi con marcatura dopo il caricamento avevano una forma sbagliata.
-- Aggiunta traduzione indonesiana.</value>
+    <value>[FIXED] Risolto il problema con lo screenshot dei preset di salvataggio e caricamento.
+[FIXED] Risolto bug quando i nodi con marcatura dopo il caricamento avevano una forma sbagliata.
+[TRANSLATION] Aggiunta traduzione indonesiana.</value>
   </data>
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Nascondi i nomi delle strade durante l'utilizzo dello strumento</value>
@@ -1415,34 +1414,34 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Dimensone cordolo sulle mediane</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
-    <value>- Aggiunto passaggio di selezione come in MoveIt. Premi Ctrl + Spazio per scavalcare (puoi ricollegarti nelle opzioni mod).
-- Aggiunti cordoli per riempire gli stili 3D.
-- Aggiunti angoli arrotondati per riempire gli stili 3D.
-- Aggiunto offset dalle linee agli stili 3D di riempimento.
-- Aggiunti stili di riempimento: Ghiaia, Rovina, Scogliera.
-- Aggiunto lo stile della linea di arresto del marciapiede.
-- Aggiunta l'opzione "Segui le linee guida" per il riempimento solido, quindi ora è possibile creare riempitivi solidi su segmenti inclinati.
-- Aggiunta la possibilità di fare clic con Ctrl per selezionare la linea o il passaggio pedonale anziché eliminarlo.
-- Aggiunto avviso per gli utenti Linux sulle librerie mancanti.
-- Aggiunta la possibilità di cambiare stile tramite la rotella di scorrimento.
-- Aggiunta la possibilità di nascondere i nomi delle strade durante l'utilizzo dello strumento. Può essere disabilitato nelle opzioni mod.
-- Aggiunta nuova icona per il pulsante UUI.
-- Risolto il problema con l'icona del pulsante Seleziona modello.</value>
+    <value>[NEW] Aggiunto passaggio di selezione come in MoveIt. Premi Ctrl + Spazio per scavalcare (puoi ricollegarti nelle opzioni mod).
+[NEW] Aggiunti cordoli per riempire gli stili 3D.
+[NEW] Aggiunti angoli arrotondati per riempire gli stili 3D.
+[NEW] Aggiunto offset dalle linee agli stili 3D di riempimento.
+[NEW] Aggiunti stili di riempimento: Ghiaia, Rovina, Scogliera.
+[NEW] Aggiunto lo stile della linea di arresto del marciapiede.
+[NEW] Aggiunta l'opzione "Segui le linee guida" per il riempimento solido, quindi ora è possibile creare riempitivi solidi su segmenti inclinati.
+[NEW] Aggiunta la possibilità di fare clic con Ctrl per selezionare la linea o il passaggio pedonale anziché eliminarlo.
+[NEW] Aggiunto avviso per gli utenti Linux sulle librerie mancanti.
+[NEW] Aggiunta la possibilità di cambiare stile tramite la rotella di scorrimento.
+[NEW] Aggiunta la possibilità di nascondere i nomi delle strade durante l'utilizzo dello strumento. Può essere disabilitato nelle opzioni mod.
+[NEW] Aggiunta nuova icona per il pulsante UUI.
+[FIXED] Risolto il problema con l'icona del pulsante Seleziona modello.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8_1" xml:space="preserve">
-    <value>- Pulsanti in modalità incolla spostati fuori dal cerchio.
-- Aggiunta traduzione coreana.</value>
+    <value>[UPDATED] Pulsanti in modalità incolla spostati fuori dal cerchio.
+[TRANSLATION] Aggiunta traduzione coreana.</value>
   </data>
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Scarta</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8_2" xml:space="preserve">
-    <value>- Aggiunto il pulsante di scarto dopo aver creato il modello/predefinito.
-- Aggiunto testo colorato ai suggerimenti.
-- Aggiunta la possibilità di nascondere il pulsante mod originale nella barra degli strumenti Se usi il mod UUI.
-- Risolto il problema con gli elementi non rimossi dall'elenco quando questi elementi venivano rimossi.
-- Raggruppamento linea fissa.
-- Aggiunta la traduzione in turco.</value>
+    <value>[NEW] Aggiunto il pulsante di scarto dopo aver creato il modello/predefinito.
+[NEW] Aggiunto testo colorato ai suggerimenti.
+[NEW] Aggiunta la possibilità di nascondere il pulsante mod originale nella barra degli strumenti Se usi il mod UUI.
+[FIXED] Risolto il problema con gli elementi non rimossi dall'elenco quando questi elementi venivano rimossi.
+[FIXED] Raggruppamento linea fissa.
+[TRANSLATION] Aggiunta la traduzione in turco.</value>
   </data>
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Ordinamento</value>
@@ -1553,4 +1552,43 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>Passo</value>
   </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Variante 1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Variante 2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Variante 3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Variante 4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Personalizzato</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Casuale</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Variante colore</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>Ridimensiona marciapiede</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Angolo</value>
+  </data>
+  
+  
+  
 </root>

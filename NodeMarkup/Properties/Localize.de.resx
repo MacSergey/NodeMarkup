@@ -306,15 +306,15 @@ Klicken um die Markierungen zu bearbeiten</value>
     <value>Startpunkt wählen zum Linie erstellen oder löschen</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
-    <value>- Füllungen. Der Bereich zwischen Linien kann gefüllt werden um zu zeigen, dass ein Befahren oder Parken verboten ist. 3 Stile stehen zur Verfügung: Linien, Gitter oder Fläche. ALT gedrückt halten zum Erstellen.
-- Haltelinien. Es ist nun möglich zwei nebeneinander liegende Punkte auf der gleichen Straße zu verbinden um eine Haltelinie zu erstellen. 2 Stile verfügbar: Durchgezogen und gestrichelt.
-- Neuer Linien-Stil: "Durchgezogen &amp; gestrichelt".
-- Linien und Vorlagen haben in Listen nun Icons, die den Stil und die Farbe anzeigen.
-- Markierungen werden kopiert, wenn man eine Kreuzung mit Move it kopiert (Steht erst zur Verfügung, wenn Move it ein Update bereit stellt).
-- Kopieren und Einfügen Funktion für Linien-Farben hinzugefügt.
-- Beim Upgraden einer Straße auf eine andere mit gleicher Anzahl an Spuren, bleiben die Markierungen nun erhalten.
-- Das Liniensegment mit der jeweiligen Regel wird hervorgehoben, wenn man in der Bearbeitungsliste auf die jeweilige Regel zeigt.
-- Vereinfachtes Chinesisch als Übersetzung hinzugefügt.</value>
+    <value>[NEW] Füllungen. Der Bereich zwischen Linien kann gefüllt werden um zu zeigen, dass ein Befahren oder Parken verboten ist. 3 Stile stehen zur Verfügung: Linien, Gitter oder Fläche. ALT gedrückt halten zum Erstellen.
+[NEW] Haltelinien. Es ist nun möglich zwei nebeneinander liegende Punkte auf der gleichen Straße zu verbinden um eine Haltelinie zu erstellen. 2 Stile verfügbar: Durchgezogen und gestrichelt.
+[NEW] Neuer Linien-Stil: "Durchgezogen &amp; gestrichelt".
+[NEW] Linien und Vorlagen haben in Listen nun Icons, die den Stil und die Farbe anzeigen.
+[NEW] Markierungen werden kopiert, wenn man eine Kreuzung mit Move it kopiert (Steht erst zur Verfügung, wenn Move it ein Update bereit stellt).
+[NEW] Kopieren und Einfügen Funktion für Linien-Farben hinzugefügt.
+[UPDATED] Beim Upgraden einer Straße auf eine andere mit gleicher Anzahl an Spuren, bleiben die Markierungen nun erhalten.
+[NEW] Das Liniensegment mit der jeweiligen Regel wird hervorgehoben, wenn man in der Bearbeitungsliste auf die jeweilige Regel zeigt.
+[TRANSLATION] Vereinfachtes Chinesisch als Übersetzung hinzugefügt.</value>
   </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>Wiederherstellen</value>
@@ -392,21 +392,21 @@ Klicken um die Markierungen zu bearbeiten</value>
     <value>Vollständig gefüllt</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>- Fix Alt, Strg und Shift Tasten halten unter Mac OS und Linux.
-- "Doppelt durchgezogen" und "Doppelt gestrichelte" Haltelinien-Stile hinzugefügt.
-- Italienische und Portugiesische Übersetzung hinzugefügt.</value>
+    <value>[FIXED] Fix Alt, Strg und Shift Tasten halten unter Mac OS und Linux.
+[NEW] "Doppelt durchgezogen" und "Doppelt gestrichelte" Haltelinien-Stile hinzugefügt.
+[TRANSLATION] Italienische und Portugiesische Übersetzung hinzugefügt.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
-    <value>- "Was ist Neu" Nachricht erscheint nur noch einmal nach einem Update und kann im Options-Menu ausgeschaltet werden.
-- Übersetzungen hinzugefügt:  Tschechisch, Niederländisch, Französisch, Deutsch, Japanisch, Polnisch, Russisch und Spanisch (Bitte den Mod-Autor kontaktieren, wenn du bei der Übersetzung in deine Sprache helfen möchtest).
-- Endpunkte können nun von einem zum anderen gezogen werden, wenn man Strg hält.
-- Backups - In den Einstellungen können alle gesetzten Markierungen einer Map als Backup gespeichert und später wieder importiert werden. Dies wird benötigt, wenn du den Mod deaktivieren willst, den Spielstand dann nochmal speichern möchtest und nach der erneuten Aktivierung des Mods die Markierungen wieder herstellen möchtest.
-- Es gibt nun einen Warnhinweis wenn etwas gelöscht werden soll. Dies gilt für Linien, Regeln und Vorlagen. Die Warnung kann in den Einstellungen deaktiviert werden.
-- Neues Tastenkürzel zum Hinzufügen neuer Regeln eingestellt - Shift+Ctrl+A (änderbar).
-- Schnell-Regeln-Einstellungen: Nach dem Hinzufügen einer neuen Regel öffnet sich die Mod-Oberfläche zum Auswählen des Start- und Endpunktes automatisch. "Von" und "Zu" muss nicht mehr zusätzlich angeklickt werden. Das kann in den Einstellungen deaktiviert werden.
-- Fehler behoben, durch den Linien unterbrochen oder geteilt erschienen - dies kam nur bei Verbindungen zwischen Autobahnen und Stadtstraßen vor.
-- Linien werden nicht mehr gerendert, wenn die Info-Ansichten geöffnet sind.
-- Der Aktivierungsshortcut wird nun angesprochen, wenn ein anderes Tool geöffnet wird, während das Marking Tool schon geöffnet ist.</value>
+    <value>[UPDATED] "Was ist Neu" Nachricht erscheint nur noch einmal nach einem Update und kann im Options-Menu ausgeschaltet werden.
+[TRANSLATION] Übersetzungen hinzugefügt:  Tschechisch, Niederländisch, Französisch, Deutsch, Japanisch, Polnisch, Russisch und Spanisch.
+[NEW] Endpunkte können nun von einem zum anderen gezogen werden, wenn man Strg hält.
+[NEW] Backups - In den Einstellungen können alle gesetzten Markierungen einer Map als Backup gespeichert und später wieder importiert werden. Dies wird benötigt, wenn du den Mod deaktivieren willst, den Spielstand dann nochmal speichern möchtest und nach der erneuten Aktivierung des Mods die Markierungen wieder herstellen möchtest.
+[NEW] Es gibt nun einen Warnhinweis wenn etwas gelöscht werden soll. Dies gilt für Linien, Regeln und Vorlagen. Die Warnung kann in den Einstellungen deaktiviert werden.
+[NEW] Neues Tastenkürzel zum Hinzufügen neuer Regeln eingestellt - Shift+Ctrl+A (änderbar).
+[NEW] Schnell-Regeln-Einstellungen: Nach dem Hinzufügen einer neuen Regel öffnet sich die Mod-Oberfläche zum Auswählen des Start- und Endpunktes automatisch. "Von" und "Zu" muss nicht mehr zusätzlich angeklickt werden. Das kann in den Einstellungen deaktiviert werden.
+[FIXED] Fehler behoben, durch den Linien unterbrochen oder geteilt erschienen - dies kam nur bei Verbindungen zwischen Autobahnen und Stadtstraßen vor.
+[UPDATED] Linien werden nicht mehr gerendert, wenn die Info-Ansichten geöffnet sind.
+[UPDATED] Der Aktivierungsshortcut wird nun angesprochen, wenn ein anderes Tool geöffnet wird, während das Marking Tool schon geöffnet ist.</value>
   </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Neue Füllung hinzufügen</value>
@@ -967,16 +967,15 @@ Möchtest du die Markierungen manuell zuordnen?</value>
     <value>Achtung: Diese Option ändert die Reihenfolge in der die Spiel-Objekte gerendert werden</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
-    <value>- Möglichkeit hinzugefügt, Markierungen unter Gleisen verlaufen zu lassen. Dies kann in den Optionen deaktiviert werden. WARNUNG: Diese Funktion ändert die Reihenfolge, in der Spiel-Objekte gerendert werden.
-- Funktion hinzugefügt um unsichtbare Linien zu erstellen (ohne Regeln).
-- Funktion hinzugefügt alle Randlinien gleichzeitig zu erstellen (Linie vom, letzten Punkt der Straße zum ersten Punkt der nächsten Straße).
-- Linien überlagern nicht mehr den Bürgersteig. Funktioniert nur für Linien vom ersten oder letzten Punkt einer Straße.
-- "Schnell-Erstellung für Fußgängerüberwegsmarkierungen" hinzugefügt - öffnet automatisch den Ränder-Auswahl sowie es bei der "Schnell-Regel-Erstellung" der Fall ist. Kann in den Einstellungen deaktiviert werden.
-- Menü für "Zusätzliche Funktionen" hinzugefügt.
-- Linken Maus-Klick aus einen Node repariert.
-- Oberfläche außerhalb des Bildschirms repariert.
-- Overlay-Farbe beim hinüberfahren mit der Maus von weiß in ein schwaches blau geändert, damit es sich besser von den Markierungen abhebt.
-- Fußgängerüberwegemarkierungen erstellen keine unnötigen Überschneidungen mehr. Möglicherweise musst du für bereits erstellte Fußgängerüberwegemarkierungen nun Ränder festlegen.</value>
+    <value>[NEW] Möglichkeit hinzugefügt, Markierungen unter Gleisen verlaufen zu lassen. Dies kann in den Optionen deaktiviert werden. WARNUNG: Diese Funktion ändert die Reihenfolge, in der Spiel-Objekte gerendert werden.
+[NEW] Funktion hinzugefügt um unsichtbare Linien zu erstellen (ohne Regeln).
+[NEW] Funktion hinzugefügt alle Randlinien gleichzeitig zu erstellen (Linie vom, letzten Punkt der Straße zum ersten Punkt der nächsten Straße).
+[NEW] Linien überlagern nicht mehr den Bürgersteig. Funktioniert nur für Linien vom ersten oder letzten Punkt einer Straße.
+[NEW] "Schnell-Erstellung für Fußgängerüberwegsmarkierungen" hinzugefügt - öffnet automatisch den Ränder-Auswahl sowie es bei der "Schnell-Regel-Erstellung" der Fall ist. Kann in den Einstellungen deaktiviert werden.
+[NEW] Menü für "Zusätzliche Funktionen" hinzugefügt.
+[FIXED] Oberfläche außerhalb des Bildschirms repariert.
+[UPDATED] Overlay-Farbe beim hinüberfahren mit der Maus von weiß in ein schwaches blau geändert, damit es sich besser von den Markierungen abhebt.
+[UPDATED] Fußgängerüberwegemarkierungen erstellen keine unnötigen Überschneidungen mehr. Möglicherweise musst du für bereits erstellte Fußgängerüberwegemarkierungen nun Ränder festlegen.</value>
   </data>
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Als Asset speichern</value>
@@ -1154,16 +1153,16 @@ Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst
     <value>Kreuzungsvorlagen</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
-    <value>- Die Möglichkeit hinzugefügt, alle Markierungen einer Kreuzung als Kreuzungsvorlage zu speichern und später auf jede beliebige andere Andeutung anwenden zu können.
-- Die Möglichkeit hinzugefügt, Stilvorlagen und Kreuzungs-Vorlagen als Objekte zu speichern und über den Workshop  zu teilen.
-- UI aktualisiert und ihre Performance verbessert. Die Verzögerung beim Umschalten der Tabulatoren und dem auswählen würde reduziert.
-- Nun können Vorlagenwerte nur noch im Bearbeitungsmodus geändert werden. So werden versehentliche Änderungen verhindert.
-- Hinweis-Einblendungen hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
-- Funktion das neue Linien von Fußgängerüberwegmarkierungen getrennt werden hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
-- Funktion zum Ändern von Farben Mithilfe des Mauerrades hinzugefugt.
-- Korrektur für Zug- und Monorail-Straßen (und alle anderen Straßen ohne Punkte
-- Korrektur und Verbesserung an der Punkte-Gruppen-Einblendung
-- Britisch-Englische Übersetzung hinzugefügt.</value>
+    <value>[NEW] Die Möglichkeit hinzugefügt, alle Markierungen einer Kreuzung als Kreuzungsvorlage zu speichern und später auf jede beliebige andere Andeutung anwenden zu können.
+[NEW] Die Möglichkeit hinzugefügt, Stilvorlagen und Kreuzungs-Vorlagen als Objekte zu speichern und über den Workshop zu teilen.
+[UPDATED] UI aktualisiert und ihre Performance verbessert. Die Verzögerung beim Umschalten der Tabulatoren und dem auswählen würde reduziert.
+[UPDATED] Nun können Vorlagenwerte nur noch im Bearbeitungsmodus geändert werden. So werden versehentliche Änderungen verhindert.
+[NEW] Hinweis-Einblendungen hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
+[NEW] Funktion das neue Linien von Fußgängerüberwegmarkierungen getrennt werden hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
+[NEW] Funktion zum Ändern von Farben Mithilfe des Mauerrades hinzugefugt.
+[FIXED] Korrektur für Zug- und Monorail-Straßen (und alle anderen Straßen ohne Punkte
+[FIXED] Korrektur und Verbesserung an der Punkte-Gruppen-Einblendung
+[TRANSLATION] Britisch-Englische Übersetzung hinzugefügt.</value>
   </data>
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Dieser Linientyp unterstützt keine Regeln</value>
@@ -1175,8 +1174,8 @@ Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst
     <value>Unbekannter Autor</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>- Informationen bei Ladefehlern korrigiert.
-- Lokalisierungen aktualisiert und verbessert.</value>
+    <value>[UPDATED] Informationen bei Ladefehlern korrigiert.
+[FIXED] Lokalisierungen aktualisiert und verbessert.</value>
   </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Laden mit Fehlern beendet.
@@ -1226,21 +1225,21 @@ Klicken um die Markierungen zu bearbeiten</value>
     <value>Wähle den zweiten Punkt der Leitlinie</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
-    <value>- Harmony Abhängigkeiten aktualisiert: Probleme mit anderen Mods gelöst</value>
+    <value>[UPDATED] Harmony Abhängigkeiten aktualisiert: Probleme mit anderen Mods gelöst</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
-    <value>- Fehler behoben, bei dem Markierungen aus dem Speicherstand verschwanden</value>
+    <value>[FIXED] Fehler behoben, bei dem Markierungen aus dem Speicherstand verschwanden</value>
   </data>
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
-    <value>- Möglichkeit zum Erstellen von Markierungen auf Segmenten hinzugefügt.
-- 3D Füllungsstil hinzugefügt: "Gehweg" and "Gras".
-- 3D Linienstil hinzugefügt: "Gehweg".
-- "Leitlinien folgen" für die Füllungsstile "Streifen" and "Winkel".
-- Performance-Verbesserung durch LOD (Level Of Detail) für Markierungen. Die Distanzeinstellungen ist in den Optionen zu finden.
-- Unterstützung für Rollbahnen hinzugefügt.
-- Konflikt mit anderen Mods behoben, der dafür sorgen knnte, dass der Button nicht sichtbar war.
-- Konflikt zwischen Scrollbalken und Mausscroll behoben.
-- Sowohl Komma als auch Punkt können nun als Zifferntrennzeichen verwendet werden</value>
+    <value>[NEW] Möglichkeit zum Erstellen von Markierungen auf Segmenten hinzugefügt.
+[NEW] 3D Füllungsstil hinzugefügt: "Gehweg" and "Gras".
+[NEW] 3D Linienstil hinzugefügt: "Gehweg".
+[NEW] "Leitlinien folgen" für die Füllungsstile "Streifen" and "Winkel".
+[NEW] Performance-Verbesserung durch LOD (Level Of Detail) für Markierungen. Die Distanzeinstellungen ist in den Optionen zu finden.
+[NEW] Unterstützung für Rollbahnen hinzugefügt.
+[FIXED] Konflikt mit anderen Mods behoben, der dafür sorgen knnte, dass der Button nicht sichtbar war.
+[FIXED] Konflikt zwischen Scrollbalken und Mausscroll behoben.
+[UPDATED] Sowohl Komma als auch Punkt können nun als Zifferntrennzeichen verwendet werden.</value>
   </data>
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Anzahl der Farben</value>
@@ -1460,5 +1459,50 @@ Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>Schritt</value>
+  </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Variante #1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Variante #2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Variante #3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Variante #4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Benutzerdefiniert</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Zufällig</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Farbvarianten</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>Bürgersteig stutzen</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Winkel</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Dekorative Netzwerke</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Breitenskalierung</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Wiederholungsdistanz</value>
   </data>
 </root>

@@ -251,7 +251,7 @@
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Voulez-vous vraiment restaurer les données ?
-Les données restaurées ont remplacer tout les marquages existants.</value>
+Les données restaurées ont remplacé tous les marquages existants.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>La restauration des marquages a échoué</value>
@@ -1245,26 +1245,26 @@ Cliquez pour modifier le marquage</value>
     <value>Alignement du début de la ligne</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_1" xml:space="preserve">
-    <value>- Ajout de la possibilité de définir l'alignement des lignes d'arrêt.
-- Tri des modèles supplémentaires :
-	1 - Modèles par défaut triés par type;
-	2 - Autres modèles classés par type puis par nom;
-	3 - Autres modèles d'autres auteurs triés par nom d'auteur puis par type puis par nom.
-- Correction du chargement des préréglages de segment.
-- Correction de la taille par défaut du panneau.</value>
+    <value>[NEW] Ajout de la possibilité de définir l'alignement des lignes d'arrêt.
+[NEW] Tri des modèles supplémentaires :
+---1 - Modèles par défaut triés par type;
+---2 - Autres modèles classés par type puis par nom;
+---3 - Autres modèles d'autres auteurs triés par nom d'auteur puis par type puis par nom.
+[FIXED] Correction du chargement des préréglages de segment.
+[FIXED] Correction de la taille par défaut du panneau.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
-    <value>- Correction de la hauteur des remplissages 3D en dehors des zones disponibles.
-- Correction du doublons de boutons.</value>
+    <value>[FIXED] Correction de la hauteur des remplissages 3D en dehors des zones disponibles.
+[FIXED] Correction du doublons de boutons.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_3" xml:space="preserve">
-    <value>- Ajout d'un vérificateur de dépendances manquantes.
-- Correction de la hauteur des remplissages 3D sur les nœuds en dehors des zones disponibles.</value>
+    <value>[NEW] Ajout d'un vérificateur de dépendances manquantes.
+[FIXED] Correction de la hauteur des remplissages 3D sur les nœuds en dehors des zones disponibles.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7_4" xml:space="preserve">
-    <value>- Correction de la capture d'écran de sauvegarde et utilisation des préréglages.
-- Correction d'un bug lorsque qu'après chargement, les nœuds avec marquage avaient une mauvaise forme.
-- Ajout de la traduction indonésienne.</value>
+    <value>[FIXED] Correction de la capture d'écran de sauvegarde et utilisation des préréglages.
+[FIXED] Correction d'un bug lorsque qu'après chargement, les nœuds avec marquage avaient une mauvaise forme.
+[TRANSLATION] Ajout de la traduction indonésienne.</value>
   </data>
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Cacher les noms des rues lors de l'utilisation</value>
@@ -1303,22 +1303,22 @@ Cliquez pour modifier le marquage</value>
     <value>Taille de bordure depuis séparateur</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
-    <value>- Ajout d'un pas de sélection comme dans MoveIt. Appuyez sur Ctrl+Espace pour passer au suivant (vous pouvez relier dans les options du mod).
-- Ajout de bordures aux styles 3D de remplissage.
-- Ajout de coins arrondis aux styles 3D de remplissage.
-- Ajout d'un décalage depuis les lignes aux styles 3D de remplissage.
-- Ajout de styles de remplissage : Gravier, Détérioré, Falaise.
-- Ajout de l'option "Suivre les lignes de guidage" pour le remplissage solide, il est donc désormais possible de créer des remplissages solides sur des segments inclinés.
-- Ajout de la possibilité de cliquer avec Ctrl pour sélectionner une ligne ou un passage piétons au lieu de le supprimer.
-- Ajout d'un avertissement pour les utilisateurs de Linux concernant les bibliothèques manquantes.
-- Ajout de la possibilité de changer de style avec la molette de la souris.
-- Ajout de la possibilité de masquer les noms de rue lors de l'utilisation de l'outil. Peut être désactivé dans les options du mod.
-- Ajout d'une nouvelle icône pour UUI.
-- Correction de l'icône du bouton de sélection de modèle.</value>
+    <value>[NEW] Ajout d'un pas de sélection comme dans MoveIt. Appuyez sur Ctrl+Espace pour passer au suivant (vous pouvez relier dans les options du mod).
+[NEW] Ajout de bordures aux styles 3D de remplissage.
+[NEW] Ajout de coins arrondis aux styles 3D de remplissage.
+[NEW] Ajout d'un décalage depuis les lignes aux styles 3D de remplissage.
+[NEW] Ajout de styles de remplissage : Gravier, Détérioré, Falaise.
+[NEW] Ajout de l'option "Suivre les lignes de guidage" pour le remplissage solide, il est donc désormais possible de créer des remplissages solides sur des segments inclinés.
+[NEW] Ajout de la possibilité de cliquer avec Ctrl pour sélectionner une ligne ou un passage piétons au lieu de le supprimer.
+[NEW] Ajout d'un avertissement pour les utilisateurs de Linux concernant les bibliothèques manquantes.
+[NEW] Ajout de la possibilité de changer de style avec la molette de la souris.
+[NEW] Ajout de la possibilité de masquer les noms de rue lors de l'utilisation de l'outil. Peut être désactivé dans les options du mod.
+[NEW] Ajout d'une nouvelle icône pour UUI.
+[FIXED] Correction de l'icône du bouton de sélection de modèle.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8_1" xml:space="preserve">
-    <value>- Les boutons en mode coller ont été déplacés en dehors du cercle.
-- Ajout de la traduction coréenne.</value>
+    <value>[UPDATED] Les boutons en mode coller ont été déplacés en dehors du cercle.
+[TRANSLATION] Ajout de la traduction coréenne.</value>
   </data>
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Annuler</value>
@@ -1409,12 +1409,73 @@ Cliquez pour modifier le marquage</value>
     <value>Nom de la route</value>
   </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Prop</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Arbre</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Hauteur</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Échelle</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Décalage</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Intervalle</value>
+  </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Variante #1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Variante #2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Variante #3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Variante #4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Personnalisé</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Aléatoire</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Variante de couleur</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>Couper le trottoir</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Réseau décoratif</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Échelle de largeur</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Distance de répétition</value>
+  </data>
 </root>
