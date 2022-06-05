@@ -1599,4 +1599,7 @@ Click to edit markings</value>
   <data name="LineEditor_ClipSidewalk" xml:space="preserve">
     <value>Clip sidewalk</value>
   </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Angle</value>
+  </data>
 </root>

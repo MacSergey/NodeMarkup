@@ -3251,6 +3251,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Angle.
+        /// </summary>
+        public static string StyleOption_SharkToothAngle {
+            get {
+                return ResourceManager.GetString("StyleOption_SharkToothAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Triangle base.
         /// </summary>
         public static string StyleOption_SharkToothBase {
