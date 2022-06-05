@@ -122,11 +122,6 @@ namespace NodeMarkup.Manager
                 return Position;
         }
         public Dependences GetDependences() => throw new NotSupportedException();
-        public virtual bool GetBorder(out ITrajectory line)
-        {
-            line = null;
-            return false;
-        }
         public virtual void Render(OverlayData data)
         {
             data.Color ??= Color;
@@ -202,16 +197,6 @@ namespace NodeMarkup.Manager
             {
                 Source.GetPositionAndDirection(0, out Vector3 position, out _);
                 return position;
-            }
-        }
-        public override bool GetBorder(out ITrajectory line)
-        {
-            if (Enter is SegmentEnter nodeEnter)
-                return nodeEnter.GetBorder(this, out line);
-            else
-            {
-                line = null;
-                return false;
             }
         }
         public override void Reset()
@@ -363,6 +348,7 @@ namespace NodeMarkup.Manager
         public bool IsNormal => First.Type == MarkupPoint.PointType.Normal || Second.Type == MarkupPoint.PointType.Normal;
         public bool IsCrosswalk => First.Type == MarkupPoint.PointType.Crosswalk && Second.Type == MarkupPoint.PointType.Crosswalk;
         public bool IsSplit => First.IsSplit || Second.IsSplit;
+        public bool IsSideLine => !IsSameEnter && ((First.IsFirst && Second.IsLast) || (First.IsLast && Second.IsFirst));
 
         public MarkupPointPair(MarkupPoint first, MarkupPoint second)
         {

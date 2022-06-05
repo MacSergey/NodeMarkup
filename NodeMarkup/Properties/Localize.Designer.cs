@@ -830,6 +830,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Clip sidewalk.
+        /// </summary>
+        public static string LineEditor_ClipSidewalk {
+            get {
+                return ResourceManager.GetString("LineEditor_ClipSidewalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на line.
         /// </summary>
         public static string LineEditor_DeleteCaptionDescription {

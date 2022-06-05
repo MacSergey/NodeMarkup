@@ -106,8 +106,12 @@ namespace NodeMarkup.UI.Editors
 
             if (editObject is MarkupRegularLine line)
             {
-                AddAlignmentProperty(line.RawAlignment, NodeMarkup.Localize.LineEditor_LineAlignment);
-                LinePropertiesVisibleAction = () => LineProperties.isVisible = IsSplit;
+                var aligment = AddAlignmentProperty(line.RawAlignment, NodeMarkup.Localize.LineEditor_LineAlignment);
+                AddClipSidewalkProperty(line);
+                LinePropertiesVisibleAction = () =>
+                {
+                    aligment.isVisible = IsSplit;
+                };
             }
             else if (editObject is MarkupStopLine stopLine)
             {
@@ -133,6 +137,17 @@ namespace NodeMarkup.UI.Editors
             alignment.OnSelectObjectChanged += (value) => property.Value = value;
 
             return alignment;
+        }
+        private BoolListPropertyPanel AddClipSidewalkProperty(MarkupRegularLine line)
+        {
+            var clipSidewalk = ComponentPool.Get<BoolListPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
+
+            clipSidewalk.Text = NodeMarkup.Localize.LineEditor_ClipSidewalk;
+            clipSidewalk.Init(NodeMarkup.Localize.StyleOption_No, NodeMarkup.Localize.StyleOption_Yes);
+            clipSidewalk.SelectedObject = line.ClipSidewalk;
+            clipSidewalk.OnSelectObjectChanged += (value) => line.ClipSidewalk.Value = value;
+
+            return clipSidewalk;
         }
 
         private void AddRulePanels(MarkupLine editObject)
