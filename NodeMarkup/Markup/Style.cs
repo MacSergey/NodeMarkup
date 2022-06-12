@@ -316,6 +316,12 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_Tree))]
             LineTree,
 
+            [NotItem]
+            RegularNetworkLine = Regular3DLine + 0x20,
+
+            [Description(nameof(Localize.LineStyle_Network))]
+            LineNetwork,
+
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]
             EmptyLine = LineBuffer - 1,

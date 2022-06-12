@@ -280,23 +280,56 @@ namespace NodeMarkup.Utilities
 
         public IEnumerable<IDrawData> GetDrawData() => RenderBatch.FromDashes(this);
     }
-    public abstract class MarkupStyleMesh : IStyleData, IDrawData
-    {
-        protected abstract float MeshHalfWidth { get; }
-        protected abstract float MeshHalfLength { get; }
 
+    public abstract class BaseMarkupStyleMesh : IStyleData, IDrawData
+    {
+        protected Vector4 Scale { get; }
+
+        public BaseMarkupStyleMesh(float meshWidth, float meshLength, float meshHeight = 1f)
+        {
+            Scale = new Vector4(1f / meshWidth, 1f / meshLength, 1f / meshHeight, 1f);
+        }
+
+        public abstract IEnumerable<IDrawData> GetDrawData();
+        public abstract void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data);
+
+        protected void CalculateMatrix(ITrajectory trajectory, float halfWidth, Vector3 position, out Matrix4x4 left, out Matrix4x4 right)
+        {
+            var startNormal = trajectory.StartDirection.Turn90(true);
+            startNormal.y = 0f;
+            var endNormal = trajectory.EndDirection.Turn90(false);
+            endNormal.y = 0f;
+
+            var bezierL = new Bezier3()
+            {
+                a = trajectory.StartPosition - startNormal * halfWidth,
+                d = trajectory.EndPosition - endNormal * halfWidth,
+            };
+            var bezierR = new Bezier3()
+            {
+                a = trajectory.StartPosition + startNormal * halfWidth,
+                d = trajectory.EndPosition + endNormal * halfWidth,
+            };
+
+            NetSegment.CalculateMiddlePoints(bezierL.a, trajectory.StartDirection, bezierL.d, trajectory.EndDirection, true, true, out bezierL.b, out bezierL.c);
+            NetSegment.CalculateMiddlePoints(bezierR.a, trajectory.StartDirection, bezierR.d, trajectory.EndDirection, true, true, out bezierR.b, out bezierR.c);
+
+            left = NetSegment.CalculateControlMatrix(bezierL.a, bezierL.b, bezierL.c, bezierL.d, bezierR.a, bezierR.b, bezierR.c, bezierR.d, position, 0.05f);
+            right = NetSegment.CalculateControlMatrix(bezierR.a, bezierR.b, bezierR.c, bezierR.d, bezierL.a, bezierL.b, bezierL.c, bezierL.d, position, 0.05f);
+        }
+    }
+
+    public abstract class MarkupStyleMesh : BaseMarkupStyleMesh
+    {
         protected Vector3 Position { get; private set; }
 
-        protected Mesh Mesh { get; private set; }
         protected Matrix4x4 Left { get; private set; }
         protected Matrix4x4 Right { get; private set; }
-        protected Vector4 Scale { get; }
+        protected Mesh Mesh { get; private set; }
         protected MaterialType MaterialType { get; private set; }
 
-        public MarkupStyleMesh()
-        {
-            Scale = new Vector4(0.5f / MeshHalfWidth, 0.5f / MeshHalfLength, 1f, 1f);
-        }
+        public MarkupStyleMesh(float meshWidth, float meshLength) : base(meshWidth, meshLength) { }
+
         protected void Init(Vector3 position, Matrix4x4 left, Matrix4x4 right, MaterialType materialType)
         {
             Position = position;
@@ -305,7 +338,15 @@ namespace NodeMarkup.Utilities
             MaterialType = materialType;
         }
 
-        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
+        public override IEnumerable<IDrawData> GetDrawData()
+        {
+            if (Mesh == null)
+                Mesh = GetMesh();
+            yield return this;
+        }
+        protected abstract Mesh GetMesh();
+
+        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
         {
             var instance = Singleton<NetManager>.instance;
 
@@ -320,13 +361,7 @@ namespace NodeMarkup.Utilities
 
             Graphics.DrawMesh(Mesh, Position, Quaternion.identity, RenderHelper.MaterialLib[MaterialType], 0, null, 0, instance.m_materialBlock);
         }
-        public IEnumerable<IDrawData> GetDrawData()
-        {
-            if (Mesh == null)
-                Mesh = GetMesh();
-            yield return this;
-        }
-        protected abstract Mesh GetMesh();
+
         protected static IEnumerable<Vector3> FixNormals(Vector3[] normals) => FixNormals(normals, 0, normals.Length);
         protected static IEnumerable<Vector3> FixNormals(Vector3[] normals, int from, int count)
         {
@@ -336,13 +371,15 @@ namespace NodeMarkup.Utilities
     }
     public abstract class BaseMarkupStylePolygonMesh : MarkupStyleMesh
     {
-        protected override float MeshHalfWidth => 20f;
-        protected override float MeshHalfLength => 20f;
+        private static float MeshHalfWidth => 20f;
+        private static float MeshHalfLength => 20f;
         private Vector3[] Vertices { get; set; }
         private int[] Triangles { get; set; }
         private Vector2[] UV { get; set; }
 
         protected virtual bool NeedFixNormals => false;
+
+        public BaseMarkupStylePolygonMesh() : base(MeshHalfWidth * 2f, MeshHalfLength * 2f) { }
 
         public void Init(float height, float elevation, Vector3[] vertices, int[] triangles, MaterialType materialType)
         {
@@ -408,14 +445,14 @@ namespace NodeMarkup.Utilities
     public class MarkupStylePolygonTopMesh : BaseMarkupStylePolygonMesh
     {
         protected override bool NeedFixNormals => true;
-        public MarkupStylePolygonTopMesh(float height, float elevation, Vector3[] points, int[] polygons, MaterialType materialType)
+        public MarkupStylePolygonTopMesh(float height, float elevation, Vector3[] points, int[] polygons, MaterialType materialType) : base()
         {
             Init(height, elevation, points, polygons, materialType);
         }
     }
     public class MarkupStylePolygonSideMesh : BaseMarkupStylePolygonMesh
     {
-        public MarkupStylePolygonSideMesh(float height, float elevation, int[] groups, Vector3[] points, MaterialType materialType)
+        public MarkupStylePolygonSideMesh(float height, float elevation, int[] groups, Vector3[] points, MaterialType materialType) : base()
         {
             var vertices = new List<Vector3>();
             var triangles = new List<int>();
@@ -467,7 +504,7 @@ namespace NodeMarkup.Utilities
             };
             mesh.RecalculateNormals();
             var lanePoints = (Split + 1) * 2;
-            mesh.normals = FixNormals(mesh.normals, 4 + lanePoints, lanePoints).ToArray();
+            //mesh.normals = FixNormals(mesh.normals, 4 + lanePoints, lanePoints).ToArray();
             mesh.RecalculateTangents();
 
             return mesh;
@@ -573,40 +610,14 @@ namespace NodeMarkup.Utilities
             }
         }
 
-        protected override float MeshHalfWidth => HalfWidth * 2;
-        protected override float MeshHalfLength => HalfLength;
-
-        public MarkupStyleLineMesh(ITrajectory trajectory, float width, float elevation, MaterialType materialType)
+        public MarkupStyleLineMesh(ITrajectory trajectory, float width, float elevation, MaterialType materialType) : base(HalfWidth * 2f, HalfLength * 2f)
         {
             var position = (trajectory.StartPosition + trajectory.EndPosition) / 2;
             CalculateMatrix(trajectory, width, position, out Matrix4x4 left, out Matrix4x4 right);
             position += Vector3.up * (elevation - Height);
             Init(position, left, right, materialType);
         }
-        private void CalculateMatrix(ITrajectory trajectory, float width, Vector3 position, out Matrix4x4 left, out Matrix4x4 right)
-        {
-            var startNormal = trajectory.StartDirection.Turn90(true);
-            startNormal.y = 0f;
-            var endNormal = trajectory.EndDirection.Turn90(false);
-            endNormal.y = 0f;
 
-            var bezierL = new Bezier3()
-            {
-                a = trajectory.StartPosition - startNormal * width,
-                d = trajectory.EndPosition - endNormal * width,
-            };
-            var bezierR = new Bezier3()
-            {
-                a = trajectory.StartPosition + startNormal * width,
-                d = trajectory.EndPosition + endNormal * width,
-            };
-
-            NetSegment.CalculateMiddlePoints(bezierL.a, trajectory.StartDirection, bezierL.d, trajectory.EndDirection, true, true, out bezierL.b, out bezierL.c);
-            NetSegment.CalculateMiddlePoints(bezierR.a, trajectory.StartDirection, bezierR.d, trajectory.EndDirection, true, true, out bezierR.b, out bezierR.c);
-
-            left = NetSegment.CalculateControlMatrix(bezierL.a, bezierL.b, bezierL.c, bezierL.d, bezierR.a, bezierR.b, bezierR.c, bezierR.d, position, 0.05f);
-            right = NetSegment.CalculateControlMatrix(bezierR.a, bezierR.b, bezierR.c, bezierR.d, bezierL.a, bezierL.b, bezierL.c, bezierL.d, position, 0.05f);
-        }
         protected override Mesh GetMesh()
         {
             if (LineMesh == null)
@@ -661,6 +672,106 @@ namespace NodeMarkup.Utilities
         {
             foreach (var item in Items)
                 TreeInstance.RenderInstance(cameraInfo, Info, item.Position, item.Scale, 1f, new Vector4());
+        }
+    }
+
+    public class MarkupStyleNetwork : BaseMarkupStyleMesh
+    {
+        private struct Data
+        {
+            public NetInfo.Segment segment;
+            public Vector3 position;
+            public Matrix4x4 left;
+            public Matrix4x4 right;
+            public Texture heightMap;
+            public Vector4 heightMapping;
+            public Vector4 surfaceMapping;
+        }
+
+        Data[] Datas { get; set; }
+
+        public MarkupStyleNetwork(NetInfo info, ITrajectory[] trajectories, float width, float length, float scale, float elevation) : base(width, length)
+        {
+            var count = info.m_segments.Count(s => s.CheckFlags(NetSegment.Flags.None, out _));
+            Datas = new Data[trajectories.Length * count];
+
+            for (int i = 0; i < trajectories.Length; i += 1)
+            {
+                var position = (trajectories[i].StartPosition + trajectories[i].EndPosition) / 2;
+                CalculateMatrix(trajectories[i], width * 0.5f * scale, position, out var left, out var right);
+                position += Vector3.up * elevation;
+
+                int j = 0;
+                foreach (var segment in info.m_segments)
+                {
+                    if (segment.CheckFlags(NetSegment.Flags.None, out _))
+                    {
+                        int index = i * count + j;
+
+                        Datas[index].segment = segment;
+                        Datas[index].position = position;
+                        Datas[index].left = left;
+                        Datas[index].right = right;
+
+                        if (segment.m_requireHeightMap)
+                            Singleton<TerrainManager>.instance.GetHeightMapping(Datas[index].position, out Datas[index].heightMap, out Datas[i].heightMapping, out Datas[index].surfaceMapping);
+
+                        j += 1;
+                    }
+                }
+            }
+        }
+
+        public override IEnumerable<IDrawData> GetDrawData()
+        {
+            yield return this;
+        }
+
+        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance renderData)
+        {
+            var instance = Singleton<NetManager>.instance;
+
+            foreach (var data in Datas)
+            {
+                if (cameraInfo.CheckRenderDistance(renderData.m_position, data.segment.m_lodRenderDistance))
+                {
+                    instance.m_materialBlock.Clear();
+                    instance.m_materialBlock.SetMatrix(instance.ID_LeftMatrix, data.left);
+                    instance.m_materialBlock.SetMatrix(instance.ID_RightMatrix, data.right);
+                    instance.m_materialBlock.SetVector(instance.ID_MeshScale, Scale);
+                    if (data.segment.m_requireHeightMap)
+                    {
+                        instance.m_materialBlock.SetTexture(instance.ID_HeightMap, data.heightMap);
+                        instance.m_materialBlock.SetVector(instance.ID_HeightMapping, data.heightMapping);
+                        instance.m_materialBlock.SetVector(instance.ID_SurfaceMapping, data.surfaceMapping);
+                    }
+
+                    instance.m_drawCallData.m_defaultCalls++;
+                    Graphics.DrawMesh(data.segment.m_segmentMesh, data.position, Quaternion.identity, data.segment.m_segmentMaterial, 0, null, 0, instance.m_materialBlock);
+                }
+                else if (data.segment.m_combinedLod is NetInfo.LodValue combinedLod)
+                {
+                    if (data.segment.m_requireHeightMap && data.heightMap != combinedLod.m_heightMap)
+                    {
+                        if (combinedLod.m_lodCount != 0)
+                            NetSegment.RenderLod(cameraInfo, combinedLod);
+
+                        combinedLod.m_heightMap = data.heightMap;
+                        combinedLod.m_heightMapping = data.heightMapping;
+                        combinedLod.m_surfaceMapping = data.surfaceMapping;
+                    }
+
+                    combinedLod.m_leftMatrices[combinedLod.m_lodCount] = data.left;
+                    combinedLod.m_rightMatrices[combinedLod.m_lodCount] = data.right;
+                    combinedLod.m_meshScales[combinedLod.m_lodCount] = Scale;
+                    combinedLod.m_meshLocations[combinedLod.m_lodCount] = data.position;
+                    combinedLod.m_lodMin = Vector3.Min(combinedLod.m_lodMin, data.position);
+                    combinedLod.m_lodMax = Vector3.Max(combinedLod.m_lodMax, data.position);
+
+                    if (++combinedLod.m_lodCount == combinedLod.m_leftMatrices.Length)
+                        NetSegment.RenderLod(cameraInfo, combinedLod);
+                }
+            }
         }
     }
 

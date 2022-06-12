@@ -1602,4 +1602,13 @@ Click to edit markings</value>
   <data name="StyleOption_SharkToothAngle" xml:space="preserve">
     <value>Angle</value>
   </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Decorative network</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Width scale</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Repeat distance</value>
+  </data>
 </root>

@@ -247,7 +247,7 @@ namespace NodeMarkup.Manager
         {
             var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCornerRadius));
             cornerRadiusProperty.Text = Localize.FillerStyle_MedianCornerRadius;
-            cornerRadiusProperty.Text = Localize.NumberFormat_Meter;
+            cornerRadiusProperty.Format = Localize.NumberFormat_Meter;
             cornerRadiusProperty.UseWheel = true;
             cornerRadiusProperty.WheelStep = 0.1f;
             cornerRadiusProperty.WheelTip = Settings.ShowToolTip;

@@ -97,8 +97,8 @@ namespace NodeMarkup.Manager
             var scale = AddScaleProperty(parent);
             var scaleRange = AddScaleRangeProperty(parent);
             components.Add(useRandomScale);
-            components.Add(angle);
-            components.Add(angleRange);
+            components.Add(scale);
+            components.Add(scaleRange);
             useRandomScale.OnSelectObjectChanged += ChangeScaleOption;
             ChangeScaleOption(useRandomScale.SelectedObject);
 

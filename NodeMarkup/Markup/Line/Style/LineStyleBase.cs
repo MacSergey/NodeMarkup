@@ -183,6 +183,9 @@ namespace NodeMarkup.Manager
         public static float DefaultObjectOffsetBefore => 0f;
         public static float DefaultObjectOffsetAfter => 0f;
 
+        public static float DefaultNetworkScale => 1f;
+        public static int DefaultRepeatDistance => 64;
+
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public override LineStyle CopyStyle() => CopyLineStyle();
@@ -202,6 +205,7 @@ namespace NodeMarkup.Manager
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
             {RegularLineType.Prop, new PropLineStyle(string.Empty, PropLineStyle.DefaultColorOption, PropLineStyle.DefaultColor, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
             {RegularLineType.Tree, new TreeLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
+            {RegularLineType.Network, new NetworkLineStyle(string.Empty, DefaultObjectShift, DefaultObjectElevation, DefaultNetworkScale, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DefaultRepeatDistance, false) },
         };
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
@@ -248,6 +252,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_Tree))]
             Tree = StyleType.LineTree,
+
+            [Description(nameof(Localize.LineStyle_Network))]
+            Network = StyleType.LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]

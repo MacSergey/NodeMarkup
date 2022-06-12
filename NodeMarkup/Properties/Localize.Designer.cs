@@ -1084,6 +1084,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Decorative network.
+        /// </summary>
+        public static string LineStyle_Network {
+            get {
+                return ResourceManager.GetString("LineStyle_Network", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Pavement.
         /// </summary>
         public static string LineStyle_Pavement {
@@ -3130,6 +3139,24 @@ namespace NodeMarkup {
         public static string StyleOption_MedianOffset {
             get {
                 return ResourceManager.GetString("StyleOption_MedianOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Repeat distance.
+        /// </summary>
+        public static string StyleOption_NetRepeatDistance {
+            get {
+                return ResourceManager.GetString("StyleOption_NetRepeatDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Width scale.
+        /// </summary>
+        public static string StyleOption_NetWidthScale {
+            get {
+                return ResourceManager.GetString("StyleOption_NetWidthScale", resourceCulture);
             }
         }
         
