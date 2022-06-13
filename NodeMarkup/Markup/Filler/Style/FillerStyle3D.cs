@@ -69,8 +69,8 @@ namespace NodeMarkup.Manager
             {
                 if (Triangulate(contour, lod, out var points, out var triangles, out var groups))
                 {
-                    yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType);
-                    yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, groups, points, MaterialType.Pavement);
+                    yield return new MarkupStylePolygonTopMesh(Elevation, points, triangles, MaterialType);
+                    yield return new MarkupStylePolygonSideMesh(Elevation, groups, points, MaterialType.Pavement);
                 }
             }
         }
@@ -332,14 +332,14 @@ namespace NodeMarkup.Manager
                 {
                     if (Triangulate(contour, lod, out var points, out var triangles, out var groups))
                     {
-                        yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType.Pavement);
-                        yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, groups, points, MaterialType.Pavement);
+                        yield return new MarkupStylePolygonTopMesh(Elevation, points, triangles, MaterialType.Pavement);
+                        yield return new MarkupStylePolygonSideMesh(Elevation, groups, points, MaterialType.Pavement);
                     }
                 }
                 foreach (var contour in curbContours)
                 {
                     if (Triangulate(contour, lod, out var points, out var triangles, out _))
-                        yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation + 0.03f, points, triangles, MaterialType);
+                        yield return new MarkupStylePolygonTopMesh(Elevation + 0.03f, points, triangles, MaterialType);
                 }
             }
         }
