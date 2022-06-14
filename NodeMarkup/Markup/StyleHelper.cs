@@ -55,14 +55,14 @@ namespace NodeMarkup.Manager
         {
             var length = trajectory.Magnitude;
 
-            var needDivide = (minAngle < deltaAngle && minLength <= length) || maxLength < length;
+            var needDivide = (deltaAngle > minAngle && length >= minLength) || length > maxLength;
             if (depth < MaxDepth && (needDivide || depth == 0))
             {
                 trajectory.Divide(out ITrajectory first, out ITrajectory second);
                 var firstDeltaAngle = first.DeltaAngle;
                 var secondDeltaAngle = second.DeltaAngle;
 
-                if (needDivide || minAngle < deltaAngle || minAngle < firstDeltaAngle + secondDeltaAngle)
+                if (needDivide || deltaAngle > minAngle || (firstDeltaAngle + secondDeltaAngle) > minAngle)
                 {
                     CalculateSolid(depth + 1, first, firstDeltaAngle, minAngle, minLength, maxLength, addToResult);
                     CalculateSolid(depth + 1, second, secondDeltaAngle, minAngle, minLength, maxLength, addToResult);

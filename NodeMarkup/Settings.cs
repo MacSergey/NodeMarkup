@@ -289,6 +289,7 @@ namespace NodeMarkup
 #if DEBUG
         public static SavedBool ShowNodeContour { get; } = new SavedBool(nameof(ShowNodeContour), string.Empty, false);
         public static SavedFloat IlluminationDelta { get; } = new SavedFloat(nameof(IlluminationDelta), SettingsFile, 1f, true);
+        public static SavedInt ShowFillerTriangulation { get; } = new SavedInt(nameof(ShowFillerTriangulation), SettingsFile, 0, true);
 
         private void AddDebug(UIAdvancedHelper helper)
         {
@@ -302,6 +303,8 @@ namespace NodeMarkup
             var groupOther = helper.AddGroup("Nodes");
             AddCheckBox(groupOther, "Show node contour", ShowNodeContour);
             AddFloatField(groupOther, "Delta", IlluminationDelta, 1f);
+
+            AddCheckboxPanel(groupOther, "Show filler triangulation", ShowFillerTriangulation, new string[] { "Dont show", "Original", "Splitted", "Both" });
         }
 #endif
         #endregion

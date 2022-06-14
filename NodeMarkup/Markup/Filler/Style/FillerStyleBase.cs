@@ -93,22 +93,10 @@ namespace NodeMarkup.Manager
         protected virtual List<List<FillerContour.Part>> GetContours(MarkupFiller filler)
         {
             var originalContour = filler.Contour.Parts.ToList();
-            var contours = GetOffsetContours(new List<List<FillerContour.Part>>() { originalContour }, LineOffset, MedianOffset);
+            var contours = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
             return contours;
         }
         public abstract IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod);
-        protected List<List<FillerContour.Part>> GetOffsetContours(List<List<FillerContour.Part>> contours, float lineOffset, float medianOffset)
-        {
-            var offsetContours = new List<List<FillerContour.Part>>();
-
-            foreach (var contour in contours)
-            {
-                var offseted = StyleHelper.SetOffset(contour, lineOffset, medianOffset);
-                offsetContours.AddRange(offseted);
-            }
-
-            return offsetContours;
-        }
 
         public virtual void Render(MarkupFiller filler, OverlayData data) { }
 
