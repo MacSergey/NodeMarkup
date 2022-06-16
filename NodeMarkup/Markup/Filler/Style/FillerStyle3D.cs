@@ -10,6 +10,7 @@ using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
+using ColossalFramework.Math;
 
 namespace NodeMarkup.Manager
 {
@@ -62,12 +63,12 @@ namespace NodeMarkup.Manager
                 var points = GetContourPoints(contour, lod, out var groups);
                 if (Triangulate(points, out var triangles))
                 {
-                    SplitTriangles(points, triangles, 2f, out var topPoints, out var topTriangles);
+                    //SplitTriangles(contour, points, triangles, 2f, out var topPoints, out var topTriangles);
 
-                    yield return new MarkupStyleFillerMesh(Elevation, MarkupStyleFillerMesh.RawData.SetSide(groups, points, MaterialType.Pavement), MarkupStyleFillerMesh.RawData.SetTop(topPoints, topTriangles, MaterialType));
+                    yield return new MarkupStyleFillerMesh(Elevation, MarkupStyleFillerMesh.RawData.SetSide(groups, points, MaterialType.Pavement), MarkupStyleFillerMesh.RawData.SetTop(points, triangles, MaterialType));
 #if DEBUG
-                    if ((Settings.ShowFillerTriangulation & 2) != 0)
-                        yield return GetTriangulationLines(topPoints, topTriangles, UnityEngine.Color.red, MaterialType.RectangleFillers);
+                    //if ((Settings.ShowFillerTriangulation & 2) != 0)
+                    //    yield return GetTriangulationLines(topPoints, topTriangles, UnityEngine.Color.red, MaterialType.RectangleFillers);
                     if ((Settings.ShowFillerTriangulation & 1) != 0)
                         yield return GetTriangulationLines(points, triangles, UnityEngine.Color.green, MaterialType.RectangleLines);
 #endif
@@ -120,8 +121,9 @@ namespace NodeMarkup.Manager
 
             return parts;
         }
-        private void SplitTriangles(Vector3[] points, int[] triangles, float maxLenght, out Vector3[] pointsResult, out int[] trianglesResult)
+        private void SplitTriangles(List<FillerContour.Part> contour, Vector3[] points, int[] triangles, float maxLenght, out Vector3[] pointsResult, out int[] trianglesResult)
         {
+            var contourCount = points.Length;
             var tempPoints = new List<Vector3>(points);
             var tempTriang = new List<int>(triangles);
             maxLenght = maxLenght * maxLenght;
@@ -139,16 +141,16 @@ namespace NodeMarkup.Manager
                 var point2 = tempPoints[index2];
                 var point3 = tempPoints[index3];
 
-                var dist12 = index1 >= points.Length || index2 >= points.Length || (Math.Abs(index2 - index1) != 0 && Math.Abs(index2 - index1) != points.Length - 1) ? (point1 - point2).sqrMagnitude : 0f;
-                var dist23 = index2 >= points.Length || index3 >= points.Length || (Math.Abs(index3 - index2) != 0 && Math.Abs(index3 - index2) != points.Length - 1) ? (point2 - point3).sqrMagnitude : 0f;
-                var dist31 = index3 >= points.Length || index1 >= points.Length || (Math.Abs(index1 - index3) != 0 && Math.Abs(index1 - index3) != points.Length - 1) ? (point3 - point1).sqrMagnitude : 0f;
+                var dist12 = (point1 - point2).sqrMagnitude;
+                var dist23 = (point2 - point3).sqrMagnitude;
+                var dist31 = (point3 - point1).sqrMagnitude;
 
                 if (dist12 > maxLenght && dist12 > dist23 && dist12 > dist31)
-                    ProcessSplitTriangle(ref i, index1, index2, index3, tempPoints, tempTriang, pointDic);
+                    ProcessSplitTriangle(contour, ref i, index1, index2, index3, tempPoints, tempTriang, pointDic, ref contourCount);
                 else if (dist23 > maxLenght && dist23 > dist31 && dist23 > dist12)
-                    ProcessSplitTriangle(ref i, index2, index3, index1, tempPoints, tempTriang, pointDic);
+                    ProcessSplitTriangle(contour, ref i, index2, index3, index1, tempPoints, tempTriang, pointDic, ref contourCount);
                 else if (dist31 > maxLenght && dist31 > dist12 && dist31 > dist23)
-                    ProcessSplitTriangle(ref i, index3, index1, index2, tempPoints, tempTriang, pointDic);
+                    ProcessSplitTriangle(contour, ref i, index3, index1, index2, tempPoints, tempTriang, pointDic, ref contourCount);
                 else
                     i += 3;
             }
@@ -156,17 +158,96 @@ namespace NodeMarkup.Manager
             pointsResult = tempPoints.ToArray();
             trianglesResult = tempTriang.ToArray();
         }
-        private void ProcessSplitTriangle(ref int i, int index1, int index2, int index3, List<Vector3> points, List<int> triangles, Dictionary<Vector3, int> pointDic)
+        private void ProcessSplitTriangle(List<FillerContour.Part> contour, ref int i, int index1, int index2, int index3, List<Vector3> points, List<int> triangles, Dictionary<Vector3, int> pointDic, ref int contourCount)
         {
             var newPoint = (points[index1] + points[index2]) * 0.5f;
 
-            if((newPoint - points[index3]).sqrMagnitude < 0.25f)
+            if ((newPoint - points[index3]).sqrMagnitude < 0.25f)
             {
                 i += 3;
                 return;
             }
+
+            var minPart = -1;
+            var minDist = float.MaxValue;
+            var minT = 0f;
+            for(int j = 0; j < contour.Count; j += 1)
+            {
+                var pos = contour[j].Trajectory.GetClosestPosition(newPoint, out var t);
+                var dist = (pos - newPoint).sqrMagnitude;
+                if(dist < minDist)
+                {
+                    minDist = dist;
+                    minPart = j;
+                    minT = t;
+                }
+            }
+
+            if (minPart >= 0)
+            {
+                var plane = new Plane();
+                if (minT < 0.1f || minT > 0.9f)
+                {
+                    var pos = contour[minPart].Trajectory.Position(minT);
+                    var dir = contour[minPart].Trajectory.Tangent(minT);
+                    var normal = dir.Turn90(true);
+                    plane.Set3Points(pos + dir, pos, pos + normal);
+                }
+                else
+                {
+                    var posA = contour[minPart].Trajectory.Position(minT - 0.1f);
+                    var pos0 = contour[minPart].Trajectory.Position(minT);
+                    var posB = contour[minPart].Trajectory.Position(minT + 0.1f);
+
+                    var minDot = Vector3.Dot((posA - pos0).normalized, (posB - pos0).normalized);
+                    if(minDot > -0.995f)
+                        plane.Set3Points(posA, pos0, posB);
+                    else
+                        plane.Set3Points(posA, pos0, pos0 + (posA - pos0).Turn90(true));
+
+                }
+                plane.Raycast(new Ray(newPoint, newPoint + Vector3.up), out var newT);
+                newPoint += Vector3.up * newT;
+            }
+
+            var dot = Vector3.Dot((points[index1] - newPoint).normalized, (points[index2] - newPoint).normalized);
+            if(Mathf.Acos(dot) * Mathf.Rad2Deg > 175f)
+            {
+                i += 3;
+                return;
+            }
+
             if (!pointDic.TryGetValue(newPoint, out var indexNew))
             {
+                //if(Math.Abs(index2 - index1) == 1)
+                //{
+                //    contourCount += 1;
+                //    if (index2 > index1)
+                //    {
+                //        points.Insert(index2, newPoint);
+                //        indexNew = index2;
+                //        index2 += 1;
+                //    }
+                //    else
+                //    {
+                //        points.Insert(index1, newPoint);
+                //        indexNew = index1;
+                //        index1 += 1;
+                //    }
+                //    if (index3 > indexNew)
+                //        index3 += 1;
+
+                //    for(int j = 0; j < triangles.Count; j += 1)
+                //    {
+                //        if (triangles[j] >= indexNew)
+                //            triangles[j] += 1;
+                //    }
+                //}
+                //else
+                //{
+                //    indexNew = points.Count;
+                //    points.Add(newPoint);
+                //}
                 indexNew = points.Count;
                 points.Add(newPoint);
                 pointDic.Add(newPoint, indexNew);
