@@ -58,6 +58,7 @@ namespace NodeMarkup.Manager
         {
             var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.DashLength));
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
+            dashLengthProperty.Format = Localize.NumberFormat_Meter;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;
             dashLengthProperty.WheelTip = Settings.ShowToolTip;
@@ -73,6 +74,7 @@ namespace NodeMarkup.Manager
         {
             var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.SpaceLength));
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
+            spaceLengthProperty.Format = Localize.NumberFormat_Meter;
             spaceLengthProperty.UseWheel = true;
             spaceLengthProperty.WheelStep = 0.1f;
             spaceLengthProperty.WheelTip = Settings.ShowToolTip;

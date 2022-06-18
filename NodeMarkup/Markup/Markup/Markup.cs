@@ -70,6 +70,18 @@ namespace NodeMarkup.Manager
         }
         public IntersectionTemplate Backup { get; private set; }
 
+        protected EnterDic<ITrajectory> BetweenEnters { get; } = new EnterDic<ITrajectory>();
+        public IEnumerable<ITrajectory> Contour
+        {
+            get
+            {
+                foreach (var enter in Enters)
+                    yield return enter.Line;
+                foreach (var line in BetweenEnters.Values)
+                    yield return line;
+            }
+        }
+
         #endregion
 
         public Markup(ushort id)
@@ -136,7 +148,7 @@ namespace NodeMarkup.Manager
             EntersList = RawEntersList.Where(e => e.PointCount != 0).ToList();
 
             UpdateRadius();
-            UpdateEntersProcess();
+            UpdateContour();
 
             foreach (var enter in EntersList)
                 enter.UpdatePoints();
@@ -145,7 +157,27 @@ namespace NodeMarkup.Manager
             CenterPosition = center;
             CenterRadius = radius;
         }
-        protected virtual void UpdateEntersProcess() { }
+        private void UpdateContour()
+        {
+            BetweenEnters.Clear();
+
+            for (var i = 0; i < EntersList.Count; i += 1)
+            {
+                var j = i.NextIndex(EntersList.Count);
+                var prev = EntersList[i];
+                var next = EntersList[j];
+
+                var betweenBezier = new Bezier3()
+                {
+                    a = prev.LastPointSide,
+                    d = next.FirstPointSide
+                };
+                NetSegment.CalculateMiddlePoints(betweenBezier.a, prev.NormalDir, betweenBezier.d, next.NormalDir, true, true, out betweenBezier.b, out betweenBezier.c);
+
+                BetweenEnters[i, j] = new BezierTrajectory(betweenBezier);
+            }
+        }
+
         protected abstract Vector3 GetPosition();
 
         protected abstract IEnumerable<ushort> GetEnters();
@@ -784,6 +816,18 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = 0x800,
+        }
+
+        protected class EnterDic<T> : Dictionary<int, T>
+        {
+            public T this[int i, int j]
+            {
+                get => this[GetId(i, j)];
+                set => this[GetId(i, j)] = value;
+            }
+            private int GetId(int i, int j) => (i + 1) * 10 + j + 1;
+
+            public bool TryGetValue(int i, int j, out T value) => TryGetValue(GetId(i, j), out value);
         }
     }
     public abstract class Markup<EnterType> : Markup

@@ -49,4 +49,10 @@ namespace NodeMarkup.UI
         public class AlignmentSegmented : UIOnceSegmented<Alignment> { }
         protected override string GetDescription(Alignment value) => value.Description();
     }
+    public class PropColorPropertyPanel : EnumOncePropertyPanel<PropLineStyle.ColorOptionEnum, PropColorPropertyPanel.PropColorDropDown>
+    {
+        protected override bool IsEqual(PropLineStyle.ColorOptionEnum first, PropLineStyle.ColorOptionEnum second) => first == second;
+        public class PropColorDropDown : UIDropDown<PropLineStyle.ColorOptionEnum> { }
+        protected override string GetDescription(PropLineStyle.ColorOptionEnum value) => value.Description();
+    }
 }

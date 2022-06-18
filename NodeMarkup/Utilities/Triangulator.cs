@@ -35,25 +35,53 @@ namespace NodeMarkup.Utilities
 
             while (true)
             {
-                if (Ears.LastOrDefault() is not LinkedListNode<Vertex> vertex)
+                if (Ears.Count == 0)
                     return null;
 
-                var prev = vertex.GetPrevious();
-                var next = vertex.GetNext();
+                var vertex = default(LinkedListNode<Vertex>);
+                var min = float.MaxValue;
+                foreach (var current in Ears)
+                {
+                    var prev = current.GetPrevious();
+                    var next = current.GetNext();
 
-                var triangle = new Triangle(next.Value.Index, vertex.Value.Index, prev.Value.Index);
-                Triangles.Add(triangle);
-                Ears.Remove(vertex);
-                Vertices.Remove(vertex);
+                    var dist12 = (prev.Value.Position - current.Value.Position).magnitude;
+                    var dist23 = (current.Value.Position - next.Value.Position).magnitude;
+                    var dist31 = (next.Value.Position - prev.Value.Position).magnitude;
 
-                if (Vertices.Count < 3)
-                    return Triangles.SelectMany(t => t.GetVertices(Direction)).ToArray();
+                    var avg = (dist12 + dist23 + dist31) / 3f;
 
-                SetConvex(prev);
-                SetConvex(next);
+                    dist12 = Mathf.Abs(dist12 - avg);
+                    dist23 = Mathf.Abs(dist23 - avg);
+                    dist31 = Mathf.Abs(dist31 - avg);
 
-                SetEar(prev);
-                SetEar(next);
+                    var dist = dist12 * dist12 + dist23 * dist23 + dist31 * dist31;
+
+                    if (dist < min)
+                    {
+                        min = dist;
+                        vertex = current;
+                    }
+                }
+
+                {
+                    var prev = vertex.GetPrevious();
+                    var next = vertex.GetNext();
+
+                    var triangle = new Triangle(next.Value.Index, vertex.Value.Index, prev.Value.Index);
+                    Triangles.Add(triangle);
+                    Ears.Remove(vertex);
+                    Vertices.Remove(vertex);
+
+                    if (Vertices.Count < 3)
+                        return Triangles.SelectMany(t => t.GetVertices(Direction)).ToArray();
+
+                    SetConvex(prev);
+                    SetConvex(next);
+
+                    SetEar(prev);
+                    SetEar(next);
+                }
             }
         }
 
@@ -103,6 +131,55 @@ namespace NodeMarkup.Utilities
 
         }
     }
+
+    //public class TriangulatorNew
+    //{
+    //    public static int[] Triangulate(IEnumerable<Vector3> points, TrajectoryHelper.Direction direction) => Triangulate(points.Select(p => XZ(p)), direction);
+    //    public static int[] Triangulate(IEnumerable<Vector2> points, TrajectoryHelper.Direction direction)
+    //    {
+    //        var triangulator = new TriangulatorNew(points, direction);
+    //        return triangulator.Triangulate();
+    //    }
+
+    //    private TrajectoryHelper.Direction Direction { get; }
+    //    private LinkedList<Vertex> Vertices { get; }
+
+    //    private TriangulatorNew(IEnumerable<Vector2> points, TrajectoryHelper.Direction direction)
+    //    {
+    //        Vertices = new LinkedList<Vertex>(points.Select((p, i) => new Vertex(p, i)));
+    //        Direction = direction;
+
+    //        foreach (var vertex in EnumerateVertex())
+    //        {
+
+    //        }
+    //    }
+
+    //    private int[] Triangulate()
+    //    {
+
+    //    }
+
+    //    private void SetConvex(LinkedListNode<Vertex> vertex)
+    //    {
+    //        if (!vertex.Value.IsConvex)
+    //            vertex.Value.SetConvex(vertex.GetPrevious().Value, vertex.GetNext().Value, Direction);
+    //    }
+
+    //    private IEnumerable<LinkedListNode<Vertex>> EnumerateVertex() => EnumerateVertex(Vertices.First);
+    //    private IEnumerable<LinkedListNode<Vertex>> EnumerateVertex(LinkedListNode<Vertex> startFrom)
+    //    {
+    //        yield return startFrom;
+
+    //        for (var vertex = startFrom.GetNext(); vertex != startFrom; vertex = vertex.GetNext())
+    //            yield return vertex;
+    //    }
+    //    private IEnumerable<LinkedListNode<Vertex>> EnumerateVertex(LinkedListNode<Vertex> from, LinkedListNode<Vertex> to)
+    //    {
+    //        for (var vertex = from.GetNext(); vertex != to; vertex = vertex.GetNext())
+    //            yield return vertex;
+    //    }
+    //}
 
     internal class Vertex
     {

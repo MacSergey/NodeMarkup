@@ -75,6 +75,7 @@ namespace NodeMarkup.Manager
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(doubleStyle.Offset));
             offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.WheelTip = Settings.ShowToolTip;
@@ -90,6 +91,7 @@ namespace NodeMarkup.Manager
         {
             var baseProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Base));
             baseProperty.Text = Localize.StyleOption_SharkToothBase;
+            baseProperty.Format = Localize.NumberFormat_Meter;
             baseProperty.UseWheel = true;
             baseProperty.WheelStep = 0.1f;
             baseProperty.WheelTip = Settings.ShowToolTip;
@@ -105,6 +107,7 @@ namespace NodeMarkup.Manager
         {
             var heightProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Height));
             heightProperty.Text = Localize.StyleOption_SharkToothHeight;
+            heightProperty.Format = Localize.NumberFormat_Meter;
             heightProperty.UseWheel = true;
             heightProperty.WheelStep = 0.1f;
             heightProperty.WheelTip = Settings.ShowToolTip;
@@ -120,6 +123,7 @@ namespace NodeMarkup.Manager
         {
             var spaceProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Space));
             spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
+            spaceProperty.Format = Localize.NumberFormat_Meter;
             spaceProperty.UseWheel = true;
             spaceProperty.WheelStep = 0.1f;
             spaceProperty.WheelTip = Settings.ShowToolTip;
@@ -142,8 +146,9 @@ namespace NodeMarkup.Manager
         }
         protected FloatPropertyPanel AddElevationProperty(I3DLine line3DStyle, UIComponent parent)
         {
-            var elevationProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(line3DStyle.Elevation));
             elevationProperty.Text = Localize.LineStyle_Elevation;
+            elevationProperty.Format = Localize.NumberFormat_Meter;
             elevationProperty.UseWheel = true;
             elevationProperty.WheelStep = 0.1f;
             elevationProperty.CheckMin = true;
@@ -165,6 +170,7 @@ namespace NodeMarkup.Manager
         public static float DefaultSharkBaseLength => 0.5f;
         public static float DefaultSharkSpaceLength => 0.5f;
         public static float DefaultSharkHeight => 0.6f;
+        public static float DefaultSharkAngle => 0.0f;
 
         public static float Default3DWidth => 0.3f;
         public static float Default3DHeigth => 0.3f;
@@ -176,6 +182,9 @@ namespace NodeMarkup.Manager
         public static float DefaultObjectElevation => 0f;
         public static float DefaultObjectOffsetBefore => 0f;
         public static float DefaultObjectOffsetAfter => 0f;
+
+        public static float DefaultNetworkScale => 1f;
+        public static int DefaultRepeatDistance => 64;
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
@@ -192,10 +201,11 @@ namespace NodeMarkup.Manager
             {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultDoubleOffset)},
             {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
-            {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
+            {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength, DefaultSharkAngle) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
-            {RegularLineType.Prop, new PropLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
+            {RegularLineType.Prop, new PropLineStyle(string.Empty, PropLineStyle.DefaultColorOption, PropLineStyle.DefaultColor, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
             {RegularLineType.Tree, new TreeLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
+            {RegularLineType.Network, new NetworkLineStyle(string.Empty, DefaultObjectShift, DefaultObjectElevation, DefaultNetworkScale, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DefaultRepeatDistance, false) },
         };
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
@@ -242,6 +252,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_Tree))]
             Tree = StyleType.LineTree,
+
+            [Description(nameof(Localize.LineStyle_Network))]
+            Network = StyleType.LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NotVisible]

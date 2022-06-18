@@ -44,8 +44,6 @@ namespace NodeMarkup.Manager
         public ITrajectory Trajectory => LineTrajectory.Copy();
         public LodDictionaryArray<IStyleData> StyleData { get; } = new LodDictionaryArray<IStyleData>();
 
-        public LineBorders Borders => new LineBorders(this);
-
         public string XmlSection => XmlName;
 
         protected MarkupLine(Markup markup, MarkupPointPair pointPair, bool update = true)
@@ -182,15 +180,20 @@ namespace NodeMarkup.Manager
         public override LineType Type => LineType.Regular;
         public override Alignment Alignment => RawAlignment;
         public PropertyEnumValue<Alignment> RawAlignment { get; private set; }
+        public PropertyBoolValue ClipSidewalk { get; private set; }
 
         public override bool IsSupportRules => true;
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
+        public LineBorders Borders => new LineBorders(this);
+        private bool DefaultClipSidewalk => Markup.Type == MarkupType.Node && PointPair.IsSideLine;
+
         public MarkupRegularLine(Markup markup, MarkupPoint first, MarkupPoint second, RegularLineStyle style = null, Alignment alignment = Alignment.Centre, bool update = true) : this(markup, MarkupPointPair.FromPoints(first, second, out bool invert), style, !invert ? alignment : alignment.Invert(), update) { }
         public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre, bool update = true) : base(markup, pointPair, false)
         {
             RawAlignment = new PropertyEnumValue<Alignment>("A", AlignmentChanged, alignment);
+            ClipSidewalk = new PropertyBoolValue("CS", ClipSidewalkChanged, DefaultClipSidewalk);
 
             if (update)
                 Update(true);
@@ -214,6 +217,7 @@ namespace NodeMarkup.Manager
             return new BezierTrajectory(trajectory);
         }
         private void AlignmentChanged() => Markup.Update(this, true, true);
+        private void ClipSidewalkChanged() => Markup.Update(this, true, false);
 
         private void AddRule(MarkupLineRawRule<RegularLineStyle> rule, bool update = true)
         {
@@ -298,6 +302,7 @@ namespace NodeMarkup.Manager
             var config = base.ToXml();
 
             RawAlignment.ToXml(config);
+            ClipSidewalk.ToXml(config);
             foreach (var rule in RawRules)
             {
                 var ruleConfig = rule.ToXml();
@@ -309,6 +314,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             RawAlignment.FromXml(config);
+            ClipSidewalk.FromXml(config, DefaultClipSidewalk);
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule<RegularLineStyle>.XmlName))
             {
                 if (MarkupLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<RegularLineStyle> rule))
@@ -540,17 +546,17 @@ namespace NodeMarkup.Manager
         public Vector3 Center { get; }
         public List<ITrajectory> Borders { get; }
         public bool IsEmpty => !Borders.Any();
-        public LineBorders(MarkupLine line)
+        public LineBorders(MarkupRegularLine line)
         {
             Center = line.Markup.Position;
             Borders = GetBorders(line).ToList();
         }
-        public IEnumerable<ITrajectory> GetBorders(MarkupLine line)
+        public IEnumerable<ITrajectory> GetBorders(MarkupRegularLine line)
         {
-            if (line.Start.GetBorder(out ITrajectory startTrajectory))
-                yield return startTrajectory;
-            if (line.End.GetBorder(out ITrajectory endTrajectory))
-                yield return endTrajectory;
+            if (line.ClipSidewalk)
+                return line.Markup.Contour;
+            else
+                return Enumerable.Empty<ITrajectory>();
         }
 
         public IEnumerator<ITrajectory> GetEnumerator() => Borders.GetEnumerator();

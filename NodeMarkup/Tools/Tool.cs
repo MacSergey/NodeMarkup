@@ -426,7 +426,7 @@ namespace NodeMarkup.Tools
             var nodeSegmentIds = node.SegmentIds().ToArray();
             var nextSegmentId = nextGetter(nodeSegmentIds, beforeSegmentId);
 
-            if (nextSegmentId != null && nodeSegmentIds.Length == 2 && (node.m_flags & NetNode.Flags.Bend) != 0)
+            if (nextSegmentId != null && nodeSegmentIds.Length == 2 && (node.m_flags & (NetNode.Flags.Bend | NetNode.Flags.Middle)) != 0)
             {
                 var map = new ObjectsMap();
                 map.AddSegment(nearNodeId, beforeSegmentId);

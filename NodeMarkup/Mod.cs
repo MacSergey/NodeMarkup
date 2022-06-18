@@ -27,29 +27,29 @@ namespace NodeMarkup
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
         protected override string IdRaw => nameof(NodeMarkup);
-        public override List<Version> Versions { get; } = new List<Version>
+        public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
-            new Version("1.9"),
-            new Version("1.8.2"),
-            new Version("1.8.1"),
-            new Version("1.8"),
-            new Version("1.7.4"),
-            new Version("1.7.3"),
-            new Version("1.7.2"),
-            new Version("1.7.1"),
-            new Version("1.7"),
-            new Version("1.6"),
-            new Version("1.5.3"),
-            new Version("1.5.2"),
-            new Version("1.5.1"),
-            new Version("1.5"),
-            new Version("1.4.1"),
-            new Version("1.4"),
-            new Version("1.3"),
-            new Version("1.2.1"),
-            new Version("1.2"),
-            new Version("1.1"),
-            new Version("1.0")
+            new ModVersion(new Version("1.9"), new DateTime(2022, 6, 2)),
+            new ModVersion(new Version("1.8.2"), new DateTime(2021, 8, 25)),
+            new ModVersion(new Version("1.8.1"), new DateTime(2021, 8, 8)),
+            new ModVersion(new Version("1.8"), new DateTime(2021, 7, 21)),
+            new ModVersion(new Version("1.7.4"), new DateTime(2021, 7, 6)),
+            new ModVersion(new Version("1.7.3"), new DateTime(2021, 5, 29)),
+            new ModVersion(new Version("1.7.2"), new DateTime(2021, 5, 19)),
+            new ModVersion(new Version("1.7.1"), new DateTime(2021, 5, 6)),
+            new ModVersion(new Version("1.7"), new DateTime(2021, 4, 3)),
+            new ModVersion(new Version("1.6"), new DateTime(2021, 3, 12)),
+            new ModVersion(new Version("1.5.3"), new DateTime(2021, 3, 8)),
+            new ModVersion(new Version("1.5.2"), new DateTime(2021, 2, 15)),
+            new ModVersion(new Version("1.5.1"), new DateTime(2021, 2, 5)),
+            new ModVersion(new Version("1.5"), new DateTime(2020, 11, 16)),
+            new ModVersion(new Version("1.4.1"), new DateTime(2020, 10, 25)),
+            new ModVersion(new Version("1.4"), new DateTime(2020, 10, 18)),
+            new ModVersion(new Version("1.3"), new DateTime(2020, 8, 22)),
+            new ModVersion(new Version("1.2.1"), new DateTime(2020, 7, 30)),
+            new ModVersion(new Version("1.2"), new DateTime(2020, 7, 27)),
+            new ModVersion(new Version("1.1"), new DateTime(2020, 7, 14)),
+            new ModVersion(new Version("1.0"), new DateTime(2020, 7, 7)),
         };
 
         public override string NameRaw => "Intersection Marking Tool";

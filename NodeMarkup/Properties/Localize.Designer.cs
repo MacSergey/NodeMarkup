@@ -830,6 +830,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Clip sidewalk.
+        /// </summary>
+        public static string LineEditor_ClipSidewalk {
+            get {
+                return ResourceManager.GetString("LineEditor_ClipSidewalk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на line.
         /// </summary>
         public static string LineEditor_DeleteCaptionDescription {
@@ -1071,6 +1080,15 @@ namespace NodeMarkup {
         public static string LineStyle_Grass {
             get {
                 return ResourceManager.GetString("LineStyle_Grass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Decorative network.
+        /// </summary>
+        public static string LineStyle_Network {
+            get {
+                return ResourceManager.GetString("LineStyle_Network", resourceCulture);
             }
         }
         
@@ -1505,6 +1523,33 @@ namespace NodeMarkup {
         public static string Mod_WhatsNewMessage1_9 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}°.
+        /// </summary>
+        public static string NumberFormat_Degree {
+            get {
+                return ResourceManager.GetString("NumberFormat_Degree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}m.
+        /// </summary>
+        public static string NumberFormat_Meter {
+            get {
+                return ResourceManager.GetString("NumberFormat_Meter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {0}%.
+        /// </summary>
+        public static string NumberFormat_Percent {
+            get {
+                return ResourceManager.GetString("NumberFormat_Percent", resourceCulture);
             }
         }
         
@@ -2900,6 +2945,42 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Variant #1.
+        /// </summary>
+        public static string StyleOption_Color1 {
+            get {
+                return ResourceManager.GetString("StyleOption_Color1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Variant #2.
+        /// </summary>
+        public static string StyleOption_Color2 {
+            get {
+                return ResourceManager.GetString("StyleOption_Color2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Variant #3.
+        /// </summary>
+        public static string StyleOption_Color3 {
+            get {
+                return ResourceManager.GetString("StyleOption_Color3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Variant #4.
+        /// </summary>
+        public static string StyleOption_Color4 {
+            get {
+                return ResourceManager.GetString("StyleOption_Color4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Color count.
         /// </summary>
         public static string StyleOption_ColorCount {
@@ -2923,6 +3004,33 @@ namespace NodeMarkup {
         public static string StyleOption_ColorCountTwo {
             get {
                 return ResourceManager.GetString("StyleOption_ColorCountTwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Custom.
+        /// </summary>
+        public static string StyleOption_ColorCustom {
+            get {
+                return ResourceManager.GetString("StyleOption_ColorCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Color variant.
+        /// </summary>
+        public static string StyleOption_ColorOption {
+            get {
+                return ResourceManager.GetString("StyleOption_ColorOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Random.
+        /// </summary>
+        public static string StyleOption_ColorRandom {
+            get {
+                return ResourceManager.GetString("StyleOption_ColorRandom", resourceCulture);
             }
         }
         
@@ -3031,6 +3139,24 @@ namespace NodeMarkup {
         public static string StyleOption_MedianOffset {
             get {
                 return ResourceManager.GetString("StyleOption_MedianOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Repeat distance.
+        /// </summary>
+        public static string StyleOption_NetRepeatDistance {
+            get {
+                return ResourceManager.GetString("StyleOption_NetRepeatDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Width scale.
+        /// </summary>
+        public static string StyleOption_NetWidthScale {
+            get {
+                return ResourceManager.GetString("StyleOption_NetWidthScale", resourceCulture);
             }
         }
         
@@ -3148,6 +3274,15 @@ namespace NodeMarkup {
         public static string StyleOption_RightRail {
             get {
                 return ResourceManager.GetString("StyleOption_RightRail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Angle.
+        /// </summary>
+        public static string StyleOption_SharkToothAngle {
+            get {
+                return ResourceManager.GetString("StyleOption_SharkToothAngle", resourceCulture);
             }
         }
         

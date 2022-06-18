@@ -102,6 +102,7 @@ namespace NodeMarkup.Manager
         protected FloatPropertyPanel AddOffsetProperty(UIComponent parent, string name, float minValue = 0f)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, name);
+            offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
             offsetProperty.CheckMin = true;
@@ -115,6 +116,7 @@ namespace NodeMarkup.Manager
         {
             var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(linedStyle.LineWidth));
             widthProperty.Text = Localize.StyleOption_LineWidth;
+            widthProperty.Format = Localize.NumberFormat_Meter;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = 0.1f;
             widthProperty.WheelTip = Settings.ShowToolTip;
@@ -366,6 +368,7 @@ namespace NodeMarkup.Manager
         {
             var gapLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(GapLength));
             gapLengthProperty.Text = Localize.StyleOption_GapLength;
+            gapLengthProperty.Format = Localize.NumberFormat_Meter;
             gapLengthProperty.UseWheel = true;
             gapLengthProperty.WheelStep = 0.1f;
             gapLengthProperty.WheelTip = Settings.ShowToolTip;
@@ -769,6 +772,7 @@ namespace NodeMarkup.Manager
         {
             var squareSideProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(SquareSide));
             squareSideProperty.Text = Localize.StyleOption_SquareSide;
+            squareSideProperty.Format = Localize.NumberFormat_Meter;
             squareSideProperty.UseWheel = true;
             squareSideProperty.WheelStep = 0.1f;
             squareSideProperty.WheelTip = Settings.ShowToolTip;

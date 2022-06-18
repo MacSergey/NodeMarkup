@@ -4,10 +4,13 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using static ColossalFramework.Math.VectorUtils;
+using ColossalFramework.Math;
 
 namespace NodeMarkup.Manager
 {
@@ -47,52 +50,46 @@ namespace NodeMarkup.Manager
         protected override List<List<FillerContour.Part>> GetContours(MarkupFiller filler)
         {
             var contours = base.GetContours(filler);
-            var roundedContours = GetRoundedContours(contours, CornerRadius, MedianCornerRadius);
 
-            return roundedContours;
-        }
-        protected List<List<FillerContour.Part>> GetRoundedContours(List<List<FillerContour.Part>> contours, float radius, float medianRadius)
-        {
-            var roundedContours = new List<List<FillerContour.Part>>();
+            for (int i = 0; i < contours.Count; i += 1)
+                contours[i] = StyleHelper.SetCornerRadius(contours[i], CornerRadius, MedianCornerRadius);
 
-            foreach (var contour in contours)
-            {
-                var rounded = StyleHelper.SetCornerRadius(contour, radius, medianRadius);
-                roundedContours.Add(rounded);
-            }
-
-            return roundedContours;
+            return contours;
         }
         public override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
             foreach (var contour in contours)
             {
-                if (Triangulate(contour, lod, out var points, out var triangles, out var groups))
+                var points = GetContourPoints(contour, lod, out var groups);
+                if (Triangulate(points, out var triangles))
                 {
-                    yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType);
-                    yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, groups, points, MaterialType.Pavement);
+                    //SplitTriangles(contour, points, triangles, 2f, out var topPoints, out var topTriangles);
+
+                    yield return new MarkupStyleFillerMesh(Elevation, MarkupStyleFillerMesh.RawData.SetSide(groups, points, MaterialType.Pavement), MarkupStyleFillerMesh.RawData.SetTop(points, triangles, MaterialType));
+#if DEBUG
+                    //if ((Settings.ShowFillerTriangulation & 2) != 0)
+                    //    yield return GetTriangulationLines(topPoints, topTriangles, UnityEngine.Color.red, MaterialType.RectangleFillers);
+                    if ((Settings.ShowFillerTriangulation & 1) != 0)
+                        yield return GetTriangulationLines(points, triangles, UnityEngine.Color.green, MaterialType.RectangleLines);
+#endif
                 }
             }
         }
-        protected bool Triangulate(List<FillerContour.Part> contour, MarkupLOD lod, out Vector3[] points, out int[] triangles, out int[] groups)
+        protected Vector3[] GetContourPoints(List<FillerContour.Part> contour, MarkupLOD lod, out int[] groups)
         {
             var trajectories = contour.Select(i => i.Trajectory).ToList();
             if (trajectories.GetDirection() == TrajectoryHelper.Direction.CounterClockWise)
                 trajectories = trajectories.Select(t => t.Invert()).Reverse().ToList();
 
             var parts = GetParts(trajectories, lod);
-
-            points = parts.SelectMany(p => p).Select(t => t.StartPosition).ToArray();
-            if (points.Length < 3)
-            {
-                points = null;
-                triangles = null;
-                groups = null;
-                return false;
-            }
-
-            triangles = Triangulator.Triangulate(points, TrajectoryHelper.Direction.ClockWise);
+            var points = parts.SelectMany(p => p).Select(t => t.StartPosition).ToArray();
             groups = parts.Select(g => g.Count).ToArray();
+
+            return points;
+        }
+        protected bool Triangulate(Vector3[] points, out int[] triangles)
+        {
+            triangles = Triangulator.Triangulate(points, TrajectoryHelper.Direction.ClockWise);
             return triangles != null;
         }
         private List<List<ITrajectory>> GetParts(List<ITrajectory> trajectories, MarkupLOD lod)
@@ -124,6 +121,166 @@ namespace NodeMarkup.Manager
 
             return parts;
         }
+        private void SplitTriangles(List<FillerContour.Part> contour, Vector3[] points, int[] triangles, float maxLenght, out Vector3[] pointsResult, out int[] trianglesResult)
+        {
+            var contourCount = points.Length;
+            var tempPoints = new List<Vector3>(points);
+            var tempTriang = new List<int>(triangles);
+            maxLenght = maxLenght * maxLenght;
+
+            var pointDic = new Dictionary<Vector3, int>();
+
+            var i = 0;
+            while(i < tempTriang.Count && tempPoints.Count < 1000 && tempTriang.Count < 3000)
+            {
+                var index1 = tempTriang[i + 0];
+                var index2 = tempTriang[i + 1];
+                var index3 = tempTriang[i + 2];
+
+                var point1 = tempPoints[index1];
+                var point2 = tempPoints[index2];
+                var point3 = tempPoints[index3];
+
+                var dist12 = (point1 - point2).sqrMagnitude;
+                var dist23 = (point2 - point3).sqrMagnitude;
+                var dist31 = (point3 - point1).sqrMagnitude;
+
+                if (dist12 > maxLenght && dist12 > dist23 && dist12 > dist31)
+                    ProcessSplitTriangle(contour, ref i, index1, index2, index3, tempPoints, tempTriang, pointDic, ref contourCount);
+                else if (dist23 > maxLenght && dist23 > dist31 && dist23 > dist12)
+                    ProcessSplitTriangle(contour, ref i, index2, index3, index1, tempPoints, tempTriang, pointDic, ref contourCount);
+                else if (dist31 > maxLenght && dist31 > dist12 && dist31 > dist23)
+                    ProcessSplitTriangle(contour, ref i, index3, index1, index2, tempPoints, tempTriang, pointDic, ref contourCount);
+                else
+                    i += 3;
+            }
+
+            pointsResult = tempPoints.ToArray();
+            trianglesResult = tempTriang.ToArray();
+        }
+        private void ProcessSplitTriangle(List<FillerContour.Part> contour, ref int i, int index1, int index2, int index3, List<Vector3> points, List<int> triangles, Dictionary<Vector3, int> pointDic, ref int contourCount)
+        {
+            var newPoint = (points[index1] + points[index2]) * 0.5f;
+
+            if ((newPoint - points[index3]).sqrMagnitude < 0.25f)
+            {
+                i += 3;
+                return;
+            }
+
+            var minPart = -1;
+            var minDist = float.MaxValue;
+            var minT = 0f;
+            for(int j = 0; j < contour.Count; j += 1)
+            {
+                var pos = contour[j].Trajectory.GetClosestPosition(newPoint, out var t);
+                var dist = (pos - newPoint).sqrMagnitude;
+                if(dist < minDist)
+                {
+                    minDist = dist;
+                    minPart = j;
+                    minT = t;
+                }
+            }
+
+            if (minPart >= 0)
+            {
+                var plane = new Plane();
+                if (minT < 0.1f || minT > 0.9f)
+                {
+                    var pos = contour[minPart].Trajectory.Position(minT);
+                    var dir = contour[minPart].Trajectory.Tangent(minT);
+                    var normal = dir.Turn90(true);
+                    plane.Set3Points(pos + dir, pos, pos + normal);
+                }
+                else
+                {
+                    var posA = contour[minPart].Trajectory.Position(minT - 0.1f);
+                    var pos0 = contour[minPart].Trajectory.Position(minT);
+                    var posB = contour[minPart].Trajectory.Position(minT + 0.1f);
+
+                    var minDot = Vector3.Dot((posA - pos0).normalized, (posB - pos0).normalized);
+                    if(minDot > -0.995f)
+                        plane.Set3Points(posA, pos0, posB);
+                    else
+                        plane.Set3Points(posA, pos0, pos0 + (posA - pos0).Turn90(true));
+
+                }
+                plane.Raycast(new Ray(newPoint, newPoint + Vector3.up), out var newT);
+                newPoint += Vector3.up * newT;
+            }
+
+            var dot = Vector3.Dot((points[index1] - newPoint).normalized, (points[index2] - newPoint).normalized);
+            if(Mathf.Acos(dot) * Mathf.Rad2Deg > 175f)
+            {
+                i += 3;
+                return;
+            }
+
+            if (!pointDic.TryGetValue(newPoint, out var indexNew))
+            {
+                //if(Math.Abs(index2 - index1) == 1)
+                //{
+                //    contourCount += 1;
+                //    if (index2 > index1)
+                //    {
+                //        points.Insert(index2, newPoint);
+                //        indexNew = index2;
+                //        index2 += 1;
+                //    }
+                //    else
+                //    {
+                //        points.Insert(index1, newPoint);
+                //        indexNew = index1;
+                //        index1 += 1;
+                //    }
+                //    if (index3 > indexNew)
+                //        index3 += 1;
+
+                //    for(int j = 0; j < triangles.Count; j += 1)
+                //    {
+                //        if (triangles[j] >= indexNew)
+                //            triangles[j] += 1;
+                //    }
+                //}
+                //else
+                //{
+                //    indexNew = points.Count;
+                //    points.Add(newPoint);
+                //}
+                indexNew = points.Count;
+                points.Add(newPoint);
+                pointDic.Add(newPoint, indexNew);
+            }
+
+            triangles[i + 0] = index1;
+            triangles[i + 1] = indexNew;
+            triangles[i + 2] = index3;
+
+            triangles.Add(index3);
+            triangles.Add(indexNew);
+            triangles.Add(index2);
+        }
+#if DEBUG
+        private IStyleData GetTriangulationLines(Vector3[] points, int[] triangles, Color32 color, MaterialType materialType)
+        {
+            var dashes = new List<MarkupStylePart>();
+
+            for (int i = 0; i < triangles.Length; i += 3)
+            {
+                var point1 = points[triangles[i + 0]];
+                var point2 = points[triangles[i + 1]];
+                var point3 = points[triangles[i + 2]];
+
+                dashes.Add(new MarkupStylePart(point1, point2, 0.05f, color, materialType));
+                dashes.Add(new MarkupStylePart(point2, point3, 0.05f, color, materialType));
+                dashes.Add(new MarkupStylePart(point3, point1, 0.05f, color, materialType));
+            }
+
+            return new MarkupStyleParts(dashes);
+        }
+#endif
+
         private bool FindIntersects(List<ITrajectory> A, List<ITrajectory> B, bool isClockWise, int skip)
         {
             for (var x = isClockWise ? A.Count - 1 : 0; isClockWise ? x >= 0 : x < A.Count; x += isClockWise ? -1 : 1)
@@ -211,6 +368,7 @@ namespace NodeMarkup.Manager
         {
             var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Elevation));
             elevationProperty.Text = Localize.FillerStyle_Elevation;
+            elevationProperty.Format = Localize.NumberFormat_Meter;
             elevationProperty.UseWheel = true;
             elevationProperty.WheelStep = 0.1f;
             elevationProperty.WheelTip = Settings.ShowToolTip;
@@ -228,6 +386,7 @@ namespace NodeMarkup.Manager
         {
             var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CornerRadius));
             cornerRadiusProperty.Text = Localize.FillerStyle_CornerRadius;
+            cornerRadiusProperty.Format = Localize.NumberFormat_Meter;
             cornerRadiusProperty.UseWheel = true;
             cornerRadiusProperty.WheelStep = 0.1f;
             cornerRadiusProperty.WheelTip = Settings.ShowToolTip;
@@ -245,6 +404,7 @@ namespace NodeMarkup.Manager
         {
             var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCornerRadius));
             cornerRadiusProperty.Text = Localize.FillerStyle_MedianCornerRadius;
+            cornerRadiusProperty.Format = Localize.NumberFormat_Meter;
             cornerRadiusProperty.UseWheel = true;
             cornerRadiusProperty.WheelStep = 0.1f;
             cornerRadiusProperty.WheelTip = Settings.ShowToolTip;
@@ -277,6 +437,12 @@ namespace NodeMarkup.Manager
     }
     public abstract class CurbTriangulationFillerStyle : TriangulationFillerStyle
     {
+        public struct CounterData
+        {
+            public List<FillerContour.Part> _side;
+            public List<FillerContour.Part> _hole;
+        }
+
         public PropertyValue<float> CurbSize { get; }
         public PropertyValue<float> MedianCurbSize { get; }
 
@@ -303,40 +469,109 @@ namespace NodeMarkup.Manager
             {
                 var originalContour = filler.Contour.Parts.ToList();
 
-                var contours = GetOffsetContours(new List<List<FillerContour.Part>>() { originalContour }, LineOffset, MedianOffset);
-                var roundedContours = GetRoundedContours(contours, CornerRadius, MedianCornerRadius);
+                var contourDatas = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset).Select(i => new CounterData() { _side = i }).ToArray();
 
-                var curbRoundedContours = GetOffsetContours(roundedContours, CurbSize, MedianCurbSize);
+                for (int i = 0; i < contourDatas.Length; i += 1)
+                {
+                    contourDatas[i]._side = StyleHelper.SetCornerRadius(contourDatas[i]._side, CornerRadius, MedianCornerRadius);
+                    if (CurbSize > 0 || MedianCurbSize > 0)
+                        contourDatas[i]._hole = StyleHelper.SetOffset(contourDatas[i]._side, CurbSize, MedianCurbSize).FirstOrDefault();
+                }
 
                 var data = new LodDictionaryArray<IStyleData>();
 
                 foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
-                    data[lod] = Calculate(filler, roundedContours, curbRoundedContours, lod).ToArray();
+                    data[lod] = Calculate(filler, contourDatas, lod).ToArray();
 
                 return data;
             }
         }
-        private IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, List<List<FillerContour.Part>> curbContours, MarkupLOD lod)
+        private IEnumerable<IStyleData> Calculate(MarkupFiller filler, CounterData[] contours, MarkupLOD lod)
         {
             if (lod == MarkupLOD.LOD1)
             {
-                foreach (var data in base.Calculate(filler, contours, lod))
+                foreach (var data in base.Calculate(filler, contours.Select(c => c._side).ToList(), lod))
                     yield return data;
             }
             else
             {
                 foreach (var contour in contours)
                 {
-                    if (Triangulate(contour, lod, out var points, out var triangles, out var groups))
+                    var meshParts = new List<MarkupStyleFillerMesh.RawData>();
+
+                    var sidePoints = GetContourPoints(contour._side, lod, out var sideGroups);
+                    if (Triangulate(sidePoints, out var triangles))
                     {
-                        yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation, points, triangles, MaterialType.Pavement);
-                        yield return new MarkupStylePolygonSideMesh(filler.Markup.Height, Elevation, groups, points, MaterialType.Pavement);
+                        meshParts.Add(MarkupStyleFillerMesh.RawData.SetSide(sideGroups, sidePoints, MaterialType.Pavement));
+                       
+                        if (contour._hole != null)
+                        {
+                            var holePoints = GetContourPoints(contour._hole, lod, out var holeGroups);
+                            if(Triangulate(holePoints, out var holeTriangles))
+                            {
+                                var sideStartI = 0;
+                                var sideHalfI = contour._side.Count / 2;
+
+                                var holeStartI = 0;
+                                var holeHalfI = 0;
+                                float startMinDist = float.MaxValue;
+                                float halfMinDist = float.MaxValue;
+
+                                for (int i = 0; i < contour._hole.Count; i += 1)
+                                {
+                                    var dist = (contour._side[sideStartI].Trajectory.StartPosition - contour._hole[i].Trajectory.StartPosition).sqrMagnitude;
+                                    if (dist < startMinDist)
+                                    {
+                                        holeStartI = i;
+                                        startMinDist = dist;
+                                    }
+                                    dist = (contour._side[sideHalfI].Trajectory.StartPosition - contour._hole[i].Trajectory.StartPosition).sqrMagnitude;
+                                    if (dist < halfMinDist)
+                                    {
+                                        holeHalfI = i;
+                                        halfMinDist = dist;
+                                    }
+                                }
+
+                                if (sideStartI != sideHalfI && holeStartI != holeHalfI)
+                                {
+                                    var firstHalf = new List<FillerContour.Part>();
+                                    firstHalf.AddRange(contour._side.Take(sideHalfI - sideStartI));
+                                    firstHalf.Add(new FillerContour.Part(new StraightTrajectory(contour._side[sideHalfI].Trajectory.StartPosition, contour._hole[holeHalfI].Trajectory.StartPosition)));
+                                    firstHalf.AddRange(contour._hole.Take(holeHalfI - holeStartI).Select(i => new FillerContour.Part(i.Trajectory.Invert())).Reverse());
+                                    firstHalf.Add(new FillerContour.Part(new StraightTrajectory(contour._hole[holeStartI].Trajectory.StartPosition, contour._side[sideStartI].Trajectory.StartPosition)));
+
+                                    var secondHalf = new List<FillerContour.Part>();
+                                    secondHalf.AddRange(contour._side.Skip(sideHalfI));
+                                    secondHalf.Add(new FillerContour.Part(new StraightTrajectory(contour._side[sideStartI].Trajectory.StartPosition, contour._hole[holeStartI].Trajectory.StartPosition)));
+                                    secondHalf.AddRange(contour._hole.Skip(holeHalfI).Select(i => new FillerContour.Part(i.Trajectory.Invert())).Reverse());
+                                    secondHalf.Add(new FillerContour.Part(new StraightTrajectory(contour._hole[holeHalfI].Trajectory.StartPosition, contour._side[sideHalfI].Trajectory.StartPosition)));
+
+                                    var firstPoints = GetContourPoints(firstHalf, lod, out _);
+                                    var secondPoints = GetContourPoints(secondHalf, lod, out _);
+                                    if (Triangulate(firstPoints, out var firstTriangles) && Triangulate(secondPoints, out var secondTriangles))
+                                    {
+                                        sidePoints = new Vector3[firstPoints.Length + secondPoints.Length];
+                                        Array.Copy(firstPoints, sidePoints, firstPoints.Length);
+                                        Array.Copy(secondPoints, 0, sidePoints, firstPoints.Length, secondPoints.Length);
+
+                                        triangles = new int[firstTriangles.Length + secondTriangles.Length];
+                                        Array.Copy(firstTriangles, triangles, firstTriangles.Length);
+                                        Array.Copy(secondTriangles, 0, triangles, firstTriangles.Length, secondTriangles.Length);
+
+                                        for (int i = firstTriangles.Length; i < triangles.Length; i += 1)
+                                            triangles[i] += firstPoints.Length;
+
+                                        meshParts.Add(MarkupStyleFillerMesh.RawData.SetTop(holePoints, holeTriangles, MaterialType));
+                                    }
+                                }
+                            }
+                        }
+
+                        meshParts.Add(MarkupStyleFillerMesh.RawData.SetTop(sidePoints, triangles, MaterialType.Pavement));
                     }
-                }
-                foreach (var contour in curbContours)
-                {
-                    if (Triangulate(contour, lod, out var points, out var triangles, out _))
-                        yield return new MarkupStylePolygonTopMesh(filler.Markup.Height, Elevation + 0.03f, points, triangles, MaterialType);
+
+                    yield return new MarkupStyleFillerMesh(Elevation, meshParts.ToArray());
                 }
             }
         }
@@ -356,6 +591,7 @@ namespace NodeMarkup.Manager
         {
             var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CurbSize));
             curbSizeProperty.Text = Localize.FillerStyle_CurbSize;
+            curbSizeProperty.Format = Localize.NumberFormat_Meter;
             curbSizeProperty.UseWheel = true;
             curbSizeProperty.WheelStep = 0.1f;
             curbSizeProperty.WheelTip = Settings.ShowToolTip;
@@ -373,6 +609,7 @@ namespace NodeMarkup.Manager
         {
             var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCurbSize));
             curbSizeProperty.Text = Localize.FillerStyle_MedianCurbSize;
+            curbSizeProperty.Format = Localize.NumberFormat_Meter;
             curbSizeProperty.UseWheel = true;
             curbSizeProperty.WheelStep = 0.1f;
             curbSizeProperty.WheelTip = Settings.ShowToolTip;

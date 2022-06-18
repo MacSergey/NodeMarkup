@@ -365,12 +365,15 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Height { get; }
         public PropertyValue<float> Space { get; }
         public PropertyBoolValue Invert { get; }
-        public SharkTeethLineStyle(Color32 color, float baseValue, float height, float space) : base(color, 0)
+        public PropertyValue<float> Angle { get; }
+
+        public SharkTeethLineStyle(Color32 color, float baseValue, float height, float space, float angle) : base(color, 0)
         {
             Base = GetBaseProperty(baseValue);
             Height = GetHeightProperty(height);
             Space = GetSpaceProperty(space);
             Invert = GetInvertProperty(true);
+            Angle = GetAngleProperty(angle);
         }
         protected override IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
@@ -378,19 +381,21 @@ namespace NodeMarkup.Manager
                 return new MarkupStyleParts();
 
             var borders = line.Borders;
-            return new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes));
+            var coef = Mathf.Cos(Angle * Mathf.Deg2Rad);
+            return new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, Base / coef, Space / coef, CalculateDashes));
 
             IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory trajectory, float startT, float endT)
             {
                 if (StyleHelper.CalculateDashedParts(borders, trajectory, Invert ? endT : startT, Invert ? startT : endT, Base, Height / (Invert ? 2 : -2), Height, Color, out MarkupStylePart dash))
                 {
                     dash.MaterialType = MaterialType.Triangle;
+                    dash.Angle -= Angle * Mathf.Deg2Rad;
                     yield return dash;
                 }
             }
         }
 
-        public override RegularLineStyle CopyLineStyle() => new SharkTeethLineStyle(Color, Base, Height, Space);
+        public override RegularLineStyle CopyLineStyle() => new SharkTeethLineStyle(Color, Base, Height, Space, Angle);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -407,8 +412,47 @@ namespace NodeMarkup.Manager
             components.Add(AddBaseProperty(this, parent));
             components.Add(AddHeightProperty(this, parent));
             components.Add(AddSpaceProperty(this, parent));
+            var angle = AddAngleProperty(parent);
+            components.Add(angle);
             if (!isTemplate)
-                components.Add(AddInvertProperty(this, parent));
+            {
+                var invertButton = AddInvertProperty(parent);
+                components.Add(invertButton);
+
+                invertButton.OnButtonClick += OnButtonClick;
+
+                void OnButtonClick()
+                {
+                    Invert.Value = !Invert;
+                    Angle.Value = -Angle;
+                    angle.Value = Angle;
+                }
+            }
+        }
+        protected FloatPropertyPanel AddAngleProperty(UIComponent parent)
+        {
+            var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            angleProperty.Text = Localize.StyleOption_SharkToothAngle;
+            angleProperty.Format = Localize.NumberFormat_Degree;
+            angleProperty.UseWheel = true;
+            angleProperty.WheelStep = 1f;
+            angleProperty.CheckMin = true;
+            angleProperty.MinValue = -60f;
+            angleProperty.CheckMax = true;
+            angleProperty.MaxValue = 60f;
+            angleProperty.Init();
+            angleProperty.Value = Angle;
+            angleProperty.OnValueChanged += (float value) => Angle.Value = value;
+
+            return angleProperty;
+        }
+        protected ButtonPanel AddInvertProperty(UIComponent parent)
+        {
+            var buttonsPanel = ComponentPool.Get<ButtonPanel>(parent, nameof(Invert));
+            buttonsPanel.Text = Localize.StyleOption_Invert;
+            buttonsPanel.Init();
+
+            return buttonsPanel;
         }
 
         public override XElement ToXml()
@@ -418,6 +462,7 @@ namespace NodeMarkup.Manager
             Height.ToXml(config);
             Space.ToXml(config);
             Invert.ToXml(config);
+            Angle.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -428,6 +473,7 @@ namespace NodeMarkup.Manager
             Space.FromXml(config, DefaultSharkSpaceLength);
             Invert.FromXml(config, false);
             Invert.Value ^= map.IsMirror ^ invert;
+            Angle.FromXml(config, DefaultSharkAngle);
         }
     }
 }

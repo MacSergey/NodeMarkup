@@ -55,14 +55,14 @@ namespace NodeMarkup.Manager
         {
             var length = trajectory.Magnitude;
 
-            var needDivide = (minAngle < deltaAngle && minLength <= length) || maxLength < length;
+            var needDivide = (deltaAngle > minAngle && length >= minLength) || length > maxLength;
             if (depth < MaxDepth && (needDivide || depth == 0))
             {
                 trajectory.Divide(out ITrajectory first, out ITrajectory second);
                 var firstDeltaAngle = first.DeltaAngle;
                 var secondDeltaAngle = second.DeltaAngle;
 
-                if (needDivide || minAngle < deltaAngle || minAngle < firstDeltaAngle + secondDeltaAngle)
+                if (needDivide || deltaAngle > minAngle || (firstDeltaAngle + secondDeltaAngle) > minAngle)
                 {
                     CalculateSolid(depth + 1, first, firstDeltaAngle, minAngle, minLength, maxLength, addToResult);
                     CalculateSolid(depth + 1, second, secondDeltaAngle, minAngle, minLength, maxLength, addToResult);
@@ -352,10 +352,10 @@ namespace NodeMarkup.Manager
             {
                 var direction = originalParts.Select(i => i.Trajectory).GetDirection();
 
-                var parts = Move(originalParts, direction, offset, medianOffset);
-                Connect(parts, originalParts, offset, medianOffset);
-                var intersections = GetIntersections(parts);
-                var partOfPart = GetParts(parts, intersections);
+                var movedParts = Move(originalParts, direction, offset, medianOffset);
+                Connect(movedParts, originalParts, offset, medianOffset);
+                var intersections = GetIntersections(movedParts);
+                var partOfPart = GetParts(movedParts, intersections);
                 var contours = GetContours(partOfPart);
 
                 foreach (var contour in contours)
