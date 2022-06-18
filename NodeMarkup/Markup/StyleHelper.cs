@@ -352,10 +352,10 @@ namespace NodeMarkup.Manager
             {
                 var direction = originalParts.Select(i => i.Trajectory).GetDirection();
 
-                var parts = Move(originalParts, direction, offset, medianOffset);
-                Connect(parts, originalParts, offset, medianOffset);
-                var intersections = GetIntersections(parts);
-                var partOfPart = GetParts(parts, intersections);
+                var movedParts = Move(originalParts, direction, offset, medianOffset);
+                Connect(movedParts, originalParts, offset, medianOffset);
+                var intersections = GetIntersections(movedParts);
+                var partOfPart = GetParts(movedParts, intersections);
                 var contours = GetContours(partOfPart);
 
                 foreach (var contour in contours)

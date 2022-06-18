@@ -103,8 +103,8 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnifiedUILib">
-      <HintPath>..\..\UnifiedUI\UnifiedUILib\bin\Debug\net35\UnifiedUILib.dll</HintPath>
+    <Reference Include="UnifiedUILib, Version=2.2.9.20126, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnifiedUILib.2.2.9\lib\net35\UnifiedUILib.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
@@ -330,7 +330,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_DetectChanges="False" />
+      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
