@@ -76,6 +76,9 @@ namespace NodeMarkup.Tools
         {
             { m_service: ItemClass.Service.Road } => true,
             { m_service: ItemClass.Service.PublicTransport, m_subService: ItemClass.SubService.PublicTransportPlane } => true,
+            { m_service: ItemClass.Service.PublicTransport, m_subService: ItemClass.SubService.PublicTransportTrain } => true,
+            { m_service: ItemClass.Service.PublicTransport, m_subService: ItemClass.SubService.PublicTransportMetro } => true,
+            { m_service: ItemClass.Service.Beautification, m_subService: ItemClass.SubService.BeautificationParks } => true,
             _ => false,
         };
 

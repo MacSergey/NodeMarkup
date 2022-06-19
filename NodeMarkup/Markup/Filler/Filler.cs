@@ -6,12 +6,13 @@ using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupFiller : IStyleItem, IToXml
+    public class MarkupFiller : IStyleItem, IToXml, ISupport
     {
         public static string XmlName { get; } = "F";
 
         public string DeleteCaptionDescription => Localize.FillerEditor_DeleteCaptionDescription;
         public string DeleteMessageDescription => Localize.FillerEditor_DeleteMessageDescription;
+        public Markup.SupportType Support => Markup.SupportType.Fillers;
 
         public Markup Markup { get; }
         public FillerContour Contour { get; }

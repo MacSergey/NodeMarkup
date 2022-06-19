@@ -284,49 +284,61 @@ namespace NodeMarkup.Manager
             RegularLine = Markup.Item.RegularLine,
 
             [Description(nameof(Localize.LineStyle_Solid))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             LineSolid,
 
             [Description(nameof(Localize.LineStyle_Dashed))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             LineDashed,
 
             [Description(nameof(Localize.LineStyle_DoubleSolid))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             LineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_DoubleDashed))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             LineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             LineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             LineSharkTeeth,
 
             [NotItem]
             Regular3DLine = Markup.Item.RegularLine + 0x80,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
+            [NetworkType(NetworkType.All)]
             LinePavement,
 
             [NotItem]
             RegularPropLine = Regular3DLine + 0x10,
 
             [Description(nameof(Localize.LineStyle_Prop))]
+            [NetworkType(NetworkType.All)]
             LineProp,
 
             [Description(nameof(Localize.LineStyle_Tree))]
+            [NetworkType(NetworkType.All)]
             LineTree,
 
             [NotItem]
             RegularNetworkLine = Regular3DLine + 0x20,
 
             [Description(nameof(Localize.LineStyle_Network))]
+            [NetworkType(NetworkType.All)]
             LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]
+            [NetworkType(NetworkType.All)]
             [NotVisible]
             EmptyLine = LineBuffer - 1,
 
             [Description(nameof(Localize.Style_FromClipboard))]
+            [NetworkType(NetworkType.All)]
             [NotVisible]
             LineBuffer = Markup.Item.RegularLine + 0x100 - 1,
 
@@ -336,30 +348,39 @@ namespace NodeMarkup.Manager
 
             [NotItem]
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
+            [NetworkType(NetworkType.Road)]
             StopLine = Markup.Item.StopLine,
 
             [Description(nameof(Localize.LineStyle_StopSolid))]
+            [NetworkType(NetworkType.Road)]
             StopLineSolid,
 
             [Description(nameof(Localize.LineStyle_StopDashed))]
+            [NetworkType(NetworkType.Road)]
             StopLineDashed,
 
             [Description(nameof(Localize.LineStyle_StopDouble))]
+            [NetworkType(NetworkType.Road)]
             StopLineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
+            [NetworkType(NetworkType.Road)]
             StopLineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_StopSolidAndDashed))]
+            [NetworkType(NetworkType.Road)]
             StopLineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
+            [NetworkType(NetworkType.Road)]
             StopLineSharkTeeth,
 
             [Description(nameof(Localize.LineStyle_StopPavement))]
+            [NetworkType(NetworkType.Road)]
             StopLinePavement,
 
             [Description(nameof(Localize.Style_FromClipboard))]
+            [NetworkType(NetworkType.Road)]
             [NotVisible]
             StopLineBuffer = Markup.Item.StopLine + 0x100 - 1,
 
@@ -372,36 +393,46 @@ namespace NodeMarkup.Manager
             Filler = Markup.Item.Filler,
 
             [Description(nameof(Localize.FillerStyle_Stripe))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             FillerStripe,
 
             [Description(nameof(Localize.FillerStyle_Grid))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             FillerGrid,
 
             [Description(nameof(Localize.FillerStyle_Solid))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             FillerSolid,
 
             [Description(nameof(Localize.FillerStyle_Chevron))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             FillerChevron,
 
             [NotItem]
             Filler3D = Filler + 0x80,
 
             [Description(nameof(Localize.FillerStyle_Pavement))]
+            [NetworkType(NetworkType.All)]
             FillerPavement,
 
             [Description(nameof(Localize.FillerStyle_Grass))]
+            [NetworkType(NetworkType.All)]
             FillerGrass,
 
             [Description(nameof(Localize.FillerStyle_Gravel))]
+            [NetworkType(NetworkType.All)]
             FillerGravel,
 
             [Description(nameof(Localize.FillerStyle_Ruined))]
+            [NetworkType(NetworkType.All)]
             FillerRuined,
 
             [Description(nameof(Localize.FillerStyle_Cliff))]
+            [NetworkType(NetworkType.All)]
             FillerCliff,
 
             [Description(nameof(Localize.Style_FromClipboard))]
+            [NetworkType(NetworkType.All)]
             [NotVisible]
             FillerBuffer = Markup.Item.Filler + 0x100 - 1,
 
@@ -414,30 +445,39 @@ namespace NodeMarkup.Manager
             Crosswalk = Markup.Item.Crosswalk,
 
             [Description(nameof(Localize.CrosswalkStyle_Existent))]
+            [NetworkType(NetworkType.Road)]
             CrosswalkExistent,
 
             [Description(nameof(Localize.CrosswalkStyle_Zebra))]
+            [NetworkType(NetworkType.Road)]
             CrosswalkZebra,
 
             [Description(nameof(Localize.CrosswalkStyle_DoubleZebra))]
+            [NetworkType(NetworkType.Road)]
             CrosswalkDoubleZebra,
 
             [Description(nameof(Localize.CrosswalkStyle_ParallelSolidLines))]
+            [NetworkType(NetworkType.Road)]
             CrosswalkParallelSolidLines,
 
             [Description(nameof(Localize.CrosswalkStyle_ParallelDashedLines))]
+            [NetworkType(NetworkType.Road)]
             CrosswalkParallelDashedLines,
 
             [Description(nameof(Localize.CrosswalkStyle_Ladder))]
+            [NetworkType(NetworkType.Road)]
             CrosswalkLadder,
 
             [Description(nameof(Localize.CrosswalkStyle_Solid))]
+            [NetworkType(NetworkType.Road)]
             CrosswalkSolid,
 
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
+            [NetworkType(NetworkType.Road)]
             CrosswalkChessBoard,
 
             [Description(nameof(Localize.Style_FromClipboard))]
+            [NetworkType(NetworkType.Road)]
             [NotVisible]
             CrosswalkBuffer = Markup.Item.Crosswalk + 0x100 - 1,
 
@@ -453,4 +493,5 @@ namespace NodeMarkup.Manager
         public sealed override Style Copy() => CopyStyle();
         public abstract StyleType CopyStyle();
     }
+
 }

@@ -12,12 +12,13 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLine : IStyleItem, IToXml
+    public abstract class MarkupLine : IStyleItem, IToXml, ISupport
     {
         public static string XmlName { get; } = "L";
 
         public string DeleteCaptionDescription => Localize.LineEditor_DeleteCaptionDescription;
         public string DeleteMessageDescription => Localize.LineEditor_DeleteMessageDescription;
+        public Markup.SupportType Support => Markup.SupportType.Lines;
 
         public abstract LineType Type { get; }
 
@@ -253,7 +254,23 @@ namespace NodeMarkup.Manager
         }
 
         public MarkupLineRawRule<RegularLineStyle> AddRule(bool empty = true, bool update = true)
-            => AddRule(SingletonManager<StyleTemplateManager>.Instance.GetDefault<RegularLineStyle>(Style.StyleType.LineDashed), empty, update);
+        {
+            var defaultStyle = Style.StyleType.LineDashed;
+
+            if((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0)
+            {
+                foreach (var style in EnumExtension.GetEnumValues<RegularLineStyle.RegularLineType>(i => true).Select(i => i.ToEnum<Style.StyleType, RegularLineStyle.RegularLineType>()))
+                {
+                    if ((style.GetNetworkType() & PointPair.NetworkType) != 0)
+                    {
+                        defaultStyle = style;
+                        break;
+                    }
+                }
+            }
+
+            return AddRule(SingletonManager<StyleTemplateManager>.Instance.GetDefault<RegularLineStyle>(defaultStyle), empty, update);
+        }
         public void RemoveRule(MarkupLineRawRule<RegularLineStyle> rule)
         {
             RawRules.Remove(rule);

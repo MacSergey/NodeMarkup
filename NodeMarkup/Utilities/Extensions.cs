@@ -25,6 +25,7 @@ namespace NodeMarkup.Utilities
             else
                 return modifier.ToString();
         }
+        public static NetworkType GetNetworkType<T>(this T value) where T : Enum => value.GetAttr<NetworkTypeAttribute, T>()?.Type ?? NetworkType.All;
 
         public static Alignment Invert(this Alignment alignment) => (Alignment)(1 - alignment.Sign());
         public static int Sign(this Alignment alignment) => (int)alignment - 1;

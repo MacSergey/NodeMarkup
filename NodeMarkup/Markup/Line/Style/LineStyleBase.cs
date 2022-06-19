@@ -227,40 +227,52 @@ namespace NodeMarkup.Manager
         public enum RegularLineType
         {
             [Description(nameof(Localize.LineStyle_Solid))]
+            [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
             Solid = StyleType.LineSolid,
 
             [Description(nameof(Localize.LineStyle_Dashed))]
+            [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
             Dashed = StyleType.LineDashed,
 
             [Description(nameof(Localize.LineStyle_DoubleSolid))]
+            [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
             DoubleSolid = StyleType.LineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_DoubleDashed))]
+            [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
             DoubleDashed = StyleType.LineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
+            [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
             SolidAndDashed = StyleType.LineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
+            [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
             SharkTeeth = StyleType.LineSharkTeeth,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
+            [NetworkType(NetworkType.All)]
             Pavement = StyleType.LinePavement,
 
             [Description(nameof(Localize.LineStyle_Prop))]
+            [NetworkType(NetworkType.All)]
             Prop = StyleType.LineProp,
 
             [Description(nameof(Localize.LineStyle_Tree))]
+            [NetworkType(NetworkType.All)]
             Tree = StyleType.LineTree,
 
             [Description(nameof(Localize.LineStyle_Network))]
+            [NetworkType(NetworkType.All)]
             Network = StyleType.LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]
+            [NetworkType(NetworkType.All)]
             [NotVisible]
             Empty = StyleType.EmptyLine,
 
             [Description(nameof(Localize.Style_FromClipboard))]
+            [NetworkType(NetworkType.All)]
             [NotVisible]
             Buffer = StyleType.LineBuffer,
         }

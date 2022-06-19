@@ -20,12 +20,12 @@ namespace NodeMarkup.UI.Editors
         void Edit(ObjectType editObject);
         void RefreshEditor();
     }
-    public abstract class Editor : CustomUIPanel
+    public abstract class Editor : CustomUIPanel, ISupport
     {
         public NodeMarkupPanel Panel { get; private set; }
 
         public abstract string Name { get; }
-        public abstract Type SupportType { get; }
+        public abstract Markup.SupportType Support { get; }
         public abstract string EmptyMessage { get; }
 
         public abstract bool AvailableItems { get; set; }

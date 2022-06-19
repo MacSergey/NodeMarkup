@@ -13,7 +13,7 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => NodeMarkup.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.TemplateEditor_EmptyMessage, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate);
-        public override Type SupportType { get; } = typeof(ISupportStyleTemplate);
+        public override Markup.SupportType Support { get; } = Markup.SupportType.StyleTemplates;
         protected override string IsAssetMessage => NodeMarkup.Localize.TemplateEditor_TemplateIsAsset;
         protected override string RewriteCaption => NodeMarkup.Localize.TemplateEditor_RewriteCaption;
         protected override string RewriteMessage => NodeMarkup.Localize.TemplateEditor_RewriteMessage;

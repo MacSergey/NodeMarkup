@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
 using System;
@@ -150,11 +151,16 @@ namespace NodeMarkup.UI.Editors
             }
 
             Style.Text = NodeMarkup.Localize.Editor_Style;
-            Style.Init();
+            Style.Init(StyleSelector);
             Style.UseWheel = true;
             Style.WheelTip = true;
             Style.SelectedObject = Rule.Style.Value.Type;
             Style.OnSelectObjectChanged += StyleChanged;
+        }
+        private bool StyleSelector(Style.StyleType styleType)
+        {
+            var type = styleType.GetNetworkType();
+            return (Line.PointPair.NetworkType & type) != 0;
         }
         private void AddStyleProperties()
         {

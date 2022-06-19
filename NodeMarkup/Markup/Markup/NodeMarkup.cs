@@ -8,11 +8,13 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class NodeMarkup : Markup<SegmentEnter>, ISupportCrosswalks
+    public class NodeMarkup : Markup<SegmentEnter>
     {
         public static string XmlName { get; } = "M";
 
         public override MarkupType Type => MarkupType.Node;
+        public override SupportType Support { get; } = SupportType.Enters | SupportType.Points | SupportType.Lines | SupportType.Fillers | SupportType.Croswalks | SupportType.StyleTemplates | SupportType.IntersectionTemplates;
+
         protected override bool IsExist => Id.ExistNode();
         public override string XmlSection => XmlName;
         public override string PanelCaption => string.Format(Localize.Panel_NodeCaption, Id);

@@ -49,7 +49,7 @@ namespace NodeMarkup.Tools
                 }
                 else
                 {
-                    var style = Tool.GetStyleByModifier<CrosswalkStyle, CrosswalkStyle.CrosswalkType>(CrosswalkStyle.CrosswalkType.Zebra);
+                    var style = Tool.GetStyleByModifier<CrosswalkStyle, CrosswalkStyle.CrosswalkType>(NetworkType.Road, CrosswalkStyle.CrosswalkType.Zebra);
                     var newCrosswalkLine = Tool.Markup.AddCrosswalkLine(pointPair, style);
                     Panel.AddLine(newCrosswalkLine);
                     Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);

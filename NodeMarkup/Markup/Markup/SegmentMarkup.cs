@@ -9,6 +9,8 @@ namespace NodeMarkup.Manager
         public static string XmlName { get; } = "S";
 
         public override MarkupType Type => MarkupType.Segment;
+        public override SupportType Support { get; } = SupportType.Enters | SupportType.Points | SupportType.Lines | SupportType.Fillers | SupportType.StyleTemplates | SupportType.IntersectionTemplates;
+
         protected override bool IsExist => Id.ExistSegment();
         public override string XmlSection => XmlName;
         public override string PanelCaption => string.Format(Localize.Panel_SegmentCaption, Id);

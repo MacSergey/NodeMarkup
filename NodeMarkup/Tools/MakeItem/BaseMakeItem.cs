@@ -57,13 +57,13 @@ namespace NodeMarkup.Tools
             var exist = Tool.Markup.ExistLine(pointPair);
 
             if (pointPair.IsStopLine)
-                return exist ? $"{Localize.Tool_InfoDeleteStopLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine);
+                return exist ? $"{Localize.Tool_InfoDeleteStopLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine, pointPair.NetworkType);
             else if (pointPair.IsCrosswalk)
-                return exist ? $"{Localize.Tool_InfoDeleteCrosswalk}\n{string.Format(Localize.Tool_InfoSelectCrosswalk, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<CrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk);
+                return exist ? $"{Localize.Tool_InfoDeleteCrosswalk}\n{string.Format(Localize.Tool_InfoSelectCrosswalk, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<CrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk, pointPair.NetworkType);
             else if (pointPair.IsNormal)
-                return exist ? $"{Localize.Tool_InfoDeleteNormalLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateNormalLine);
+                return exist ? $"{Localize.Tool_InfoDeleteNormalLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateNormalLine, pointPair.NetworkType);
             else
-                return exist ? $"{Localize.Tool_InfoDeleteLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLine);
+                return exist ? $"{Localize.Tool_InfoDeleteLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLine, pointPair.NetworkType);
         }
         public override void OnPrimaryMouseClicked(Event e)
         {

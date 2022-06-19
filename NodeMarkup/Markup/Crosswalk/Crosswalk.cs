@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupCrosswalk : IStyleItem, IToXml
+    public class MarkupCrosswalk : IStyleItem, IToXml, ISupport
     {
         #region PROPERTIES
 
@@ -16,6 +16,7 @@ namespace NodeMarkup.Manager
 
         public string DeleteCaptionDescription => Localize.CrossWalkEditor_DeleteCaptionDescription;
         public string DeleteMessageDescription => Localize.CrossWalkEditor_DeleteMessageDescription;
+        public Markup.SupportType Support => Markup.SupportType.Croswalks;
 
         public Markup Markup { get; }
         public MarkupCrosswalkLine CrosswalkLine { get; }

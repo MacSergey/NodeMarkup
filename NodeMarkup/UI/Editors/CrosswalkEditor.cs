@@ -17,7 +17,7 @@ namespace NodeMarkup.UI.Editors
 
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.CrosswalkEditor_EmptyMessage, LocalizeExtension.Shift);
-        public override Type SupportType { get; } = typeof(ISupportCrosswalks);
+        public override Markup.SupportType Support { get; } = Markup.SupportType.Croswalks;
 
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
         private CrosswalkBorderSelectPropertyPanel RightBorder { get; set; }

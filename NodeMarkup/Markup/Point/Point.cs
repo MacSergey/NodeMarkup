@@ -11,7 +11,7 @@ using ObjectId = NodeMarkup.Utilities.ObjectId;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupPoint : IItem, IToXml
+    public abstract class MarkupPoint : IItem, IToXml, ISupport
     {
         public event Action<MarkupPoint> OnUpdate;
         public static int GetId(ushort enter, byte num, PointType type) => enter + (num << 16) + ((int)type >> 1 << 24);
@@ -48,12 +48,14 @@ namespace NodeMarkup.Manager
 
         public string DeleteCaptionDescription => Localize.PointEditor_DeleteCaptionDescription;
         public string DeleteMessageDescription => Localize.PointEditor_DeleteMessageDescription;
+        public Markup.SupportType Support => Markup.SupportType.Points;
 
         public PropertyValue<float> Offset { get; }
 
         public byte Num { get; }
         public int Id { get; }
         public abstract PointType Type { get; }
+        public NetworkType NetworkType => Source.NetworkType;
         public Color32 Color => Colors.GetOverlayColor(Num - 1, byte.MaxValue);
         public virtual Vector3 Position
         {
@@ -349,6 +351,7 @@ namespace NodeMarkup.Manager
         public bool IsCrosswalk => First.Type == MarkupPoint.PointType.Crosswalk && Second.Type == MarkupPoint.PointType.Crosswalk;
         public bool IsSplit => First.IsSplit || Second.IsSplit;
         public bool IsSideLine => !IsSameEnter && ((First.IsFirst && Second.IsLast) || (First.IsLast && Second.IsFirst));
+        public NetworkType NetworkType => First.NetworkType & Second.NetworkType;
 
         public MarkupPointPair(MarkupPoint first, MarkupPoint second)
         {

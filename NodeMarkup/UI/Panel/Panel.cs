@@ -240,7 +240,7 @@ namespace NodeMarkup.UI.Panel
 
         private void AddObject<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
-            where ItemType : class, ISupport, IDeletable
+            where ItemType : class, IDeletable
         {
             if (Editors.Find(e => e.GetType() == typeof(EditorType)) is EditorType editor)
             {
@@ -256,7 +256,7 @@ namespace NodeMarkup.UI.Panel
 
         private void DeleteObject<EditorType, ItemType>(ItemType item)
             where EditorType : Editor, IEditor<ItemType>
-            where ItemType : class, ISupport, IDeletable
+            where ItemType : class, IDeletable
         {
             if (Editors.Find(e => e.GetType() == typeof(EditorType)) is EditorType editor)
             {
@@ -277,7 +277,7 @@ namespace NodeMarkup.UI.Panel
             where EditorType : Editor, IEditor<ItemType>
             where ItemType : class, ISupport, IDeletable
         {
-            if (Markup is not ISupport<ItemType>)
+            if ((Markup.Support & item.Support) == 0)
                 return null;
 
             Available = true;

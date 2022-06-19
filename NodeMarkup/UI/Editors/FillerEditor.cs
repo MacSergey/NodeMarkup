@@ -17,7 +17,7 @@ namespace NodeMarkup.UI.Editors
 
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, LocalizeExtension.Alt, NodeMarkupTool.AddFillerShortcut);
-        public override Type SupportType { get; } = typeof(ISupportFillers);
+        public override Markup.SupportType Support { get; } = Markup.SupportType.Fillers;
 
         public StylePropertyPanel Style { get; private set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();

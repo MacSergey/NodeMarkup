@@ -22,9 +22,9 @@ namespace NodeMarkup.Tools
             {
                 tips.Add(Localize.Tool_InfoSelectLineStartPoint);
                 tips.Add(string.Format(Localize.Tool_InfoStartDragPointMode, LocalizeExtension.Ctrl.AddInfoColor()));
-                if (Markup is ISupportFillers)
+                if ((Markup.Support & Markup.SupportType.Fillers) != 0)
                     tips.Add(string.Format(Localize.Tool_InfoStartCreateFiller, LocalizeExtension.Alt.AddInfoColor()));
-                if (Markup is ISupportCrosswalks)
+                if ((Markup.Support & Markup.SupportType.Croswalks) != 0)
                     tips.Add(string.Format(Localize.Tool_InfoStartCreateCrosswalk, LocalizeExtension.Shift.AddInfoColor()));
             }
             else if (IsHoverPoint)
@@ -51,13 +51,13 @@ namespace NodeMarkup.Tools
 
             if (!Tool.Panel.IsHover)
             {
-                if (Utility.OnlyAltIsPressed && Markup is ISupportFillers)
+                if (Utility.OnlyAltIsPressed && (Markup.Support & Markup.SupportType.Fillers) != 0)
                 {
                     Tool.SetMode(ToolModeType.MakeFiller);
                     if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
                         fillerToolMode.DisableByAlt = true;
                 }
-                else if (Utility.OnlyShiftIsPressed && Markup is ISupportCrosswalks)
+                else if (Utility.OnlyShiftIsPressed && (Markup.Support & Markup.SupportType.Croswalks) != 0)
                     Tool.SetMode(ToolModeType.MakeCrosswalk);
             }
         }
@@ -87,13 +87,13 @@ namespace NodeMarkup.Tools
                 }
                 else if (pointPair.IsStopLine)
                 {
-                    var style = Tool.GetStyleByModifier<StopLineStyle, StopLineStyle.StopLineType>(StopLineStyle.StopLineType.Solid);
+                    var style = Tool.GetStyleByModifier<StopLineStyle, StopLineStyle.StopLineType>(NetworkType.Road, StopLineStyle.StopLineType.Solid);
                     var newLine = Tool.Markup.AddStopLine(pointPair, style);
                     Panel.SelectLine(newLine);
                 }
                 else
                 {
-                    var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(RegularLineStyle.RegularLineType.Dashed, true);
+                    var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(pointPair.NetworkType, RegularLineStyle.RegularLineType.Dashed, true);
                     var newLine = Tool.Markup.AddRegularLine(pointPair, style);
                     Panel.SelectLine(newLine);
                 }
