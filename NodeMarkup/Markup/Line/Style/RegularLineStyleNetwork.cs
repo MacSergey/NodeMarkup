@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.UI;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,13 @@ namespace NodeMarkup.Manager
 {
     public class NetworkLineStyle : RegularLineStyle, IAsymLine, I3DLine
     {
+        public static bool IsValidPrefab(NetInfo info) => info != null && info.m_segments.Length != 0 && info.m_netAI is DecorationWallAI;
         public override StyleType Type => StyleType.LineNetwork;
 
         public override bool CanOverlap => true;
+        private bool IsValid => IsValidPrefab(Prefab.Value);
 
-        public PropertyValue<string> Name { get; }
+        public PropertyPrefabValue<NetInfo> Prefab { get; }
         public PropertyValue<float> Shift { get; }
         public PropertyValue<float> Elevation { get; }
         public PropertyValue<float> OffsetBefore { get; }
@@ -26,9 +29,9 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> RepeatDistance { get; }
         public PropertyBoolValue Invert { get; }
 
-        public NetworkLineStyle(string name, float shift, float elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(new Color32(), 0f)
+        public NetworkLineStyle(NetInfo prefab, float shift, float elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(new Color32(), 0f)
         {
-            Name = new PropertyStringValue("N", StyleChanged, name);
+            Prefab = new PropertyPrefabValue<NetInfo>("PRF", StyleChanged, prefab);
             Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
             Elevation = new PropertyStructValue<float>("E", StyleChanged, elevation);
             OffsetBefore = new PropertyStructValue<float>("OB", StyleChanged, offsetBefore);
@@ -38,7 +41,7 @@ namespace NodeMarkup.Manager
             Invert = GetInvertProperty(invert);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new NetworkLineStyle(Name, Shift, Elevation, Scale, OffsetBefore, OffsetAfter, RepeatDistance, Invert);
+        public override RegularLineStyle CopyLineStyle() => new NetworkLineStyle(Prefab, Shift, Elevation, Scale, OffsetBefore, OffsetAfter, RepeatDistance, Invert);
 
         public override void CopyTo(LineStyle target)
         {
@@ -49,7 +52,7 @@ namespace NodeMarkup.Manager
                 asymTarget.Invert.Value = Invert;
             if (target is NetworkLineStyle networkTarget)
             {
-                networkTarget.Name.Value = Name;
+                networkTarget.Prefab.Value = Prefab;
                 networkTarget.Shift.Value = Shift;
                 networkTarget.OffsetBefore.Value = OffsetBefore;
                 networkTarget.OffsetAfter.Value = OffsetAfter;
@@ -57,19 +60,9 @@ namespace NodeMarkup.Manager
                 networkTarget.RepeatDistance.Value = RepeatDistance;
             }
         }
-        protected bool GetProp(out NetInfo info)
-        {
-            if (PrefabCollection<NetInfo>.FindLoaded(Name) is NetInfo foundInfo && foundInfo.m_segments.Length != 0 && foundInfo.m_netAI is DecorationWallAI)
-                info = foundInfo;
-            else
-                info = null;
-
-            return info != null;
-        }
-
         protected override IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
-            if (!GetProp(out NetInfo info))
+            if (!IsValid)
                 return new MarkupStyleParts();
 
             if (Invert)
@@ -101,16 +94,16 @@ namespace NodeMarkup.Manager
                     trajectories[i] = trajectory.Cut(1f / count * i, 1f / count * (i + 1));
             }
 
-            return new MarkupStyleNetwork(info, trajectories, info.m_halfWidth * 2f, info.m_segmentLength, Scale, Elevation);
+            return new MarkupStyleNetwork(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, Elevation);
         }
 
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
-            var name = AddNameProperty(parent);
+            var prefab = AddPrefabProperty(parent);
 
-            components.Add(name);
+            components.Add(prefab);
             components.Add(AddShiftProperty(parent));
             var elevation = AddElevationProperty(parent);
             components.Add(elevation);
@@ -120,37 +113,31 @@ namespace NodeMarkup.Manager
             components.Add(AddOffsetAfterProperty(parent));
             components.Add(AddInvertProperty(this, parent));
 
-            name.OnValueChanged += OnNameChanged;
+            prefab.OnValueChanged += OnNameChanged;
             AfterNameChanged();
 
-            void OnNameChanged(string value)
+            void OnNameChanged(NetInfo value)
             {
-                Name.Value = value;
+                Prefab.Value = value;
                 AfterNameChanged();
             };
             void AfterNameChanged()
             {
-                if (GetProp(out var info))
-                {
-                    name.FieldTextColor = UnityEngine.Color.green;
-                    elevation.isVisible = info.m_segments[0].m_segmentMaterial.shader.name != "Custom/Net/Fence";
-                }
+                if (IsValid)
+                    elevation.isVisible = Prefab.Value.m_segments[0].m_segmentMaterial.shader.name != "Custom/Net/Fence";
                 else
-                {
-                    name.FieldTextColor = UnityEngine.Color.white;
                     elevation.isVisible = true;
-                }
             }
         }
 
-        protected StringPropertyPanel AddNameProperty(UIComponent parent)
+        private SelectNetworkProperty AddPrefabProperty(UIComponent parent)
         {
-            var nameProperty = ComponentPool.Get<StringPropertyPanel>(parent, nameof(Name));
-            nameProperty.Text = Localize.StyleOption_ObjectName;
-            nameProperty.FieldWidth = 230f;
-            nameProperty.Init();
-            nameProperty.Value = Name;
-            return nameProperty;
+            var prefabProperty = ComponentPool.Get<SelectNetworkProperty>(parent, nameof(Prefab));
+            prefabProperty.Init(IsValidPrefab);
+            prefabProperty.Prefab = Prefab;
+            prefabProperty.OnValueChanged += (NetInfo value) => Prefab.Value = value;
+
+            return prefabProperty;
         }
 
         protected FloatPropertyPanel AddShiftProperty(UIComponent parent)
@@ -261,7 +248,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            Name.ToXml(config);
+            Prefab.ToXml(config);
             Shift.ToXml(config);
             Elevation.ToXml(config);
             Scale.ToXml(config);
@@ -274,7 +261,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Name.FromXml(config, string.Empty);
+            Prefab.FromXml(config, null);
             Shift.FromXml(config, DefaultObjectShift);
             Elevation.FromXml(config, DefaultObjectElevation);
             Scale.FromXml(config, DefaultNetworkScale);

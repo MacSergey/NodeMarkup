@@ -203,9 +203,9 @@ namespace NodeMarkup.Manager
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength, DefaultSharkAngle) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
-            {RegularLineType.Prop, new PropLineStyle(string.Empty, PropLineStyle.DefaultColorOption, PropLineStyle.DefaultColor, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
-            {RegularLineType.Tree, new TreeLineStyle(string.Empty, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
-            {RegularLineType.Network, new NetworkLineStyle(string.Empty, DefaultObjectShift, DefaultObjectElevation, DefaultNetworkScale, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DefaultRepeatDistance, false) },
+            {RegularLineType.Prop, new PropLineStyle(null, PropLineStyle.DefaultColorOption, PropLineStyle.DefaultColor, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
+            {RegularLineType.Tree, new TreeLineStyle(null, DefaultObjectStep, DefaultObjectAngle, DefaultObjectAngle, false, DefaultObjectShift, DefaultObjectScale, DefaultObjectScale, false, DefaultObjectElevation, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
+            {RegularLineType.Network, new NetworkLineStyle(null, DefaultObjectShift, DefaultObjectElevation, DefaultNetworkScale, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DefaultRepeatDistance, false) },
         };
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
