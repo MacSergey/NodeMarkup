@@ -1385,5 +1385,22 @@
   <data name="StyleOption_NetWidthScale" xml:space="preserve">
     <value>두께 스케일</value>
   </data>
-  
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>반복 거리</value>
+  </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>네트워크 에셋</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>설정되지 않음</value>
+  </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>프롭 에셋</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>나무 에셋</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>아무 것도 없음</value>
+  </data>
 </root>

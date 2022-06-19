@@ -1388,4 +1388,19 @@ Apăsați pentru a modifica marcajele</value>
   <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
     <value>Distanță de repetare</value>
   </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>Asset-ul rețelei</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Nesetat</value>
+  </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>Asset-ul obiectului</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>Asset-ul copacilor</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Nu s-a găsit nimic</value>
+  </data>
 </root>

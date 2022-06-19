@@ -1611,4 +1611,19 @@
   <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
     <value>Дистанция повтора</value>
   </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>Декоративная сеть</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Не выбрано</value>
+  </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>Реквизит</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>Дерево</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Ничего не найдено</value>
+  </data>
 </root>
