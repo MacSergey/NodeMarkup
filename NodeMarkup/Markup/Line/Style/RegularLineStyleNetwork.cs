@@ -14,11 +14,11 @@ namespace NodeMarkup.Manager
 {
     public class NetworkLineStyle : RegularLineStyle, IAsymLine, I3DLine
     {
-        public static bool IsValidPrefab(NetInfo info) => info != null && info.m_segments.Length != 0 && info.m_netAI is DecorationWallAI;
+        public static bool IsValidNetwork(NetInfo info) => info != null && info.m_segments.Length != 0 && info.m_netAI is DecorationWallAI;
         public override StyleType Type => StyleType.LineNetwork;
 
         public override bool CanOverlap => true;
-        private bool IsValid => IsValidPrefab(Prefab.Value);
+        private bool IsValid => IsValidNetwork(Prefab.Value);
 
         public PropertyPrefabValue<NetInfo> Prefab { get; }
         public PropertyValue<float> Shift { get; }
@@ -133,7 +133,9 @@ namespace NodeMarkup.Manager
         private SelectNetworkProperty AddPrefabProperty(UIComponent parent)
         {
             var prefabProperty = ComponentPool.Get<SelectNetworkProperty>(parent, nameof(Prefab));
-            prefabProperty.Init(IsValidPrefab);
+            prefabProperty.Text = Localize.StyleOption_AssetNetwork;
+            prefabProperty.Selector = IsValidNetwork;
+            prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
             prefabProperty.OnValueChanged += (NetInfo value) => Prefab.Value = value;
 

@@ -375,9 +375,8 @@ namespace NodeMarkup.Manager
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
         }
     }
-    public abstract class BaseObjectLineStyle<PrefabType, SelectPanelType> : BaseObjectLineStyle
+    public abstract class BaseObjectLineStyle<PrefabType> : BaseObjectLineStyle
         where PrefabType : PrefabInfo
-        where SelectPanelType : SelectAssetProperty<PrefabType>
     {
         public PropertyPrefabValue<PrefabType> Prefab { get; }
 
@@ -389,7 +388,7 @@ namespace NodeMarkup.Manager
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
-            if (target is BaseObjectLineStyle<PrefabType, SelectPanelType> objectTarget)
+            if (target is BaseObjectLineStyle<PrefabType> objectTarget)
             {
                 objectTarget.Prefab.Value = Prefab;
             }
@@ -465,16 +464,6 @@ namespace NodeMarkup.Manager
         protected virtual void CalculateItem(PrefabType prefab, ref MarkupStylePropItem item) { }
         protected abstract IStyleData GetParts(PrefabType prefab, MarkupStylePropItem[] items);
 
-        protected sealed override EditorItem AddPrefabProperty(UIComponent parent)
-        {
-            var prefabProperty = ComponentPool.Get<SelectPanelType>(parent, nameof(Prefab));
-            prefabProperty.Init();
-            prefabProperty.Prefab = Prefab;
-            prefabProperty.OnValueChanged += (PrefabType value) => Prefab.Value = value;
-
-            return prefabProperty;
-        }
-
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -487,8 +476,9 @@ namespace NodeMarkup.Manager
             Prefab.FromXml(config, null);
         }
     }
-    public class PropLineStyle : BaseObjectLineStyle<PropInfo, SelectPropProperty>
+    public class PropLineStyle : BaseObjectLineStyle<PropInfo>
     {
+        public static bool IsValidProp(PropInfo info) => info != null && !info.m_isMarker;
         public static new Color32 DefaultColor => new Color32();
         public static ColorOptionEnum DefaultColorOption => ColorOptionEnum.Random;
 
@@ -549,7 +539,17 @@ namespace NodeMarkup.Manager
                 color.isVisible = (option == ColorOptionEnum.Custom);
             }
         }
+        protected sealed override EditorItem AddPrefabProperty(UIComponent parent)
+        {
+            var prefabProperty = ComponentPool.Get<SelectPropProperty>(parent, nameof(Prefab));
+            prefabProperty.Text = Localize.StyleOption_AssetProp;
+            prefabProperty.Selector = IsValidProp;
+            prefabProperty.Init(60f);
+            prefabProperty.Prefab = Prefab;
+            prefabProperty.OnValueChanged += (PropInfo value) => Prefab.Value = value;
 
+            return prefabProperty;
+        }
         protected PropColorPropertyPanel AddColorOptionProperty(UIComponent parent)
         {
             var colorOptionProperty = ComponentPool.GetAfter<PropColorPropertyPanel>(parent, nameof(Prefab), nameof(ColorOption));
@@ -606,7 +606,7 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class TreeLineStyle : BaseObjectLineStyle<TreeInfo, SelectTreeProperty>
+    public class TreeLineStyle : BaseObjectLineStyle<TreeInfo>
     {
         public override StyleType Type => StyleType.LineTree;
 
@@ -617,6 +617,16 @@ namespace NodeMarkup.Manager
         protected override IStyleData GetParts(TreeInfo tree, MarkupStylePropItem[] items)
         {
             return new MarkupStyleTree(tree, items);
+        }
+        protected sealed override EditorItem AddPrefabProperty(UIComponent parent)
+        {
+            var prefabProperty = ComponentPool.Get<SelectTreeProperty>(parent, nameof(Prefab));
+            prefabProperty.Text = Localize.StyleOption_AssetTree;
+            prefabProperty.Init(60f);
+            prefabProperty.Prefab = Prefab;
+            prefabProperty.OnValueChanged += (TreeInfo value) => Prefab.Value = value;
+
+            return prefabProperty;
         }
     }
 }
