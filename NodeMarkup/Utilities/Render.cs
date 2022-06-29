@@ -156,7 +156,7 @@ namespace NodeMarkup.Utilities
             return material;
         }
 
-        public static Material CreateRoadMaterial(MaterialType type, Texture2D texture, Texture2D apr = null, int renderQueue = /*2461*/ 2459)
+        public static Material CreateRoadMaterial(MaterialType type, Texture2D texture, Texture2D apr = null, int renderQueue = 2461)
         {
             var material = new Material(Shader.Find("Custom/Net/Road"))
             {
