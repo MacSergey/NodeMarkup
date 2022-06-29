@@ -26,7 +26,7 @@ namespace NodeMarkup.UI.Editors
         }
         public override string Name => NodeMarkup.Localize.LineEditor_Lines;
         public override string EmptyMessage => NodeMarkup.Localize.LineEditor_EmptyMessage;
-        public override Type SupportType { get; } = typeof(ISupportLines);
+        public override Markup.SupportType Support { get; } = Markup.SupportType.Lines;
 
         private PropertyGroupPanel LineProperties { get; set; }
         private AddRuleButton AddButton { get; set; }
@@ -227,7 +227,7 @@ namespace NodeMarkup.UI.Editors
         private void SetupRule(RulePanel rulePanel) => SelectRuleEdge(rulePanel.From, (_) => SelectRuleEdge(rulePanel.To, (_) => SetStyle(rulePanel)));
         private bool SetStyle(RulePanel rulePanel)
         {
-            var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(RegularLineStyle.RegularLineType.Dashed);
+            var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(EditObject.PointPair.NetworkType, RegularLineStyle.RegularLineType.Dashed);
             rulePanel.ApplyStyle(style);
             ContentPanel.Content.ScrollToBottom();
             ContentPanel.Content.ScrollIntoViewRecursive(rulePanel);
@@ -325,7 +325,7 @@ namespace NodeMarkup.UI.Editors
             var info = SelectPanel?.Position switch
             {
                 EdgePosition.Start => Localize.LineEditor_InfoSelectFrom,
-                EdgePosition.End => Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.LineEditor_InfoSelectTo),
+                EdgePosition.End => Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.LineEditor_InfoSelectTo, Editor.EditObject.PointPair.NetworkType),
                 _ => string.Empty,
             };
 

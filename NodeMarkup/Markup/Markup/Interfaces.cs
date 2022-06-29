@@ -10,17 +10,12 @@ namespace NodeMarkup.Manager
         string DeleteMessageDescription { get; }
         Dependences GetDependences();
     }
-    public interface ISupport { }
-    public interface ISupport<Type> where Type : ISupport { }
-    public interface ISupportPoints : ISupport<MarkupEnterPoint> { }
-    public interface ISupportEnters : ISupport<Enter> { }
-    public interface ISupportLines : ISupport<MarkupLine> { }
-    public interface ISupportFillers : ISupport<MarkupFiller> { }
-    public interface ISupportCrosswalks : ISupport<MarkupCrosswalk> { }
-    public interface ISupportStyleTemplate : ISupport<StyleTemplate> { }
-    public interface ISupportIntersectionTemplate : ISupport<IntersectionTemplate> { }
 
-    public interface IUpdate : ISupport
+    public interface ISupport
+    {
+        Markup.SupportType Support { get; }
+    }
+    public interface IUpdate
     {
         void Update(bool onlySelfUpdate = false);
     }

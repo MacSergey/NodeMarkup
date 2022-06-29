@@ -8,6 +8,7 @@ namespace NodeMarkup.Manager
     public interface IPointSource
     {
         public MarkupPoint.LocationType Location { get; }
+        public NetworkType NetworkType { get; }
         public void GetPositionAndDirection(float offset, out Vector3 position, out Vector3 direction);
     }
     public class NetInfoPointSource : IPointSource
@@ -16,6 +17,7 @@ namespace NodeMarkup.Manager
         private DriveLane LeftLane { get; }
         private DriveLane RightLane { get; }
         public MarkupPoint.LocationType Location { get; private set; }
+        public NetworkType NetworkType { get; private set; }
 
         public bool IsEdge => GetIsEdge(LeftLane, RightLane);
         public float CenterDelte => GetCenterDelte(LeftLane, RightLane);
@@ -27,6 +29,7 @@ namespace NodeMarkup.Manager
             LeftLane = leftLane;
             RightLane = rightLane;
             Location = location;
+            NetworkType = (LeftLane == null ? NetworkType.None : leftLane.NetworkType) | (RightLane == null ? NetworkType.None : RightLane.NetworkType);
         }
 
         public void GetPositionAndDirection(float offset, out Vector3 position, out Vector3 direction)
@@ -116,6 +119,7 @@ namespace NodeMarkup.Manager
         public float Position { get; }
         public float Height { get; }
         public MarkupPoint.LocationType Location => throw new NotImplementedException();
+        public NetworkType NetworkType => throw new NotImplementedException();
 
         public RoadGeneratorPointSource(Enter enter, float position, float height = -0.3f)
         {
@@ -136,20 +140,43 @@ namespace NodeMarkup.Manager
 
         public uint LaneId { get; }
         public NetLane NetLane => LaneId.GetLane();
+        public NetworkType NetworkType { get; }
 
         public float Position { get; }
         public float HalfWidth { get; }
         public float LeftSidePos => Position + (Enter.IsLaneInvert ? -HalfWidth : HalfWidth);
         public float RightSidePos => Position + (Enter.IsLaneInvert ? HalfWidth : -HalfWidth);
 
-        public DriveLane(Enter enter, uint laneId, NetInfo.Lane info)
+        public DriveLane(Enter enter, uint laneId, NetInfo.Lane info, NetworkType type)
         {
             Enter = enter;
             LaneId = laneId;
             Position = info.m_position;
             HalfWidth = Mathf.Abs(info.m_width) / 2;
+            NetworkType = type;
         }
 
         public override string ToString() => LaneId.ToString();
+    }
+    [Flags]
+    public enum NetworkType
+    {
+        None = 0,
+        Road = 1 << 0,
+        Track = 1 << 1,
+        Taxiway = 1 << 2,
+        Path = 1 << 3,
+
+        All = Road | Track | Taxiway | Path,
+    }
+    [AttributeUsage(AttributeTargets.Field)]
+    public class NetworkTypeAttribute : Attribute
+    {
+        public NetworkType Type { get; }
+
+        public NetworkTypeAttribute(NetworkType type)
+        {
+            Type = type;
+        }
     }
 }

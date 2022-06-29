@@ -21,6 +21,7 @@ namespace NodeMarkup.Manager
         public virtual MarkupPoint.PointType SupportPoints => MarkupPoint.PointType.Enter;
         public Markup Markup { get; private set; }
         public abstract EnterType Type { get; }
+        public Markup.SupportType Support => Markup.SupportType.Enters;
         public ushort Id { get; }
         protected abstract bool IsExist { get; }
 
@@ -37,6 +38,16 @@ namespace NodeMarkup.Manager
         public bool LanesChanged => GetSegment().m_lanes != FirstLane;
         public string RoadName => GetSegment().Info.name;
 
+        private static VehicleInfo.VehicleType RoadType { get; } =
+            VehicleInfo.VehicleType.Car |
+            VehicleInfo.VehicleType.Bicycle |
+            VehicleInfo.VehicleType.Tram |
+            VehicleInfo.VehicleType.Trolleybus;
+        private static bool IsVehicleLane(NetInfo.Lane info) => (info.m_vehicleType & RoadType) != 0;
+        private static bool IsTaxiwayLane(NetInfo.Lane info) => (info.m_vehicleType & VehicleInfo.VehicleType.Plane) != 0;
+        private static bool IsTrackLane(NetInfo.Lane info) => (info.m_vehicleType & (VehicleInfo.VehicleType.Train | VehicleInfo.VehicleType.Metro | VehicleInfo.VehicleType.Monorail)) != 0;
+        private static bool IsPathLane(NetInfo.Lane info) => (info.m_vehicleType & VehicleInfo.VehicleType.Bicycle) != 0 || (info.m_laneType & NetInfo.LaneType.Pedestrian) != 0;
+
         public IEnumerable<DriveLane> DriveLanes
         {
             get
@@ -44,20 +55,46 @@ namespace NodeMarkup.Manager
                 var segment = GetSegment();
                 var info = segment.Info;
                 var lanes = segment.GetLaneIds().ToArray();
+                var isRoad = info.m_netAI is RoadBaseAI;
+                var isTaxiway = info.m_netAI is TaxiwayAI || info.m_netAI is RunwayAI || info.m_netAI is AirportAreaRunwayAI;
+                var isTrack = info.m_netAI is TrainTrackBaseAI || info.m_netAI is MetroTrackBaseAI;
+                var isPath = info.m_netAI is PedestrianPathAI || info.m_netAI is PedestrianBridgeAI || info.m_netAI is PedestrianTunnelAI || info.m_netAI is PedestrianWayAI;
 
                 foreach (var index in IsLaneInvert ? info.m_sortedLanes : info.m_sortedLanes.Reverse())
                 {
                     var lane = info.m_lanes[index];
-                    if (lane.IsDriveLane())
+                    if (isRoad)
                     {
-                        var driveLane = new DriveLane(this, lanes[index], lane);
-                        if (lane.IsTaxiway())
+                        if (IsVehicleLane(lane))
                         {
+                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Road);
+                            yield return driveLane;
+                        }
+                    }
+                    else if(isTaxiway)
+                    {
+                        if (IsTaxiwayLane(lane))
+                        {
+                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Taxiway);
                             yield return driveLane;
                             yield return driveLane;
                         }
-                        else
+                    }
+                    else if(isTrack)
+                    {
+                        if (IsTrackLane(lane))
+                        {
+                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Track);
                             yield return driveLane;
+                        }
+                    }
+                    else if (isPath)
+                    {
+                        if (IsPathLane(lane))
+                        {
+                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Path);
+                            yield return driveLane;
+                        }
                     }
                 }
             }

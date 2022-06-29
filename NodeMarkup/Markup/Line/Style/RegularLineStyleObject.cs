@@ -17,7 +17,6 @@ namespace NodeMarkup.Manager
     {
         public override bool CanOverlap => true;
 
-        public PropertyValue<string> Name { get; }
         public PropertyValue<float> Step { get; }
 
         public PropertyBoolValue UseRandomAngle { get; }
@@ -33,9 +32,8 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> OffsetBefore { get; }
         public PropertyValue<float> OffsetAfter { get; }
 
-        public BaseObjectLineStyle(string name, float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
+        public BaseObjectLineStyle(float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
         {
-            Name = new PropertyStringValue("N", StyleChanged, name);
             Step = new PropertyStructValue<float>("S", StyleChanged, step);
 
             UseRandomAngle = new PropertyBoolValue("URA", StyleChanged, useRandomAngle);
@@ -57,7 +55,6 @@ namespace NodeMarkup.Manager
             base.CopyTo(target);
             if (target is BaseObjectLineStyle objectTarget)
             {
-                objectTarget.Name.Value = Name;
                 objectTarget.Step.Value = Step;
 
                 objectTarget.UseRandomAngle.Value = UseRandomAngle;
@@ -78,7 +75,7 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddNameProperty(parent));
+            components.Add(AddPrefabProperty(parent));
             components.Add(AddStepProperty(parent));
 
             var useRandomAngle = AddRandomAngleProperty(parent);
@@ -139,17 +136,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected StringPropertyPanel AddNameProperty(UIComponent parent)
-        {
-            var nameProperty = ComponentPool.Get<StringPropertyPanel>(parent, nameof(Name));
-            nameProperty.Text = Localize.StyleOption_ObjectName;
-            nameProperty.FieldWidth = 230f;
-            nameProperty.Init();
-            nameProperty.Value = Name;
-            nameProperty.OnValueChanged += (string value) => Name.Value = value;
-
-            return nameProperty;
-        }
+        protected abstract EditorItem AddPrefabProperty(UIComponent parent);
         protected FloatPropertyPanel AddStepProperty(UIComponent parent)
         {
             var stepProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Step));
@@ -353,7 +340,6 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            Name.ToXml(config);
             Step.ToXml(config);
 
             UseRandomAngle.ToXml(config);
@@ -373,7 +359,6 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            Name.FromXml(config, string.Empty);
             Step.FromXml(config, DefaultObjectStep);
 
             UseRandomAngle.FromXml(config, false);
@@ -393,11 +378,25 @@ namespace NodeMarkup.Manager
     public abstract class BaseObjectLineStyle<PrefabType> : BaseObjectLineStyle
         where PrefabType : PrefabInfo
     {
-        public BaseObjectLineStyle(string name, float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(name, step, angleA, angleB, useRandomAngle, shift, scaleA, scaleB, useRandomScale, elevation, offsetBefore, offsetAfter) { }
+        public PropertyPrefabValue<PrefabType> Prefab { get; }
+
+        public BaseObjectLineStyle(PrefabType prefab, float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(step, angleA, angleB, useRandomAngle, shift, scaleA, scaleB, useRandomScale, elevation, offsetBefore, offsetAfter) 
+        {
+            Prefab = new PropertyPrefabValue<PrefabType>("PRF", StyleChanged, prefab);
+        }
+
+        public override void CopyTo(LineStyle target)
+        {
+            base.CopyTo(target);
+            if (target is BaseObjectLineStyle<PrefabType> objectTarget)
+            {
+                objectTarget.Prefab.Value = Prefab;
+            }
+        }
 
         protected override IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
-            if (PrefabCollection<PrefabType>.FindLoaded(Name) is not PrefabType prefab)
+            if (Prefab.Value is not PrefabType prefab)
                 return new MarkupStyleParts();
 
             if (Shift != 0)
@@ -464,9 +463,22 @@ namespace NodeMarkup.Manager
         }
         protected virtual void CalculateItem(PrefabType prefab, ref MarkupStylePropItem item) { }
         protected abstract IStyleData GetParts(PrefabType prefab, MarkupStylePropItem[] items);
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            Prefab.ToXml(config);
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            base.FromXml(config, map, invert);
+            Prefab.FromXml(config, null);
+        }
     }
     public class PropLineStyle : BaseObjectLineStyle<PropInfo>
     {
+        public static bool IsValidProp(PropInfo info) => info != null && !info.m_isMarker;
         public static new Color32 DefaultColor => new Color32();
         public static ColorOptionEnum DefaultColorOption => ColorOptionEnum.Random;
 
@@ -474,13 +486,13 @@ namespace NodeMarkup.Manager
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
-        public PropLineStyle(string name, ColorOptionEnum colorOption, Color32 color, float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(name, step, angleA, angleB, useRandomAngle, shift, scaleA, scaleB, useRandomScale, elevation, offsetBefore, offsetAfter) 
+        public PropLineStyle(PropInfo prop, ColorOptionEnum colorOption, Color32 color, float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(prop, step, angleA, angleB, useRandomAngle, shift, scaleA, scaleB, useRandomScale, elevation, offsetBefore, offsetAfter) 
         {
             Color.Value = color;
             ColorOption = new PropertyEnumValue<ColorOptionEnum>("CO", StyleChanged, colorOption);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Name, ColorOption, Color, Step, AngleA, AngleB, UseRandomAngle, Shift, ScaleA, ScaleB, UseRandomScale, Elevation, OffsetBefore, OffsetAfter);
+        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, ColorOption, Color, Step, AngleA, AngleB, UseRandomAngle, Shift, ScaleA, ScaleB, UseRandomScale, Elevation, OffsetBefore, OffsetAfter);
 
         protected override void CalculateItem(PropInfo prop, ref MarkupStylePropItem item)
         {
@@ -516,6 +528,8 @@ namespace NodeMarkup.Manager
 
             var colorOption = AddColorOptionProperty(parent);
             var color = AddColorProperty(parent);
+            components.Add(colorOption);
+            components.Add(color);
 
             colorOption.OnSelectObjectChanged += ColorOptionChanged;
             ColorOptionChanged(ColorOption);
@@ -525,11 +539,22 @@ namespace NodeMarkup.Manager
                 color.isVisible = (option == ColorOptionEnum.Custom);
             }
         }
+        protected sealed override EditorItem AddPrefabProperty(UIComponent parent)
+        {
+            var prefabProperty = ComponentPool.Get<SelectPropProperty>(parent, nameof(Prefab));
+            prefabProperty.Text = Localize.StyleOption_AssetProp;
+            prefabProperty.Selector = IsValidProp;
+            prefabProperty.Init(60f);
+            prefabProperty.Prefab = Prefab;
+            prefabProperty.OnValueChanged += (PropInfo value) => Prefab.Value = value;
 
+            return prefabProperty;
+        }
         protected PropColorPropertyPanel AddColorOptionProperty(UIComponent parent)
         {
-            var colorOptionProperty = ComponentPool.GetAfter<PropColorPropertyPanel>(parent, nameof(Name), nameof(ColorOption));
+            var colorOptionProperty = ComponentPool.GetAfter<PropColorPropertyPanel>(parent, nameof(Prefab), nameof(ColorOption));
             colorOptionProperty.Text = Localize.StyleOption_ColorOption;
+            colorOptionProperty.UseWheel = true;
             colorOptionProperty.Init();
             colorOptionProperty.SelectedObject = ColorOption;
             colorOptionProperty.OnSelectObjectChanged += (value) => ColorOption.Value = value;
@@ -585,13 +610,23 @@ namespace NodeMarkup.Manager
     {
         public override StyleType Type => StyleType.LineTree;
 
-        public TreeLineStyle(string name, float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(name, step, angleA, angleB, useRandomAngle, shift, scaleA, scaleB, useRandomScale, elevation, offsetBefore, offsetAfter) { }
+        public TreeLineStyle(TreeInfo tree, float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(tree, step, angleA, angleB, useRandomAngle, shift, scaleA, scaleB, useRandomScale, elevation, offsetBefore, offsetAfter) { }
 
-        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Name, Step, AngleA, AngleB, UseRandomAngle, Shift, ScaleA, ScaleB, UseRandomScale, Elevation, OffsetBefore, OffsetAfter);
+        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Step, AngleA, AngleB, UseRandomAngle, Shift, ScaleA, ScaleB, UseRandomScale, Elevation, OffsetBefore, OffsetAfter);
 
         protected override IStyleData GetParts(TreeInfo tree, MarkupStylePropItem[] items)
         {
             return new MarkupStyleTree(tree, items);
+        }
+        protected sealed override EditorItem AddPrefabProperty(UIComponent parent)
+        {
+            var prefabProperty = ComponentPool.Get<SelectTreeProperty>(parent, nameof(Prefab));
+            prefabProperty.Text = Localize.StyleOption_AssetTree;
+            prefabProperty.Init(60f);
+            prefabProperty.Prefab = Prefab;
+            prefabProperty.OnValueChanged += (TreeInfo value) => Prefab.Value = value;
+
+            return prefabProperty;
         }
     }
 }

@@ -39,9 +39,8 @@ namespace NodeMarkup.UI.Panel
         }
         public void SetVisible(Markup markup)
         {
-            var type = markup.GetType();
             foreach (var tab in Tabs)
-                tab.isVisible = tab.Editor.SupportType.IsAssignableFrom(type);
+                tab.isVisible = (markup.Support & tab.Editor.Support) != 0;
         }
 
         public void AddTab(Editor editor)

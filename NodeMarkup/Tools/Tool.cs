@@ -137,7 +137,7 @@ namespace NodeMarkup.Tools
 
         private void StartCreateFiller()
         {
-            if (Markup is ISupportFillers)
+            if ((Markup.Support & Markup.SupportType.Fillers) != 0)
             {
                 SetMode(ToolModeType.MakeFiller);
                 if (NextMode is MakeFillerToolMode fillerToolMode)
@@ -610,7 +610,7 @@ namespace NodeMarkup.Tools
 
         #region UTILITIES
 
-        public TStyle GetStyleByModifier<TStyle, TStyleType>(TStyleType ifNotFound, bool allowNull = false)
+        public TStyle GetStyleByModifier<TStyle, TStyleType>(NetworkType networkType, TStyleType ifNotFound, bool allowNull = false)
             where TStyleType : Enum
             where TStyle : Style
         {
@@ -618,6 +618,9 @@ namespace NodeMarkup.Tools
 
             foreach (var style in EnumExtension.GetEnumValues<TStyleType>(i => true).Select(i => i.ToEnum<Style.StyleType, TStyleType>()))
             {
+                if ((style.GetNetworkType() & networkType) == 0)
+                    continue;
+
                 if (StylesModifier.TryGetValue(style, out SavedInt saved) && (StyleModifier)saved.value == modifier)
                 {
                     if ((style + 1).GetItem() == 0)
@@ -634,7 +637,21 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            return SingletonManager<StyleTemplateManager>.Instance.GetDefault<TStyle>(ifNotFound.ToEnum<Style.StyleType, TStyleType>());
+            {
+                var defaultStyle = ifNotFound.ToEnum<Style.StyleType, TStyleType>();
+                if ((defaultStyle.GetNetworkType() & networkType) == 0)
+                {
+                    foreach (var style in EnumExtension.GetEnumValues<TStyleType>(i => true).Select(i => i.ToEnum<Style.StyleType, TStyleType>()))
+                    {
+                        if ((style.GetNetworkType() & networkType) != 0)
+                        {
+                            defaultStyle = style;
+                            break;
+                        }
+                    }
+                }
+                return SingletonManager<StyleTemplateManager>.Instance.GetDefault<TStyle>(defaultStyle);
+            }
         }
 
         private static SavedInt GetSavedStylesModifier(Style.StyleType type) => new SavedInt($"{nameof(StylesModifier)}{type.ToInt()}", Settings.SettingsFile, (int)GetDefaultStylesModifier(type), true);
@@ -661,17 +678,20 @@ namespace NodeMarkup.Tools
                 _ => StyleModifier.NotSet,
             };
         }
-        public string GetModifierToolTip<StyleType>(string text)
+        public string GetModifierToolTip<StyleType>(string text, NetworkType networkType)
             where StyleType : Enum
         {
-            var modifiers = GetStylesModifier<StyleType>().ToArray();
+            var modifiers = GetStylesModifier<StyleType>(networkType).ToArray();
             return modifiers.Any() ? $"{text}:\n{string.Join("\n", modifiers)}" : text;
         }
-        private IEnumerable<string> GetStylesModifier<StyleType>()
+        private IEnumerable<string> GetStylesModifier<StyleType>(NetworkType networkType)
             where StyleType : Enum
         {
             foreach (var style in EnumExtension.GetEnumValues<StyleType>(i => true))
             {
+                if ((style.GetNetworkType() & networkType) == 0)
+                    continue;
+
                 var general = (Style.StyleType)(object)style;
                 var modifier = (StyleModifier)StylesModifier[general].value;
                 if (modifier != StyleModifier.NotSet)

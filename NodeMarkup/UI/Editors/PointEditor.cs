@@ -13,7 +13,7 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
-        public override Type SupportType { get; } = typeof(ISupportPoints);
+        public override Markup.SupportType Support { get; } = Markup.SupportType.Points;
 
         protected PropertyGroupPanel TemplatePanel { get; private set; }
 

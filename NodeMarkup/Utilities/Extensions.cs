@@ -25,6 +25,7 @@ namespace NodeMarkup.Utilities
             else
                 return modifier.ToString();
         }
+        public static NetworkType GetNetworkType<T>(this T value) where T : Enum => value.GetAttr<NetworkTypeAttribute, T>()?.Type ?? NetworkType.All;
 
         public static Alignment Invert(this Alignment alignment) => (Alignment)(1 - alignment.Sign());
         public static int Sign(this Alignment alignment) => (int)alignment - 1;
@@ -34,6 +35,34 @@ namespace NodeMarkup.Utilities
 
         public static Style.StyleType GetGroup(this Style.StyleType type) => type & Style.StyleType.GroupMask;
         public static Style.StyleType GetItem(this Style.StyleType type) => type & Style.StyleType.ItemMask;
+
+        public static string GetPrefabName(PropInfo prop)
+        {
+            if (prop == null)
+                return string.Empty;
+            else if (Locale.Exists("PROPS_TITLE", prop.name))
+                return Locale.Get("PROPS_TITLE", prop.name);
+            else
+                return prop.name;
+        }
+        public static string GetPrefabName(TreeInfo tree)
+        {
+            if (tree == null)
+                return string.Empty;
+            else if (Locale.Exists("TREE_TITLE", tree.name))
+                return Locale.Get("TREE_TITLE", tree.name);
+            else
+                return tree.name;
+        }
+        public static string GetPrefabName(NetInfo network)
+        {
+            if (network == null)
+                return string.Empty;
+            else if (Locale.Exists("NET_TITLE", network.name))
+                return Locale.Get("NET_TITLE", network.name);
+            else
+                return network.name;
+        }
     }
     public class NotExistEnterException : Exception
     {

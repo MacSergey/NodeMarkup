@@ -13,10 +13,24 @@ using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, ISupportEnters, ISupportPoints, ISupportLines, ISupportFillers, ISupportStyleTemplate, ISupportIntersectionTemplate, IToXml
+    public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, IToXml
     {
+        [Flags]
+        public enum SupportType
+        {
+            None = 0,
+            Points = 1 << 0,
+            Enters = 1 << 1,
+            Lines = 1 << 2,
+            Fillers = 1 << 3,
+            Croswalks = 1 << 4,
+            StyleTemplates = 1 << 5,
+            IntersectionTemplates = 1 << 6,
+        }
+
         #region PROPERTIES
         public abstract MarkupType Type { get; }
+        public abstract SupportType Support { get; }
         public virtual MarkupLine.LineType SupportLines => MarkupLine.LineType.Regular;
 
         public ushort Id { get; }
@@ -697,7 +711,7 @@ namespace NodeMarkup.Manager
             foreach (var pair in toInitLines)
                 pair.Key.FromXml(pair.Value, map, invertLines.Contains(pair.Key));
 
-            if (this is ISupportFillers)
+            if ((Support & SupportType.Fillers) != 0)
             {
                 foreach (var fillerConfig in config.Elements(MarkupFiller.XmlName))
                 {
@@ -706,7 +720,7 @@ namespace NodeMarkup.Manager
                 }
             }
 
-            if (this is ISupportCrosswalks)
+            if ((Support & SupportType.Croswalks) != 0)
             {
                 foreach (var crosswalkConfig in config.Elements(MarkupCrosswalk.XmlName))
                 {

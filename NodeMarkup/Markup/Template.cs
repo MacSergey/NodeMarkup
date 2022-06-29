@@ -23,6 +23,7 @@ namespace NodeMarkup.Manager
         public string XmlSection => XmlName;
         public abstract TemplateType Type { get; }
         public abstract TemplateManager Manager { get; }
+        public abstract Markup.SupportType Support { get; }
 
         public TemplateAsset Asset { get; set; }
         public bool IsAsset => Asset != null;
@@ -104,6 +105,7 @@ namespace NodeMarkup.Manager
     public class StyleTemplate : Template<StyleTemplate>
     {
         public override TemplateType Type => TemplateType.Style;
+        public override Markup.SupportType Support => Markup.SupportType.StyleTemplates;
         public override TemplateManager Manager => SingletonManager<StyleTemplateManager>.Instance;
 
         public override bool HasPreview => true;
@@ -193,6 +195,7 @@ namespace NodeMarkup.Manager
     public class IntersectionTemplate : Template<IntersectionTemplate>
     {
         public override TemplateType Type => TemplateType.Intersection;
+        public override Markup.SupportType Support => Markup.SupportType.IntersectionTemplates;
         public override TemplateManager Manager => SingletonManager<IntersectionTemplateManager>.Instance;
 
         public override string DeleteCaptionDescription => Localize.PresetEditor_DeleteCaptionDescription;

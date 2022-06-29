@@ -61,6 +61,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Nothing found.
+        /// </summary>
+        public static string AssetPopup_NothingFound {
+            get {
+                return ResourceManager.GetString("AssetPopup_NothingFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на To be able to set the crosswalk borders, you must have lines started from the same points as the crosswalk.
         /// </summary>
         public static string CrosswalkEditor_BordersWarning {
@@ -1275,10 +1284,10 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - &quot;What`s New&quot; message this will pop-up one time after an update and can be disabled in the Options menu.
-        ///- Added the following translations:  Czech, Dutch, French, German, Japanese, Polish, Russian, and Spanish (Please contact the mod author to assist with translation into your own language).
-        ///- End Points can now be dragged from one to another by holding Ctrl.
-        ///- Backups - In the Options menu the marking data on a map can now be backed up by dumping to a file and then importing it. This is necessary if y [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на [UPDATED] &quot;What`s New&quot; message will pop-up one time after an update and can be disabled in the Options menu.
+        ///[TRANSLATION] Added the following translations:  Czech, Dutch, French, German, Japanese, Polish, Russian, and Spanish.
+        ///[NEW] End Points can now be dragged from one to another by holding Ctrl.
+        ///[NEW] Backups - In the Options menu the marking data on a map can now be backed up by dumping to a file and then importing it. This is necessary if you need to disable the mod, make a new save without the mod [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_1 {
             get {
@@ -1287,11 +1296,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
-        ///- Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: &quot;Solid&quot; and &quot;Dashed&quot;.
-        ///- New line style: &quot;Solid &amp; Dashed&quot;.
-        ///- Lines and templates in the list now have icons that show style and colour.
-        ///- Markings will be now copied when the road is copied with MoveIt (function will [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на [NEW] Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
+        ///[NEW] Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: &quot;Solid&quot; and &quot;Dashed&quot;.
+        ///[NEW] New line style: &quot;Solid &amp; Dashed&quot;.
+        ///[NEW] Lines and templates in the list now have icons that show style and colour.
+        ///[NEW] Markings will be now copied when the road is copied with M [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_2 {
             get {
@@ -1300,9 +1309,9 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Fix hold Alt, Ctrl and Shift buttons on Mac OS and Linux.
-        ///- Added &quot;Double solid&quot; and &quot;Double Dashed&quot; stop line styles.
-        ///- Added Italian and Portuguese translations..
+        ///   Ищет локализованную строку, похожую на [FIXED] Fix hold Alt, Ctrl and Shift buttons on Mac OS and Linux.
+        ///[NEW] Added &quot;Double solid&quot; and &quot;Double Dashed&quot; stop line styles.
+        ///[TRANSLATION] Added Italian and Portuguese translations..
         /// </summary>
         public static string Mod_WhatsNewMessage1_2_1 {
             get {
@@ -1311,10 +1320,10 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
-        ///- Added crosswalks. Hold Shift to create them. Currently available Styles: &quot;Existing crosswalk&quot;, &quot;Zebra&quot;, &quot;Double Zebra&quot;, &quot;Parallel solid lines&quot;, &quot;Parallel dashed lines&quot;, &quot;Ladder&quot;, &quot;Solid&quot;.
-        ///- Added perpendicular lines. These lines don&apos;t have second point, they are generated as a straight line from one point. To create perpendicular line, pull the line in the opposite direction from the intersection.
-        ///- Added the ability to copy/paste style of lines, fillers, and [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на [NEW] Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
+        ///[NEW] Added crosswalks. Hold Shift to create them. Currently available Styles: &quot;Existing crosswalk&quot;, &quot;Zebra&quot;, &quot;Double Zebra&quot;, &quot;Parallel solid lines&quot;, &quot;Parallel dashed lines&quot;, &quot;Ladder&quot;, &quot;Solid&quot;.
+        ///[NEW] Added perpendicular lines. These lines don&apos;t have second point, they are generated as a straight line from one point. To create perpendicular line, pull the line in the opposite direction from the intersection.
+        ///[NEW] Added the ability to copy/paste style of lin [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_3 {
             get {
@@ -1323,16 +1332,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на WARNING: Default templates setting will be reset.
-        ///
-        ///- Added the ability to copy/paste marking from one exist intersection to another exist intersection.
-        ///- Now the marking is not removed if you replace the road with a different number of points.
-        ///- Added map editor support.
-        ///- Added the ability to save marking data in intersection assets.
-        ///- Added &quot;Shark teeth&quot; line and stop line style.
-        ///- Added &quot;Solid&amp;Dashed&quot; stop line style.
-        ///- Added &quot;Chess board&quot; crosswalk style.
-        ///- Added the ability to set create modif [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на [WARNING] Default templates setting will be reset.
+        ///[NEW] Added the ability to copy/paste marking from one exist intersection to another exist intersection.
+        ///[UPDATED] Now the marking is not removed if you replace the road with a different number of points.
+        ///[NEW] Added map editor support.
+        ///[NEW] Added the ability to save marking data in intersection assets.
+        ///[NEW] Added &quot;Shark teeth&quot; line and stop line style.
+        ///[NEW] Added &quot;Solid&amp;Dashed&quot; stop line style.
+        ///[NEW] Added &quot;Chess board&quot; crosswalk style.
+        ///[NEW] Ad [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_4 {
             get {
@@ -1341,11 +1349,11 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added the ability to draw marking under tracks. This can be disabled in the options. WARNING: This option change game objects render order.
-        ///- Added modifier to create a empty line (without rules).
-        ///- Added the ability to create all edge lines at once (line from road last point to next road first point).
-        ///- Lines no longer climb on pavement. Work only for lines from the first or last road point.
-        ///- Added &quot;Quick crosswalk option setup&quot; - automatically open border selection interface after create crosswalk  [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на [NEW] Added the ability to draw marking under tracks. This can be disabled in the options. WARNING: This option change game objects render order.
+        ///[NEW] Added modifier to create a empty line (without rules).
+        ///[NEW] Added the ability to create all edge lines at once (line from road last point to next road first point).
+        ///[NEW] Lines no longer climb on pavement. Work only for lines from the first or last road point.
+        ///[NEW] Added &quot;Quick crosswalk option setup&quot; - automatically open border selection interface aft [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_4_1 {
             get {
@@ -1354,12 +1362,12 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added the ability to save whole intersection marking as preset and after apply to any other intersection.
-        ///- Added the ability to save templates and presets as asset and share it over Workshop.
-        ///- Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
-        ///- Now templates values can be changes only in edit mode, what prevents accidental changes to values.
-        ///- Added panel tips (can be disable in settings).
-        ///- Added the ability to cut new line by crosswalks (can be disable [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на [NEW] Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+        ///[NEW] Added the ability to save templates and presets as asset and share it over Workshop.
+        ///[UPDATED] Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+        ///[UPDATED] Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+        ///[NEW] Added panel tips (can be disable in settings).
+        ///[NEW] Added the ability to cut new li [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_5 {
             get {
@@ -1368,8 +1376,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Improve messages about load data errors.
-        ///- Fix and update localizes..
+        ///   Ищет локализованную строку, похожую на [UPDATED] Improve messages about load data errors.
+        ///[FIXED] Fix and update localizes..
         /// </summary>
         public static string Mod_WhatsNewMessage1_5_1 {
             get {
@@ -1378,7 +1386,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Update Harmony dependence: resolving conflicts with others mods that use it.
+        ///   Ищет локализованную строку, похожую на [UPDATED] Update Harmony dependence: resolving conflicts with others mods that use it.
         /// </summary>
         public static string Mod_WhatsNewMessage1_5_2 {
             get {
@@ -1387,7 +1395,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Fixed a situation where markings could disappear from saving.
+        ///   Ищет локализованную строку, похожую на [FIXED] Fixed a situation where markings could disappear from saving.
         /// </summary>
         public static string Mod_WhatsNewMessage1_5_3 {
             get {
@@ -1396,15 +1404,14 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added the ability to make markings on segments.
-        ///- Added filler 3D styles: &quot;Pavement&quot; and &quot;Grass&quot;.
-        ///- Added line 3D style: &quot;Pavement&quot;.
-        ///- Added the ability follow rails to filler styles &quot;Stripes&quot; and &quot;Chevron&quot;.
-        ///- Improve performance by added LOD (Level Of Detail) to markings. The LOD distance is set in the settings.
-        ///- Added support taxiways.
-        ///- Fixed a conflict with other mods that could cause the tool button to not appear.
-        ///- Fixed a conflict with scroll panel and scroll wheel to change values.
-        ///- Now  [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на [NEW] Added the ability to make markings on segments.
+        ///[NEW] Added filler 3D styles: &quot;Pavement&quot; and &quot;Grass&quot;.
+        ///[NEW] Added line 3D style: &quot;Pavement&quot;.
+        ///[NEW] Added the ability follow rails to filler styles &quot;Stripes&quot; and &quot;Chevron&quot;.
+        ///[NEW] Improve performance by added LOD (Level Of Detail) to markings. The LOD distance is set in the settings.
+        ///[NEW] Added support taxiways.
+        ///[FIXED] Fixed a conflict with other mods that could cause the tool button to not appear.
+        ///[FIXED] Fixed a conflict with scroll panel and sc [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_6 {
             get {
@@ -1413,10 +1420,10 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - New node/segment selection mode. The selection area exactly follows the actual shapes of the nodes and segments that prevents difficulties with selecting too close together nodes.
-        ///- Added automatic line creation when create filler. No more need add lines before create filler.
-        ///- Added the ability to split point to two virtual points, set split shift and choose lines alignment. Now possible continue one double line with two separating single lines.
-        ///- Added style modifier &quot;From clipboard&quot;. Hold Ctrl+Alt t [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на [NEW] New node/segment selection mode. The selection area exactly follows the actual shapes of the nodes and segments that prevents difficulties with selecting too close together nodes.
+        ///[NEW] Added automatic line creation when create filler. No more need add lines before create filler.
+        ///[NEW] Added the ability to split point to two virtual points, set split shift and choose lines alignment. Now possible continue one double line with two separating single lines.
+        ///[NEW] Added style modifier &quot;From clipboard&quot;. [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_7 {
             get {
@@ -1425,13 +1432,13 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added the ability to set alignment for stop lines.
-        ///- Additional templates sort: 
-        ///	1 - Default templates sorted by type
-        ///	2 - Other templates sorted by type then by name
-        ///	3 - Other author templates sort by author name then by type then by name
-        ///- Fix load segment presets.
-        ///- Fix default panel size..
+        ///   Ищет локализованную строку, похожую на [NEW] Added the ability to set alignment for stop lines.
+        ///[NEW] Additional templates sort: 
+        ///---1 - Default templates sorted by type
+        ///---2 - Other templates sorted by type then by name
+        ///---3 - Other author templates sort by author name then by type then by name
+        ///[FIXED] Fix load segment presets.
+        ///[FIXED] Fix default panel size..
         /// </summary>
         public static string Mod_WhatsNewMessage1_7_1 {
             get {
@@ -1440,8 +1447,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Fix 3D fillers height outside available tiles.
-        ///- Fix creating button duplicates..
+        ///   Ищет локализованную строку, похожую на [FIXED] Fix 3D fillers height outside available tiles.
+        ///[FIXED] Fix creating button duplicates..
         /// </summary>
         public static string Mod_WhatsNewMessage1_7_2 {
             get {
@@ -1450,8 +1457,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added missing dependencies checker.
-        ///- Fix 3D fillers height on nodes outside available tiles..
+        ///   Ищет локализованную строку, похожую на [NEW] Added missing dependencies checker.
+        ///[FIXED] Fix 3D fillers height on nodes outside available tiles..
         /// </summary>
         public static string Mod_WhatsNewMessage1_7_3 {
             get {
@@ -1460,9 +1467,9 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Fixed save and load presets&apos; screenshot.
-        ///- Fixed bug when nodes with marking after loading had a wrong shape.
-        ///- Added Indonesian translation..
+        ///   Ищет локализованную строку, похожую на [FIXED] Fixed save and load presets&apos; screenshot.
+        ///[FIXED] Fixed bug when nodes with marking after loading had a wrong shape.
+        ///[TRANSLATION] Added Indonesian translation..
         /// </summary>
         public static string Mod_WhatsNewMessage1_7_4 {
             get {
@@ -1471,14 +1478,14 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added selection step over like in MoveIt. Press Ctrl+Space to step over (you can rebind in mod options).
-        ///- Added curbs to filler 3D styles.
-        ///- Added rounded corners to filler 3D styles.
-        ///- Added offset from lines to filler 3D styles.
-        ///- Added filler styles: Gravel, Ruined, Cliff.
-        ///- Added pavement stop line style.
-        ///- Added option &quot;Follow guide lines&quot; for solid filler, so now possible make solid fillers on sloped segments.
-        ///- Added the ability to click with Ctrl to select line or crosswalk instend of dele [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на [NEW] Added selection step over like in MoveIt. Press Ctrl+Space to step over (you can rebind in mod options).
+        ///[NEW] Added curbs to filler 3D styles.
+        ///[NEW] Added rounded corners to filler 3D styles.
+        ///[NEW] Added offset from lines to filler 3D styles.
+        ///[NEW] Added filler styles: Gravel, Ruined, Cliff.
+        ///[NEW] Added pavement stop line style.
+        ///[NEW] Added option &quot;Follow guide lines&quot; for solid filler, so now possible make solid fillers on sloped segments.
+        ///[NEW] Added the ability to click with Ctrl to select l [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_8 {
             get {
@@ -1487,8 +1494,8 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Buttons in paste mode moved ouside of circle.
-        ///- Added Korean translation..
+        ///   Ищет локализованную строку, похожую на [UPDATED] Buttons on paste mode moved ouside of circle.
+        ///[TRANSLATION] Added Korean translation..
         /// </summary>
         public static string Mod_WhatsNewMessage1_8_1 {
             get {
@@ -1497,12 +1504,12 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added discard button after create template/preset.
-        ///- Added colored text to tooltips.
-        ///- Added the ability to hide original mod button in toolbar If you use UUI mod.
-        ///- Fixed not removed items from list when this items were removed.
-        ///- Fixed line grouping.
-        ///- Added Turkish translation..
+        ///   Ищет локализованную строку, похожую на [NEW] Added discard button after create template/preset.
+        ///[NEW] Added colored text to tooltips.
+        ///[NEW] Added the ability to hide original mod button in toolbar If you use UUI mod.
+        ///[FIXED] Fixed not removed items from list when this items were removed.
+        ///[FIXED] Fixed line grouping.
+        ///[TRANSLATION] Added Turkish translation..
         /// </summary>
         public static string Mod_WhatsNewMessage1_8_2 {
             get {
@@ -1511,14 +1518,13 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added the ability to save points offset values for each roads.
-        ///- Added gap option to zebra and double zebra crosswalk styles. It allows to set different space each N dashes.
-        ///- Added intersection points to lines from one splited point with different alignment.
-        ///- Added settings of sorting templates, presets and applying list.
-        ///- Added template grouping by fit (Perfect/Close/Possible/Poor).
-        ///- Added illumination to marking while editing at night.
-        ///- Added illumination to cursor like default game tool.
-        ///-  [остаток строки не уместился]&quot;;.
+        ///   Ищет локализованную строку, похожую на [NEW] Added the ability to save points offset values for each roads.
+        ///[NEW] Added gap option to zebra and double zebra crosswalk styles. It allows to set different space each N dashes.
+        ///[NEW] Added intersection points to lines from one splited point with different alignment.
+        ///[NEW] Added settings of sorting templates, presets and applying list.
+        ///[NEW] Added template grouping by fit (Perfect/Close/Possible/Poor).
+        ///[NEW] Added illumination to marking while editing at night.
+        ///[NEW] Added illumination to cursor [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_9 {
             get {
@@ -2932,6 +2938,42 @@ namespace NodeMarkup {
         public static string StyleOption_AngleBetween {
             get {
                 return ResourceManager.GetString("StyleOption_AngleBetween", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Network asset.
+        /// </summary>
+        public static string StyleOption_AssetNetwork {
+            get {
+                return ResourceManager.GetString("StyleOption_AssetNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not set.
+        /// </summary>
+        public static string StyleOption_AssetNotSet {
+            get {
+                return ResourceManager.GetString("StyleOption_AssetNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Prop asset.
+        /// </summary>
+        public static string StyleOption_AssetProp {
+            get {
+                return ResourceManager.GetString("StyleOption_AssetProp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Tree asset.
+        /// </summary>
+        public static string StyleOption_AssetTree {
+            get {
+                return ResourceManager.GetString("StyleOption_AssetTree", resourceCulture);
             }
         }
         
