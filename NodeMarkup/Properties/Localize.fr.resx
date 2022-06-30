@@ -1626,4 +1626,30 @@ Cliquez pour modifier le marquage</value>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>Aucun résultat</value>
   </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Application automatique du marquage copié si la source correspond à la cible</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Probabilité</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Portée</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Statique</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] Ajout des styles de lignes Accessoires et Arbres. Ils permettent de placer n'importe quel accessoire ou arbre sur une ligne. Ces objets ne sont pas comptés dans les limites des accessoires et arbres du jeu.
+[NEW] Ajout du style de ligne Réseau décoratif. Il permet de placer n'importe quel réseau décoratif comme une clôture sur une ligne. Ces réseaux ne sont pas comptabilisés dans les limites des nœuds et segments du jeu.
+[NEW] Ajout de la possibilité de faire des marquages sur les voies ferrées, les rails de métro et les chemins piétons.
+[NEW] Ajout de l'application automatique du marquage lorsqu'il est copié depuis une autre intersection ou depuis un préréglage si l'intersection cible correspond à l'intersection source. Peut être désactivé dans les paramètres du mod.
+[NEW] Ajout de la possibilité de désactiver la coupure des trottoirs.
+[NEW] La coupure des trottoirs est disponible pour les segments.
+[UPDATED] Le modèle 3D des remplisseurs s'étend sous la surface de la route afin d'éviter tout vide sur les nœuds en pente.
+[UPDATED] Ajout de la possibilité de faire pivoter les styles Dents de requin.
+[FIXED] Correction d'un trou dans la superposition lors de la sélection de gros nœuds.
+[FIXED] Correction de l'ombre sur la bordure du trottoir.
+[UPDATED] Ajout du format numérique (m, %, °) pour toutes les propriétés.
+[FIXED] Correction des points manqués par les remplisseurs à l'intersection des lignes normales.</value>
+  </data>
 </root>

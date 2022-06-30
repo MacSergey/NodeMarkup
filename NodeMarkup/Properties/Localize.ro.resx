@@ -1403,4 +1403,30 @@ Apăsați pentru a modifica marcajele</value>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>Nu s-a găsit nimic</value>
   </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Aplică automat lipirea marcajelor dacă sursa se potrivește cu obiectul țintă</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Probabilitate</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Rază</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Static</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] Adăugată posibilitatea de a pune obiecte și copaci pe linii. Ele permit să se pună orice obiect și copaci pe linie. Obiectele astea nu sunt considerate în parametri obiectelor și a copacilor al jocului.
+[NEW] Adăugată stilul Rețea decorativă al liniilor. Aceasta permite să se pună orice rețea decorativa ca gardurile pe linii. Aceste obiecte nu sunt considerate in parametri nodurilor și segmentelor al jocului.
+[NEW] Adăugată posibilitatea de a folosi marcajele pe șiniile trenurilor, metrourilor și pe drumurile pietonale.
+[NEW] Adăugată aplicarea automată a marcajelor cănd vine lipită din buffer sau preset dacă intersecția interesată se potrivește intersecția sursă. Această opțiune poate fi dezacivată din setările modului.
+[NEW] Adăugată posibilitatea de a dezactiva tăierea trotuarului.
+[NEW] Opțiunea de tăiere a trotuarelor este valabilă și pentru segmente.
+[UPDATED] Plasa de umplutură 3D vine acum extinsă sub suprafeței strâzii pentru a preveni goluri în nodurile înclinate.
+[UPDATED] Adăugată posibilitatea de a roti Dinții de rechin.
+[FIXED] Rezolvată problema găurii în overlay cănd vin selectate noduri prea mari.
+[FIXED] Rezolvată problema umbrei în liniile trotuarelor.
+[UPDATED] Adăugată formatul numeric (m, %, °) la toate proprietățiile.
+[FIXED] Rezolvată problema punctelor fără umpluturi în intersecții între linii normale.</value>
+  </data>
 </root>

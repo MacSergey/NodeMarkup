@@ -1520,4 +1520,17 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>Keine Treffer</value>
   </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Automatisch die Markierungen vom Kopieren einfügen, wenn die Quelle dem Ziel entspricht</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Wahrscheinlichkeit</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Reichweite</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Statisch</value>
+  </data>
+  
 </root>

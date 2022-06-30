@@ -1458,4 +1458,11 @@ Klik om de markering te wijzigen</value>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>Niets gevonden</value>
   </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Voeg automatisch de markeringen van het kopiëren in als de bron overeenkomt met de bestemming</value>
+  </data>
+  
+  
+  
+  
 </root>

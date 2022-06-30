@@ -1446,8 +1446,21 @@ Kliknij aby edytować oznaczenia</value>
     <value>Odległość powtarzania</value>
   </data>
   
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Nie ustawione</value>
+  </data>
   
   
   
+  
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Prawdopodobieństwo</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Zasięg</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Statyczny</value>
+  </data>
   
 </root>

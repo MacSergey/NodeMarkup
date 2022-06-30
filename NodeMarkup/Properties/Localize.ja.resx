@@ -1461,4 +1461,17 @@
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>何も見つかりませんでした</value>
   </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>ソースとターゲットが一致する場合は、マーキングの貼り付けを自動的に適用</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>出現率</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>範囲</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>固定</value>
+  </data>
+  
 </root>

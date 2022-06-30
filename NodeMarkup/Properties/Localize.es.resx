@@ -1458,4 +1458,11 @@ Haga clic para editar las marcas</value>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>No se ha encontrado nada</value>
   </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Aplicar marcas de forma automática al pegar si la intersección de destino es igual a la de origen</value>
+  </data>
+  
+  
+  
+  
 </root>
