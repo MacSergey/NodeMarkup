@@ -285,7 +285,7 @@ namespace NodeMarkup.Manager
     public class EnterData : IToXml
     {
         public ushort Id { get; private set; }
-        public int Points { get; private set; }
+        public int PointCount { get; private set; }
         public float NormalAngle { get; private set; }
         public float CornerAngle { get; private set; }
 
@@ -295,7 +295,7 @@ namespace NodeMarkup.Manager
         public EnterData(Enter enter)
         {
             Id = enter.Id;
-            Points = enter.PointCount;
+            PointCount = enter.PointCount;
             NormalAngle = enter.NormalAngle;
             CornerAngle = enter.CornerAngle;
         }
@@ -304,7 +304,7 @@ namespace NodeMarkup.Manager
             var data = new EnterData
             {
                 Id = config.GetAttrValue<ushort>(nameof(Id)),
-                Points = config.GetAttrValue<int>("P"),
+                PointCount = config.GetAttrValue<int>("P"),
                 NormalAngle = config.GetAttrValue<float>("A")
             };
             return data;
@@ -314,7 +314,7 @@ namespace NodeMarkup.Manager
         {
             var config = new XElement(XmlSection);
             config.AddAttr(nameof(Id), Id);
-            config.AddAttr("P", Points);
+            config.AddAttr("P", PointCount);
             config.AddAttr("A", NormalAngle);
             return config;
         }

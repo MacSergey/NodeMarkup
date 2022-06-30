@@ -249,8 +249,7 @@ namespace NodeMarkup.Tools
 
             bool Paste()
             {
-                BaseOrderToolMode.IntersectionTemplate = MarkupBuffer;
-                SetMode(ToolModeType.PasteEntersOrder);
+                ApplyMarking(MarkupBuffer);
                 return true;
             }
         }
@@ -264,9 +263,7 @@ namespace NodeMarkup.Tools
         public void ApplyIntersectionTemplate(IntersectionTemplate template)
         {
             SingletonMod<Mod>.Logger.Debug($"Apply intersection template");
-
-            BaseOrderToolMode.IntersectionTemplate = template;
-            SetMode(ToolModeType.ApplyIntersectionTemplateOrder);
+            ApplyMarking(template);
         }
         private void CreateEdgeLines()
         {
@@ -304,6 +301,56 @@ namespace NodeMarkup.Tools
             foreach (var crosswalk in Markup.Crosswalks)
                 Markup.CutLinesByCrosswalk(crosswalk);
         }
+
+        private void ApplyMarking(IntersectionTemplate source)
+        {
+            if (Settings.AutoApplyPasting && Markup.EntersCount == source.Enters.Length)
+            {
+                var markupPoints = Markup.Enters.Select(e => e.PointCount).ToArray();
+                var templatePoints = source.Enters.Select(e => e.PointCount).ToArray();
+                for (int shift = 0; shift < markupPoints.Length; shift += 1)
+                {
+                    bool match = true;
+                    for (int indexTarget = 0; indexTarget < markupPoints.Length; indexTarget += 1)
+                    {
+                        var indexSource = indexTarget.NextIndex(markupPoints.Length, shift);
+                        if (markupPoints[indexTarget] != templatePoints[indexSource])
+                        {
+                            match = false;
+                            break;
+                        }
+                    }
+
+                    if (!match)
+                        continue;
+
+                    var map = new ObjectsMap();
+                    var markupEnters = Markup.Enters.ToArray();
+                    for (int indexTarget = 0; indexTarget < markupPoints.Length; indexTarget += 1)
+                    {
+                        var indexSource = indexTarget.NextIndex(markupPoints.Length, shift);
+                        switch (Markup.Type)
+                        {
+                            case MarkupType.Node:
+                                map.AddSegment(source.Enters[indexSource].Id, markupEnters[indexTarget].Id);
+                                break;
+                            case MarkupType.Segment:
+                                map.AddNode(source.Enters[indexSource].Id, markupEnters[indexTarget].Id);
+                                break;
+                        }
+                    }
+
+                    Markup.Clear();
+                    Markup.FromXml(SingletonMod<Mod>.Version, source.Data, map);
+
+                    return;
+                }
+            }
+
+            BaseOrderToolMode.IntersectionTemplate = source;
+            SetMode(ToolModeType.PasteEntersOrder);
+        }
+
         private delegate ushort? SegmentGetter(ushort[] segmentIds, ushort beforeSegmentId);
         private void ApplyBetweenIntersections()
         {

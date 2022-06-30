@@ -1625,4 +1625,7 @@ Click to edit markings</value>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>Nothing found</value>
   </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Auto apply marking pasting if the source matches the target</value>
+  </data>
 </root>

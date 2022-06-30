@@ -135,7 +135,7 @@ namespace NodeMarkup.UI.Editors
         }
         private bool PointsMatch(IntersectionTemplate template, Markup markup)
         {
-            var templatePoints = template.Enters.Select(e => e.Points).ToArray();
+            var templatePoints = template.Enters.Select(e => e.PointCount).ToArray();
             var markupPoints = markup.Enters.Select(e => e.PointCount).ToArray();
             if (markupPoints.Length == templatePoints.Length)
             {
@@ -154,7 +154,7 @@ namespace NodeMarkup.UI.Editors
 
         private bool SimilarWidth(IntersectionTemplate template, Markup markup)
         {
-            var templatePoints = template.Enters.Select(e => e.Points).ToArray();
+            var templatePoints = template.Enters.Select(e => e.PointCount).ToArray();
             var markupPoints = markup.Enters.Select(e => e.PointCount).ToArray();
             if (markupPoints.Length == templatePoints.Length)
             {

@@ -1976,6 +1976,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Auto apply marking pasting if the source matches the target.
+        /// </summary>
+        public static string Settings_AutoApplyPasting {
+            get {
+                return ResourceManager.GetString("Settings_AutoApplyPasting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Backup markings.
         /// </summary>
         public static string Settings_BackupMarking {

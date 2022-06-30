@@ -39,6 +39,7 @@ namespace NodeMarkup
         public static SavedBool CutLineByCrosswalk { get; } = new SavedBool(nameof(CutLineByCrosswalk), SettingsFile, true, true);
         public static SavedBool NotCutBordersByCrosswalk { get; } = new SavedBool(nameof(NotCutBordersByCrosswalk), SettingsFile, true, true);
         public static SavedBool HideStreetName { get; } = new SavedBool(nameof(HideStreetName), SettingsFile, true, true);
+        public static SavedBool AutoApplyPasting { get; } = new SavedBool(nameof(AutoApplyPasting), SettingsFile, true, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
         public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
         public static SavedString Roads { get; } = new SavedString(nameof(Roads), SettingsFile, string.Empty, true);
@@ -127,6 +128,7 @@ namespace NodeMarkup
             AddCheckBox(gameplayGroup, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
             AddCheckBox(gameplayGroup, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
             AddCheckBox(gameplayGroup, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
+            AddCheckBox(gameplayGroup, Localize.Settings_AutoApplyPasting, AutoApplyPasting);
 
             void OnIlluminationChanged()
             {

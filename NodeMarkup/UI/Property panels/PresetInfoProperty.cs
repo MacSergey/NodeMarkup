@@ -58,7 +58,7 @@ namespace NodeMarkup.UI
             for (var i = 0; i < template.Enters.Length; i += 1)
             {
                 titlesText.Add(string.Format(NodeMarkup.Localize.PresetInfo_RoadPoints, i + 1));
-                valuesText.Add(template.Enters[i].Points.ToString());
+                valuesText.Add(template.Enters[i].PointCount.ToString());
             }
 
             Titles.text = string.Join("\n", titlesText.ToArray());
