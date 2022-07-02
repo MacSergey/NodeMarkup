@@ -57,6 +57,9 @@ namespace NodeMarkup.Utilities
         public static string ArrowDown { get; } = nameof(ArrowDown);
         public static string ArrowRight { get; } = nameof(ArrowRight);
 
+        public static string Single { get; } = nameof(Single);
+        public static string Range { get; } = nameof(Range);
+
         private static Dictionary<string, TextureHelper.SpriteParamsGetter> Files { get; } = new Dictionary<string, TextureHelper.SpriteParamsGetter>
         {
             {nameof(OrderButtons), OrderButtons},
@@ -69,6 +72,7 @@ namespace NodeMarkup.Utilities
             {nameof(Button), Button},
             {nameof(UUIButton), UUIButton},
             {nameof(Arrows), Arrows},
+            {nameof(ButtonIcons), ButtonIcons},
         };
 
         static NodeMarkupTextures()
@@ -103,6 +107,6 @@ namespace NodeMarkup.Utilities
 
         private static UITextureAtlas.SpriteInfo[] Arrows(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 32, 32, ArrowDown, ArrowRight).ToArray();
 
-
+        private static UITextureAtlas.SpriteInfo[] ButtonIcons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 30, 20, Single, Range).ToArray();
     }
 }

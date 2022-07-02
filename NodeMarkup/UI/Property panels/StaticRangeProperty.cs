@@ -1,5 +1,6 @@
 ﻿using ModsCommon;
 using ModsCommon.UI;
+using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -183,11 +184,7 @@ namespace NodeMarkup.UI
         {
             Selector = Content.AddUIComponent<BoolSegmented>();
             Selector.SetDefaultStyle();
-            Selector.StopLayout();
-            Selector.AddItem(false, NodeMarkup.Localize.StyleOption_ObjectStatic);
-            Selector.AddItem(true, NodeMarkup.Localize.StyleOption_ObjectRange);
-            Selector.StartLayout();
-            Selector.OnSelectObjectChanged += SelectorChanged;
+            Selector.name = nameof(Selector);
 
             FieldA = Content.AddUIComponent<FieldType>();
             FieldA.SetDefaultStyle();
@@ -199,6 +196,20 @@ namespace NodeMarkup.UI
 
             FieldA.OnValueChanged += ValueAChanged;
             FieldB.OnValueChanged += ValueBChanged;
+        }
+
+        public override void Init()
+        {
+            Selector.AutoButtonSize = false;
+            Selector.ButtonWidth = 30f;
+            Selector.SetDefaultStyle();
+            Selector.StopLayout();
+            Selector.AddItem(false, label: NodeMarkup.Localize.StyleOption_ObjectStatic, iconAtlas: NodeMarkupTextures.Atlas, iconSprite: NodeMarkupTextures.Single);
+            Selector.AddItem(true, label: NodeMarkup.Localize.StyleOption_ObjectRange, iconAtlas: NodeMarkupTextures.Atlas, iconSprite: NodeMarkupTextures.Range);
+            Selector.StartLayout();
+            Selector.OnSelectObjectChanged += SelectorChanged;
+
+            base.Init();
         }
 
         public override void DeInit()
@@ -222,7 +233,7 @@ namespace NodeMarkup.UI
 
             FieldA.SetDefault();
             FieldB.SetDefault();
-            Selector.SetDefaultStyle();
+            Selector.DeInit();
         }
 
         public void SetValues(ValueType valueA, ValueType valueB)
