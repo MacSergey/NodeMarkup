@@ -68,6 +68,7 @@ namespace NodeMarkup.UI
             Background.atlas = CommonTextures.Atlas;
             Background.normalBgSprite = CommonTextures.FieldNormal;
             Background.hoveredBgSprite = CommonTextures.FieldHovered;
+            Background.disabledBgSprite = CommonTextures.FieldDisabled;
 
             Panel = Background.AddUIComponent<PanelType>();
             Panel.relativePosition = new Vector3(0f, 0f);

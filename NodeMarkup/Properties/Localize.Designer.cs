@@ -3248,6 +3248,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Probability.
+        /// </summary>
+        public static string StyleOption_ObjectProbability {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectProbability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Range.
+        /// </summary>
+        public static string StyleOption_ObjectRange {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Scale.
         /// </summary>
         public static string StyleOption_ObjectScale {
@@ -3262,6 +3280,15 @@ namespace NodeMarkup {
         public static string StyleOption_ObjectShift {
             get {
                 return ResourceManager.GetString("StyleOption_ObjectShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Static.
+        /// </summary>
+        public static string StyleOption_ObjectStatic {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectStatic", resourceCulture);
             }
         }
         

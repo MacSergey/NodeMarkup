@@ -1628,4 +1628,13 @@ Click to edit markings</value>
   <data name="Settings_AutoApplyPasting" xml:space="preserve">
     <value>Auto apply marking pasting if the source matches the target</value>
   </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Probability</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Range</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Static</value>
+  </data>
 </root>
