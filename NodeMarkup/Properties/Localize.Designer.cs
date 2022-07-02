@@ -1296,6 +1296,18 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на [NEW] Added Prop and Tree line styles. They allow place any prop or tree on lines. Those props are not counted in game prop and tree limits.
+        ///[NEW] Added Decorative network line style. It allows place any decorative network like fence on lines. Those networks are not counted in game node and segment limits.
+        ///[NEW] Added the ability to use markings on train tracks, metro tracks and pedestrian paths.
+        ///[NEW] Added auto applying marking when it is pasted from buffer or preset if target intersection matches sour [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_10 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на [NEW] Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
         ///[NEW] Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: &quot;Solid&quot; and &quot;Dashed&quot;.
         ///[NEW] New line style: &quot;Solid &amp; Dashed&quot;.
