@@ -17,33 +17,23 @@ namespace NodeMarkup.Manager
     {
         public override bool CanOverlap => true;
 
+        public PropertyValue<int> Probability { get; }
         public PropertyValue<float> Step { get; }
 
-        public PropertyBoolValue UseRandomAngle { get; }
-        public PropertyValue<float> AngleA { get; }
-        public PropertyValue<float> AngleB { get; }
-
-        public PropertyBoolValue UseRandomScale { get; }
-        public PropertyValue<float> ScaleA { get; }
-        public PropertyValue<float> ScaleB { get; }
+        public PropertyVector2Value Angle { get; }
+        public PropertyVector2Value Scale { get; }
 
         public PropertyValue<float> Shift { get; }
         public PropertyValue<float> Elevation { get; }
         public PropertyValue<float> OffsetBefore { get; }
         public PropertyValue<float> OffsetAfter { get; }
 
-        public BaseObjectLineStyle(float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
+        public BaseObjectLineStyle(int probability, float step, Vector2 angle, float shift, Vector2 scale, float elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
         {
+            Probability = new PropertyStructValue<int>("P", StyleChanged, probability);
             Step = new PropertyStructValue<float>("S", StyleChanged, step);
-
-            UseRandomAngle = new PropertyBoolValue("URA", StyleChanged, useRandomAngle);
-            AngleA = new PropertyStructValue<float>("AA", StyleChanged, angleA);
-            AngleB = new PropertyStructValue<float>("AB", StyleChanged, angleB);
-
-            UseRandomScale = new PropertyBoolValue("URSC", StyleChanged, useRandomScale);
-            ScaleA = new PropertyStructValue<float>("SCA", StyleChanged, scaleA);
-            ScaleB = new PropertyStructValue<float>("SCB", StyleChanged, scaleB);
-
+            Angle = new PropertyVector2Value(StyleChanged, angle, "AA", "AB");
+            Scale = new PropertyVector2Value(StyleChanged, scale, "SCA", "SCB");
             Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
             Elevation = new PropertyStructValue<float>("E", StyleChanged, elevation);
             OffsetBefore = new PropertyStructValue<float>("OB", StyleChanged, offsetBefore);
@@ -55,16 +45,10 @@ namespace NodeMarkup.Manager
             base.CopyTo(target);
             if (target is BaseObjectLineStyle objectTarget)
             {
+                objectTarget.Probability.Value = Probability;
                 objectTarget.Step.Value = Step;
-
-                objectTarget.UseRandomAngle.Value = UseRandomAngle;
-                objectTarget.AngleA.Value = AngleA;
-                objectTarget.AngleB.Value = AngleB;
-
-                objectTarget.UseRandomScale.Value = UseRandomScale;
-                objectTarget.ScaleA.Value = ScaleA;
-                objectTarget.ScaleB.Value = ScaleB;
-
+                objectTarget.Angle.Value = Angle;
+                objectTarget.Scale.Value = Scale;
                 objectTarget.Shift.Value = Shift;
                 objectTarget.Elevation.Value = Elevation;
                 objectTarget.OffsetBefore.Value = OffsetBefore;
@@ -76,72 +60,52 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddPrefabProperty(parent));
-            components.Add(AddStepProperty(parent));
 
-            var useRandomAngle = AddRandomAngleProperty(parent);
-            var angle = AddAngleProperty(parent);
-            var angleRange = AddAngleRangeProperty(parent);
-            components.Add(useRandomAngle);
-            components.Add(angle);
-            components.Add(angleRange);
-            useRandomAngle.OnSelectObjectChanged += ChangeAngleOption;
-            ChangeAngleOption(useRandomAngle.SelectedObject);
+            var probabilityProperty = AddProbabilityProperty(parent);
+            var stepProperty = AddStepProperty(parent);
+            var angleProperty = AddAngleRangeProperty(parent);
+            var shiftProperty = AddShiftProperty(parent);
+            var elevationProperty = AddElevationProperty(parent);
+            var scaleProperty = AddScaleRangeProperty(parent);
+            var offsetBeforeProperty = AddOffsetBeforeProperty(parent);
+            var offsetAfterProperty = AddOffsetAfterProperty(parent);
 
-            components.Add(AddShiftProperty(parent));
-            components.Add(AddElevationProperty(parent));
-
-            var useRandomScale = AddRandomScaleProperty(parent);
-            var scale = AddScaleProperty(parent);
-            var scaleRange = AddScaleRangeProperty(parent);
-            components.Add(useRandomScale);
-            components.Add(scale);
-            components.Add(scaleRange);
-            useRandomScale.OnSelectObjectChanged += ChangeScaleOption;
-            ChangeScaleOption(useRandomScale.SelectedObject);
-
-            components.Add(AddOffsetBeforeProperty(parent));
-            components.Add(AddOffsetAfterProperty(parent));
-
-            void ChangeAngleOption(bool random)
-            {
-                if (random)
-                {
-                    angle.isVisible = false;
-                    angleRange.isVisible = true;
-                    angleRange.SetValues(AngleA, AngleB);
-                }
-                else
-                {
-                    angle.isVisible = true;
-                    angleRange.isVisible = false;
-                    angle.Value = AngleA;
-                }
-
-            }
-
-            void ChangeScaleOption(bool random)
-            {
-                if (random)
-                {
-                    scale.isVisible = false;
-                    scaleRange.isVisible = true;
-                    scaleRange.SetValues(ScaleA * 100f, ScaleB * 100f);
-                }
-                else
-                {
-                    scale.isVisible = true;
-                    scaleRange.isVisible = false;
-                    scale.Value = ScaleA * 100f;
-                }
-            }
+            components.Add(probabilityProperty);
+            components.Add(stepProperty);
+            components.Add(angleProperty);
+            components.Add(shiftProperty);
+            components.Add(elevationProperty);
+            components.Add(scaleProperty);
+            components.Add(offsetBeforeProperty);
+            components.Add(offsetAfterProperty);
         }
 
         protected abstract EditorItem AddPrefabProperty(UIComponent parent);
+
+        protected IntPropertyPanel AddProbabilityProperty(UIComponent parent)
+        {
+            var probabilityProperty = ComponentPool.Get<IntPropertyPanel>(parent, nameof(Probability));
+            probabilityProperty.Text = Localize.StyleOption_ObjectProbability;
+            probabilityProperty.Format = Localize.NumberFormat_Percent;
+            probabilityProperty.UseWheel = true;
+            probabilityProperty.WheelStep = 1;
+            probabilityProperty.WheelTip = Settings.ShowToolTip;
+            probabilityProperty.CheckMin = true;
+            probabilityProperty.MinValue = 0;
+            probabilityProperty.CheckMax = true;
+            probabilityProperty.MaxValue = 100;
+            probabilityProperty.Init();
+            probabilityProperty.Value = Probability;
+            probabilityProperty.OnValueChanged += (int value) => Probability.Value = value;
+
+            return probabilityProperty;
+        }
+
         protected FloatPropertyPanel AddStepProperty(UIComponent parent)
         {
             var stepProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Step));
             stepProperty.Text = Localize.StyleOption_ObjectStep;
-            stepProperty.Format = "{0}m";
+            stepProperty.Format = Localize.NumberFormat_Meter;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
             stepProperty.WheelTip = Settings.ShowToolTip;
@@ -153,45 +117,12 @@ namespace NodeMarkup.Manager
 
             return stepProperty;
         }
-        protected BoolListPropertyPanel AddRandomAngleProperty(UIComponent parent)
-        {
-            var useRandomAngleProperty = ComponentPool.GetBefore<BoolListPropertyPanel>(parent, nameof(UseRandomAngle));
-            useRandomAngleProperty.Text = "Angle option";
-            useRandomAngleProperty.Init("Static", "Range", false);
-            useRandomAngleProperty.SelectedObject = UseRandomAngle;
-            useRandomAngleProperty.OnSelectObjectChanged += (value) => UseRandomAngle.Value = value;
 
-            return useRandomAngleProperty;
-        }
-        protected FloatPropertyPanel AddAngleProperty(UIComponent parent)
+        protected FloatStaticRangeProperty AddAngleRangeProperty(UIComponent parent)
         {
-            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(AngleA));
-            angleProperty.Text = Localize.StyleOption_ObjectAngle;
-            angleProperty.Format = "{0}°";
-            angleProperty.UseWheel = true;
-            angleProperty.CyclicalValue = true;
-            angleProperty.WheelStep = 1f;
-            angleProperty.WheelTip = Settings.ShowToolTip;
-            angleProperty.CheckMin = true;
-            angleProperty.CheckMax = true;
-            angleProperty.MinValue = -180;
-            angleProperty.MaxValue = 180;
-            angleProperty.Init();
-            angleProperty.Value = AngleA;
-            angleProperty.OnValueChanged += (float value) =>
-            {
-                AngleA.Value = value;
-                AngleB.Value = value;
-            };
-
-            return angleProperty;
-        }
-        protected FloatRangePropertyPanel AddAngleRangeProperty(UIComponent parent)
-        {
-            var angleProperty = ComponentPool.Get<FloatRangePropertyPanel>(parent, nameof(AngleA));
+            var angleProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Angle));
             angleProperty.Text = Localize.StyleOption_ObjectAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
-            angleProperty.FieldWidth = (100f - 5f) * 0.5f;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
             angleProperty.WheelTip = Settings.ShowToolTip;
@@ -200,13 +131,10 @@ namespace NodeMarkup.Manager
             angleProperty.MinValue = -180;
             angleProperty.MaxValue = 180;
             angleProperty.AllowInvert = true;
+            angleProperty.CyclicalValue = true;
             angleProperty.Init();
-            angleProperty.SetValues(AngleA, AngleB);
-            angleProperty.OnValueChanged += (float valueA, float valueB) =>
-                {
-                    AngleA.Value = valueA;
-                    AngleB.Value = valueB;
-                };
+            angleProperty.SetValues(Angle.Value.x, Angle.Value.y);
+            angleProperty.OnValueChanged += (float valueA, float valueB) => Angle.Value = new Vector2(valueA, valueB);
 
             return angleProperty;
         }
@@ -230,19 +158,9 @@ namespace NodeMarkup.Manager
             return shiftProperty;
         }
 
-        protected BoolListPropertyPanel AddRandomScaleProperty(UIComponent parent)
+        protected FloatStaticRangeProperty AddScaleRangeProperty(UIComponent parent)
         {
-            var useRandomScaleProperty = ComponentPool.GetBefore<BoolListPropertyPanel>(parent, nameof(UseRandomScale));
-            useRandomScaleProperty.Text = "Scale option";
-            useRandomScaleProperty.Init("Static", "Range", false);
-            useRandomScaleProperty.SelectedObject = UseRandomScale;
-            useRandomScaleProperty.OnSelectObjectChanged += (value) => UseRandomScale.Value = value;
-
-            return useRandomScaleProperty;
-        }
-        protected FloatPropertyPanel AddScaleProperty(UIComponent parent)
-        {
-            var scaleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(ScaleA));
+            var scaleProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Scale));
             scaleProperty.Text = Localize.StyleOption_ObjectScale;
             scaleProperty.Format = Localize.NumberFormat_Percent;
             scaleProperty.UseWheel = true;
@@ -253,35 +171,8 @@ namespace NodeMarkup.Manager
             scaleProperty.MinValue = 1f;
             scaleProperty.MaxValue = 500f;
             scaleProperty.Init();
-            scaleProperty.Value = ScaleA * 100f;
-            scaleProperty.OnValueChanged += (float value) =>
-            {
-                ScaleA.Value = value * 0.01f;
-                ScaleB.Value = value * 0.01f;
-            };
-
-            return scaleProperty;
-        }
-        protected FloatRangePropertyPanel AddScaleRangeProperty(UIComponent parent)
-        {
-            var scaleProperty = ComponentPool.Get<FloatRangePropertyPanel>(parent, nameof(ScaleB));
-            scaleProperty.Text = Localize.StyleOption_ObjectScale;
-            scaleProperty.Format = Localize.NumberFormat_Percent;
-            scaleProperty.FieldWidth = (100f - 5f) * 0.5f;
-            scaleProperty.UseWheel = true;
-            scaleProperty.WheelStep = 1f;
-            scaleProperty.WheelTip = Settings.ShowToolTip;
-            scaleProperty.CheckMin = true;
-            scaleProperty.CheckMax = true;
-            scaleProperty.MinValue = 1f;
-            scaleProperty.MaxValue = 500f;
-            scaleProperty.Init();
-            scaleProperty.SetValues(ScaleA * 100f, ScaleB * 100f);
-            scaleProperty.OnValueChanged += (float valueA, float valueB) =>
-            {
-                ScaleA.Value = valueA * 0.01f;
-                ScaleB.Value = valueB * 0.01f;
-            };
+            scaleProperty.SetValues(Scale.Value.x * 100f, Scale.Value.y * 100f);
+            scaleProperty.OnValueChanged += (float valueA, float valueB) => Scale.Value = new Vector2(valueA, valueB) * 0.01f;
 
             return scaleProperty;
         }
@@ -340,16 +231,10 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
+            Probability.ToXml(config);
             Step.ToXml(config);
-
-            UseRandomAngle.ToXml(config);
-            AngleA.ToXml(config);
-            AngleB.ToXml(config);
-
-            UseRandomScale.ToXml(config);
-            ScaleA.ToXml(config);
-            ScaleB.ToXml(config);
-
+            Angle.ToXml(config);
+            Scale.ToXml(config);
             Shift.ToXml(config);
             Elevation.ToXml(config);
             OffsetBefore.ToXml(config);
@@ -359,16 +244,10 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
+            Probability.FromXml(config, DefaultObjectProbability);
             Step.FromXml(config, DefaultObjectStep);
-
-            UseRandomAngle.FromXml(config, false);
-            AngleA.FromXml(config, DefaultObjectAngle);
-            AngleB.FromXml(config, DefaultObjectAngle);
-
-            UseRandomScale.FromXml(config, false);
-            ScaleA.FromXml(config, DefaultObjectScale);
-            ScaleB.FromXml(config, DefaultObjectScale);
-
+            Angle.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
+            Scale.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
             Shift.FromXml(config, DefaultObjectShift);
             Elevation.FromXml(config, DefaultObjectElevation);
             OffsetBefore.FromXml(config, DefaultObjectOffsetBefore);
@@ -380,7 +259,7 @@ namespace NodeMarkup.Manager
     {
         public PropertyPrefabValue<PrefabType> Prefab { get; }
 
-        public BaseObjectLineStyle(PrefabType prefab, float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(step, angleA, angleB, useRandomAngle, shift, scaleA, scaleB, useRandomScale, elevation, offsetBefore, offsetAfter) 
+        public BaseObjectLineStyle(PrefabType prefab, int probability, float step, Vector2 angle, float shift, Vector2 scale, float elevation, float offsetBefore, float offsetAfter) : base(probability, step, angle, shift, scale, elevation, offsetBefore, offsetAfter)
         {
             Prefab = new PropertyPrefabValue<PrefabType>("PRF", StyleChanged, prefab);
         }
@@ -419,44 +298,35 @@ namespace NodeMarkup.Manager
             var count = Mathf.CeilToInt(length / Step);
 
             var items = new MarkupStylePropItem[count];
-            if (count == 1)
+
+            var startOffset = (length - (count - 1) * Step) * 0.5f;
+            for (int i = 0; i < count; i += 1)
             {
-                items[0].Position = trajectory.Position(0.5f);
-                items[0].Position.y += Elevation;
-                items[0].Angle = trajectory.Tangent(0.5f).AbsoluteAngle() + AngleA * Mathf.Deg2Rad;
-                items[0].Scale = ScaleA;
-            }
-            else
-            {
-                var startOffset = (length - (count - 1) * Step) * 0.5f;
-                for (int i = 0; i < count; i += 1)
+                if (SimulationManager.instance.m_randomizer.Int32(1, 100) > Probability)
+                    continue;
+
+                float t;
+                if (count == 1)
+                    t = 0.5f;
+                else
                 {
                     var distance = startOffset + Step * i;
-                    var t = trajectory.Travel(distance);
-                    items[i].Position = trajectory.Position(t);
-                    items[i].Position.y += Elevation;
-
-                    items[i].Angle = trajectory.Tangent(t).AbsoluteAngle();
-                    if (UseRandomAngle)
-                    {
-                        var minAngle = Mathf.Min(AngleA, AngleB);
-                        var maxAngle = Mathf.Max(AngleA, AngleB);
-                        var randomAngle = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(maxAngle - minAngle));
-                        items[i].Angle += (minAngle + randomAngle) * Mathf.Deg2Rad;
-                    }
-                    else
-                        items[i].Angle += AngleA * Mathf.Deg2Rad;
-
-                    if (UseRandomScale)
-                    {
-                        var randomScale = (float)SimulationManager.instance.m_randomizer.UInt32((uint)((ScaleB - ScaleA) * 1000));
-                        items[i].Scale = ScaleA + randomScale * 0.001f;
-                    }
-                    else
-                        items[i].Scale = ScaleA;
-
-                    CalculateItem(prefab, ref items[i]);
+                    t = trajectory.Travel(distance);
                 }
+
+                items[i].Position = trajectory.Position(t);
+                items[i].Position.y += Elevation;
+                items[i].Angle = trajectory.Tangent(t).AbsoluteAngle();
+
+                var minAngle = Mathf.Min(Angle.Value.x, Angle.Value.y);
+                var maxAngle = Mathf.Max(Angle.Value.x, Angle.Value.y);
+                var randomAngle = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(maxAngle - minAngle));
+                items[i].Angle += (minAngle + randomAngle) * Mathf.Deg2Rad;
+
+                var randomScale = (float)SimulationManager.instance.m_randomizer.UInt32((uint)((Scale.Value.y - Scale.Value.x) * 1000));
+                items[i].Scale = Scale.Value.x + randomScale * 0.001f;
+
+                CalculateItem(prefab, ref items[i]);
             }
 
             return GetParts(prefab, items);
@@ -486,17 +356,17 @@ namespace NodeMarkup.Manager
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
-        public PropLineStyle(PropInfo prop, ColorOptionEnum colorOption, Color32 color, float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(prop, step, angleA, angleB, useRandomAngle, shift, scaleA, scaleB, useRandomScale, elevation, offsetBefore, offsetAfter) 
+        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float step, Vector2 angle, float shift, Vector2 scale, float elevation, float offsetBefore, float offsetAfter) : base(prop, probability, step, angle, shift, scale, elevation, offsetBefore, offsetAfter)
         {
             Color.Value = color;
             ColorOption = new PropertyEnumValue<ColorOptionEnum>("CO", StyleChanged, colorOption);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, ColorOption, Color, Step, AngleA, AngleB, UseRandomAngle, Shift, ScaleA, ScaleB, UseRandomScale, Elevation, OffsetBefore, OffsetAfter);
+        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
 
         protected override void CalculateItem(PropInfo prop, ref MarkupStylePropItem item)
         {
-            switch(ColorOption.Value)
+            switch (ColorOption.Value)
             {
                 case ColorOptionEnum.Color1:
                     item.Color = prop.m_color0;
@@ -516,7 +386,7 @@ namespace NodeMarkup.Manager
                 case ColorOptionEnum.Custom:
                     item.Color = Color;
                     break;
-            }    
+            }
         }
         protected override IStyleData GetParts(PropInfo prop, MarkupStylePropItem[] items)
         {
@@ -610,9 +480,9 @@ namespace NodeMarkup.Manager
     {
         public override StyleType Type => StyleType.LineTree;
 
-        public TreeLineStyle(TreeInfo tree, float step, float angleA, float angleB, bool useRandomAngle, float shift, float scaleA, float scaleB, bool useRandomScale, float elevation, float offsetBefore, float offsetAfter) : base(tree, step, angleA, angleB, useRandomAngle, shift, scaleA, scaleB, useRandomScale, elevation, offsetBefore, offsetAfter) { }
+        public TreeLineStyle(TreeInfo tree, int probability, float step, Vector2 angle, float shift, Vector2 scale, float elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, shift, scale, elevation, offsetBefore, offsetAfter) { }
 
-        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Step, AngleA, AngleB, UseRandomAngle, Shift, ScaleA, ScaleB, UseRandomScale, Elevation, OffsetBefore, OffsetAfter);
+        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value,Probability, Step, Angle, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
 
         protected override IStyleData GetParts(TreeInfo tree, MarkupStylePropItem[] items)
         {

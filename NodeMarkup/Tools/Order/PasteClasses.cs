@@ -91,7 +91,7 @@ namespace NodeMarkup.Tools
                 _target = value;
 
                 for (var i = 0; i < Points.Length; i += 1)
-                    Points[i].Target = _target is TargetEnter targetEnter && i < targetEnter.Enter.Points ? targetEnter.Points[!IsMirror ? i : targetEnter.Points.Length - i - 1] : null;
+                    Points[i].Target = _target is TargetEnter targetEnter && i < targetEnter.Enter.PointCount ? targetEnter.Points[!IsMirror ? i : targetEnter.Points.Length - i - 1] : null;
             }
         }
         public SourcePoint[] Points { get; }
@@ -99,7 +99,7 @@ namespace NodeMarkup.Tools
         public SourceEnter(EnterData enter, int num) : base(num)
         {
             Enter = enter;
-            Points = Enumerable.Range(0, Enter.Points).Select(i => new SourcePoint(i)).ToArray();
+            Points = Enumerable.Range(0, Enter.PointCount).Select(i => new SourcePoint(i)).ToArray();
         }
         protected override Vector3 GetPosition(BaseOrderToolMode toolMode) => Target?.GetSourcePosition(this) ?? Vector3.zero;
     }

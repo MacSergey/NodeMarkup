@@ -107,10 +107,12 @@ namespace NodeMarkup.UI.Editors
             if (editObject is MarkupRegularLine line)
             {
                 var aligment = AddAlignmentProperty(line.RawAlignment, NodeMarkup.Localize.LineEditor_LineAlignment);
-                AddClipSidewalkProperty(line);
+                var clipSidewalk = AddClipSidewalkProperty(line);
                 LinePropertiesVisibleAction = () =>
                 {
+                    clipSidewalk.isVisible = line.PointPair.NetworkType == NetworkType.Road;
                     aligment.isVisible = IsSplit;
+                    LineProperties.isVisible = clipSidewalk.isVisibleSelf || aligment.isVisibleSelf;
                 };
             }
             else if (editObject is MarkupStopLine stopLine)
@@ -119,9 +121,9 @@ namespace NodeMarkup.UI.Editors
                 var end = AddAlignmentProperty(stopLine.RawEndAlignment, NodeMarkup.Localize.LineEditor_LineEndAlignment);
                 LinePropertiesVisibleAction = () =>
                 {
-                    LineProperties.isVisible = IsSplit;
                     start.isVisible = stopLine.Start.IsSplit;
                     end.isVisible = stopLine.End.IsSplit;
+                    LineProperties.isVisible = start.isVisibleSelf || end.isVisibleSelf;
                 };
             }
 

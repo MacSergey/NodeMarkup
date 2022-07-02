@@ -188,7 +188,7 @@ namespace NodeMarkup.Manager
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
         public LineBorders Borders => new LineBorders(this);
-        private bool DefaultClipSidewalk => Markup.Type == MarkupType.Node && PointPair.IsSideLine;
+        private bool DefaultClipSidewalk => Markup.Type == MarkupType.Node && PointPair.IsSideLine && PointPair.NetworkType == NetworkType.Road;
 
         public MarkupRegularLine(Markup markup, MarkupPoint first, MarkupPoint second, RegularLineStyle style = null, Alignment alignment = Alignment.Centre, bool update = true) : this(markup, MarkupPointPair.FromPoints(first, second, out bool invert), style, !invert ? alignment : alignment.Invert(), update) { }
         public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre, bool update = true) : base(markup, pointPair, false)
