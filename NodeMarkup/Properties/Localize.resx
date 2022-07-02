@@ -1635,7 +1635,7 @@ Click to edit markings</value>
     <value>Range</value>
   </data>
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
-    <value>Static</value>
+    <value>Single</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
     <value>[NEW] Added Prop and Tree line styles. They allow place any prop or tree on lines. Those objects are not counted in game prop and tree limits.

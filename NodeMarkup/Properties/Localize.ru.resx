@@ -1636,7 +1636,7 @@
     <value>Диапазон</value>
   </data>
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
-    <value>Статичный</value>
+    <value>Постоянный</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
     <value>[NEW] Добавлены стили линий Реквизит и Дерево. Они позволяют размещать любой реквизит и деревья на линиях. Эти объекты не учитываются в лимитах игры.

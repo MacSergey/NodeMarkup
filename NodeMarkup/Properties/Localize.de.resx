@@ -1532,5 +1532,18 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
     <value>Statisch</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] Dekorationen und Bäume als Linienstil hinzugefügt. Dies ermöglicht Dekorationen oder Bäume auf Linien hinzuzufügen. Diese Objekte reduzieren nicht in die Dekorations- und Baum-Limits.
+[NEW] Dekorative Netzwerke als Linien hinzugefügt. Dies ermöglicht jeda Art dekorativen Netzwerkes, wie z.B. Zäune, als Linien hinzuzufügen. Diese Netzwerke reduzieren nicht die Kreuzungs- und Segmente-Limits.
+[NEW] Die Möglichkeit Markierungen auf Gleisen, U-Bahn-Gleisen und Fußgängerwegen zu erstellen wurde hinzugefügt.
+[NEW] Automatisches Anwenden von kopierten Markierungen, die aus der Zwischenablage oder den Vorlagen eingefügt werden, wenn die Ziel-Kreuzung zu der Quell-Kreuzung passt. Kann in den Mod-Einstellungen deaktiviert werden.
+[NEW] Die Möglichkeit, das Überlagern der Markierungen auf Bürgersteigen zu deaktivieren wurde hinzugefügt.
+[NEW] Das Überlagern der Markierungen auf Bürgersteigen ist auch für Segmente verfügbar.
+[UPDATED] 3D Füllungs-Mesh geht nun unter der Straßenoberfläche weiter um Lücken bei Straßen mit Gefälle oder Steigung zu verhindern.
+[UPDATED] Heifischzahn-Markierungen können nun rotiert werden.
+[FIXED] Das Loch in der Überlagerung bei der Auswahl von sehr gestreckten Netwerk-Knoten wurde behoben.
+[FIXED] Der fehlerhafte Schatten ander Bürgersteigkante als Linienstil wurde berhoben.
+[UPDATED] Zahlenformat (m, %, °) zu allen Eingabewerten hinzugefügt.
+[FIXED] Fehlende Füll-Eckpunkte auf Kreuzungen zwischen normalen Linien wurden behoben.</value>
+  </data>
 </root>

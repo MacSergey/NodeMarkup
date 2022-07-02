@@ -1403,9 +1403,17 @@
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>아무 것도 없음</value>
   </data>
-  
-  
-  
-  
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>출처가 목표와 같을 경우 자동으로 마킹 붙여넣기 적용</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>확률</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>범위</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>단일</value>
+  </data>
   
 </root>
