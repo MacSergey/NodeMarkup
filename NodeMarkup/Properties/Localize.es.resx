@@ -1461,8 +1461,27 @@ Haga clic para editar las marcas</value>
   <data name="Settings_AutoApplyPasting" xml:space="preserve">
     <value>Aplicar marcas de forma automática al pegar si la intersección de destino es igual a la de origen</value>
   </data>
-  
-  
-  
-  
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Probabilidad</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Rango</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Único</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] Agregado Decoraciones y Árboles como estilos de línea. Permite colocar cualquier decoración o árboles como línea. Estos objetos no se toman en cuenta para los límites de objetos en el juego.
+[NEW] Agreagdo estilos de línea decorativa Permite agreras redes decorativas como vallas en las líneas. Estos objetos no se toman en cuenta para los límites de objetos en el juego.
+[NEW] Ahora se puede agregar marcas en vías de tren, metro y caminerias. 
+[NEW] Las marcas se aplican de forma automática cuando se pega del buffer o ajuste si la intersección de destino es similar a la intesección de origen. Se puede deshabilitar esta opción en la configuración del mod.
+[NEW] Se puede desactivar el clipping de las aceras. 
+[NEW] Se puede agregar clipping de aceras en segmentos.
+[UPDATED] Los 3D filler mesh se extienden por debajo del camino para prevenir espacios en nodos con inclinación.
+[UPDATED] Se puede rotar los "Dientes de Tiburón".
+[FIXED] Hueco en la capa cuando el nodo es muy grande.
+[FIXED] Sombra en las líneas de pavimento.
+[UPDATED] Agregado formatos de número (m, %, °) en todas las propiedades.
+[FIXED] Puntos de relleno en intersecciones entre líneas normales.</value>
+  </data>
 </root>

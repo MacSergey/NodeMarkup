@@ -1461,8 +1461,27 @@ Klik om de markering te wijzigen</value>
   <data name="Settings_AutoApplyPasting" xml:space="preserve">
     <value>Voeg automatisch de markeringen van het kopiëren in als de bron overeenkomt met de bestemming</value>
   </data>
-  
-  
-  
-  
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Waarschijnlijkheid</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Bereik</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Enkel</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] Versieringen en bomen toegevoegd als lijnstijl. Hierdoor kunnen versieringen of bomen op lijnen worden aangebracht. Deze voorwerpen vallen niet binnen de grenzen van de decoratie en de boom.
+[NEW] Decoratieve netwerken toegevoegd als lijnen. Hierdoor kan elk type decoratief netwerk, zoals hekken, als lijnen worden toegevoegd. Deze netwerken verlagen de grenswaarden voor kruisingen en segmenten niet.
+[NEW] De mogelijkheid toegevoegd om markeringen aan te brengen op treinsporen, ondergrondse sporen en voetgangerspaden.
+[NEW] Pas automatisch gekopieerde markeringen, geplakt van klembord of sjablonen, toe wanneer het doel snijpunt overeenkomt met het bron snijpunt. Kan worden uitgeschakeld in de mod instellingen.
+[NEW] Mogelijkheid toegevoegd om overlappende markeringen op voetpaden uit te schakelen.
+[NEW] Overlaying markers op verhardingen is ook beschikbaar voor segmenten.
+[UPDATED] 3D opvuller loopt nu door onder het wegdek om gaten te voorkomen op wegen met hellingen.
+[UPDATED] De haaientanden kunnen nu gedraaid worden.
+[FIXED] Repareerde het gat in de overlay bij het selecteren van zeer uitgerekte mesh nodes.
+[FIXED] Verkeerde schaduw op stoeprand als lijnstijl opgelost.
+[UPDATED] Getalformaat (m, %, °) toegevoegd aan alle invoerwaarden.
+[FIXED] Ontbrekende punten van opvullers op kruisingen tussen normale lijnen opgelost.</value>
+  </data>
 </root>

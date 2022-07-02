@@ -1649,6 +1649,7 @@ Click to edit markings</value>
 [FIXED] Fixed hole in overlay while selection such a big nodes.
 [FIXED] Fixed shadow on pavement line.
 [UPDATED] Added number format (m, %, °) to all properties.
-[FIXED] Fixed missed filler's points on intersection between normal lines.</value>
+[FIXED] Fixed missed filler's points on intersection between normal lines.
+[TRANSLATION] Added Romanian language.</value>
   </data>
 </root>
