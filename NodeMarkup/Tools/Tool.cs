@@ -342,6 +342,7 @@ namespace NodeMarkup.Tools
 
                     Markup.Clear();
                     Markup.FromXml(SingletonMod<Mod>.Version, source.Data, map);
+                    Panel.UpdatePanel();
 
                     return;
                 }
