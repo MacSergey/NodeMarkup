@@ -166,6 +166,7 @@ Global
 		ModsCommon\MathExtension\MathExtension.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\MessageBoxShared\MessageBoxShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\ModShared\ModsCommonShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
+		ModsCommon\MultyAtlasButton\MultyAtlasButton.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\NetAssetDataExtension\NetAssetDataExtension.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\NetExtension\NetExtension.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
 		ModsCommon\NetObjectMapShared\NetObjectMapShared.projitems*{94b9b12b-0d2b-4685-bf64-4f0488470569}*SharedItemsImports = 4
@@ -297,11 +298,11 @@ Global
 		{C9801015-21EB-490F-9C5C-E54FD0A67A95} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_RemoveEmptyEntries = False
-		RESX_ConfirmAddLanguageFile = True
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ExcelExportMode = MultipleSheets
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		RESX_ExcelExportMode = MultipleSheets
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ConfirmAddLanguageFile = True
+		RESX_RemoveEmptyEntries = False
 	EndGlobalSection
 EndGlobal
