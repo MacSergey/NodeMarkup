@@ -162,9 +162,9 @@ namespace NodeMarkup.Utilities
             {
                 name = type.ToString(),
                 mainTexture = texture,
-                color = new Color32(10, 10, 10, 0),
+                color = new Color(1f, 1f, 1f, 1f),
                 renderQueue = renderQueue,
-                globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack | MaterialGlobalIlluminationFlags.RealtimeEmissive,
+                //globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack | MaterialGlobalIlluminationFlags.RealtimeEmissive,
             };
 
             if (apr != null)
@@ -377,15 +377,14 @@ namespace NodeMarkup.Utilities
     }
     public class MarkupStyleFillerMesh : MarkupStyleMesh
     {
+        public enum MeshType
+        {
+            Side,
+            Top,
+        }
         public struct RawData
         {
-            public enum Type
-            {
-                Side,
-                Top,
-            }
-
-            public Type _type;
+            public MeshType _meshType;
             public MaterialType _materialType;
             public int[] _groups;
             public Vector3[] _points;
@@ -395,7 +394,7 @@ namespace NodeMarkup.Utilities
             {
                 return new RawData()
                 {
-                    _type = Type.Side,
+                    _meshType = MeshType.Side,
                     _groups = groups.ToArray(),
                     _points = points.ToArray(),
                     _materialType = materialType,
@@ -405,7 +404,7 @@ namespace NodeMarkup.Utilities
             {
                 return new RawData()
                 {
-                    _type = Type.Top,
+                    _meshType = MeshType.Top,
                     _points = points.ToArray(),
                     _polygons = polygons.ToArray(),
                     _materialType = materialType,
@@ -414,6 +413,7 @@ namespace NodeMarkup.Utilities
         }
         public struct RenderData
         {
+            public MeshType _meshType;
             public Vector3[] _vertixes;
             public int[] _triangles;
         }
@@ -430,8 +430,9 @@ namespace NodeMarkup.Utilities
             for (var i = 0; i < datas.Length; i += 1)
             {
                 var data = datas[i];
+                Data[i]._meshType = data._meshType;
 
-                if (data._type == RawData.Type.Side)
+                if (data._meshType == MeshType.Side)
                 {
                     var vertices = new List<Vector3>();
                     var triangles = new List<int>();
@@ -531,6 +532,8 @@ namespace NodeMarkup.Utilities
                     bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
                 };
                 mesh.RecalculateNormals();
+                if(data._meshType == MeshType.Top)
+                    mesh.normals = mesh.normals.Select(n => -n).ToArray();
                 mesh.RecalculateTangents();
                 mesh.UploadMeshData(false);
 
