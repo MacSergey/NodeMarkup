@@ -1296,10 +1296,10 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на [NEW] Added Prop and Tree line styles. They allow place any prop or tree on lines. Those props are not counted in game prop and tree limits.
+        ///   Ищет локализованную строку, похожую на [NEW] Added Prop and Tree line styles. They allow place any prop or tree on lines. Those objects are not counted in game prop and tree limits.
         ///[NEW] Added Decorative network line style. It allows place any decorative network like fence on lines. Those networks are not counted in game node and segment limits.
         ///[NEW] Added the ability to use markings on train tracks, metro tracks and pedestrian paths.
-        ///[NEW] Added auto applying marking when it is pasted from buffer or preset if target intersection matches sour [остаток строки не уместился]&quot;;.
+        ///[NEW] Added auto applying marking when it is pasted from buffer or preset if target intersection matches so [остаток строки не уместился]&quot;;.
         /// </summary>
         public static string Mod_WhatsNewMessage1_10 {
             get {
@@ -3296,7 +3296,7 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Static.
+        ///   Ищет локализованную строку, похожую на Single.
         /// </summary>
         public static string StyleOption_ObjectStatic {
             get {
