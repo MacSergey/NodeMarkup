@@ -1413,7 +1413,7 @@ Apăsați pentru a modifica marcajele</value>
     <value>Rază</value>
   </data>
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
-    <value>Static</value>
+    <value>Unic</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
     <value>[NEW] Adăugată posibilitatea de a pune obiecte și copaci pe linii. Ele permit să se pună orice obiect și copaci pe linie. Obiectele astea nu sunt considerate în parametri obiectelor și a copacilor al jocului.
