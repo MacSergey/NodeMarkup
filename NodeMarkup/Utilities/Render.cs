@@ -164,7 +164,6 @@ namespace NodeMarkup.Utilities
                 mainTexture = texture,
                 color = new Color(1f, 1f, 1f, 1f),
                 renderQueue = renderQueue,
-                //globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack | MaterialGlobalIlluminationFlags.RealtimeEmissive,
             };
 
             if (apr != null)
@@ -570,6 +569,10 @@ namespace NodeMarkup.Utilities
                     bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
                 };
                 mesh.RecalculateNormals();
+                var count = (Split + 1) * 2;
+                var startIndex = count + 4;
+                var endIndex = startIndex + count;
+                mesh.normals = mesh.normals.Select((n, i) => i >= startIndex && i < endIndex ? -n : n).ToArray();
                 mesh.RecalculateTangents();
                 mesh.UploadMeshData(false);
 
