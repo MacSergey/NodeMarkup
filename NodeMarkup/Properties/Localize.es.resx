@@ -1396,7 +1396,7 @@ Haga clic para editar las marcas</value>
     <value>Desplazar</value>
   </data>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
-    <value>Grado</value>
+    <value>Separación</value>
   </data>
   <data name="NumberFormat_Degree" xml:space="preserve">
     <value>{0}°</value>
@@ -1484,4 +1484,7 @@ Haga clic para editar las marcas</value>
 [UPDATED] Agregado formatos de número (m, %, °) en todas las propiedades.
 [FIXED] Puntos de relleno en intersecciones entre líneas normales.</value>
   </data>
+  
+  
+  
 </root>

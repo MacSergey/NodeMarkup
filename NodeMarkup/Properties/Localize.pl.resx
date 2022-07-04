@@ -1445,14 +1445,24 @@ Kliknij aby edytować oznaczenia</value>
   <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
     <value>Odległość powtarzania</value>
   </data>
-  
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>Zasób sieć</value>
+  </data>
   <data name="StyleOption_AssetNotSet" xml:space="preserve">
     <value>Nie ustawione</value>
   </data>
-  
-  
-  
-  
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>Zasób rekwizyt</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>Zasób drzewo</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Nic nie znaleziono</value>
+  </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Automatycznie zastosuj wklejanie jeżeli źródło pasuje to celu</value>
+  </data>
   <data name="StyleOption_ObjectProbability" xml:space="preserve">
     <value>Prawdopodobieństwo</value>
   </data>
@@ -1462,5 +1472,31 @@ Kliknij aby edytować oznaczenia</value>
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
     <value>Statyczny</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] Dodano style linii dla rekwizytów i drzew. Pozwala to na umieszczenie dowolnego rekwizytu lub drzewa w liniach. Te obiekty nie są wliczane do limitów rekwizytów i drzew w grze.
+[NEW] Dodano styl sieci dekoracyjnej. Pozwala ona na umieszczanie sieci dekoracyjnej takiej jak płoty na liniach. Te sieci nie są wliczane w limity węzłów i segmentów gry.
+[NEW] Dodano możliwość używania oznaczeń na na torach kolejowych, torach tramwajowych oraz ścieżkach dla pieszych.
+[NEW] Dodano automatyczne zastosowywanie oznaczeń kiedy jest wklejane z buforu lub presetu kiedy skrzyżowanie pasuje to źródłowego skrzyżowania. Może zostać wyłączone w ustawieniach.
+[NEW] Dodano możliwość wyłaczenia przycinania chodnika.
+[NEW] Przycinanie chodnika jest dostępne dla segmentów.
+[UPDATED] Wypełnienie 3D rozciąga się poniżej powierzchnię drogi aby zapobiec powistawaniu luki na pochyłych węzłach.
+[UPDATED] Dodano opcję obracania oznaczenia ustąp pierwszeństwa.
+[FIXED] Naprawiono dziurę na nakładce podczas wybierania dużych węzłów.
+[FIXED] Naprawiono cień na lini chodnika.
+[UPDATED] Dodano format liczb (m, %, °) dla wszystkich ustawień.
+[FIXED] Naprawiono brakujące punkty dla wypełnień pomiędzy zwykłymi liniami na skrzyżowaniach.
+[TRANSLATION] Dodano język rumuński.</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Tryb kierunku i kolejnośc</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Tylko tryb kierunku</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] Automatyczne zastosowywanie oznaczeń działa tylko kiedy istnieje tylko jedna opcja wklejenia oznaczeń.
+[NEW] Dodano opcję "Tylko tryb kierunku" oraz "Tryb kierunku i kolejności" do automatycznego zastosowywania oznaczeń.
+[FIXED] Naprawiono przeliczanie i oświetlenie wypełnień.
+[UPDATED] Przycisk "Domyślny kolor" w wyborze koloru ustala domyślny kolor dla stylu zamiast domyślnego koloru dla modyfikacji. </value>
+  </data>
 </root>

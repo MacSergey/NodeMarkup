@@ -1652,4 +1652,16 @@ Click to edit markings</value>
 [FIXED] Fixed missed filler's points on intersection between normal lines.
 [TRANSLATION] Added Romanian language.</value>
   </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Direct and Invert order</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Only direct order</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] Auto applying marking is enable only when there is only one posible option to paste marking.
+[NEW] Added option "Only direct order" and "Direct and invert order" to auto applying marking.
+[FIXED] Fixed fillers calculation and illumination.
+[UPDATED] "Default color" button on color selector set default color of style instead of default color of mod.</value>
+  </data>
 </root>

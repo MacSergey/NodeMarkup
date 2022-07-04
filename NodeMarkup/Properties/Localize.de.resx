@@ -1546,4 +1546,16 @@ Klicken um die Markierungen zu bearbeiten</value>
 [UPDATED] Zahlenformat (m, %, °) zu allen Eingabewerten hinzugefügt.
 [FIXED] Fehlende Füll-Eckpunkte auf Kreuzungen zwischen normalen Linien wurden behoben.</value>
   </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Direkt und Reihenfolge invertieren</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Nur direkt</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] Automatisches Anwenden von Markierungen ist nur aktiv, wenn es nur eine Möglichkeit gibt, die Markierungen einzufügen.
+[NEW] Optionen "Nur direkt" und "Direkt und invertiert" für das automatische Anwenden von Markierungen hinzugefügt.
+[FIXED] Berechnung und Beleuchtung von Füllungen korrigiert.
+[UPDATED] "Standardfarbe"-Button beim Farbwahl er auf den Standard des Stils eingestellt, anstelle der Standardwerte der Mod. </value>
+  </data>
 </root>

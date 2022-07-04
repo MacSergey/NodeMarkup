@@ -1652,4 +1652,16 @@ Cliquez pour modifier le marquage</value>
 [UPDATED] Ajout du format numérique (m, %, °) pour toutes les propriétés.
 [FIXED] Correction des points manqués par les remplisseurs à l'intersection des lignes normales.</value>
   </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Même ordre et ordre inverse</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Même ordre uniquement</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] L'application automatique du marquage est activée uniquement lorsqu'il n'y a qu'une seule option possible pour coller le marquage.
+[NEW] Ajout de l'option "Même ordre uniquement" et "Même ordre et ordre inverse" pour l'application automatique du marquage.
+[FIXED] Correction du calcul et de l'illumination des remplisseurs.
+[UPDATED] Le bouton "Couleur par défaut" dans le sélecteur de couleur met la couleur par défaut du style au lieu de celle du mod. </value>
+  </data>
 </root>

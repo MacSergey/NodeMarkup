@@ -1438,7 +1438,7 @@
     <value>角度</value>
   </data>
   <data name="LineStyle_Network" xml:space="preserve">
-    <value>装飾系のネットワーク</value>
+    <value>装飾系ネットワーク</value>
   </data>
   <data name="StyleOption_NetWidthScale" xml:space="preserve">
     <value>幅のスケール</value>
@@ -1473,5 +1473,31 @@
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
     <value>固定</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] Added Prop and Tree line styles. They allow place any prop or tree on lines. Those objects are not counted in game prop and tree limits.
+[NEW] Added Decorative network line style. It allows place any decorative network like fence on lines. Those networks are not counted in game node and segment limits.
+[NEW] Added the ability to use markings on train tracks, metro tracks and pedestrian paths.
+[NEW] Added auto applying marking when it is pasted from buffer or preset if target intersection matches source intersection. Can be disabled in mod settings.
+[NEW] Added ability to turn off sidewalk clipping.
+[NEW] Sidewalk clipping is available for segments.
+[UPDATED] 3D filler mesh extends below the road surface to prevent gap on slope nodes.
+[UPDATED] Added the ability to rotate Shark Teeth.
+[FIXED] Fixed hole in overlay while selection such a big nodes.
+[FIXED] Fixed shadow on pavement line.
+[UPDATED] Added number format (m, %, °) to all properties.
+[FIXED] Fixed missed filler's points on intersection between normal lines.
+[TRANSLATION] Added Romanian language.</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>直接と反転の順序</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>直接の順序のみ</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] Auto applying marking is enable only when there is only one posible option to paste marking.
+[NEW] Added option "Only direct order" and "Direct and invert order" to auto applying marking.
+[FIXED] Fixed fillers calculation and illumination.
+[UPDATED] "Default color" button on color selector set default color of style instead of default color of mod. </value>
+  </data>
 </root>
