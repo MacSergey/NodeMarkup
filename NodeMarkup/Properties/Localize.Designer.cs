@@ -1997,6 +1997,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Direct and Invert order.
+        /// </summary>
+        public static string Settings_AutoApplyPastingDirectAndInvert {
+            get {
+                return ResourceManager.GetString("Settings_AutoApplyPastingDirectAndInvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Only direct order.
+        /// </summary>
+        public static string Settings_AutoApplyPastingDirectOnly {
+            get {
+                return ResourceManager.GetString("Settings_AutoApplyPastingDirectOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Backup markings.
         /// </summary>
         public static string Settings_BackupMarking {

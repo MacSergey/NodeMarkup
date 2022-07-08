@@ -304,52 +304,98 @@ namespace NodeMarkup.Tools
 
         private void ApplyMarking(IntersectionTemplate source)
         {
+            ObjectsMap map = null;
             if (Settings.AutoApplyPasting && Markup.EntersCount == source.Enters.Length)
             {
-                var markupPoints = Markup.Enters.Select(e => e.PointCount).ToArray();
-                var templatePoints = source.Enters.Select(e => e.PointCount).ToArray();
-                for (int shift = 0; shift < markupPoints.Length; shift += 1)
+                var targetPoints = Markup.Enters.Select(e => e.PointCount).ToArray();
+                var sourcePoints = source.Enters.Select(e => e.PointCount).ToArray();
+                var invertedPoints = source.Enters.Select(e => e.PointCount).Reverse().ToArray();
+
+                var direct = MatchMarkings(sourcePoints, targetPoints);
+                var invert = MatchMarkings(invertedPoints, targetPoints);
+
+                if (direct.Length == 1 && invert.Length == 0)
                 {
-                    bool match = true;
-                    for (int indexTarget = 0; indexTarget < markupPoints.Length; indexTarget += 1)
-                    {
-                        var indexSource = indexTarget.NextIndex(markupPoints.Length, shift);
-                        if (markupPoints[indexTarget] != templatePoints[indexSource])
-                        {
-                            match = false;
-                            break;
-                        }
-                    }
+                    map = new ObjectsMap();
+                    var targetEnters = Markup.Enters.ToArray();
+                    var sourceEnters = source.Enters;
 
-                    if (!match)
-                        continue;
-
-                    var map = new ObjectsMap();
-                    var markupEnters = Markup.Enters.ToArray();
-                    for (int indexTarget = 0; indexTarget < markupPoints.Length; indexTarget += 1)
+                    for (int indexTarget = 0; indexTarget < targetPoints.Length; indexTarget += 1)
                     {
-                        var indexSource = indexTarget.NextIndex(markupPoints.Length, shift);
+                        var indexSource = indexTarget.NextIndex(sourcePoints.Length, direct[0]);
                         switch (Markup.Type)
                         {
                             case MarkupType.Node:
-                                map.AddSegment(source.Enters[indexSource].Id, markupEnters[indexTarget].Id);
+                                map.AddSegment(sourceEnters[indexSource].Id, targetEnters[indexTarget].Id);
                                 break;
                             case MarkupType.Segment:
-                                map.AddNode(source.Enters[indexSource].Id, markupEnters[indexTarget].Id);
+                                map.AddNode(sourceEnters[indexSource].Id, targetEnters[indexTarget].Id);
                                 break;
                         }
                     }
+                }
+                else if(Settings.AutoApplyPastingType == 1 && direct.Length == 0 && invert.Length == 1)
+                {
+                    map = new ObjectsMap();
+                    var targetEnters = Markup.Enters.ToArray();
+                    var sourceEnters = source.Enters.Reverse().ToArray();
 
-                    Markup.Clear();
-                    Markup.FromXml(SingletonMod<Mod>.Version, source.Data, map);
-                    Panel.UpdatePanel();
+                    for (int indexTarget = 0; indexTarget < targetPoints.Length; indexTarget += 1)
+                    {
+                        var indexSource = indexTarget.NextIndex(sourcePoints.Length, invert[0]);
+                        switch (Markup.Type)
+                        {
+                            case MarkupType.Node:
+                                map.AddSegment(sourceEnters[indexSource].Id, targetEnters[indexTarget].Id);
+                                break;
+                            case MarkupType.Segment:
+                                map.AddNode(sourceEnters[indexSource].Id, targetEnters[indexTarget].Id);
+                                break;
+                        }
 
-                    return;
+                        for(var pointI = 0; pointI <= targetEnters[indexTarget].PointCount; pointI += 1)
+                        {
+                            map.AddPoint(targetEnters[indexTarget].Id, (byte)(pointI + 1), (byte)(targetEnters[indexTarget].PointCount - pointI));
+                        }
+                    }
                 }
             }
 
-            BaseOrderToolMode.IntersectionTemplate = source;
-            SetMode(ToolModeType.PasteEntersOrder);
+            if (map != null)
+            {
+                Markup.Clear();
+                Markup.FromXml(SingletonMod<Mod>.Version, source.Data, map);
+                Panel.UpdatePanel();
+            }
+            else
+            {
+                BaseOrderToolMode.IntersectionTemplate = source;
+                SetMode(ToolModeType.PasteEntersOrder);
+            }
+        }
+        private int[] MatchMarkings(int[] source, int[] target)
+        {
+            var matches = new List<int>();
+
+            var length = Math.Min(source.Length, target.Length);
+            for (int shift = 0; shift < length; shift += 1)
+            {
+                bool match = true;
+                for (int indexTarget = 0; indexTarget < length; indexTarget += 1)
+                {
+                    var indexSource = indexTarget.NextIndex(source.Length, shift);
+                    if (target[indexTarget] != source[indexSource])
+                    {
+                        match = false;
+                        break;
+                    }
+                }
+
+                if (match)
+                    matches.Add(shift);
+            }
+
+            return matches.ToArray();
         }
 
         private delegate ushort? SegmentGetter(ushort[] segmentIds, ushort beforeSegmentId);

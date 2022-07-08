@@ -64,6 +64,7 @@ namespace NodeMarkup.Manager
         protected virtual float WidthWheelStep { get; } = 0.01f;
         protected virtual float WidthMinValue { get; } = 0.05f;
 
+        protected abstract Style GetDefault();
         public static T GetDefault<T>(StyleType type) where T : Style
         {
             return type.GetGroup() switch
@@ -136,7 +137,7 @@ namespace NodeMarkup.Manager
             var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(Color));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
-            colorProperty.Init();
+            colorProperty.Init(GetDefault()?.Color);
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
 
@@ -492,6 +493,9 @@ namespace NodeMarkup.Manager
         public virtual void CopyTo(StyleType target) => base.CopyTo(target);
         public sealed override Style Copy() => CopyStyle();
         public abstract StyleType CopyStyle();
+
+        protected sealed override Style GetDefault() => GetDefaultStyle();
+        protected StyleType GetDefaultStyle() => SingletonManager<StyleTemplateManager>.Instance.GetDefault<StyleType>(Type);
     }
 
 }
