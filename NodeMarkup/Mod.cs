@@ -29,6 +29,7 @@ namespace NodeMarkup
         protected override string IdRaw => nameof(NodeMarkup);
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version("1.10.1"), new DateTime(2022, 7, 9)),
             new ModVersion(new Version("1.10"), new DateTime(2022, 7, 2)),
             new ModVersion(new Version("1.9"), new DateTime(2022, 6, 2)),
             new ModVersion(new Version("1.8.2"), new DateTime(2021, 8, 25)),
