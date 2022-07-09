@@ -235,40 +235,35 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Localize.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\UUIButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Arrows.png" />
-    <EmbeddedResource Include="Resources\ListItem.png" />
+    <EmbeddedResource Include="Resources\ListItem\ListItemBackground.png" />
     <EmbeddedResource Include="Resources\SharkTooth.png" />
-    <EmbeddedResource Include="Resources\Button.png" />
-    <EmbeddedResource Include="Resources\HeaderButtons.png" />
-    <EmbeddedResource Include="Resources\OrderButtons.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesSteamBackground.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewBackground.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkChessBoard.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkDoubleZebra.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkLadder.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkParallelDashedLines.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkParallelSolidLines.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkSolid.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\CrosswalkZebra.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\FillerChevron.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\FillerGrid.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\FillerSolid.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\FillerStripe.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\LineDashed.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\LineDoubleDashed.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\LineDoubleSolid.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\LineSharkTeeth.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\LineSolid.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\LineSolidAndDashed.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\StopLineDashed.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\StopLineDoubleDashed.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\StopLineDoubleSolid.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\StopLineSharkTeeth.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\StopLineSolid.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\StopLineSolidAndDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkChessBoard.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkDoubleZebra.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkLadder.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkParallelDashedLines.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkParallelSolidLines.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkZebra.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerChevron.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerGrid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerStripe.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineSolidAndDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineSolidAndDashed.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ModsCommon\ModsBridge\ModsBridge.csproj">
@@ -278,25 +273,109 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\StylesCrosswalks.png" />
-    <EmbeddedResource Include="Resources\StylesFillers.png" />
-    <EmbeddedResource Include="Resources\StylesLines.png" />
-    <EmbeddedResource Include="Resources\StylesStopLines.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\StylesPreview\FillerCliff.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\FillerGrass.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\FillerGravel.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\FillerPavement.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\FillerRuined.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\LineNetwork.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\LinePavement.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\LineProp.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\LineTree.png" />
-    <EmbeddedResource Include="Resources\StylesPreview\StopLinePavement.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerCliff.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerGrass.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerGravel.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerPavement.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerRuined.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineNetwork.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLinePavement.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineProp.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineTree.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLinePavement.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\ButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\RangeButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\SingleButtonIcons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ListItem\ListItemCollapse.png" />
+    <EmbeddedResource Include="Resources\ListItem\ListItemExpand.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\HeaderButtons\AddTemplateHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\ApplyHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\ApplyTemplateHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\BeetwenIntersectionsHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\ClearHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\CopyHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\CutHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\DuplicateHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\EdgeLinesHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\EditHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\NotSaveHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\OffsetHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\PackageHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\PasteHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\SaveHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\SetDefaultHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\UnsetDefaultHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\WholeStreetHeaderButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\OrderButtons\ApplyOrderButton.png" />
+    <EmbeddedResource Include="Resources\OrderButtons\FlipOrderButton.png" />
+    <EmbeddedResource Include="Resources\OrderButtons\NotApplyOrderButton.png" />
+    <EmbeddedResource Include="Resources\OrderButtons\ResetOrderButton.png" />
+    <EmbeddedResource Include="Resources\OrderButtons\TurnLeftOrderButton.png" />
+    <EmbeddedResource Include="Resources\OrderButtons\TurnRightOrderButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonActive.png" />
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonHover.png" />
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonIconActive.png" />
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonIconHover.png" />
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonIconNormal.png" />
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonNormal.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\UUIButton\UUIButtonHovered.png" />
+    <EmbeddedResource Include="Resources\UUIButton\UUIButtonNormal.png" />
+    <EmbeddedResource Include="Resources\UUIButton\UUIButtonPressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\StylesLine\LineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineNetwork.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LinePavement.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineProp.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineSolidAndDashed.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineTree.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLinePavement.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineSolidAndDashed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkChessBoard.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkDoubleZebra.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkLadder.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkParallelDashedLines.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkParallelSolidLines.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkSolid.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkZebra.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\StylesFiller\FillerChevron.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerCliff.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerGrass.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerGravel.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerGrid.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerPavement.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerRuined.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerSolid.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerStripe.png" />
   </ItemGroup>
   <Import Project="..\ModsCommon\ModShared\ModsCommonShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\ToolShared\ModsToolShared.projitems" Label="Shared" />
@@ -348,7 +427,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.None.Increment" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_StartDate="2000/1/1" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_DetectChanges="False" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">

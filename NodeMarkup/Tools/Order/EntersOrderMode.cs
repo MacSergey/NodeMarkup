@@ -27,22 +27,22 @@ namespace NodeMarkup.Tools
 
         public BaseEntersOrderToolMode()
         {
-            TurnLeftButton = new GUIButton(1, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.TurnLeftButton].region);
+            TurnLeftButton = new GUIButton(1, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.TurnLeftOrderButton].region);
             TurnLeftButton.OnClick += TurnLeftClick;
 
-            FlipButton = new GUIButton(2, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.FlipButton].region);
+            FlipButton = new GUIButton(2, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.FlipOrderButton].region);
             FlipButton.OnClick += FlipClick;
 
-            TurnRightButton = new GUIButton(3, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.TurnRightButton].region);
+            TurnRightButton = new GUIButton(3, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.TurnRightOrderButton].region);
             TurnRightButton.OnClick += TurnRightClick;
 
-            ApplyButton = new GUIButton(4, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.ApplyButton].region);
+            ApplyButton = new GUIButton(4, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.ApplyOrderButton].region);
             ApplyButton.OnClick += ApplyClick;
 
-            NotApplyButton = new GUIButton(5, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.NotApplyButton].region);
+            NotApplyButton = new GUIButton(5, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.NotApplyOrderButton].region);
             NotApplyButton.OnClick += NotApplyClick;
 
-            ResetButton = new GUIButton(6, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.ResetButton].region);
+            ResetButton = new GUIButton(6, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.ResetOrderButton].region);
             ResetButton.OnClick += ResetClick;
         }
         private void TurnLeftClick()

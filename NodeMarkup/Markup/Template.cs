@@ -118,7 +118,7 @@ namespace NodeMarkup.Manager
         {
             var assembly = Assembly.GetExecutingAssembly();
             var background = assembly.LoadTextureFromAssembly(name);
-            var logo = assembly.LoadTextureFromAssembly(Style.Type.ToString());
+            var logo = assembly.LoadTextureFromAssembly("StylesPreview" + Style.Type.ToString());
 
             if (background == null)
                 return null;

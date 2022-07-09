@@ -90,13 +90,13 @@ namespace NodeMarkup.UI.Editors
         public override Color32 PressedColor => new Color32(86, 167, 225, 255);
         public override Color32 FocusColor => NormalColor;
 
-        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? NodeMarkupTextures.ArrowDown : NodeMarkupTextures.ArrowRight; }
+        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? NodeMarkupTextures.ListItemCollapse : NodeMarkupTextures.ListItemExpand; }
 
         private CustomUIPanel ExpandIcon { get; set; }
 
         public GroupItem()
         {
-            height = 35;
+            height = 36;
             AddExpandIcon();
         }
 
@@ -118,8 +118,8 @@ namespace NodeMarkup.UI.Editors
 
             if (ExpandIcon != null)
             {
-                ExpandIcon.size = new Vector2(size.y - 11, size.y - 11);
-                ExpandIcon.relativePosition = new Vector2(size.x - (size.y - 3), 3);
+                ExpandIcon.size = new Vector2(size.y - 12, size.y - 12);
+                ExpandIcon.relativePosition = new Vector2(size.x - (size.y - 6), 6);
             }
 
             Label.size = new Vector2(size.x - 6, size.y);

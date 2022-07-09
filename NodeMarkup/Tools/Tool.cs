@@ -84,9 +84,9 @@ namespace NodeMarkup.Tools
         private Dictionary<Style.StyleType, Style> StyleBuffer { get; } = new Dictionary<Style.StyleType, Style>();
 
         protected override UITextureAtlas UUIAtlas => NodeMarkupTextures.Atlas;
-        protected override string UUINormalSprite => NodeMarkupTextures.UUINormal;
-        protected override string UUIHoveredSprite => NodeMarkupTextures.UUIHovered;
-        protected override string UUIPressedSprite => NodeMarkupTextures.UUIPressed;
+        protected override string UUINormalSprite => NodeMarkupTextures.UUIButtonNormal;
+        protected override string UUIHoveredSprite => NodeMarkupTextures.UUIButtonHovered;
+        protected override string UUIPressedSprite => NodeMarkupTextures.UUIButtonPressed;
         protected override string UUIDisabledSprite => /*NodeMarkupTextures.UUIDisabled;*/string.Empty;
 
         #endregion

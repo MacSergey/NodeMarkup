@@ -14,99 +14,118 @@ namespace NodeMarkup.Utilities
         public static UITextureAtlas Atlas;
         public static Texture2D Texture => Atlas.texture;
 
-        public static string TurnLeftButton => nameof(TurnLeftButton);
-        public static string FlipButton => nameof(FlipButton);
-        public static string TurnRightButton => nameof(TurnRightButton);
-        public static string ApplyButton => nameof(ApplyButton);
-        public static string NotApplyButton => nameof(NotApplyButton);
-        public static string ResetButton => nameof(ResetButton);
+        public static string ActivationButtonNormal => nameof(ActivationButtonNormal);
+        public static string ActivationButtonActive => nameof(ActivationButtonActive);
+        public static string ActivationButtonHover => nameof(ActivationButtonHover);
+        public static string ActivationButtonIconNormal => nameof(ActivationButtonIconNormal);
+        public static string ActivationButtonIconActive => nameof(ActivationButtonIconActive);
+        public static string ActivationButtonIconHover => nameof(ActivationButtonIconHover);
 
-        public static string AddTemplate => nameof(AddTemplate);
-        public static string ApplyTemplate => nameof(ApplyTemplate);
-        public static string Copy => nameof(Copy);
-        public static string Paste => nameof(Paste);
-        public static string Duplicate => nameof(Duplicate);
-        public static string SetDefault => nameof(SetDefault);
-        public static string UnsetDefault => nameof(UnsetDefault);
-        public static string Apply => nameof(Apply);
-        public static string Package => nameof(Package);
-        public static string Clear => nameof(Clear);
-        public static string Edit => nameof(Edit);
-        public static string Save => nameof(Save);
-        public static string NotSave => nameof(NotSave);
-        public static string Offset => nameof(Offset);
-        public static string EdgeLines => nameof(EdgeLines);
-        public static string Cut => nameof(Cut);
-        public static string BeetwenIntersections => nameof(BeetwenIntersections);
-        public static string WholeStreet => nameof(WholeStreet);
-
-        public static string ListItemSprite { get; } = nameof(ListItemSprite);
-
-        public static string ButtonNormal => nameof(ButtonNormal);
-        public static string ButtonActive => nameof(ButtonActive);
-        public static string ButtonHover => nameof(ButtonHover);
-        public static string Icon => nameof(Icon);
-        public static string IconActive => nameof(IconActive);
-        public static string IconHover => nameof(IconHover);
-
-        public static string UUINormal => nameof(UUINormal);
-        public static string UUIHovered => nameof(UUIHovered);
-        public static string UUIPressed => nameof(UUIPressed);
+        public static string UUIButtonNormal => nameof(UUIButtonNormal);
+        public static string UUIButtonHovered => nameof(UUIButtonHovered);
+        public static string UUIButtonPressed => nameof(UUIButtonPressed);
         //public static string UUIDisabled => nameof(UUIDisabled);
 
-        public static string ArrowDown { get; } = nameof(ArrowDown);
-        public static string ArrowRight { get; } = nameof(ArrowRight);
+        public static string AddTemplateHeaderButton => nameof(AddTemplateHeaderButton);
+        public static string ApplyTemplateHeaderButton => nameof(ApplyTemplateHeaderButton);
+        public static string CopyHeaderButton => nameof(CopyHeaderButton);
+        public static string PasteHeaderButton => nameof(PasteHeaderButton);
+        public static string DuplicateHeaderButton => nameof(DuplicateHeaderButton);
+        public static string SetDefaultHeaderButton => nameof(SetDefaultHeaderButton);
+        public static string UnsetDefaultHeaderButton => nameof(UnsetDefaultHeaderButton);
+        public static string ApplyHeaderButton => nameof(ApplyHeaderButton);
+        public static string PackageHeaderButton => nameof(PackageHeaderButton);
+        public static string ClearHeaderButton => nameof(ClearHeaderButton);
+        public static string EditHeaderButton => nameof(EditHeaderButton);
+        public static string SaveHeaderButton => nameof(SaveHeaderButton);
+        public static string NotSaveHeaderButton => nameof(NotSaveHeaderButton);
+        public static string OffsetHeaderButton => nameof(OffsetHeaderButton);
+        public static string EdgeLinesHeaderButton => nameof(EdgeLinesHeaderButton);
+        public static string CutHeaderButton => nameof(CutHeaderButton);
+        public static string BeetwenIntersectionsHeaderButton => nameof(BeetwenIntersectionsHeaderButton);
+        public static string WholeStreetHeaderButton => nameof(WholeStreetHeaderButton);
 
-        public static string Single { get; } = nameof(Single);
-        public static string Range { get; } = nameof(Range);
+        public static string TurnLeftOrderButton => nameof(TurnLeftOrderButton);
+        public static string FlipOrderButton => nameof(FlipOrderButton);
+        public static string TurnRightOrderButton => nameof(TurnRightOrderButton);
+        public static string ApplyOrderButton => nameof(ApplyOrderButton);
+        public static string NotApplyOrderButton => nameof(NotApplyOrderButton);
+        public static string ResetOrderButton => nameof(ResetOrderButton);
 
-        private static Dictionary<string, TextureHelper.SpriteParamsGetter> Files { get; } = new Dictionary<string, TextureHelper.SpriteParamsGetter>
-        {
-            {nameof(OrderButtons), OrderButtons},
-            {nameof(StylesLines), StylesLines},
-            {nameof(StylesStopLines), StylesStopLines},
-            {nameof(StylesCrosswalks), StylesCrosswalks},
-            {nameof(StylesFillers), StylesFillers},
-            {nameof(HeaderButtons), HeaderButtons},
-            {nameof(ListItem), ListItem},
-            {nameof(Button), Button},
-            {nameof(UUIButton), UUIButton},
-            {nameof(Arrows), Arrows},
-            {nameof(ButtonIcons), ButtonIcons},
-        };
+        public static string ListItemBackground { get; } = nameof(ListItemBackground);
+        public static string ListItemCollapse { get; } = nameof(ListItemCollapse);
+        public static string ListItemExpand { get; } = nameof(ListItemExpand);
+
+        public static string SingleButtonIcons { get; } = nameof(SingleButtonIcons);
+        public static string RangeButtonIcons { get; } = nameof(RangeButtonIcons);
 
         static NodeMarkupTextures()
         {
-            Atlas = TextureHelper.CreateAtlas(nameof(NodeMarkup), Files);
+            var spriteParams = new Dictionary<string, RectOffset>();
+
+            //ActivationButton
+            spriteParams[ActivationButtonNormal] = new RectOffset();
+            spriteParams[ActivationButtonActive] = new RectOffset();
+            spriteParams[ActivationButtonHover] = new RectOffset();
+            spriteParams[ActivationButtonIconNormal] = new RectOffset();
+            spriteParams[ActivationButtonIconActive] = new RectOffset();
+            spriteParams[ActivationButtonIconHover] = new RectOffset();
+
+            //UUIButton
+            spriteParams[UUIButtonNormal] = new RectOffset();
+            spriteParams[UUIButtonHovered] = new RectOffset();
+            spriteParams[UUIButtonPressed] = new RectOffset();
+
+            //HeaderButtons
+            spriteParams[AddTemplateHeaderButton] = new RectOffset();
+            spriteParams[ApplyTemplateHeaderButton] = new RectOffset();
+            spriteParams[CopyHeaderButton] = new RectOffset();
+            spriteParams[PasteHeaderButton] = new RectOffset();
+            spriteParams[DuplicateHeaderButton] = new RectOffset();
+            spriteParams[SetDefaultHeaderButton] = new RectOffset();
+            spriteParams[UnsetDefaultHeaderButton] = new RectOffset();
+            spriteParams[ApplyHeaderButton] = new RectOffset();
+            spriteParams[PackageHeaderButton] = new RectOffset();
+            spriteParams[ClearHeaderButton] = new RectOffset();
+            spriteParams[EditHeaderButton] = new RectOffset();
+            spriteParams[SaveHeaderButton] = new RectOffset();
+            spriteParams[NotSaveHeaderButton] = new RectOffset();
+            spriteParams[OffsetHeaderButton] = new RectOffset();
+            spriteParams[EdgeLinesHeaderButton] = new RectOffset();
+            spriteParams[CutHeaderButton] = new RectOffset();
+            spriteParams[BeetwenIntersectionsHeaderButton] = new RectOffset();
+            spriteParams[WholeStreetHeaderButton] = new RectOffset();
+
+            //OrderButtons
+            spriteParams[TurnLeftOrderButton] = new RectOffset();
+            spriteParams[FlipOrderButton] = new RectOffset();
+            spriteParams[TurnRightOrderButton] = new RectOffset();
+            spriteParams[ApplyOrderButton] = new RectOffset();
+            spriteParams[NotApplyOrderButton] = new RectOffset();
+            spriteParams[ResetOrderButton] = new RectOffset();
+
+            //ButtonIcons
+            spriteParams[SingleButtonIcons] = new RectOffset();
+            spriteParams[RangeButtonIcons] = new RectOffset();
+
+            //ListItem
+            spriteParams[ListItemBackground] = new RectOffset(4, 4, 4, 4);
+            spriteParams[ListItemCollapse] = new RectOffset();
+            spriteParams[ListItemExpand] = new RectOffset();
+
+            foreach (var item in EnumExtension.GetEnumValues<RegularLineStyle.RegularLineType>())
+                spriteParams.Add(item.ToEnum<Style.StyleType, RegularLineStyle.RegularLineType>().ToString(), new RectOffset());
+
+            foreach (var item in EnumExtension.GetEnumValues<StopLineStyle.StopLineType>())
+                spriteParams.Add(item.ToEnum<Style.StyleType, StopLineStyle.StopLineType>().ToString(), new RectOffset());
+
+            foreach (var item in EnumExtension.GetEnumValues<CrosswalkStyle.CrosswalkType>())
+                spriteParams.Add(item.ToEnum<Style.StyleType, CrosswalkStyle.CrosswalkType>().ToString(), new RectOffset());
+
+            foreach (var item in EnumExtension.GetEnumValues<FillerStyle.FillerType>())
+                spriteParams.Add(item.ToEnum<Style.StyleType, FillerStyle.FillerType>().ToString(), new RectOffset());
+
+            Atlas = TextureHelper.CreateAtlas(nameof(NodeMarkup), spriteParams);
         }
-
-        private static UITextureAtlas.SpriteInfo[] OrderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 50, 50, TurnLeftButton, FlipButton, TurnRightButton, ApplyButton, NotApplyButton, ResetButton).ToArray();
-
-        private static UITextureAtlas.SpriteInfo[] Styles<TypeStyle>(int texWidth, int texHeight, Rect rect)
-            where TypeStyle : Enum
-        {
-            var sprites = EnumExtension.GetEnumValues<TypeStyle>().Select(v => ((Style.StyleType)(object)v).ToString()).ToArray();
-            return TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 19, 19, sprites).ToArray();
-        }
-
-        private static UITextureAtlas.SpriteInfo[] StylesLines(int texWidth, int texHeight, Rect rect) => Styles<RegularLineStyle.RegularLineType>(texWidth, texHeight, rect);
-
-        private static UITextureAtlas.SpriteInfo[] StylesStopLines(int texWidth, int texHeight, Rect rect) => Styles<StopLineStyle.StopLineType>(texWidth, texHeight, rect);
-
-        private static UITextureAtlas.SpriteInfo[] StylesCrosswalks(int texWidth, int texHeight, Rect rect) => Styles<CrosswalkStyle.CrosswalkType>(texWidth, texHeight, rect);
-
-        private static UITextureAtlas.SpriteInfo[] StylesFillers(int texWidth, int texHeight, Rect rect) => Styles<FillerStyle.FillerType>(texWidth, texHeight, rect);
-
-        private static UITextureAtlas.SpriteInfo[] HeaderButtons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 25, 25, new RectOffset(4, 4, 4, 4), 2, AddTemplate, ApplyTemplate, Copy, Paste, Duplicate, SetDefault, UnsetDefault, Apply, Package, Clear, Edit, Save, NotSave, Offset, EdgeLines, Cut, BeetwenIntersections, WholeStreet).ToArray();
-
-        private static UITextureAtlas.SpriteInfo[] ListItem(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, new RectOffset(2, 2, 2, 2), 1, ListItemSprite).ToArray();
-
-        private static UITextureAtlas.SpriteInfo[] Button(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 31, 31, ButtonNormal, ButtonActive, ButtonHover, Icon, IconActive, IconHover).ToArray();
-
-        private static UITextureAtlas.SpriteInfo[] UUIButton(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 40, 40, UUINormal, UUIHovered, UUIPressed/*, UUIDisabled*/).ToArray();
-
-        private static UITextureAtlas.SpriteInfo[] Arrows(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 32, 32, ArrowDown, ArrowRight).ToArray();
-
-        private static UITextureAtlas.SpriteInfo[] ButtonIcons(int texWidth, int texHeight, Rect rect) => TextureHelper.GetSpritesInfo(texWidth, texHeight, rect, 30, 20, Single, Range).ToArray();
     }
 }

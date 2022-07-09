@@ -25,29 +25,29 @@ namespace NodeMarkup.UI.Panel
 
         public PanelHeader()
         {
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.AddTemplate, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.AddTemplateHeaderButton, NodeMarkup.Localize.Panel_SaveAsPreset, NodeMarkupTool.SaveAsIntersectionTemplateShortcut));
 
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Copy, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.CopyHeaderButton, NodeMarkup.Localize.Panel_CopyMarking, NodeMarkupTool.CopyMarkingShortcut));
 
-            PasteButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Paste, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
+            PasteButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.PasteHeaderButton, NodeMarkup.Localize.Panel_PasteMarking, NodeMarkupTool.PasteMarkingShortcut);
             Content.AddButton(PasteButton);
 
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Clear, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.ClearHeaderButton, NodeMarkup.Localize.Panel_ClearMarking, NodeMarkupTool.DeleteAllShortcut));
 
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.Edit, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.EditHeaderButton, NodeMarkup.Localize.Panel_EditMarking, NodeMarkupTool.EditMarkingShortcut));
 
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.Offset, NodeMarkup.Localize.Panel_ResetOffset, NodeMarkupTool.ResetOffsetsShortcut));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.OffsetHeaderButton, NodeMarkup.Localize.Panel_ResetOffset, NodeMarkupTool.ResetOffsetsShortcut));
 
-            EdgeLinesButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.EdgeLines, NodeMarkup.Localize.Panel_CreateEdgeLines, NodeMarkupTool.CreateEdgeLinesShortcut);
+            EdgeLinesButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.EdgeLinesHeaderButton, NodeMarkup.Localize.Panel_CreateEdgeLines, NodeMarkupTool.CreateEdgeLinesShortcut);
             Content.AddButton(EdgeLinesButton);
 
-            CutButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.Cut, NodeMarkup.Localize.Panel_CutLinesByCrosswalks, NodeMarkupTool.CutLinesByCrosswalksShortcut);
+            CutButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.CutHeaderButton, NodeMarkup.Localize.Panel_CutLinesByCrosswalks, NodeMarkupTool.CutLinesByCrosswalksShortcut);
             Content.AddButton(CutButton);
 
-            BeetwenIntersectionsButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.BeetwenIntersections, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut);
+            BeetwenIntersectionsButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.BeetwenIntersectionsHeaderButton, NodeMarkup.Localize.Panel_ApplyBetweenIntersections, NodeMarkupTool.ApplyBetweenIntersectionsShortcut);
             Content.AddButton(BeetwenIntersectionsButton);
 
-            WholeStreetButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.WholeStreet, NodeMarkup.Localize.Panel_ApplyWholeStreet, NodeMarkupTool.ApplyWholeStreetShortcut);
+            WholeStreetButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, NodeMarkupTextures.Atlas, NodeMarkupTextures.WholeStreetHeaderButton, NodeMarkup.Localize.Panel_ApplyWholeStreet, NodeMarkupTool.ApplyWholeStreetShortcut);
             Content.AddButton(WholeStreetButton);
         }
 

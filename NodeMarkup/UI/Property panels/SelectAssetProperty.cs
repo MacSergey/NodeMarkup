@@ -232,7 +232,7 @@ namespace NodeMarkup.UI
         {
             Search = AddUIComponent<CustomUITextField>();
             Search.atlas = TextureHelper.InGameAtlas;
-            Search.selectionSprite = CommonTextures.EmptySprite;
+            Search.selectionSprite = CommonTextures.Empty;
             Search.normalBgSprite = "TextFieldPanel";
             Search.color = new Color32(10, 10, 10, 255);
             Search.relativePosition = new Vector2(5f, 5f);
