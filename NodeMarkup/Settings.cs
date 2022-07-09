@@ -39,7 +39,8 @@ namespace NodeMarkup
         public static SavedBool CutLineByCrosswalk { get; } = new SavedBool(nameof(CutLineByCrosswalk), SettingsFile, true, true);
         public static SavedBool NotCutBordersByCrosswalk { get; } = new SavedBool(nameof(NotCutBordersByCrosswalk), SettingsFile, true, true);
         public static SavedBool HideStreetName { get; } = new SavedBool(nameof(HideStreetName), SettingsFile, true, true);
-        public static SavedBool AutoApplyPasting { get; } = new SavedBool(nameof(AutoApplyPasting), SettingsFile, true, true);
+        public static SavedBool AutoApplyPasting { get; } = new SavedBool(nameof(AutoApplyPasting) + "V2", SettingsFile, false, true);
+        public static SavedInt AutoApplyPastingType { get; } = new SavedInt(nameof(AutoApplyPastingType), SettingsFile, 1, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
         public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
         public static SavedString Roads { get; } = new SavedString(nameof(Roads), SettingsFile, string.Empty, true);
@@ -114,12 +115,12 @@ namespace NodeMarkup
             AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
             AddToolButton<NodeMarkupTool, NodeMarkupButton>(group);
             AddCheckBox(group, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
-            AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);          
+            AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);
             AddCheckBox(group, Localize.Settings_HideStreetName, HideStreetName);
 
             UIPanel intensityField = null;
             AddCheckBox(group, Localize.Settings_IlluminationAtNight, IlluminationAtNight, OnIlluminationChanged);
-            intensityField = AddIntField(group, Localize.Settings_IlluminationIntensity, IlluminationIntensity, 10, 1, 30, padding: 25);          
+            intensityField = AddIntField(group, Localize.Settings_IlluminationIntensity, IlluminationIntensity, 10, 1, 30, padding: 25);
             OnIlluminationChanged();
 
             var gameplayGroup = helper.AddGroup(Localize.Settings_Gameplay);
@@ -128,7 +129,7 @@ namespace NodeMarkup
             AddCheckBox(gameplayGroup, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
             AddCheckBox(gameplayGroup, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
             AddCheckBox(gameplayGroup, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
-            AddCheckBox(gameplayGroup, Localize.Settings_AutoApplyPasting, AutoApplyPasting);
+            AddCheckboxPanel(gameplayGroup, Localize.Settings_AutoApplyPasting, AutoApplyPasting, AutoApplyPastingType, new string[] { Localize.Settings_AutoApplyPastingDirectOnly, Localize.Settings_AutoApplyPastingDirectAndInvert});
 
             void OnIlluminationChanged()
             {

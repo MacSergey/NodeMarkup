@@ -204,8 +204,8 @@ namespace NodeMarkup.UI
             Selector.ButtonWidth = 30f;
             Selector.SetDefaultStyle();
             Selector.StopLayout();
-            Selector.AddItem(false, label: NodeMarkup.Localize.StyleOption_ObjectStatic, iconAtlas: NodeMarkupTextures.Atlas, iconSprite: NodeMarkupTextures.Single);
-            Selector.AddItem(true, label: NodeMarkup.Localize.StyleOption_ObjectRange, iconAtlas: NodeMarkupTextures.Atlas, iconSprite: NodeMarkupTextures.Range);
+            Selector.AddItem(false, label: NodeMarkup.Localize.StyleOption_ObjectStatic, iconAtlas: NodeMarkupTextures.Atlas, iconSprite: NodeMarkupTextures.SingleButtonIcons);
+            Selector.AddItem(true, label: NodeMarkup.Localize.StyleOption_ObjectRange, iconAtlas: NodeMarkupTextures.Atlas, iconSprite: NodeMarkupTextures.RangeButtonIcons);
             Selector.StartLayout();
             Selector.OnSelectObjectChanged += SelectorChanged;
 

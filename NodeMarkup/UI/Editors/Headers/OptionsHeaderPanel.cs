@@ -24,14 +24,14 @@ namespace NodeMarkup.UI.Editors
 
         public StyleHeaderPanel()
         {
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.AddTemplate, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, SaveTemplateClick));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.AddTemplateHeaderButton, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, SaveTemplateClick));
 
-            ApplyTemplate = new HeaderButtonInfo<ApplyTemplateHeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.ApplyTemplate, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
+            ApplyTemplate = new HeaderButtonInfo<ApplyTemplateHeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.ApplyTemplateHeaderButton, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
             Content.AddButton(ApplyTemplate);
 
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Copy, NodeMarkup.Localize.HeaderPanel_StyleCopy, CopyClick));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.CopyHeaderButton, NodeMarkup.Localize.HeaderPanel_StyleCopy, CopyClick));
 
-            PasteButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Paste, NodeMarkup.Localize.HeaderPanel_StylePaste, PasteClick);
+            PasteButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.PasteHeaderButton, NodeMarkup.Localize.HeaderPanel_StylePaste, PasteClick);
             Content.AddButton(PasteButton);
         }
 
@@ -73,7 +73,7 @@ namespace NodeMarkup.UI.Editors
 
         public CrosswalkHeaderPanel()
         {
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Cut, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, CutClick));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.CutHeaderButton, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, CutClick));
         }
         public override void DeInit()
         {
@@ -121,19 +121,19 @@ namespace NodeMarkup.UI.Editors
         public TemplateHeaderPanel() => AddButtons();
         protected virtual void AddButtons()
         {
-            Edit = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Edit, NodeMarkup.Localize.HeaderPanel_Edit, EditClick);
+            Edit = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.EditHeaderButton, NodeMarkup.Localize.HeaderPanel_Edit, EditClick);
             Content.AddButton(Edit);
 
-            SaveAsAsset = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Package, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, SaveAssetClick);
+            SaveAsAsset = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.PackageHeaderButton, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, SaveAssetClick);
             Content.AddButton(SaveAsAsset);
 
-            Save = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Save, NodeMarkup.Localize.HeaderPanel_Save, SaveClick);
+            Save = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.SaveHeaderButton, NodeMarkup.Localize.HeaderPanel_Save, SaveClick);
             Content.AddButton(Save);
 
-            NotSave = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.NotSave, NodeMarkup.Localize.HeaderPanel_NotSave, NotSaveClick);
+            NotSave = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.NotSaveHeaderButton, NodeMarkup.Localize.HeaderPanel_NotSave, NotSaveClick);
             Content.AddButton(NotSave);
 
-            Discard = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Clear, NodeMarkup.Localize.HeaderPanel_Discard, DiscardClick);
+            Discard = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.ClearHeaderButton, NodeMarkup.Localize.HeaderPanel_Discard, DiscardClick);
             Content.AddButton(Discard);
         }
 
@@ -184,13 +184,13 @@ namespace NodeMarkup.UI.Editors
 
         protected override void AddButtons()
         {
-            SetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.SetDefault, NodeMarkup.Localize.HeaderPanel_SetAsDefault, SetAsDefaultClick);
+            SetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.SetDefaultHeaderButton, NodeMarkup.Localize.HeaderPanel_SetAsDefault, SetAsDefaultClick);
             Content.AddButton(SetAsDefaultButton);
 
-            UnsetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.UnsetDefault, NodeMarkup.Localize.HeaderPanel_UnsetAsDefault, SetAsDefaultClick);
+            UnsetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.UnsetDefaultHeaderButton, NodeMarkup.Localize.HeaderPanel_UnsetAsDefault, SetAsDefaultClick);
             Content.AddButton(UnsetAsDefaultButton);
 
-            Duplicate = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Duplicate, NodeMarkup.Localize.HeaderPanel_Duplicate, DuplicateClick);
+            Duplicate = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.DuplicateHeaderButton, NodeMarkup.Localize.HeaderPanel_Duplicate, DuplicateClick);
             Content.AddButton(Duplicate);
 
             base.AddButtons();
@@ -222,7 +222,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override void AddButtons()
         {
-            Apply = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.Apply, NodeMarkup.Localize.PresetEditor_ApplyPreset, ApplyClick);
+            Apply = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.ApplyHeaderButton, NodeMarkup.Localize.PresetEditor_ApplyPreset, ApplyClick);
             Content.AddButton(Apply);
 
             base.AddButtons();

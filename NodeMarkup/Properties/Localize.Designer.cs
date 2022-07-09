@@ -1308,6 +1308,18 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на [UPDATED] Auto applying marking is enable only when there is only one posible option to paste marking.
+        ///[NEW] Added option &quot;Only direct order&quot; and &quot;Direct and invert order&quot; to auto applying marking.
+        ///[FIXED] Fixed fillers calculation and illumination.
+        ///[UPDATED] &quot;Default color&quot; button on color selector set default color of style instead of default color of mod. .
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_10_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_10_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на [NEW] Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
         ///[NEW] Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: &quot;Solid&quot; and &quot;Dashed&quot;.
         ///[NEW] New line style: &quot;Solid &amp; Dashed&quot;.
@@ -1993,6 +2005,24 @@ namespace NodeMarkup {
         public static string Settings_AutoApplyPasting {
             get {
                 return ResourceManager.GetString("Settings_AutoApplyPasting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Direct and Invert order.
+        /// </summary>
+        public static string Settings_AutoApplyPastingDirectAndInvert {
+            get {
+                return ResourceManager.GetString("Settings_AutoApplyPastingDirectAndInvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Only direct order.
+        /// </summary>
+        public static string Settings_AutoApplyPastingDirectOnly {
+            get {
+                return ResourceManager.GetString("Settings_AutoApplyPastingDirectOnly", resourceCulture);
             }
         }
         

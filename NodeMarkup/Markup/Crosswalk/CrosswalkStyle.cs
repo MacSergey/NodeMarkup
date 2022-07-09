@@ -347,7 +347,7 @@ namespace NodeMarkup.Manager
             var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(Color), nameof(SecondColor));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
-            colorProperty.Init();
+            colorProperty.Init((GetDefault() as ZebraCrosswalkStyle)?.SecondColor);
             colorProperty.Value = SecondColor;
             colorProperty.OnValueChanged += (Color32 color) => SecondColor.Value = color;
 

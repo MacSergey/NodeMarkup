@@ -435,7 +435,7 @@ namespace NodeMarkup.Manager
             var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(ColorOption), nameof(Color));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
-            colorProperty.Init();
+            colorProperty.Init(GetDefault()?.Color);
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
 

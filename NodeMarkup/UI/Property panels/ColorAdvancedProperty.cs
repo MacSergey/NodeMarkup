@@ -8,6 +8,13 @@ namespace NodeMarkup.UI
     {
         private static Color32? Buffer { get; set; }
 
+        Color32? _defaultColor;
+        private Color32 DefaultColor 
+        {
+            get => _defaultColor ?? Manager.Style.DefaultColor;
+            set => _defaultColor = value;
+        }
+
         protected override void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
         {
             base.ColorPickerOpen(dropdown, popup, ref overridden);
@@ -61,7 +68,18 @@ namespace NodeMarkup.UI
                     Popup.component.Hide();
             }
         }
-        private void SetDefault() => ValueChanged(Manager.Style.DefaultColor, true, OnChangedValue);
+        private void SetDefault() => ValueChanged(DefaultColor, true, OnChangedValue);
+
+        public void Init(Color32? defaultColor = null)
+        {
+            _defaultColor = defaultColor;
+            base.Init();
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+            _defaultColor = null;
+        }
     }
 }
 
