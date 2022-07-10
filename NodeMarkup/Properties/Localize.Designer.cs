@@ -1311,7 +1311,7 @@ namespace NodeMarkup {
         ///   Ищет локализованную строку, похожую на [UPDATED] Auto applying marking is enable only when there is only one posible option to paste marking.
         ///[NEW] Added option &quot;Only direct order&quot; and &quot;Direct and invert order&quot; to auto applying marking.
         ///[FIXED] Fixed fillers calculation and illumination.
-        ///[UPDATED] &quot;Default color&quot; button on color selector set default color of style instead of default color of mod. .
+        ///[UPDATED] &quot;Default color&quot; button on color selector set default color of style instead of default color of mod..
         /// </summary>
         public static string Mod_WhatsNewMessage1_10_1 {
             get {
@@ -3434,6 +3434,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Slope.
+        /// </summary>
+        public static string StyleOption_Slope {
+            get {
+                return ResourceManager.GetString("StyleOption_Slope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Solid in center.
         /// </summary>
         public static string StyleOption_SolidInCenter {
@@ -3475,6 +3484,15 @@ namespace NodeMarkup {
         public static string StyleOption_Step {
             get {
                 return ResourceManager.GetString("StyleOption_Step", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Tilt.
+        /// </summary>
+        public static string StyleOption_Tilt {
+            get {
+                return ResourceManager.GetString("StyleOption_Tilt", resourceCulture);
             }
         }
         
