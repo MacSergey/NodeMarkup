@@ -1558,4 +1558,10 @@ Klicken um die Markierungen zu bearbeiten</value>
 [FIXED] Berechnung und Beleuchtung von Füllungen korrigiert.
 [UPDATED] "Standardfarbe"-Button beim Farbwahl er auf den Standard des Stils eingestellt, anstelle der Standardwerte der Mod. </value>
   </data>
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Gefälle</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Neigung</value>
+  </data>
 </root>

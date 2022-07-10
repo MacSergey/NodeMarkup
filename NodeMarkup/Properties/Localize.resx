@@ -1664,4 +1664,10 @@ Click to edit markings</value>
 [FIXED] Fixed fillers calculation and illumination.
 [UPDATED] "Default color" button on color selector set default color of style instead of default color of mod.</value>
   </data>
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Slope</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Tilt</value>
+  </data>
 </root>
