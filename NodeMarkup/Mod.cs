@@ -283,7 +283,7 @@ namespace NodeMarkup
         }
         private bool Patch_LoadingScreenMod_LoadImpl()
         {
-            if ((AccessTools.TypeByName("LoadingScreenMod.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModTest.AssetLoader")) is not Type type)
+            if ((AccessTools.TypeByName("LoadingScreenMod.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModTest.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModRevisited.AssetLoader")) is not Type type)
             {
                 Logger.Error($"LSM not founded, patch skip");
                 return true;
