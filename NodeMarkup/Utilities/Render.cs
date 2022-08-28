@@ -162,7 +162,7 @@ namespace NodeMarkup.Utilities
             {
                 name = type.ToString(),
                 mainTexture = texture,
-                color = new Color(1f, 1f, 1f, 1f),
+                color = new Color(0.6f, 0.6f, 0.6f, 0f),
                 renderQueue = renderQueue,
             };
 
@@ -212,7 +212,7 @@ namespace NodeMarkup.Utilities
 
     public interface IDrawData
     {
-        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data);
+        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
     }
 
     public enum MarkupLOD
@@ -291,7 +291,7 @@ namespace NodeMarkup.Utilities
         }
 
         public abstract IEnumerable<IDrawData> GetDrawData();
-        public abstract void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data);
+        public abstract void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
 
         protected void CalculateMatrix(ITrajectory trajectory, float halfWidth, Vector3 position, out Matrix4x4 left, out Matrix4x4 right)
         {
@@ -347,7 +347,7 @@ namespace NodeMarkup.Utilities
         }
         protected abstract IEnumerable<Mesh> GetMeshes();
 
-        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
+        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
             var instance = Singleton<NetManager>.instance;
 
@@ -684,13 +684,13 @@ namespace NodeMarkup.Utilities
             yield return this;
         }
 
-        public abstract void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data);
+        public abstract void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
     }
     public class MarkupStyleProp : BaseMarkupStyleProp<PropInfo>
     {
         public MarkupStyleProp(PropInfo info, MarkupStylePropItem[] items) : base(info, items) { }
 
-        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
+        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
             var instance = new InstanceID() { };
 
@@ -800,7 +800,7 @@ namespace NodeMarkup.Utilities
     {
         public MarkupStyleTree(TreeInfo info, MarkupStylePropItem[] items) : base(info, items) { }
 
-        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
+        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
             foreach (var item in Items)
                 RenderInstance(cameraInfo, Info, item.Position, item.Scale, item.Angle, item.Tilt, item.Slope, 1f, new Vector4());
@@ -896,7 +896,7 @@ namespace NodeMarkup.Utilities
             yield return this;
         }
 
-        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance renderData)
+        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance renderData, bool infoView)
         {
             var instance = Singleton<NetManager>.instance;
 
@@ -1019,8 +1019,11 @@ namespace NodeMarkup.Utilities
 
         public override string ToString() => $"{Count}: {Size}";
 
-        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data)
+        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
+            if (infoView)
+                return;
+
             var instance = Singleton<PropManager>.instance;
             var materialBlock = instance.m_materialBlock;
             materialBlock.Clear();

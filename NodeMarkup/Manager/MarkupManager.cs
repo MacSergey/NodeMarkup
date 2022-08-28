@@ -132,7 +132,6 @@ namespace NodeMarkup.Manager
         }
         protected abstract TypeMarkup NewMarkup(ushort id);
 
-        protected abstract void AddToUpdate(ushort id);
         public void Update(params ushort[] ids)
         {
             foreach (var id in ids)
@@ -158,8 +157,8 @@ namespace NodeMarkup.Manager
             if (data.m_nextInstance != ushort.MaxValue)
                 return;
 
-            if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
-                return;
+            //if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
+            //    return;
 
             if (!TryGetMarkup(id, out TypeMarkup markup))
                 return;
@@ -167,15 +166,17 @@ namespace NodeMarkup.Manager
             if (markup.NeedRecalculateDrawData)
                 markup.RecalculateDrawData();
 
+            bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
+
             if (cameraInfo.CheckRenderDistance(data.m_position, Settings.LODDistance))
-                Render(cameraInfo, markup, data, MarkupLOD.LOD0);
+                Render(cameraInfo, markup, data, MarkupLOD.LOD0, infoView);
             else if (cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
-                Render(cameraInfo, markup, data, MarkupLOD.LOD1);
+                Render(cameraInfo, markup, data, MarkupLOD.LOD1, infoView);
         }
-        private void Render(RenderManager.CameraInfo cameraInfo, TypeMarkup markup, RenderManager.Instance data, MarkupLOD lod)
+        private void Render(RenderManager.CameraInfo cameraInfo, TypeMarkup markup, RenderManager.Instance data, MarkupLOD lod, bool infoView)
         {
             foreach (var item in markup.DrawData[lod])
-                item.Draw(cameraInfo, data);
+                item.Draw(cameraInfo, data, infoView);
         }
 
         public void Remove(ushort id) => Markups.Remove(id);
@@ -249,7 +250,6 @@ namespace NodeMarkup.Manager
         protected override MarkupType Type => MarkupType.Node;
         protected override string XmlName => NodeMarkup.XmlName;
         protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetNode;
-        protected override void AddToUpdate(ushort id) => NetManager.instance.UpdateNode(id);
     }
     public class SegmentMarkupManager : MarkupManager<SegmentMarkup>
     {
@@ -262,6 +262,5 @@ namespace NodeMarkup.Manager
         protected override MarkupType Type => MarkupType.Segment;
         protected override string XmlName => SegmentMarkup.XmlName;
         protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetSegment;
-        protected override void AddToUpdate(ushort id) => NetManager.instance.UpdateSegment(id);
     }
 }
