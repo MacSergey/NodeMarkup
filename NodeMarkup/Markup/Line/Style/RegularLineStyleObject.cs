@@ -25,12 +25,12 @@ namespace NodeMarkup.Manager
         public PropertyVector2Value Slope { get; }
         public PropertyVector2Value Scale { get; }
 
-        public PropertyValue<float> Shift { get; }
-        public PropertyValue<float> Elevation { get; }
+        public PropertyVector2Value Shift { get; }
+        public PropertyVector2Value Elevation { get; }
         public PropertyValue<float> OffsetBefore { get; }
         public PropertyValue<float> OffsetAfter { get; }
 
-        public BaseObjectLineStyle(int probability, float step, Vector2 angle, Vector2 tilt, Vector2 slope, float shift, Vector2 scale, float elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
+        public BaseObjectLineStyle(int probability, float step, Vector2 angle, Vector2 tilt, Vector2 slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
         {
             Probability = new PropertyStructValue<int>("P", StyleChanged, probability);
             Step = new PropertyStructValue<float>("S", StyleChanged, step);
@@ -38,8 +38,8 @@ namespace NodeMarkup.Manager
             Tilt = new PropertyVector2Value(StyleChanged, tilt, "TLA", "TLB");
             Slope = new PropertyVector2Value(StyleChanged, slope, "SLA", "SLB");
             Scale = new PropertyVector2Value(StyleChanged, scale, "SCA", "SCB");
-            Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
-            Elevation = new PropertyStructValue<float>("E", StyleChanged, elevation);
+            Shift = new PropertyVector2Value(StyleChanged, shift, "SFA", "SFB");
+            Elevation = new PropertyVector2Value(StyleChanged, elevation,"EA", "EB");
             OffsetBefore = new PropertyStructValue<float>("OB", StyleChanged, offsetBefore);
             OffsetAfter = new PropertyStructValue<float>("OA", StyleChanged, offsetAfter);
         }
@@ -191,9 +191,9 @@ namespace NodeMarkup.Manager
             return slopeProperty;
         }
 
-        protected FloatPropertyPanel AddShiftProperty(UIComponent parent)
+        protected FloatStaticRangeProperty AddShiftProperty(UIComponent parent)
         {
-            var shiftProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Shift));
+            var shiftProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Shift));
             shiftProperty.Text = Localize.StyleOption_ObjectShift;
             shiftProperty.Format = Localize.NumberFormat_Meter;
             shiftProperty.UseWheel = true;
@@ -203,9 +203,11 @@ namespace NodeMarkup.Manager
             shiftProperty.CheckMax = true;
             shiftProperty.MinValue = -50;
             shiftProperty.MaxValue = 50;
+            shiftProperty.AllowInvert = false;
+            shiftProperty.CyclicalValue = false;
             shiftProperty.Init();
-            shiftProperty.Value = Shift;
-            shiftProperty.OnValueChanged += (float value) => Shift.Value = value;
+            shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
+            shiftProperty.OnValueChanged += (float valueA, float valueB) => Shift.Value = new Vector2(valueA, valueB);
 
             return shiftProperty;
         }
@@ -222,6 +224,8 @@ namespace NodeMarkup.Manager
             scaleProperty.CheckMax = true;
             scaleProperty.MinValue = 1f;
             scaleProperty.MaxValue = 500f;
+            scaleProperty.AllowInvert = false;
+            scaleProperty.CyclicalValue = false;
             scaleProperty.Init();
             scaleProperty.SetValues(Scale.Value.x * 100f, Scale.Value.y * 100f);
             scaleProperty.OnValueChanged += (float valueA, float valueB) => Scale.Value = new Vector2(valueA, valueB) * 0.01f;
@@ -229,9 +233,9 @@ namespace NodeMarkup.Manager
             return scaleProperty;
         }
 
-        protected FloatPropertyPanel AddElevationProperty(UIComponent parent)
+        protected FloatStaticRangeProperty AddElevationProperty(UIComponent parent)
         {
-            var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Elevation));
+            var elevationProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Elevation));
             elevationProperty.Text = Localize.LineStyle_Elevation;
             elevationProperty.Format = Localize.NumberFormat_Meter;
             elevationProperty.UseWheel = true;
@@ -241,9 +245,11 @@ namespace NodeMarkup.Manager
             elevationProperty.CheckMax = true;
             elevationProperty.MinValue = -10;
             elevationProperty.MaxValue = 10;
+            elevationProperty.AllowInvert = false;
+            elevationProperty.CyclicalValue = false;
             elevationProperty.Init();
-            elevationProperty.Value = Elevation;
-            elevationProperty.OnValueChanged += (float value) => Elevation.Value = value;
+            elevationProperty.SetValues(Elevation.Value.x, Elevation.Value.y);
+            elevationProperty.OnValueChanged += (float valueA, float valueB) => Elevation.Value = new Vector2(valueA, valueB);
 
             return elevationProperty;
         }
@@ -304,8 +310,12 @@ namespace NodeMarkup.Manager
             Tilt.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
             Slope.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
             Scale.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
-            Shift.FromXml(config, DefaultObjectShift);
-            Elevation.FromXml(config, DefaultObjectElevation);
+            Shift.FromXml(config, new Vector2(DefaultObjectShift, DefaultObjectShift));
+            if (config.TryGetAttrValue<float>("SF", out var shift))
+                Shift.Value = new Vector2(shift, shift);
+            Elevation.FromXml(config, new Vector2(DefaultObjectElevation, DefaultObjectElevation));
+            if (config.TryGetAttrValue<float>("E", out var elevation))
+                Elevation.Value = new Vector2(elevation, elevation);
             OffsetBefore.FromXml(config, DefaultObjectOffsetBefore);
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
         }
@@ -315,7 +325,7 @@ namespace NodeMarkup.Manager
     {
         public PropertyPrefabValue<PrefabType> Prefab { get; }
 
-        public BaseObjectLineStyle(PrefabType prefab, int probability, float step, Vector2 angle, Vector2 tilt, Vector2 slope, float shift, Vector2 scale, float elevation, float offsetBefore, float offsetAfter) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
+        public BaseObjectLineStyle(PrefabType prefab, int probability, float step, Vector2 angle, Vector2 tilt, Vector2 slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
         {
             Prefab = new PropertyPrefabValue<PrefabType>("PRF", StyleChanged, prefab);
         }
@@ -334,12 +344,14 @@ namespace NodeMarkup.Manager
             if (Prefab.Value is not PrefabType prefab)
                 return new MarkupStyleParts();
 
-            if (Shift != 0)
+            var shift = (Shift.Value.x + Shift.Value.y) * 0.5f;
+
+            if (shift != 0)
             {
                 var startNormal = trajectory.StartDirection.Turn90(true);
                 var endNormal = trajectory.EndDirection.Turn90(false);
 
-                trajectory = new BezierTrajectory(trajectory.StartPosition + startNormal * Shift, trajectory.StartDirection, trajectory.EndPosition + endNormal * Shift, trajectory.EndDirection);
+                trajectory = new BezierTrajectory(trajectory.StartPosition + startNormal * shift, trajectory.StartDirection, trajectory.EndPosition + endNormal * shift, trajectory.EndDirection);
             }
 
             var length = trajectory.Length;
@@ -371,13 +383,17 @@ namespace NodeMarkup.Manager
                 }
 
                 items[i].Position = trajectory.Position(t);
-                items[i].Position.y += Elevation;
-                items[i].Angle = trajectory.Tangent(t).AbsoluteAngle();
+
+                var randomShift = SimulationManager.instance.m_randomizer.UInt32((uint)((Shift.Value.y - Shift.Value.x) * 1000f)) * 0.001f;
+                items[i].Position += trajectory.Tangent(t).Turn90(true).MakeFlatNormalized() * (randomShift - (Shift.Value.y - Shift.Value.x) * 0.5f);
+
+                var randomElevation = SimulationManager.instance.m_randomizer.UInt32((uint)((Elevation.Value.y - Elevation.Value.x) * 1000f)) * 0.001f;
+                items[i].Position.y += Elevation.Value.x + randomElevation;
 
                 var minAngle = Mathf.Min(Angle.Value.x, Angle.Value.y);
                 var maxAngle = Mathf.Max(Angle.Value.x, Angle.Value.y);
                 var randomAngle = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(maxAngle - minAngle));
-                items[i].Angle += (minAngle + randomAngle) * Mathf.Deg2Rad;
+                items[i].Angle = trajectory.Tangent(t).AbsoluteAngle() + (minAngle + randomAngle) * Mathf.Deg2Rad;
 
                 var randomTilt = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Tilt.Value.y - Tilt.Value.x));
                 items[i].Tilt += (Tilt.Value.x + randomTilt) * Mathf.Deg2Rad;
@@ -385,8 +401,8 @@ namespace NodeMarkup.Manager
                 var randomSlope = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Slope.Value.y - Slope.Value.x));
                 items[i].Slope += (Slope.Value.x + randomSlope) * Mathf.Deg2Rad;
 
-                var randomScale = (float)SimulationManager.instance.m_randomizer.UInt32((uint)((Scale.Value.y - Scale.Value.x) * 1000));
-                items[i].Scale = Scale.Value.x + randomScale * 0.001f;
+                var randomScale = SimulationManager.instance.m_randomizer.UInt32((uint)((Scale.Value.y - Scale.Value.x) * 1000f)) * 0.001f;
+                items[i].Scale = Scale.Value.x + randomScale;
 
                 CalculateItem(prefab, ref items[i]);
             }
@@ -418,7 +434,7 @@ namespace NodeMarkup.Manager
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
-        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float step, Vector2 angle, Vector2 tilt, Vector2 slope, float shift, Vector2 scale, float elevation, float offsetBefore, float offsetAfter) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
+        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float step, Vector2 angle, Vector2 tilt, Vector2 slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
         {
             Color.Value = color;
             ColorOption = new PropertyEnumValue<ColorOptionEnum>("CO", StyleChanged, colorOption);
@@ -555,7 +571,7 @@ namespace NodeMarkup.Manager
     {
         public override StyleType Type => StyleType.LineTree;
 
-        public TreeLineStyle(TreeInfo tree, int probability, float step, Vector2 angle, Vector2 tilt, Vector2 slope, float shift, Vector2 scale, float elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter) { }
+        public TreeLineStyle(TreeInfo tree, int probability, float step, Vector2 angle, Vector2 tilt, Vector2 slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter) { }
 
         public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
 

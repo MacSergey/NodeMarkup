@@ -284,26 +284,30 @@ namespace NodeMarkup.UI
                     FieldA.MinValue = MinValue;
                     FieldA.MaxValue = MaxValue;
                     FieldA.CyclicalValue = CyclicalValue;
+                    FieldA.Value = FieldA.Value;
 
                     FieldB.CheckMin = CheckMin;
                     FieldB.CheckMax = CheckMax;
                     FieldB.MinValue = MinValue;
                     FieldB.MaxValue = MaxValue;
                     FieldB.CyclicalValue = CyclicalValue;
+                    FieldB.Value = FieldB.Value;
                 }
                 else
                 {
-                    FieldA.CheckMin = CheckMin;
-                    FieldA.CheckMax = true;
-                    FieldA.MinValue = MinValue;
-                    FieldA.MaxValue = FieldB.Value;
-                    FieldA.CyclicalValue = false;
-
                     FieldB.CheckMin = true;
                     FieldB.CheckMax = CheckMax;
                     FieldB.MinValue = FieldA.Value;
                     FieldB.MaxValue = MaxValue;
                     FieldB.CyclicalValue = false;
+                    FieldB.Value = FieldB.Value;
+
+                    FieldA.CheckMin = CheckMin;
+                    FieldA.CheckMax = true;
+                    FieldA.MinValue = MinValue;
+                    FieldA.MaxValue = FieldB.Value;
+                    FieldA.CyclicalValue = false;
+                    FieldA.Value = FieldA.Value;
                 }
             }
             else
@@ -316,6 +320,7 @@ namespace NodeMarkup.UI
                 FieldA.MinValue = MinValue;
                 FieldA.MaxValue = MaxValue;
                 FieldA.CyclicalValue = CyclicalValue;
+                FieldA.Value = FieldA.Value;
             }
 
             Content.Refresh();
