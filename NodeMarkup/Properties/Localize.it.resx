@@ -1604,4 +1604,10 @@ Seleziona per modificare la segnaletica orizzontale</value>
   
   
   
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Pendenza</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Inclinazione</value>
+  </data>
 </root>
