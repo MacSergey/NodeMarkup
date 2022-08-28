@@ -478,7 +478,20 @@ namespace NodeMarkup.Manager
             prefabProperty.Selector = IsValidProp;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
-            prefabProperty.OnValueChanged += (PropInfo value) => Prefab.Value = value;
+            prefabProperty.OnValueChanged += (PropInfo value) =>
+            {
+                Prefab.Value = value;
+                if (IsValidProp(value))
+                {
+                    if (parent.Find(nameof(Step)) is FloatPropertyPanel stepProperty)
+                        stepProperty.SimulateEnterValue(Prefab.Value.m_generatedInfo.m_size.x);
+                    else
+                    {
+                        Step.Value = Prefab.Value.m_generatedInfo.m_size.x;
+                        StyleChanged();
+                    }
+                }
+            };
 
             return prefabProperty;
         }
@@ -544,7 +557,7 @@ namespace NodeMarkup.Manager
 
         public TreeLineStyle(TreeInfo tree, int probability, float step, Vector2 angle, Vector2 tilt, Vector2 slope, float shift, Vector2 scale, float elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter) { }
 
-        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value,Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
+        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
 
         protected override IStyleData GetParts(TreeInfo tree, MarkupStylePropItem[] items)
         {
