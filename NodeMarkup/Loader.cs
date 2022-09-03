@@ -43,7 +43,7 @@ namespace NodeMarkup
                     continue;
 
                 var date = new DateTime(long.Parse(match.Groups["date"].Value));
-                result[file] = $"{match.Groups["name"].Value} {date}";
+                result[file] = $"{match.Groups["name"].Value} {date.ToString(SingletonMod<Mod>.Instance.Culture)}";
             }
             return result;
         }
@@ -61,7 +61,7 @@ namespace NodeMarkup
                     continue;
 
                 var date = new DateTime(long.Parse(match.Groups["date"].Value));
-                result[file] = date.ToString();
+                result[file] = date.ToString(SingletonMod<Mod>.Instance.Culture);
             }
             return result;
         }

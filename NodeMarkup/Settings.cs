@@ -106,13 +106,13 @@ namespace NodeMarkup
             AddFloatField(group, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
             AddFloatField(group, Localize.Settings_LODDistance, LODDistance, 300f, 0f);
             AddCheckBox(group, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
-            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
+            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
             AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
-            AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
-            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
+            AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
+            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
             AddCheckBox(group, Localize.Settings_LevelCrossingUnderMarking, LevelCrossingUnderMarking);
-            AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, Color.red, 25);
-            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, Color.yellow, 25);
+            AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
+            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
             AddToolButton<NodeMarkupTool, NodeMarkupButton>(group);
             AddCheckBox(group, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
             AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);
@@ -224,7 +224,10 @@ namespace NodeMarkup
         private void AddDeleteAll(UIHelper group, string buttonText, string caption, string message, Action process)
         {
             var button = AddButton(group, buttonText, Click, 600);
-            button.textColor = Color.red;
+            button.color = new Color32(255, 40, 40, 255);
+            button.hoveredColor = new Color32(224, 40, 40, 255);
+            button.pressedColor = new Color32(192, 40, 40, 255);
+            button.focusedColor = button.color;
 
             void Click()
             {
