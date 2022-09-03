@@ -1283,10 +1283,18 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="Settings_GroupPresets" xml:space="preserve">
     <value>Grup ön ayarları</value>
   </data>
-  
-  
-  
-  
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Yakın Uyum</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Mükemmel Uyum</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Kötü Uyum</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Mümkün Uyum</value>
+  </data>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Hemzemin geçitlerin altındaki işaretler</value>
   </data>
@@ -1310,6 +1318,27 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   </data>
   
   
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Ağaç</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Açı</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Yükseklik</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>İsim</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Ölçek</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Adım</value>
+  </data>
   
   
   
@@ -1317,32 +1346,53 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   
   
   
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Özel</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Rastgele</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Renk varyantı</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>Kaldırıma yapıştır</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Açı</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Dekoratif ağ</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Genişlik Ölçeği</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Tekrarlama Mesafesi</value>
+  </data>
   
   
   
   
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Hiçbir şey bulunamadı</value>
+  </data>
+  
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>İhtimal</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Aralık</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Tek</value>
+  </data>
   
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Eğim</value>
+  </data>
   
 </root>
