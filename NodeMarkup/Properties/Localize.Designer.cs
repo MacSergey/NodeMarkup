@@ -1311,11 +1311,21 @@ namespace NodeMarkup {
         ///   Ищет локализованную строку, похожую на [UPDATED] Auto applying marking is enable only when there is only one posible option to paste marking.
         ///[NEW] Added option &quot;Only direct order&quot; and &quot;Direct and invert order&quot; to auto applying marking.
         ///[FIXED] Fixed fillers calculation and illumination.
-        ///[UPDATED] &quot;Default color&quot; button on color selector set default color of style instead of default color of mod. .
+        ///[UPDATED] &quot;Default color&quot; button on color selector set default color of style instead of default color of mod..
         /// </summary>
         public static string Mod_WhatsNewMessage1_10_1 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_10_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на [UPDATED] Added Plazas &amp; Promenades DLC support.
+        ///[FIXED] Fixed UI blinking while serching props/trees/networks.
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_10_2 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_10_2", resourceCulture);
             }
         }
         
