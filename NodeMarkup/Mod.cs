@@ -285,13 +285,37 @@ namespace NodeMarkup
         }
         private bool Patch_LoadingScreenMod_LoadImpl()
         {
-            if ((AccessTools.TypeByName("LoadingScreenMod.AssetLoader") ?? AccessTools.TypeByName("LoadingScreenModTest.AssetLoader")) is not Type type)
+            var lsmFound = false;
+            var success = true;
             {
-                Logger.Error($"LSM not founded, patch skip");
+                if (AccessTools.TypeByName("LoadingScreenMod.AssetLoader") is Type type)
+                {
+                    lsmFound = true;
+                    success &= AddTranspiler(typeof(Mod), nameof(Mod.LoadingScreenModLoadImplTranspiler), type, "LoadImpl");
+                }
+            }
+            {
+                if (AccessTools.TypeByName("LoadingScreenModTest.AssetLoader") is Type type)
+                {
+                    lsmFound = true;
+                    success &= AddTranspiler(typeof(Mod), nameof(Mod.LoadingScreenModLoadImplTranspiler), type, "LoadImpl");
+                }
+            }
+            {
+                if (AccessTools.TypeByName("LoadingScreenModRevisited.AssetLoader") is Type type)
+                {
+                    lsmFound = true;
+                    success &= AddTranspiler(typeof(Mod), nameof(Mod.LoadingScreenModLoadImplTranspiler), type, "LoadImpl");
+                }
+            }
+
+            if (lsmFound)
+                return success;
+            else
+            {
+                Logger.Error($"LSM not founded, patch skiped");
                 return true;
             }
-            else
-                return AddTranspiler(typeof(Mod), nameof(Mod.LoadingScreenModLoadImplTranspiler), type, "LoadImpl");
         }
         private static IEnumerable<CodeInstruction> LoadingScreenModLoadImplTranspiler(IEnumerable<CodeInstruction> instructions)
         {
