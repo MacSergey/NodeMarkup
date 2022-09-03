@@ -83,7 +83,7 @@ namespace NodeMarkup.UI
 
         public ModifierDropDown()
         {
-            SetSettingsStyle(new Vector2(278, 31));
+            ComponentStyle.CustomSettingsStyle(this, new Vector2(278, 31));
 
             foreach (var modifier in EnumExtension.GetEnumValues<StyleModifier>())
                 AddItem(modifier, modifier.Description());
