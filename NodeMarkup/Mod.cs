@@ -198,7 +198,7 @@ namespace NodeMarkup
                     yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.UpdateNode)));
                     yield return instruction;
                 }
-                else if(instruction.opcode == OpCodes.Call && instruction.operand == updateLanes)
+                else if (instruction.opcode == OpCodes.Call && instruction.operand == updateLanes)
                 {
                     yield return instruction;
                     yield return new CodeInstruction(OpCodes.Ldloc_S, 13);
@@ -234,7 +234,7 @@ namespace NodeMarkup
                 success &= Patch_NetInfo_NodeInitNodeInfo_Rail();
                 success &= Patch_NetInfo_InitSegmentInfo();
             }
-            if(Settings.LevelCrossingUnderMarking)
+            if (Settings.LevelCrossingUnderMarking)
                 success &= Patch_NetInfo_NodeInitNodeInfo_LevelCrossing();
 
         }
@@ -258,7 +258,7 @@ namespace NodeMarkup
         private void PatchLoading(ref bool success)
         {
             if (Settings.LoadMarkingAssets)
-            {
+            {             
                 success &= Patch_LoadingManager_LoadCustomContent();
                 success &= Patch_LoadingScreenMod_LoadImpl();
             }
@@ -269,19 +269,108 @@ namespace NodeMarkup
             return AddTranspiler(typeof(Mod), nameof(Mod.LoadingManagerLoadCustomContentTranspiler), nestedType, "MoveNext");
         }
 
-        private static IEnumerable<CodeInstruction> LoadingManagerLoadCustomContentTranspiler(IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> LoadingManagerLoadCustomContentTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
-            var type = typeof(LoadingManager).GetNestedTypes(AccessTools.all).FirstOrDefault(t => t.FullName.Contains("LoadCustomContent"));
-            var field = AccessTools.Field(type, "<metaData>__4");
-            var additional = new CodeInstruction[]
-            {
-                new CodeInstruction(OpCodes.Ldloc_S, 19),
-                new CodeInstruction(OpCodes.Ldarg_0),
-                new CodeInstruction(OpCodes.Ldfld, field),
-                new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(CustomAssetMetaData), nameof(CustomAssetMetaData.assetRef))),
-            };
+            var newInstructions = new List<CodeInstruction>(instructions);
 
-            return LoadingTranspiler(instructions, OpCodes.Ldloc_S, 26, additional);
+            var index = 0;
+            LocalBuilder markingLocal = null;
+            for (; index < newInstructions.Count; index += 1)
+            {
+                var instruction = newInstructions[index];
+
+                if (instruction.opcode == OpCodes.Stloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 29)
+                {
+                    markingLocal = generator.DeclareLocal(typeof(MarkingInfo));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldloc_S, 22));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(UnityEngine.GameObject), nameof(UnityEngine.GameObject.GetComponent), new Type[0], new Type[] { typeof(MarkingInfo) })));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Stloc_S, markingLocal));
+                    break;
+                }
+            }
+
+            if (markingLocal == null)
+                return newInstructions;
+
+            bool lastIfFound = false;
+            for (index += 1; index < newInstructions.Count; index += 1)
+            {
+                var instruction = newInstructions[index];
+                if (instruction.opcode == OpCodes.Ldloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 29)
+                {
+                    lastIfFound = true;
+                    break;
+                }
+            }
+
+            if (!lastIfFound)
+                return newInstructions;
+
+            bool elseJumpFound = false;
+            Label elseLabel = default;
+            Label newElseLabel = default;
+            for (index += 1; index < newInstructions.Count; index += 1)
+            {
+                var instruction = newInstructions[index];
+
+                if (instruction.opcode == OpCodes.Brfalse)
+                {
+                    elseLabel = (Label)instruction.operand;
+                    elseJumpFound = true;
+                    newElseLabel = generator.DefineLabel();
+                    instruction.operand = newElseLabel;
+                    break;
+                }
+            }
+
+            if (!elseJumpFound)
+                return newInstructions;
+
+            bool added = false;
+            Label endLabel = default;
+            for (index += 1; index < newInstructions.Count; index += 1)
+            {
+                var instruction = newInstructions[index];
+
+                if (instruction.opcode == OpCodes.Br)
+                {
+                    var newInstruction = new CodeInstruction(OpCodes.Ldloc_S, markingLocal);
+                    newInstruction.labels.Add(newElseLabel);
+                    newInstructions.Insert(++index, newInstruction);
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldnull));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(UnityEngine.Object), "op_Inequality")));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Brfalse, elseLabel));
+
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldloc_S, markingLocal));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldarg_0));
+                    var type = typeof(LoadingManager).GetNestedTypes(AccessTools.all).FirstOrDefault(t => t.FullName.Contains("LoadCustomContent"));
+                    var field = AccessTools.Field(type, "<metaData>__4");
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldfld, field));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(CustomAssetMetaData), nameof(CustomAssetMetaData.assetRef))));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(Loader), nameof(Loader.LoadTemplateAsset))));
+
+                    endLabel = generator.DefineLabel();
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Br, endLabel));
+                    added = true;
+                    break;
+                }
+            }
+
+            if (!added)
+                return newInstructions;
+
+            for (index += 1; index < newInstructions.Count; index += 1)
+            {
+                var instruction = newInstructions[index];
+
+                if (instruction.opcode == OpCodes.Ldloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 30)
+                {
+                    instruction.labels.Add(endLabel);
+                    break;
+                }
+            }
+
+            return newInstructions;
         }
         private bool Patch_LoadingScreenMod_LoadImpl()
         {
@@ -317,64 +406,91 @@ namespace NodeMarkup
                 return true;
             }
         }
-        private static IEnumerable<CodeInstruction> LoadingScreenModLoadImplTranspiler(IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> LoadingScreenModLoadImplTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
-            var additional = new CodeInstruction[]
+            var newInstructions = new List<CodeInstruction>(instructions);
+
+            var index = 0;
+            bool lastIfFound = false;
+            for (; index < newInstructions.Count; index += 1)
             {
-                new CodeInstruction(OpCodes.Ldloc_1),
-                new CodeInstruction(OpCodes.Ldarg_1),
-            };
-
-            return LoadingTranspiler(instructions, OpCodes.Stloc_S, 12, additional);
-        }
-        private static IEnumerable<CodeInstruction> LoadingTranspiler(IEnumerable<CodeInstruction> instructions, OpCode startOc, int startVarIndex, CodeInstruction[] additional)
-        {
-            var enumerator = instructions.GetEnumerator();
-
-            while (enumerator.MoveNext())
-            {
-                var instruction = enumerator.Current;
-                yield return instruction;
-
-                if (instruction.opcode == startOc && instruction.operand is LocalBuilder local && local.LocalIndex == startVarIndex)
-                    break;
-            }
-
-            var elseLabel = (Label)default;
-            while (enumerator.MoveNext())
-            {
-                var instruction = enumerator.Current;
-                yield return instruction;
-
-                if (instruction.opcode == OpCodes.Brfalse || instruction.opcode == OpCodes.Brfalse_S)
+                var instruction = newInstructions[index];
+                if (instruction.opcode == OpCodes.Stloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 13)
                 {
-                    if (instruction.operand is Label label)
-                        elseLabel = label;
-
+                    lastIfFound = true;
                     break;
                 }
             }
 
-            if (elseLabel == default)
-                throw new Exception("else label not founded");
+            if (!lastIfFound)
+                return newInstructions;
 
-            while (enumerator.MoveNext())
+            bool elseJumpFound = false;
+            Label elseLabel = default;
+            Label newElseLabel = default;
+            for (index += 1; index < newInstructions.Count; index += 1)
             {
-                var instruction = enumerator.Current;
-                yield return instruction;
+                var instruction = newInstructions[index];
 
-                if (instruction.labels.Contains(elseLabel))
+                if (instruction.opcode == OpCodes.Brfalse_S)
                 {
-                    foreach (var additionalInst in additional)
-                        yield return additionalInst;
-
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(Loader), nameof(Loader.LoadTemplateAsset)));
+                    elseLabel = (Label)instruction.operand;
+                    elseJumpFound = true;
+                    newElseLabel = generator.DefineLabel();
+                    instruction.operand = newElseLabel;
                     break;
                 }
             }
 
-            while (enumerator.MoveNext())
-                yield return enumerator.Current;
+            if (!elseJumpFound)
+                return newInstructions;
+
+            bool added = false;
+            Label endLabel = default;
+            for (index += 1; index < newInstructions.Count; index += 1)
+            {
+                var instruction = newInstructions[index];
+
+                if (instruction.opcode == OpCodes.Br_S)
+                {
+                    var newInstruction = new CodeInstruction(OpCodes.Ldloc_1);
+                    newInstruction.labels.Add(newElseLabel);
+                    newInstructions.Insert(++index, newInstruction);
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(UnityEngine.GameObject), nameof(UnityEngine.GameObject.GetComponent), new Type[0], new Type[] { typeof(MarkingInfo) })));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Dup));
+
+                    var markingLocal = generator.DeclareLocal(typeof(MarkingInfo));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Stloc_S, markingLocal));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldnull));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(UnityEngine.Object), "op_Inequality")));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Brfalse_S, elseLabel));
+
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldloc_S, markingLocal));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldarg_1));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(Loader), nameof(Loader.LoadTemplateAsset))));
+
+                    endLabel = generator.DefineLabel();
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Br_S, endLabel));
+                    added = true;
+                    break;
+                }
+            }
+
+            if (!added)
+                return newInstructions;
+
+            for (index += 1; index < newInstructions.Count; index += 1)
+            {
+                var instruction = newInstructions[index];
+
+                if (instruction.opcode == OpCodes.Ldarg_0)
+                {
+                    instruction.labels.Add(endLabel);
+                    break;
+                }
+            }
+
+            return newInstructions;
         }
 
         #endregion
