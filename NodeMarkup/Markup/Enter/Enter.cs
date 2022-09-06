@@ -1,5 +1,4 @@
 ﻿using ColossalFramework.Math;
-using ModsBridge;
 using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Tools;
@@ -149,12 +148,12 @@ namespace NodeMarkup.Manager
 
             var sources = new List<IPointSource>();
 
-            if (segment.Info is IMarkingNetInfo info)
-            {
-                foreach (var position in IsLaneInvert ? info.MarkupPoints : info.MarkupPoints.Reverse())
-                    sources.Add(new RoadGeneratorPointSource(this, IsLaneInvert ? position : -position));
-            }
-            else
+            //if (segment.Info is IMarkingNetInfo info)
+            //{
+            //    foreach (var position in IsLaneInvert ? info.MarkupPoints : info.MarkupPoints.Reverse())
+            //        sources.Add(new RoadGeneratorPointSource(this, IsLaneInvert ? position : -position));
+            //}
+            //else
             {
                 var driveLanes = DriveLanes.ToArray();
                 if (driveLanes.Any())
