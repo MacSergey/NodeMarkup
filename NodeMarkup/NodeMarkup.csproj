@@ -1,241 +1,58 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{94B9B12B-0D2B-4685-BF64-4F0488470569}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NodeMarkup</RootNamespace>
-    <AssemblyName>NodeMarkup</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
-    <OutputPath>bin\Stable Release\</OutputPath>
+    <TargetFramework>net35</TargetFramework>
+    <Authors>MacSergey</Authors>
+    <Product>Intersection Marking Tool</Product>
+    <PackageProjectUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2472062376</PackageProjectUrl>
     <LangVersion>9.0</LangVersion>
+    <ManagedDLLPath>$(MSBuildProgramFiles32)/Steam/steamapps/common/Cities_Skylines/Cities_Data/Managed</ManagedDLLPath>
+    <ExternalDLLPath>$(SolutionDir)/libs</ExternalDLLPath>
+    <AssemblySearchPaths>
+      $(AssemblySearchPaths);
+      $(ManagedDLLPath);
+      $(ExternalDLLPath)
+    </AssemblySearchPaths>
+    <Configurations>Beta Debug;Beta Release;Stable Debug;Stable Release</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
+    <Version>1.10.1.1</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Beta Release' OR '$(Configuration)' == 'Beta Debug'">
+    <Version>1.10.0.295</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants />
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Debug|AnyCPU'">
-    <OutputPath>bin\Stable Debug\</OutputPath>
-    <LangVersion>9.0</LangVersion>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <Optimize>false</Optimize>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta Release|AnyCPU'">
-    <OutputPath>bin\Beta Release\</OutputPath>
-    <LangVersion>9.0</LangVersion>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <DefineConstants>BETA</DefineConstants>
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta Debug|AnyCPU'">
-    <OutputPath>bin\Beta Debug\</OutputPath>
-    <LangVersion>9.0</LangVersion>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <Optimize>false</Optimize>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <DefineConstants>BETA, DEBUG</DefineConstants>
-    <ShouldCreateLogs>True</ShouldCreateLogs>
-    <AdvancedSettingsExpanded>False</AdvancedSettingsExpanded>
-    <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
-    <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
-    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
-    <AssemblyVersionSettings>None.None.None.Increment</AssemblyVersionSettings>
-    <UpdatePackageVersion>False</UpdatePackageVersion>
-    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
-    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
-    <AssemblyFileVersionSettings>None.None.None.Increment</AssemblyFileVersionSettings>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="CitiesHarmony.API, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CitiesHarmony.API.2.0.0\lib\net35\CitiesHarmony.API.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="CitiesHarmony.Harmony, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CitiesHarmony.Harmony.2.0.4\lib\net35\CitiesHarmony.Harmony.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ColossalManaged">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="ICities">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ICities.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MoveItIntegration">
-      <HintPath>..\..\CS-MoveIt\MoveItIntegration\bin\Debug\MoveItIntegration.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
-    <Reference Include="System">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UnifiedUILib, Version=2.2.9.20126, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifiedUILib.2.2.9\lib\net35\UnifiedUILib.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Markup\Enter\NodeEnter.cs" />
-    <Compile Include="Markup\Enter\SegmentEnter.cs" />
-    <Compile Include="Markup\Enter\Sources.cs" />
-    <Compile Include="Markup\Filler\Style\FillerStyle3D.cs" />
-    <Compile Include="Markup\Line\Style\RegularLineStyleNetwork.cs" />
-    <Compile Include="Markup\Line\Style\RegularLineStyleObject.cs" />
-    <Compile Include="Markup\Line\Style\RegularLineStyle3D.cs" />
-    <Compile Include="Markup\Markup\Interfaces.cs" />
-    <Compile Include="Markup\Markup\Markup.cs" />
-    <Compile Include="Markup\Markup\SegmentMarkup.cs" />
-    <Compile Include="Markup\Template.cs" />
-    <Compile Include="Tools\DragPointMode.cs" />
-    <Compile Include="Tools\MakeItem\MakeCrosswalk.cs" />
-    <Compile Include="Tools\MakeItem\MakeFiller.cs" />
-    <Compile Include="Tools\MakeItem\BaseMakeItem.cs" />
-    <Compile Include="Tools\MakeItem\MakeLine.cs" />
-    <Compile Include="Tools\Order\PasteClasses.cs" />
-    <Compile Include="Tools\Order\EntersOrderMode.cs" />
-    <Compile Include="Tools\Order\PointsOrderMode.cs" />
-    <Compile Include="Tools\BasePanelMode.cs" />
-    <Compile Include="Tools\SelectMode.cs" />
-    <Compile Include="UI\Editors\ItemsPanel\ItemsGroupPanel.cs" />
-    <Compile Include="UI\Editors\ItemsPanel\ItemsPanel.cs" />
-    <Compile Include="UI\Editors\EnterEditor.cs" />
-    <Compile Include="UI\Property panels\SelectAssetProperty.cs" />
-    <Compile Include="UI\Property panels\StaticRangeProperty.cs" />
-    <Compile Include="UI\Selectors\LinesSelector.cs" />
-    <Compile Include="UI\Panel\TabStrip.cs" />
-    <Compile Include="UI\Property panels\ColorAdvancedProperty.cs" />
-    <Compile Include="UI\Property panels\EnumProperty.cs" />
-    <Compile Include="UI\Property panels\PresetInfoProperty.cs" />
-    <Compile Include="UI\Editors\Base\BaseTemplateEditor.cs" />
-    <Compile Include="UI\Editors\Headers\ApplyTemplatePopup.cs" />
-    <Compile Include="UI\Editors\IntersectionTemplateEditor.cs" />
-    <Compile Include="UI\Panel\Header.cs" />
-    <Compile Include="Manager\Extensions\AssetDataExtension.cs" />
-    <Compile Include="Manager\Extensions\LoadingExtension.cs" />
-    <Compile Include="Loader.cs" />
-    <Compile Include="Markup\Crosswalk\Crosswalk.cs" />
-    <Compile Include="Markup\Crosswalk\CrosswalkStyleBase.cs" />
-    <Compile Include="Markup\Filler\Filler.cs" />
-    <Compile Include="Markup\Filler\FillerContour.cs" />
-    <Compile Include="Markup\Filler\Style\FillerStyle2D.cs" />
-    <Compile Include="Markup\Filler\Style\FillerStyleBase.cs" />
-    <Compile Include="Markup\Filler\FillerVertex.cs" />
-    <Compile Include="Markup\Line\Line.cs" />
-    <Compile Include="Markup\Line\LinePart.cs" />
-    <Compile Include="Markup\Line\LineRule.cs" />
-    <Compile Include="Markup\Crosswalk\CrosswalkStyle.cs" />
-    <Compile Include="Markup\Line\Style\StopLineStyle.cs" />
-    <Compile Include="Markup\Line\Style\RegularLineStyle2D.cs" />
-    <Compile Include="Markup\Markup\NodeMarkup.cs" />
-    <Compile Include="Markup\Line\LinePartEdge.cs" />
-    <Compile Include="Markup\Point\Point.cs" />
-    <Compile Include="Markup\Enter\Enter.cs" />
-    <Compile Include="Markup\Point\SupportPoint.cs" />
-    <Compile Include="Markup\Line\Style\LineStyleBase.cs" />
-    <Compile Include="Markup\Style.cs" />
-    <Compile Include="Markup\StyleHelper.cs" />
-    <Compile Include="Manager\TemplateManager.cs" />
-    <Compile Include="Mod.cs" />
-    <Compile Include="Manager\MarkupManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Localize.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Localize.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\Tool.cs" />
-    <Compile Include="Tools\Order\BaseOrderMode.cs" />
-    <Compile Include="UI\Editors\Base\BaseEditor.cs" />
-    <Compile Include="UI\Editors\CrosswalkEditor.cs" />
-    <Compile Include="UI\Editors\Items\ItemGroup.cs" />
-    <Compile Include="UI\Editors\Items\Item.cs" />
-    <Compile Include="UI\Editors\FillerEditor.cs" />
-    <Compile Include="UI\Editors\LineEditor.cs" />
-    <Compile Include="UI\Editors\PointEditor.cs" />
-    <Compile Include="UI\Elements\Button.cs" />
-    <Compile Include="UI\GUI\Button.cs" />
-    <Compile Include="UI\Message boxes\ImportMessageBox.cs" />
-    <Compile Include="UI\Message boxes\SimpleMessageBox.cs" />
-    <Compile Include="UI\Editors\RulePanel.cs" />
-    <Compile Include="UI\Editors\StyleTemplateEditor.cs" />
-    <Compile Include="UI\Panel\Panel.cs" />
-    <Compile Include="UI\Selectors\PointsSelector.cs" />
-    <Compile Include="UI\Editors\Headers\OptionsHeaderPanel.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="UI\Elements\StyleModifier.cs" />
-    <Compile Include="UI\Property panels\SelectProperty.cs" />
-    <Compile Include="Utilities\Dependences.cs" />
-    <Compile Include="Utilities\Intersects.cs" />
-    <Compile Include="Utilities\Extensions.cs" />
-    <Compile Include="Utilities\MoveItIntegration.cs" />
-    <Compile Include="Utilities\ObjectsMap.cs" />
-    <Compile Include="Utilities\Render.cs" />
-    <Compile Include="Manager\Extensions\SerializableDataExtension.cs" />
-    <Compile Include="Utilities\Textures.cs" />
-    <Compile Include="Utilities\VersionMigration.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Localize.cs.resx" />
-    <EmbeddedResource Include="Properties\Localize.de.resx" />
-    <EmbeddedResource Include="Properties\Localize.en-GB.resx" />
-    <EmbeddedResource Include="Properties\Localize.es.resx" />
-    <EmbeddedResource Include="Properties\Localize.fi.resx" />
-    <EmbeddedResource Include="Properties\Localize.fr.resx" />
-    <EmbeddedResource Include="Properties\Localize.id.resx" />
-    <EmbeddedResource Include="Properties\Localize.it.resx" />
-    <EmbeddedResource Include="Properties\Localize.ja.resx" />
-    <EmbeddedResource Include="Properties\Localize.ko.resx" />
-    <EmbeddedResource Include="Properties\Localize.nl.resx" />
-    <EmbeddedResource Include="Properties\Localize.pl.resx" />
-    <EmbeddedResource Include="Properties\Localize.pt.resx" />
-    <EmbeddedResource Include="Properties\Localize.ro.resx" />
-    <EmbeddedResource Include="Properties\Localize.ru.resx" />
-    <EmbeddedResource Include="Properties\Localize.tr.resx" />
-    <EmbeddedResource Include="Properties\Localize.zh-CN.resx" />
-    <EmbeddedResource Include="Properties\Localize.resx">
-      <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
-      <SubType>Designer</SubType>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Localize.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="Resources\ListItem\ListItemBackground.png" />
     <EmbeddedResource Include="Resources\SharkTooth.png" />
@@ -264,17 +81,7 @@
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineSharkTeeth.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineSolid.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineSolidAndDashed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ModsCommon\ModsBridge\ModsBridge.csproj">
-      <Project>{9cc1b2fa-1a1b-4b74-92d8-d20b185c892a}</Project>
-      <Name>ModsBridge</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerCliff.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerGrass.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerGravel.png" />
@@ -285,16 +92,13 @@
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineProp.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineTree.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLinePavement.png" />
-  </ItemGroup>
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\ButtonIcons\RangeButtonIcons.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\SingleButtonIcons.png" />
-  </ItemGroup>
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\ListItem\ListItemCollapse.png" />
     <EmbeddedResource Include="Resources\ListItem\ListItemExpand.png" />
-  </ItemGroup>
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\HeaderButtons\AddTemplateHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyTemplateHeaderButton.png" />
@@ -313,30 +117,25 @@
     <EmbeddedResource Include="Resources\HeaderButtons\SetDefaultHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\UnsetDefaultHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\WholeStreetHeaderButton.png" />
-  </ItemGroup>
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\OrderButtons\ApplyOrderButton.png" />
     <EmbeddedResource Include="Resources\OrderButtons\FlipOrderButton.png" />
     <EmbeddedResource Include="Resources\OrderButtons\NotApplyOrderButton.png" />
     <EmbeddedResource Include="Resources\OrderButtons\ResetOrderButton.png" />
     <EmbeddedResource Include="Resources\OrderButtons\TurnLeftOrderButton.png" />
     <EmbeddedResource Include="Resources\OrderButtons\TurnRightOrderButton.png" />
-  </ItemGroup>
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonActive.png" />
     <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonHover.png" />
     <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonIconActive.png" />
     <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonIconHover.png" />
     <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonIconNormal.png" />
     <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonNormal.png" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\UUIButton\UUIButtonHovered.png" />
     <EmbeddedResource Include="Resources\UUIButton\UUIButtonNormal.png" />
     <EmbeddedResource Include="Resources\UUIButton\UUIButtonPressed.png" />
-  </ItemGroup>
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\StylesLine\LineDashed.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineDoubleDashed.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineDoubleSolid.png" />
@@ -347,8 +146,7 @@
     <EmbeddedResource Include="Resources\StylesLine\LineSolid.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineSolidAndDashed.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineTree.png" />
-  </ItemGroup>
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\StylesStopLine\StopLineDashed.png" />
     <EmbeddedResource Include="Resources\StylesStopLine\StopLineDoubleDashed.png" />
     <EmbeddedResource Include="Resources\StylesStopLine\StopLineDoubleSolid.png" />
@@ -356,8 +154,7 @@
     <EmbeddedResource Include="Resources\StylesStopLine\StopLineSharkTeeth.png" />
     <EmbeddedResource Include="Resources\StylesStopLine\StopLineSolid.png" />
     <EmbeddedResource Include="Resources\StylesStopLine\StopLineSolidAndDashed.png" />
-  </ItemGroup>
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkChessBoard.png" />
     <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkDoubleZebra.png" />
     <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkLadder.png" />
@@ -365,8 +162,7 @@
     <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkParallelSolidLines.png" />
     <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkSolid.png" />
     <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkZebra.png" />
-  </ItemGroup>
-  <ItemGroup>
+
     <EmbeddedResource Include="Resources\StylesFiller\FillerChevron.png" />
     <EmbeddedResource Include="Resources\StylesFiller\FillerCliff.png" />
     <EmbeddedResource Include="Resources\StylesFiller\FillerGrass.png" />
@@ -377,6 +173,44 @@
     <EmbeddedResource Include="Resources\StylesFiller\FillerSolid.png" />
     <EmbeddedResource Include="Resources\StylesFiller\FillerStripe.png" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitiesHarmony.API" Version="2.1.0" />
+    <PackageReference Include="UnifiedUILib" Version="2.2.12" />
+    <Reference Include="Assembly-CSharp">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ColossalManaged">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ICities">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="MoveItIntegration" />
+    <Reference Include="System.Xml.Linq">
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Localize.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localize.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Localize.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localize.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+
   <Import Project="..\ModsCommon\ModShared\ModsCommonShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\ToolShared\ModsToolShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\UIShared\ModsUIShared.projitems" Label="Shared" />
@@ -391,20 +225,19 @@
   <Import Project="..\ModsCommon\XmlExtension\XmlExtension.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\NetExtension\NetExtension.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\MathExtension\MathExtension.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.cs.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.de.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.en-GB.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.es.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.fi.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.fr.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.it.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.ja.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.nl.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.pl.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.pt.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.ru.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.zh-CN.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\cs\LocalizeShared.cs.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\de\LocalizeShared.de.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\en-GB\LocalizeShared.en-GB.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\es\LocalizeShared.es.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\fi\LocalizeShared.fi.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\fr\LocalizeShared.fr.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\it\LocalizeShared.it.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ja\LocalizeShared.ja.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\nl\LocalizeShared.nl.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\pl\LocalizeShared.pl.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\pt\LocalizeShared.pt.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ru\LocalizeShared.ru.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\zh-CN\LocalizeShared.zh-CN.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\PluginsShared\PluginsShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\DependencyShared\DependencyShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LoggerShared\LoggerShared.projitems" Label="Shared" />
@@ -415,49 +248,61 @@
   <Import Project="..\ModsCommon\NetObjectMapShared\NetObjectMapShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\NetAssetDataExtension\NetAssetDataExtension.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\ColorsShared\ColorsShared.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.id.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\id\LocalizeShared.id.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\UUIRegisterShared\UUIRegisterShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\ToolPanelShared\ToolPanelShared.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.ko.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.tr.projitems" Label="Shared" />
-  <Import Project="..\..\ModsCommon\LocalizeShared\LocalizeShared.ro.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ko\LocalizeShared.ko.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\tr\LocalizeShared.tr.projitems" Label="Shared" />
+  <Import Project="..\..\ModsCommon\LocalizeShared\ro\LocalizeShared.ro.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\TriangulatorShared\Triangulator.projitems" Label="Shared" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties BuildVersion_DetectChanges="False" BuildVersion_ConfigurationName="Beta Debug" BuildVersion_StartDate="2000/1/1" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_BuildVersioningStyle="None.None.None.Increment" />
-    </VisualStudio>
-  </ProjectExtensions>
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.projitems" Label="Shared" />
+
+
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
     <WorkshopId>2140418403</WorkshopId>
     <Type>Stable</Type>
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)' == 'Beta Release' OR '$(Configuration)' == 'Beta Debug'">
     <WorkshopId>2159934925</WorkshopId>
     <Type>Beta</Type>
   </PropertyGroup>
+
   <PropertyGroup>
-    <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)$(Type)</LocalDir>
+    <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(MSBuildProjectName)$(Type)</LocalDir>
     <WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
   </PropertyGroup>
-  <Target Name="AfterBuild">
+
+  <Target Name="PdbToMdb" AfterTargets="Build">
+    <!--<Message Text="Convert pdb to mdb" Importance="high" />
+
+    <PropertyGroup>
+      <UnityPath>$(MSBuildExtensionsPath64)\..\Unity\</UnityPath>
+      <UnityPath Condition="! Exists ('$(UnityPath)')">..\Unity\</UnityPath>
+      <MonoDir>$(UnityPath)Editor\Data\MonoBleedingEdge\</MonoDir>
+    </PropertyGroup>
+
+    <Exec Command='"$(MonoDir)bin\mono.exe" "$(MonoDir)lib\mono\4.5\pdb2mdb.exe" "$(TargetPath)"' />-->
     <ItemGroup>
       <FilesToDelete Include="$(OutDir)*.pdb" />
-      <FilesToDelete Include="$(OutDir)Assembly-CSharp-firstpass.dll" />
-      <FilesToDelete Include="$(OutDir)ICSharpCode.SharpZipLib.dll" />
-      <FilesToDelete Include="$(OutDir)PopsApiWrapper.dll" />
     </ItemGroup>
-    <Message Text="AfterBuild event $(LocalDir) $(WorkshopDir)" Importance="high" />
     <Delete Files="@(FilesToDelete)" />
+  </Target>
+
+  <Target Name="DeployToLocal" AfterTargets="PdbToMdb">
+    <Message Text="Deploy to local $(LocalDir)" Importance="high" />
     <RemoveDir Directories="$(LocalDir)" />
     <ItemGroup>
       <FilesToCopy Include="$(OutDir)\**\*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(LocalDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
-  <Target Name="AfterBuildRelease" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Beta Release'">
+
+  <Target Name="DeployToWorkshop" AfterTargets="PdbToMdb" Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Beta Release'">
+    <Message Text="Deploy to workshop $(WorkshopDir)" Importance="high" />
     <RemoveDir Directories="$(WorkshopDir)" />
     <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(WorkshopDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
     <Copy SourceFiles="$(ProjectDir)..\Workshop\PreviewImage$(Type).png" DestinationFiles="$(WorkshopDir)\PreviewImage.png" />
   </Target>
+
 </Project>

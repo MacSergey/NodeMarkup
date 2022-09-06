@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Normal": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files (x86)\\Steam\\steam.exe",
+      "commandLineArgs": "-applaunch 255710"
+    },
+    "No Workshop": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files (x86)\\Steam\\steam.exe",
+      "commandLineArgs": "-applaunch 255710 --noWorkshop"
+    }
+  }
+}
