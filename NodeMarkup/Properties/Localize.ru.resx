@@ -1665,6 +1665,10 @@
 [FIXED] Исправлен рассчет и освещение заполнителей.
 [UPDATED] Кнопка "по умолчанию" в панели выбора цвета теперь задает цвет по умочанию для конкретного стиля, а не цвет по умолчанию для мода.</value>
   </data>
-  
-  
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Наклон вперед/назад</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Наклон вправо/влево</value>
+  </data>
 </root>
