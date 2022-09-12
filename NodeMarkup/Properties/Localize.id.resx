@@ -1294,7 +1294,9 @@ Klik untuk mengedit markah</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Game</value>
   </data>
-  
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Kelompok pra-setelan</value>
+  </data>
   <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
     <value>Lumayan cocok</value>
   </data>
@@ -1307,7 +1309,9 @@ Klik untuk mengedit markah</value>
   <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
     <value>Mungkin cocok</value>
   </data>
-  
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Markah di bawah persimpangan</value>
+  </data>
   <data name="StyleOption_GapLength" xml:space="preserve">
     <value>Panjang jeda</value>
   </data>
@@ -1390,21 +1394,56 @@ Klik untuk mengedit markah</value>
   <data name="LineStyle_Network" xml:space="preserve">
     <value>Jaringan hiasan</value>
   </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Skala lebar</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Jarak pengulangan</value>
+  </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>Aset jaringan</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Tidak disetel</value>
+  </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>Aset benda</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>Aset pohon</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Tidak ada yang ditemukan</value>
+  </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Tempel otomatis jika sumber cocok dengan sasaran</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Probabilitas</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Jarak</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Tunggal</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Urutan langsung dan terbalik</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Hanya urutan langsung</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] Aplikasi markah otomatis hanya akan berjalan apabila hanya ada satu kemungkinan untuk pengaplikasian markah.
+[NEW] Menambahkan opsi "Only direct order" dan "Direct and invert order" pada pengaplikasian markah otomatis.
+[FIXED] Pembenaran perhitungan fillers dan penerangan.
+[UPDATED] Tombol "Default color" pada pilihan warna mensetel warna bawaan gaya dari pada warna bawaan mod.</value>
+  </data>
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Kemiringan</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Miring</value>
+  </data>
 </root>
