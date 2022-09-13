@@ -1294,7 +1294,9 @@ Klik untuk mengedit markah</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Game</value>
   </data>
-  
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Kelompok pra-setelan</value>
+  </data>
   <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
     <value>Lumayan cocok</value>
   </data>
@@ -1307,52 +1309,141 @@ Klik untuk mengedit markah</value>
   <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
     <value>Mungkin cocok</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Markah di bawah persimpangan</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Panjang jeda</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Periode jeda</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Gunakan jeda</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Pulihkan pergeseran</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Simpan pergeseran</value>
+  </data>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Nama jalan</value>
   </data>
   
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Benda</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Pohon</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Sudut</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Ketinggian</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>Nama</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Skala</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Pergeseran</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Langkah</value>
+  </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Varian 1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Varian 2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Varian 3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Varian 4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Kustom</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Acak</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Varian warna</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>Potongan trotoar</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Sudut</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Jaringan hiasan</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Skala lebar</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Jarak pengulangan</value>
+  </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>Aset jaringan</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Tidak disetel</value>
+  </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>Aset benda</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>Aset pohon</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Tidak ada yang ditemukan</value>
+  </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Tempel otomatis jika sumber cocok dengan sasaran</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Probabilitas</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Jarak</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Tunggal</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Urutan langsung dan terbalik</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Hanya urutan langsung</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] Aplikasi markah otomatis hanya akan berjalan apabila hanya ada satu kemungkinan untuk pengaplikasian markah.
+[NEW] Menambahkan opsi "Only direct order" dan "Direct and invert order" pada pengaplikasian markah otomatis.
+[FIXED] Pembenaran perhitungan fillers dan penerangan.
+[UPDATED] Tombol "Default color" pada pilihan warna mensetel warna bawaan gaya dari pada warna bawaan mod.</value>
+  </data>
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Kemiringan</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Miring</value>
+  </data>
 </root>
