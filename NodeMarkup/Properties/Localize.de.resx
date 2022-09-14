@@ -1558,7 +1558,11 @@ Klicken um die Markierungen zu bearbeiten</value>
 [FIXED] Berechnung und Beleuchtung von Füllungen korrigiert.
 [UPDATED] "Standardfarbe"-Button beim Farbwahl er auf den Standard des Stils eingestellt, anstelle der Standardwerte der Mod. </value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Plazas &amp; Promenades DLC Unterstützung hinzugefügt.
+[NEW] Loading Screen Mod Revisited Unterstützung hinzugefügt.
+[FIXED] Blinkende UI beim suchen von Dekorationen/Bäumen/Netzwerken behoben.</value>
+  </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Gefälle</value>
   </data>

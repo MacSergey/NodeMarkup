@@ -1496,7 +1496,11 @@ Haga clic para editar las marcas</value>
 [FIXED] Cálculo de rellenos e iluminación.
 [UPDATED] Botón de "Color Predeterminado" en el selector de color, aplica el color predeterminado del estilo y no del mod.</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Soporte para DLC Plazas &amp; Promedades.
+[NEW] Soporte para el Loading Screen Mod Revisited mod.
+[FIXED] Salto en interfaz al buscar elementos / arboles y redes.</value>
+  </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Pendiente</value>
   </data>

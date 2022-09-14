@@ -1496,7 +1496,10 @@ Klik om de markering te wijzigen</value>
 [FIXED] Berekening en belichting van vullingen gecorrigeerd.
 [UPDATED] "Standaard kleur" knop bij de kleurselector stelt standaard kleur van stijl in in plaats van standaard kleur van mod.</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Ondersteuning toegevoegd voor Plazas &amp; Promenades DLC.
+[FIXED] Probleem met knipperende UI bij het zoeken naar props/bomen/netwerken opgelost.</value>
+  </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Helling</value>
   </data>

@@ -1500,7 +1500,11 @@
 [FIXED] Fixed fillers calculation and illumination.
 [UPDATED] "Default color" button on color selector set default color of style instead of default color of mod. </value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Added Plazas &amp; Promenades DLC support.
+[NEW] Added Loading Screen Mod Revisited support.
+[FIXED] Fixed UI blinking while searching props/trees/networks.</value>
+  </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>傾斜</value>
   </data>
