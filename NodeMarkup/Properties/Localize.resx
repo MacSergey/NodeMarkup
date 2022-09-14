@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Delete {0}</value>
@@ -1664,10 +1664,8 @@ Click to edit markings</value>
 [FIXED] Fixed fillers calculation and illumination.
 [UPDATED] "Default color" button on color selector set default color of style instead of default color of mod.</value>
   </data>
-  <data name="StyleOption_Slope" xml:space="preserve">
-    <value>Slope</value>
-  </data>
-  <data name="StyleOption_Tilt" xml:space="preserve">
-    <value>Tilt</value>
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Added Plazas &amp; Promenades DLC support.
+[FIXED] Fixed UI blinking while searching props/trees/networks.</value>
   </data>
 </root>

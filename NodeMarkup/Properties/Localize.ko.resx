@@ -1442,10 +1442,4 @@
 [FIXED] 필러 계산과 광도가 수정되었습니다.
 [UPDATED] 색상 선택의 "기본 색상" 버튼은 모드에서의 기본 색이 아닌 스타일에서의 기본 색상을 설정합니다. </value>
   </data>
-  <data name="StyleOption_Slope" xml:space="preserve">
-    <value>경사</value>
-  </data>
-  <data name="StyleOption_Tilt" xml:space="preserve">
-    <value>기울기</value>
-  </data>
 </root>

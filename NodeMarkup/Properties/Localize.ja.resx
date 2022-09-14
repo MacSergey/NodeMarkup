@@ -1500,10 +1500,4 @@
 [FIXED] Fixed fillers calculation and illumination.
 [UPDATED] "Default color" button on color selector set default color of style instead of default color of mod. </value>
   </data>
-  <data name="StyleOption_Slope" xml:space="preserve">
-    <value>傾斜</value>
-  </data>
-  <data name="StyleOption_Tilt" xml:space="preserve">
-    <value>傾き</value>
-  </data>
 </root>

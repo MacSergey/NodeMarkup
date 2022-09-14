@@ -1664,10 +1664,4 @@ Cliquez pour modifier le marquage</value>
 [FIXED] Correction du calcul et de l'illumination des remplisseurs.
 [UPDATED] Le bouton "Couleur par défaut" dans le sélecteur de couleur met la couleur par défaut du style au lieu de celle du mod. </value>
   </data>
-  <data name="StyleOption_Slope" xml:space="preserve">
-    <value>Pente</value>
-  </data>
-  <data name="StyleOption_Tilt" xml:space="preserve">
-    <value>Inclinaison</value>
-  </data>
 </root>

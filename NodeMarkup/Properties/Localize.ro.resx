@@ -127,7 +127,7 @@
     <value>Aplică șablonul</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Salvează ca șablon</value>
+    <value>Salvează șablonul</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
     <value>Setare ca implicit</value>
@@ -244,7 +244,7 @@
     <value>Salvare efectuată cu succes</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
-    <value>Încărcați datele marcajelor dintr-un fișier</value>
+    <value>Încărcați datele marcajelor din fișier</value>
   </data>
   <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
     <value>Încărcare datele marcajelor</value>
@@ -1429,22 +1429,7 @@ Apăsați pentru a modifica marcajele</value>
 [UPDATED] Adăugată formatul numeric (m, %, °) la toate proprietățiile.
 [FIXED] Rezolvată problema punctelor fără umpluturi în intersecții între linii normale.</value>
   </data>
-  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
-    <value>Ordine directă și inversă</value>
-  </data>
-  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
-    <value>Doar ordine directă</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
-    <value>[UPDATED] Marcajele aplicate in mod automat sunt activate doar când este posibilă doar o singură opțiune pentru a aplica marcajele.
-[NEW] Adăugată opțiunea "Doar ordine directă" și "Ordine directă și inversă" pentru a aplica marcajele în mod automat.
-[FIXED] Rezolvate calculatea ți înluminarea umpluturilor.
-[UPDATED] Butonul "Culoare împlicită" în selectorul de culori setează culoarea împlicită al stilului în loc de culoarea împlicită al modului.</value>
-  </data>
-  <data name="StyleOption_Slope" xml:space="preserve">
-    <value>Pantă</value>
-  </data>
-  <data name="StyleOption_Tilt" xml:space="preserve">
-    <value>Înclinare</value>
-  </data>
+  
+  
+  
 </root>

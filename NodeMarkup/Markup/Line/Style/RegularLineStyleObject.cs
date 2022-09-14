@@ -21,8 +21,6 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Step { get; }
 
         public PropertyVector2Value Angle { get; }
-        public PropertyVector2Value Tilt { get; }
-        public PropertyVector2Value Slope { get; }
         public PropertyVector2Value Scale { get; }
 
         public PropertyVector2Value Shift { get; }
@@ -35,8 +33,6 @@ namespace NodeMarkup.Manager
             Probability = new PropertyStructValue<int>("P", StyleChanged, probability);
             Step = new PropertyStructValue<float>("S", StyleChanged, step);
             Angle = new PropertyVector2Value(StyleChanged, angle, "AA", "AB");
-            Tilt = new PropertyVector2Value(StyleChanged, tilt, "TLA", "TLB");
-            Slope = new PropertyVector2Value(StyleChanged, slope, "SLA", "SLB");
             Scale = new PropertyVector2Value(StyleChanged, scale, "SCA", "SCB");
             Shift = new PropertyVector2Value(StyleChanged, shift, "SFA", "SFB");
             Elevation = new PropertyVector2Value(StyleChanged, elevation,"EA", "EB");
@@ -52,8 +48,6 @@ namespace NodeMarkup.Manager
                 objectTarget.Probability.Value = Probability;
                 objectTarget.Step.Value = Step;
                 objectTarget.Angle.Value = Angle;
-                objectTarget.Tilt.Value = Tilt;
-                objectTarget.Slope.Value = Slope;
                 objectTarget.Scale.Value = Scale;
                 objectTarget.Shift.Value = Shift;
                 objectTarget.Elevation.Value = Elevation;
@@ -70,8 +64,6 @@ namespace NodeMarkup.Manager
             var probabilityProperty = AddProbabilityProperty(parent);
             var stepProperty = AddStepProperty(parent);
             var angleProperty = AddAngleRangeProperty(parent);
-            var tiltProperty = AddTiltRangeProperty(parent);
-            var slopeProperty = AddSlopeRangeProperty(parent);
             var shiftProperty = AddShiftProperty(parent);
             var elevationProperty = AddElevationProperty(parent);
             var scaleProperty = AddScaleRangeProperty(parent);
@@ -81,8 +73,6 @@ namespace NodeMarkup.Manager
             components.Add(probabilityProperty);
             components.Add(stepProperty);
             components.Add(angleProperty);
-            components.Add(tiltProperty);
-            components.Add(slopeProperty);
             components.Add(shiftProperty);
             components.Add(elevationProperty);
             components.Add(scaleProperty);
@@ -292,8 +282,6 @@ namespace NodeMarkup.Manager
             Probability.ToXml(config);
             Step.ToXml(config);
             Angle.ToXml(config);
-            Tilt.ToXml(config);
-            Slope.ToXml(config);
             Scale.ToXml(config);
             Shift.ToXml(config);
             Elevation.ToXml(config);
@@ -307,8 +295,6 @@ namespace NodeMarkup.Manager
             Probability.FromXml(config, DefaultObjectProbability);
             Step.FromXml(config, DefaultObjectStep);
             Angle.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
-            Tilt.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
-            Slope.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
             Scale.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
             Shift.FromXml(config, new Vector2(DefaultObjectShift, DefaultObjectShift));
             if (config.TryGetAttrValue<float>("SF", out var shift))
@@ -440,7 +426,7 @@ namespace NodeMarkup.Manager
             ColorOption = new PropertyEnumValue<ColorOptionEnum>("CO", StyleChanged, colorOption);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
+        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
 
         protected override void CalculateItem(PropInfo prop, ref MarkupStylePropItem item)
         {
