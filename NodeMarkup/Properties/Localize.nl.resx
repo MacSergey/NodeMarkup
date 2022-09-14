@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Verwijder {0}</value>
@@ -1484,7 +1484,23 @@ Klik om de markering te wijzigen</value>
 [UPDATED] Getalformaat (m, %, °) toegevoegd aan alle invoerwaarden.
 [FIXED] Ontbrekende punten van opvullers op kruisingen tussen normale lijnen opgelost.</value>
   </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Directe en omgekeerde volgorde</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Alleen directe volgorde</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] Automatisch aanbrengen van markering is alleen ingeschakeld als er maar één manier is om de markering in te voegen.
+[NEW] Opties "Alleen directe volgorde" en "Directe en omgekeerde volgorde" toegevoegd voor het automatisch aanbrengen van markeringen.
+[FIXED] Berekening en belichting van vullingen gecorrigeerd.
+[UPDATED] "Standaard kleur" knop bij de kleurselector stelt standaard kleur van stijl in in plaats van standaard kleur van mod.</value>
+  </data>
   
-  
-  
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Helling</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Kantelen</value>
+  </data>
 </root>

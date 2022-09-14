@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Supprimer {0}</value>
@@ -1663,5 +1663,15 @@ Cliquez pour modifier le marquage</value>
 [NEW] Ajout de l'option "Même ordre uniquement" et "Même ordre et ordre inverse" pour l'application automatique du marquage.
 [FIXED] Correction du calcul et de l'illumination des remplisseurs.
 [UPDATED] Le bouton "Couleur par défaut" dans le sélecteur de couleur met la couleur par défaut du style au lieu de celle du mod. </value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Ajout du support du DLC Plazas &amp; Promenades.
+[FIXED] Problème d'UI qui clignotait en cherchant des props/arbres/réseaux réglé.</value>
+  </data>
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Pente</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Inclinaison</value>
   </data>
 </root>

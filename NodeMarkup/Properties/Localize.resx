@@ -1668,4 +1668,10 @@ Click to edit markings</value>
     <value>[UPDATED] Added Plazas &amp; Promenades DLC support.
 [FIXED] Fixed UI blinking while searching props/trees/networks.</value>
   </data>
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Slope</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Tilt</value>
+  </data>
 </root>

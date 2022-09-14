@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Удалить {0}</value>
@@ -1664,6 +1664,10 @@
 [NEW] Добавлена опции "Только прямой порядок" и "Прямой и обратный порядок" для авто применение вставки разметки.
 [FIXED] Исправлен рассчет и освещение заполнителей.
 [UPDATED] Кнопка "по умолчанию" в панели выбора цвета теперь задает цвет по умочанию для конкретного стиля, а не цвет по умолчанию для мода.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Добавлена поддержка Plazas &amp; Promenades DLC.
+[FIXED] Исправлено моргание интерфейса во время поиска реквизита/деревьев/декоративных сетей.</value>
   </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Наклон вперед/назад</value>

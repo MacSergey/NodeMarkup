@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Tool_DeleteCaption" xml:space="preserve">
     <value>Eliminar {0}</value>
@@ -1459,7 +1459,7 @@ Haga clic para editar las marcas</value>
     <value>No se ha encontrado nada</value>
   </data>
   <data name="Settings_AutoApplyPasting" xml:space="preserve">
-    <value>Aplicar marcas de forma automática al pegar si la intersección de destino es igual a la de origen</value>
+    <value>Aplicar marcas al pegar si la intersección de destino y origen son iguales</value>
   </data>
   <data name="StyleOption_ObjectProbability" xml:space="preserve">
     <value>Probabilidad</value>
@@ -1484,7 +1484,23 @@ Haga clic para editar las marcas</value>
 [UPDATED] Agregado formatos de número (m, %, °) en todas las propiedades.
 [FIXED] Puntos de relleno en intersecciones entre líneas normales.</value>
   </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Orden Directo e Invertido</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Únicamente orden directo</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] APlicar las marcas de foram automática solo está disponible cuando hay una sola posibilidad para copiar las marcas.
+[NEW] Opción de "Únicamente orden directo" y "Orden Directo e Invertido" a la copia automática de marcas.
+[FIXED] Cálculo de rellenos e iluminación.
+[UPDATED] Botón de "Color Predeterminado" en el selector de color, aplica el color predeterminado del estilo y no del mod.</value>
+  </data>
   
-  
-  
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Inclinación</value>
+  </data>
 </root>
