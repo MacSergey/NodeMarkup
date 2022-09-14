@@ -1321,7 +1321,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на [UPDATED] Added Plazas &amp; Promenades DLC support.
-        ///[FIXED] Fixed UI blinking while serching props/trees/networks.
+        ///[FIXED] Fixed UI blinking while searching props/trees/networks..
         /// </summary>
         public static string Mod_WhatsNewMessage1_10_2 {
             get {
