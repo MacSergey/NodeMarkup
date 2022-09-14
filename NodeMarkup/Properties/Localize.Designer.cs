@@ -3444,6 +3444,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Slope.
+        /// </summary>
+        public static string StyleOption_Slope {
+            get {
+                return ResourceManager.GetString("StyleOption_Slope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Solid in center.
         /// </summary>
         public static string StyleOption_SolidInCenter {
@@ -3485,6 +3494,15 @@ namespace NodeMarkup {
         public static string StyleOption_Step {
             get {
                 return ResourceManager.GetString("StyleOption_Step", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Tilt.
+        /// </summary>
+        public static string StyleOption_Tilt {
+            get {
+                return ResourceManager.GetString("StyleOption_Tilt", resourceCulture);
             }
         }
         

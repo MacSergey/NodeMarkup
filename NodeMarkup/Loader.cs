@@ -177,8 +177,11 @@ namespace NodeMarkup
             }
         }
 
-        public static void LoadTemplateAsset(MarkingInfo markingInfo, Package.Asset asset)
+        public static void LoadTemplateAsset(GameObject gameObject, Package.Asset asset)
         {
+            if (gameObject.GetComponent<MarkingInfo>() is not MarkingInfo markingInfo)
+                return;
+
             SingletonMod<Mod>.Logger.Debug($"Start load template asset \"{asset.fullName}\" from {asset.package.packagePath}");
             try
             {
