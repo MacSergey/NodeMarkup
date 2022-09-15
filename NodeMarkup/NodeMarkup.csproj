@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Beta Release' OR '$(Configuration)' == 'Beta Debug'">
-    <Version>1.11.0.22</Version>
+    <Version>1.11.0.23</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
@@ -271,6 +271,7 @@
   <PropertyGroup>
     <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(MSBuildProjectName)$(Type)</LocalDir>
     <WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
+    <AssemblyVersion>1.11.0.24</AssemblyVersion>
   </PropertyGroup>
 
   <Target Name="PdbToMdb" AfterTargets="Build">
