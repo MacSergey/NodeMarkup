@@ -54,7 +54,7 @@ namespace NodeMarkup
             new ModVersion(new Version("1.1"), new DateTime(2020, 7, 14)),
             new ModVersion(new Version("1.0"), new DateTime(2020, 7, 7)),
         };
-        protected override Version RequiredGameVersion => new Version(1, 15, 0, 5);
+        protected override Version RequiredGameVersion => new Version(1, 15, 0, 7);
 
         public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
