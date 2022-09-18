@@ -1569,4 +1569,30 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>Neigung</value>
   </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Untergrundmodus aktivieren</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Untergrundmodus beenden</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Unterirdische Ansicht umschalten</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Drücke {0} zum Betreten und {1} zum Beenden</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Halte {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Drücke {0}, um in den unterirdischen Modus
+zu gelangen</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Drücke {0}, um den unterirdischen Modus
+zu verlassen</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Halte {0} gedrückt für den unterirdischen Modus</value>
+  </data>
 </root>

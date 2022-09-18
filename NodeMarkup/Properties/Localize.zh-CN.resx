@@ -1474,4 +1474,30 @@
   
   
   
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>进入地下模式</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>退出地下模式</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>切换地下</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>按 {0} 进入， {1} 退出</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>按住 {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>按 {0} 进入
+地下模式</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>按 {0} 退出
+地下模式</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>按住{0}进入地下模式</value>
+  </data>
 </root>

@@ -1506,4 +1506,28 @@ Klik om de markering te wijzigen</value>
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>Kantelen</value>
   </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Ondergrondse modus activeren</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Ondergrondse modus verlaten</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Ondergrondse weergave omschakelen</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Druk op {0} om binnen te gaan en op {1} om te verlaten</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Houd {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Druk op {0} om de ondergrondse modus in te gaan</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Druk op {0} om de ondergrondse modus te verlaten</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Houd {0} om in ondergrondse modus te gaan</value>
+  </data>
 </root>

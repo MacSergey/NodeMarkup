@@ -1447,4 +1447,31 @@ Klik untuk mengedit markah</value>
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>Miring</value>
   </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Masuk ke mode bawah tanah</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Keluar dari mode bawah tanah</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Aktif/nonaktifkan mode bawah tanah</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Tekan {0} untuk masuk dan {1} untuk keluar</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Tekan dan tahan {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Tekan {0} untuk memasuki
+mode bawah tanah</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Tekan {0} untuk keluar
+mode bawah tanah</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Tekan dan tahan {0} untuk
+mode bawah tanah</value>
+  </data>
 </root>

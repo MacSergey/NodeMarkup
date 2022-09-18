@@ -281,7 +281,7 @@ Marcajele încărcate vor înlocui toate marcajele existente.</value>
     <value>Șablon nou</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Eliminați marcajele în nod</value>
+    <value>Eliminați marcajele din nod</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
     <value>Sigur doriți să ștergeți toate marcajele din nodul #{0}?</value>
@@ -303,7 +303,7 @@ Apăsați pentru a modifica marcajele</value>
     <value>Selectați punctul final pentru liniile regulare</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Selectați un punct pentru a crea ori șterge o linie</value>
+    <value>Selectați un punct pentru a crea sau șterge o linie</value>
   </data>
   
   <data name="Settings_Restore" xml:space="preserve">
@@ -1441,11 +1441,42 @@ Apăsați pentru a modifica marcajele</value>
 [FIXED] Rezolvate calculatea ți înluminarea umpluturilor.
 [UPDATED] Butonul "Culoare împlicită" în selectorul de culori setează culoarea împlicită al stilului în loc de culoarea împlicită al modului.</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Adăugat suportul pentru Plazas &amp; Promenades DLC.
+[NEW] Adăugat suportul pentru Loading Screen Mod Revisited.
+[FIXED] Rezolvată problema cu clipirea UI când se căutau obiecte/copaci/rețele.</value>
+  </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Pantă</value>
   </data>
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>Înclinare</value>
+  </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Intră in modul Underground</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Ieșiți din modul Underground</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Comutare modul Underground</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Apăsați {0} pentru a intra și {1} pentru a ieși</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Mențineți apăsat {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Apăsați {0} pentru a intra în
+modul Underground</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Apăsați {0} pentru a ieși din
+modul Underground</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Țineți apăsat {0} pentru
+modul Underground</value>
   </data>
 </root>

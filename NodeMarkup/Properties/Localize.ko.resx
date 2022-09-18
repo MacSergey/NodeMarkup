@@ -1442,11 +1442,42 @@
 [FIXED] 필러 계산과 광도가 수정되었습니다.
 [UPDATED] 색상 선택의 "기본 색상" 버튼은 모드에서의 기본 색이 아닌 스타일에서의 기본 색상을 설정합니다. </value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Plazas &amp; Promenades DLC를 지원합니다.
+[NEW] Loading Screen Mod Revisited 모드를 지원합니다.
+[FIXED] props/trees/networks를 검색할 때 UI가 깜빡거리는 문제가 수정되었습니다.</value>
+  </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>경사</value>
   </data>
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>기울기</value>
+  </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>지하 모드 진입하기</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>지하 모드 끝내기</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>지하 토글</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>{0}을 눌러 진입하고 {1}을 눌러 끝내기</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>{0} 길게 누르기</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>{0}을 눌러
+지하 모드 진입하기</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>{0}을 눌러
+지하 모드 끝내기</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>{0}를 계속 눌러
+지하 모드</value>
   </data>
 </root>

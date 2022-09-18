@@ -1674,4 +1674,30 @@ Cliquez pour modifier le marquage</value>
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>Inclinaison</value>
   </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Passer en mode souterrain</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Quitter le mode souterrain</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Activer le souterrain</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Appuyez sur {0} pour entrer et {1} pour quitter</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Maintenez {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Appuyez sur {0} pour entrer
+en mode souterrain</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Appuyez sur {0} pour quitter
+le mode souterrain</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Maintenez la touche {0} pour utiliser le mode souterrain</value>
+  </data>
 </root>

@@ -1507,4 +1507,29 @@ Haga clic para editar las marcas</value>
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>Inclinación</value>
   </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Entrar en modo subterráneo</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Salir del modo subterráneo</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Alternar modo subterráneo</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Presiona {0} para entrar y {1} para salir</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Mantener presionado {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Presiona {0} patra entrar en modo subterráneo</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Presiona {0} para salir del modo subterráneo</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Mantener presionada la tecla {0}
+para modo subterráneo</value>
+  </data>
 </root>

@@ -1502,4 +1502,28 @@ Kliknij aby edytować oznaczenia</value>
   
   
   
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Przejdź do trybu podziemnego</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Wyjdź z trybu podziemnego</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Przełącz tryb podziemny</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Naciśnij {0}, aby wejść i {1}, aby wyjść</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Przytrzymaj {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Naciśnij {0}, aby przejść do trybu podziemnego</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Naciśnij {0}, aby wyjść z trybu podziemnego</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Przytrzymaj {0} by przejść w tryb podziemny</value>
+  </data>
 </root>

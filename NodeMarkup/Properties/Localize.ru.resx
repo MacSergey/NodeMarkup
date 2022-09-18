@@ -1676,4 +1676,31 @@
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>Наклон вправо/влево</value>
   </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Войти в подземный режим</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Выйти из подземного режима</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Переключение подземного режима</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Нажать {0} для входа и {1} для выхода</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Удерживать {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Нажмите {0} для входа
+в подземный режим</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Нажмите {0} для выхода
+из подземного режима</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Удерживайте {0}
+для подземного режима</value>
+  </data>
 </root>
