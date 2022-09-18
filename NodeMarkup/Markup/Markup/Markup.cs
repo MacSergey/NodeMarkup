@@ -43,6 +43,7 @@ namespace NodeMarkup.Manager
         public float Height => Position.y;
         public abstract string XmlSection { get; }
         public abstract string PanelCaption { get; }
+        public abstract bool IsUnderground { get; }
 
         protected List<Enter> RawEntersList { get; set; } = new List<Enter>();
         protected List<Enter> EntersList { get; set; } = new List<Enter>();

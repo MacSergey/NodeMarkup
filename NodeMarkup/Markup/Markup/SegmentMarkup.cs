@@ -14,7 +14,14 @@ namespace NodeMarkup.Manager
         protected override bool IsExist => Id.ExistSegment();
         public override string XmlSection => XmlName;
         public override string PanelCaption => string.Format(Localize.Panel_SegmentCaption, Id);
-
+        public override bool IsUnderground
+        {
+            get
+            {
+                ref var segment = ref Id.GetSegment();
+                return segment.m_startNode.GetNode().m_flags.IsSet(NetNode.Flags.Underground) && segment.m_endNode.GetNode().m_flags.IsSet(NetNode.Flags.Underground);
+            }
+        }
         public SegmentMarkup(ushort segmentId) : base(segmentId) { }
 
         protected override Vector3 GetPosition() => Id.GetSegment().m_middlePosition;

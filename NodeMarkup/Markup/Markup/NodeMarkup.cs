@@ -19,6 +19,7 @@ namespace NodeMarkup.Manager
         public override string XmlSection => XmlName;
         public override string PanelCaption => string.Format(Localize.Panel_NodeCaption, Id);
         public override MarkupLine.LineType SupportLines => MarkupLine.LineType.All;
+        public override bool IsUnderground => Id.GetNode().m_flags.IsSet(NetNode.Flags.Underground);
 
         public NodeMarkup(ushort nodeId) : base(nodeId) { }
 
