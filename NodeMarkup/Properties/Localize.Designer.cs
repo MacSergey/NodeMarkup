@@ -1321,6 +1321,7 @@ namespace NodeMarkup {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на [UPDATED] Added Plazas &amp; Promenades DLC support.
+        ///[NEW] Added Loading Screen Mod Revisited support.
         ///[FIXED] Fixed UI blinking while searching props/trees/networks..
         /// </summary>
         public static string Mod_WhatsNewMessage1_10_2 {
@@ -2724,6 +2725,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter underground mode.
+        /// </summary>
+        public static string Settings_ShortcutEnterUnderground {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutEnterUnderground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Exit underground mode.
+        /// </summary>
+        public static string Settings_ShortcutExitUnderground {
+            get {
+                return ResourceManager.GetString("Settings_ShortcutExitUnderground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Paste markings.
         /// </summary>
         public static string Settings_ShortcutPasteMarking {
@@ -2936,6 +2955,33 @@ namespace NodeMarkup {
         public static string Settings_StyleModifierWithout {
             get {
                 return ResourceManager.GetString("Settings_StyleModifierWithout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Toogle underground.
+        /// </summary>
+        public static string Settings_ToggleUnderground {
+            get {
+                return ResourceManager.GetString("Settings_ToggleUnderground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Press {0} to enter and {1} to exit.
+        /// </summary>
+        public static string Settings_ToggleUndergroundButtons {
+            get {
+                return ResourceManager.GetString("Settings_ToggleUndergroundButtons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Hold {0}.
+        /// </summary>
+        public static string Settings_ToggleUndergroundHold {
+            get {
+                return ResourceManager.GetString("Settings_ToggleUndergroundHold", resourceCulture);
             }
         }
         
@@ -3933,6 +3979,26 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Press {0} to enter
+        ///underground mode.
+        /// </summary>
+        public static string Tool_EnterUnderground {
+            get {
+                return ResourceManager.GetString("Tool_EnterUnderground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Press {0} to exit
+        ///underground mode.
+        /// </summary>
+        public static string Tool_ExitUnderground {
+            get {
+                return ResourceManager.GetString("Tool_ExitUnderground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Click to create a crosswalk.
         /// </summary>
         public static string Tool_InfoCreateCrosswalk {
@@ -4257,6 +4323,16 @@ namespace NodeMarkup {
         public static string Tool_InfoTurnСounterClockwise {
             get {
                 return ResourceManager.GetString("Tool_InfoTurnСounterClockwise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Hold {0} to
+        ///underground mode.
+        /// </summary>
+        public static string Tool_InfoUnderground {
+            get {
+                return ResourceManager.GetString("Tool_InfoUnderground", resourceCulture);
             }
         }
         

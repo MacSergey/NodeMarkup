@@ -28,6 +28,10 @@ namespace NodeMarkup.Tools
 
         public static NodeMarkupShortcut ActivationShortcut { get; } = new NodeMarkupShortcut(nameof(ActivationShortcut), nameof(CommonLocalize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
         public static NodeMarkupShortcut SelectionStepOverShortcut { get; } = new NodeMarkupShortcut(nameof(SelectionStepOverShortcut), nameof(CommonLocalize.Settings_ShortcutSelectionStepOver), SavedInputKey.Encode(KeyCode.Space, true, false, false), () => SingletonTool<NodeMarkupTool>.Instance.SelectionStepOver(), ToolModeType.Select);
+
+        public static NodeMarkupShortcut EnterUndergroundShortcut { get; } = new NodeMarkupShortcut(nameof(EnterUndergroundShortcut), nameof(Localize.Settings_ShortcutEnterUnderground), SavedInputKey.Encode(KeyCode.PageDown, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as SelectToolMode)?.ChangeUnderground(true), ToolModeType.Select);
+        public static NodeMarkupShortcut ExitUndergroundShortcut { get; } = new NodeMarkupShortcut(nameof(ExitUndergroundShortcut), nameof(Localize.Settings_ShortcutExitUnderground), SavedInputKey.Encode(KeyCode.PageUp, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as SelectToolMode)?.ChangeUnderground(false), ToolModeType.Select);
+
         public static NodeMarkupShortcut AddRuleShortcut { get; } = new NodeMarkupShortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false), () =>
         {
             if (SingletonItem<NodeMarkupPanel>.Instance.CurrentEditor is UI.Editors.LinesEditor linesEditor)
@@ -50,6 +54,8 @@ namespace NodeMarkup.Tools
             get
             {
                 yield return SelectionStepOverShortcut;
+                yield return EnterUndergroundShortcut;
+                yield return ExitUndergroundShortcut;
                 yield return AddRuleShortcut;
                 yield return DeleteAllShortcut;
                 yield return ResetOffsetsShortcut;
@@ -64,7 +70,20 @@ namespace NodeMarkup.Tools
                 yield return ApplyWholeStreetShortcut;
             }
         }
-        public override IEnumerable<Shortcut> Shortcuts => ToolShortcuts;
+        public override IEnumerable<Shortcut> Shortcuts
+        {
+            get
+            {
+                foreach (var shortcut in ToolShortcuts)
+                    yield return shortcut;
+
+                if (Mode is IShortcutMode mode)
+                {
+                    foreach (var shortcut in mode.Shortcuts)
+                        yield return shortcut;
+                }
+            }
+        }
 
         public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => GetSavedStylesModifier(i));
 
@@ -77,6 +96,7 @@ namespace NodeMarkup.Tools
         public override Shortcut Activation => ActivationShortcut;
 
         public Markup Markup { get; private set; }
+        public bool IsUnderground => Markup?.IsUnderground ?? false;
 
         public NodeMarkupPanel Panel => SingletonItem<NodeMarkupPanel>.Instance;
         public IntersectionTemplate MarkupBuffer { get; private set; }
@@ -149,6 +169,8 @@ namespace NodeMarkup.Tools
             if (Mode is SelectToolMode selectMode)
                 selectMode.IgnoreSelected();
         }
+        protected override bool CheckInfoMode(InfoManager.InfoMode mode, InfoManager.SubInfoMode subInfo) => (mode == InfoManager.InfoMode.None || mode == InfoManager.InfoMode.Underground) && subInfo == InfoManager.SubInfoMode.Default;
+
         private void DeleteAllMarking()
         {
             SingletonMod<Mod>.Logger.Debug($"Delete all markings");
@@ -334,7 +356,7 @@ namespace NodeMarkup.Tools
                         }
                     }
                 }
-                else if(Settings.AutoApplyPastingType == 1 && direct.Length == 0 && invert.Length == 1)
+                else if (Settings.AutoApplyPastingType == 1 && direct.Length == 0 && invert.Length == 1)
                 {
                     map = new ObjectsMap();
                     var targetEnters = Markup.Enters.ToArray();
@@ -353,7 +375,7 @@ namespace NodeMarkup.Tools
                                 break;
                         }
 
-                        for(var pointI = 0; pointI <= targetEnters[indexTarget].PointCount; pointI += 1)
+                        for (var pointI = 0; pointI <= targetEnters[indexTarget].PointCount; pointI += 1)
                         {
                             map.AddPoint(targetEnters[indexTarget].Id, (byte)(pointI + 1), (byte)(targetEnters[indexTarget].PointCount - pointI));
                         }
@@ -824,6 +846,7 @@ namespace NodeMarkup.Tools
         public virtual bool ShowPanel => true;
         protected NodeMarkupPanel Panel => SingletonItem<NodeMarkupPanel>.Instance;
         public Markup Markup => Tool.Markup;
+        protected bool IsUnderground => Tool.IsUnderground;
 
         public override void RenderGeometry(RenderManager.CameraInfo cameraInfo)
         {
@@ -859,6 +882,10 @@ namespace NodeMarkup.Tools
         DragPoint = 512,
 
         MakeItem = MakeLine | MakeCrosswalk
+    }
+    public interface IShortcutMode
+    {
+        public IEnumerable<Shortcut> Shortcuts { get; }
     }
     public class NodeMarkupShortcut : ToolShortcut<Mod, NodeMarkupTool, ToolModeType>
     {

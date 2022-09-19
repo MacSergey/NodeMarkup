@@ -59,8 +59,13 @@ namespace NodeMarkup
         public static SavedBool IlluminationAtNight { get; } = new SavedBool(nameof(IlluminationAtNight), SettingsFile, true, true);
         public static SavedInt IlluminationIntensity { get; } = new SavedInt(nameof(IlluminationIntensity), SettingsFile, 10, true);
 
+        public static SavedInt ToggleUndergroundMode { get; } = new SavedInt(nameof(ToggleUndergroundMode), SettingsFile, 0, true);
+
         protected UIAdvancedHelper ShortcutsTab => GetTab(nameof(ShortcutsTab));
         protected UIAdvancedHelper BackupTab => GetTab(nameof(BackupTab));
+
+        public static bool IsUndergroundWithModifier => ToggleUndergroundMode == 0;
+        public static string UndergroundModifier => LocalizeExtension.Shift;
 
         #endregion
 
@@ -79,12 +84,12 @@ namespace NodeMarkup
             base.FillSettings();
 
             AddLanguage(GeneralTab);
-            AddGeneral(GeneralTab);
+            AddGeneral(GeneralTab, out var undergroundOptions);
             AddGrouping(GeneralTab);
             AddSorting(GeneralTab);
             AddNotifications(GeneralTab);
 
-            AddKeyMapping(ShortcutsTab);
+            AddKeyMapping(ShortcutsTab, undergroundOptions);
 
             AddBackupMarking(BackupTab);
             AddBackupStyleTemplates(BackupTab);
@@ -99,7 +104,7 @@ namespace NodeMarkup
         #region GENERAL
 
         #region DISPLAY&USAGE
-        private void AddGeneral(UIAdvancedHelper helper)
+        private void AddGeneral(UIAdvancedHelper helper, out OptionPanelWithLabelData undergroundOptions)
         {
             var group = helper.AddGroup(Localize.Settings_DisplayAndUsage);
 
@@ -114,6 +119,7 @@ namespace NodeMarkup
             AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
             AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
             AddToolButton<NodeMarkupTool, NodeMarkupButton>(group);
+            undergroundOptions = AddCheckboxPanel(group, Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, NodeMarkupTool.EnterUndergroundShortcut, NodeMarkupTool.ExitUndergroundShortcut) });
             AddCheckBox(group, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
             AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);
             AddCheckBox(group, Localize.Settings_HideStreetName, HideStreetName);
@@ -166,13 +172,20 @@ namespace NodeMarkup
         #endregion
 
         #region KEYMAPPING
-        private void AddKeyMapping(UIAdvancedHelper helper)
+        private void AddKeyMapping(UIAdvancedHelper helper, OptionPanelWithLabelData undergroundOptions)
         {
             var group = helper.AddGroup(CommonLocalize.Settings_Shortcuts);
             var keymappings = AddKeyMappingPanel(group);
             keymappings.AddKeymapping(NodeMarkupTool.ActivationShortcut);
             foreach (var shortcut in NodeMarkupTool.ToolShortcuts)
                 keymappings.AddKeymapping(shortcut);
+
+            keymappings.BindingChanged += OnBindingChanged;
+            void OnBindingChanged(Shortcut shortcut)
+            {
+                if (shortcut == NodeMarkupTool.EnterUndergroundShortcut || shortcut == NodeMarkupTool.ExitUndergroundShortcut)
+                    undergroundOptions.checkBoxes[1].label.text = string.Format(Localize.Settings_ToggleUndergroundButtons, NodeMarkupTool.EnterUndergroundShortcut, NodeMarkupTool.ExitUndergroundShortcut);
+            }
 
             AddModifier<RegularLineModifierPanel>(helper, Localize.Settings_RegularLinesModifier);
             AddModifier<StopLineModifierPanel>(helper, Localize.Settings_StopLinesModifier);
