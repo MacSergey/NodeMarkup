@@ -1666,7 +1666,8 @@ Cliquez pour modifier le marquage</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
     <value>[UPDATED] Ajout du support du DLC Plazas &amp; Promenades.
-[FIXED] Problème d'UI qui clignotait en cherchant des props/arbres/réseaux réglé.</value>
+[NEW] Ajout du support de Loading Screen Mod Revisited.
+[FIXED] Correction du clignotement de l'interface lors de la recherche de props/arbres/réseaux.</value>
   </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Pente</value>
@@ -1698,6 +1699,6 @@ en mode souterrain</value>
 le mode souterrain</value>
   </data>
   <data name="Tool_InfoUnderground" xml:space="preserve">
-    <value>Maintenez la touche {0} pour utiliser le mode souterrain</value>
+    <value>Maintenez {0} pour utiliser le mode souterrain</value>
   </data>
 </root>

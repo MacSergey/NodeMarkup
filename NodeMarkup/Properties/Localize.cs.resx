@@ -412,7 +412,7 @@ Klikněte pro změnu značení</value>
 Pro vytvoření čáry spojte dva body.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>Na této křižovatce nejsou žádné výplňě.
+    <value>Na této křižovatce nejsou žádné výplně.
 Pro vytvoření výplně držte {0}, nebo stiskněte {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
@@ -908,7 +908,7 @@ Chcete nastavit předchozí značení manuálně?</value>
     <value>Ano</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Podržte {0} Shift pro vytvoření přechodu</value>
+    <value>Podržte {0} pro vytvoření přechodu</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
     <value>Podržte {0} pro vytvoření výplně</value>
@@ -1063,7 +1063,7 @@ Původní data připíší všechny existující předvolby.</value>
     <value>Tato šablona je součástí assetu, přejmenování nebo změna hodnot přepíše jeho soubor. Pokračovat?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
-    <value>Pro úpravu okrajů přechodu musíte mi čáry ze stejných bodů, jak přechod</value>
+    <value>Pro úpravu okrajů přechodu musíte mít čáry ze stejných bodů, jako přechod</value>
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
     <value>Pro úpravů bodů "Z" a "Do" musíte mít vytvořeny čáry, které se s touto protínají.</value>
@@ -1243,7 +1243,7 @@ Klikněte pro změnu značení</value>
     <value>Určitě chcete použít značení pro celou {0}?</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
-    <value>Táhněte za bod pro vytvoření kolmé čáry</value>
+    <value>Táhněte za bodem pro vytvoření kolmé čáry</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Vyberte koncový bod čáry</value>
@@ -1266,10 +1266,10 @@ Klikněte pro změnu značení</value>
     <value>Chodník</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Podržte {0} pro výběr přechodu</value>
+    <value>Klikněte s {0} pro výběr přechodu</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Podržte {0} pro výběr čáry</value>
+    <value>Klikněte s {0} pro výběr čáry</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Štěrk</value>
@@ -1278,22 +1278,22 @@ Klikněte pro změnu značení</value>
     <value>Útes</value>
   </data>
   <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Suť</value>
+    <value>Rozbořený</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
     <value>Odsazení od čar</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
-    <value>Zaoblení rohů</value>
+    <value>Poloměr rohu</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Zaoblení rohů u mediánů</value>
+    <value>Poloměry rohů u mediánů</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>Šířka obrubníku</value>
+    <value>Velikost obrubníku</value>
   </data>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Šířka obrubníku u mediánů</value>
+    <value>Velikost obrubníku u mediánů</value>
   </data>
   
   
@@ -1305,7 +1305,7 @@ Klikněte pro změnu značení</value>
     <value>Řazení</value>
   </data>
   <data name="Settings_SortPresetType" xml:space="preserve">
-    <value>Nastavení řazení</value>
+    <value>Seřadit předvolby</value>
   </data>
   <data name="Settings_SortPresetByNames" xml:space="preserve">
     <value>Podle jména</value>
@@ -1323,7 +1323,7 @@ Klikněte pro změnu značení</value>
     <value>Podle typu, pak podle jména</value>
   </data>
   <data name="Settings_SortTemplateType" xml:space="preserve">
-    <value>Řadit šablony</value>
+    <value>Seřadit šablony</value>
   </data>
   <data name="Settings_SortApplyByAuthor" xml:space="preserve">
     <value>Podle autora, pak podle typu, pak podle jména</value>
@@ -1338,7 +1338,7 @@ Klikněte pro změnu značení</value>
     <value>Zobrazit výchozí šablony na vrchu seznamu</value>
   </data>
   <data name="Settings_SortApplyType" xml:space="preserve">
-    <value>Řadit šablony v seznamu</value>
+    <value>Seřadit šablony v seznamu</value>
   </data>
   <data name="Settings_IlluminationAtNight" xml:space="preserve">
     <value>Osvětlení upravených značení v noci</value>
@@ -1347,7 +1347,7 @@ Klikněte pro změnu značení</value>
     <value>Intenzita osvětlení</value>
   </data>
   <data name="Settings_Gameplay" xml:space="preserve">
-    <value>Hraní hry</value>
+    <value>Hratelnost</value>
   </data>
   <data name="Settings_GroupPresets" xml:space="preserve">
     <value>Předvolby skupin</value>
@@ -1365,13 +1365,13 @@ Klikněte pro změnu značení</value>
     <value>Možné dosednutí</value>
   </data>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
-    <value>Značení pod přechodem</value>
+    <value>Značení pod železničními přejezdy</value>
   </data>
   <data name="StyleOption_GapLength" xml:space="preserve">
     <value>Délka mezery</value>
   </data>
   <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Opakování mezery</value>
+    <value>Rozestup mezer</value>
   </data>
   <data name="StyleOption_UseGap" xml:space="preserve">
     <value>Použít mezeru</value>
@@ -1402,7 +1402,7 @@ Klikněte pro změnu značení</value>
     <value>Název</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
-    <value>Stupnice</value>
+    <value>Měřítko</value>
   </data>
   <data name="StyleOption_ObjectShift" xml:space="preserve">
     <value>Posun</value>
@@ -1435,7 +1435,7 @@ Klikněte pro změnu značení</value>
     <value>Vlastní</value>
   </data>
   <data name="StyleOption_ColorRandom" xml:space="preserve">
-    <value>Náhodný</value>
+    <value>Náhodná</value>
   </data>
   <data name="StyleOption_ColorOption" xml:space="preserve">
     <value>Barevná varianta</value>
@@ -1447,16 +1447,16 @@ Klikněte pro změnu značení</value>
     <value>Úhel</value>
   </data>
   <data name="LineStyle_Network" xml:space="preserve">
-    <value>Dekorované silnice</value>
+    <value>Dekorativní silnice</value>
   </data>
   <data name="StyleOption_NetWidthScale" xml:space="preserve">
-    <value>Stupnice šířky</value>
+    <value>Měřítko šířky</value>
   </data>
   <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
     <value>Opakovat vzdálenost</value>
   </data>
   <data name="StyleOption_AssetNetwork" xml:space="preserve">
-    <value>Objekt silnic</value>
+    <value>Silnice</value>
   </data>
   <data name="StyleOption_AssetNotSet" xml:space="preserve">
     <value>Nenastaveno</value>
@@ -1465,7 +1465,7 @@ Klikněte pro změnu značení</value>
     <value>Objekt</value>
   </data>
   <data name="StyleOption_AssetTree" xml:space="preserve">
-    <value>Objekt strom</value>
+    <value>Strom</value>
   </data>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>Nic nenalezeno</value>
@@ -1498,14 +1498,14 @@ Klikněte pro změnu značení</value>
 [TRANSLATION] Přidán Rumunský překlad.</value>
   </data>
   <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
-    <value>Přímý a opačný příkaz</value>
+    <value>Přímé a opačné pořadí</value>
   </data>
   <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
-    <value>Pouze přímý příkaz</value>
+    <value>Pouze přímé pořadí</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
     <value>[UPDATED] Automatické použití značení je zapnuté pouze pokud je jen jedna možnost vložit označení.
-[NEW] Přidána volba "Pouze přímé řazení" a "Přímé a opačné řazení" pro aotomatické použití značení.
+[NEW] Přidána volba "Pouze přímé řazení" a "Přímé a opačné řazení" pro automatické použití značení.
 [FIXED] Opraveny filtry výpočtů a osvětlení.
 [UPDATED] Tlačítko "Výchozí barva" na výběru barev nastavuje výchozí barvu ze stylu namísto výchozí barvy z módu.</value>
   </data>
@@ -1518,7 +1518,7 @@ Klikněte pro změnu značení</value>
     <value>Sklon</value>
   </data>
   <data name="StyleOption_Tilt" xml:space="preserve">
-    <value>Náklon</value>
+    <value>Naklonění</value>
   </data>
   <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
     <value>Vstoupit do podzemního režimu</value>
@@ -1536,12 +1536,12 @@ Klikněte pro změnu značení</value>
     <value>Držte {0}</value>
   </data>
   <data name="Tool_EnterUnderground" xml:space="preserve">
-    <value>Stiskněte {0} podzemní režim</value>
+    <value>Stiskněte {0} pro podzemní režim</value>
   </data>
   <data name="Tool_ExitUnderground" xml:space="preserve">
     <value>Stiskněte {0} pro ukončení podzemního režimu</value>
   </data>
   <data name="Tool_InfoUnderground" xml:space="preserve">
-    <value>Stiskněte {0} pro podzemní režim</value>
+    <value>Podržte {0} pro podzemní režim</value>
   </data>
 </root>

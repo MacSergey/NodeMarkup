@@ -1517,16 +1517,16 @@ Haga clic para editar las marcas</value>
     <value>Alternar modo subterráneo</value>
   </data>
   <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
-    <value>Presiona {0} para entrar y {1} para salir</value>
+    <value>Presiona la tecla {0} para entrar y {1} para salir</value>
   </data>
   <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
-    <value>Mantener presionado {0}</value>
+    <value>Mantener presionada la tecla {0}</value>
   </data>
   <data name="Tool_EnterUnderground" xml:space="preserve">
-    <value>Presiona {0} patra entrar en modo subterráneo</value>
+    <value>Presiona la tecla {0} patra entrar en modo subterráneo</value>
   </data>
   <data name="Tool_ExitUnderground" xml:space="preserve">
-    <value>Presiona {0} para salir del modo subterráneo</value>
+    <value>Presiona la tecla {0} para salir del modo subterráneo</value>
   </data>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Mantener presionada la tecla {0}
