@@ -14,13 +14,13 @@
     </AssemblySearchPaths>
     <Configurations>Beta Debug;Beta Release;Stable Debug;Stable Release</Configurations>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
-    <Version>1.10.2.1</Version>
+	
+  <PropertyGroup>
+    <AssemblyVersion>1.11.0.28</AssemblyVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Beta Release' OR '$(Configuration)' == 'Beta Debug'">
-    <Version>1.11.0.28</Version>
+  <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
+    <AssemblyVersion>1.10.2.1</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
