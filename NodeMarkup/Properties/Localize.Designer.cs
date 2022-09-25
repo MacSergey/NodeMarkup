@@ -19,7 +19,7 @@ namespace NodeMarkup {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Localize {
@@ -2034,6 +2034,15 @@ namespace NodeMarkup {
         public static string Settings_AutoApplyPastingDirectOnly {
             get {
                 return ResourceManager.GetString("Settings_AutoApplyPastingDirectOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Auto prop step depends on its size.
+        /// </summary>
+        public static string Settings_AutoPropStep {
+            get {
+                return ResourceManager.GetString("Settings_AutoPropStep", resourceCulture);
             }
         }
         

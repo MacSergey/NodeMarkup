@@ -1702,4 +1702,7 @@ underground mode</value>
     <value>Hold {0} to
 underground mode</value>
   </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Auto prop step depends on its size</value>
+  </data>
 </root>

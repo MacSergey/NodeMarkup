@@ -41,6 +41,7 @@ namespace NodeMarkup
         public static SavedBool HideStreetName { get; } = new SavedBool(nameof(HideStreetName), SettingsFile, true, true);
         public static SavedBool AutoApplyPasting { get; } = new SavedBool(nameof(AutoApplyPasting) + "V2", SettingsFile, false, true);
         public static SavedInt AutoApplyPastingType { get; } = new SavedInt(nameof(AutoApplyPastingType), SettingsFile, 1, true);
+        public static SavedBool AutoPropStep { get; } = new SavedBool(nameof(AutoPropStep), SettingsFile, false, true);
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
         public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
         public static SavedString Roads { get; } = new SavedString(nameof(Roads), SettingsFile, string.Empty, true);
@@ -135,6 +136,7 @@ namespace NodeMarkup
             AddCheckBox(gameplayGroup, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
             AddCheckBox(gameplayGroup, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
             AddCheckBox(gameplayGroup, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
+            AddCheckBox(gameplayGroup, Localize.Settings_AutoPropStep, AutoPropStep);
             AddCheckboxPanel(gameplayGroup, Localize.Settings_AutoApplyPasting, AutoApplyPasting, AutoApplyPastingType, new string[] { Localize.Settings_AutoApplyPastingDirectOnly, Localize.Settings_AutoApplyPastingDirectAndInvert});
 
             void OnIlluminationChanged()
