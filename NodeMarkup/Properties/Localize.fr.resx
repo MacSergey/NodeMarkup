@@ -1701,4 +1701,7 @@ le mode souterrain</value>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Maintenez {0} pour utiliser le mode souterrain</value>
   </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>L'intervalle automatique de l'accessoire dépend de sa taille</value>
+  </data>
 </root>

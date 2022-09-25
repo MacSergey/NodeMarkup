@@ -1441,7 +1441,7 @@ Haga clic para editar las marcas</value>
     <value>Estirar</value>
   </data>
   <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
-    <value>Distancia de renderizado</value>
+    <value>Distancia de repetición</value>
   </data>
   <data name="StyleOption_AssetNetwork" xml:space="preserve">
     <value>Redes</value>
@@ -1531,5 +1531,8 @@ Haga clic para editar las marcas</value>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Mantener presionada la tecla {0}
 para modo subterráneo</value>
+  </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Separación automática de elementos depende del tamaño</value>
   </data>
 </root>

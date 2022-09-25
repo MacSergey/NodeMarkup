@@ -1479,4 +1479,7 @@ modul Underground</value>
     <value>Țineți apăsat {0} pentru
 modul Underground</value>
   </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Distanța automata între obiecte depinde de dimensiunea acestuia</value>
+  </data>
 </root>

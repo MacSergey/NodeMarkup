@@ -1703,4 +1703,7 @@
     <value>Удерживайте {0}
 для подземного режима</value>
   </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Авто шаг реквизита в зависимости от его размера</value>
+  </data>
 </root>

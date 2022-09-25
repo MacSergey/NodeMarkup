@@ -1544,4 +1544,7 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Podržte {0} pro podzemní režim</value>
   </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Auto krok objektu závisí na jeho velikosti</value>
+  </data>
 </root>

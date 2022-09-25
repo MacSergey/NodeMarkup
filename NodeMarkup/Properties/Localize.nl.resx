@@ -1530,4 +1530,7 @@ Klik om de markering te wijzigen</value>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Houd {0} om in ondergrondse modus te gaan</value>
   </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Het automatische interval van de prop hangt af van de grootte ervan</value>
+  </data>
 </root>

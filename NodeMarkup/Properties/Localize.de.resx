@@ -1595,4 +1595,7 @@ zu verlassen</value>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Halte {0} gedrückt für den unterirdischen Modus</value>
   </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Automatische Dekorations-Abstände basierend auf der Größe</value>
+  </data>
 </root>

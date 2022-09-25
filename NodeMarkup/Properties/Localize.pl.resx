@@ -1499,9 +1499,17 @@ Kliknij aby edytować oznaczenia</value>
 [FIXED] Naprawiono przeliczanie i oświetlenie wypełnień.
 [UPDATED] Przycisk "Domyślny kolor" w wyborze koloru ustala domyślny kolor dla stylu zamiast domyślnego koloru dla modyfikacji. </value>
   </data>
-  
-  
-  
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Dodano wsparcie dla DLC Place &amp; Promenady.
+[NEW] Dodano wsparcie dla Loading Screen Mod Revisited.
+[FIXED] Poprawiono migotanie UI podczas wyszukiwania rekwizytów/drzew/sieci.</value>
+  </data>
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Nachylenie</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Przechylenie</value>
+  </data>
   <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
     <value>Przejdź do trybu podziemnego</value>
   </data>
@@ -1525,5 +1533,8 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Przytrzymaj {0} by przejść w tryb podziemny</value>
+  </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Automatyczny krok dla rekwizytów zależny od jego rozmiaru</value>
   </data>
 </root>

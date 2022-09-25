@@ -1537,4 +1537,7 @@
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>{0} で、地下表示に切り替え</value>
   </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>自動的なPropの間隔はサイズに合わせる</value>
+  </data>
 </root>
