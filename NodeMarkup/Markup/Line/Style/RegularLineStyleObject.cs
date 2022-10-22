@@ -499,12 +499,15 @@ namespace NodeMarkup.Manager
                 Prefab.Value = value;
                 if (IsValidProp(value))
                 {
-                    if (parent.Find(nameof(Step)) is FloatPropertyPanel stepProperty)
-                        stepProperty.SimulateEnterValue(Prefab.Value.m_generatedInfo.m_size.x);
-                    else
+                    if (Settings.AutoPropStep)
                     {
-                        Step.Value = Prefab.Value.m_generatedInfo.m_size.x;
-                        StyleChanged();
+                        if (parent.Find(nameof(Step)) is FloatPropertyPanel stepProperty)
+                            stepProperty.SimulateEnterValue(Prefab.Value.m_generatedInfo.m_size.x);
+                        else
+                        {
+                            Step.Value = Prefab.Value.m_generatedInfo.m_size.x;
+                            StyleChanged();
+                        }
                     }
                 }
             };
