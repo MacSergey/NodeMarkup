@@ -1435,45 +1435,140 @@
     <value>道路名称</value>
   </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>摆件</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>树木</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>角度</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>缩放</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>位移</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>间隔</value>
+  </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}米</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>变体1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>变体2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>变体3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>变体4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>随机</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>色差</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>编辑人行道</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>角度</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>装饰性网络（围栏、堤岸等）</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>宽度调整</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>重复的距离</value>
+  </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>网络资产</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>未设置</value>
+  </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>摆件资产</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>树木资产</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>未找到</value>
+  </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>如果目标能匹配源，粘贴的标记将会自动应用</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>可见性</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>范围</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>单一</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] 添加了摆件和树木的线条样式。它允许沿线放置任何摆件或树木。这些物品不计入游戏摆件和树木的上限。
+[NEW] 添加了装饰性网络线条样式。它允许沿线放置任何装饰性网络，如围栏。这些网络不计入游戏节点和分段上限。
+[NEW] 增加了在火车轨道、地铁轨道和人行道上添加标线的功能。
+[NEW] 添加了当从缓存粘贴标线时自动应用标线，或者如果目标与源匹配，则自动应用标线。可以在模组设置中禁用。
+[NEW] 添加了关闭人行道剪切的功能。
+[NEW] 人行道剪切可用于路段上。
+[UPDATED] 3D填充网格现在可在道路下方延伸，以防止倾斜的节点上出现间隙。
+[UPDATED] 增加了旋转锯齿线的功能。
+[FIXED] 修复了选择大节点时覆盖层中的蓝洞。
+[FIXED] 修复人行道线上的阴影。
+[UPDATED] 将数字单位（米，%，°）添加到所有属性。
+[FIXED] 修复了法线相交处缺少填充点的问题。
+[TRANSLATION] 添加罗马尼亚语。</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>正序与反序</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>仅正序</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] 当只有一个可粘贴标线的选项时，才会启用自动应用标线的功能。
+[NEW] 为自动应用标线添加了选项“仅正序”和“正序与反序”。
+[FIXED] 修复了填充图案计算与光照。
+[UPDATED] “默认颜色”按钮在颜色选择器上设置样式的默认颜色，而不是模组的默认颜色。</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] 增加了Plazas &amp; Promenades DLC 的支持。
+[NEW] 增加了 Loading Screen Mod Revisited 的支持。
+[FIXED] 修复了搜索摆件/树木/网络时UI闪烁的问题。</value>
+  </data>
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>斜坡</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>倾角</value>
+  </data>
   <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
     <value>进入地下模式</value>
   </data>
@@ -1500,10 +1595,28 @@
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>按住{0}进入地下模式</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>根据摆件的大小自动调整间距</value>
+  </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>2D标线LOD显示距离</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>网络LOD显示距离</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>摆件LOD显示距离</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>树木LOD显示距离</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>自动</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>3D标线LOD显示距离</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>渲染</value>
+  </data>
 </root>

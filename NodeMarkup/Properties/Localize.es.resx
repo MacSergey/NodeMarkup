@@ -1535,9 +1535,25 @@ para modo subterráneo</value>
   <data name="Settings_AutoPropStep" xml:space="preserve">
     <value>Separación automática de elementos depende del tamaño</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>Distancia LOD en marcas 2D</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Distancia LOD de redes</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Distancia LOD en decoraciones</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Distancia LOD de árboles</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Automático</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>Distancia de LOD en marcas 3D</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Renderizado</value>
+  </data>
 </root>

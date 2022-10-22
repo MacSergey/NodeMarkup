@@ -1483,9 +1483,25 @@
   <data name="Settings_AutoPropStep" xml:space="preserve">
     <value>프롭 스텝을 크기에 따라 자동으로 맞추기</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>2D 마킹 LOD 거리</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>네트워크 LOD 거리</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>프롭 LOD 거리</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>나무 LOD 거리</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>자동</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>3D 마킹 LOD 거리</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>렌더링</value>
+  </data>
 </root>

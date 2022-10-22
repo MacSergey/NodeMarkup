@@ -263,7 +263,7 @@
     <value>追加ルールのクイックセットアップ</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>マーキングの描画距離(m)</value>
+    <value>マーキングの描画距離</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>削除前の確認方法</value>
@@ -1158,7 +1158,7 @@
     <value>舗装(3Dスタイル)</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
-    <value>LOD(3Dスタイル)の描画距離(m)</value>
+    <value>LODの描画距離</value>
   </data>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>セグメント #{0}
@@ -1540,9 +1540,25 @@
   <data name="Settings_AutoPropStep" xml:space="preserve">
     <value>自動的なPropの間隔はサイズに合わせる</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>2Dマーキング LODの描画距離</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>ネットワーク LODの描画距離</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Prop LODの描画距離</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>ツリー LODの描画距離</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>3Dマーキング LODの描画距離</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>レンダリング</value>
+  </data>
 </root>
