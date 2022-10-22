@@ -4,6 +4,7 @@ using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.UI
@@ -16,13 +17,14 @@ namespace NodeMarkup.UI
         public override bool SupportEven => true;
 
         public abstract PrefabType Prefab { get; set; }
-        public Func<PrefabType, bool> PrefabPredicate { get; set; }
+        public Func<PrefabType, bool> PrefabSelectPredicate { get; set; }
+        public Func<PrefabType, string> PrefabSortPredicate { get; set; }
 
         public override void DeInit()
         {
             base.DeInit();
             Prefab = null;
-            PrefabPredicate = null;
+            PrefabSelectPredicate = null;
             OnValueChanged = null;
         }
 
@@ -127,7 +129,7 @@ namespace NodeMarkup.UI
             Popup.EntityHeight = 50f;
             Popup.MaxVisibleItems = 10;
             Popup.maximumSize = new Vector2(230f, 700f);
-            Popup.Init(Prefabs, PrefabPredicate);
+            Popup.Init(PrefabSortPredicate != null ? Prefabs.OrderBy(PrefabSortPredicate) : Prefabs, PrefabSelectPredicate);
             Popup.Focus();
             Popup.SelectedObject = Prefab;
 

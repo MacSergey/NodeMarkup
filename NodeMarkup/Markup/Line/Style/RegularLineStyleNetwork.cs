@@ -135,7 +135,8 @@ namespace NodeMarkup.Manager
         {
             var prefabProperty = ComponentPool.Get<SelectNetworkProperty>(parent, nameof(Prefab));
             prefabProperty.Text = Localize.StyleOption_AssetNetwork;
-            prefabProperty.PrefabPredicate = IsValidNetwork;
+            prefabProperty.PrefabSelectPredicate = IsValidNetwork;
+            prefabProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
             prefabProperty.OnValueChanged += (NetInfo value) => Prefab.Value = value;

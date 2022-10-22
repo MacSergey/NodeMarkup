@@ -451,7 +451,8 @@ namespace NodeMarkup.Manager
         {
             var prefabProperty = ComponentPool.Get<SelectPrefabType>(parent, nameof(Prefab));
             prefabProperty.Text = Localize.StyleOption_AssetProp;
-            prefabProperty.PrefabPredicate = IsValidPrefab;
+            prefabProperty.PrefabSelectPredicate = IsValidPrefab;
+            prefabProperty.PrefabSortPredicate = GetSortPredicate();
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
             prefabProperty.OnValueChanged += (PrefabType value) =>
@@ -470,6 +471,7 @@ namespace NodeMarkup.Manager
         }
 
         protected abstract bool IsValidPrefab(PrefabType info);
+        protected abstract Func<PrefabType, string> GetSortPredicate();
 
         public override XElement ToXml()
         {
@@ -570,6 +572,7 @@ namespace NodeMarkup.Manager
         }
 
         protected override bool IsValidPrefab(PropInfo info) => info != null && !info.m_isMarker;
+        protected override Func<PropInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
 
         public override XElement ToXml()
         {
@@ -621,5 +624,6 @@ namespace NodeMarkup.Manager
         }
 
         protected override bool IsValidPrefab(TreeInfo info) => info != null;
+        protected override Func<TreeInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
     }
 }
