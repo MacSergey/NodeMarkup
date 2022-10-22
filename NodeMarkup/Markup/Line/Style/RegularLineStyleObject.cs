@@ -18,8 +18,11 @@ namespace NodeMarkup.Manager
     {
         public override bool CanOverlap => true;
 
-        public PropertyValue<int> Probability { get; }
-        public PropertyValue<float> Step { get; }
+        protected abstract bool IsValid { get; }
+        protected abstract Vector3 PrefabSize { get; }
+
+        public PropertyStructValue<int> Probability { get; }
+        public PropertyNullableStructValue<float, PropertyStructValue<float>> Step { get; }
 
         public PropertyVector2Value Angle { get; }
         public PropertyVector2Value Tilt { get; }
@@ -28,19 +31,19 @@ namespace NodeMarkup.Manager
 
         public PropertyVector2Value Shift { get; }
         public PropertyVector2Value Elevation { get; }
-        public PropertyValue<float> OffsetBefore { get; }
-        public PropertyValue<float> OffsetAfter { get; }
+        public PropertyStructValue<float> OffsetBefore { get; }
+        public PropertyStructValue<float> OffsetAfter { get; }
 
-        public BaseObjectLineStyle(int probability, float step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
+        public BaseObjectLineStyle(int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
         {
             Probability = new PropertyStructValue<int>("P", StyleChanged, probability);
-            Step = new PropertyStructValue<float>("S", StyleChanged, step);
+            Step = new PropertyNullableStructValue<float, PropertyStructValue<float>>(new PropertyStructValue<float>("S", null), "S", StyleChanged, step);
             Angle = new PropertyVector2Value(StyleChanged, angle, "AA", "AB");
             Tilt = new PropertyVector2Value(StyleChanged, tilt, "TLA", "TLB");
-            Slope = new PropertyNullableStructValue<Vector2, PropertyVector2Value>(new PropertyVector2Value(null, labelX: "SLA", labelY: "SLB"), "SL", StyleChanged, scale);
+            Slope = new PropertyNullableStructValue<Vector2, PropertyVector2Value>(new PropertyVector2Value(null, labelX: "SLA", labelY: "SLB"), "SL", StyleChanged, slope);
             Scale = new PropertyVector2Value(StyleChanged, scale, "SCA", "SCB");
             Shift = new PropertyVector2Value(StyleChanged, shift, "SFA", "SFB");
-            Elevation = new PropertyVector2Value(StyleChanged, elevation,"EA", "EB");
+            Elevation = new PropertyVector2Value(StyleChanged, elevation, "EA", "EB");
             OffsetBefore = new PropertyStructValue<float>("OB", StyleChanged, offsetBefore);
             OffsetAfter = new PropertyStructValue<float>("OA", StyleChanged, offsetAfter);
         }
@@ -112,9 +115,9 @@ namespace NodeMarkup.Manager
             return probabilityProperty;
         }
 
-        protected FloatPropertyPanel AddStepProperty(UIComponent parent)
+        protected FloatStaticAutoProperty AddStepProperty(UIComponent parent)
         {
-            var stepProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Step));
+            var stepProperty = ComponentPool.Get<FloatStaticAutoProperty>(parent, nameof(Step));
             stepProperty.Text = Localize.StyleOption_ObjectStep;
             stepProperty.Format = Localize.NumberFormat_Meter;
             stepProperty.UseWheel = true;
@@ -123,8 +126,20 @@ namespace NodeMarkup.Manager
             stepProperty.CheckMin = true;
             stepProperty.MinValue = 0.1f;
             stepProperty.Init();
-            stepProperty.Value = Step;
+
+            if (Step.HasValue)
+                stepProperty.SetValue(Step.Value.Value);
+            else
+                stepProperty.SetAuto();
+
             stepProperty.OnValueChanged += (float value) => Step.Value = value;
+            stepProperty.OnAutoValue += () =>
+            {
+                Step.Value = null;
+
+                if (IsValid)
+                    stepProperty.Value = PrefabSize.x;
+            };
 
             return stepProperty;
         }
@@ -327,12 +342,14 @@ namespace NodeMarkup.Manager
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
         }
     }
-    public abstract class BaseObjectLineStyle<PrefabType> : BaseObjectLineStyle
+    public abstract class BaseObjectLineStyle<PrefabType, SelectPrefabType> : BaseObjectLineStyle
         where PrefabType : PrefabInfo
+        where SelectPrefabType : SelectPrefabProperty<PrefabType>
     {
         public PropertyPrefabValue<PrefabType> Prefab { get; }
+        protected override bool IsValid => IsValidPrefab(Prefab.Value);
 
-        public BaseObjectLineStyle(PrefabType prefab, int probability, float step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
+        public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
         {
             Prefab = new PropertyPrefabValue<PrefabType>("PRF", StyleChanged, prefab);
         }
@@ -340,7 +357,7 @@ namespace NodeMarkup.Manager
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
-            if (target is BaseObjectLineStyle<PrefabType> objectTarget)
+            if (target is BaseObjectLineStyle<PrefabType, SelectPrefabType> objectTarget)
             {
                 objectTarget.Prefab.Value = Prefab;
             }
@@ -370,11 +387,12 @@ namespace NodeMarkup.Manager
             trajectory = trajectory.Cut(startT, endT);
 
             length = trajectory.Length;
-            var count = Mathf.CeilToInt(length / Step);
+            var stepValue = Step.HasValue ? Step.Value.Value : PrefabSize.x;
+            var count = Mathf.CeilToInt(length / stepValue);
 
             var items = new MarkupPropItemData[count];
 
-            var startOffset = (length - (count - 1) * Step) * 0.5f;
+            var startOffset = (length - (count - 1) * stepValue) * 0.5f;
             for (int i = 0; i < count; i += 1)
             {
                 if (SimulationManager.instance.m_randomizer.Int32(1, 100) > Probability)
@@ -385,7 +403,7 @@ namespace NodeMarkup.Manager
                     t = 0.5f;
                 else
                 {
-                    var distance = startOffset + Step * i;
+                    var distance = startOffset + stepValue * i;
                     t = trajectory.Travel(distance);
                 }
 
@@ -429,6 +447,30 @@ namespace NodeMarkup.Manager
         protected virtual void CalculateItem(PrefabType prefab, ref MarkupPropItemData item) { }
         protected abstract IStyleData GetParts(PrefabType prefab, MarkupPropItemData[] items);
 
+        protected sealed override EditorItem AddPrefabProperty(UIComponent parent)
+        {
+            var prefabProperty = ComponentPool.Get<SelectPrefabType>(parent, nameof(Prefab));
+            prefabProperty.Text = Localize.StyleOption_AssetProp;
+            prefabProperty.PrefabPredicate = IsValidPrefab;
+            prefabProperty.Init(60f);
+            prefabProperty.Prefab = Prefab;
+            prefabProperty.OnValueChanged += (PrefabType value) =>
+            {
+                Prefab.Value = value;
+                if (!Step.HasValue)
+                {
+                    if (parent.Find(nameof(Step)) is FloatStaticAutoProperty stepProperty)
+                        stepProperty.Value = IsValid ? PrefabSize.x : DefaultObjectStep;
+
+                    StyleChanged();
+                }
+            };
+
+            return prefabProperty;
+        }
+
+        protected abstract bool IsValidPrefab(PrefabType info);
+
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -441,18 +483,18 @@ namespace NodeMarkup.Manager
             Prefab.FromXml(config, null);
         }
     }
-    public class PropLineStyle : BaseObjectLineStyle<PropInfo>
+    public class PropLineStyle : BaseObjectLineStyle<PropInfo, SelectPropProperty>
     {
-        public static bool IsValidProp(PropInfo info) => info != null && !info.m_isMarker;
         public static new Color32 DefaultColor => new Color32();
         public static ColorOptionEnum DefaultColorOption => ColorOptionEnum.Random;
 
         public override StyleType Type => StyleType.LineProp;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
-        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
+        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
         {
             Color.Value = color;
             ColorOption = new PropertyEnumValue<ColorOptionEnum>("CO", StyleChanged, colorOption);
@@ -505,33 +547,6 @@ namespace NodeMarkup.Manager
                 color.isVisible = (option == ColorOptionEnum.Custom);
             }
         }
-        protected sealed override EditorItem AddPrefabProperty(UIComponent parent)
-        {
-            var prefabProperty = ComponentPool.Get<SelectPropProperty>(parent, nameof(Prefab));
-            prefabProperty.Text = Localize.StyleOption_AssetProp;
-            prefabProperty.Selector = IsValidProp;
-            prefabProperty.Init(60f);
-            prefabProperty.Prefab = Prefab;
-            prefabProperty.OnValueChanged += (PropInfo value) =>
-            {
-                Prefab.Value = value;
-                if (IsValidProp(value))
-                {
-                    if (Settings.AutoPropStep)
-                    {
-                        if (parent.Find(nameof(Step)) is FloatPropertyPanel stepProperty)
-                            stepProperty.SimulateEnterValue(Prefab.Value.m_generatedInfo.m_size.x);
-                        else
-                        {
-                            Step.Value = Prefab.Value.m_generatedInfo.m_size.x;
-                            StyleChanged();
-                        }
-                    }
-                }
-            };
-
-            return prefabProperty;
-        }
         protected PropColorPropertyPanel AddColorOptionProperty(UIComponent parent)
         {
             var colorOptionProperty = ComponentPool.GetAfter<PropColorPropertyPanel>(parent, nameof(Prefab), nameof(ColorOption));
@@ -553,6 +568,8 @@ namespace NodeMarkup.Manager
 
             return colorProperty;
         }
+
+        protected override bool IsValidPrefab(PropInfo info) => info != null && !info.m_isMarker;
 
         public override XElement ToXml()
         {
@@ -588,12 +605,13 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class TreeLineStyle : BaseObjectLineStyle<TreeInfo>
+    public class TreeLineStyle : BaseObjectLineStyle<TreeInfo, SelectTreeProperty>
     {
         public override StyleType Type => StyleType.LineTree;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
 
-        public TreeLineStyle(TreeInfo tree, int probability, float step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter) { }
+        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter) { }
 
         public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
 
@@ -601,15 +619,7 @@ namespace NodeMarkup.Manager
         {
             return new MarkupTreeData(tree, items);
         }
-        protected sealed override EditorItem AddPrefabProperty(UIComponent parent)
-        {
-            var prefabProperty = ComponentPool.Get<SelectTreeProperty>(parent, nameof(Prefab));
-            prefabProperty.Text = Localize.StyleOption_AssetTree;
-            prefabProperty.Init(60f);
-            prefabProperty.Prefab = Prefab;
-            prefabProperty.OnValueChanged += (TreeInfo value) => Prefab.Value = value;
 
-            return prefabProperty;
-        }
+        protected override bool IsValidPrefab(TreeInfo info) => info != null;
     }
 }
