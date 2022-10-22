@@ -217,8 +217,9 @@ namespace NodeMarkup.Utilities
 
     public enum MarkupLOD
     {
-        LOD0,
-        LOD1
+        NoLOD = 1,
+        LOD0 = 2,
+        LOD1 = 4,
     }
     public class LodDictionary<Type> : Dictionary<MarkupLOD, Type>
     {
@@ -420,9 +421,9 @@ namespace NodeMarkup.Utilities
         protected override bool ReceiveShadow => false;
         private static float MeshHalfWidth => 20f;
         private static float MeshHalfLength => 20f;
-        private RenderData[] Data {get;set; }
+        private RenderData[] Data { get; set; }
 
-        public MarkupStyleFillerMesh(float elevation, params RawData[] datas) : base(MeshHalfWidth * 2f, MeshHalfLength * 2f) 
+        public MarkupStyleFillerMesh(float elevation, params RawData[] datas) : base(MeshHalfWidth * 2f, MeshHalfLength * 2f)
         {
             Data = new RenderData[datas.Length];
 
@@ -478,7 +479,7 @@ namespace NodeMarkup.Utilities
             var xRatio = MeshHalfWidth / minMax.size.x;
             var yRatio = MeshHalfLength / minMax.size.z;
 
-            for(var i = 0; i < Data.Length; i += 1)
+            for (var i = 0; i < Data.Length; i += 1)
             {
                 for (var j = 0; j < Data[i]._vertixes.Length; j += 1)
                 {
@@ -521,7 +522,7 @@ namespace NodeMarkup.Utilities
         }
         protected override IEnumerable<Mesh> GetMeshes()
         {
-            foreach(var data in Data)
+            foreach (var data in Data)
             {
                 var mesh = new Mesh
                 {
@@ -531,7 +532,7 @@ namespace NodeMarkup.Utilities
                     bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
                 };
                 mesh.RecalculateNormals();
-                if(data._meshType == MeshType.Top)
+                if (data._meshType == MeshType.Top)
                     mesh.normals = mesh.normals.Select(n => -n).ToArray();
                 mesh.RecalculateTangents();
                 mesh.UploadMeshData(false);
@@ -724,14 +725,13 @@ namespace NodeMarkup.Utilities
 
             if (Singleton<InfoManager>.instance.CurrentMode == InfoManager.InfoMode.None)
             {
-                float num = 0f;
                 if (!active && !info.m_alwaysActive)
                     objectIndex.z = 0f;
                 else if (info.m_illuminationOffRange.x < 1000f || info.m_illuminationBlinkType != 0)
                 {
                     LightSystem lightSystem = Singleton<RenderManager>.instance.lightSystem;
                     Randomizer randomizer = new Randomizer(id.Index);
-                    num = info.m_illuminationOffRange.x + (float)randomizer.Int32(100000u) * 1E-05f * (info.m_illuminationOffRange.y - info.m_illuminationOffRange.x);
+                    var num = info.m_illuminationOffRange.x + (float)randomizer.Int32(100000u) * 1E-05f * (info.m_illuminationOffRange.y - info.m_illuminationOffRange.x);
                     objectIndex.z = MathUtils.SmoothStep(num + 0.01f, num - 0.01f, lightSystem.DayLightIntensity);
                     if (info.m_illuminationBlinkType != 0)
                     {
@@ -747,7 +747,7 @@ namespace NodeMarkup.Utilities
                     objectIndex.z = 1f;
             }
 
-            if (cameraInfo == null || cameraInfo.CheckRenderDistance(position, info.m_lodRenderDistance))
+            if (cameraInfo == null || cameraInfo.CheckRenderDistance(position, Mathf.Max(info.m_lodRenderDistance, Settings.PropLODDistance)))
             {
                 Matrix4x4 matrix = default(Matrix4x4);
                 matrix.SetTRS(position, Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down) * Quaternion.AngleAxis(tilt * Mathf.Rad2Deg, Vector3.right) * Quaternion.AngleAxis(slope * Mathf.Rad2Deg, Vector3.forward), new Vector3(scale, scale, scale));
@@ -784,11 +784,9 @@ namespace NodeMarkup.Utilities
             else
             {
                 objectIndex.w = scale;
-                ref Vector4 reference = ref info.m_lodLocations[info.m_lodCount];
-                reference = new Vector4(position.x, position.y, position.z, angle);
+                info.m_lodLocations[info.m_lodCount] = new Vector4(position.x, position.y, position.z, angle);
                 info.m_lodObjectIndices[info.m_lodCount] = objectIndex;
-                ref Vector4 reference2 = ref info.m_lodColors[info.m_lodCount];
-                reference2 = color.linear;
+                info.m_lodColors[info.m_lodCount]= color.linear;
                 info.m_lodMin = Vector3.Min(info.m_lodMin, position);
                 info.m_lodMax = Vector3.Max(info.m_lodMax, position);
                 if (++info.m_lodCount == info.m_lodLocations.Length)
@@ -812,7 +810,7 @@ namespace NodeMarkup.Utilities
             {
                 return;
             }
-            if (cameraInfo == null || info.m_lodMesh1 == null || cameraInfo.CheckRenderDistance(position, info.m_lodRenderDistance))
+            if (cameraInfo == null || info.m_lodMesh1 == null || cameraInfo.CheckRenderDistance(position, Mathf.Max(info.m_lodRenderDistance, Settings.TreeLODDistance)))
             {
                 TreeManager instance = Singleton<TreeManager>.instance;
                 MaterialPropertyBlock materialBlock = instance.m_materialBlock;
@@ -830,10 +828,8 @@ namespace NodeMarkup.Utilities
             position.y += info.m_generatedInfo.m_center.y * (scale - 1f);
             Color color = info.m_defaultColor * brightness;
             color.a = Singleton<WeatherManager>.instance.GetWindSpeed(position);
-            ref Vector4 reference = ref info.m_lodLocations[info.m_lodCount];
-            reference = new Vector4(position.x, position.y, position.z, scale);
-            ref Vector4 reference2 = ref info.m_lodColors[info.m_lodCount];
-            reference2 = color.linear;
+            info.m_lodLocations[info.m_lodCount] = new Vector4(position.x, position.y, position.z, scale);
+            info.m_lodColors[info.m_lodCount] = color.linear;
             info.m_lodObjectIndices[info.m_lodCount] = objectIndex;
             info.m_lodMin = Vector3.Min(info.m_lodMin, position);
             info.m_lodMax = Vector3.Max(info.m_lodMax, position);
@@ -902,7 +898,7 @@ namespace NodeMarkup.Utilities
 
             foreach (var data in Datas)
             {
-                if (cameraInfo.CheckRenderDistance(renderData.m_position, data.segment.m_lodRenderDistance))
+                if (cameraInfo.CheckRenderDistance(renderData.m_position, Mathf.Max(data.segment.m_lodRenderDistance, Settings.NetworkLODDistance)))
                 {
                     instance.m_materialBlock.Clear();
                     instance.m_materialBlock.SetMatrix(instance.ID_LeftMatrix, data.left);

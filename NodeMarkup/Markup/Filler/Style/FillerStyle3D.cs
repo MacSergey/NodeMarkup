@@ -56,8 +56,11 @@ namespace NodeMarkup.Manager
 
             return contours;
         }
-        public override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
+        protected override IEnumerable<IStyleData> CalculateImpl(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
+            if ((SupportLOD & lod) != 0)
+                yield break;
+
             foreach (var contour in contours)
             {
                 var points = GetContourPoints(contour, lod, out var groups);
@@ -488,9 +491,12 @@ namespace NodeMarkup.Manager
         }
         private IEnumerable<IStyleData> Calculate(MarkupFiller filler, CounterData[] contours, MarkupLOD lod)
         {
+            if ((SupportLOD & lod) == 0)
+                yield break;
+
             if (lod == MarkupLOD.LOD1)
             {
-                foreach (var data in base.Calculate(filler, contours.Select(c => c._side).ToList(), lod))
+                foreach (var data in base.CalculateImpl(filler, contours.Select(c => c._side).ToList(), lod))
                     yield return data;
             }
             else
@@ -503,11 +509,11 @@ namespace NodeMarkup.Manager
                     if (Triangulate(sidePoints, out var triangles))
                     {
                         meshParts.Add(MarkupStyleFillerMesh.RawData.SetSide(sideGroups, sidePoints, MaterialType.Pavement));
-                       
+
                         if (contour._hole != null)
                         {
                             var holePoints = GetContourPoints(contour._hole, lod, out var holeGroups);
-                            if(Triangulate(holePoints, out var holeTriangles))
+                            if (Triangulate(holePoints, out var holeTriangles))
                             {
                                 holePoints = holePoints.Select(p => p += new Vector3(0f, 0.03f, 0f)).ToArray();
                                 meshParts.Add(MarkupStyleFillerMesh.RawData.SetTop(holePoints, holeTriangles, MaterialType));
@@ -643,6 +649,7 @@ namespace NodeMarkup.Manager
     public class PavementFillerStyle : TriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerPavement;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
         public PavementFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
@@ -652,6 +659,7 @@ namespace NodeMarkup.Manager
     public class GrassFillerStyle : CurbTriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerGrass;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Grass;
 
         public GrassFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
@@ -661,6 +669,7 @@ namespace NodeMarkup.Manager
     public class GravelFillerStyle : CurbTriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerGravel;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Gravel;
 
         public GravelFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
@@ -670,6 +679,7 @@ namespace NodeMarkup.Manager
     public class RuinedFillerStyle : CurbTriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerRuined;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Ruined;
 
         public RuinedFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
@@ -679,6 +689,7 @@ namespace NodeMarkup.Manager
     public class CliffFillerStyle : CurbTriangulationFillerStyle
     {
         public override StyleType Type => StyleType.FillerCliff;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Cliff;
 
         public CliffFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }

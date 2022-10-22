@@ -27,6 +27,10 @@ namespace NodeMarkup
 
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 700f, true);
         public static SavedFloat LODDistance { get; } = new SavedFloat(nameof(LODDistance), SettingsFile, 300f, true);
+        public static SavedFloat PropLODDistance { get; } = new SavedFloat(nameof(PropLODDistance), SettingsFile, 500f, true);
+        public static SavedFloat TreeLODDistance { get; } = new SavedFloat(nameof(TreeLODDistance), SettingsFile, 500f, true);
+        public static SavedFloat NetworkLODDistance { get; } = new SavedFloat(nameof(NetworkLODDistance), SettingsFile, 500f, true);
+
         public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool LevelCrossingUnderMarking { get; } = new SavedBool(nameof(LevelCrossingUnderMarking), SettingsFile, true, true);
@@ -110,7 +114,11 @@ namespace NodeMarkup
             var group = helper.AddGroup(Localize.Settings_DisplayAndUsage);
 
             AddFloatField(group, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
-            AddFloatField(group, Localize.Settings_LODDistance, LODDistance, 300f, 0f);
+            AddFloatField(group, Localize.Settings_LODDistanceMarking, LODDistance, 300f, 0f);
+            AddFloatField(group, Localize.Settings_LODDistanceNetwork, NetworkLODDistance, 500f, 0f);
+            AddFloatField(group, Localize.Settings_LODDistanceProp, PropLODDistance, 500f, 0f);
+            AddFloatField(group, Localize.Settings_LODDistanceTree, TreeLODDistance, 500f, 0f);
+
             AddCheckBox(group, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
             AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
             AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);

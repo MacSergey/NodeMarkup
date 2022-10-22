@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace NodeMarkup.Manager
 
         public PropertyVector2Value Angle { get; }
         public PropertyVector2Value Tilt { get; }
-        public PropertyVector2Value Slope { get; }
+        public PropertyNullableStructValue<Vector2, PropertyVector2Value> Slope { get; }
         public PropertyVector2Value Scale { get; }
 
         public PropertyVector2Value Shift { get; }
@@ -30,13 +31,13 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> OffsetBefore { get; }
         public PropertyValue<float> OffsetAfter { get; }
 
-        public BaseObjectLineStyle(int probability, float step, Vector2 angle, Vector2 tilt, Vector2 slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
+        public BaseObjectLineStyle(int probability, float step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
         {
             Probability = new PropertyStructValue<int>("P", StyleChanged, probability);
             Step = new PropertyStructValue<float>("S", StyleChanged, step);
             Angle = new PropertyVector2Value(StyleChanged, angle, "AA", "AB");
             Tilt = new PropertyVector2Value(StyleChanged, tilt, "TLA", "TLB");
-            Slope = new PropertyVector2Value(StyleChanged, slope, "SLA", "SLB");
+            Slope = new PropertyNullableStructValue<Vector2, PropertyVector2Value>(new PropertyVector2Value(null, labelX: "SLA", labelY: "SLB"), "SL", StyleChanged, scale);
             Scale = new PropertyVector2Value(StyleChanged, scale, "SCA", "SCB");
             Shift = new PropertyVector2Value(StyleChanged, shift, "SFA", "SFB");
             Elevation = new PropertyVector2Value(StyleChanged, elevation,"EA", "EB");
@@ -170,9 +171,9 @@ namespace NodeMarkup.Manager
             return tiltProperty;
         }
 
-        protected FloatStaticRangeProperty AddSlopeRangeProperty(UIComponent parent)
+        protected FloatStaticRangeAutoProperty AddSlopeRangeProperty(UIComponent parent)
         {
-            var slopeProperty = ComponentPool.GetAfter<FloatStaticRangeProperty>(parent, nameof(Tilt), nameof(Slope));
+            var slopeProperty = ComponentPool.GetAfter<FloatStaticRangeAutoProperty>(parent, nameof(Tilt), nameof(Slope));
             slopeProperty.Text = Localize.StyleOption_Slope;
             slopeProperty.Format = Localize.NumberFormat_Degree;
             slopeProperty.UseWheel = true;
@@ -185,8 +186,14 @@ namespace NodeMarkup.Manager
             slopeProperty.AllowInvert = false;
             slopeProperty.CyclicalValue = false;
             slopeProperty.Init();
-            slopeProperty.SetValues(Slope.Value.x, Slope.Value.y);
+
+            if (Slope.HasValue)
+                slopeProperty.SetValues(Slope.Value.Value.x, Slope.Value.Value.y);
+            else
+                slopeProperty.SetAuto();
+
             slopeProperty.OnValueChanged += (float valueA, float valueB) => Slope.Value = new Vector2(valueA, valueB);
+            slopeProperty.OnAutoValue += () => Slope.Value = null;
 
             return slopeProperty;
         }
@@ -325,7 +332,7 @@ namespace NodeMarkup.Manager
     {
         public PropertyPrefabValue<PrefabType> Prefab { get; }
 
-        public BaseObjectLineStyle(PrefabType prefab, int probability, float step, Vector2 angle, Vector2 tilt, Vector2 slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
+        public BaseObjectLineStyle(PrefabType prefab, int probability, float step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
         {
             Prefab = new PropertyPrefabValue<PrefabType>("PRF", StyleChanged, prefab);
         }
@@ -339,7 +346,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (Prefab.Value is not PrefabType prefab)
                 return new MarkupStyleParts();
@@ -398,8 +405,18 @@ namespace NodeMarkup.Manager
                 var randomTilt = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Tilt.Value.y - Tilt.Value.x));
                 items[i].Tilt += (Tilt.Value.x + randomTilt) * Mathf.Deg2Rad;
 
-                var randomSlope = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Slope.Value.y - Slope.Value.x));
-                items[i].Slope += (Slope.Value.x + randomSlope) * Mathf.Deg2Rad;
+                if (Slope.HasValue)
+                {
+                    var slopeValue = Slope.Value.Value;
+                    var randomSlope = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(slopeValue.y - slopeValue.x));
+                    items[i].Slope += (slopeValue.x + randomSlope) * Mathf.Deg2Rad;
+                }
+                else
+                {
+                    var direction = trajectory.Tangent(t);
+                    var flatDirection = direction.MakeFlat();
+                    items[i].Slope = Vector3.Angle(flatDirection, direction) * Mathf.Deg2Rad;
+                }
 
                 var randomScale = SimulationManager.instance.m_randomizer.UInt32((uint)((Scale.Value.y - Scale.Value.x) * 1000f)) * 0.001f;
                 items[i].Scale = Scale.Value.x + randomScale;
@@ -431,10 +448,11 @@ namespace NodeMarkup.Manager
         public static ColorOptionEnum DefaultColorOption => ColorOptionEnum.Random;
 
         public override StyleType Type => StyleType.LineProp;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
-        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float step, Vector2 angle, Vector2 tilt, Vector2 slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
+        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
         {
             Color.Value = color;
             ColorOption = new PropertyEnumValue<ColorOptionEnum>("CO", StyleChanged, colorOption);
@@ -573,8 +591,9 @@ namespace NodeMarkup.Manager
     public class TreeLineStyle : BaseObjectLineStyle<TreeInfo>
     {
         public override StyleType Type => StyleType.LineTree;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
-        public TreeLineStyle(TreeInfo tree, int probability, float step, Vector2 angle, Vector2 tilt, Vector2 slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter) { }
+        public TreeLineStyle(TreeInfo tree, int probability, float step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter) { }
 
         public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
 

@@ -1705,4 +1705,19 @@ underground mode</value>
   <data name="Settings_AutoPropStep" xml:space="preserve">
     <value>Auto prop step depends on its size</value>
   </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>Marking LOD distance</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Network LOD distance</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Prop LOD distance</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Tree LOD distance</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
 </root>

@@ -16,6 +16,7 @@ namespace NodeMarkup.Manager
     {
         public static bool IsValidNetwork(NetInfo info) => info != null && info.m_segments.Length != 0 && info.m_netAI is DecorationWallAI;
         public override StyleType Type => StyleType.LineNetwork;
+        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
 
         public override bool CanOverlap => true;
         private bool IsValid => IsValidNetwork(Prefab.Value);
@@ -60,7 +61,7 @@ namespace NodeMarkup.Manager
                 networkTarget.RepeatDistance.Value = RepeatDistance;
             }
         }
-        protected override IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!IsValid)
                 return new MarkupStyleParts();

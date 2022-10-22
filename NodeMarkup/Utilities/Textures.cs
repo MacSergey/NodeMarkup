@@ -56,6 +56,7 @@ namespace NodeMarkup.Utilities
         public static string ListItemCollapse { get; } = nameof(ListItemCollapse);
         public static string ListItemExpand { get; } = nameof(ListItemExpand);
 
+        public static string AutoButtonIcons { get; } = nameof(AutoButtonIcons);
         public static string SingleButtonIcons { get; } = nameof(SingleButtonIcons);
         public static string RangeButtonIcons { get; } = nameof(RangeButtonIcons);
 
@@ -105,6 +106,7 @@ namespace NodeMarkup.Utilities
             spriteParams[ResetOrderButton] = new RectOffset();
 
             //ButtonIcons
+            spriteParams[AutoButtonIcons] = new RectOffset();
             spriteParams[SingleButtonIcons] = new RectOffset();
             spriteParams[RangeButtonIcons] = new RectOffset();
 

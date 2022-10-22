@@ -52,7 +52,14 @@ namespace NodeMarkup.Manager
         }
         public virtual void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
-        public abstract IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod);
+        public IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        {
+            if ((SupportLOD & lod) != 0)
+                return CalculateImpl(crosswalk, lod);
+            else
+                return new MarkupStyleParts();
+        }
+        protected abstract IEnumerable<MarkupStylePart> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod);
 
         protected FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
         {

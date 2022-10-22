@@ -42,9 +42,10 @@ namespace NodeMarkup.Manager
     {
         public Filler2DStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset) { }
 
-        public sealed override IEnumerable<IStyleData> Calculate(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
+        protected sealed override IEnumerable<IStyleData> CalculateImpl(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
-            yield return new MarkupStyleParts(CalculateProcess(filler, contours, lod));
+            if ((SupportLOD & lod) != 0)
+                yield return new MarkupStyleParts(CalculateProcess(filler, contours, lod));
         }
         protected virtual IEnumerable<MarkupStylePart> CalculateProcess(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
@@ -476,6 +477,7 @@ namespace NodeMarkup.Manager
     public class StripeFillerStyle : RailFillerStyle, IFollowRailFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerStripe;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
         public PropertyValue<float> Angle { get; }
         public PropertyValue<bool> FollowRails { get; }
@@ -604,6 +606,7 @@ namespace NodeMarkup.Manager
     public class ChevronFillerStyle : RailFillerStyle, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerChevron;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
         public PropertyValue<float> AngleBetween { get; }
         public PropertyBoolValue Invert { get; }
@@ -764,6 +767,7 @@ namespace NodeMarkup.Manager
     public class GridFillerStyle : Filler2DStyle, IPeriodicFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerGrid;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
         public PropertyValue<float> Angle { get; }
         public PropertyValue<float> Step { get; }
@@ -829,6 +833,7 @@ namespace NodeMarkup.Manager
         public static float DefaultSolidWidth { get; } = 0.2f;
 
         public override StyleType Type => StyleType.FillerSolid;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
         public PropertyValue<int> LeftRailA { get; }
         public PropertyValue<int> RightRailA { get; }

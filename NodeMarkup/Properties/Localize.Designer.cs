@@ -2452,6 +2452,42 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Marking LOD distance.
+        /// </summary>
+        public static string Settings_LODDistanceMarking {
+            get {
+                return ResourceManager.GetString("Settings_LODDistanceMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Network LOD distance.
+        /// </summary>
+        public static string Settings_LODDistanceNetwork {
+            get {
+                return ResourceManager.GetString("Settings_LODDistanceNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Prop LOD distance.
+        /// </summary>
+        public static string Settings_LODDistanceProp {
+            get {
+                return ResourceManager.GetString("Settings_LODDistanceProp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Tree LOD distance.
+        /// </summary>
+        public static string Settings_LODDistanceTree {
+            get {
+                return ResourceManager.GetString("Settings_LODDistanceTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Quick crosswalk borders setup.
         /// </summary>
         public static string Settings_QuickBorderSetup {
@@ -2991,6 +3027,15 @@ namespace NodeMarkup {
         public static string Settings_ToggleUndergroundHold {
             get {
                 return ResourceManager.GetString("Settings_ToggleUndergroundHold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
