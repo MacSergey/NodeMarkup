@@ -349,7 +349,7 @@ namespace NodeMarkup.Manager
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (Prefab.Value is not PrefabType prefab)
-                return new MarkupStyleParts();
+                return new MarkupPartGroupData(lod);
 
             var shift = (Shift.Value.x + Shift.Value.y) * 0.5f;
 
@@ -363,7 +363,7 @@ namespace NodeMarkup.Manager
 
             var length = trajectory.Length;
             if (OffsetBefore + OffsetAfter >= length)
-                return new MarkupStyleParts();
+                return new MarkupPartGroupData(lod);
 
             var startT = OffsetBefore == 0f ? 0f : trajectory.Travel(OffsetBefore);
             var endT = OffsetAfter == 0f ? 1f : 1f - trajectory.Invert().Travel(OffsetAfter);
@@ -372,7 +372,7 @@ namespace NodeMarkup.Manager
             length = trajectory.Length;
             var count = Mathf.CeilToInt(length / Step);
 
-            var items = new MarkupStylePropItem[count];
+            var items = new MarkupPropItemData[count];
 
             var startOffset = (length - (count - 1) * Step) * 0.5f;
             for (int i = 0; i < count; i += 1)
@@ -426,8 +426,8 @@ namespace NodeMarkup.Manager
 
             return GetParts(prefab, items);
         }
-        protected virtual void CalculateItem(PrefabType prefab, ref MarkupStylePropItem item) { }
-        protected abstract IStyleData GetParts(PrefabType prefab, MarkupStylePropItem[] items);
+        protected virtual void CalculateItem(PrefabType prefab, ref MarkupPropItemData item) { }
+        protected abstract IStyleData GetParts(PrefabType prefab, MarkupPropItemData[] items);
 
         public override XElement ToXml()
         {
@@ -460,7 +460,7 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
 
-        protected override void CalculateItem(PropInfo prop, ref MarkupStylePropItem item)
+        protected override void CalculateItem(PropInfo prop, ref MarkupPropItemData item)
         {
             switch (ColorOption.Value)
             {
@@ -484,9 +484,9 @@ namespace NodeMarkup.Manager
                     break;
             }
         }
-        protected override IStyleData GetParts(PropInfo prop, MarkupStylePropItem[] items)
+        protected override IStyleData GetParts(PropInfo prop, MarkupPropItemData[] items)
         {
-            return new MarkupStyleProp(prop, items);
+            return new MarkupPropData(prop, items);
         }
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -597,9 +597,9 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
 
-        protected override IStyleData GetParts(TreeInfo tree, MarkupStylePropItem[] items)
+        protected override IStyleData GetParts(TreeInfo tree, MarkupPropItemData[] items)
         {
-            return new MarkupStyleTree(tree, items);
+            return new MarkupTreeData(tree, items);
         }
         protected sealed override EditorItem AddPrefabProperty(UIComponent parent)
         {

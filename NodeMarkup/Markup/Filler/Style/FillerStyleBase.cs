@@ -80,15 +80,15 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public virtual LodDictionaryArray<IStyleData> Calculate(MarkupFiller filler)
+        public virtual IEnumerable<IStyleData> Calculate(MarkupFiller filler)
         {
             var contours = GetContours(filler);
-            var data = new LodDictionaryArray<IStyleData>();
 
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
-                data[lod] = CalculateImpl(filler, contours, lod).ToArray();
-
-            return data;
+            {
+                foreach (var data in CalculateImpl(filler, contours, lod))
+                    yield return data;
+            }
         }
         protected virtual List<List<FillerContour.Part>> GetContours(MarkupFiller filler)
         {

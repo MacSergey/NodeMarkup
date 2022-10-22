@@ -1706,7 +1706,7 @@ underground mode</value>
     <value>Auto prop step depends on its size</value>
   </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
-    <value>Marking LOD distance</value>
+    <value>2D Marking LOD distance</value>
   </data>
   <data name="Settings_LODDistanceNetwork" xml:space="preserve">
     <value>Network LOD distance</value>
@@ -1717,7 +1717,13 @@ underground mode</value>
   <data name="Settings_LODDistanceTree" xml:space="preserve">
     <value>Tree LOD distance</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>3D Marking LOD distance</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Render</value>
   </data>
 </root>

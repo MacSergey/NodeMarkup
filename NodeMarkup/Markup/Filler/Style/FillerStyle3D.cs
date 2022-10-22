@@ -58,7 +58,7 @@ namespace NodeMarkup.Manager
         }
         protected override IEnumerable<IStyleData> CalculateImpl(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
-            if ((SupportLOD & lod) != 0)
+            if ((SupportLOD & lod) == 0)
                 yield break;
 
             foreach (var contour in contours)
@@ -68,7 +68,7 @@ namespace NodeMarkup.Manager
                 {
                     //SplitTriangles(contour, points, triangles, 2f, out var topPoints, out var topTriangles);
 
-                    yield return new MarkupStyleFillerMesh(Elevation, MarkupStyleFillerMesh.RawData.SetSide(groups, points, MaterialType.Pavement), MarkupStyleFillerMesh.RawData.SetTop(points, triangles, MaterialType));
+                    yield return new MarkupFillerMeshData(lod, Elevation, MarkupFillerMeshData.RawData.SetSide(groups, points, MaterialType.Pavement), MarkupFillerMeshData.RawData.SetTop(points, triangles, MaterialType));
 #if DEBUG
                     //if ((Settings.ShowFillerTriangulation & 2) != 0)
                     //    yield return GetTriangulationLines(topPoints, topTriangles, UnityEngine.Color.red, MaterialType.RectangleFillers);
@@ -267,7 +267,7 @@ namespace NodeMarkup.Manager
 #if DEBUG
         private IStyleData GetTriangulationLines(Vector3[] points, int[] triangles, Color32 color, MaterialType materialType)
         {
-            var dashes = new List<MarkupStylePart>();
+            var dashes = new List<MarkupPartData>();
 
             for (int i = 0; i < triangles.Length; i += 3)
             {
@@ -275,12 +275,12 @@ namespace NodeMarkup.Manager
                 var point2 = points[triangles[i + 1]];
                 var point3 = points[triangles[i + 2]];
 
-                dashes.Add(new MarkupStylePart(point1, point2, 0.05f, color, materialType));
-                dashes.Add(new MarkupStylePart(point2, point3, 0.05f, color, materialType));
-                dashes.Add(new MarkupStylePart(point3, point1, 0.05f, color, materialType));
+                dashes.Add(new MarkupPartData(point1, point2, 0.05f, color, materialType));
+                dashes.Add(new MarkupPartData(point2, point3, 0.05f, color, materialType));
+                dashes.Add(new MarkupPartData(point3, point1, 0.05f, color, materialType));
             }
 
-            return new MarkupStyleParts(dashes);
+            return new MarkupPartGroupData(MarkupLOD.NoLOD, dashes);
         }
 #endif
 
@@ -464,10 +464,13 @@ namespace NodeMarkup.Manager
                 curbTarget.MedianCurbSize.Value = MedianCurbSize;
             }
         }
-        public override LodDictionaryArray<IStyleData> Calculate(MarkupFiller filler)
+        public override IEnumerable<IStyleData> Calculate(MarkupFiller filler)
         {
             if (CurbSize == 0f && MedianCurbSize == 0f)
-                return base.Calculate(filler);
+            {
+                foreach (var data in base.Calculate(filler))
+                    yield return data;
+            }
             else
             {
                 var originalContour = filler.Contour.Parts.ToList();
@@ -481,12 +484,11 @@ namespace NodeMarkup.Manager
                         contourDatas[i]._hole = StyleHelper.SetOffset(contourDatas[i]._side, CurbSize, MedianCurbSize).FirstOrDefault();
                 }
 
-                var data = new LodDictionaryArray<IStyleData>();
-
                 foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
-                    data[lod] = Calculate(filler, contourDatas, lod).ToArray();
-
-                return data;
+                {
+                    foreach (var data in Calculate(filler, contourDatas, lod))
+                        yield return data;
+                }
             }
         }
         private IEnumerable<IStyleData> Calculate(MarkupFiller filler, CounterData[] contours, MarkupLOD lod)
@@ -503,12 +505,12 @@ namespace NodeMarkup.Manager
             {
                 foreach (var contour in contours)
                 {
-                    var meshParts = new List<MarkupStyleFillerMesh.RawData>();
+                    var meshParts = new List<MarkupFillerMeshData.RawData>();
 
                     var sidePoints = GetContourPoints(contour._side, lod, out var sideGroups);
                     if (Triangulate(sidePoints, out var triangles))
                     {
-                        meshParts.Add(MarkupStyleFillerMesh.RawData.SetSide(sideGroups, sidePoints, MaterialType.Pavement));
+                        meshParts.Add(MarkupFillerMeshData.RawData.SetSide(sideGroups, sidePoints, MaterialType.Pavement));
 
                         if (contour._hole != null)
                         {
@@ -516,7 +518,7 @@ namespace NodeMarkup.Manager
                             if (Triangulate(holePoints, out var holeTriangles))
                             {
                                 holePoints = holePoints.Select(p => p += new Vector3(0f, 0.03f, 0f)).ToArray();
-                                meshParts.Add(MarkupStyleFillerMesh.RawData.SetTop(holePoints, holeTriangles, MaterialType));
+                                meshParts.Add(MarkupFillerMeshData.RawData.SetTop(holePoints, holeTriangles, MaterialType));
                                 //var sideStartI = 0;
                                 //var sideHalfI = contour._side.Count / 2;
 
@@ -576,10 +578,10 @@ namespace NodeMarkup.Manager
                             }
                         }
 
-                        meshParts.Add(MarkupStyleFillerMesh.RawData.SetTop(sidePoints, triangles, MaterialType.Pavement));
+                        meshParts.Add(MarkupFillerMeshData.RawData.SetTop(sidePoints, triangles, MaterialType.Pavement));
                     }
 
-                    yield return new MarkupStyleFillerMesh(Elevation, meshParts.ToArray());
+                    yield return new MarkupFillerMeshData(lod, Elevation, meshParts.ToArray());
                 }
             }
         }

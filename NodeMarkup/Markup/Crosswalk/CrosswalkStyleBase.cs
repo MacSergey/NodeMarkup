@@ -52,14 +52,14 @@ namespace NodeMarkup.Manager
         }
         public virtual void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
-        public IEnumerable<MarkupStylePart> Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        public IStyleData Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
         {
             if ((SupportLOD & lod) != 0)
-                return CalculateImpl(crosswalk, lod);
+                return new MarkupPartGroupData(lod, CalculateImpl(crosswalk, lod));
             else
-                return new MarkupStyleParts();
+                return new MarkupPartGroupData(lod);
         }
-        protected abstract IEnumerable<MarkupStylePart> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod);
+        protected abstract IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod);
 
         protected FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
         {
@@ -94,7 +94,7 @@ namespace NodeMarkup.Manager
             return spaceLengthProperty;
         }
 
-        protected IEnumerable<MarkupStylePart> CalculateCroswalkPart(ITrajectory trajectory, float startT, float endT, Vector3 direction, ITrajectory[] borders, float length, float width, Color32 color)
+        protected IEnumerable<MarkupPartData> CalculateCroswalkPart(ITrajectory trajectory, float startT, float endT, Vector3 direction, ITrajectory[] borders, float length, float width, Color32 color)
         {
             var position = trajectory.Position((startT + endT) / 2);
             var partTrajectory = new StraightTrajectory(position, position + direction, false);
@@ -118,7 +118,7 @@ namespace NodeMarkup.Manager
                 var startPosition = position + direction * start;
                 var endPosition = position + direction * end;
 
-                yield return new MarkupStylePart(startPosition, endPosition, direction, width, color);
+                yield return new MarkupPartData(startPosition, endPosition, direction, width, color);
             }
 
             static float GetOffset(Intersection intersect, float offset)

@@ -43,7 +43,7 @@ namespace NodeMarkup.Manager
 
         protected ITrajectory LineTrajectory { get; private set; }
         public ITrajectory Trajectory => LineTrajectory.Copy();
-        public LodDictionaryArray<IStyleData> StyleData { get; } = new LodDictionaryArray<IStyleData>();
+        public List<IStyleData> StyleData { get; } = new List<IStyleData>();
 
         public string XmlSection => XmlName;
 
@@ -70,10 +70,13 @@ namespace NodeMarkup.Manager
 #if DEBUG_RECALCULATE
             Mod.Logger.Debug($"Recalculate line {this}");
 #endif
+            StyleData.Clear();
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
-                RecalculateStyleData(lod);
+            {
+                StyleData.AddRange(GetStyleData(lod));
+            }
         }
-        private void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = GetStyleData(lod).ToArray();
+
         protected abstract IEnumerable<IStyleData> GetStyleData(MarkupLOD lod);
 
         public bool ContainsPoint(MarkupPoint point) => PointPair.ContainsPoint(point);
@@ -579,7 +582,7 @@ namespace NodeMarkup.Manager
         public IEnumerator<ITrajectory> GetEnumerator() => Borders.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public StraightTrajectory[] GetVertex(MarkupStylePart dash)
+        public StraightTrajectory[] GetVertex(MarkupPartData dash)
         {
             var dirX = dash.Angle.Direction();
             var dirY = dirX.Turn90(true);

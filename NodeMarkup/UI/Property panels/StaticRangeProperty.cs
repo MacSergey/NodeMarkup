@@ -326,7 +326,7 @@ namespace NodeMarkup.UI
 
         protected override void AddSelectorItems()
         {
-            AddItem(AutoIndex, "Auto", NodeMarkupTextures.Atlas, NodeMarkupTextures.AutoButtonIcons);
+            AddItem(AutoIndex, NodeMarkup.Localize.StyleOption_ObjectAuto, NodeMarkupTextures.Atlas, NodeMarkupTextures.AutoButtonIcons);
             base.AddSelectorItems();
         }
 

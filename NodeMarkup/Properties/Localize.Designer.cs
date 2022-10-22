@@ -2452,11 +2452,20 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Marking LOD distance.
+        ///   Ищет локализованную строку, похожую на 2D Marking LOD distance.
         /// </summary>
         public static string Settings_LODDistanceMarking {
             get {
                 return ResourceManager.GetString("Settings_LODDistanceMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 3D Marking LOD distance.
+        /// </summary>
+        public static string Settings_LODDistanceMesh {
+            get {
+                return ResourceManager.GetString("Settings_LODDistanceMesh", resourceCulture);
             }
         }
         
@@ -2529,6 +2538,15 @@ namespace NodeMarkup {
         public static string Settings_RegularLinesModifier {
             get {
                 return ResourceManager.GetString("Settings_RegularLinesModifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Render.
+        /// </summary>
+        public static string Settings_Render {
+            get {
+                return ResourceManager.GetString("Settings_Render", resourceCulture);
             }
         }
         
@@ -3031,15 +3049,6 @@ namespace NodeMarkup {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на From clipboard.
         /// </summary>
         public static string Style_FromClipboard {
@@ -3378,6 +3387,15 @@ namespace NodeMarkup {
         public static string StyleOption_ObjectAngle {
             get {
                 return ResourceManager.GetString("StyleOption_ObjectAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Auto.
+        /// </summary>
+        public static string StyleOption_ObjectAuto {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectAuto", resourceCulture);
             }
         }
         

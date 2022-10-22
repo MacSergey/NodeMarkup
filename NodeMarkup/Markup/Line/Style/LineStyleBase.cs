@@ -216,7 +216,7 @@ namespace NodeMarkup.Manager
             if ((SupportLOD & lod) != 0 && line is MarkupRegularLine regularLine)
                 return CalculateImpl(regularLine, trajectory, lod);
             else
-                return new MarkupStyleParts();
+                return new MarkupPartGroupData(lod);
         }
         protected abstract IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod);
 
@@ -307,7 +307,7 @@ namespace NodeMarkup.Manager
             if ((SupportLOD & lod) != 0 && line is MarkupStopLine stopLine)
                 return CalculateImpl(stopLine, trajectory, lod);
             else
-                return new MarkupStyleParts();
+                return new MarkupPartGroupData(lod);
         }
         protected abstract IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);
 

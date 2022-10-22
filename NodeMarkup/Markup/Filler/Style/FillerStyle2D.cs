@@ -45,9 +45,9 @@ namespace NodeMarkup.Manager
         protected sealed override IEnumerable<IStyleData> CalculateImpl(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
             if ((SupportLOD & lod) != 0)
-                yield return new MarkupStyleParts(CalculateProcess(filler, contours, lod));
+                yield return new MarkupPartGroupData(lod, CalculateProcess(filler, contours, lod));
         }
-        protected virtual IEnumerable<MarkupStylePart> CalculateProcess(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
+        protected virtual IEnumerable<MarkupPartData> CalculateProcess(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
             var originalContour = filler.Contour.TrajectoriesProcessed.ToArray();
             var rails = GetRails(filler, originalContour).ToArray();
@@ -155,7 +155,7 @@ namespace NodeMarkup.Manager
                 yield return new PartItem(itemPos, itemDir, itemWidth, isBothDir);
             }
         }
-        protected virtual IEnumerable<MarkupStylePart> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithoutOrder(item, contours); 
+        protected virtual IEnumerable<MarkupPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithoutOrder(item, contours); 
         protected Intersection[] GetDashesIntersects(StraightTrajectory itemStraight, List<List<FillerContour.Part>> contours)
         {
             var intersectSet = new HashSet<Intersection>();
@@ -168,7 +168,7 @@ namespace NodeMarkup.Manager
             var intersects = intersectSet.OrderBy(i => i, Intersection.FirstComparer).ToArray();
             return intersects;
         }
-        protected IEnumerable<MarkupStylePart> GetDashesWithoutOrder(PartItem item, List<List<FillerContour.Part>> contours)
+        protected IEnumerable<MarkupPartData> GetDashesWithoutOrder(PartItem item, List<List<FillerContour.Part>> contours)
         {
             var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
             var intersects = GetDashesIntersects(straight, contours);
@@ -179,10 +179,10 @@ namespace NodeMarkup.Manager
                 var end = intersects[i];
                 var startPos = start.Second.Position(start.SecondT);
                 var endPos = end.Second.Position(end.SecondT);
-                yield return new MarkupStylePart(startPos, endPos, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
+                yield return new MarkupPartData(startPos, endPos, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
             }
         }
-        protected IEnumerable<MarkupStylePart> GetDashesWithOrder(PartItem item, List<List<FillerContour.Part>> contours)
+        protected IEnumerable<MarkupPartData> GetDashesWithOrder(PartItem item, List<List<FillerContour.Part>> contours)
         {
             var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
             var intersects = GetDashesIntersects(straight, contours);
@@ -202,7 +202,7 @@ namespace NodeMarkup.Manager
                 {
                     var start = item.Position + item.Direction * input;
                     var end = item.Position + item.Direction * output;
-                    yield return new MarkupStylePart(start, end, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
+                    yield return new MarkupPartData(start, end, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
                 }
             }
         }
@@ -448,7 +448,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IEnumerable<MarkupStylePart> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithOrder(item, contours);
+        protected override IEnumerable<MarkupPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithOrder(item, contours);
         protected override void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right)
         {
             left = contour.GetRail(LeftRailA, LeftRailB, RightRailA, RightRailB);

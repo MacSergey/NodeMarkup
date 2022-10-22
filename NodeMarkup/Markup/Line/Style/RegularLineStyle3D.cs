@@ -27,7 +27,7 @@ namespace NodeMarkup.Manager
 
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
-            return new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
+            return new MarkupLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
         }
 
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)

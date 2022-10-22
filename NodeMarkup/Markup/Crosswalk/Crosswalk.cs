@@ -1,6 +1,7 @@
 ﻿using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace NodeMarkup.Manager
         public Markup Markup { get; }
         public MarkupCrosswalkLine CrosswalkLine { get; }
 
-        public LodDictionary<IStyleData> StyleData { get; } = new LodDictionary<IStyleData>();
+        public List<IStyleData> StyleData { get; } = new List<IStyleData>();
         public MarkupEnterLine EnterLine { get; private set; }
 
         public PropertyValue<MarkupRegularLine> RightBorder { get; }
@@ -80,10 +81,12 @@ namespace NodeMarkup.Manager
 #if DEBUG_RECALCULATE
             Mod.Logger.Debug($"Recalculate crosswalk {this}");
 #endif
+            StyleData.Clear();
             foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
-                RecalculateStyleData(lod);
+            {
+                StyleData.Add(Style.Value.Calculate(this, lod));
+            }
         }
-        public void RecalculateStyleData(MarkupLOD lod) => StyleData[lod] = new MarkupStyleParts(Style.Value.Calculate(this, lod));
 
         public MarkupRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
 

@@ -1,6 +1,7 @@
 ﻿using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -18,7 +19,7 @@ namespace NodeMarkup.Manager
         public FillerContour Contour { get; }
 
         public PropertyValue<FillerStyle> Style { get; }
-        public LodDictionaryArray<IStyleData> StyleData { get; private set; } = new LodDictionaryArray<IStyleData>();
+        public List<IStyleData> StyleData { get; } = new List<IStyleData>();
         public bool IsMedian => Contour.IsMedian;
 
         public string XmlSection => XmlName;
@@ -46,7 +47,8 @@ namespace NodeMarkup.Manager
 #if DEBUG_RECALCULATE
             Mod.Logger.Debug($"Recalculate filler {this}");
 #endif
-            StyleData = Style.Value.Calculate(this);
+            StyleData.Clear();
+            StyleData.AddRange(Style.Value.Calculate(this));
         }
         public Dependences GetDependences() => new Dependences();
 
