@@ -4,19 +4,21 @@ using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using UnityEngine;
 
 namespace NodeMarkup.UI
 {
-    public abstract class StaticRangeProperty<ValueType, FieldType> : EditorPropertyPanel, IReusable
+    public abstract class StaticRangeProperty<ValueType, FieldType> : VariationProperty<int, IntSegmented>
         where FieldType : ComparableUITextField<ValueType>
         where ValueType : IComparable<ValueType>
     {
-        bool IReusable.InCache { get; set; }
-
-        protected BoolSegmented Selector { get; set; }
         protected FieldType FieldA { get; set; }
         protected FieldType FieldB { get; set; }
+
+        protected virtual int StaticIndex => 0;
+        protected virtual int RangeIndex => 1;
 
         public event Action<ValueType, ValueType> OnValueChanged;
 
@@ -182,10 +184,6 @@ namespace NodeMarkup.UI
 
         public StaticRangeProperty()
         {
-            Selector = Content.AddUIComponent<BoolSegmented>();
-            Selector.SetDefaultStyle();
-            Selector.name = nameof(Selector);
-
             FieldA = Content.AddUIComponent<FieldType>();
             FieldA.SetDefaultStyle();
             FieldA.name = nameof(FieldA);
@@ -198,18 +196,10 @@ namespace NodeMarkup.UI
             FieldB.OnValueChanged += ValueBChanged;
         }
 
-        public override void Init()
+        protected override void AddSelectorItems()
         {
-            Selector.AutoButtonSize = false;
-            Selector.ButtonWidth = 30f;
-            Selector.SetDefaultStyle();
-            Selector.StopLayout();
-            Selector.AddItem(false, label: NodeMarkup.Localize.StyleOption_ObjectStatic, iconAtlas: NodeMarkupTextures.Atlas, iconSprite: NodeMarkupTextures.SingleButtonIcons);
-            Selector.AddItem(true, label: NodeMarkup.Localize.StyleOption_ObjectRange, iconAtlas: NodeMarkupTextures.Atlas, iconSprite: NodeMarkupTextures.RangeButtonIcons);
-            Selector.StartLayout();
-            Selector.OnSelectObjectChanged += SelectorChanged;
-
-            base.Init();
+            AddItem(StaticIndex, NodeMarkup.Localize.StyleOption_ObjectStatic, NodeMarkupTextures.Atlas, NodeMarkupTextures.SingleButtonIcons);
+            AddItem(RangeIndex, NodeMarkup.Localize.StyleOption_ObjectRange, NodeMarkupTextures.Atlas, NodeMarkupTextures.RangeButtonIcons);
         }
 
         public override void DeInit()
@@ -233,45 +223,56 @@ namespace NodeMarkup.UI
 
             FieldA.SetDefault();
             FieldB.SetDefault();
-            Selector.DeInit();
         }
 
         public void SetValues(ValueType valueA, ValueType valueB)
         {
             FieldA.Value = valueA;
             FieldB.Value = valueB;
-            Selector.SelectedObject = valueA.CompareTo(valueB) != 0;
+            SelectedObject = valueA.CompareTo(valueB) == 0 ? StaticIndex : RangeIndex;
             Refresh();
         }
 
-        private void SelectorChanged(bool value)
+        protected override void SelectorChangedImpl(int index)
         {
-            Refresh();
-            if(Selector.SelectedObject)
-                OnValueChanged?.Invoke(FieldA.Value, FieldB.Value);
-            else
+            if (index == StaticIndex)
                 OnValueChanged?.Invoke(FieldA.Value, FieldA.Value);
+            else if (index == RangeIndex)
+                OnValueChanged?.Invoke(FieldA.Value, FieldB.Value);
         }
+
         private void ValueAChanged(ValueType value)
         {
             Refresh();
-            if (Selector.SelectedObject)
-                OnValueChanged?.Invoke(value, FieldB.Value);
-            else
+            if (SelectedObject == StaticIndex)
                 OnValueChanged?.Invoke(value, value);
+            else if (SelectedObject == RangeIndex)
+                OnValueChanged?.Invoke(value, FieldB.Value);
         }
         private void ValueBChanged(ValueType value)
         {
             Refresh();
-            if (Selector.SelectedObject)
-                OnValueChanged?.Invoke(FieldA.Value, value);
-            else
+            if (SelectedObject == StaticIndex)
                 OnValueChanged?.Invoke(FieldA.Value, FieldA.Value);
+            else if (SelectedObject == RangeIndex)
+                OnValueChanged?.Invoke(FieldA.Value, value);
         }
 
-        private void Refresh()
+        protected override void RefreshImpl()
         {
-            if (Selector.SelectedObject)
+            if (SelectedObject == StaticIndex)
+            {
+                FieldB.isVisible = false;
+                FieldA.width = FieldWidth;
+
+                FieldA.CheckMin = CheckMin;
+                FieldA.CheckMax = CheckMax;
+                FieldA.MinValue = MinValue;
+                FieldA.MaxValue = MaxValue;
+                FieldA.CyclicalValue = CyclicalValue;
+                FieldA.Value = FieldA.Value;
+            }
+            else if (SelectedObject == RangeIndex)
             {
                 FieldB.isVisible = true;
                 FieldA.width = (FieldWidth - Content.autoLayoutPadding.horizontal) * 0.5f;
@@ -310,22 +311,57 @@ namespace NodeMarkup.UI
                     FieldA.Value = FieldA.Value;
                 }
             }
-            else
-            {
-                FieldB.isVisible = false;
-                FieldA.width = FieldWidth;
-
-                FieldA.CheckMin = CheckMin;
-                FieldA.CheckMax = CheckMax;
-                FieldA.MinValue = MinValue;
-                FieldA.MaxValue = MaxValue;
-                FieldA.CyclicalValue = CyclicalValue;
-                FieldA.Value = FieldA.Value;
-            }
-
-            Content.Refresh();
         }
     }
 
-    public class FloatStaticRangeProperty : StaticRangeProperty<float, FloatUITextField> {}
+    public abstract class StaticRangeAutoProperty<ValueType, FieldType> : StaticRangeProperty<ValueType, FieldType>
+        where FieldType : ComparableUITextField<ValueType>
+        where ValueType : IComparable<ValueType>
+    {
+        public event Action OnAutoValue;
+
+        protected virtual int AutoIndex => 0;
+        protected override int StaticIndex => 1;
+        protected override int RangeIndex => 2;
+
+        protected override void AddSelectorItems()
+        {
+            AddItem(AutoIndex, NodeMarkup.Localize.StyleOption_ObjectAuto, NodeMarkupTextures.Atlas, NodeMarkupTextures.AutoButtonIcons);
+            base.AddSelectorItems();
+        }
+
+        public void SetAuto()
+        {
+            FieldA.Value = default;
+            FieldB.Value = default;
+            SelectedObject = AutoIndex;
+            Refresh();
+        }
+        protected override void SelectorChangedImpl(int index)
+        {
+            if (index == AutoIndex)
+                OnAutoValue?.Invoke();
+            else 
+                base.SelectorChangedImpl(index);
+        }
+
+        protected override void RefreshImpl()
+        {
+            if(SelectedObject == AutoIndex)
+            {
+                FieldB.isVisible = false;
+                FieldA.isEnabled = false;
+                FieldA.width = FieldWidth;
+                FieldA.Value = FieldA.Value;
+            }
+            else
+            {
+                FieldA.isEnabled = true;
+                base.RefreshImpl();
+            }
+        }
+    }
+
+    public class FloatStaticRangeProperty : StaticRangeProperty<float, FloatUITextField> { }
+    public class FloatStaticRangeAutoProperty : StaticRangeAutoProperty<float, FloatUITextField> { }
 }

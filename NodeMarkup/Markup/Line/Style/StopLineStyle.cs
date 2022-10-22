@@ -11,15 +11,16 @@ namespace NodeMarkup.Manager
     public class SolidStopLineStyle : StopLineStyle, IStopLine
     {
         public override StyleType Type => StyleType.StopLineSolid;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
         public SolidStopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
-            return new MarkupStyleParts(StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes));
+            return new MarkupPartGroupData(lod, StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes));
 
-            MarkupStylePart CalculateDashes(ITrajectory dashTrajectory) => StyleHelper.CalculateSolidPart(dashTrajectory, offset, offset, Width, Color);
+            MarkupPartData CalculateDashes(ITrajectory dashTrajectory) => StyleHelper.CalculateSolidPart(dashTrajectory, offset, offset, Width, Color);
         }
 
         public override StopLineStyle CopyLineStyle() => new SolidStopLineStyle(Color, Width);
@@ -27,6 +28,7 @@ namespace NodeMarkup.Manager
     public class DoubleSolidStopLineStyle : SolidStopLineStyle, IStopLine, IDoubleLine
     {
         public override StyleType Type => StyleType.StopLineDoubleSolid;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
         public PropertyValue<float> Offset { get; }
 
@@ -34,15 +36,15 @@ namespace NodeMarkup.Manager
         {
             Offset = GetOffsetProperty(offset);
         }
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var offsetLeft = offsetNormal * (Width / 2);
             var offsetRight = offsetNormal * (Width / 2 + 2 * Offset);
 
-            return new MarkupStyleParts(StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes));
+            return new MarkupPartGroupData(lod, StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes));
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory)
+            IEnumerable<MarkupPartData> CalculateDashes(ITrajectory dashTrajectory)
             {
                 yield return StyleHelper.CalculateSolidPart(dashTrajectory, offsetLeft, offsetLeft, Width, Color);
                 yield return StyleHelper.CalculateSolidPart(dashTrajectory, offsetRight, offsetRight, Width, Color);
@@ -79,6 +81,7 @@ namespace NodeMarkup.Manager
     public class DashedStopLineStyle : StopLineStyle, IStopLine, IDashedLine
     {
         public override StyleType Type { get; } = StyleType.StopLineDashed;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
@@ -89,15 +92,15 @@ namespace NodeMarkup.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Width, DashLength))
-                return new MarkupStyleParts();
+                return new MarkupPartGroupData(lod);
 
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
-            return new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes));
+            return new MarkupPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes));
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
+            IEnumerable<MarkupPartData> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
             {
                 yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offset, offset, Width, Color);
             }
@@ -137,6 +140,7 @@ namespace NodeMarkup.Manager
     public class DoubleDashedStopLineStyle : DashedStopLineStyle, IStopLine, IDoubleLine
     {
         public override StyleType Type { get; } = StyleType.StopLineDoubleDashed;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
         public PropertyValue<float> Offset { get; }
         public DoubleDashedStopLineStyle(Color32 color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
@@ -151,18 +155,18 @@ namespace NodeMarkup.Manager
                 doubleTarget.Offset.Value = Offset;
         }
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Width, DashLength))
-                return new MarkupStyleParts();
+                return new MarkupPartGroupData(lod);
 
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var offsetLeft = offsetNormal * (Width / 2);
             var offsetRight = offsetNormal * (Width / 2 + 2 * Offset);
 
-            return new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes));
+            return new MarkupPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes));
 
-            IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
+            IEnumerable<MarkupPartData> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
             {
                 yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offsetLeft, offsetLeft, Width, Color);
                 yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offsetRight, offsetRight, Width, Color);
@@ -189,6 +193,7 @@ namespace NodeMarkup.Manager
     public class SolidAndDashedStopLineStyle : StopLineStyle, IStopLine, IDoubleLine, IDashedLine
     {
         public override StyleType Type => StyleType.StopLineSolidAndDashed;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
         public PropertyValue<float> Offset { get; }
         public PropertyValue<float> DashLength { get; }
@@ -202,22 +207,22 @@ namespace NodeMarkup.Manager
         }
 
 
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var solidOffset = offsetNormal * (Width / 2);
             var dashedOffset = offsetNormal * (Width / 2 + 2 * Offset);
 
-            var dashes = new List<MarkupStylePart>();
+            var dashes = new List<MarkupPartData>();
             dashes.AddRange(StyleHelper.CalculateSolid(trajectory, lod, CalculateSolidDash));
             if (CheckDashedLod(lod, Width, DashLength))
                 dashes.AddRange(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash));
 
-            return new MarkupStyleParts(dashes);
+            return new MarkupPartGroupData(lod, dashes);
 
-            MarkupStylePart CalculateSolidDash(ITrajectory lineTrajectory) => StyleHelper.CalculateSolidPart(lineTrajectory, solidOffset, solidOffset, Width, Color);
+            MarkupPartData CalculateSolidDash(ITrajectory lineTrajectory) => StyleHelper.CalculateSolidPart(lineTrajectory, solidOffset, solidOffset, Width, Color);
 
-            IEnumerable<MarkupStylePart> CalculateDashedDash(ITrajectory lineTrajectory, float startT, float endT)
+            IEnumerable<MarkupPartData> CalculateDashedDash(ITrajectory lineTrajectory, float startT, float endT)
             {
                 yield return StyleHelper.CalculateDashedPart(lineTrajectory, startT, endT, DashLength, dashedOffset, dashedOffset, Width, Color);
             }
@@ -263,6 +268,7 @@ namespace NodeMarkup.Manager
     public class SharkTeethStopLineStyle : StopLineStyle, IColorStyle, ISharkLine
     {
         public override StyleType Type { get; } = StyleType.StopLineSharkTeeth;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override float LodWidth => 0.5f;
 
         public PropertyValue<float> Base { get; }
@@ -274,19 +280,19 @@ namespace NodeMarkup.Manager
             Height = GetHeightProperty(height);
             Space = GetSpaceProperty(space);
         }
-        protected override IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Base, Height))
-                return new MarkupStyleParts();
+                return new MarkupPartGroupData(lod);
 
-            var styleData = new MarkupStyleParts(StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes));
+            var styleData = new MarkupPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes));
             foreach (var dash in styleData)
                 dash.MaterialType = MaterialType.Triangle;
 
             return styleData;
         }
 
-        private IEnumerable<MarkupStylePart> CalculateDashes(ITrajectory lineTrajectory, float startT, float endT)
+        private IEnumerable<MarkupPartData> CalculateDashes(ITrajectory lineTrajectory, float startT, float endT)
         {
             yield return StyleHelper.CalculateDashedPart(lineTrajectory, startT, endT, Base, Height / -2, Height, Color);
         }
@@ -343,7 +349,7 @@ namespace NodeMarkup.Manager
                 line3DTarget.Elevation.Value = Elevation;
         }
 
-        protected override IStyleData Calculate(MarkupStopLine line, ITrajectory trajectory, MarkupLOD lod) => new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
+        protected override IStyleData CalculateImpl(MarkupStopLine line, ITrajectory trajectory, MarkupLOD lod) => new MarkupLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
 
         public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -367,6 +373,7 @@ namespace NodeMarkup.Manager
     public class PavementStopLineStyle : StopLine3DStyle
     {
         public override StyleType Type { get; } = StyleType.StopLinePavement;
+        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
         public PavementStopLineStyle(float width, float elevation) : base(width, elevation) { }

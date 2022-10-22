@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using ObjectId = NodeMarkup.Utilities.ObjectId;
 using static ColossalFramework.Math.VectorUtils;
+using static NodeMarkup.Utilities.MarkupFillerMeshData;
 
 namespace NodeMarkup.Manager
 {
@@ -67,7 +68,7 @@ namespace NodeMarkup.Manager
 
 
         public bool NeedRecalculateDrawData { get; private set; }
-        public LodDictionaryArray<IDrawData> DrawData { get; } = new LodDictionaryArray<IDrawData>();
+        public MarkupRenderData DrawData { get; } = new MarkupRenderData();
 
         private bool _needSetOrder;
         public bool NeedSetOrder
@@ -401,26 +402,30 @@ namespace NodeMarkup.Manager
         {
             DrawData.Clear();
 
-            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+            var dashesLOD0 = new List<MarkupPartData>();
+            var dashesLOD1 = new List<MarkupPartData>();
+
+            Seporate(Lines.SelectMany(l => l.StyleData));
+            Seporate(Fillers.SelectMany(f => f.StyleData));
+            Seporate(Crosswalks.SelectMany(c => c.StyleData));
+
+            DrawData[MarkupLODType.Dash][MarkupLOD.LOD0].AddRange(MarkupPartsBatchData.FromDashes(dashesLOD0));
+            DrawData[MarkupLODType.Dash][MarkupLOD.LOD1].AddRange(MarkupPartsBatchData.FromDashes(dashesLOD1));
+
+            void Seporate(IEnumerable<IStyleData> stylesData)
             {
-                var dashes = new List<MarkupStylePart>();
-                var drawData = new List<IDrawData>();
-
-                Seporate(Lines.SelectMany(l => l.StyleData[lod]));
-                Seporate(Fillers.SelectMany(f => f.StyleData[lod]));
-                Seporate(Crosswalks.Select(c => c.StyleData[lod]));
-
-                drawData.AddRange(RenderBatch.FromDashes(dashes));
-                DrawData[lod] = drawData.ToArray();
-
-                void Seporate(IEnumerable<IStyleData> stylesData)
+                foreach (var styleData in stylesData)
                 {
-                    foreach (var styleData in stylesData)
+                    if (styleData is IEnumerable<MarkupPartData> styleDashes)
                     {
-                        if (styleData is IEnumerable<MarkupStylePart> styleDashes)
-                            dashes.AddRange(styleDashes);
-                        else if (styleData != null)
-                            drawData.AddRange(styleData.GetDrawData());
+                        if(styleData.LOD == MarkupLOD.LOD0)
+                            dashesLOD0.AddRange(styleDashes);
+                        else if (styleData.LOD == MarkupLOD.LOD1)
+                            dashesLOD1.AddRange(styleDashes);
+                    }
+                    else if (styleData != null)
+                    {
+                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
                     }
                 }
             }

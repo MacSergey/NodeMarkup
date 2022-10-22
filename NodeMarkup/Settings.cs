@@ -27,6 +27,11 @@ namespace NodeMarkup
 
         public static SavedFloat RenderDistance { get; } = new SavedFloat(nameof(RenderDistance), SettingsFile, 700f, true);
         public static SavedFloat LODDistance { get; } = new SavedFloat(nameof(LODDistance), SettingsFile, 300f, true);
+        public static SavedFloat MeshLODDistance { get; } = new SavedFloat(nameof(MeshLODDistance), SettingsFile, 300f, true);
+        public static SavedFloat PropLODDistance { get; } = new SavedFloat(nameof(PropLODDistance), SettingsFile, 500f, true);
+        public static SavedFloat TreeLODDistance { get; } = new SavedFloat(nameof(TreeLODDistance), SettingsFile, 500f, true);
+        public static SavedFloat NetworkLODDistance { get; } = new SavedFloat(nameof(NetworkLODDistance), SettingsFile, 500f, true);
+
         public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool LevelCrossingUnderMarking { get; } = new SavedBool(nameof(LevelCrossingUnderMarking), SettingsFile, true, true);
@@ -107,30 +112,40 @@ namespace NodeMarkup
         #region DISPLAY&USAGE
         private void AddGeneral(UIAdvancedHelper helper, out OptionPanelWithLabelData undergroundOptions)
         {
-            var group = helper.AddGroup(Localize.Settings_DisplayAndUsage);
+            var renderGroup = helper.AddGroup(Localize.Settings_Render);
 
-            AddFloatField(group, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
-            AddFloatField(group, Localize.Settings_LODDistance, LODDistance, 300f, 0f);
-            AddCheckBox(group, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
-            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
-            AddCheckBox(group, Localize.Settings_RailUnderMarking, RailUnderMarking);
-            AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
-            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
-            AddCheckBox(group, Localize.Settings_LevelCrossingUnderMarking, LevelCrossingUnderMarking);
-            AddLabel(group, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
-            AddLabel(group, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
-            AddToolButton<NodeMarkupTool, NodeMarkupButton>(group);
-            undergroundOptions = AddCheckboxPanel(group, Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, NodeMarkupTool.EnterUndergroundShortcut, NodeMarkupTool.ExitUndergroundShortcut) });
-            AddCheckBox(group, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
-            AddCheckBox(group, Localize.Settings_ShowPaneltips, ShowPanelTip);
-            AddCheckBox(group, Localize.Settings_HideStreetName, HideStreetName);
+            AddFloatField(renderGroup, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
+            AddFloatField(renderGroup, Localize.Settings_LODDistanceMarking, LODDistance, 300f, 0f);
+            AddFloatField(renderGroup, Localize.Settings_LODDistanceMesh, MeshLODDistance, 300f, 0f);
+            AddFloatField(renderGroup, Localize.Settings_LODDistanceNetwork, NetworkLODDistance, 500f, 0f);
+            AddFloatField(renderGroup, Localize.Settings_LODDistanceProp, PropLODDistance, 500f, 0f);
+            AddFloatField(renderGroup, Localize.Settings_LODDistanceTree, TreeLODDistance, 500f, 0f);
+
+
+            var displayAndUsageGroup = helper.AddGroup(Localize.Settings_DisplayAndUsage);
+
+            AddCheckBox(displayAndUsageGroup, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
+            AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
+            AddCheckBox(displayAndUsageGroup, Localize.Settings_RailUnderMarking, RailUnderMarking);
+            AddLabel(displayAndUsageGroup, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
+            AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
+            AddCheckBox(displayAndUsageGroup, Localize.Settings_LevelCrossingUnderMarking, LevelCrossingUnderMarking);
+            AddLabel(displayAndUsageGroup, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
+            AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
+            AddToolButton<NodeMarkupTool, NodeMarkupButton>(displayAndUsageGroup);
+            undergroundOptions = AddCheckboxPanel(displayAndUsageGroup, Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, NodeMarkupTool.EnterUndergroundShortcut, NodeMarkupTool.ExitUndergroundShortcut) });
+            AddCheckBox(displayAndUsageGroup, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
+            AddCheckBox(displayAndUsageGroup, Localize.Settings_ShowPaneltips, ShowPanelTip);
+            AddCheckBox(displayAndUsageGroup, Localize.Settings_HideStreetName, HideStreetName);
 
             UIPanel intensityField = null;
-            AddCheckBox(group, Localize.Settings_IlluminationAtNight, IlluminationAtNight, OnIlluminationChanged);
-            intensityField = AddIntField(group, Localize.Settings_IlluminationIntensity, IlluminationIntensity, 10, 1, 30, padding: 25);
+            AddCheckBox(displayAndUsageGroup, Localize.Settings_IlluminationAtNight, IlluminationAtNight, OnIlluminationChanged);
+            intensityField = AddIntField(displayAndUsageGroup, Localize.Settings_IlluminationIntensity, IlluminationIntensity, 10, 1, 30, padding: 25);
             OnIlluminationChanged();
 
+
             var gameplayGroup = helper.AddGroup(Localize.Settings_Gameplay);
+
             AddCheckboxPanel(gameplayGroup, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
             AddCheckBox(gameplayGroup, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
             AddCheckBox(gameplayGroup, Localize.Settings_QuickBorderSetup, QuickBorderSetup);

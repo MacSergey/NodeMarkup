@@ -157,9 +157,6 @@ namespace NodeMarkup.Manager
             if (data.m_nextInstance != ushort.MaxValue)
                 return;
 
-            //if ((cameraInfo.m_layerMask & (3 << 24)) == 0)
-            //    return;
-
             if (!TryGetMarkup(id, out TypeMarkup markup))
                 return;
 
@@ -168,15 +165,8 @@ namespace NodeMarkup.Manager
 
             bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
 
-            if (cameraInfo.CheckRenderDistance(data.m_position, Settings.LODDistance))
-                Render(cameraInfo, markup, data, MarkupLOD.LOD0, infoView);
-            else if (cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
-                Render(cameraInfo, markup, data, MarkupLOD.LOD1, infoView);
-        }
-        private void Render(RenderManager.CameraInfo cameraInfo, TypeMarkup markup, RenderManager.Instance data, MarkupLOD lod, bool infoView)
-        {
-            foreach (var item in markup.DrawData[lod])
-                item.Draw(cameraInfo, data, infoView);
+            foreach(var drawData in markup.DrawData.Values)
+                drawData.Render(cameraInfo, data, infoView);
         }
 
         public void Remove(ushort id) => Markups.Remove(id);

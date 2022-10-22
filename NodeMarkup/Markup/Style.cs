@@ -88,6 +88,7 @@ namespace NodeMarkup.Manager
         public Action OnStyleChanged { private get; set; }
         public string XmlSection => XmlName;
         public abstract StyleType Type { get; }
+        public abstract MarkupLOD SupportLOD { get; }
 
         protected virtual void StyleChanged() => OnStyleChanged?.Invoke();
 

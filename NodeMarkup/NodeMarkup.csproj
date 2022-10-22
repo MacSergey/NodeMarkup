@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.11.0.35</AssemblyVersion>
+    <AssemblyVersion>1.11.0.46</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -54,6 +54,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\ButtonIcons\AutoButtonIcons.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ButtonIcons\AutoButtonIcons.png" />
     <EmbeddedResource Include="Resources\ListItem\ListItemBackground.png" />
     <EmbeddedResource Include="Resources\SharkTooth.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesSteamBackground.png" />

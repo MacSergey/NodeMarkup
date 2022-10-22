@@ -211,8 +211,14 @@ namespace NodeMarkup.Manager
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod) => line is MarkupRegularLine regularLine ? Calculate(regularLine, trajectory, lod) : new MarkupStyleParts();
-        protected abstract IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod);
+        public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
+        {
+            if ((SupportLOD & lod) != 0 && line is MarkupRegularLine regularLine)
+                return CalculateImpl(regularLine, trajectory, lod);
+            else
+                return new MarkupPartGroupData(lod);
+        }
+        protected abstract IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod);
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
@@ -296,8 +302,14 @@ namespace NodeMarkup.Manager
 
         public StopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod) => line is MarkupStopLine stopLine ? Calculate(stopLine, trajectory, lod) : new MarkupStyleParts();
-        protected abstract IStyleData Calculate(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);
+        public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
+        {
+            if ((SupportLOD & lod) != 0 && line is MarkupStopLine stopLine)
+                return CalculateImpl(stopLine, trajectory, lod);
+            else
+                return new MarkupPartGroupData(lod);
+        }
+        protected abstract IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {

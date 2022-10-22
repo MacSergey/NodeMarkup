@@ -38,5 +38,7 @@ namespace NodeMarkup.Manager
     public interface IStyleData
     {
         IEnumerable<IDrawData> GetDrawData();
+        MarkupLOD LOD { get; }
+        MarkupLODType LODType { get; }
     }
 }

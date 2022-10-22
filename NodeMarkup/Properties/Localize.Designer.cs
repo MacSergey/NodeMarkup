@@ -2452,6 +2452,51 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на 2D Marking LOD distance.
+        /// </summary>
+        public static string Settings_LODDistanceMarking {
+            get {
+                return ResourceManager.GetString("Settings_LODDistanceMarking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 3D Marking LOD distance.
+        /// </summary>
+        public static string Settings_LODDistanceMesh {
+            get {
+                return ResourceManager.GetString("Settings_LODDistanceMesh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Network LOD distance.
+        /// </summary>
+        public static string Settings_LODDistanceNetwork {
+            get {
+                return ResourceManager.GetString("Settings_LODDistanceNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Prop LOD distance.
+        /// </summary>
+        public static string Settings_LODDistanceProp {
+            get {
+                return ResourceManager.GetString("Settings_LODDistanceProp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Tree LOD distance.
+        /// </summary>
+        public static string Settings_LODDistanceTree {
+            get {
+                return ResourceManager.GetString("Settings_LODDistanceTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Quick crosswalk borders setup.
         /// </summary>
         public static string Settings_QuickBorderSetup {
@@ -2493,6 +2538,15 @@ namespace NodeMarkup {
         public static string Settings_RegularLinesModifier {
             get {
                 return ResourceManager.GetString("Settings_RegularLinesModifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Render.
+        /// </summary>
+        public static string Settings_Render {
+            get {
+                return ResourceManager.GetString("Settings_Render", resourceCulture);
             }
         }
         
@@ -3333,6 +3387,15 @@ namespace NodeMarkup {
         public static string StyleOption_ObjectAngle {
             get {
                 return ResourceManager.GetString("StyleOption_ObjectAngle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Auto.
+        /// </summary>
+        public static string StyleOption_ObjectAuto {
+            get {
+                return ResourceManager.GetString("StyleOption_ObjectAuto", resourceCulture);
             }
         }
         

@@ -12,6 +12,8 @@ namespace NodeMarkup.Manager
         protected abstract MaterialType MaterialType { get; }
         public PropertyValue<float> Elevation { get; }
 
+        public override bool CanOverlap => true;
+
         public RegularLine3DStyle(float width, float elevation) : base(default, width)
         {
             Elevation = GetElevationProperty(elevation);
@@ -23,7 +25,10 @@ namespace NodeMarkup.Manager
                 line3DTarget.Elevation.Value = Elevation;
         }
 
-        protected override IStyleData Calculate(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod) => new MarkupStyleLineMesh(trajectory, Width, Elevation, MaterialType.Pavement);
+        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        {
+            return new MarkupLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
+        }
 
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -48,6 +53,7 @@ namespace NodeMarkup.Manager
     public class PavementLineStyle : RegularLine3DStyle
     {
         public override StyleType Type { get; } = StyleType.LinePavement;
+        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
         public PavementLineStyle(float width, float elevation) : base(width, elevation) { }
