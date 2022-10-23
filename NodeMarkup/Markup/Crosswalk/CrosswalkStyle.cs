@@ -79,8 +79,14 @@ namespace NodeMarkup.Manager
 
         protected FloatPropertyPanel AddOffsetBeforeProperty(CustomCrosswalkStyle customStyle, UIComponent parent)
         {
-            var offsetBeforeProperty = AddOffsetProperty(parent, nameof(customStyle.OffsetBefore));
+            var offsetBeforeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(customStyle.OffsetBefore));
             offsetBeforeProperty.Text = Localize.StyleOption_OffsetBefore;
+            offsetBeforeProperty.Format = Localize.NumberFormat_Meter;
+            offsetBeforeProperty.UseWheel = true;
+            offsetBeforeProperty.WheelStep = 0.1f;
+            offsetBeforeProperty.CheckMin = true;
+            offsetBeforeProperty.WheelTip = Settings.ShowToolTip;
+            offsetBeforeProperty.Init();
             offsetBeforeProperty.Value = customStyle.OffsetBefore;
             offsetBeforeProperty.OnValueChanged += (float value) => customStyle.OffsetBefore.Value = value;
 
@@ -88,35 +94,20 @@ namespace NodeMarkup.Manager
         }
         protected FloatPropertyPanel AddOffsetAfterProperty(CustomCrosswalkStyle customStyle, UIComponent parent)
         {
-            var offsetAfterProperty = AddOffsetProperty(parent, nameof(customStyle.OffsetAfter));
+            var offsetAfterProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(customStyle.OffsetAfter));
             offsetAfterProperty.Text = Localize.StyleOption_OffsetAfter;
+            offsetAfterProperty.Format = Localize.NumberFormat_Meter;
+            offsetAfterProperty.UseWheel = true;
+            offsetAfterProperty.WheelStep = 0.1f;
+            offsetAfterProperty.CheckMin = true;
+            offsetAfterProperty.WheelTip = Settings.ShowToolTip;
+            offsetAfterProperty.Init();
             offsetAfterProperty.Value = customStyle.OffsetAfter;
             offsetAfterProperty.OnValueChanged += (float value) => customStyle.OffsetAfter.Value = value;
 
             return offsetAfterProperty;
         }
-        protected FloatPropertyPanel AddOffsetBetweenProperty(IDoubleCrosswalk doubleStyle, UIComponent parent)
-        {
-            var offsetAfterProperty = AddOffsetProperty(parent, nameof(doubleStyle.Offset), 0.1f);
-            offsetAfterProperty.Text = Localize.StyleOption_OffsetBetween;
-            offsetAfterProperty.Value = doubleStyle.Offset;
-            offsetAfterProperty.OnValueChanged += (float value) => doubleStyle.Offset.Value = value;
 
-            return offsetAfterProperty;
-        }
-        protected FloatPropertyPanel AddOffsetProperty(UIComponent parent, string name, float minValue = 0f)
-        {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, name);
-            offsetProperty.Format = Localize.NumberFormat_Meter;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = minValue;
-            offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.Init();
-
-            return offsetProperty;
-        }
         protected FloatPropertyPanel AddLineWidthProperty(ILinedCrosswalk linedStyle, UIComponent parent)
         {
             var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(linedStyle.LineWidth));
@@ -528,10 +519,25 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            var offsetBetween = AddOffsetBetweenProperty(this, parent);
-            if (parent.Find(nameof(OffsetBefore)) is UIComponent offsetBefore)
-                offsetBetween.zOrder = offsetBefore.zOrder + 1;
+            var offsetBetween = AddOffsetBetweenProperty(parent);
             components.Add(offsetBetween);
+        }
+
+        protected FloatPropertyPanel AddOffsetBetweenProperty(UIComponent parent)
+        {
+            var offsetBetweenProperty = ComponentPool.GetAfter<FloatPropertyPanel>(parent, nameof(OffsetBefore), nameof(Offset));
+            offsetBetweenProperty.Text = Localize.StyleOption_OffsetBetween;
+            offsetBetweenProperty.Format = Localize.NumberFormat_Meter;
+            offsetBetweenProperty.UseWheel = true;
+            offsetBetweenProperty.WheelStep = 0.1f;
+            offsetBetweenProperty.CheckMin = true;
+            offsetBetweenProperty.MinValue = 0.1f;
+            offsetBetweenProperty.WheelTip = Settings.ShowToolTip;
+            offsetBetweenProperty.Init();
+            offsetBetweenProperty.Value = Offset;
+            offsetBetweenProperty.OnValueChanged += (float value) => Offset.Value = value;
+
+            return offsetBetweenProperty;
         }
 
         public override XElement ToXml()

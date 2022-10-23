@@ -6,6 +6,7 @@ using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -71,27 +72,16 @@ namespace NodeMarkup.Manager
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddPrefabProperty(parent));
 
-            var probabilityProperty = AddProbabilityProperty(parent);
-            var stepProperty = AddStepProperty(parent);
-            var angleProperty = AddAngleRangeProperty(parent);
-            var tiltProperty = AddTiltRangeProperty(parent);
-            var slopeProperty = AddSlopeRangeProperty(parent);
-            var shiftProperty = AddShiftProperty(parent);
-            var elevationProperty = AddElevationProperty(parent);
-            var scaleProperty = AddScaleRangeProperty(parent);
-            var offsetBeforeProperty = AddOffsetBeforeProperty(parent);
-            var offsetAfterProperty = AddOffsetAfterProperty(parent);
-
-            components.Add(probabilityProperty);
-            components.Add(stepProperty);
-            components.Add(angleProperty);
-            components.Add(tiltProperty);
-            components.Add(slopeProperty);
-            components.Add(shiftProperty);
-            components.Add(elevationProperty);
-            components.Add(scaleProperty);
-            components.Add(offsetBeforeProperty);
-            components.Add(offsetAfterProperty);
+            components.Add(AddProbabilityProperty(parent));
+            components.Add(AddStepProperty(parent));
+            components.Add(AddAngleRangeProperty(parent));
+            components.Add(AddTiltRangeProperty(parent));
+            components.Add(AddSlopeRangeProperty(parent));
+            components.Add(AddShiftProperty(parent));
+            components.Add(AddElevationProperty(parent));
+            components.Add(AddScaleRangeProperty(parent));
+            components.Add(AddOffsetBeforeProperty(parent));
+            components.Add(AddOffsetAfterProperty(parent));
         }
 
         protected abstract EditorItem AddPrefabProperty(UIComponent parent);
@@ -536,18 +526,10 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
-            var colorOption = AddColorOptionProperty(parent);
-            var color = AddColorProperty(parent);
-            components.Add(colorOption);
-            components.Add(color);
+            components.Add(AddColorOptionProperty(parent));
+            components.Add(AddColorProperty(parent));
+            ColorOptionChanged(parent, ColorOption);
 
-            colorOption.OnSelectObjectChanged += ColorOptionChanged;
-            ColorOptionChanged(ColorOption);
-
-            void ColorOptionChanged(ColorOptionEnum option)
-            {
-                color.isVisible = (option == ColorOptionEnum.Custom);
-            }
         }
         protected PropColorPropertyPanel AddColorOptionProperty(UIComponent parent)
         {
@@ -556,9 +538,19 @@ namespace NodeMarkup.Manager
             colorOptionProperty.UseWheel = true;
             colorOptionProperty.Init();
             colorOptionProperty.SelectedObject = ColorOption;
-            colorOptionProperty.OnSelectObjectChanged += (value) => ColorOption.Value = value;
+            colorOptionProperty.OnSelectObjectChanged += (value) =>
+            {
+                ColorOption.Value = value;
+                ColorOptionChanged(parent, value);
+            };
             return colorOptionProperty;
         }
+        protected void ColorOptionChanged(UIComponent parent, ColorOptionEnum value)
+        {
+            if (parent.Find<ColorAdvancedPropertyPanel>(nameof(Color)) is ColorAdvancedPropertyPanel colorProperty)
+                colorProperty.isVisible = (value == ColorOptionEnum.Custom);
+        }
+
         protected ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent)
         {
             var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(ColorOption), nameof(Color));

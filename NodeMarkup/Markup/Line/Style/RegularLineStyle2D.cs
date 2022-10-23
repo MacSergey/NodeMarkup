@@ -468,26 +468,14 @@ namespace NodeMarkup.Manager
             components.Add(AddBaseProperty(this, parent));
             components.Add(AddHeightProperty(this, parent));
             components.Add(AddSpaceProperty(this, parent));
-            var angle = AddAngleProperty(parent);
-            components.Add(angle);
+            components.Add(AddAngleProperty(parent));
+
             if (!isTemplate)
-            {
-                var invertButton = AddInvertProperty(parent);
-                components.Add(invertButton);
-
-                invertButton.OnButtonClick += OnButtonClick;
-
-                void OnButtonClick()
-                {
-                    Invert.Value = !Invert;
-                    Angle.Value = -Angle;
-                    angle.Value = Angle;
-                }
-            }
+                components.Add(AddInvertProperty(parent));
         }
         protected FloatPropertyPanel AddAngleProperty(UIComponent parent)
         {
-            var angleProperty = parent.AddUIComponent<FloatPropertyPanel>();
+            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Angle));
             angleProperty.Text = Localize.StyleOption_SharkToothAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
@@ -504,11 +492,19 @@ namespace NodeMarkup.Manager
         }
         protected ButtonPanel AddInvertProperty(UIComponent parent)
         {
-            var buttonsPanel = ComponentPool.Get<ButtonPanel>(parent, nameof(Invert));
-            buttonsPanel.Text = Localize.StyleOption_Invert;
-            buttonsPanel.Init();
+            var invertButton = ComponentPool.Get<ButtonPanel>(parent, nameof(Invert));
+            invertButton.Text = Localize.StyleOption_Invert;
+            invertButton.Init();
 
-            return buttonsPanel;
+            invertButton.OnButtonClick += () =>
+            {
+                Invert.Value = !Invert;
+                Angle.Value = -Angle;
+                if (parent.Find<FloatPropertyPanel>(nameof(Angle)) is FloatPropertyPanel angleProperty)
+                    angleProperty.Value = Angle;
+            };
+
+            return invertButton;
         }
 
         public override XElement ToXml()
