@@ -26,6 +26,8 @@ namespace NodeMarkup.UI.Editors
         public RuleEdgeSelectPropertyPanel From { get; private set; }
         public RuleEdgeSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
+        private MoreOptionsPanel MoreOptionsButton { get; set; }
+        private bool ShowMoreOptions { get; set; }
 
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
@@ -47,6 +49,7 @@ namespace NodeMarkup.UI.Editors
             Refresh();
 
             AddStyleTypeProperty();
+            AddMoreOptions();
             AddStyleProperties();
 
             StartLayout();
@@ -63,6 +66,8 @@ namespace NodeMarkup.UI.Editors
             From = null;
             To = null;
             Style = null;
+            MoreOptionsButton = null;
+            ShowMoreOptions = false;
             StyleProperties.Clear();
 
             Editor = null;
@@ -162,11 +167,38 @@ namespace NodeMarkup.UI.Editors
             var type = styleType.GetNetworkType();
             return (Line.PointPair.NetworkType & type) != 0;
         }
+        private void AddMoreOptions()
+        {
+            MoreOptionsButton = ComponentPool.Get<MoreOptionsPanel>(this, nameof(MoreOptionsButton));
+            MoreOptionsButton.Init();
+            MoreOptionsButton.OnButtonClick += () =>
+            {
+                ShowMoreOptions = !ShowMoreOptions;
+                SetOptionsCollapse();
+            };
+        }
+        private void SetOptionsCollapse()
+        {
+            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {NodeMarkup.Localize.Editor_LessOptions} ▲" : $"▼ {NodeMarkup.Localize.Editor_MoreOptions} ▼";
+
+            foreach (var option in StyleProperties)
+                option.IsCollapsed = !ShowMoreOptions;
+        }
+
         private void AddStyleProperties()
         {
             StyleProperties = Rule.Style.Value.GetUIComponents(Rule.Line, this);
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
+
+            if(Settings.CollapseOptions && StyleProperties.Count(p => p.CanCollapse) >= 2)
+            {
+                MoreOptionsButton.isVisible = true;
+                MoreOptionsButton.BringToFront();
+                SetOptionsCollapse();
+            }
+            else
+                MoreOptionsButton.isVisible = false;
         }
 
         private void ClearStyleProperties()

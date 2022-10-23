@@ -1726,4 +1726,19 @@ underground mode</value>
   <data name="Settings_Render" xml:space="preserve">
     <value>Render</value>
   </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Less options</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>More options</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Collapse additional style options</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Main color</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Second color</value>
+  </data>
 </root>

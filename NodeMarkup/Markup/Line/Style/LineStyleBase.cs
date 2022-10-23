@@ -73,7 +73,7 @@ namespace NodeMarkup.Manager
 
         protected bool CheckDashedLod(MarkupLOD lod, float width, float length) => lod != MarkupLOD.LOD1 || width > LodWidth || length > LodLength;
 
-        protected FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent)
+        protected FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, bool canCollapse)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(doubleStyle.Offset));
             offsetProperty.Text = Localize.StyleOption_Offset;
@@ -83,13 +83,14 @@ namespace NodeMarkup.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0.05f;
+            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init();
             offsetProperty.Value = doubleStyle.Offset;
             offsetProperty.OnValueChanged += (float value) => doubleStyle.Offset.Value = value;
 
             return offsetProperty;
         }
-        protected FloatPropertyPanel AddBaseProperty(ISharkLine sharkTeethStyle, UIComponent parent)
+        protected FloatPropertyPanel AddBaseProperty(ISharkLine sharkTeethStyle, UIComponent parent, bool canCollapse)
         {
             var baseProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Base));
             baseProperty.Text = Localize.StyleOption_SharkToothBase;
@@ -99,13 +100,14 @@ namespace NodeMarkup.Manager
             baseProperty.WheelTip = Settings.ShowToolTip;
             baseProperty.CheckMin = true;
             baseProperty.MinValue = 0.3f;
+            baseProperty.CanCollapse = canCollapse;
             baseProperty.Init();
             baseProperty.Value = sharkTeethStyle.Base;
             baseProperty.OnValueChanged += (float value) => sharkTeethStyle.Base.Value = value;
 
             return baseProperty;
         }
-        protected FloatPropertyPanel AddHeightProperty(ISharkLine sharkTeethStyle, UIComponent parent)
+        protected FloatPropertyPanel AddHeightProperty(ISharkLine sharkTeethStyle, UIComponent parent, bool canCollapse)
         {
             var heightProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Height));
             heightProperty.Text = Localize.StyleOption_SharkToothHeight;
@@ -115,13 +117,14 @@ namespace NodeMarkup.Manager
             heightProperty.WheelTip = Settings.ShowToolTip;
             heightProperty.CheckMin = true;
             heightProperty.MinValue = 0.3f;
+            heightProperty.CanCollapse = canCollapse;
             heightProperty.Init();
             heightProperty.Value = sharkTeethStyle.Height;
             heightProperty.OnValueChanged += (float value) => sharkTeethStyle.Height.Value = value;
 
             return heightProperty;
         }
-        protected FloatPropertyPanel AddSpaceProperty(ISharkLine sharkTeethStyle, UIComponent parent)
+        protected FloatPropertyPanel AddSpaceProperty(ISharkLine sharkTeethStyle, UIComponent parent, bool canCollapse)
         {
             var spaceProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Space));
             spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
@@ -131,22 +134,24 @@ namespace NodeMarkup.Manager
             spaceProperty.WheelTip = Settings.ShowToolTip;
             spaceProperty.CheckMin = true;
             spaceProperty.MinValue = 0.1f;
+            spaceProperty.CanCollapse = canCollapse;
             spaceProperty.Init();
             spaceProperty.Value = sharkTeethStyle.Space;
             spaceProperty.OnValueChanged += (float value) => sharkTeethStyle.Space.Value = value;
 
             return spaceProperty;
         }
-        protected LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent)
+        protected LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent, bool canCollapse)
         {
             var alignmentProperty = ComponentPool.Get<LineAlignmentPropertyPanel>(parent, nameof(alignmentStyle.Alignment));
             alignmentProperty.Text = Localize.StyleOption_Alignment;
+            alignmentProperty.CanCollapse = canCollapse;
             alignmentProperty.Init();
             alignmentProperty.SelectedObject = alignmentStyle.Alignment;
             alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment.Value = value;
             return alignmentProperty;
         }
-        protected FloatPropertyPanel AddElevationProperty(I3DLine line3DStyle, UIComponent parent)
+        protected FloatPropertyPanel AddElevationProperty(I3DLine line3DStyle, UIComponent parent, bool canCollapse)
         {
             var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(line3DStyle.Elevation));
             elevationProperty.Text = Localize.LineStyle_Elevation;
@@ -157,6 +162,7 @@ namespace NodeMarkup.Manager
             elevationProperty.MinValue = 0f;
             elevationProperty.CheckMax = true;
             elevationProperty.MaxValue = 1f;
+            elevationProperty.CanCollapse = canCollapse;
             elevationProperty.Init();
             elevationProperty.Value = line3DStyle.Elevation;
             elevationProperty.OnValueChanged += (float value) => line3DStyle.Elevation.Value = value;
@@ -164,10 +170,11 @@ namespace NodeMarkup.Manager
             return elevationProperty;
         }
 
-        protected BoolListPropertyPanel AddUseSecondColorProperty(IDoubleLine doubleLine, UIComponent parent)
+        protected BoolListPropertyPanel AddUseSecondColorProperty(IDoubleLine doubleLine, UIComponent parent, bool canCollapse)
         {
             var useSecondColorProperty = ComponentPool.GetBefore<BoolListPropertyPanel>(parent, nameof(Color), nameof(doubleLine.UseSecondColor));
             useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
+            useSecondColorProperty.CanCollapse = canCollapse;
             useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
             useSecondColorProperty.SelectedObject = doubleLine.UseSecondColor;
             useSecondColorProperty.OnSelectObjectChanged += (value) =>
@@ -180,15 +187,24 @@ namespace NodeMarkup.Manager
         }
         protected void UseSecondColorChanged(IDoubleLine doubleLine, UIComponent parent, bool value)
         {
+            if (parent.Find<ColorAdvancedPropertyPanel>(nameof(Color)) is ColorAdvancedPropertyPanel mainColorProperty)
+            {
+                mainColorProperty.Text = value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
+            }
+
             if (parent.Find<ColorAdvancedPropertyPanel>(nameof(doubleLine.SecondColor)) is ColorAdvancedPropertyPanel secondColorProperty)
-                secondColorProperty.isVisible = value;
+            {
+                secondColorProperty.IsHidden = !value;
+                secondColorProperty.Text = value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
+            }
         }
 
-        protected ColorAdvancedPropertyPanel AddSecondColorProperty(IDoubleLine doubleLine, UIComponent parent)
+        protected ColorAdvancedPropertyPanel AddSecondColorProperty(IDoubleLine doubleLine, UIComponent parent, bool canCollapse)
         {
             var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(Color), nameof(doubleLine.SecondColor));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
+            colorProperty.CanCollapse = canCollapse;
             colorProperty.Init((GetDefault() as IDoubleLine)?.SecondColor);
             colorProperty.Value = doubleLine.SecondColor;
             colorProperty.OnValueChanged += (Color32 color) => doubleLine.SecondColor.Value = color;

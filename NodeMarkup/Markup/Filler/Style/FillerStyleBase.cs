@@ -77,9 +77,9 @@ namespace NodeMarkup.Manager
         {
             if (!isTemplate)
             {
-                components.Add(AddLineOffsetProperty(parent));
+                components.Add(AddLineOffsetProperty(parent, false));
                 if (filler.IsMedian)
-                    components.Add(AddMedianOffsetProperty(parent));
+                    components.Add(AddMedianOffsetProperty(parent, true));
             }
         }
 
@@ -117,7 +117,7 @@ namespace NodeMarkup.Manager
             MedianOffset.FromXml(config, DefaultOffset);
         }
 
-        protected FloatPropertyPanel AddLineOffsetProperty(UIComponent parent)
+        protected FloatPropertyPanel AddLineOffsetProperty(UIComponent parent, bool canCollapse)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(LineOffset));
             offsetProperty.Text = Localize.StyleOption_LineOffset;
@@ -127,13 +127,14 @@ namespace NodeMarkup.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0f;
+            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init();
             offsetProperty.Value = LineOffset;
             offsetProperty.OnValueChanged += (float value) => LineOffset.Value = value;
 
             return offsetProperty;
         }
-        private FloatPropertyPanel AddMedianOffsetProperty(UIComponent parent)
+        private FloatPropertyPanel AddMedianOffsetProperty(UIComponent parent, bool canCollapse)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianOffset));
             offsetProperty.Text = Localize.StyleOption_MedianOffset;
@@ -143,13 +144,14 @@ namespace NodeMarkup.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0f;
+            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init();
             offsetProperty.Value = MedianOffset;
             offsetProperty.OnValueChanged += (float value) => MedianOffset.Value = value;
 
             return offsetProperty;
         }
-        protected FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent)
+        protected FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent, bool canCollapse)
         {
             var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(rotateStyle.Angle));
             angleProperty.Text = Localize.StyleOption_Angle;
@@ -162,13 +164,14 @@ namespace NodeMarkup.Manager
             angleProperty.CheckMax = true;
             angleProperty.MaxValue = 90;
             angleProperty.CyclicalValue = true;
+            angleProperty.CanCollapse = canCollapse;
             angleProperty.Init();
             angleProperty.Value = rotateStyle.Angle;
             angleProperty.OnValueChanged += (float value) => rotateStyle.Angle.Value = value;
 
             return angleProperty;
         }
-        protected FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent)
+        protected FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent, bool canCollapse)
         {
             var stepProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(periodicStyle.Step));
             stepProperty.Text = Localize.StyleOption_Step;
@@ -177,48 +180,51 @@ namespace NodeMarkup.Manager
             stepProperty.WheelTip = Settings.ShowToolTip;
             stepProperty.CheckMin = true;
             stepProperty.MinValue = 1.5f;
+            stepProperty.CanCollapse = canCollapse;
             stepProperty.Init();
             stepProperty.Value = periodicStyle.Step;
             stepProperty.OnValueChanged += (float value) => periodicStyle.Step.Value = value;
 
             return stepProperty;
         }
-        protected BoolListPropertyPanel AddFollowRailsProperty(IFollowRailFiller followRailStyle, UIComponent parent)
+        protected BoolListPropertyPanel AddFollowRailsProperty(IFollowRailFiller followRailStyle, UIComponent parent, bool canCollapse)
         {
             var followRailsProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(followRailStyle.FollowRails));
             followRailsProperty.Text = Localize.StyleOption_FollowRails;
+            followRailsProperty.CanCollapse = canCollapse;
             followRailsProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             followRailsProperty.SelectedObject = followRailStyle.FollowRails;
             followRailsProperty.OnSelectObjectChanged += (bool value) =>
             {
                 followRailStyle.FollowRails.Value = value;
-                FollowRailChanged(followRailStyle, parent, value);
+                FollowRailChanged(parent, value);
             };
             return followRailsProperty;
         }
-        protected void FollowRailChanged(IFollowRailFiller followRailStyle, UIComponent parent, bool value)
+        protected void FollowRailChanged(UIComponent parent, bool value)
         {
             if (parent.Find<FillerRailSelectPropertyPanel>(LeftRail) is FillerRailSelectPropertyPanel leftRailProperty)
-                leftRailProperty.isVisible = value;
+                leftRailProperty.IsHidden = !value;
             if (parent.Find<FillerRailSelectPropertyPanel>(RightRail) is FillerRailSelectPropertyPanel rightRailProperty)
-                rightRailProperty.isVisible = value;
+                rightRailProperty.IsHidden = !value;
             if (parent.Find<ButtonPanel>("Turn") is ButtonPanel turnButton)
-                turnButton.isVisible = value;
+                turnButton.IsHidden = !value;
         }
 
-        protected void AddRailProperty(IRailFiller railStyle, FillerContour contour, UIComponent parent, out FillerRailSelectPropertyPanel leftRailProperty, out FillerRailSelectPropertyPanel rightRailProperty)
+        protected void AddRailProperty(IRailFiller railStyle, FillerContour contour, UIComponent parent, bool canCollapse, out FillerRailSelectPropertyPanel leftRailProperty, out FillerRailSelectPropertyPanel rightRailProperty)
         {
-            leftRailProperty = AddRailProperty(contour, parent, LeftRail, railStyle.LeftRailA, railStyle.LeftRailB, RailType.Left, Localize.StyleOption_LeftRail);
-            rightRailProperty = AddRailProperty(contour, parent, RightRail, railStyle.RightRailA, railStyle.RightRailB, RailType.Right, Localize.StyleOption_RightRail);
+            leftRailProperty = AddRailProperty(contour, parent, canCollapse, LeftRail, railStyle.LeftRailA, railStyle.LeftRailB, RailType.Left, Localize.StyleOption_LeftRail);
+            rightRailProperty = AddRailProperty(contour, parent, canCollapse, RightRail, railStyle.RightRailA, railStyle.RightRailB, RailType.Right, Localize.StyleOption_RightRail);
 
             leftRailProperty.OtherRail = rightRailProperty;
             rightRailProperty.OtherRail = leftRailProperty;
         }
-        private FillerRailSelectPropertyPanel AddRailProperty(FillerContour contour, UIComponent parent, string name, PropertyValue<int> railA, PropertyValue<int> railB, RailType railType, string label)
+        private FillerRailSelectPropertyPanel AddRailProperty(FillerContour contour, UIComponent parent, bool canCollapse, string name, PropertyValue<int> railA, PropertyValue<int> railB, RailType railType, string label)
         {
             var rail = new FillerRail(contour.GetCorrectIndex(railA), contour.GetCorrectIndex(railB));
             var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent, name);
             railProperty.Text = label;
+            railProperty.CanCollapse = canCollapse;
             railProperty.Init(railType);
             railProperty.Value = rail;
             railProperty.OnValueChanged += RailPropertyChanged;

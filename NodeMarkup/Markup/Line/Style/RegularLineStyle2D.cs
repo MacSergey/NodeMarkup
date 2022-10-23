@@ -90,13 +90,13 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
-            components.Add(AddUseSecondColorProperty(this, parent));
-            components.Add(AddSecondColorProperty(this, parent));
+            components.Add(AddUseSecondColorProperty(this, parent, true));
+            components.Add(AddSecondColorProperty(this, parent, true));
             UseSecondColorChanged(this, parent, UseSecondColor);
 
-            components.Add(AddOffsetProperty(this, parent));
+            components.Add(AddOffsetProperty(this, parent, false));
             if (!isTemplate)
-                components.Add(AddAlignmentProperty(this, parent));
+                components.Add(AddAlignmentProperty(this, parent, false));
         }
         public override XElement ToXml()
         {
@@ -164,8 +164,8 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent));
-            components.Add(AddSpaceLengthProperty(this, parent));
+            components.Add(AddDashLengthProperty(this, parent, false));
+            components.Add(AddSpaceLengthProperty(this, parent, false));
         }
 
         public override XElement ToXml()
@@ -240,11 +240,11 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddUseSecondColorProperty(this, parent));
-            components.Add(AddSecondColorProperty(this, parent));
-            components.Add(AddOffsetProperty(this, parent));
+            components.Add(AddUseSecondColorProperty(this, parent, true));
+            components.Add(AddSecondColorProperty(this, parent, true));
+            components.Add(AddOffsetProperty(this, parent, false));
             if (!isTemplate)
-                components.Add(AddAlignmentProperty(this, parent));
+                components.Add(AddAlignmentProperty(this, parent, false));
 
             UseSecondColorChanged(this, parent, UseSecondColor);
         }
@@ -348,23 +348,24 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddUseSecondColorProperty(this, parent));
-            components.Add(AddSecondColorProperty(this, parent));
-            components.Add(AddDashLengthProperty(this, parent));
-            components.Add(AddSpaceLengthProperty(this, parent));
-            components.Add(AddOffsetProperty(this, parent));
+            components.Add(AddUseSecondColorProperty(this, parent, true));
+            components.Add(AddSecondColorProperty(this, parent, true));
+            components.Add(AddDashLengthProperty(this, parent, false));
+            components.Add(AddSpaceLengthProperty(this, parent, false));
+            components.Add(AddOffsetProperty(this, parent, false));
             if (!isTemplate)
             {
-                components.Add(AddCenterSolidProperty(parent));
-                components.Add(AddInvertProperty(this, parent));
+                components.Add(AddCenterSolidProperty(parent, false));
+                components.Add(AddInvertProperty(this, parent, false));
             }
 
             UseSecondColorChanged(this, parent, UseSecondColor);
         }
-        protected BoolListPropertyPanel AddCenterSolidProperty(UIComponent parent)
+        protected BoolListPropertyPanel AddCenterSolidProperty(UIComponent parent, bool canCollapse)
         {
             var centerSolidProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(CenterSolid));
             centerSolidProperty.Text = Localize.StyleOption_SolidInCenter;
+            centerSolidProperty.CanCollapse = canCollapse;
             centerSolidProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             centerSolidProperty.SelectedObject = CenterSolid;
             centerSolidProperty.OnSelectObjectChanged += (value) => CenterSolid.Value = value;
@@ -465,15 +466,15 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddBaseProperty(this, parent));
-            components.Add(AddHeightProperty(this, parent));
-            components.Add(AddSpaceProperty(this, parent));
-            components.Add(AddAngleProperty(parent));
+            components.Add(AddBaseProperty(this, parent, false));
+            components.Add(AddHeightProperty(this, parent, false));
+            components.Add(AddSpaceProperty(this, parent, false));
+            components.Add(AddAngleProperty(parent, true));
 
             if (!isTemplate)
-                components.Add(AddInvertProperty(parent));
+                components.Add(AddInvertProperty(parent, false));
         }
-        protected FloatPropertyPanel AddAngleProperty(UIComponent parent)
+        protected FloatPropertyPanel AddAngleProperty(UIComponent parent, bool canCollapse)
         {
             var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Angle));
             angleProperty.Text = Localize.StyleOption_SharkToothAngle;
@@ -484,16 +485,18 @@ namespace NodeMarkup.Manager
             angleProperty.MinValue = -60f;
             angleProperty.CheckMax = true;
             angleProperty.MaxValue = 60f;
+            angleProperty.CanCollapse = canCollapse;
             angleProperty.Init();
             angleProperty.Value = Angle;
             angleProperty.OnValueChanged += (float value) => Angle.Value = value;
 
             return angleProperty;
         }
-        protected ButtonPanel AddInvertProperty(UIComponent parent)
+        protected ButtonPanel AddInvertProperty(UIComponent parent, bool canCollapse)
         {
             var invertButton = ComponentPool.Get<ButtonPanel>(parent, nameof(Invert));
             invertButton.Text = Localize.StyleOption_Invert;
+            invertButton.CanCollapse = canCollapse;
             invertButton.Init();
 
             invertButton.OnButtonClick += () =>

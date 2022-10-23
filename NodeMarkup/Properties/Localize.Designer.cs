@@ -496,6 +496,24 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Less options.
+        /// </summary>
+        public static string Editor_LessOptions {
+            get {
+                return ResourceManager.GetString("Editor_LessOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на More options.
+        /// </summary>
+        public static string Editor_MoreOptions {
+            get {
+                return ResourceManager.GetString("Editor_MoreOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Style.
         /// </summary>
         public static string Editor_Style {
@@ -2083,6 +2101,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Collapse additional style options.
+        /// </summary>
+        public static string Settings_CollapseOptions {
+            get {
+                return ResourceManager.GetString("Settings_CollapseOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Copy path to clipboard.
         /// </summary>
         public static string Settings_CopyPathToClipboard {
@@ -3346,6 +3373,15 @@ namespace NodeMarkup {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Main color.
+        /// </summary>
+        public static string StyleOption_MainColor {
+            get {
+                return ResourceManager.GetString("StyleOption_MainColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Offset from median.
         /// </summary>
         public static string StyleOption_MedianOffset {
@@ -3522,6 +3558,15 @@ namespace NodeMarkup {
         public static string StyleOption_RightRail {
             get {
                 return ResourceManager.GetString("StyleOption_RightRail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Second color.
+        /// </summary>
+        public static string StyleOption_SecondColor {
+            get {
+                return ResourceManager.GetString("StyleOption_SecondColor", resourceCulture);
             }
         }
         

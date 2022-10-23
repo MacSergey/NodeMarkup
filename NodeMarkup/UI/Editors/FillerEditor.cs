@@ -21,6 +21,8 @@ namespace NodeMarkup.UI.Editors
 
         public StylePropertyPanel Style { get; private set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
+        private MoreOptionsPanel MoreOptionsButton { get; set; }
+        private bool ShowMoreOptions { get; set; }
 
         private FillerRailToolMode FillerRailToolMode { get; }
 
@@ -41,6 +43,7 @@ namespace NodeMarkup.UI.Editors
         {
             AddHeader();
             AddStyleTypeProperty();
+            AddMoreOptions();
             AddStyleProperties();
         }
         protected override void OnObjectDelete(MarkupFiller filler)
@@ -53,6 +56,8 @@ namespace NodeMarkup.UI.Editors
             base.OnClear();
 
             Style = null;
+            MoreOptionsButton = null;
+            ShowMoreOptions = false;
             StyleProperties.Clear();
         }
 
@@ -74,6 +79,24 @@ namespace NodeMarkup.UI.Editors
             Style.SelectedObject = EditObject.Style.Value.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
+        private void AddMoreOptions()
+        {
+            MoreOptionsButton = ComponentPool.Get<MoreOptionsPanel>(PropertiesPanel, nameof(MoreOptionsButton));
+            MoreOptionsButton.Init();
+            MoreOptionsButton.OnButtonClick += () =>
+            {
+                ShowMoreOptions = !ShowMoreOptions;
+                SetOptionsCollapse();
+            };
+        }
+        private void SetOptionsCollapse()
+        {
+            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {NodeMarkup.Localize.Editor_LessOptions} ▲" : $"▼ {NodeMarkup.Localize.Editor_MoreOptions} ▼";
+
+            foreach (var option in StyleProperties)
+                option.IsCollapsed = !ShowMoreOptions;
+        }
+
         private void AddStyleProperties()
         {
             StyleProperties = EditObject.Style.Value.GetUIComponents(EditObject, PropertiesPanel);
@@ -89,6 +112,15 @@ namespace NodeMarkup.UI.Editors
                     railProperty.OnLeave += LeaveRail;
                 }
             }
+
+            if (Settings.CollapseOptions && StyleProperties.Count(p => p.CanCollapse) >= 2)
+            {
+                MoreOptionsButton.isVisible = true;
+                MoreOptionsButton.BringToFront();
+                SetOptionsCollapse();
+            }
+            else
+                MoreOptionsButton.isVisible = false;
         }
         private void ClearStyleProperties()
         {

@@ -71,11 +71,11 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
-            components.Add(AddUseSecondColorProperty(this, parent));
-            components.Add(AddSecondColorProperty(this, parent));
+            components.Add(AddUseSecondColorProperty(this, parent, true));
+            components.Add(AddSecondColorProperty(this, parent, true));
             UseSecondColorChanged(this, parent, UseSecondColor);
 
-            components.Add(AddOffsetProperty(this, parent));
+            components.Add(AddOffsetProperty(this, parent, false));
         }
         public override XElement ToXml()
         {
@@ -134,8 +134,8 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent));
-            components.Add(AddSpaceLengthProperty(this, parent));
+            components.Add(AddDashLengthProperty(this, parent, false));
+            components.Add(AddSpaceLengthProperty(this, parent, false));
         }
 
         public override XElement ToXml()
@@ -201,11 +201,11 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
-            components.Add(AddUseSecondColorProperty(this, parent));
-            components.Add(AddSecondColorProperty(this, parent));
+            components.Add(AddUseSecondColorProperty(this, parent, true));
+            components.Add(AddSecondColorProperty(this, parent, true));
             UseSecondColorChanged(this, parent, UseSecondColor);
 
-            components.Add(AddOffsetProperty(this, parent));
+            components.Add(AddOffsetProperty(this, parent, false));
         }
         public override XElement ToXml()
         {
@@ -286,13 +286,13 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
-            components.Add(AddUseSecondColorProperty(this, parent));
-            components.Add(AddSecondColorProperty(this, parent));
+            components.Add(AddUseSecondColorProperty(this, parent, true));
+            components.Add(AddSecondColorProperty(this, parent, true));
             UseSecondColorChanged(this, parent, UseSecondColor);
 
-            components.Add(AddDashLengthProperty(this, parent));
-            components.Add(AddSpaceLengthProperty(this, parent));
-            components.Add(AddOffsetProperty(this, parent));
+            components.Add(AddDashLengthProperty(this, parent, false));
+            components.Add(AddSpaceLengthProperty(this, parent, false));
+            components.Add(AddOffsetProperty(this, parent, false));
         }
 
         public override XElement ToXml()
@@ -361,9 +361,9 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddBaseProperty(this, parent));
-            components.Add(AddHeightProperty(this, parent));
-            components.Add(AddSpaceProperty(this, parent));
+            components.Add(AddBaseProperty(this, parent, false));
+            components.Add(AddHeightProperty(this, parent, false));
+            components.Add(AddSpaceProperty(this, parent, false));
         }
 
         public override XElement ToXml()
@@ -404,7 +404,7 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddElevationProperty(this, parent));
+            components.Add(AddElevationProperty(this, parent, false));
         }
 
         public override XElement ToXml()
