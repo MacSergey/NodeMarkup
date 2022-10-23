@@ -1504,4 +1504,19 @@
   <data name="Settings_Render" xml:space="preserve">
     <value>렌더링</value>
   </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>간단 설정</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>상세 설정</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>추가 스타일 설정 접기</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>주 색상</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>둘째 색상</value>
+  </data>
 </root>

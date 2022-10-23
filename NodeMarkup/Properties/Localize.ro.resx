@@ -1482,11 +1482,40 @@ modul Underground</value>
   <data name="Settings_AutoPropStep" xml:space="preserve">
     <value>Distanța automata între obiecte depinde de dimensiunea acestuia</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>Distanța LOD pentru marcajele 2D</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Distanța LOD a rețelei</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Distanța LOD a arborilor</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Distanța LOD a copacilor</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Automat</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>Distanța LOD pentru marcajele 3D</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Randare</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Mai puține opțiuni</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Mai multe opțiuni</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Restrângeți opțiuni de stil suplimentare</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Culoare principală</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Culoare secundară</value>
+  </data>
 </root>

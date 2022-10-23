@@ -141,9 +141,7 @@
   <data name="StyleOption_Color" xml:space="preserve">
     <value>Colour</value>
   </data>
-  <data name="StyleOption_DashedLength" xml:space="preserve">
-    <value>Dash lenght</value>
-  </data>
+  
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
     <value>Delete rule</value>
   </data>
@@ -168,9 +166,7 @@
   <data name="StyleOption_Offset" xml:space="preserve">
     <value>Offset</value>
   </data>
-  <data name="StyleOption_SpaceLength" xml:space="preserve">
-    <value>Space lenght</value>
-  </data>
+  
   <data name="Editor_Style" xml:space="preserve">
     <value>Style</value>
   </data>
@@ -300,7 +296,10 @@ To create a template, click «{0}» at the line or pedestrian crossing or filler
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
     <value>Pedestrian Crossings</value>
   </data>
-  
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>There are no crossings at this intersection yet.
+To create a pedestrian crossing hold {0}.</value>
+  </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>pedestrian crossing</value>
   </data>
@@ -462,7 +461,9 @@ create or delete a pedestrian crossing</value>
   </data>
   
   
-  
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Hold {0} to create a pedestrian crossing</value>
+  </data>
   
   
   
@@ -572,6 +573,9 @@ crossings:</value>
   
   
   
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Colour count</value>
+  </data>
   
   
   
@@ -599,6 +603,9 @@ crossings:</value>
   
   
   
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Click with {0} to select the pedestrian crossing</value>
+  </data>
   
   
   
@@ -658,6 +665,9 @@ crossings:</value>
   
   
   
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Colour variant</value>
+  </data>
   
   
   
@@ -698,4 +708,10 @@ crossings:</value>
   
   
   
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Main colour</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Second colour</value>
+  </data>
 </root>
