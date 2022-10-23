@@ -309,33 +309,19 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
 
-            var useSecondColor = AddUseSecondColorProperty(parent);
-            var secondColor = AddSecondColorProperty(parent);
-            components.Add(useSecondColor);
-            components.Add(secondColor);
-            useSecondColor.OnSelectObjectChanged += ChangeSecondColorVisible;
-            ChangeSecondColorVisible(useSecondColor.SelectedObject);
+            components.Add(AddUseSecondColorProperty(parent));
+            components.Add(AddSecondColorProperty(parent));
+            UseSecondColorChanged(parent, UseSecondColor);
 
             components.Add(AddDashLengthProperty(this, parent));
             components.Add(AddSpaceLengthProperty(this, parent));
 
-            var useGap = AddUseGapProperty(parent);
-            var gapLength = AddGapLengthProperty(parent);
-            var gapPeriod = AddGapPeriodProperty(parent);
-            components.Add(useGap);
-            components.Add(gapLength);
-            components.Add(gapPeriod);
-            useGap.OnSelectObjectChanged += ChangeGapVisible;
-            ChangeGapVisible(useGap.SelectedObject);
+            components.Add(AddUseGapProperty(parent));
+            components.Add(AddGapLengthProperty(parent));
+            components.Add(AddGapPeriodProperty(parent));
+            UseGapChanged(parent, UseGap);
 
             components.Add(AddParallelProperty(this, parent));
-
-            void ChangeSecondColorVisible(bool useSecondColor) => secondColor.isVisible = useSecondColor;
-            void ChangeGapVisible(bool useGap)
-            {
-                gapLength.isVisible = useGap;
-                gapPeriod.isVisible = useGap;
-            }
         }
 
         protected BoolListPropertyPanel AddUseSecondColorProperty(UIComponent parent)
@@ -344,10 +330,22 @@ namespace NodeMarkup.Manager
             useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
             useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
             useSecondColorProperty.SelectedObject = UseSecondColor;
-            useSecondColorProperty.OnSelectObjectChanged += (value) => UseSecondColor.Value = value;
+            useSecondColorProperty.OnSelectObjectChanged += (value) =>
+                {
+                    UseSecondColor.Value = value;
+                    UseSecondColorChanged(parent, value);
+                };
+
 
             return useSecondColorProperty;
         }
+        protected void UseSecondColorChanged( UIComponent parent, bool value)
+        {
+            if (parent.Find<ColorAdvancedPropertyPanel>(nameof(SecondColor)) is ColorAdvancedPropertyPanel secondColorProperty)
+                secondColorProperty.isVisible = value;
+        }
+
+
         protected ColorAdvancedPropertyPanel AddSecondColorProperty(UIComponent parent)
         {
             var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(Color), nameof(SecondColor));
@@ -366,10 +364,22 @@ namespace NodeMarkup.Manager
             useGapProperty.Text = Localize.StyleOption_UseGap;
             useGapProperty.Init();
             useGapProperty.SelectedObject = UseGap;
-            useGapProperty.OnSelectObjectChanged += (value) => UseGap.Value = value;
+            useGapProperty.OnSelectObjectChanged += (value) =>
+            {
+                UseGap.Value = value;
+                UseGapChanged(parent, value);
+            };
 
             return useGapProperty;
         }
+        protected void UseGapChanged(UIComponent parent, bool value)
+        {
+            if (parent.Find<FloatPropertyPanel>(nameof(GapLength)) is FloatPropertyPanel gapLengthProperty)
+                gapLengthProperty.isVisible = value;
+            if (parent.Find<IntPropertyPanel>(nameof(GapPeriod)) is IntPropertyPanel gapPeriodProperty)
+                gapPeriodProperty.isVisible = value;
+        }
+
         protected FloatPropertyPanel AddGapLengthProperty(UIComponent parent)
         {
             var gapLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(GapLength));

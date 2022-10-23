@@ -22,6 +22,8 @@ namespace NodeMarkup.Manager
     public interface IDoubleLine
     {
         PropertyValue<float> Offset { get; }
+        public PropertyBoolValue UseSecondColor { get; }
+        public PropertyColorValue SecondColor { get; }
     }
     public interface IDoubleAlignmentLine : IDoubleLine
     {
@@ -161,6 +163,38 @@ namespace NodeMarkup.Manager
 
             return elevationProperty;
         }
+
+        protected BoolListPropertyPanel AddUseSecondColorProperty(IDoubleLine doubleLine, UIComponent parent)
+        {
+            var useSecondColorProperty = ComponentPool.GetBefore<BoolListPropertyPanel>(parent, nameof(Color), nameof(doubleLine.UseSecondColor));
+            useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
+            useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
+            useSecondColorProperty.SelectedObject = doubleLine.UseSecondColor;
+            useSecondColorProperty.OnSelectObjectChanged += (value) =>
+                {
+                    doubleLine.UseSecondColor.Value = value;
+                    UseSecondColorChanged(doubleLine, parent, value);
+                };
+
+            return useSecondColorProperty;
+        }
+        protected void UseSecondColorChanged(IDoubleLine doubleLine, UIComponent parent, bool value)
+        {
+            if (parent.Find<ColorAdvancedPropertyPanel>(nameof(doubleLine.SecondColor)) is ColorAdvancedPropertyPanel secondColorProperty)
+                secondColorProperty.isVisible = value;
+        }
+
+        protected ColorAdvancedPropertyPanel AddSecondColorProperty(IDoubleLine doubleLine, UIComponent parent)
+        {
+            var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(Color), nameof(doubleLine.SecondColor));
+            colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.WheelTip = Settings.ShowToolTip;
+            colorProperty.Init((GetDefault() as IDoubleLine)?.SecondColor);
+            colorProperty.Value = doubleLine.SecondColor;
+            colorProperty.OnValueChanged += (Color32 color) => doubleLine.SecondColor.Value = color;
+
+            return colorProperty;
+        }
     }
     public abstract class LineStyle<StyleType> : LineStyle
         where StyleType : LineStyle<StyleType>
@@ -199,9 +233,9 @@ namespace NodeMarkup.Manager
         {
             {RegularLineType.Solid, new SolidLineStyle(DefaultColor, DefaultWidth)},
             {RegularLineType.Dashed, new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength)},
-            {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultWidth, DefaultDoubleOffset)},
-            {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
-            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
+            {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDoubleOffset)},
+            {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
+            {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength, DefaultSharkAngle) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
             {RegularLineType.Prop, new PropLineStyle(null, DefaultObjectProbability, PropLineStyle.DefaultColorOption, PropLineStyle.DefaultColor, DefaultObjectStep, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectShift,DefaultObjectShift), new Vector2(DefaultObjectScale, DefaultObjectScale), new Vector2(DefaultObjectElevation,DefaultObjectElevation), DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
@@ -293,9 +327,9 @@ namespace NodeMarkup.Manager
         {
             {StopLineType.Solid, new SolidStopLineStyle(DefaultColor, DefaultStopWidth)},
             {StopLineType.Dashed, new DashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength)},
-            {StopLineType.DoubleSolid, new DoubleSolidStopLineStyle(DefaultColor, DefaultStopWidth, DefaultStopOffset)},
-            {StopLineType.DoubleDashed, new DoubleDashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
-            {StopLineType.SolidAndDashed, new SolidAndDashedStopLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
+            {StopLineType.DoubleSolid, new DoubleSolidStopLineStyle(DefaultColor, DefaultColor, false, DefaultStopWidth, DefaultStopOffset)},
+            {StopLineType.DoubleDashed, new DoubleDashedStopLineStyle(DefaultColor, DefaultColor, false, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
+            {StopLineType.SolidAndDashed, new SolidAndDashedStopLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
             {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
             {StopLineType.Pavement, new PavementStopLineStyle(Default3DWidth, Default3DHeigth) },
         };

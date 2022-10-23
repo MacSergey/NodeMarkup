@@ -36,21 +36,29 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.LineDoubleSolid;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
+        public PropertyBoolValue UseSecondColor { get; }
+        public PropertyColorValue SecondColor { get; }
         public PropertyValue<float> Offset { get; }
         public PropertyEnumValue<Alignment> Alignment { get; }
 
-        public DoubleSolidLineStyle(Color32 color, float width, float offset) : base(color, width)
+        public DoubleSolidLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offset) : base(color, width)
         {
+            UseSecondColor = GetUseSecondColorProperty(useSecondColor);
+            SecondColor = GetSecondColorProperty(UseSecondColor ? secondColor : color);
             Offset = GetOffsetProperty(offset);
             Alignment = GetAlignmentProperty(Manager.Alignment.Centre);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, Width, Offset);
+        public override RegularLineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, SecondColor, UseSecondColor, Width, Offset);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
+            {
                 doubleTarget.Offset.Value = Offset;
+                doubleTarget.SecondColor.Value = SecondColor;
+                doubleTarget.UseSecondColor.Value = UseSecondColor;
+            }
             if (target is IDoubleAlignmentLine doubleAlignmentTarget)
                 doubleAlignmentTarget.Alignment.Value = Alignment;
         }
@@ -75,12 +83,17 @@ namespace NodeMarkup.Manager
             if (StyleHelper.CalculateSolidPart(borders, trajectory, firstOffset, Width, Color, out MarkupPartData firstDash))
                 yield return firstDash;
 
-            if (StyleHelper.CalculateSolidPart(borders, trajectory, secondOffset, Width, Color, out MarkupPartData secondDash))
+            if (StyleHelper.CalculateSolidPart(borders, trajectory, secondOffset, Width, UseSecondColor ? SecondColor : Color, out MarkupPartData secondDash))
                 yield return secondDash;
         }
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
+
+            components.Add(AddUseSecondColorProperty(this, parent));
+            components.Add(AddSecondColorProperty(this, parent));
+            UseSecondColorChanged(this, parent, UseSecondColor);
+
             components.Add(AddOffsetProperty(this, parent));
             if (!isTemplate)
                 components.Add(AddAlignmentProperty(this, parent));
@@ -88,6 +101,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
+            UseSecondColor.ToXml(config);
+            SecondColor.ToXml(config);
             Offset.ToXml(config);
             Alignment.ToXml(config);
             return config;
@@ -95,6 +110,8 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
+            UseSecondColor.FromXml(config, false);
+            SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             Alignment.FromXml(config, Manager.Alignment.Centre);
             if (invert)
@@ -172,19 +189,27 @@ namespace NodeMarkup.Manager
 
         public PropertyValue<float> Offset { get; }
         public PropertyEnumValue<Alignment> Alignment { get; }
+        public PropertyBoolValue UseSecondColor { get; }
+        public PropertyColorValue SecondColor { get; }
 
-        public DoubleDashedLineStyle(Color32 color, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
+        public DoubleDashedLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
         {
             Offset = GetOffsetProperty(offset);
             Alignment = GetAlignmentProperty(Manager.Alignment.Centre);
+            UseSecondColor = GetUseSecondColorProperty(useSecondColor);
+            SecondColor = GetSecondColorProperty(UseSecondColor ? secondColor : color);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override RegularLineStyle CopyLineStyle() => new DoubleDashedLineStyle(Color, SecondColor, UseSecondColor, Width, DashLength, SpaceLength, Offset);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleLine doubleTarget)
+            {
                 doubleTarget.Offset.Value = Offset;
+                doubleTarget.SecondColor.Value = SecondColor;
+                doubleTarget.UseSecondColor.Value = UseSecondColor;
+            }
             if (target is IDoubleAlignmentLine doubleAlignmentTarget)
                 doubleAlignmentTarget.Alignment.Value = Alignment;
         }
@@ -209,19 +234,25 @@ namespace NodeMarkup.Manager
             if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLength, firstOffset, Width, Color, out MarkupPartData firstDash))
                 yield return firstDash;
 
-            if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLength, secondOffset, Width, Color, out MarkupPartData secondDash))
+            if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLength, secondOffset, Width, UseSecondColor ? SecondColor : Color, out MarkupPartData secondDash))
                 yield return secondDash;
         }
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddUseSecondColorProperty(this, parent));
+            components.Add(AddSecondColorProperty(this, parent));
             components.Add(AddOffsetProperty(this, parent));
             if (!isTemplate)
                 components.Add(AddAlignmentProperty(this, parent));
+
+            UseSecondColorChanged(this, parent, UseSecondColor);
         }
         public override XElement ToXml()
         {
             var config = base.ToXml();
+            UseSecondColor.ToXml(config);
+            SecondColor.ToXml(config);
             Offset.ToXml(config);
             Alignment.ToXml(config);
             return config;
@@ -229,6 +260,8 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
+            UseSecondColor.FromXml(config, false);
+            SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             Alignment.FromXml(config, Manager.Alignment.Centre);
             if (invert)
@@ -240,6 +273,8 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.LineSolidAndDashed;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
+        public PropertyBoolValue UseSecondColor { get; }
+        public PropertyColorValue SecondColor { get; }
         public PropertyValue<float> Offset { get; }
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
@@ -248,8 +283,10 @@ namespace NodeMarkup.Manager
         private FakeAligmentProperty FakeAligment { get; }
         public PropertyEnumValue<Alignment> Alignment => FakeAligment;
 
-        public SolidAndDashedLineStyle(Color32 color, float width, float dashLength, float spaceLength, float offset) : base(color, width)
+        public SolidAndDashedLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLength, float spaceLength, float offset) : base(color, width)
         {
+            UseSecondColor = GetUseSecondColorProperty(useSecondColor);
+            SecondColor = GetSecondColorProperty(UseSecondColor ? secondColor : color);
             Offset = GetOffsetProperty(offset);
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
@@ -286,11 +323,11 @@ namespace NodeMarkup.Manager
 
             IEnumerable<MarkupPartData> CalculateDashedDash(ITrajectory lineTrajectory, float startT, float endT)
             {
-                if (StyleHelper.CalculateDashedParts(borders, lineTrajectory, startT, endT, DashLength, dashedOffset, Width, Color, out MarkupPartData dash))
+                if (StyleHelper.CalculateDashedParts(borders, lineTrajectory, startT, endT, DashLength, dashedOffset, Width, UseSecondColor ? SecondColor : Color, out MarkupPartData dash))
                     yield return dash;
             }
         }
-        public override RegularLineStyle CopyLineStyle() => new SolidAndDashedLineStyle(Color, Width, DashLength, SpaceLength, Offset);
+        public override RegularLineStyle CopyLineStyle() => new SolidAndDashedLineStyle(Color, SecondColor, UseSecondColor, Width, DashLength, SpaceLength, Offset);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -300,13 +337,19 @@ namespace NodeMarkup.Manager
                 dashedTarget.SpaceLength.Value = SpaceLength;
             }
             if (target is IDoubleLine doubleTarget)
+            {
                 doubleTarget.Offset.Value = Offset;
+                doubleTarget.SecondColor.Value = SecondColor;
+                doubleTarget.UseSecondColor.Value = UseSecondColor;
+            }
             if (target is IDoubleAlignmentLine doubleAlignmentTarget)
                 doubleAlignmentTarget.Alignment.Value = Alignment;
         }
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddUseSecondColorProperty(this, parent));
+            components.Add(AddSecondColorProperty(this, parent));
             components.Add(AddDashLengthProperty(this, parent));
             components.Add(AddSpaceLengthProperty(this, parent));
             components.Add(AddOffsetProperty(this, parent));
@@ -315,6 +358,8 @@ namespace NodeMarkup.Manager
                 components.Add(AddCenterSolidProperty(parent));
                 components.Add(AddInvertProperty(this, parent));
             }
+
+            UseSecondColorChanged(this, parent, UseSecondColor);
         }
         protected BoolListPropertyPanel AddCenterSolidProperty(UIComponent parent)
         {
@@ -329,6 +374,8 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
+            UseSecondColor.ToXml(config);
+            SecondColor.ToXml(config);
             Offset.ToXml(config);
             DashLength.ToXml(config);
             SpaceLength.ToXml(config);
@@ -339,6 +386,8 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
+            UseSecondColor.FromXml(config, false);
+            SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
