@@ -102,45 +102,43 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
-            var prefab = AddPrefabProperty(parent);
-
-            components.Add(prefab);
+            components.Add(AddPrefabProperty(parent));
             components.Add(AddShiftProperty(parent));
-            var elevation = AddElevationProperty(parent);
-            components.Add(elevation);
+            components.Add(AddElevationProperty(parent));
             components.Add(AddScaleProperty(parent));
             components.Add(AddRepeatDistanceProperty(parent));
             components.Add(AddOffsetBeforeProperty(parent));
             components.Add(AddOffsetAfterProperty(parent));
             components.Add(AddInvertProperty(this, parent));
 
-            prefab.OnValueChanged += OnNameChanged;
-            AfterNameChanged();
-
-            void OnNameChanged(NetInfo value)
-            {
-                Prefab.Value = value;
-                AfterNameChanged();
-            };
-            void AfterNameChanged()
-            {
-                if (IsValid)
-                    elevation.isVisible = Prefab.Value.m_segments[0].m_segmentMaterial.shader.name != "Custom/Net/Fence";
-                else
-                    elevation.isVisible = true;
-            }
+            PrefabChanged(parent, Prefab);
         }
 
         private SelectNetworkProperty AddPrefabProperty(UIComponent parent)
         {
             var prefabProperty = ComponentPool.Get<SelectNetworkProperty>(parent, nameof(Prefab));
             prefabProperty.Text = Localize.StyleOption_AssetNetwork;
-            prefabProperty.Selector = IsValidNetwork;
+            prefabProperty.PrefabSelectPredicate = IsValidNetwork;
+            prefabProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
-            prefabProperty.OnValueChanged += (NetInfo value) => Prefab.Value = value;
+            prefabProperty.OnValueChanged += (NetInfo value) =>
+            {
+                Prefab.Value = value;
+                PrefabChanged(parent, value);
+            };
 
             return prefabProperty;
+        }
+        private void PrefabChanged(UIComponent parent, NetInfo value)
+        {
+            if (parent.Find<FloatPropertyPanel>(nameof(Elevation)) is FloatPropertyPanel elevationProperty)
+            {
+                if (IsValidNetwork(value))
+                    elevationProperty.isVisible = Prefab.Value.m_segments[0].m_segmentMaterial.shader.name != "Custom/Net/Fence";
+                else
+                    elevationProperty.isVisible = true;
+            }
         }
 
         protected FloatPropertyPanel AddShiftProperty(UIComponent parent)

@@ -29,6 +29,9 @@ namespace NodeMarkup.Manager
         public static float DefaultCurbSize => 0f;
         public static bool DefaultFollowRails => false;
 
+        protected static string LeftRail => nameof(LeftRail);
+        protected static string RightRail => nameof(RightRail);
+
         public static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
             {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset,  DefaultFollowRails)},
@@ -186,13 +189,27 @@ namespace NodeMarkup.Manager
             followRailsProperty.Text = Localize.StyleOption_FollowRails;
             followRailsProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             followRailsProperty.SelectedObject = followRailStyle.FollowRails;
-            followRailsProperty.OnSelectObjectChanged += (bool value) => followRailStyle.FollowRails.Value = value;
+            followRailsProperty.OnSelectObjectChanged += (bool value) =>
+            {
+                followRailStyle.FollowRails.Value = value;
+                FollowRailChanged(followRailStyle, parent, value);
+            };
             return followRailsProperty;
         }
+        protected void FollowRailChanged(IFollowRailFiller followRailStyle, UIComponent parent, bool value)
+        {
+            if (parent.Find<FillerRailSelectPropertyPanel>(LeftRail) is FillerRailSelectPropertyPanel leftRailProperty)
+                leftRailProperty.isVisible = value;
+            if (parent.Find<FillerRailSelectPropertyPanel>(RightRail) is FillerRailSelectPropertyPanel rightRailProperty)
+                rightRailProperty.isVisible = value;
+            if (parent.Find<ButtonPanel>("Turn") is ButtonPanel turnButton)
+                turnButton.isVisible = value;
+        }
+
         protected void AddRailProperty(IRailFiller railStyle, FillerContour contour, UIComponent parent, out FillerRailSelectPropertyPanel leftRailProperty, out FillerRailSelectPropertyPanel rightRailProperty)
         {
-            leftRailProperty = AddRailProperty(contour, parent, "LeftRail", railStyle.LeftRailA, railStyle.LeftRailB, RailType.Left, Localize.StyleOption_LeftRail);
-            rightRailProperty = AddRailProperty(contour, parent, "RightRail", railStyle.RightRailA, railStyle.RightRailB, RailType.Right, Localize.StyleOption_RightRail);
+            leftRailProperty = AddRailProperty(contour, parent, LeftRail, railStyle.LeftRailA, railStyle.LeftRailB, RailType.Left, Localize.StyleOption_LeftRail);
+            rightRailProperty = AddRailProperty(contour, parent, RightRail, railStyle.RightRailA, railStyle.RightRailB, RailType.Right, Localize.StyleOption_RightRail);
 
             leftRailProperty.OtherRail = rightRailProperty;
             rightRailProperty.OtherRail = leftRailProperty;

@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using ICities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.UI.Editors;
@@ -507,43 +508,32 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                var vertexCount = filler.Contour.ProcessedCount;
-
-                var followRails = AddFollowRailsProperty(this, parent);
+                components.Add(AddFollowRailsProperty(this, parent));
                 AddRailProperty(this, filler.Contour, parent, out var leftRail, out var rightRail);
-                var turn = AddTurnProperty(parent);
-
-                components.Add(followRails);
                 components.Add(leftRail);
                 components.Add(rightRail);
-                components.Add(turn);
+                components.Add(AddTurnProperty(filler, parent));
 
-                followRails.OnSelectObjectChanged += ChangeRailsVisible;
-                ChangeRailsVisible(followRails.SelectedObject);
-
-                turn.OnButtonClick += TurnClick;
-
-                void ChangeRailsVisible(bool followRails)
-                {
-                    leftRail.isVisible = followRails;
-                    rightRail.isVisible = followRails;
-                    turn.isVisible = followRails;
-                }
-
-                void TurnClick()
-                {
-                    leftRail.Value = (leftRail.Value + 1) % vertexCount;
-                    rightRail.Value = (rightRail.Value + 1) % vertexCount;
-                }
+                FollowRailChanged(this, parent, FollowRails);
             }
         }
-        protected static ButtonPanel AddTurnProperty(UIComponent parent)
+        private ButtonPanel AddTurnProperty(MarkupFiller filler, UIComponent parent)
         {
-            var buttonPanel = ComponentPool.Get<ButtonPanel>(parent, "Turn");
-            buttonPanel.Text = Localize.StyleOption_Turn;
-            buttonPanel.Init();
+            var turnButton = ComponentPool.Get<ButtonPanel>(parent, "Turn");
+            turnButton.Text = Localize.StyleOption_Turn;
+            turnButton.Init();
 
-            return buttonPanel;
+            turnButton.OnButtonClick += () =>
+            {
+                var vertexCount = filler.Contour.ProcessedCount;
+
+                if (parent.Find<FillerRailSelectPropertyPanel>("LeftRail") is FillerRailSelectPropertyPanel leftRailProperty)
+                    leftRailProperty.Value = (leftRailProperty.Value + 1) % vertexCount;
+                if (parent.Find<FillerRailSelectPropertyPanel>("RightRail") is FillerRailSelectPropertyPanel rightRailProperty)
+                    rightRailProperty.Value = (rightRailProperty.Value + 1) % vertexCount;
+            };
+
+            return turnButton;
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
@@ -643,25 +633,9 @@ namespace NodeMarkup.Manager
             if (!isTemplate)
             {
                 AddRailProperty(this, filler.Contour, parent, out var leftRail, out var rightRail);
-                var turnAndInvert = AddInvertAndTurnProperty(parent, out int invertIndex, out int turnIndex);
-
                 components.Add(leftRail);
                 components.Add(rightRail);
-                components.Add(turnAndInvert);
-
-                var vertexCount = filler.Contour.ProcessedCount;
-                turnAndInvert.OnButtonClick += OnButtonClick;
-
-                void OnButtonClick(int buttonIndex)
-                {
-                    if (buttonIndex == invertIndex)
-                        Invert.Value = !Invert;
-                    else if (buttonIndex == turnIndex)
-                    {
-                        leftRail.Value = (leftRail.Value + 1) % vertexCount;
-                        rightRail.Value = (rightRail.Value + 1) % vertexCount;
-                    }
-                }
+                components.Add(AddInvertAndTurnProperty(filler, parent));
             }
         }
         protected FloatPropertyPanel AddAngleBetweenProperty(UIComponent parent)
@@ -682,14 +656,31 @@ namespace NodeMarkup.Manager
 
             return angleProperty;
         }
-        protected static ButtonsPanel AddInvertAndTurnProperty(UIComponent parent, out int invertIndex, out int turnIndex)
+        protected ButtonsPanel AddInvertAndTurnProperty(MarkupFiller filler, UIComponent parent)
         {
-            var buttonsPanel = ComponentPool.Get<ButtonsPanel>(parent, "TurnAndInvert");
-            invertIndex = buttonsPanel.AddButton(Localize.StyleOption_Invert);
-            turnIndex = buttonsPanel.AddButton(Localize.StyleOption_Turn);
-            buttonsPanel.Init();
+            var turnAndInvert = ComponentPool.Get<ButtonsPanel>(parent, "TurnAndInvert");
+            var invertIndex = turnAndInvert.AddButton(Localize.StyleOption_Invert);
+            var turnIndex = turnAndInvert.AddButton(Localize.StyleOption_Turn);
+            turnAndInvert.Init();
 
-            return buttonsPanel;
+            turnAndInvert.OnButtonClick += (int buttonIndex) =>
+            {
+                if (buttonIndex == invertIndex)
+                {
+                    Invert.Value = !Invert;
+                }
+                else if (buttonIndex == turnIndex)
+                {
+                    var vertexCount = filler.Contour.ProcessedCount;
+
+                    if (parent.Find<FillerRailSelectPropertyPanel>(LeftRail) is FillerRailSelectPropertyPanel leftRailProperty)
+                        leftRailProperty.Value = (leftRailProperty.Value + 1) % vertexCount;
+                    if (parent.Find<FillerRailSelectPropertyPanel>(RightRail) is FillerRailSelectPropertyPanel rightRailProperty)
+                        rightRailProperty.Value = (rightRailProperty.Value + 1) % vertexCount;
+                }
+            };
+
+            return turnAndInvert;
         }
 
         protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
@@ -899,21 +890,11 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                var followRails = AddFollowRailsProperty(this, parent);
+                components.Add(AddFollowRailsProperty(this, parent));
                 AddRailProperty(this, filler.Contour, parent, out var leftRail, out var rightRail);
 
-                components.Add(followRails);
                 components.Add(leftRail);
                 components.Add(rightRail);
-
-                followRails.OnSelectObjectChanged += ChangeRailsVisible;
-                ChangeRailsVisible(followRails.SelectedObject);
-
-                void ChangeRailsVisible(bool followRails)
-                {
-                    leftRail.isVisible = followRails;
-                    rightRail.isVisible = followRails;
-                }
             }
         }
 
