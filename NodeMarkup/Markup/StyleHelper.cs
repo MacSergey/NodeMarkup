@@ -628,7 +628,13 @@ namespace NodeMarkup.Manager
 
             return false;
 
-            static StraightTrajectory Calculate(ITrajectory trajectory) => trajectory as StraightTrajectory ?? new StraightTrajectory(trajectory.StartPosition, trajectory.EndPosition);
+            static StraightTrajectory Calculate(ITrajectory trajectory)
+            {
+                if (trajectory is StraightTrajectory straight)
+                    return straight;
+                else
+                    return new StraightTrajectory(trajectory.StartPosition, trajectory.EndPosition);
+            }
         }
         private static bool CheckRadius(StraightTrajectory first, StraightTrajectory second, float radius, ref Vector3 center, ref Vector3 firstDir, ref Vector3 secondDir)
         {
