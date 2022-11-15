@@ -127,24 +127,25 @@ namespace NodeMarkup.Manager
             var components = new List<EditorItem>();
 
             if (this is IColorStyle)
-                components.Add(AddColorProperty(parent));
+                components.Add(AddColorProperty(parent, false));
             if (this is IWidthStyle)
-                components.Add(AddWidthProperty(parent));
+                components.Add(AddWidthProperty(parent, false));
 
             return components;
         }
-        private ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent)
+        private ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent, bool canCollapse)
         {
             var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(Color));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
+            colorProperty.CanCollapse = canCollapse;
             colorProperty.Init(GetDefault()?.Color);
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
 
             return colorProperty;
         }
-        private FloatPropertyPanel AddWidthProperty(UIComponent parent)
+        private FloatPropertyPanel AddWidthProperty(UIComponent parent, bool canCollapse)
         {
             var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Width));
             widthProperty.Text = Localize.StyleOption_Width;
@@ -154,13 +155,14 @@ namespace NodeMarkup.Manager
             widthProperty.WheelTip = Settings.ShowToolTip;
             widthProperty.CheckMin = true;
             widthProperty.MinValue = WidthMinValue;
+            widthProperty.CanCollapse = canCollapse;
             widthProperty.Init();
             widthProperty.Value = Width;
             widthProperty.OnValueChanged += (float value) => Width.Value = value;
 
             return widthProperty;
         }
-        protected FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent)
+        protected FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
         {
             var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.DashLength));
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
@@ -170,13 +172,14 @@ namespace NodeMarkup.Manager
             dashLengthProperty.WheelTip = Settings.ShowToolTip;
             dashLengthProperty.CheckMin = true;
             dashLengthProperty.MinValue = 0.1f;
+            dashLengthProperty.CanCollapse = canCollapse;
             dashLengthProperty.Init();
             dashLengthProperty.Value = dashedStyle.DashLength;
             dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength.Value = value;
 
             return dashLengthProperty;
         }
-        protected FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent)
+        protected FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
         {
             var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.SpaceLength));
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
@@ -186,16 +189,18 @@ namespace NodeMarkup.Manager
             spaceLengthProperty.WheelTip = Settings.ShowToolTip;
             spaceLengthProperty.CheckMin = true;
             spaceLengthProperty.MinValue = 0.1f;
+            spaceLengthProperty.CanCollapse = canCollapse;
             spaceLengthProperty.Init();
             spaceLengthProperty.Value = dashedStyle.SpaceLength;
             spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength.Value = value;
 
             return spaceLengthProperty;
         }
-        protected ButtonPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent)
+        protected ButtonPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent, bool canCollapse)
         {
             var buttonsPanel = ComponentPool.Get<ButtonPanel>(parent, nameof(asymStyle.Invert));
             buttonsPanel.Text = Localize.StyleOption_Invert;
+            buttonsPanel.CanCollapse = canCollapse;
             buttonsPanel.Init();
             buttonsPanel.OnButtonClick += OnButtonClick;
 

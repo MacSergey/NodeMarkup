@@ -24,7 +24,9 @@ namespace NodeMarkup.UI.Editors
         private CrosswalkBorderSelectPropertyPanel LeftBorder { get; set; }
         private WarningTextProperty Warning { get; set; }
         private StylePropertyPanel Style { get; set; }
+        private MoreOptionsPanel MoreOptionsButton { get; set; }
         private CrosswalkBorderToolMode CrosswalkBorderToolMode { get; }
+        private bool ShowMoreOptions { get; set; }
 
         public CrosswalkBorderSelectPropertyPanel HoverBorderPanel { get; private set; }
 
@@ -47,6 +49,7 @@ namespace NodeMarkup.UI.Editors
 
             AddBordersProperties();
             AddStyleTypeProperty();
+            AddMoreOptions();
             AddStyleProperties();
 
             FillBorders();
@@ -65,6 +68,8 @@ namespace NodeMarkup.UI.Editors
             LeftBorder = null;
             Warning = null;
             Style = null;
+            MoreOptionsButton = null;
+            ShowMoreOptions = false;
 
             StyleProperties.Clear();
         }
@@ -131,6 +136,24 @@ namespace NodeMarkup.UI.Editors
 
             panel.OnValueChanged += action;
         }
+        private void AddMoreOptions()
+        {
+            MoreOptionsButton = ComponentPool.Get<MoreOptionsPanel>(PropertiesPanel, nameof(MoreOptionsButton));
+            MoreOptionsButton.Init();
+            MoreOptionsButton.OnButtonClick += () =>
+            {
+                ShowMoreOptions = !ShowMoreOptions;
+                SetOptionsCollapse();
+            };
+        }
+        private void SetOptionsCollapse()
+        {
+            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {NodeMarkup.Localize.Editor_LessOptions} ▲" : $"▼ {NodeMarkup.Localize.Editor_MoreOptions} ▼";
+
+            foreach (var option in StyleProperties)
+                option.IsCollapsed = !ShowMoreOptions;
+        }
+
         private CrosswalkBorderSelectPropertyPanel AddBorderProperty(BorderPosition position, string name, string text)
         {
             var border = ComponentPool.Get<CrosswalkBorderSelectPropertyPanel>(PropertiesPanel, name);
@@ -162,7 +185,17 @@ namespace NodeMarkup.UI.Editors
             StyleProperties = EditObject.Style.Value.GetUIComponents(EditObject, PropertiesPanel);
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
+
+            if (Settings.CollapseOptions && StyleProperties.Count(p => p.CanCollapse) >= 2)
+            {
+                MoreOptionsButton.isVisible = true;
+                MoreOptionsButton.BringToFront();
+                SetOptionsCollapse();
+            }
+            else
+                MoreOptionsButton.isVisible = false;
         }
+
         private void ClearStyleProperties()
         {
             foreach (var property in StyleProperties)

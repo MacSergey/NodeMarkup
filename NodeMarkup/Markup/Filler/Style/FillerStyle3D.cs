@@ -319,13 +319,13 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddElevationProperty(this, parent));
+            components.Add(AddElevationProperty(this, parent, false));
 
             if (!isTemplate)
             {
-                components.Add(AddCornerRadiusProperty(this, parent));
+                components.Add(AddCornerRadiusProperty(this, parent, false));
                 if (filler.IsMedian)
-                    components.Add(AddMedianCornerRadiusProperty(this, parent));
+                    components.Add(AddMedianCornerRadiusProperty(this, parent, true));
             }
 #if DEBUG
             //var material = GetVectorProperty(parent, "Material");
@@ -367,7 +367,7 @@ namespace NodeMarkup.Manager
 #endif
         }
 
-        private static FloatPropertyPanel AddElevationProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent)
+        private static FloatPropertyPanel AddElevationProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, bool canCollapse)
         {
             var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Elevation));
             elevationProperty.Text = Localize.FillerStyle_Elevation;
@@ -379,13 +379,14 @@ namespace NodeMarkup.Manager
             elevationProperty.MinValue = 0f;
             elevationProperty.CheckMax = true;
             elevationProperty.MaxValue = 10f;
+            elevationProperty.CanCollapse = canCollapse;
             elevationProperty.Init();
             elevationProperty.Value = triangulationStyle.Elevation;
             elevationProperty.OnValueChanged += (float value) => triangulationStyle.Elevation.Value = value;
 
             return elevationProperty;
         }
-        private static FloatPropertyPanel AddCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent)
+        private static FloatPropertyPanel AddCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, bool canCollapse)
         {
             var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CornerRadius));
             cornerRadiusProperty.Text = Localize.FillerStyle_CornerRadius;
@@ -397,13 +398,14 @@ namespace NodeMarkup.Manager
             cornerRadiusProperty.MinValue = 0f;
             cornerRadiusProperty.CheckMax = true;
             cornerRadiusProperty.MaxValue = 10f;
+            cornerRadiusProperty.CanCollapse = canCollapse;
             cornerRadiusProperty.Init();
             cornerRadiusProperty.Value = triangulationStyle.CornerRadius;
             cornerRadiusProperty.OnValueChanged += (float value) => triangulationStyle.CornerRadius.Value = value;
 
             return cornerRadiusProperty;
         }
-        private static FloatPropertyPanel AddMedianCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent)
+        private static FloatPropertyPanel AddMedianCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, bool canCollapse)
         {
             var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCornerRadius));
             cornerRadiusProperty.Text = Localize.FillerStyle_MedianCornerRadius;
@@ -415,6 +417,7 @@ namespace NodeMarkup.Manager
             cornerRadiusProperty.MinValue = 0f;
             cornerRadiusProperty.CheckMax = true;
             cornerRadiusProperty.MaxValue = 10f;
+            cornerRadiusProperty.CanCollapse = canCollapse;
             cornerRadiusProperty.Init();
             cornerRadiusProperty.Value = triangulationStyle.MedianCornerRadius;
             cornerRadiusProperty.OnValueChanged += (float value) => triangulationStyle.MedianCornerRadius.Value = value;
@@ -592,12 +595,12 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddCurbSizeProperty(this, parent));
+                components.Add(AddCurbSizeProperty(this, parent, false));
                 if (filler.IsMedian)
-                    components.Add(AddMedianCurbSizeProperty(this, parent));
+                    components.Add(AddMedianCurbSizeProperty(this, parent, true));
             }
         }
-        private static FloatPropertyPanel AddCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent)
+        private static FloatPropertyPanel AddCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent, bool canCollapse)
         {
             var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CurbSize));
             curbSizeProperty.Text = Localize.FillerStyle_CurbSize;
@@ -609,13 +612,14 @@ namespace NodeMarkup.Manager
             curbSizeProperty.MinValue = 0f;
             curbSizeProperty.CheckMax = true;
             curbSizeProperty.MaxValue = 10f;
+            curbSizeProperty.CanCollapse = canCollapse;
             curbSizeProperty.Init();
             curbSizeProperty.Value = curbStyle.CurbSize;
             curbSizeProperty.OnValueChanged += (float value) => curbStyle.CurbSize.Value = value;
 
             return curbSizeProperty;
         }
-        private static FloatPropertyPanel AddMedianCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent)
+        private static FloatPropertyPanel AddMedianCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent, bool canCollapse)
         {
             var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCurbSize));
             curbSizeProperty.Text = Localize.FillerStyle_MedianCurbSize;
@@ -627,6 +631,7 @@ namespace NodeMarkup.Manager
             curbSizeProperty.MinValue = 0f;
             curbSizeProperty.CheckMax = true;
             curbSizeProperty.MaxValue = 10f;
+            curbSizeProperty.CanCollapse = canCollapse;
             curbSizeProperty.Init();
             curbSizeProperty.Value = curbStyle.MedianCurbSize;
             curbSizeProperty.OnValueChanged += (float value) => curbStyle.MedianCurbSize.Value = value;

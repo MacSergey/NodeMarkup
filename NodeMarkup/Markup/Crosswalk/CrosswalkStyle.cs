@@ -63,13 +63,14 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddOffsetBeforeProperty(this, parent));
-            components.Add(AddOffsetAfterProperty(this, parent));
+            components.Add(AddOffsetBeforeProperty(parent, true));
+            components.Add(AddOffsetAfterProperty(parent, true));
         }
-        protected BoolListPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent)
+        protected BoolListPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent, bool canCollapse)
         {
-            var parallelProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(parallelStyle.Parallel));
+            var parallelProperty = ComponentPool.GetAfter<BoolListPropertyPanel>(parent, nameof(Width), nameof(parallelStyle.Parallel));
             parallelProperty.Text = Localize.StyleOption_ParallelToLanes;
+            parallelProperty.CanCollapse = canCollapse;
             parallelProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             parallelProperty.SelectedObject = parallelStyle.Parallel;
             parallelProperty.OnSelectObjectChanged += (value) => parallelStyle.Parallel.Value = value;
@@ -77,38 +78,40 @@ namespace NodeMarkup.Manager
             return parallelProperty;
         }
 
-        protected FloatPropertyPanel AddOffsetBeforeProperty(CustomCrosswalkStyle customStyle, UIComponent parent)
+        protected FloatPropertyPanel AddOffsetBeforeProperty(UIComponent parent, bool canCollapse)
         {
-            var offsetBeforeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(customStyle.OffsetBefore));
+            var offsetBeforeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetBefore));
             offsetBeforeProperty.Text = Localize.StyleOption_OffsetBefore;
             offsetBeforeProperty.Format = Localize.NumberFormat_Meter;
             offsetBeforeProperty.UseWheel = true;
             offsetBeforeProperty.WheelStep = 0.1f;
             offsetBeforeProperty.CheckMin = true;
             offsetBeforeProperty.WheelTip = Settings.ShowToolTip;
+            offsetBeforeProperty.CanCollapse = canCollapse;
             offsetBeforeProperty.Init();
-            offsetBeforeProperty.Value = customStyle.OffsetBefore;
-            offsetBeforeProperty.OnValueChanged += (float value) => customStyle.OffsetBefore.Value = value;
+            offsetBeforeProperty.Value = OffsetBefore;
+            offsetBeforeProperty.OnValueChanged += (float value) => OffsetBefore.Value = value;
 
             return offsetBeforeProperty;
         }
-        protected FloatPropertyPanel AddOffsetAfterProperty(CustomCrosswalkStyle customStyle, UIComponent parent)
+        protected FloatPropertyPanel AddOffsetAfterProperty(UIComponent parent, bool canCollapse)
         {
-            var offsetAfterProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(customStyle.OffsetAfter));
+            var offsetAfterProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetAfter));
             offsetAfterProperty.Text = Localize.StyleOption_OffsetAfter;
             offsetAfterProperty.Format = Localize.NumberFormat_Meter;
             offsetAfterProperty.UseWheel = true;
             offsetAfterProperty.WheelStep = 0.1f;
             offsetAfterProperty.CheckMin = true;
             offsetAfterProperty.WheelTip = Settings.ShowToolTip;
+            offsetAfterProperty.CanCollapse = canCollapse;
             offsetAfterProperty.Init();
-            offsetAfterProperty.Value = customStyle.OffsetAfter;
-            offsetAfterProperty.OnValueChanged += (float value) => customStyle.OffsetAfter.Value = value;
+            offsetAfterProperty.Value = OffsetAfter;
+            offsetAfterProperty.OnValueChanged += (float value) => OffsetAfter.Value = value;
 
             return offsetAfterProperty;
         }
 
-        protected FloatPropertyPanel AddLineWidthProperty(ILinedCrosswalk linedStyle, UIComponent parent)
+        protected FloatPropertyPanel AddLineWidthProperty(ILinedCrosswalk linedStyle, UIComponent parent, bool canCollapse)
         {
             var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(linedStyle.LineWidth));
             widthProperty.Text = Localize.StyleOption_LineWidth;
@@ -118,6 +121,7 @@ namespace NodeMarkup.Manager
             widthProperty.WheelTip = Settings.ShowToolTip;
             widthProperty.CheckMin = true;
             widthProperty.MinValue = 0.05f;
+            widthProperty.CanCollapse = canCollapse;
             widthProperty.Init();
             widthProperty.Value = linedStyle.LineWidth;
             widthProperty.OnValueChanged += (float value) => linedStyle.LineWidth.Value = value;
@@ -174,7 +178,7 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddLineWidthProperty(this, parent));
+            components.Add(AddLineWidthProperty(this, parent, false));
         }
         public override XElement ToXml()
         {
@@ -300,25 +304,26 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
 
-            components.Add(AddUseSecondColorProperty(parent));
-            components.Add(AddSecondColorProperty(parent));
+            components.Add(AddParallelProperty(this, parent, true));
+
+            components.Add(AddUseSecondColorProperty(parent, true));
+            components.Add(AddSecondColorProperty(parent, true));
             UseSecondColorChanged(parent, UseSecondColor);
 
-            components.Add(AddDashLengthProperty(this, parent));
-            components.Add(AddSpaceLengthProperty(this, parent));
+            components.Add(AddDashLengthProperty(this, parent, false));
+            components.Add(AddSpaceLengthProperty(this, parent, false));
 
-            components.Add(AddUseGapProperty(parent));
-            components.Add(AddGapLengthProperty(parent));
-            components.Add(AddGapPeriodProperty(parent));
+            components.Add(AddUseGapProperty(parent, true));
+            components.Add(AddGapLengthProperty(parent, true));
+            components.Add(AddGapPeriodProperty(parent, true));
             UseGapChanged(parent, UseGap);
-
-            components.Add(AddParallelProperty(this, parent));
         }
 
-        protected BoolListPropertyPanel AddUseSecondColorProperty(UIComponent parent)
+        protected BoolListPropertyPanel AddUseSecondColorProperty(UIComponent parent, bool canCollapse)
         {
             var useSecondColorProperty = ComponentPool.GetBefore<BoolListPropertyPanel>(parent, nameof(Color), nameof(UseSecondColor));
             useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
+            useSecondColorProperty.CanCollapse = canCollapse;
             useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
             useSecondColorProperty.SelectedObject = UseSecondColor;
             useSecondColorProperty.OnSelectObjectChanged += (value) =>
@@ -330,18 +335,27 @@ namespace NodeMarkup.Manager
 
             return useSecondColorProperty;
         }
-        protected void UseSecondColorChanged( UIComponent parent, bool value)
+        protected void UseSecondColorChanged(UIComponent parent, bool value)
         {
+            if (parent.Find<ColorAdvancedPropertyPanel>(nameof(Color)) is ColorAdvancedPropertyPanel mainColorProperty)
+            {
+                mainColorProperty.Text = value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
+            }
+
             if (parent.Find<ColorAdvancedPropertyPanel>(nameof(SecondColor)) is ColorAdvancedPropertyPanel secondColorProperty)
-                secondColorProperty.isVisible = value;
+            {
+                secondColorProperty.IsHidden = !value;
+                secondColorProperty.Text = value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
+            }
         }
 
 
-        protected ColorAdvancedPropertyPanel AddSecondColorProperty(UIComponent parent)
+        protected ColorAdvancedPropertyPanel AddSecondColorProperty(UIComponent parent, bool canCollapse)
         {
             var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(Color), nameof(SecondColor));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
+            colorProperty.CanCollapse = canCollapse;
             colorProperty.Init((GetDefault() as ZebraCrosswalkStyle)?.SecondColor);
             colorProperty.Value = SecondColor;
             colorProperty.OnValueChanged += (Color32 color) => SecondColor.Value = color;
@@ -349,10 +363,11 @@ namespace NodeMarkup.Manager
             return colorProperty;
         }
 
-        protected BoolListPropertyPanel AddUseGapProperty(UIComponent parent)
+        protected BoolListPropertyPanel AddUseGapProperty(UIComponent parent, bool canCollapse)
         {
             var useGapProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(UseGap));
             useGapProperty.Text = Localize.StyleOption_UseGap;
+            useGapProperty.CanCollapse = canCollapse;
             useGapProperty.Init();
             useGapProperty.SelectedObject = UseGap;
             useGapProperty.OnSelectObjectChanged += (value) =>
@@ -366,12 +381,12 @@ namespace NodeMarkup.Manager
         protected void UseGapChanged(UIComponent parent, bool value)
         {
             if (parent.Find<FloatPropertyPanel>(nameof(GapLength)) is FloatPropertyPanel gapLengthProperty)
-                gapLengthProperty.isVisible = value;
+                gapLengthProperty.IsHidden = !value;
             if (parent.Find<IntPropertyPanel>(nameof(GapPeriod)) is IntPropertyPanel gapPeriodProperty)
-                gapPeriodProperty.isVisible = value;
+                gapPeriodProperty.IsHidden = !value;
         }
 
-        protected FloatPropertyPanel AddGapLengthProperty(UIComponent parent)
+        protected FloatPropertyPanel AddGapLengthProperty(UIComponent parent, bool canCollapse)
         {
             var gapLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(GapLength));
             gapLengthProperty.Text = Localize.StyleOption_GapLength;
@@ -381,13 +396,14 @@ namespace NodeMarkup.Manager
             gapLengthProperty.WheelTip = Settings.ShowToolTip;
             gapLengthProperty.CheckMin = true;
             gapLengthProperty.MinValue = 0.1f;
+            gapLengthProperty.CanCollapse = canCollapse;
             gapLengthProperty.Init();
             gapLengthProperty.Value = GapLength;
             gapLengthProperty.OnValueChanged += (float value) => GapLength.Value = value;
 
             return gapLengthProperty;
         }
-        protected IntPropertyPanel AddGapPeriodProperty(UIComponent parent)
+        protected IntPropertyPanel AddGapPeriodProperty(UIComponent parent, bool canCollapse)
         {
             var gapPeriodProperty = ComponentPool.Get<IntPropertyPanel>(parent, nameof(GapPeriod));
             gapPeriodProperty.Text = Localize.StyleOption_GapPeriod;
@@ -396,6 +412,7 @@ namespace NodeMarkup.Manager
             gapPeriodProperty.WheelTip = Settings.ShowToolTip;
             gapPeriodProperty.CheckMin = true;
             gapPeriodProperty.MinValue = DefaultCrosswalkLineCount;
+            gapPeriodProperty.CanCollapse = canCollapse;
             gapPeriodProperty.Init();
             gapPeriodProperty.Value = GapPeriod;
             gapPeriodProperty.OnValueChanged += (int value) => GapPeriod.Value = value;
@@ -519,11 +536,11 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            var offsetBetween = AddOffsetBetweenProperty(parent);
+            var offsetBetween = AddOffsetBetweenProperty(parent, false);
             components.Add(offsetBetween);
         }
 
-        protected FloatPropertyPanel AddOffsetBetweenProperty(UIComponent parent)
+        protected FloatPropertyPanel AddOffsetBetweenProperty(UIComponent parent, bool canCollapse)
         {
             var offsetBetweenProperty = ComponentPool.GetAfter<FloatPropertyPanel>(parent, nameof(OffsetBefore), nameof(Offset));
             offsetBetweenProperty.Text = Localize.StyleOption_OffsetBetween;
@@ -533,6 +550,7 @@ namespace NodeMarkup.Manager
             offsetBetweenProperty.CheckMin = true;
             offsetBetweenProperty.MinValue = 0.1f;
             offsetBetweenProperty.WheelTip = Settings.ShowToolTip;
+            offsetBetweenProperty.CanCollapse = canCollapse;
             offsetBetweenProperty.Init();
             offsetBetweenProperty.Value = Offset;
             offsetBetweenProperty.OnValueChanged += (float value) => Offset.Value = value;
@@ -608,8 +626,8 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent));
-            components.Add(AddSpaceLengthProperty(this, parent));
+            components.Add(AddDashLengthProperty(this, parent, false));
+            components.Add(AddSpaceLengthProperty(this, parent, false));
         }
 
         protected override IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod)
@@ -694,8 +712,8 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent));
-            components.Add(AddSpaceLengthProperty(this, parent));
+            components.Add(AddDashLengthProperty(this, parent, false));
+            components.Add(AddSpaceLengthProperty(this, parent, false));
         }
 
         public override XElement ToXml()
@@ -791,12 +809,12 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddSquareSideProperty(parent));
-            components.Add(AddLineCountProperty(parent));
+            components.Add(AddSquareSideProperty(parent, false));
+            components.Add(AddLineCountProperty(parent, false));
             if (!isTemplate)
-                components.Add(AddInvertProperty(this, parent));
+                components.Add(AddInvertProperty(this, parent, false));
         }
-        protected FloatPropertyPanel AddSquareSideProperty(UIComponent parent)
+        protected FloatPropertyPanel AddSquareSideProperty(UIComponent parent, bool canCollapse)
         {
             var squareSideProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(SquareSide));
             squareSideProperty.Text = Localize.StyleOption_SquareSide;
@@ -806,13 +824,14 @@ namespace NodeMarkup.Manager
             squareSideProperty.WheelTip = Settings.ShowToolTip;
             squareSideProperty.CheckMin = true;
             squareSideProperty.MinValue = 0.1f;
+            squareSideProperty.CanCollapse = canCollapse;
             squareSideProperty.Init();
             squareSideProperty.Value = SquareSide;
             squareSideProperty.OnValueChanged += (float value) => SquareSide.Value = value;
 
             return squareSideProperty;
         }
-        protected IntPropertyPanel AddLineCountProperty(UIComponent parent)
+        protected IntPropertyPanel AddLineCountProperty(UIComponent parent, bool canCollapse)
         {
             var lineCountProperty = ComponentPool.Get<IntPropertyPanel>(parent, nameof(LineCount));
             lineCountProperty.Text = Localize.StyleOption_LineCount;
@@ -821,6 +840,7 @@ namespace NodeMarkup.Manager
             lineCountProperty.WheelTip = Settings.ShowToolTip;
             lineCountProperty.CheckMin = true;
             lineCountProperty.MinValue = DefaultCrosswalkLineCount;
+            lineCountProperty.CanCollapse = canCollapse;
             lineCountProperty.Init();
             lineCountProperty.Value = LineCount;
             lineCountProperty.OnValueChanged += (int value) => LineCount.Value = value;

@@ -70,23 +70,23 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddPrefabProperty(parent));
+            components.Add(AddPrefabProperty(parent, false));
 
-            components.Add(AddProbabilityProperty(parent));
-            components.Add(AddStepProperty(parent));
-            components.Add(AddAngleRangeProperty(parent));
-            components.Add(AddTiltRangeProperty(parent));
-            components.Add(AddSlopeRangeProperty(parent));
-            components.Add(AddShiftProperty(parent));
-            components.Add(AddElevationProperty(parent));
-            components.Add(AddScaleRangeProperty(parent));
-            components.Add(AddOffsetBeforeProperty(parent));
-            components.Add(AddOffsetAfterProperty(parent));
+            components.Add(AddProbabilityProperty(parent, true));
+            components.Add(AddStepProperty(parent, false));
+            components.Add(AddShiftProperty(parent, false));
+            components.Add(AddElevationProperty(parent, false));
+            components.Add(AddAngleRangeProperty(parent, false));
+            components.Add(AddTiltRangeProperty(parent, true));
+            components.Add(AddSlopeRangeProperty(parent, true));
+            components.Add(AddScaleRangeProperty(parent, true));
+            components.Add(AddOffsetBeforeProperty(parent, true));
+            components.Add(AddOffsetAfterProperty(parent, true));
         }
 
-        protected abstract EditorItem AddPrefabProperty(UIComponent parent);
+        protected abstract EditorItem AddPrefabProperty(UIComponent parent, bool canCollapse);
 
-        protected IntPropertyPanel AddProbabilityProperty(UIComponent parent)
+        protected IntPropertyPanel AddProbabilityProperty(UIComponent parent, bool canCollapse)
         {
             var probabilityProperty = ComponentPool.Get<IntPropertyPanel>(parent, nameof(Probability));
             probabilityProperty.Text = Localize.StyleOption_ObjectProbability;
@@ -98,6 +98,7 @@ namespace NodeMarkup.Manager
             probabilityProperty.MinValue = 0;
             probabilityProperty.CheckMax = true;
             probabilityProperty.MaxValue = 100;
+            probabilityProperty.CanCollapse = canCollapse;
             probabilityProperty.Init();
             probabilityProperty.Value = Probability;
             probabilityProperty.OnValueChanged += (int value) => Probability.Value = value;
@@ -105,7 +106,7 @@ namespace NodeMarkup.Manager
             return probabilityProperty;
         }
 
-        protected FloatStaticAutoProperty AddStepProperty(UIComponent parent)
+        protected FloatStaticAutoProperty AddStepProperty(UIComponent parent, bool canCollapse)
         {
             var stepProperty = ComponentPool.Get<FloatStaticAutoProperty>(parent, nameof(Step));
             stepProperty.Text = Localize.StyleOption_ObjectStep;
@@ -115,6 +116,7 @@ namespace NodeMarkup.Manager
             stepProperty.WheelTip = Settings.ShowToolTip;
             stepProperty.CheckMin = true;
             stepProperty.MinValue = 0.1f;
+            stepProperty.CanCollapse = canCollapse;
             stepProperty.Init();
 
             if (Step.HasValue)
@@ -134,7 +136,7 @@ namespace NodeMarkup.Manager
             return stepProperty;
         }
 
-        protected FloatStaticRangeProperty AddAngleRangeProperty(UIComponent parent)
+        protected FloatStaticRangeProperty AddAngleRangeProperty(UIComponent parent, bool canCollapse)
         {
             var angleProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Angle));
             angleProperty.Text = Localize.StyleOption_ObjectAngle;
@@ -148,6 +150,7 @@ namespace NodeMarkup.Manager
             angleProperty.MaxValue = 180;
             angleProperty.AllowInvert = true;
             angleProperty.CyclicalValue = true;
+            angleProperty.CanCollapse = canCollapse;
             angleProperty.Init();
             angleProperty.SetValues(Angle.Value.x, Angle.Value.y);
             angleProperty.OnValueChanged += (float valueA, float valueB) => Angle.Value = new Vector2(valueA, valueB);
@@ -155,7 +158,7 @@ namespace NodeMarkup.Manager
             return angleProperty;
         }
 
-        protected FloatStaticRangeProperty AddTiltRangeProperty(UIComponent parent)
+        protected FloatStaticRangeProperty AddTiltRangeProperty(UIComponent parent, bool canCollapse)
         {
             var tiltProperty = ComponentPool.GetAfter<FloatStaticRangeProperty>(parent, nameof(Angle), nameof(Tilt));
             tiltProperty.Text = Localize.StyleOption_Tilt;
@@ -169,6 +172,7 @@ namespace NodeMarkup.Manager
             tiltProperty.MaxValue = 90;
             tiltProperty.AllowInvert = false;
             tiltProperty.CyclicalValue = false;
+            tiltProperty.CanCollapse = canCollapse;
             tiltProperty.Init();
             tiltProperty.SetValues(Tilt.Value.x, Tilt.Value.y);
             tiltProperty.OnValueChanged += (float valueA, float valueB) => Tilt.Value = new Vector2(valueA, valueB);
@@ -176,7 +180,7 @@ namespace NodeMarkup.Manager
             return tiltProperty;
         }
 
-        protected FloatStaticRangeAutoProperty AddSlopeRangeProperty(UIComponent parent)
+        protected FloatStaticRangeAutoProperty AddSlopeRangeProperty(UIComponent parent, bool canCollapse)
         {
             var slopeProperty = ComponentPool.GetAfter<FloatStaticRangeAutoProperty>(parent, nameof(Tilt), nameof(Slope));
             slopeProperty.Text = Localize.StyleOption_Slope;
@@ -190,6 +194,7 @@ namespace NodeMarkup.Manager
             slopeProperty.MaxValue = 90;
             slopeProperty.AllowInvert = false;
             slopeProperty.CyclicalValue = false;
+            slopeProperty.CanCollapse = canCollapse;
             slopeProperty.Init();
 
             if (Slope.HasValue)
@@ -203,7 +208,7 @@ namespace NodeMarkup.Manager
             return slopeProperty;
         }
 
-        protected FloatStaticRangeProperty AddShiftProperty(UIComponent parent)
+        protected FloatStaticRangeProperty AddShiftProperty(UIComponent parent, bool canCollapse)
         {
             var shiftProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Shift));
             shiftProperty.Text = Localize.StyleOption_ObjectShift;
@@ -217,6 +222,7 @@ namespace NodeMarkup.Manager
             shiftProperty.MaxValue = 50;
             shiftProperty.AllowInvert = false;
             shiftProperty.CyclicalValue = false;
+            shiftProperty.CanCollapse = canCollapse;
             shiftProperty.Init();
             shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
             shiftProperty.OnValueChanged += (float valueA, float valueB) => Shift.Value = new Vector2(valueA, valueB);
@@ -224,7 +230,7 @@ namespace NodeMarkup.Manager
             return shiftProperty;
         }
 
-        protected FloatStaticRangeProperty AddScaleRangeProperty(UIComponent parent)
+        protected FloatStaticRangeProperty AddScaleRangeProperty(UIComponent parent, bool canCollapse)
         {
             var scaleProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Scale));
             scaleProperty.Text = Localize.StyleOption_ObjectScale;
@@ -238,6 +244,7 @@ namespace NodeMarkup.Manager
             scaleProperty.MaxValue = 500f;
             scaleProperty.AllowInvert = false;
             scaleProperty.CyclicalValue = false;
+            scaleProperty.CanCollapse = canCollapse;
             scaleProperty.Init();
             scaleProperty.SetValues(Scale.Value.x * 100f, Scale.Value.y * 100f);
             scaleProperty.OnValueChanged += (float valueA, float valueB) => Scale.Value = new Vector2(valueA, valueB) * 0.01f;
@@ -245,7 +252,7 @@ namespace NodeMarkup.Manager
             return scaleProperty;
         }
 
-        protected FloatStaticRangeProperty AddElevationProperty(UIComponent parent)
+        protected FloatStaticRangeProperty AddElevationProperty(UIComponent parent, bool canCollapse)
         {
             var elevationProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Elevation));
             elevationProperty.Text = Localize.LineStyle_Elevation;
@@ -259,13 +266,14 @@ namespace NodeMarkup.Manager
             elevationProperty.MaxValue = 10;
             elevationProperty.AllowInvert = false;
             elevationProperty.CyclicalValue = false;
+            elevationProperty.CanCollapse = canCollapse;
             elevationProperty.Init();
             elevationProperty.SetValues(Elevation.Value.x, Elevation.Value.y);
             elevationProperty.OnValueChanged += (float valueA, float valueB) => Elevation.Value = new Vector2(valueA, valueB);
 
             return elevationProperty;
         }
-        protected FloatPropertyPanel AddOffsetBeforeProperty(UIComponent parent)
+        protected FloatPropertyPanel AddOffsetBeforeProperty(UIComponent parent, bool canCollapse)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetBefore));
             offsetProperty.Text = Localize.StyleOption_OffsetBefore;
@@ -275,13 +283,14 @@ namespace NodeMarkup.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0;
+            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init();
             offsetProperty.Value = OffsetBefore;
             offsetProperty.OnValueChanged += (float value) => OffsetBefore.Value = value;
 
             return offsetProperty;
         }
-        protected FloatPropertyPanel AddOffsetAfterProperty(UIComponent parent)
+        protected FloatPropertyPanel AddOffsetAfterProperty(UIComponent parent, bool canCollapse)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetAfter));
             offsetProperty.Text = Localize.StyleOption_OffsetAfter;
@@ -291,6 +300,7 @@ namespace NodeMarkup.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0;
+            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init();
             offsetProperty.Value = OffsetAfter;
             offsetProperty.OnValueChanged += (float value) => OffsetAfter.Value = value;
@@ -437,12 +447,13 @@ namespace NodeMarkup.Manager
         protected virtual void CalculateItem(PrefabType prefab, ref MarkupPropItemData item) { }
         protected abstract IStyleData GetParts(PrefabType prefab, MarkupPropItemData[] items);
 
-        protected sealed override EditorItem AddPrefabProperty(UIComponent parent)
+        protected sealed override EditorItem AddPrefabProperty(UIComponent parent, bool canCollapse)
         {
             var prefabProperty = ComponentPool.Get<SelectPrefabType>(parent, nameof(Prefab));
             prefabProperty.Text = Localize.StyleOption_AssetProp;
             prefabProperty.PrefabSelectPredicate = IsValidPrefab;
             prefabProperty.PrefabSortPredicate = GetSortPredicate();
+            prefabProperty.CanCollapse = canCollapse;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
             prefabProperty.OnValueChanged += (PrefabType value) =>
@@ -526,16 +537,17 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
-            components.Add(AddColorOptionProperty(parent));
-            components.Add(AddColorProperty(parent));
+            components.Add(AddColorOptionProperty(parent, true));
+            components.Add(AddColorProperty(parent, true));
             ColorOptionChanged(parent, ColorOption);
 
         }
-        protected PropColorPropertyPanel AddColorOptionProperty(UIComponent parent)
+        protected PropColorPropertyPanel AddColorOptionProperty(UIComponent parent, bool canCollapse)
         {
             var colorOptionProperty = ComponentPool.GetAfter<PropColorPropertyPanel>(parent, nameof(Prefab), nameof(ColorOption));
             colorOptionProperty.Text = Localize.StyleOption_ColorOption;
             colorOptionProperty.UseWheel = true;
+            colorOptionProperty.CanCollapse = canCollapse;
             colorOptionProperty.Init();
             colorOptionProperty.SelectedObject = ColorOption;
             colorOptionProperty.OnSelectObjectChanged += (value) =>
@@ -548,14 +560,15 @@ namespace NodeMarkup.Manager
         protected void ColorOptionChanged(UIComponent parent, ColorOptionEnum value)
         {
             if (parent.Find<ColorAdvancedPropertyPanel>(nameof(Color)) is ColorAdvancedPropertyPanel colorProperty)
-                colorProperty.isVisible = (value == ColorOptionEnum.Custom);
+                colorProperty.IsHidden = !(value == ColorOptionEnum.Custom);
         }
 
-        protected ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent)
+        protected ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent, bool canCollapse)
         {
             var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(ColorOption), nameof(Color));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
+            colorProperty.CanCollapse = canCollapse;
             colorProperty.Init(GetDefault()?.Color);
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;

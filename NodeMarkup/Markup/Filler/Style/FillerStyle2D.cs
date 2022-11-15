@@ -156,7 +156,7 @@ namespace NodeMarkup.Manager
                 yield return new PartItem(itemPos, itemDir, itemWidth, isBothDir);
             }
         }
-        protected virtual IEnumerable<MarkupPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithoutOrder(item, contours); 
+        protected virtual IEnumerable<MarkupPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithoutOrder(item, contours);
         protected Intersection[] GetDashesIntersects(StraightTrajectory itemStraight, List<List<FillerContour.Part>> contours)
         {
             var intersectSet = new HashSet<Intersection>();
@@ -286,7 +286,7 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddStepProperty(this, parent));
+            components.Add(AddStepProperty(this, parent, false));
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
@@ -504,23 +504,24 @@ namespace NodeMarkup.Manager
             base.GetUIComponents(filler, components, parent, isTemplate);
 
             if (!isTemplate)
-                components.Add(AddAngleProperty(this, parent));
+                components.Add(AddAngleProperty(this, parent, false));
 
             if (!isTemplate)
             {
-                components.Add(AddFollowRailsProperty(this, parent));
-                AddRailProperty(this, filler.Contour, parent, out var leftRail, out var rightRail);
+                components.Add(AddFollowRailsProperty(this, parent, true));
+                AddRailProperty(this, filler.Contour, parent, true, out var leftRail, out var rightRail);
                 components.Add(leftRail);
                 components.Add(rightRail);
-                components.Add(AddTurnProperty(filler, parent));
+                components.Add(AddTurnProperty(filler, parent, false));
 
-                FollowRailChanged(this, parent, FollowRails);
+                FollowRailChanged(parent, FollowRails);
             }
         }
-        private ButtonPanel AddTurnProperty(MarkupFiller filler, UIComponent parent)
+        private ButtonPanel AddTurnProperty(MarkupFiller filler, UIComponent parent, bool canCollapse)
         {
             var turnButton = ComponentPool.Get<ButtonPanel>(parent, "Turn");
             turnButton.Text = Localize.StyleOption_Turn;
+            turnButton.CanCollapse = canCollapse;
             turnButton.Init();
 
             turnButton.OnButtonClick += () =>
@@ -629,16 +630,16 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddAngleBetweenProperty(parent));
+            components.Add(AddAngleBetweenProperty(parent, false));
             if (!isTemplate)
             {
-                AddRailProperty(this, filler.Contour, parent, out var leftRail, out var rightRail);
+                AddRailProperty(this, filler.Contour, parent, true, out var leftRail, out var rightRail);
                 components.Add(leftRail);
                 components.Add(rightRail);
-                components.Add(AddInvertAndTurnProperty(filler, parent));
+                components.Add(AddInvertAndTurnProperty(filler, parent, false));
             }
         }
-        protected FloatPropertyPanel AddAngleBetweenProperty(UIComponent parent)
+        protected FloatPropertyPanel AddAngleBetweenProperty(UIComponent parent, bool canCollapse)
         {
             var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(AngleBetween));
             angleProperty.Text = Localize.StyleOption_AngleBetween;
@@ -650,17 +651,19 @@ namespace NodeMarkup.Manager
             angleProperty.MinValue = 30;
             angleProperty.CheckMax = true;
             angleProperty.MaxValue = 150;
+            angleProperty.CanCollapse = canCollapse;
             angleProperty.Init();
             angleProperty.Value = AngleBetween;
             angleProperty.OnValueChanged += (float value) => AngleBetween.Value = value;
 
             return angleProperty;
         }
-        protected ButtonsPanel AddInvertAndTurnProperty(MarkupFiller filler, UIComponent parent)
+        protected ButtonsPanel AddInvertAndTurnProperty(MarkupFiller filler, UIComponent parent, bool canCollapse)
         {
             var turnAndInvert = ComponentPool.Get<ButtonsPanel>(parent, "TurnAndInvert");
             var invertIndex = turnAndInvert.AddButton(Localize.StyleOption_Invert);
             var turnIndex = turnAndInvert.AddButton(Localize.StyleOption_Turn);
+            turnAndInvert.CanCollapse = canCollapse;
             turnAndInvert.Init();
 
             turnAndInvert.OnButtonClick += (int buttonIndex) =>
@@ -783,9 +786,9 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddStepProperty(this, parent));
+            components.Add(AddStepProperty(this, parent, false));
             if (!isTemplate)
-                components.Add(AddAngleProperty(this, parent));
+                components.Add(AddAngleProperty(this, parent, false));
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
@@ -875,7 +878,7 @@ namespace NodeMarkup.Manager
         }
         protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
         {
-            foreach(var part in rail.OfType<StraightTrajectory>())
+            foreach (var part in rail.OfType<StraightTrajectory>())
             {
                 var width = part.Length;
                 GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
@@ -890,8 +893,8 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddFollowRailsProperty(this, parent));
-                AddRailProperty(this, filler.Contour, parent, out var leftRail, out var rightRail);
+                components.Add(AddFollowRailsProperty(this, parent, true));
+                AddRailProperty(this, filler.Contour, parent, true, out var leftRail, out var rightRail);
 
                 components.Add(leftRail);
                 components.Add(rightRail);

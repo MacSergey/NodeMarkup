@@ -102,24 +102,25 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
-            components.Add(AddPrefabProperty(parent));
-            components.Add(AddShiftProperty(parent));
-            components.Add(AddElevationProperty(parent));
-            components.Add(AddScaleProperty(parent));
-            components.Add(AddRepeatDistanceProperty(parent));
-            components.Add(AddOffsetBeforeProperty(parent));
-            components.Add(AddOffsetAfterProperty(parent));
-            components.Add(AddInvertProperty(this, parent));
+            components.Add(AddPrefabProperty(parent, false));
+            components.Add(AddShiftProperty(parent, false));
+            components.Add(AddElevationProperty(parent, false));
+            components.Add(AddScaleProperty(parent, true));
+            components.Add(AddRepeatDistanceProperty(parent, true));
+            components.Add(AddOffsetBeforeProperty(parent, true));
+            components.Add(AddOffsetAfterProperty(parent, true));
+            components.Add(AddInvertProperty(this, parent, false));
 
             PrefabChanged(parent, Prefab);
         }
 
-        private SelectNetworkProperty AddPrefabProperty(UIComponent parent)
+        private SelectNetworkProperty AddPrefabProperty(UIComponent parent, bool canCollapse)
         {
             var prefabProperty = ComponentPool.Get<SelectNetworkProperty>(parent, nameof(Prefab));
             prefabProperty.Text = Localize.StyleOption_AssetNetwork;
             prefabProperty.PrefabSelectPredicate = IsValidNetwork;
             prefabProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
+            prefabProperty.CanCollapse = canCollapse;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
             prefabProperty.OnValueChanged += (NetInfo value) =>
@@ -141,7 +142,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected FloatPropertyPanel AddShiftProperty(UIComponent parent)
+        protected FloatPropertyPanel AddShiftProperty(UIComponent parent, bool canCollapse)
         {
             var shiftProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Shift));
             shiftProperty.Text = Localize.StyleOption_ObjectShift;
@@ -153,13 +154,14 @@ namespace NodeMarkup.Manager
             shiftProperty.CheckMax = true;
             shiftProperty.MinValue = -50;
             shiftProperty.MaxValue = 50;
+            shiftProperty.CanCollapse = canCollapse;
             shiftProperty.Init();
             shiftProperty.Value = Shift;
             shiftProperty.OnValueChanged += (float value) => Shift.Value = value;
 
             return shiftProperty;
         }
-        protected FloatPropertyPanel AddElevationProperty(UIComponent parent)
+        protected FloatPropertyPanel AddElevationProperty(UIComponent parent, bool canCollapse)
         {
             var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Elevation));
             elevationProperty.Text = Localize.LineStyle_Elevation;
@@ -171,13 +173,14 @@ namespace NodeMarkup.Manager
             elevationProperty.CheckMax = true;
             elevationProperty.MinValue = -10;
             elevationProperty.MaxValue = 10;
+            elevationProperty.CanCollapse = canCollapse;
             elevationProperty.Init();
             elevationProperty.Value = Elevation;
             elevationProperty.OnValueChanged += (float value) => Elevation.Value = value;
 
             return elevationProperty;
         }
-        protected FloatPropertyPanel AddScaleProperty(UIComponent parent)
+        protected FloatPropertyPanel AddScaleProperty(UIComponent parent, bool canCollapse)
         {
             var scaleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Scale));
             scaleProperty.Text = Localize.StyleOption_NetWidthScale;
@@ -189,13 +192,14 @@ namespace NodeMarkup.Manager
             scaleProperty.CheckMax = true;
             scaleProperty.MinValue = 1f;
             scaleProperty.MaxValue = 1000f;
+            scaleProperty.CanCollapse = canCollapse;
             scaleProperty.Init();
             scaleProperty.Value = Scale.Value * 100f;
             scaleProperty.OnValueChanged += (float value) => Scale.Value = value * 0.01f;
 
             return scaleProperty;
         }
-        protected IntPropertyPanel AddRepeatDistanceProperty(UIComponent parent)
+        protected IntPropertyPanel AddRepeatDistanceProperty(UIComponent parent, bool canCollapse)
         {
             var repeatDistanceProperty = ComponentPool.Get<IntPropertyPanel>(parent, nameof(RepeatDistance));
             repeatDistanceProperty.Text = Localize.StyleOption_NetRepeatDistance;
@@ -207,13 +211,14 @@ namespace NodeMarkup.Manager
             repeatDistanceProperty.CheckMax = true;
             repeatDistanceProperty.MinValue = 1;
             repeatDistanceProperty.MaxValue = 100;
+            repeatDistanceProperty.CanCollapse = canCollapse;
             repeatDistanceProperty.Init();
             repeatDistanceProperty.Value = RepeatDistance.Value;
             repeatDistanceProperty.OnValueChanged += (int value) => RepeatDistance.Value = value;
 
             return repeatDistanceProperty;
         }
-        protected FloatPropertyPanel AddOffsetBeforeProperty(UIComponent parent)
+        protected FloatPropertyPanel AddOffsetBeforeProperty(UIComponent parent, bool canCollapse)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetBefore));
             offsetProperty.Text = Localize.StyleOption_OffsetBefore;
@@ -223,13 +228,14 @@ namespace NodeMarkup.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0;
+            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init();
             offsetProperty.Value = OffsetBefore;
             offsetProperty.OnValueChanged += (float value) => OffsetBefore.Value = value;
 
             return offsetProperty;
         }
-        protected FloatPropertyPanel AddOffsetAfterProperty(UIComponent parent)
+        protected FloatPropertyPanel AddOffsetAfterProperty(UIComponent parent, bool canCollapse)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetAfter));
             offsetProperty.Text = Localize.StyleOption_OffsetAfter;
@@ -239,6 +245,7 @@ namespace NodeMarkup.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0;
+            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init();
             offsetProperty.Value = OffsetAfter;
             offsetProperty.OnValueChanged += (float value) => OffsetAfter.Value = value;

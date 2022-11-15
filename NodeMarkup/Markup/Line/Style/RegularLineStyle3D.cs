@@ -33,7 +33,7 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddElevationProperty(this, parent));
+            components.Add(AddElevationProperty(this, parent, false));
         }
 
         public override XElement ToXml()

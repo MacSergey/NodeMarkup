@@ -61,7 +61,7 @@ namespace NodeMarkup.Manager
         }
         protected abstract IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod);
 
-        protected FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
+        protected FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, bool canCollapse)
         {
             var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.DashLength));
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
@@ -71,13 +71,14 @@ namespace NodeMarkup.Manager
             dashLengthProperty.WheelTip = Settings.ShowToolTip;
             dashLengthProperty.CheckMin = true;
             dashLengthProperty.MinValue = 0.1f;
+            dashLengthProperty.CanCollapse = canCollapse;
             dashLengthProperty.Init();
             dashLengthProperty.Value = dashedStyle.DashLength;
             dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength.Value = value;
 
             return dashLengthProperty;
         }
-        protected FloatPropertyPanel AddSpaceLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent)
+        protected FloatPropertyPanel AddSpaceLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, bool canCollapse)
         {
             var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.SpaceLength));
             spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
@@ -87,6 +88,7 @@ namespace NodeMarkup.Manager
             spaceLengthProperty.WheelTip = Settings.ShowToolTip;
             spaceLengthProperty.CheckMin = true;
             spaceLengthProperty.MinValue = 0.1f;
+            spaceLengthProperty.CanCollapse = canCollapse;
             spaceLengthProperty.Init();
             spaceLengthProperty.Value = dashedStyle.SpaceLength;
             spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength.Value = value;
