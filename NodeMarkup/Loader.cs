@@ -206,7 +206,6 @@ namespace NodeMarkup
                     name = $"{templateAsset.Template.Name}_{Guid.NewGuid().Unique()}",
                     timeStamp = DateTime.Now,
                     type = CustomAssetMetaData.Type.Unknown,
-                    dlcMask = SteamHelper.DLC_BitMask.None,
                     steamTags = new string[] { "Marking" },
                     guid = templateAsset.Template.Id.ToString(),
                 };
