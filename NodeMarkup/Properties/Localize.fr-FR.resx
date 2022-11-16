@@ -1,0 +1,1743 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Tool_DeleteCaption" xml:space="preserve">
+    <value>Supprimer {0}</value>
+  </data>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment supprimer {0} "{1}" ?</value>
+  </data>
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>Appliquer le modèle</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>Enregistrer comme modèle</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>Définir par défaut</value>
+  </data>
+  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
+    <value>Retirer comme défaut</value>
+  </data>
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>Ajouter une règle</value>
+  </data>
+  <data name="StyleOption_Color" xml:space="preserve">
+    <value>Couleur</value>
+  </data>
+  <data name="StyleOption_DashedLength" xml:space="preserve">
+    <value>Longueur du tiret</value>
+  </data>
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>Supprimer cette règle</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment supprimer cette règle ?</value>
+  </data>
+  <data name="LineRule_From" xml:space="preserve">
+    <value>De</value>
+  </data>
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>Sélectionnez le point "De" de cette règle</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>Sélectionnez le point "À" de cette règle</value>
+  </data>
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>ligne</value>
+  </data>
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>Lignes</value>
+  </data>
+  <data name="StyleOption_Offset" xml:space="preserve">
+    <value>Décalage</value>
+  </data>
+  <data name="StyleOption_SpaceLength" xml:space="preserve">
+    <value>Longueur de l'espace</value>
+  </data>
+  <data name="Editor_Style" xml:space="preserve">
+    <value>Style</value>
+  </data>
+  <data name="LineRule_To" xml:space="preserve">
+    <value>À</value>
+  </data>
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>Intersection avec {0}</value>
+  </data>
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>Point de bord {0}</value>
+  </data>
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>Tiret</value>
+  </data>
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>Double tiret</value>
+  </data>
+  <data name="LineStyle_DoubleSolid" xml:space="preserve">
+    <value>Double solide</value>
+  </data>
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>Solide</value>
+  </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>Faire marquages aux intersections seulement</value>
+  </data>
+  <data name="Panel_NodeCaption" xml:space="preserve">
+    <value>Modifier le marquage du nœud #{0}</value>
+  </data>
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>point</value>
+  </data>
+  <data name="PointEditor_Offset" xml:space="preserve">
+    <value>Décalage</value>
+  </data>
+  <data name="PointEditor_Points" xml:space="preserve">
+    <value>Points</value>
+  </data>
+  <data name="SelectPanel_NotSet" xml:space="preserve">
+    <value>Non défini</value>
+  </data>
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
+    <value>Ajouter une règle de ligne</value>
+  </data>
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
+    <value>Supprimer toutes les lignes du noeud</value>
+  </data>
+  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
+    <value>Supprimer le marquage de toutes les intersections</value>
+  </data>
+  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
+    <value>Supprimer tous les marquages</value>
+  </data>
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment supprimer tous les marquages ?</value>
+  </data>
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>Extraire les données de marquage vers un fichier</value>
+  </data>
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
+    <value>Copier le chemin au presse-papier</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>Extraire les données de marquage</value>
+  </data>
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
+    <value>L'extraction a échoué</value>
+  </data>
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
+    <value>Extraction réussie</value>
+  </data>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Restaurer les marquages depuis le fichier</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Restaurer les marquages</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment restaurer les données ?
+Les données restaurées ont remplacé tous les marquages existants.</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>La restauration des marquages a échoué</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Marquages restaurés avec succès</value>
+  </data>
+  <data name="Settings_QuickRuleSetup" xml:space="preserve">
+    <value>Configuration rapide des règles</value>
+  </data>
+  <data name="Settings_RenderDistance" xml:space="preserve">
+    <value>Distance d'affichage</value>
+  </data>
+  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
+    <value>Confirmer avant de supprimer</value>
+  </data>
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>modèle</value>
+  </data>
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="TemplateEditor_Templates" xml:space="preserve">
+    <value>Modèles</value>
+  </data>
+  <data name="Template_NewTemplate" xml:space="preserve">
+    <value>Nouveau modèle</value>
+  </data>
+  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
+    <value>Effacer les marquages de nœuds</value>
+  </data>
+  <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment supprimer tous les marquages du nœud #{0} ?</value>
+  </data>
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>Cliquez pour créer une ligne</value>
+  </data>
+  <data name="Tool_InfoDeleteLine" xml:space="preserve">
+    <value>Cliquez pour supprimer la ligne</value>
+  </data>
+  <data name="Tool_InfoHoverNode" xml:space="preserve">
+    <value>Noeud #{0}
+Cliquez pour modifier le marquage</value>
+  </data>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Sélectionnez un nœud ou segment pour changer les marquages</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Sélectionnez un point de fin pour une ligne normal</value>
+  </data>
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Sélectionnez un point pour
+créer ou supprimer une ligne</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
+    <value>[NEW] Remplisseurs. Les espaces entre les lignes peuvent être remplis pour indiquer les zones interdites d'arrêt ou de circulation. 3 styles sont disponibles : Lignes, Grille et Solide. Pour créer, maintenez la touche Alt.
+[NEW] Lignes de stop. Il est désormais possible de relier deux points sur une même route pour créer une ligne d'arrêt. 2 styles disponibles : "Solide" et "Tiret".
+[NEW] Nouveau style de ligne : "Solide et Tirets".
+[NEW] Les lignes et les modèles dans la liste ont maintenant des icônes qui indiquent le style et la couleur.
+[NEW] Les marquages seront désormais copiés lorsque la route est copiée avec MoveIt (la fonction ne sera pas disponible avant la mise à jour du mod MoveIt).
+[NEW] Ajout de l'option copier-coller pour la couleur des lignes.
+[UPDATED] Le remplacement de la route par une autre route comportant le même nombre de voies conservera les marquages.
+[NEW] Le segment de ligne avec la règle sera mis en évidence lors du survol du panneau d'édition de cette règle.
+[TRANSLATION] Ajout de la traduction en chinois simplifié.</value>
+  </data>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Restaurer</value>
+  </data>
+  <data name="StyleOption_Invert" xml:space="preserve">
+    <value>Inverser</value>
+  </data>
+  <data name="StyleOption_Width" xml:space="preserve">
+    <value>Largeur</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Solide et Tirets</value>
+  </data>
+  <data name="LineStyle_StopSolid" xml:space="preserve">
+    <value>Solide</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Cliquez pour supprimer la ligne de stop</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Cliquez pour créer une ligne de stop</value>
+  </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Remplisseurs</value>
+  </data>
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>remplisseur</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Zébra</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Grille</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Tiret</value>
+  </data>
+  <data name="StyleOption_Step" xml:space="preserve">
+    <value>Intervalle</value>
+  </data>
+  <data name="StyleOption_Angle" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="StyleOption_LinesOffset" xml:space="preserve">
+    <value>Écart depuis la ligne</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>Cliquez pour commencer un remplisseur</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>Cliquez pour finir le remplisseur</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Sélectionnez le prochain point du contour</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>Selectionnez un point pour commencer le remplissseur</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Sélectionnez le prochain point pour le contour</value>
+  </data>
+  <data name="StyleOption_MedianOffset" xml:space="preserve">
+    <value>Écart depuis séparateur</value>
+  </data>
+  <data name="Editor_ColorCopy" xml:space="preserve">
+    <value>Copier</value>
+  </data>
+  <data name="Editor_ColorPaste" xml:space="preserve">
+    <value>Coller</value>
+  </data>
+  <data name="Editor_ColorDefault" xml:space="preserve">
+    <value>Par défaut</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Solide</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>[FIXED] Correction du maintien des boutons Alt, Ctrl et Maj sur Mac OS et Linux.
+[NEW] Ajout des styles de ligne de stop "Double solide" et "Double tiret".
+[TRANSLATION] Ajout des traductions italienne et portugaise.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
+    <value>[UPDATED] Les messages "Quoi de neuf" apparaîtront une fois après une mise à jour et peuvent être désactivés dans le menu Options.
+[NEW] Les points d'extrémité peuvent maintenant être déplacés de l'un à l'autre en maintenant la touche Ctrl enfoncée.
+[NEW] Sauvegardes - Dans le menu Options, les données de marquage d'une carte peuvent désormais être sauvegardées en les enregistrant dans un fichier, puis en les important. Ceci est nécessaire si vous devez désactiver le mod, faire une nouvelle sauvegarde sans le mod, et ensuite avoir besoin de récupérer tous les marquages.
+[NEW] Une fenêtre d'avertissement s'affiche désormais lors de la suppression d'éléments. Cela s'applique aux lignes, aux règles et aux modèles. Ceci peut être désactivé dans les options.
+[NEW] Ajout d'un nouveau raccourci pour ajouter une nouvelle règle - Maj+Ctrl+A (modifiable).
+[NEW] Configuration rapide des règles : Après avoir ajouté une nouvelle règle, l'interface permettant de sélectionner ses points de départ et d'arrivée s'ouvre désormais automatiquement. Vous n'avez plus besoin de cliquer sur les zones "De" et "À". Ceci peut être désactivé dans les options.
+[FIXED] Correction d'un problème avec les lignes qui semblaient être cassées ou fendues - cela ne se produisait que lors des transitions entre les autoroutes et les routes urbaines.
+[UPDATED] Les lignes ne sont plus affichées lorsque les superpositions d'information sont affichées.
+[UPDATED] Les raccourcis d'activation se déclenchent désormais lorsqu'un autre outil s'ouvre alors que l'outil de marquage est déjà ouvert.
+[TRANSLATION] Ajout des traductions suivantes :  allemand, espagnol, français, japonais, néerlandais, polonais, russe et tchèque.</value>
+  </data>
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
+    <value>Ajouter un nouveau remplisseur</value>
+  </data>
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Double solide</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Double tiret</value>
+  </data>
+  <data name="HeaderPanel_StyleCopy" xml:space="preserve">
+    <value>Copier</value>
+  </data>
+  <data name="HeaderPanel_StylePaste" xml:space="preserve">
+    <value>Coller</value>
+  </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Chevron</value>
+  </data>
+  <data name="StyleOption_AngleBetween" xml:space="preserve">
+    <value>Angle entre les deux</value>
+  </data>
+  <data name="StyleOption_Turn" xml:space="preserve">
+    <value>Tourner</value>
+  </data>
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>Il n'y a pas de lignes à cet intersection.
+Pour créer une ligne, connectez deux points.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>Il n'y a pas de remplisseurs à cette intersection.
+Pour créer un remplisseur, maintenez {0} ou appuyez sur {1}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>La liste des modèles est vide.
+Pour créer un modèle, cliquez {0} sur une ligne, passage piéton ou remplisseur.</value>
+  </data>
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Activer avec la clé</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Échec de l'activation</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Activation réussie</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>Cette fonction n'est pas disponible</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>La fonction "{0}" n'est actuellement disponible que pour les Patreons avec l'accès anticipé
+Elle sera disponible pour tout le monde plus tard.
+En vous inscrivant à l'accès anticipé, vous pourrez en profiter à la même vitesse que le développement.</value>
+  </data>
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>Obtenir l'accès anticipé</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>Votre ID d'accès</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Clé d'accès</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Activer</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Activation de l'accès anticipé</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Pour activer l'accès anticiper vous devez entrer une clé</value>
+  </data>
+  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>La clé que vous avez entrée n'est pas valide</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Lien en cours...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Lier votre compte Patreon</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Lier votre compte Patreon</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>Votre compte Patreon n'a pas pu être lié car vous avez refusé la demande d'accès.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Une erreur est survenue au moment du lien, veuillez réessayer.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>Votre compte est relié, mais vous n'avez pas l'accès anticipé.</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>Vous pouvez fermer cette page et retourner au jeu.</value>
+  </data>
+  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>Status : {0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>Activé</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>Désactivé</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>Merci pour votre soutien, vous pouvez maintenant profiter de toutes les fonctionnalités.</value>
+  </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Accès anticipé</value>
+  </data>
+  <data name="StyleOption_Alignment" xml:space="preserve">
+    <value>Alignement</value>
+  </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Cliquez pour créer une ligne perpendiculaire
++Maj - Solide
++Ctrl - Double</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Cliquez pour supprimer la ligne perpendiculaire</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zébra</value>
+  </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Passage piéton existant</value>
+  </data>
+  <data name="StyleOption_OffsetBetween" xml:space="preserve">
+    <value>Décalage entre</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Passage piéton</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Il n'y a pas de passages piétons à cette intersection.
+Pour créer un passage piéton, maintenez {0}.</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>passage piéton</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Passages piétons</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Remplisseurs</value>
+  </data>
+  <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
+    <value>Lignes régulières</value>
+  </data>
+  <data name="LineStyle_StopLinesGroup" xml:space="preserve">
+    <value>Lignes de stop</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Grouper les lignes</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Grouper les modèles</value>
+  </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>Cliquez pour créer un passage piéton</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>Cliquez pour supprimer le passage piéton</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>Par style</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>Par type</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Double zébra</value>
+  </data>
+  <data name="StyleOption_LineWidth" xml:space="preserve">
+    <value>Largeur de la ligne</value>
+  </data>
+  <data name="StyleOption_OffsetAfter" xml:space="preserve">
+    <value>Décalage avant</value>
+  </data>
+  <data name="StyleOption_OffsetBefore" xml:space="preserve">
+    <value>Décalage après</value>
+  </data>
+  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
+    <value>Parallèle aux voies</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Lignes solides parallèles</value>
+  </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>Bordure de gauche</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>Bordure de droite</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>Sélectionnez la bordure gauche du trottoir</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>Sélectionnez la bordure droite du trottoir</value>
+  </data>
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
+    <value>Grouper l'onglet des points</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Disposer en cercle</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>Disposer en ligne</value>
+  </data>
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>Cette règle est en conflit avec une autre règle.
+Regardez les points "De" et "À" des autres règles.</value>
+  </data>
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Bordure gauche du passage piéton</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Bordure droite du passage piéton</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Réinitialiser</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Sélectionnez l'extrémité</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Sélectionnez un point pour
+créer ou supprimer un passage piéton</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Lignes parallèles en tirets</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Échelle</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Pas de modèles</value>
+  </data>
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Solide</value>
+  </data>
+  <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
+    <value>Passages piétons</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>passage piéton</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>remplisseur</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>ligne</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>point</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>modèle</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
+    <value>[NEW] Ajout d'un nouveau style de remplissage - Chevron (&lt;&lt;&lt;&lt;&lt;).
+[NEW] Ajout de passages piétons. Maintenez la touche Maj pour les créer. Styles actuellement disponibles : "Passage piéton existant", "Zébra", "Double zébra", "Lignes solides parallèles", "Lignes parallèles en tirets", "Échelle", "Solide".
+[NEW] Ajout de lignes perpendiculaires. Ces lignes n'ont pas de second point, elles sont générées comme une ligne droite à partir d'un point. Pour créer une ligne perpendiculaire, tirez la ligne dans la direction opposée à l'intersection.
+[NEW] Ajout de la possibilité de copier/coller le style des lignes, des remplisseurs et des passages piétons.
+[NEW] Ajout de la possibilité de trier les lignes et les modèles par styles et types. Vous pouvez modifier et désactiver cette fonction dans les paramètres.
+[UPDATED] Mise à jour du menu de sélection des modèles.
+[NEW] Ajout du groupement de points proches pour faciliter la sélection. Deux types de regroupement sont disponibles : en cercle et en ligne. Vous pouvez choisir le type ou désactiver la fonction dans les paramètres.
+[NEW] Ajout d'une indication des règles en conflit.
+[NEW] Ajout de la possibilité de centrer une ligne solide dans le style "Solide et Tirets".
+[UPDATED] Modification de la façon d'éditer un point. Vous devez maintenant cliquer sur le point tout en maintenant la touche Ctrl enfoncée.
+[NEW] Ajout de la possibilité de sélectionner une langue pour l'outil différente de la langue du jeu.
+[TRANSLATION] Ajout de la traduction finlandaise.</value>
+  </data>
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Erreurs lors du chargement.
+Le marquage de {0} intersections n'a pas pu être chargé.</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Damiers</value>
+  </data>
+  <data name="StyleOption_LineCount" xml:space="preserve">
+    <value>Nombre de lignes</value>
+  </data>
+  <data name="StyleOption_SharkToothBase" xml:space="preserve">
+    <value>Base du triangle</value>
+  </data>
+  <data name="StyleOption_SharkToothHeight" xml:space="preserve">
+    <value>Hauteur du triangle</value>
+  </data>
+  <data name="StyleOption_SharkToothSpace" xml:space="preserve">
+    <value>Espacement</value>
+  </data>
+  <data name="StyleOption_SquareSide" xml:space="preserve">
+    <value>Côté du carré</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Dents de requin</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Dents de requin</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Solide et Tirets</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Supprimer le marquage</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Copier le marquage</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Coller le marquage</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Coller le marquage</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment coller le marquage ?</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Raccourcis pour les passages piétons</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Raccourcis pour les remplisseurs</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Raccourcis pour les lignes de marquage</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Raccourcis pour les lignes de stop</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Non défini</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Sans raccourci</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Toujours</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Seulement s'il affecte d'autres objets</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Ces éléments dépendants vont aussi être supprimés :</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Bordures de passage piéton : {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Passages piétons : {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Remplisseurs : {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Lignes : {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Règles : {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Sauvegarde</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Affichage et utilisation</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Catégories</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Raccourcis</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Dupliquer</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Copier</value>
+  </data>
+  <data name="StyleOption_Edge" xml:space="preserve">
+    <value>Coin</value>
+  </data>
+  <data name="StyleOption_StartingFrom" xml:space="preserve">
+    <value>À partir de</value>
+  </data>
+  <data name="StyleOption_Vertex" xml:space="preserve">
+    <value>Vertex</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Réinitialiser tout les décalages de points</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Réinitialiser tout les décalages de points</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment réinitialiser tous les décalages du nœud #{0} ?</value>
+  </data>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Maintenez puis relâchez les cercles pour configurer l'ordre
+Cliquez le cercle pour modifier l'ordre des points</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Maintenez puis relâchez la cible intérieur/extérieur pour mettre/enlever l'ordre</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Copier le marquage</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Coller le marquage</value>
+  </data>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Inverser l'ordre</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Tourner dans le sens des aiguilles d'une montre</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Tourner dans le sens inverse des aiguilles d'une montre</value>
+  </data>
+  <data name="StyleOption_AlignmentCenter" xml:space="preserve">
+    <value>Centré</value>
+  </data>
+  <data name="StyleOption_AlignmentLeft" xml:space="preserve">
+    <value>Gauche</value>
+  </data>
+  <data name="StyleOption_AlignmentRight" xml:space="preserve">
+    <value>Droite</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Modèle sans nom</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Nom déjà utilisé</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Le nom «{0}» est déjà utilisé pour un autre modèle.
+Êtes-vous sûr de vouloir avoir plusieurs modèles avec le même nom ?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Sauvegarder le marquage</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Sauvegarder les modèles</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Supprimer tous les modèles</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Supprimer tous les modèles</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment supprimer tous les modèles ?</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Sauvegarder les modèles dans le fichier</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Sauvegarder les modèles</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Restaurer les modèles depuis le fichier</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Restaurer les modèles</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment restaurer les modèles ?
+Les modèles restaurés vont remplacer tout les modèles actuels.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>La restauration des modèles a échoué</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Modèles restaurés avec succès</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Appliquer</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Continuer</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Sortir du mode collage</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Voulez vous vraiment quitter le mode collage et appliquer le collage ?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Ne pas appliquer</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Appliquer</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Ne pas appliquer</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Réinitialiser</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Modifier l'ordre du marquage</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Modifier l'ordre du marquage</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Les routes ont été changées</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>Les routes à cette intersection ont été changées, donc le marquage existant ne peut être appliqué automatiquement.
+Voulez-vous changer le marquage manuellement ?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Quitter le mode de modification de l'ordre</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Voulez vous vraiment quitter le mode de modification et appliquer un nouvel ordre ?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Glisser-déposer le cercle pour définir l'ordre des points</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Maintenez puis relâchez la cible intérieur/extérieur pour mettre/enlever l'ordre des points</value>
+  </data>
+  <data name="StyleOption_SolidInCenter" xml:space="preserve">
+    <value>Solide au centre</value>
+  </data>
+  <data name="StyleOption_No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="StyleOption_Yes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Maintenez {0} pour créer un passage piéton</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Maintenir {0} pour créer un remplisseur</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Glissez avec {0} pour bouger le point</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
+    <value>[WARNING] Les paramètres par défaut des modèles seront réinitialisés.
+[NEW] Ajout de la possibilité de copier/coller le marquage d'une intersection existante vers une autre intersection existante.
+[UPDATED] Maintenant, le marquage n'est pas supprimé si vous remplacez la route par un autre avec un nombre différent de points.
+[NEW] Ajout du support de l'éditeur de cartes.
+[NEW] Ajout de la possibilité d'enregistrer les données de marquage dans les ressources de type intersection.
+[NEW] Ajout d'un style de ligne et de ligne d'arrêt "Dents de requin".
+[NEW] Ajout du style de ligne d'arrêt "Solide et Tirets".
+[NEW] Ajout du style de passage piéton "Damier".
+[NEW] Ajout de la possibilité de définir des modificateurs de création pour tous les styles.
+[NEW] Ajout de la possibilité de dupliquer les modèles.
+[NEW] Ajout de la possibilité d'avoir plusieurs modèles avec un même nom.
+[NEW] Ajout d'options d'alignement à tous les styles de ligne double.
+[NEW] Ajout de la possibilité de commencer le remplissage "Chevron" à partir des bords.
+[NEW] Ajout de la possibilité d'obtenir un avertissement de suppression uniquement si cela affecte d'autres éléments.
+[NEW] Ajout de la possibilité de redimensionner le panneau.
+[NEW] Ajout de la possibilité de sauvegarder des modèles.
+[NEW] Ajout de la possibilité de réinitialiser le décalage de tous les points.
+[NEW] Ajout du support de la réflexion de MoveIt (attendez la mise à jour de MoveIt).
+[UPDATED] Mise à jour de l'algorithme de calcul du style de remplissage "Chevron".
+[FIXED] Correction des doublons de sommets des remplisseurs dans l'interface de création.
+[FIXED] Correction des lignes asymétriques avec une valeur d'inversion incorrecte après le chargement.</value>
+  </data>
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Cette action est irréversible.</value>
+  </data>
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>Vide</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Créer les lignes de bord</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Créer les lignes de bord</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Réinitialiser tout les décalages de points</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Bordures de passage piétons rapide</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Marquage en dessous des rails</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Attention : cet option change l'ordre de rendu des objets</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
+    <value>[NEW] Ajout de la possibilité de placer des marquages sous les rails. Ceci peut être désactivé dans les options. AVERTISSEMENT : Cette option change l'ordre de rendu des objets en jeu.
+[NEW] Ajout d'un paramètre pour créer une ligne vide (sans règles).
+[NEW] Ajout de la possibilité de créer toutes les lignes de bord en une seule fois (ligne du dernier point de la route au premier point de la route suivante).
+[NEW] Les lignes ne montent plus sur la chaussée. Ne fonctionne que pour les lignes partant du premier ou du dernier point de route.
+[NEW] Ajout de "Bordures de passage piétons rapide" - ouverture automatique de l'interface de sélection des bordures après la création d'un passage, comme "Configuration rapide des règles" des lignes. Cette option peut être désactivée dans les paramètres.
+[NEW] Ajout d'un menu d'options supplémentaires pour le panneau.
+[FIXED] Correction du clic gauche de la souris sur la sélection du nœud.
+[FIXED] Correction du panneau hors de l'écran.
+[UPDATED] La couleur de la superposition au survol est passée du blanc au bleu clair pour éviter la fusion avec le marquage.
+[UPDATED] La ligne de passage piéton ne crée plus d'intersections inutiles. Vous devrez peut-être définir des bordures pour les passages piétons déjà créés.</value>
+  </data>
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Sauvegarder en tant que ressource</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0} par {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>La liste des préréglages est vide.
+Pour créer un préréglages, cliquez sur {0} sur le haut de la fenêtre.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Préréglages</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Sauvegarder comme préréglage</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Sauvegarder comme préréglage</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>Aucun préréglage</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Appliquer le préréglage</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Nouveau préréglage</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Quitter le mode d'application des préréglages</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Souhaitez vous appliquer un préréglage ?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Auteur</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>S'applique après le redémarrage</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Charger les ressources de marquages</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Passages piétons :</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Remplisseurs :</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Lignes :</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>Aucune capture d'écran</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Route #{0} points :</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Routes :</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Les passages piétons coupent les nouvelles lignes</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Couper les lignes au niveau de ce passage piéton</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Sauvegarder les préréglages</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Supprimer tous les préréglages</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Supprimer tous les préréglages</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment supprimer tous les préréglages ?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Sauvegarder tous les préréglages dans un fichier</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Sauvegarder les préréglages</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Restaurer les préréglages à partir du fichier</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Restaurer les préréglages</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment restaurer les préréglages ?
+Les préréglages restaurés vont remplacer tout les préréglages existants.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>La restauration des préréglages a échoué</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Préréglages restaurés avec succès</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Couper les lignes au niveau de tout les passages piétons</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Couper les lignes au niveau de tout les passages piétons</value>
+  </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Réécriture de la ressource du préréglage</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>Pour la renommer, il faut refaire la ressource. Continuer ?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Réécriture de la ressource du modèle</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>Pour le renommer, il faut refaire l'asset. Continuer ?</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>Pour mettre les bordures du passage piéton, il faut une ligne qui commence au même points que le passage piéton</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>Il faut sur que des lignes croisent cette ligne pour pouvoir changer les points "De" et "À" de la règles et ajouter de nouvelles règles.</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Afficher l’aide d’interface</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Éditer</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Enregistrer les modifications</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Ne pas sauvegarder les changements</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Voulez-vous enregistrer les modifications ?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Enregistrer les modifications</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Voulez-vous enregistrer les modifications des valeurs ?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>Le nom «{0}» est déjà utilisé pour un autre préréglage.
+Êtes-vous sûr de vouloir avoir plusieurs préréglages avec le même nom ?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Vous pouvez le supprimer depuis le gestionnaire de contenu.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Vous ne pouvez pas modifier le préréglage et vous pouvez le supprimer uniquement depuis le gestionnaire de contenu ou en se désinscrivant depuis le Steam Workshop.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Ce préréglage est une ressource.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Vous pouvez le supprimer uniquement depuis le gestionnaire de contenu.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Vous ne pouvez pas modifier le modèle et vous pouvez le supprimer uniquement depuis le gestionnaire de contenu ou en se désinscrivant depuis le Steam Workshop.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Ce préréglage est une ressource.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>préréglage</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>préréglage</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
+    <value>[NEW] Ajout de la possibilité d'enregistrer le marquage d'une intersection entière comme préréglage et de l'appliquer à toute autre intersection.
+[NEW] Ajout de la possibilité d'enregistrer les modèles et les préréglages en tant que ressources et de les partager dans le Steam Workshop.
+[UPDATED] Mise à jour de l'interface utilisateur et amélioration de ses performances. Réduction du délai lors du changement d'onglet et de la sélection d'éléments.
+[UPDATED] Désormais, les valeurs des modèles ne peuvent être modifiées qu'en mode édition, ce qui permet d'éviter les modifications accidentelles.
+[NEW] Ajout d'astuces pour les panneaux (désactivables dans les paramètres).
+[NEW] Ajout de la possibilité de couper la nouvelle ligne par les passages piétons (désactivable dans les paramètres).
+[NEW] Ajout de la possibilité de modifier les valeurs des couleurs avec la molette de la souris.
+[FIXED] Correction des voies ferrées et des monorails.
+[FIXED] Correction et amélioration de la superposition des groupes de points.
+[TRANSLATION] Ajout de la traduction anglaise britannique.</value>
+  </data>
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Ce type de ligne ne prend pas en charge les règles</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Ne pas couper les lignes de passages piétons si c'est leur bordure</value>
+  </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Auteur inconnu</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>[UPDATED] Amélioration des messages concernant les erreurs de données du chargement.
+[FIXED] Correction et mise à jour des traductions.</value>
+  </data>
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>Erreur lors du chargement.
+Le marquage de toutes les intersections n'a pas pu être chargé.</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Modifier le marquage du segment #{0}</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Herbe</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Béton</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Hauteur</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Hauteur</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Herbe</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Béton</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Distance LOD</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Segment #{0}
+Cliquez pour modifier le marquage</value>
+  </data>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Suivre le rail</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Rail de gauche</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Rail de droite</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Sélectionnez le premier point ou ligne du rail</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Sélectionnez le second point du rail</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
+    <value>[UPDATED] Mise à jour de la dépendance d'Harmony : résolution des conflits avec les autres mods qui l'utilisent</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
+    <value>[FIXED] Correction d'un cas où les marquages pouvaient disparaître lors de l'enregistrement</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
+    <value>[NEW] Ajout de la possibilité de faire des marquages sur les segments.
+[NEW] Ajout de styles de remplissage 3D : "Béton" et "Herbe".
+[NEW] Ajout du style de ligne 3D : "Béton".
+[NEW] Ajout de la possibilité de suivre les rails pour les styles de remplissage "Zébra" et "Chevron".
+[NEW] Amélioration des performances en ajoutant un LOD (Niveau de détail) aux marquages. La distance du LOD est définie dans les paramètres.
+[NEW] Ajout du support des taxiways.
+[FIXED] Correction d'un conflit avec d'autres mods qui pouvait faire disparaître le bouton d'outil.
+[FIXED] Correction d'un conflit avec le panneau de défilement et la molette de défilement pour modifier les valeurs.
+[UPDATED] Désormais, il n'y a aucune différence que vous saisissiez un point ou une virgule dans les champs de valeur.</value>
+  </data>
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Nombre de couleurs</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>Une</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>Deux</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>Depuis le presse-papiers</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Alignement de la ligne</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>Diviser en deux</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Décalage de la division</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Grouper les points</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Appliquer entre les deux intersections</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Appliquer entre les deux intersections</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Appliquer à toute la rue</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Appliquer à toute la rue</value>
+  </data>
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>Cela va remplacer le marquage existant.</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Appliquer le marquage entre les intersections</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment appliquer le marquage entre les intersections ?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Appliquer le marquage sur toute la rue</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Voulez-vous vraiment appliquer le marquage sur tout "{0}" ?</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Glissez derrière le point pour une ligne perpendiculaire</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Sélectionnez un point de fin pour une ligne ou ligne de stop</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7" xml:space="preserve">
+    <value>[NEW] Nouveau mode de sélection des nœuds/segments. La zone de sélection suit exactement les formes des nœuds et des segments, ce qui évite les difficultés liées à la sélection de nœuds trop proches les uns des autres.
+[NEW] Ajout de la création automatique de lignes lors de la création d'un remplisseur. Plus besoin d'ajouter des lignes avant de créer le remplisseur.
+[NEW] Ajout de la possibilité de diviser un point en deux points virtuels, de définir le décalage de la division et de choisir l'alignement des lignes. Il est maintenant possible de poursuivre une ligne double avec deux lignes séparées.
+[NEW] Ajout d'un modificateur de style "Depuis le presse-papiers". Maintenez Ctrl+Alt enfoncé pour appliquer le style du presse-papiers à une nouvelle ligne, une règle, un croisement ou un remplisseur.
+[NEW] Ajout de la possibilité d'appliquer un marquage de segment entre deux intersections et de l'appliquer à toute la rue.
+[NEW] Ajout de la possibilité de définir une deuxième couleur pour les styles de passages pour piétons "Zebra" et "Double zébra".
+[UPDATED] Changement du comportement de la touche Echap. Maintenant, c'est comme le comportement par défaut des outils du jeu. Si quelque chose est en cours d'édition, la touche Echap suggère une sortie plutôt que de fermer l'outil avec la perte des modifications.
+[NEW] Ajout du groupement des points par route dans la liste (peut être désactivé dans les paramètres).
+[FIXED] Correction de la position de l'overlay des connecteurs de ligne sur les routes surélevées.
+[FIXED] Correction du calcul des styles de remplissage 3D.
+[FIXED] Correction d'une erreur dans le mode copier/coller du marquage qui rendait impossible l'utilisation de l'outil.
+[FIXED] Correction de la position de défilement du panneau lors du redimensionnement du panneau.
+[UPDATED] Le mode Passages piétons n'est plus activé par le maintien de la touche Maj lorsque la valeur est modifiée par la molette de la souris.
+[NEW] Définissez la taille par défaut du panneau en double-cliquant sur le redimensionneur de panneau.</value>
+  </data>
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Alignement de l'extrémité de la ligne</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Alignement du début de la ligne</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_1" xml:space="preserve">
+    <value>[NEW] Ajout de la possibilité de définir l'alignement des lignes d'arrêt.
+[NEW] Tri des modèles supplémentaires :
+---1 - Modèles par défaut triés par type;
+---2 - Autres modèles classés par type puis par nom;
+---3 - Autres modèles d'autres auteurs triés par nom d'auteur puis par type puis par nom.
+[FIXED] Correction du chargement des préréglages de segment.
+[FIXED] Correction de la taille par défaut du panneau.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
+    <value>[FIXED] Correction de la hauteur des remplissages 3D en dehors des zones disponibles.
+[FIXED] Correction du doublons de boutons.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_3" xml:space="preserve">
+    <value>[NEW] Ajout d'un vérificateur de dépendances manquantes.
+[FIXED] Correction de la hauteur des remplissages 3D sur les nœuds en dehors des zones disponibles.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_4" xml:space="preserve">
+    <value>[FIXED] Correction de la capture d'écran de sauvegarde et utilisation des préréglages.
+[FIXED] Correction d'un bug lorsque qu'après chargement, les nœuds avec marquage avaient une mauvaise forme.
+[TRANSLATION] Ajout de la traduction indonésienne.</value>
+  </data>
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Cacher les noms des rues lors de l'utilisation</value>
+  </data>
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Béton</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Cliquez sur {0} pour sélectionner le passage piéton</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Cliquez sur {0} pour sélectionner la ligne</value>
+  </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>Gravier</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>Falaise</value>
+  </data>
+  <data name="FillerStyle_Ruined" xml:space="preserve">
+    <value>Détérioré</value>
+  </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Écart depuis les lignes</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>Rayon du coin</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>Rayon du coin depuis séparateur</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>Taille de bordure</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>Taille de bordure depuis séparateur</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
+    <value>[NEW] Ajout d'un pas de sélection comme dans MoveIt. Appuyez sur Ctrl+Espace pour passer au suivant (vous pouvez relier dans les options du mod).
+[NEW] Ajout de bordures aux styles 3D de remplissage.
+[NEW] Ajout de coins arrondis aux styles 3D de remplissage.
+[NEW] Ajout d'un décalage depuis les lignes aux styles 3D de remplissage.
+[NEW] Ajout de styles de remplissage : Gravier, Détérioré, Falaise.
+[NEW] Ajout de l'option "Suivre les lignes de guidage" pour le remplissage solide, il est donc désormais possible de créer des remplissages solides sur des segments inclinés.
+[NEW] Ajout de la possibilité de cliquer avec Ctrl pour sélectionner une ligne ou un passage piétons au lieu de le supprimer.
+[NEW] Ajout d'un avertissement pour les utilisateurs de Linux concernant les bibliothèques manquantes.
+[NEW] Ajout de la possibilité de changer de style avec la molette de la souris.
+[NEW] Ajout de la possibilité de masquer les noms de rue lors de l'utilisation de l'outil. Peut être désactivé dans les options du mod.
+[NEW] Ajout d'une nouvelle icône pour UUI.
+[FIXED] Correction de l'icône du bouton de sélection de modèle.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_8_1" xml:space="preserve">
+    <value>[UPDATED] Les boutons en mode coller ont été déplacés en dehors du cercle.
+[TRANSLATION] Ajout de la traduction coréenne.</value>
+  </data>
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_8_2" xml:space="preserve">
+    <value>[NEW] Ajout d'un bouton de suppression après la création d'un modèle/préset.
+[NEW] Ajout de texte coloré aux infobulles.
+[NEW] Ajout de la possibilité de masquer le bouton du mod original dans la barre d'outils si vous utilisez le mod UUI.
+[FIXED] Correction des éléments qui n'étaient pas supprimés de la liste lorsque ces éléments étaient supprimés.
+[FIXED] Correction du regroupement des lignes.
+[TRANSLATION] Ajout de la traduction turque.</value>
+  </data>
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Tris</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Trier les préréglages</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Par nom</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Par le nombre de routes, puis par nom</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Par l'auteur, puis par le type et puis le nom</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Par le nom, puis par le type</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Par le type, puis par le nom</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Trier les modèles</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Par auteur, puis par type et puis par nom</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Par nom, puis par type</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Par type, puis par nom</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Afficher les modèles par défaut en haut de la liste</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Trier les modèles dans la liste</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Illumination de l'édition du marquage la nuit</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Intensité lumineuse</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Jouabilité</value>
+  </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Grouper les préréglages</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Bonne correspondance</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Parfaite correspondance</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Faible correspondance</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Possible correspondance</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Marquage sous les passages à niveau</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Longueur des espaces</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Fréquence des espaces</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Utiliser des espaces</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Réinitialiser le décalage</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Sauvegarder le décalage</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Nom de la route</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_9" xml:space="preserve">
+    <value>[NEW] Ajout de la possibilité de sauvegarder les décalages des points pour chaque route.
+[NEW] Ajout d'une option d'espacement aux styles de passages piétons zébrés et double zébrés. Elle permet de définir un espacement différent pour chaque N tirets.
+[NEW] Ajout de points d'intersection aux lignes provenant d'un point divisé avec un alignement différent.
+[NEW] Ajout de paramètres de tri des modèles, des préréglages et de la liste des applications.
+[NEW] Ajout d'un regroupement des modèles en fonction de leur adéquation (Parfaite/Bonne/Possible/Faible).
+[NEW] Ajout d'une illumination aux marquages lors de l'édition de nuit.
+[NEW] Ajout d'un éclairage au curseur comme l'outil de jeu par défaut.
+[NEW] Ajout d'une option permettant de placer des marquages sous les passages à niveau. Cette option peut être désactivée dans les paramètres du mod.
+[NEW] Ajout d'un troisième point (au centre) pour les taxiways/pistes d'aviation.
+[FIXED] Correction d'une erreur lors de l'enregistrement du modèle en tant que ressource.
+[FIXED] Correction d'une erreur de calcul des passages piétons.</value>
+  </data>
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Prop</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Arbre</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Hauteur</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Échelle</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Décalage</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Intervalle</value>
+  </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Variante #1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Variante #2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Variante #3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Variante #4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Personnalisé</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Aléatoire</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Variante de couleur</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>Couper le trottoir</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Angle</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Réseau décoratif</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Échelle de la largeur</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Distance de répétition</value>
+  </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>Réseau</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Non défini</value>
+  </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>Accessoire</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>Arbre</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Aucun résultat</value>
+  </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Application automatique du marquage copié si la source correspond à la cible</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Probabilité</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Plage</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Unique</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] Ajout des styles de lignes Accessoires et Arbres. Ils permettent de placer n'importe quel accessoire ou arbre sur une ligne. Ces objets ne sont pas comptés dans les limites des accessoires et arbres du jeu.
+[NEW] Ajout du style de ligne Réseau décoratif. Il permet de placer n'importe quel réseau décoratif comme une clôture sur une ligne. Ces réseaux ne sont pas comptabilisés dans les limites des nœuds et segments du jeu.
+[NEW] Ajout de la possibilité de faire des marquages sur les voies ferrées, les rails de métro et les chemins piétons.
+[NEW] Ajout de l'application automatique du marquage lorsqu'il est copié depuis une autre intersection ou depuis un préréglage si l'intersection cible correspond à l'intersection source. Peut être désactivé dans les paramètres du mod.
+[NEW] Ajout de la possibilité de désactiver la coupure des trottoirs.
+[NEW] La coupure des trottoirs est disponible pour les segments.
+[UPDATED] Le modèle 3D des remplisseurs s'étend sous la surface de la route afin d'éviter tout vide sur les nœuds en pente.
+[UPDATED] Ajout de la possibilité de faire pivoter les styles Dents de requin.
+[FIXED] Correction d'un trou dans la superposition lors de la sélection de gros nœuds.
+[FIXED] Correction de l'ombre sur la bordure du trottoir.
+[UPDATED] Ajout du format numérique (m, %, °) pour toutes les propriétés.
+[FIXED] Correction des points manqués par les remplisseurs à l'intersection des lignes normales.</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Même ordre et ordre inverse</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Même ordre uniquement</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] L'application automatique du marquage est activée uniquement lorsqu'il n'y a qu'une seule option possible pour coller le marquage.
+[NEW] Ajout de l'option "Même ordre uniquement" et "Même ordre et ordre inverse" pour l'application automatique du marquage.
+[FIXED] Correction du calcul et de l'illumination des remplisseurs.
+[UPDATED] Le bouton "Couleur par défaut" dans le sélecteur de couleur met la couleur par défaut du style au lieu de celle du mod. </value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Ajout du support du DLC Plazas &amp; Promenades.
+[NEW] Ajout du support de Loading Screen Mod Revisited.
+[FIXED] Correction du clignotement de l'interface lors de la recherche de props/arbres/réseaux.</value>
+  </data>
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Pente</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Inclinaison</value>
+  </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Passer en mode souterrain</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Quitter le mode souterrain</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Activer le souterrain</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Appuyez sur {0} pour entrer et {1} pour quitter</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Maintenez {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Appuyez sur {0} pour entrer
+en mode souterrain</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Appuyez sur {0} pour quitter
+le mode souterrain</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Maintenez {0} pour utiliser le mode souterrain</value>
+  </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>L'intervalle automatique de l'accessoire dépend de sa taille</value>
+  </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>Distance de LOD du marquage 2D</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Distance de LOD des réseaux</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Distance de LOD des accessoires</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Distance de LOD des arbres</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Automatique</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>Distance de LOD du marquage 3D</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Rendu</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Moins d'options</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Plus d'options</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Réduire les options de style supplémentaires</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Couleur principale</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Couleur secondaire</value>
+  </data>
+</root>

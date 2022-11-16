@@ -1,0 +1,1490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Tool_DeleteCaption" xml:space="preserve">
+    <value>Hapus {0}</value>
+  </data>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk menghapus {0} "{1}"?</value>
+  </data>
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>Terapkan templat</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>Simpan sebagai templat</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>Simpan sebagai standar</value>
+  </data>
+  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
+    <value>Hapus simpanan sebagai standar</value>
+  </data>
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>Tambah aturan</value>
+  </data>
+  <data name="StyleOption_Color" xml:space="preserve">
+    <value>Warna</value>
+  </data>
+  <data name="StyleOption_DashedLength" xml:space="preserve">
+    <value>Panjang garis</value>
+  </data>
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>Hapus aturan</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk menghapus aturan ini?</value>
+  </data>
+  <data name="LineRule_From" xml:space="preserve">
+    <value>Dari</value>
+  </data>
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>Pilih titik "Dari" untuk aturan ini</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>Pilih titik "Ke" untuk aturan ini</value>
+  </data>
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>garis</value>
+  </data>
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>Garis</value>
+  </data>
+  <data name="StyleOption_Offset" xml:space="preserve">
+    <value>Geser</value>
+  </data>
+  <data name="StyleOption_SpaceLength" xml:space="preserve">
+    <value>Panjang spasi</value>
+  </data>
+  <data name="Editor_Style" xml:space="preserve">
+    <value>Gaya</value>
+  </data>
+  <data name="LineRule_To" xml:space="preserve">
+    <value>Ke</value>
+  </data>
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>Persilangan dengan {0}</value>
+  </data>
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>Titik tepian-diri {0}</value>
+  </data>
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>Putus-putus</value>
+  </data>
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>Putus-putus ganda</value>
+  </data>
+  <data name="LineStyle_DoubleSolid" xml:space="preserve">
+    <value>Utuh ganda</value>
+  </data>
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>Utuh</value>
+  </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>Untuk membuat markah pada persimpangan</value>
+  </data>
+  <data name="Panel_NodeCaption" xml:space="preserve">
+    <value>Edit markah titik hubung #{0}</value>
+  </data>
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>titik</value>
+  </data>
+  <data name="PointEditor_Offset" xml:space="preserve">
+    <value>Pergeseran</value>
+  </data>
+  <data name="PointEditor_Points" xml:space="preserve">
+    <value>Titik</value>
+  </data>
+  <data name="SelectPanel_NotSet" xml:space="preserve">
+    <value>Belum disetel</value>
+  </data>
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
+    <value>Tambah aturan garis baru</value>
+  </data>
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
+    <value>Hapus semua garis simpangan</value>
+  </data>
+  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
+    <value>Hapus segala markah dari seluruh persimpangan</value>
+  </data>
+  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
+    <value>Hapus segala markah</value>
+  </data>
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk menghapus segala markah?</value>
+  </data>
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>Limpahkan data markah ke file</value>
+  </data>
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
+    <value>Salin jalur file ke salinan</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>Limpahkan markah data</value>
+  </data>
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
+    <value>Pelimpahan gagal</value>
+  </data>
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
+    <value>Pelimpahan ke file berhasil</value>
+  </data>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Pulihkan data markah dari file</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Pulihkan data markah</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk memulihkan markah?
+Markah yang dipulihkan akan menggantikan segala markah yang ada.</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>Pemulihan data markah gagal</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Pemulihan data markah berhasil</value>
+  </data>
+  <data name="Settings_QuickRuleSetup" xml:space="preserve">
+    <value>Penyetelan aturan cepat</value>
+  </data>
+  <data name="Settings_RenderDistance" xml:space="preserve">
+    <value>Jarak penglihatan</value>
+  </data>
+  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
+    <value>Konfirmasi sebelum penghapusan</value>
+  </data>
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>templat</value>
+  </data>
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>Nama</value>
+  </data>
+  <data name="TemplateEditor_Templates" xml:space="preserve">
+    <value>Templat</value>
+  </data>
+  <data name="Template_NewTemplate" xml:space="preserve">
+    <value>Templat baru</value>
+  </data>
+  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
+    <value>Hapus markah persimpangan</value>
+  </data>
+  <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk menghapus segala markah simpang #{0}?</value>
+  </data>
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>Klik untuk membuat garis</value>
+  </data>
+  <data name="Tool_InfoDeleteLine" xml:space="preserve">
+    <value>Klik untuk menghapus garis</value>
+  </data>
+  <data name="Tool_InfoHoverNode" xml:space="preserve">
+    <value>Persimpangan #{0}
+Klik untuk mengedit markah</value>
+  </data>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Pilih sebuah titik hubung atau bagian jalan untuk mengubah markahnya</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Pilih titik akhir untuk garis biasa</value>
+  </data>
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Pilih sebuah titik untuk membuat atau menghapus sebuah garis</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
+    <value>[NEW] Isian. Ruangan di antara garis-garis dapat diisi untuk menunjukkan tempat dimana tidak diperbolahken berhenti atau menyetir. 3 gaya tersedia: Garis-garis, jaring dan utuh. Untuk membuatkannya, tahan Alt.
+[NEW] Garis pemberhentian. Anda dapat menghubungkan dua titik pada jalan yang sama untuk membuat garis pemberhentian. 2 gaya tersedia: "Utuh" dan "Putus-putus".
+[NEW] Gaya garis baru: "Utuh dan putus-putus".
+[NEW] Garis dan templat dalam daftar sekarang memiliki gambar yang menunjukkan gaya dan warna.
+[NEW] Markah sekarang akan disalinkan jika jalan disalinkan menggunakan MoveIt (fungsi tidak akan tersedia hingga mod MoveIt diperbarui).
+[NEW] Opsi salin dan tempel untuk warna garis telah ditambahkan.
+[UPDATED] Mengupgrade jalan ke jalan yang berbeda dengan jumlah lajur yang sama akan memelihara markahnya.
+[NEW] Bagian garis dengan aturan akan disorot jika cursor mouse berada di atas aturan tersebut di panel edit.
+[TRANSLATION] Terjemahan Bahasa Cina Sederhana telah ditambahkan.</value>
+  </data>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Pulihkan</value>
+  </data>
+  <data name="StyleOption_Invert" xml:space="preserve">
+    <value>Balikkan</value>
+  </data>
+  <data name="StyleOption_Width" xml:space="preserve">
+    <value>Lebar</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Utuh dan putus-putus</value>
+  </data>
+  <data name="LineStyle_StopSolid" xml:space="preserve">
+    <value>Utuh</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Klik untuk menghapus garis berhenti</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Klik untuk membuat garis berhenti</value>
+  </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Isian</value>
+  </data>
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>isian</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Garis-garis</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Jejaring</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Putus-putus</value>
+  </data>
+  <data name="StyleOption_Step" xml:space="preserve">
+    <value>Langkah</value>
+  </data>
+  <data name="StyleOption_Angle" xml:space="preserve">
+    <value>Sudut</value>
+  </data>
+  <data name="StyleOption_LinesOffset" xml:space="preserve">
+    <value>Pergeseran dari garis</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>Klik untuk membuat isian</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>Klik untuk menyelesaikan isian</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Klik untuk memilih titik berikutnya untuk sisi isian</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>Pilih sebuah titik untuk mulai membuat isian</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Pilih titik berikutnya untuk sisi isian</value>
+  </data>
+  <data name="StyleOption_MedianOffset" xml:space="preserve">
+    <value>Pergeseran dari tengah</value>
+  </data>
+  <data name="Editor_ColorCopy" xml:space="preserve">
+    <value>Salin</value>
+  </data>
+  <data name="Editor_ColorPaste" xml:space="preserve">
+    <value>Tempel</value>
+  </data>
+  <data name="Editor_ColorDefault" xml:space="preserve">
+    <value>Standar</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Utuh</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>[FIXED] Tekan dan tahan Alt, Ctrl, dan Shift telah diperbaiki pada Mac OS dan Linux.
+[NEW] Gaya garis pemberhentian "Utuh ganda" dan "Putus-putus ganda" telah ditambah.
+[TRANSLATION] Terjemahan Bahasa Italia dan Portugis telah ditambah.</value>
+  </data>
+  
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
+    <value>Tambah isian baru</value>
+  </data>
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Utuh ganda</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Putus-putus ganda</value>
+  </data>
+  <data name="HeaderPanel_StyleCopy" xml:space="preserve">
+    <value>Salin</value>
+  </data>
+  <data name="HeaderPanel_StylePaste" xml:space="preserve">
+    <value>Tempel</value>
+  </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Serong</value>
+  </data>
+  <data name="StyleOption_AngleBetween" xml:space="preserve">
+    <value>Sudut di antaranya</value>
+  </data>
+  <data name="StyleOption_Turn" xml:space="preserve">
+    <value>Putar</value>
+  </data>
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>Tidak ada garis di simpang ini.
+Untuk membuat garis, hubungkan dua titik.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>Tidak ada isian di simpang ini.
+Untuk membuat isian, tekan dan tahan {0} atau tekan {1}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>Tidak ada templat.
+Untuk membuat templat, klik {0} pada garis atau penyebrangan atau gaya isian.</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <data name="StyleOption_Alignment" xml:space="preserve">
+    <value>Penjajaran</value>
+  </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Klik untuk membuat garis tegak lurus</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Klik untuk menghapus garis tegak lurus</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zebra</value>
+  </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Penyeberangan yang sudah ada</value>
+  </data>
+  <data name="StyleOption_OffsetBetween" xml:space="preserve">
+    <value>Pergeseran di antaranya</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Penyeberangan</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Tidak ada penyeberangan di persimpangan ini.
+Untuk membuat penyeberangan, tekan dan tahan {0}.</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>penyeberangan</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Penyeberangan</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Isian</value>
+  </data>
+  <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
+    <value>Garis biasa</value>
+  </data>
+  <data name="LineStyle_StopLinesGroup" xml:space="preserve">
+    <value>Garis berhenti</value>
+  </data>
+  <data name="Settings_GroupLines" xml:space="preserve">
+    <value>Kelompokkan garis</value>
+  </data>
+  <data name="Settings_GroupTemplates" xml:space="preserve">
+    <value>Kelompokkan templat</value>
+  </data>
+  <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
+    <value>Klik untuk membuat penyeberangan</value>
+  </data>
+  <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
+    <value>Klik untuk menghapus penyeberangan</value>
+  </data>
+  <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
+    <value>Menurut gaya</value>
+  </data>
+  <data name="Settings_GroupTemplatesByType" xml:space="preserve">
+    <value>Menurut jenis</value>
+  </data>
+  <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
+    <value>Zebra ganda</value>
+  </data>
+  <data name="StyleOption_LineWidth" xml:space="preserve">
+    <value>Lebar garis</value>
+  </data>
+  <data name="StyleOption_OffsetAfter" xml:space="preserve">
+    <value>Pergeseran setelahnya</value>
+  </data>
+  <data name="StyleOption_OffsetBefore" xml:space="preserve">
+    <value>Pergeseran sebelumnya</value>
+  </data>
+  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
+    <value>Paralel ke lajur</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
+    <value>Garis utuh paralel</value>
+  </data>
+  <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
+    <value>Tepian kiri</value>
+  </data>
+  <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
+    <value>Tepian kanan</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
+    <value>Pilih tepian kiri dari penyeberangan ini</value>
+  </data>
+  <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
+    <value>Pilih tepian kanan dari penyeberangan ini</value>
+  </data>
+  <data name="Settings_GroupPointsOverlay" xml:space="preserve">
+    <value>Hamparan kelompok titik</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
+    <value>Susun dalam lingkaran</value>
+  </data>
+  <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
+    <value>Susun dalam garis</value>
+  </data>
+  <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
+    <value>Aturan ini ditumpangtindih oleh aturan lainnya.
+Cek titik "Dari" dan "Ke" aturan lainnya.</value>
+  </data>
+  <data name="LineRule_LeftBorder" xml:space="preserve">
+    <value>Tepian kiri penyeberangan</value>
+  </data>
+  <data name="LineRule_RightBorder" xml:space="preserve">
+    <value>Tepian kanan penyeberangan</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Setel ulang</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Pilih titik akhir</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Pilih titik untuk membuat atau menghapus sebuah penyeberangan</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Garis putus-putus paralel</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Tangga</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Tidak ada templat</value>
+  </data>
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Utuh</value>
+  </data>
+  <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
+    <value>Garis penyeberangan</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>penyeberangan</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>isian</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>garis</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>titik</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>templat</value>
+  </data>
+  
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Pemuatan telah selesai dengan kendala.
+Pemuatan markah untuk {0} persimpangan gagal.</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Papan catur</value>
+  </data>
+  <data name="StyleOption_LineCount" xml:space="preserve">
+    <value>Hitungan garis</value>
+  </data>
+  <data name="StyleOption_SharkToothBase" xml:space="preserve">
+    <value>Panjang dasar segi tiga</value>
+  </data>
+  <data name="StyleOption_SharkToothHeight" xml:space="preserve">
+    <value>Tinggi segi tiga</value>
+  </data>
+  <data name="StyleOption_SharkToothSpace" xml:space="preserve">
+    <value>Spasi di antara</value>
+  </data>
+  <data name="StyleOption_SquareSide" xml:space="preserve">
+    <value>Sisi segi empat</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Gigi hiu</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Gigi hiu</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Utuh dan putus-putus</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Hapus markah</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Salin markah</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Tempel markah</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Tempel markah</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk menempel markah?</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Pengubah penyeberangan</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Pengubah isian</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Pengubah garis biasa</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Pengubah garis berhenti</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Belum disetel</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Tanpa pengubah</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Selalu</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Hanya jika akan memengaruhi lainnya</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Hal-hal yang berkaitan akan dihapus juga:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Tepian penyeberangan - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Penyeberangan - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Isian - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Garis - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Aturan - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Tampilan dan pemakaian</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Pengelompokan</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Pintasan dan pengubah</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Duplikat</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Salin</value>
+  </data>
+  <data name="StyleOption_Edge" xml:space="preserve">
+    <value>Tepi</value>
+  </data>
+  <data name="StyleOption_StartingFrom" xml:space="preserve">
+    <value>Mulai dari</value>
+  </data>
+  <data name="StyleOption_Vertex" xml:space="preserve">
+    <value>Puncak</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Setel ulang pergeseran semua titik</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Setel ulang pergeseran semua titik</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk menyetel ulang pergeseran titik persimpangan #{0}?</value>
+  </data>
+  <data name="Tool_InfoRoadsDrag" xml:space="preserve">
+    <value>Seret dan taruhkan lingkaran untuk menyetel urutan jalanan
+Klik lingkaran untuk mengedit urutan titik jalan</value>
+  </data>
+  <data name="Tool_InfoRoadsDrop" xml:space="preserve">
+    <value>Taruhkan lingkaran di dalam/luar target untuk menyetel/lepas setelan urutan jalan</value>
+  </data>
+  <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
+    <value>Salin markah</value>
+  </data>
+  <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
+    <value>Tempel markah</value>
+  </data>
+  <data name="Tool_InfoInverseOrder" xml:space="preserve">
+    <value>Inversi urutan</value>
+  </data>
+  <data name="Tool_InfoTurnClockwise" xml:space="preserve">
+    <value>Putar searah dengan jarum jam</value>
+  </data>
+  <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
+    <value>Putar berlawanan dengan jarum jam</value>
+  </data>
+  <data name="StyleOption_AlignmentCenter" xml:space="preserve">
+    <value>Tengah</value>
+  </data>
+  <data name="StyleOption_AlignmentLeft" xml:space="preserve">
+    <value>Kiri</value>
+  </data>
+  <data name="StyleOption_AlignmentRight" xml:space="preserve">
+    <value>Kanan</value>
+  </data>
+  <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
+    <value>Templat yang belum dinamakan</value>
+  </data>
+  <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
+    <value>Nama telah digunakan</value>
+  </data>
+  <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
+    <value>Nama "{0}" telah digunakan oleh templat lainnya.
+Apakah Anda yakin untuk memiliki lebih dari satu templat dengan nama yang sama?</value>
+  </data>
+  <data name="Settings_BackupMarking" xml:space="preserve">
+    <value>Backup markah</value>
+  </data>
+  <data name="Settings_BackupTemplates" xml:space="preserve">
+    <value>Backup templat</value>
+  </data>
+  <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
+    <value>Hapuskan semua templat</value>
+  </data>
+  <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
+    <value>Hapuskan semua templat</value>
+  </data>
+  <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk menghapus semua templat?</value>
+  </data>
+  <data name="Settings_DumpTemplatesButton" xml:space="preserve">
+    <value>Limpahkan templat ke file</value>
+  </data>
+  <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
+    <value>Limpahkan templat</value>
+  </data>
+  <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
+    <value>Pulihkan templat dari file</value>
+  </data>
+  <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
+    <value>Pulihkan templat</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk memulihkan templat?
+Templat yang dipulihkan akan menggantikan semua templat yang ada.</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
+    <value>Pemulihan templat gagal</value>
+  </data>
+  <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
+    <value>Pemulihan templat berhasil</value>
+  </data>
+  <data name="Tool_Apply" xml:space="preserve">
+    <value>Terapkan</value>
+  </data>
+  <data name="Tool_Continue" xml:space="preserve">
+    <value>Lanjutkan</value>
+  </data>
+  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
+    <value>Keluar mode tempel</value>
+  </data>
+  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
+    <value>Apakah anda ingin untuk keluar dari mode tempel dan terapkan perubahan?</value>
+  </data>
+  <data name="Tool_NotApply" xml:space="preserve">
+    <value>Jangan terapkan</value>
+  </data>
+  <data name="Tool_InfoPasteApply" xml:space="preserve">
+    <value>Terapkan</value>
+  </data>
+  <data name="Tool_infoPasteNotApply" xml:space="preserve">
+    <value>Jangan terapkan</value>
+  </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Setel ulang</value>
+  </data>
+  <data name="Panel_EditMarking" xml:space="preserve">
+    <value>Edit urutan markah</value>
+  </data>
+  <data name="Settings_ShortcutEditMarking" xml:space="preserve">
+    <value>Ubah urutan markah</value>
+  </data>
+  <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
+    <value>Jalanan telah berubah</value>
+  </data>
+  <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
+    <value>Jalanan di persimpangan ini telah berubah. Maka, markah yang sudah ada tidak bisa diterapkan secara otomatis. Apakah Anda ingin terapkan markah secara manual?</value>
+  </data>
+  <data name="Tool_EndEditOrderCaption" xml:space="preserve">
+    <value>Keluar mode edit urutan</value>
+  </data>
+  <data name="Tool_EndEditOrderMessage" xml:space="preserve">
+    <value>Apakah Anda ingin keluar dari mode edit dan terapkan perubahan?</value>
+  </data>
+  <data name="Tool_InfoPointsDrag" xml:space="preserve">
+    <value>Seret dan lepaskan lingkaran untuk menyetel urutan titik</value>
+  </data>
+  <data name="Tool_InfoPointsDrop" xml:space="preserve">
+    <value>Taruhkan lingkaran di dalam/luar target untuk menyetel/lepas setelan urutan titik</value>
+  </data>
+  <data name="StyleOption_SolidInCenter" xml:space="preserve">
+    <value>Utuh di tengah</value>
+  </data>
+  <data name="StyleOption_No" xml:space="preserve">
+    <value>Tidak</value>
+  </data>
+  <data name="StyleOption_Yes" xml:space="preserve">
+    <value>Iya</value>
+  </data>
+  <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
+    <value>Tekan dan tahan {0} untuk membuat penyeberangan</value>
+  </data>
+  <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
+    <value>Tekan dan tahan {0} untuk membuat isian</value>
+  </data>
+  <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
+    <value>Tekan dan tahan {0} untuk menggeser titik</value>
+  </data>
+  
+  <data name="MessageBox_CantUndone" xml:space="preserve">
+    <value>Aksi ini tidak dapat ditarik ulang.</value>
+  </data>
+  <data name="LineStyle_Empty" xml:space="preserve">
+    <value>Kosong</value>
+  </data>
+  <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
+    <value>Buat garis pinggiran persimpangan</value>
+  </data>
+  <data name="Panel_CreateEdgeLines" xml:space="preserve">
+    <value>Buat garis pinggiran persimpangan</value>
+  </data>
+  <data name="Panel_ResetOffset" xml:space="preserve">
+    <value>Setel ulang pergeseran semua titik</value>
+  </data>
+  <data name="Settings_QuickBorderSetup" xml:space="preserve">
+    <value>Penyetelan tepian penyeberangan cepat</value>
+  </data>
+  <data name="Settings_RailUnderMarking" xml:space="preserve">
+    <value>Markah di bawah jalur rel</value>
+  </data>
+  <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
+    <value>Awas: opsi ini akan mengubah urutan render objek di game</value>
+  </data>
+  
+  <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
+    <value>Simpan sebagai aset</value>
+  </data>
+  <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
+    <value>{0}
+oleh {1}</value>
+  </data>
+  <data name="PresetEditor_EmptyMessage" xml:space="preserve">
+    <value>Tidak ada prasetelan.
+Untuk membuat sebuah prasetelan, klik {0} di bagian atas panel.</value>
+  </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Prasetelan</value>
+  </data>
+  <data name="Panel_SaveAsPreset" xml:space="preserve">
+    <value>Simpan sebagai prasetelan</value>
+  </data>
+  <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
+    <value>Simpan sebagai prasetelan</value>
+  </data>
+  <data name="HeaderPanel_NoPresets" xml:space="preserve">
+    <value>Tidak ada prasetelan</value>
+  </data>
+  <data name="PresetEditor_ApplyPreset" xml:space="preserve">
+    <value>Terapkan prasetelan</value>
+  </data>
+  <data name="Preset_NewPreset" xml:space="preserve">
+    <value>Prasetelan baru</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+    <value>Keluar mode penerapan prasetelan</value>
+  </data>
+  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+    <value>Apakan Anda yakin untuk menerapkan prasetelan?</value>
+  </data>
+  <data name="TemplateEditor_Author" xml:space="preserve">
+    <value>Ciptaan</value>
+  </data>
+  <data name="Settings_ApplyAfterRestart" xml:space="preserve">
+    <value>Diterapkan setelah game direstart</value>
+  </data>
+  <data name="Settings_LoadMarkingAssets" xml:space="preserve">
+    <value>Muatkan asset markah</value>
+  </data>
+  <data name="PresetInfo_Crosswalks" xml:space="preserve">
+    <value>Penyeberangan:</value>
+  </data>
+  <data name="PresetInfo_Fillers" xml:space="preserve">
+    <value>Isian:</value>
+  </data>
+  <data name="PresetInfo_Lines" xml:space="preserve">
+    <value>Garis:</value>
+  </data>
+  <data name="PresetInfo_NoScreenshot" xml:space="preserve">
+    <value>Tidak ada screenshot</value>
+  </data>
+  <data name="PresetInfo_RoadPoints" xml:space="preserve">
+    <value>Titik jalan #{0}:</value>
+  </data>
+  <data name="PresetInfo_Roads" xml:space="preserve">
+    <value>Jalan:</value>
+  </data>
+  <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
+    <value>Potong garis baru di penyeberangan</value>
+  </data>
+  <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
+    <value>Potong garis pada penyeberangan ini</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Backup prasetelan</value>
+  </data>
+  <data name="Settings_DeletePresetsButton" xml:space="preserve">
+    <value>Hapus semua prasetelan</value>
+  </data>
+  <data name="Settings_DeletePresetsCaption" xml:space="preserve">
+    <value>Hapus semua prasetelan</value>
+  </data>
+  <data name="Settings_DeletePresetsMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk menghapus semua prasetelan?</value>
+  </data>
+  <data name="Settings_DumpPresetsButton" xml:space="preserve">
+    <value>Limpahkan prasetelan ke file</value>
+  </data>
+  <data name="Settings_DumpPresetsCaption" xml:space="preserve">
+    <value>Limpahkan prasetelan</value>
+  </data>
+  <data name="Settings_RestorePresetsButton" xml:space="preserve">
+    <value>Pulihkan prasetelan dari file</value>
+  </data>
+  <data name="Settings_RestorePresetsCaption" xml:space="preserve">
+    <value>Pulihkan prasetelan</value>
+  </data>
+  <data name="Settings_RestorePresetsMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk memulihkan prasetelan?
+Markah yang dipulihkan akan menggantikan semua prasetelan yang ada.</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
+    <value>Pemulihan prasetelan gagal</value>
+  </data>
+  <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
+    <value>Pemulihan prasetelan berhasil</value>
+  </data>
+  <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
+    <value>Potong garis pada semua penyeberangan</value>
+  </data>
+  <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
+    <value>Potong garis pada semua penyeberangan</value>
+  </data>
+  <data name="PresetEditor_RewriteCaption" xml:space="preserve">
+    <value>Tuliskan kembali aset prasetelan</value>
+  </data>
+  <data name="PresetEditor_RewriteMessage" xml:space="preserve">
+    <value>Untuk mengubah namanya, diperlukan penulisan kembali file aset. Lanjutkan?</value>
+  </data>
+  <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
+    <value>Tuliskan kembali aset templat</value>
+  </data>
+  <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
+    <value>Untuk mengubah nama dan nilai-nilainya, diperlukan penulisan kembali file aset. Lanjutkan?</value>
+  </data>
+  <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
+    <value>Untuk dapat mengubah tepian penyeberangan, Anda harus memiliki garis yang mulai dari titik yang sama dengan penyeberangan</value>
+  </data>
+  <data name="LineEditor_RulesWarning" xml:space="preserve">
+    <value>Anda harus memiliki garis lainnya yang bersimpangan dengan garis ini untuk mengubah titik "Dari" dan "Ke" aturan ini dan membuat aturan tambahan.</value>
+  </data>
+  <data name="Settings_ShowPaneltips" xml:space="preserve">
+    <value>Perlihatkan petunjuk di panel</value>
+  </data>
+  <data name="HeaderPanel_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="HeaderPanel_Save" xml:space="preserve">
+    <value>Simpan perubahan</value>
+  </data>
+  <data name="HeaderPanel_NotSave" xml:space="preserve">
+    <value>Jangan simpan perubahan</value>
+  </data>
+  <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Apakah Anda ingin untuk menyimpan perubahan nama prasetelan?</value>
+  </data>
+  <data name="TemplateEditor_SaveChanges" xml:space="preserve">
+    <value>Simpan perubahan</value>
+  </data>
+  <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
+    <value>Apakah Anda ingin menyimpan perubahan nilai templat?</value>
+  </data>
+  <data name="PresetEditor_NameExistMessage" xml:space="preserve">
+    <value>Nama "{0}" telah digunakan oleh prasetelan lainnya.
+Apakah Anda yakin untuk memiliki lebih dari satu prasetelan dengan nama yang sama?</value>
+  </data>
+  <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Templat ini adalah sebuah aset. Anda hanya dapat menghapuskannya dari Content Manager game.</value>
+  </data>
+  <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Prasetelan ini tidak dapat dimodifikasi. Ini hanya dapat dihapus dari Content Manager game atau diberhentikan langganannya di Steam Workshop.</value>
+  </data>
+  <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
+    <value>Prasetelan ini adalah sebuah aset.</value>
+  </data>
+  <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
+    <value>Ini hanya dapat dihapus dari Content Manager game.</value>
+  </data>
+  <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
+    <value>Templat ini tidak dapat dimodifikasi. Ini hanya dapat dihapus dari Content Manager game atau diberhentikan langganannya di Steam Workshop.</value>
+  </data>
+  <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
+    <value>Templat ini adalah sebuah aset.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>prasetelan</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>prasetelan</value>
+  </data>
+  
+  <data name="LineEditor_NotSupportRules" xml:space="preserve">
+    <value>Garis jenis ini tidak mendukung aturan</value>
+  </data>
+  <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
+    <value>Jangan potongkan garis di penyeberangan jika itu adalah tepiannya</value>
+  </data>
+  <data name="Template_UnknownAuthor" xml:space="preserve">
+    <value>Pembuat tidak diketahui</value>
+  </data>
+  
+  <data name="Mod_LoadFailedAll" xml:space="preserve">
+    <value>Pemuatan telah selesai dengan kendala.
+Pemuatan markah untuk semua persimpangan gagal.</value>
+  </data>
+  <data name="Panel_SegmentCaption" xml:space="preserve">
+    <value>Edit markah ruas #{0}</value>
+  </data>
+  <data name="FillerStyle_Grass" xml:space="preserve">
+    <value>Rumput</value>
+  </data>
+  <data name="FillerStyle_Pavement" xml:space="preserve">
+    <value>Trotoar</value>
+  </data>
+  <data name="FillerStyle_Elevation" xml:space="preserve">
+    <value>Ketinggian</value>
+  </data>
+  <data name="LineStyle_Elevation" xml:space="preserve">
+    <value>Ketinggian</value>
+  </data>
+  <data name="LineStyle_Grass" xml:space="preserve">
+    <value>Rumput</value>
+  </data>
+  <data name="LineStyle_Pavement" xml:space="preserve">
+    <value>Trotoar</value>
+  </data>
+  <data name="Settings_LODDistance" xml:space="preserve">
+    <value>Jarak tingkat detail (LOD)</value>
+  </data>
+  <data name="Tool_InfoHoverSegment" xml:space="preserve">
+    <value>Ruas #{0}
+Klik untuk mengedit markah</value>
+  </data>
+  <data name="StyleOption_FollowRails" xml:space="preserve">
+    <value>Ikuti pemandu</value>
+  </data>
+  <data name="StyleOption_LeftRail" xml:space="preserve">
+    <value>Pemandu kiri</value>
+  </data>
+  <data name="StyleOption_RightRail" xml:space="preserve">
+    <value>Pemandu kanan</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
+    <value>Pilih titik pertama pemandu atau garis sebagai pemandu</value>
+  </data>
+  <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
+    <value>Pilih titik kedua pemandu</value>
+  </data>
+  
+  
+  
+  <data name="StyleOption_ColorCount" xml:space="preserve">
+    <value>Hitungan warna</value>
+  </data>
+  <data name="StyleOption_ColorCountOne" xml:space="preserve">
+    <value>Satu</value>
+  </data>
+  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
+    <value>Dua</value>
+  </data>
+  <data name="Style_FromClipboard" xml:space="preserve">
+    <value>Dari salinan</value>
+  </data>
+  <data name="LineEditor_LineAlignment" xml:space="preserve">
+    <value>Penjajaran garis</value>
+  </data>
+  <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
+    <value>Dipisah menjadi dua</value>
+  </data>
+  <data name="PointEditor_SplitOffset" xml:space="preserve">
+    <value>Pemisahan pergeseran</value>
+  </data>
+  <data name="Settings_GroupPoints" xml:space="preserve">
+    <value>Kelompokkan titik</value>
+  </data>
+  <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
+    <value>Terapkan di antara persimpangan</value>
+  </data>
+  <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
+    <value>Terapkan di antara persimpangan</value>
+  </data>
+  <data name="Panel_ApplyWholeStreet" xml:space="preserve">
+    <value>Terapkan ke jalan dari ujung ke ujung</value>
+  </data>
+  <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
+    <value>Terapkan ke jalan dari ujung ke ujung</value>
+  </data>
+  <data name="MessageBox_ItWillReplace" xml:space="preserve">
+    <value>Ini akan menggantikan markah yang sudah ada.</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
+    <value>Terapkan markah di antara persimpangan</value>
+  </data>
+  <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
+    <value>Apakah Anda yakin untuk menerapkan markah di antara persimpangan?</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
+    <value>Terapkan markah ke jalan dari ujung ke ujung</value>
+  </data>
+  <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
+    <value>Apakah anda yakin untuk menerapkan markah ke keseluruhan jalan "{0}"?</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
+    <value>Seretkan di belakang titik untuk garis tegak lurus</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
+    <value>Pilih titik akhir untuk garis biasa atau pemberhentian</value>
+  </data>
+  
+  <data name="LineEditor_LineEndAlignment" xml:space="preserve">
+    <value>Penjajaran ujung garis</value>
+  </data>
+  <data name="LineEditor_LineStartAlignment" xml:space="preserve">
+    <value>Penjajaran awal garis</value>
+  </data>
+  
+  
+  
+  
+  <data name="Settings_HideStreetName" xml:space="preserve">
+    <value>Hilangkan nama jalan saat menggunakan alat</value>
+  </data>
+  <data name="LineStyle_StopPavement" xml:space="preserve">
+    <value>Trotoar</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
+    <value>Klik dengan menahan {0} untuk memilih penyeberangan</value>
+  </data>
+  <data name="Tool_InfoSelectLine" xml:space="preserve">
+    <value>Klik dengan menahan {0} untuk memilih garis</value>
+  </data>
+  <data name="FillerStyle_Gravel" xml:space="preserve">
+    <value>Kerikil</value>
+  </data>
+  <data name="FillerStyle_Cliff" xml:space="preserve">
+    <value>Jurang</value>
+  </data>
+  <data name="FillerStyle_Ruined" xml:space="preserve">
+    <value>Rusak</value>
+  </data>
+  <data name="StyleOption_LineOffset" xml:space="preserve">
+    <value>Pergeseran dari garis</value>
+  </data>
+  <data name="FillerStyle_CornerRadius" xml:space="preserve">
+    <value>Radius sudut</value>
+  </data>
+  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
+    <value>Radius sudut pada median</value>
+  </data>
+  <data name="FillerStyle_CurbSize" xml:space="preserve">
+    <value>Besar trotoar</value>
+  </data>
+  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
+    <value>Besar trotoar pada median</value>
+  </data>
+  
+  
+  <data name="HeaderPanel_Discard" xml:space="preserve">
+    <value>Buangkan</value>
+  </data>
+  
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Pengurutan</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Urutkan prasetelan</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Dengan nama</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Dengan jumlah jalanan, terus dengan nama</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Dengan pengarang, terus dengan jenis, terus dengan nama</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Dengan nama, terus dengan jenis</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Dengan jenis, terus dengan nama</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Urutkan templat</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Berdasarkan pengarang, lalu jenis, lalu nama</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Berdasarkan nama, lalu berdasarkan jenis</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Berdasarkan jenis, lalu berdasarkan nama</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Tampilkan templat standar di awal apply list</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Sortir templat di apply list</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Penerangan saat mengedit markah pada malam hari</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Intensitas penerangan</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Kelompok pra-setelan</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Lumayan cocok</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Cocok dgn sempurna</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Kurang cocok</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Mungkin cocok</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Markah di bawah persimpangan</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Panjang jeda</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Periode jeda</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Gunakan jeda</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Pulihkan pergeseran</value>
+  </data>
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Simpan pergeseran</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Nama jalan</value>
+  </data>
+  
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Benda</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Pohon</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Sudut</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Ketinggian</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>Nama</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Skala</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Pergeseran</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Langkah</value>
+  </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Varian 1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Varian 2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Varian 3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Varian 4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Kustom</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Acak</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Varian warna</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>Potongan trotoar</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Sudut</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Jaringan hiasan</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Skala lebar</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Jarak pengulangan</value>
+  </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>Aset jaringan</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Tidak disetel</value>
+  </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>Aset benda</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>Aset pohon</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Tidak ada yang ditemukan</value>
+  </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Tempel otomatis jika sumber cocok dengan sasaran</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Probabilitas</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Jarak</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Tunggal</value>
+  </data>
+  
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Urutan langsung dan terbalik</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Hanya urutan langsung</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] Aplikasi markah otomatis hanya akan berjalan apabila hanya ada satu kemungkinan untuk pengaplikasian markah.
+[NEW] Menambahkan opsi "Only direct order" dan "Direct and invert order" pada pengaplikasian markah otomatis.
+[FIXED] Pembenaran perhitungan fillers dan penerangan.
+[UPDATED] Tombol "Default color" pada pilihan warna mensetel warna bawaan gaya dari pada warna bawaan mod.</value>
+  </data>
+  
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Kemiringan</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Miring</value>
+  </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Masuk ke mode bawah tanah</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Keluar dari mode bawah tanah</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Aktif/nonaktifkan mode bawah tanah</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Tekan {0} untuk masuk dan {1} untuk keluar</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Tekan dan tahan {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Tekan {0} untuk memasuki
+mode bawah tanah</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Tekan {0} untuk keluar
+mode bawah tanah</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Tekan dan tahan {0} untuk
+mode bawah tanah</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</root>
