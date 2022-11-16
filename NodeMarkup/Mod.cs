@@ -14,7 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Resources;
-using UnityEngine.SceneManagement;
+using UnityEngine;
 
 namespace NodeMarkup
 {
@@ -259,7 +259,7 @@ namespace NodeMarkup
         private void PatchLoading(ref bool success)
         {
             if (Settings.LoadMarkingAssets)
-            {             
+            {
                 success &= Patch_LoadingManager_LoadCustomContent();
                 success &= Patch_LoadingScreenMod_LoadImpl();
             }
@@ -270,6 +270,9 @@ namespace NodeMarkup
             return AddTranspiler(typeof(Mod), nameof(Mod.LoadingManagerLoadCustomContentTranspiler), nestedType, "MoveNext");
         }
 
+        private const int gameObjectVarIndex = 26;
+        private const int component7VarIndex = 33;
+        private const int flagVarIndex = 34;
         private static IEnumerable<CodeInstruction> LoadingManagerLoadCustomContentTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var newInstructions = new List<CodeInstruction>(instructions);
@@ -280,10 +283,10 @@ namespace NodeMarkup
             {
                 var instruction = newInstructions[index];
 
-                if (instruction.opcode == OpCodes.Stloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 29)
+                if (instruction.opcode == OpCodes.Stloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == component7VarIndex)
                 {
                     markingLocal = generator.DeclareLocal(typeof(MarkingInfo));
-                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldloc_S, 22));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldloc_S, gameObjectVarIndex));
                     newInstructions.Insert(++index, new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(UnityEngine.GameObject), nameof(UnityEngine.GameObject.GetComponent), new Type[0], new Type[] { typeof(MarkingInfo) })));
                     newInstructions.Insert(++index, new CodeInstruction(OpCodes.Stloc_S, markingLocal));
                     break;
@@ -297,7 +300,7 @@ namespace NodeMarkup
             for (index += 1; index < newInstructions.Count; index += 1)
             {
                 var instruction = newInstructions[index];
-                if (instruction.opcode == OpCodes.Ldloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 29)
+                if (instruction.opcode == OpCodes.Ldloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == component7VarIndex)
                 {
                     lastIfFound = true;
                     break;
@@ -364,7 +367,7 @@ namespace NodeMarkup
             {
                 var instruction = newInstructions[index];
 
-                if (instruction.opcode == OpCodes.Ldloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 30)
+                if (instruction.opcode == OpCodes.Ldloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == flagVarIndex)
                 {
                     instruction.labels.Add(endLabel);
                     break;
@@ -373,6 +376,7 @@ namespace NodeMarkup
 
             return newInstructions;
         }
+
         private bool Patch_LoadingScreenMod_LoadImpl()
         {
             var lsmFound = false;
@@ -407,6 +411,7 @@ namespace NodeMarkup
                 return true;
             }
         }
+        private const int component6VarIndex = 13;
         private static IEnumerable<CodeInstruction> LoadingScreenModLoadImplTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var newInstructions = new List<CodeInstruction>(instructions);
@@ -416,7 +421,7 @@ namespace NodeMarkup
             for (; index < newInstructions.Count; index += 1)
             {
                 var instruction = newInstructions[index];
-                if (instruction.opcode == OpCodes.Stloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 13)
+                if (instruction.opcode == OpCodes.Stloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == component6VarIndex)
                 {
                     lastIfFound = true;
                     break;
