@@ -305,17 +305,7 @@ Clique para editar marcações</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selecione um ponto para criar ou remover a uma linha</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
-    <value>[NEW] Adicionado Preenchimentos. O espaço entre as linhas pode ser preenchido para indicar áreas de proibição de paragem ou condução. 3 estilos disponíveis: "Linhas", "Grelha" e "Sólido". Para criar um preenchimento pressione Alt.
-[NEW] Adicionada Linha de Paragem. Agora é possível conectar dois pontos da mesma estrada para criar uma linha de paragem. 2 estilos disponíveis: "Sólida" e "Tracejada".
-[NEW] Adicionado estilo de linha: "Sólida &amp; Tracejada".
-[NEW] Adicionado icons que mostram o estilo e a cor.
-[NEW] Marcações são agora copiadas ao copiar as estradas com MoveIt (funcionalidade só estará disponível aquando o MoveIt for actualizado).
-[NEW] Adicionada opção para copiar e colar cor das linhas.
-[UPDATED] Melhorar uma estrada para um diferente com o mesmo número de vias agora preserva as marcações.
-[NEW] O segmento de uma linha agora é realçado quando paira com o rato no painel de edição daquela regra.
-[TRANSLATION] Adicionada tradução para Chinês Simplificado.</value>
-  </data>
+  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Recuperar</value>
   </data>
@@ -408,9 +398,7 @@ Clique para editar marcações</value>
   <data name="HeaderPanel_StylePaste" xml:space="preserve">
     <value>Colar</value>
   </data>
-  <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>Chevron</value>
-  </data>
+  
   <data name="StyleOption_AngleBetween" xml:space="preserve">
     <value>Ângulo entre</value>
   </data>
@@ -429,86 +417,32 @@ Para criar um preenchimento mantenha {0} premido ou pressione {1}.</value>
     <value>A lista de modelos está vazia.
 Para criar um modelo, clique «{0}» no estilo da linha, da passadeira ou do preenchimento.</value>
   </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Activar com chave</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Activação falhada</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Ativação bem-sucedida</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Esta funcionalidade está indisponível</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>Funcionalidade {0} está disponível para acesso antecipado dos Patreons.
-Ir ficar disponível para todos mais tarde.
-Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste mod.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Obtenha acesso antecipado</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>O seu ID de acesso</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Chave de acesso</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Activar</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Activação de acesso antecipado</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Para activar acesso antecipado necessita de preencher com uma chave</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Cancelar</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>A chave que usou não é válida</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Conexão em curso...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Conectar Patreon</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Conectar Patreon</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>A conta do Patreon não pode ser conectada porque você recusou o acesso.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Ocorreu um erro ao conectar a conta, tente novamente.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>A sua conta está conectada mas você não tem acesso antecipado.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Pode fechar esta página e voltar ao jogo.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Cancelar</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Estado: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Activado</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Não activado</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Obrigado pelo seu apoio, agora pode usufruir de todas as funcionalidades.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Acesso antecipado</value>
-  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alinhamento</value>
   </data>
@@ -520,9 +454,7 @@ Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste m
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
     <value>Clique para remover linha perpendicular</value>
   </data>
-  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
-    <value>Zebra</value>
-  </data>
+  
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Passadeira existente</value>
   </data>
@@ -1137,10 +1069,7 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Autor desconhecido</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>[UPDATED] Improve mensagens sobre erros no carregamento de dados.
-[FIXED] Linguagens corrigidas e atualizadas.</value>
-  </data>
+  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>O carregamento foi completado com erros.
 O carregamento de todas marcações falhou.</value>
