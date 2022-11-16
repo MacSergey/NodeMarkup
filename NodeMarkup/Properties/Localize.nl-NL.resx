@@ -118,708 +118,684 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Tool_DeleteCaption" xml:space="preserve">
-    <value>Lösche {0}</value>
+    <value>Verwijder {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Willst du {0} "{1}" wirklich löschen?</value>
+    <value>Wil je {0} "{1}" echt verwijderen?</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Vorlage anwenden</value>
+    <value>Sjabloon toepassen</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Als Vorlage speichern</value>
+    <value>Opslaan als sjabloon</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>Als Standard festlegen</value>
+    <value>Als standaard instellen</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Als Standard entfernen</value>
+    <value>Verwijder als standaard</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Regel hinzufügen</value>
+    <value>Regel Toevoegen</value>
   </data>
   <data name="StyleOption_Color" xml:space="preserve">
-    <value>Farbe</value>
+    <value>Kleur</value>
   </data>
   <data name="StyleOption_DashedLength" xml:space="preserve">
-    <value>Strichlänge</value>
+    <value>Streeplengte</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Regel löschen</value>
+    <value>Regel verwijderen</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Willst du die Regel wirklich löschen?</value>
+    <value>Wil je de regel echt verwijderen?</value>
   </data>
   <data name="LineRule_From" xml:space="preserve">
-    <value>Von</value>
+    <value>Van</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Startpunkt der Regel auswählen</value>
+    <value>Selecteer het startpunt van de regel</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Endpunkt der Regel auswählen</value>
+    <value>Selecteer het eindpunt van de regel</value>
   </data>
   <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>Linie</value>
+    <value>lijn</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>Linien</value>
+    <value>Lijnen</value>
   </data>
   <data name="StyleOption_Offset" xml:space="preserve">
-    <value>Versatz</value>
+    <value>Correctieafstand</value>
   </data>
   <data name="StyleOption_SpaceLength" xml:space="preserve">
-    <value>Länge des Zwischenraums</value>
+    <value>Afstand</value>
   </data>
   <data name="Editor_Style" xml:space="preserve">
-    <value>Stil</value>
+    <value>Stijl</value>
   </data>
   <data name="LineRule_To" xml:space="preserve">
-    <value>Zu</value>
+    <value>Naar</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Überschneidung mit {0}</value>
+    <value>Knooppunt met {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Eckpunkt {0}</value>
+    <value>Kantpunt {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Gestrichelt</value>
+    <value>Onderbroken</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Doppelt gestrichelt</value>
+    <value>Dubbel onderbroken</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Doppelt durchgezogen</value>
+    <value>Dubbel ononderbroken</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Durchgezogen</value>
+    <value>Ononderbroken</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Markierungen an Kreuzungen erstellen</value>
+    <value>Maak gewoon markeringen op kruispunten</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
-    <value>Markierungen von Netzwerk-Knoten #{0} bearbeiten</value>
+    <value>Bewerk markering van knooppunt #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>Punkt</value>
+    <value>punt</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
-    <value>Versatz</value>
+    <value>Correctieafstand</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>Punkte</value>
+    <value>Punten</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>Nicht festgelegt</value>
+    <value>Niet ingesteld</value>
   </data>
   <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
-    <value>Neue Linienregel hinzufügen</value>
+    <value>Voeg nieuwe lijnregel toe</value>
   </data>
   <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
-    <value>Alle Linien an Netzwerk-Knoten löschen</value>
+    <value>Verwijder alle knooppuntlijnen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Markierungen von allen Kreuzungen löschen</value>
+    <value>Verwijder alle markeringen van knooppunten</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Alle Markierungen löschen</value>
+    <value>Verwijder alle markeringen</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Willst du wirklich alle Markierungen entfernen?</value>
+    <value>Wil je echt alle markeringen verwijderen?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Markierungsdaten in Datei speichern</value>
+    <value>Exporteer markeringsdata als bestand</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>Dateipfad in die Zwischenablage kopieren</value>
+    <value>Kopieer bestandslocatie naar klembord</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Markierungsdaten speichern</value>
+    <value>Exporteer markeringsdata</value>
   </data>
   <data name="Settings_DumpMessageFailed" xml:space="preserve">
-    <value>Speichern fehlgeschlagen</value>
+    <value>Export mislukt</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>Erfolgreich gespeichert</value>
+    <value>Export gelukt</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
-    <value>Markierungsdaten aus Datei importieren</value>
+    <value>Herstel markeringsgegevens uit bestand</value>
   </data>
   <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
-    <value>Markierungsdaten wiederherstellen</value>
+    <value>Herstel markeringsgegevens</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
-    <value>Möchtest du die Daten wirklich wiederherstellen?
-Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</value>
+    <value>Weet je zeker dat je de gegevens wil herstellen?
+De herstelde data zal alle bestaande markeringen vervangen.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
-    <value>Wiederherstellen der Markierungsdaten fehlgeschlagen</value>
+    <value>Markeringsgegevens herstellen mislukt</value>
   </data>
   <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
-    <value>Markierungsdaten erfolgreich wiederhergestellt</value>
+    <value>Markeringsgegevens zijn succesvol hersteld</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Schnelle Regel-Erstellung</value>
+    <value>Snelle regel setup</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Render-Distanz</value>
+    <value>Render afstand</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Löschwarnungen anzeigen</value>
+    <value>Bevestig voordat u verwijdert</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>Stilvorlage</value>
+    <value>sjabloon</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Naam</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Stilvorlagen</value>
+    <value>Sjablonen</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
-    <value>Neue Vorlage</value>
+    <value>Nieuwe template</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Node-Markierungen löschen</value>
+    <value>Verwijder puntmarkeringen</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Willst Du wirklich alle Markierungen von Node #{0} entfernen?</value>
+    <value>Wil je echt alle markeringen op punt #{0} wissen?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Klicken um eine Linie zu erstellen</value>
+    <value>Klik om een lijn te maken</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Zum Löschen der Linie klicken</value>
+    <value>Klik om de lijn te verwijderen</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Node #{0}
-Klicken um die Markierungen zu bearbeiten</value>
+    <value>Punt #{0}
+Klik om de markering te wijzigen</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
-    <value>Netzwerk-Knoten oder Segment zum Ändern der Markierungen auswählen</value>
+    <value>Selecteer een knooppunt of segment om markeringen te wijzigen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Endpunkt für eine reguläre Linie auswählen</value>
+    <value>Selecteer een eindpunt voor een standaard lijn</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Startpunkt wählen zum Linie erstellen oder löschen</value>
+    <value>Selecteer een punt om
+een lijn te creëren of te verwijderen</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
-    <value>[NEW] Füllungen. Der Bereich zwischen Linien kann gefüllt werden um zu zeigen, dass ein Befahren oder Parken verboten ist. 3 Stile stehen zur Verfügung: Linien, Gitter oder Fläche. ALT gedrückt halten zum Erstellen.
-[NEW] Haltelinien. Es ist nun möglich zwei nebeneinander liegende Punkte auf der gleichen Straße zu verbinden um eine Haltelinie zu erstellen. 2 Stile verfügbar: Durchgezogen und gestrichelt.
-[NEW] Neuer Linien-Stil: "Durchgezogen &amp; gestrichelt".
-[NEW] Linien und Vorlagen haben in Listen nun Icons, die den Stil und die Farbe anzeigen.
-[NEW] Markierungen werden kopiert, wenn man eine Kreuzung mit Move it kopiert (Steht erst zur Verfügung, wenn Move it ein Update bereit stellt).
-[NEW] Kopieren und Einfügen Funktion für Linien-Farben hinzugefügt.
-[UPDATED] Beim Upgraden einer Straße auf eine andere mit gleicher Anzahl an Spuren, bleiben die Markierungen nun erhalten.
-[NEW] Das Liniensegment mit der jeweiligen Regel wird hervorgehoben, wenn man in der Bearbeitungsliste auf die jeweilige Regel zeigt.
-[TRANSLATION] Vereinfachtes Chinesisch als Übersetzung hinzugefügt.</value>
-  </data>
+  
   <data name="Settings_Restore" xml:space="preserve">
-    <value>Wiederherstellen</value>
+    <value>Herstel</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
-    <value>Invertieren</value>
+    <value>Omkeren</value>
   </data>
   <data name="StyleOption_Width" xml:space="preserve">
-    <value>Breite</value>
+    <value>Breedte</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>Durchgezogen und Gestrichelt</value>
+    <value>Ononderbroken en onderbroken</value>
   </data>
   <data name="LineStyle_StopSolid" xml:space="preserve">
-    <value>Durchgezogen</value>
+    <value>Ononderbroken</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
-    <value>Zum Löschen der Haltelinie klicken</value>
+    <value>Klik om de stoplijn te verwijderen</value>
   </data>
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
-    <value>Klicken um eine Haltelinie zu erstellen</value>
+    <value>Klik om een stoplijn te maken</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>Füllungen</value>
+    <value>Opvullingen</value>
   </data>
   <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>füllung</value>
+    <value>opvulling</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
-    <value>Streifen</value>
+    <value>Strepen</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>Gitter</value>
+    <value>Raster</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Gestrichelt</value>
+    <value>Onderbroken</value>
   </data>
   <data name="StyleOption_Step" xml:space="preserve">
-    <value>Schritt</value>
+    <value>Stapgrootte</value>
   </data>
   <data name="StyleOption_Angle" xml:space="preserve">
-    <value>Winkel</value>
+    <value>Hoek</value>
   </data>
   <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Abstand der Linien</value>
+    <value>Afstand tot lijnen</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
-    <value>Klicken um mit der Füllung zu beginnen</value>
+    <value>Klik om te beginnen met het maken van een opvulling</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
-    <value>Klicken um das Erstellen der Füllung zu beenden</value>
+    <value>Klik om de opvulling af te maken</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
-    <value>Klicken um den nächsten Punkt des Umrisses auszuwählen</value>
+    <value>Klik om het volgende punt van de omtrek te selecteren</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Wähle einen Punkt um mit dem Erstellen einer Füllung zu beginnen</value>
+    <value>Selecteer een punt om te beginnen met het creëren van een opvulling</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
-    <value>Wähle den nächsten Punkt des Umrisses</value>
+    <value>Selecteer het volgende punt van de omtrek</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Abstand vom Median</value>
+    <value>Afstand tot middenberm</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
-    <value>Kopieren</value>
+    <value>Kopiëren</value>
   </data>
   <data name="Editor_ColorPaste" xml:space="preserve">
-    <value>Einfügen</value>
+    <value>Plakken</value>
   </data>
   <data name="Editor_ColorDefault" xml:space="preserve">
-    <value>Standard</value>
+    <value>Standaard</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Vollständig gefüllt</value>
+    <value>Ononderbroken</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>[FIXED] Fix Alt, Strg und Shift Tasten halten unter Mac OS und Linux.
-[NEW] "Doppelt durchgezogen" und "Doppelt gestrichelte" Haltelinien-Stile hinzugefügt.
-[TRANSLATION] Italienische und Portugiesische Übersetzung hinzugefügt.</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
-    <value>[UPDATED] "Was ist Neu" Nachricht erscheint nur noch einmal nach einem Update und kann im Options-Menu ausgeschaltet werden.
-[TRANSLATION] Übersetzungen hinzugefügt:  Tschechisch, Niederländisch, Französisch, Deutsch, Japanisch, Polnisch, Russisch und Spanisch.
-[NEW] Endpunkte können nun von einem zum anderen gezogen werden, wenn man Strg hält.
-[NEW] Backups - In den Einstellungen können alle gesetzten Markierungen einer Map als Backup gespeichert und später wieder importiert werden. Dies wird benötigt, wenn du den Mod deaktivieren willst, den Spielstand dann nochmal speichern möchtest und nach der erneuten Aktivierung des Mods die Markierungen wieder herstellen möchtest.
-[NEW] Es gibt nun einen Warnhinweis wenn etwas gelöscht werden soll. Dies gilt für Linien, Regeln und Vorlagen. Die Warnung kann in den Einstellungen deaktiviert werden.
-[NEW] Neues Tastenkürzel zum Hinzufügen neuer Regeln eingestellt - Shift+Ctrl+A (änderbar).
-[NEW] Schnell-Regeln-Einstellungen: Nach dem Hinzufügen einer neuen Regel öffnet sich die Mod-Oberfläche zum Auswählen des Start- und Endpunktes automatisch. "Von" und "Zu" muss nicht mehr zusätzlich angeklickt werden. Das kann in den Einstellungen deaktiviert werden.
-[FIXED] Fehler behoben, durch den Linien unterbrochen oder geteilt erschienen - dies kam nur bei Verbindungen zwischen Autobahnen und Stadtstraßen vor.
-[UPDATED] Linien werden nicht mehr gerendert, wenn die Info-Ansichten geöffnet sind.
-[UPDATED] Der Aktivierungsshortcut wird nun angesprochen, wenn ein anderes Tool geöffnet wird, während das Marking Tool schon geöffnet ist.</value>
-  </data>
+  
+  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
-    <value>Neue Füllung hinzufügen</value>
+    <value>Nieuwe opvulling toevoegen</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Doppelt durchgezogen</value>
+    <value>Dubbel ononderbroken</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>Doppelt gestrichelt</value>
+    <value>Dubbel onderbroken</value>
   </data>
   <data name="HeaderPanel_StyleCopy" xml:space="preserve">
-    <value>Kopieren</value>
+    <value>Kopiëren</value>
   </data>
   <data name="HeaderPanel_StylePaste" xml:space="preserve">
-    <value>Einfügen</value>
+    <value>Plakken</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>Winkel</value>
+    <value>Chevron</value>
   </data>
   <data name="StyleOption_AngleBetween" xml:space="preserve">
-    <value>Winkel-Grad</value>
+    <value>Binnenhoek</value>
   </data>
   <data name="StyleOption_Turn" xml:space="preserve">
-    <value>Umdrehen</value>
+    <value>Draai</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
-    <value>Es befinden sich noch keine Linien auf dieser Kreuzung.
-Zum Erstellen einer Linie zwei Punkte miteinander verbinden.</value>
+    <value>Er zijn nog geen lijnen op dit kruispunt.
+Verbind twee punten om een lijn te maken.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>Es befinden sich noch keine Füllungen auf dieser Kreuzung.
-Zum Erstellen einer Füllung halte {0} oder drücke {1}.</value>
+    <value>Er zijn nog geen opvullingen bij dit kruispunt.
+Houdt {0} ingedrukt of klik {1} om een opvulling te maken.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Die Liste mit Stilvorlagen ist leer.
-Um eine Stilvorlage zu erstellen klicke «{0}» beim Linien-, Fußgängerüberweg- oder Füllungs-Stil.</value>
+    <value>De lijst met sjablonen is leeg.
+Klik «{0}» bij de lijn-, zebrapad- of opvuliingstijl om een sjabloon te maken.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Aktivierungscode eingeben</value>
+    <value>Activeren met sleutel</value>
   </data>
   <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Aktivierung fehlgeschlagen</value>
+    <value>Activeren mislukt</value>
   </data>
   <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Aktivierung erfolgreich</value>
+    <value>Succesvol geactiveerd</value>
   </data>
   <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Die Funktion ist nicht verfügbar</value>
+    <value>Deze functie is niet beschikbaar</value>
   </data>
   <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>Die Funktion «{0}» ist im Moment für Unterstützer vorab verfügbar.
-Sie wird zu einem späteren Zeitpunkt für alle freigeschaltet werden. 
-Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Möglichkeit den Mod in dieser Geschwindigkeit weiter zu entwickeln.</value>
+    <value>De functie «{0}» is op dit moment alleen beschikbaar voor Patreon's vroegtijdige toegang.
+Op een later moment is dit voor iedereen beschikbaar.
+Door je te registreren voor vroegtijdige toegang help je bij het behouden van de ontwikkelsnelheid van deze mod.</value>
   </data>
   <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Vorabzugriff erhalten</value>
+    <value>Krijg vroegtijdige toegang</value>
   </data>
   <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Deine Zugangs-ID</value>
+    <value>Uw toegang ID</value>
   </data>
   <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Zugriffsschlüssel</value>
+    <value>Toegangssleutel</value>
   </data>
   <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Aktivieren</value>
+    <value>Activeren</value>
   </data>
   <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Vorabzugriff-Aktivierung</value>
+    <value>Vroegtijdige toegang activatie</value>
   </data>
   <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Um den Vorabzugriff zu aktivieren, musst du einen Zugriffsschlüssel eingeben</value>
+    <value>Voer een sleutel in om vroegtijdige toegang te activeren</value>
   </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Annuleer</value>
   </data>
   <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>Der eingegeben Schlüssel ist nicht gültig</value>
+    <value>De ingevulde sleutel is niet geldig</value>
   </data>
   <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Verlinkung in Bearbeitung...</value>
+    <value>Aan het koppelen...</value>
   </data>
   <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Patreon-Account verlinken</value>
+    <value>Koppel Patreon account</value>
   </data>
   <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Patreon-Account verlinken</value>
+    <value>Koppel Patreon account</value>
   </data>
   <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Der Patreon-Account kann nicht verlinkt werden, da du die Anfrage abgelehnt hast.</value>
+    <value>Het Patreon account kan niet gekoppeld worden omdat je het toegangsverzoek geweigerd hebt.</value>
   </data>
   <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Beim Verlinken des Accounts trat ein Fehler auf. Bitte versuche es erneut.</value>
+    <value>Er is een fout opgetreden bij het koppelen van het account, probeer het opnieuw.</value>
   </data>
   <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Dein Account wurde verlinkt, aber du hast keinen Vorabzugriff.</value>
+    <value>Je account is gekoppeld, maar je hebt geen vroegtijdige toegang.</value>
   </data>
   <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Du kannst diese Seite nun schließen und zum Spiel zurückkehren.</value>
+    <value>Je kan deze pagina sluiten en terugkeren naar het spel.</value>
   </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Annuleer</value>
   </data>
   <data name="EarlyAccess_Status" xml:space="preserve">
     <value>Status: {0}</value>
   </data>
   <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Aktiviert</value>
+    <value>Geactiveerd</value>
   </data>
   <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Nicht aktiviert</value>
+    <value>Niet geactiveerd</value>
   </data>
   <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Danke dir für deine Unterstützung, du kannst nun alle Funktionen genießen.</value>
+    <value>Bedankt voor je steun, nu kan je genieten van alle functionaliteit.</value>
   </data>
   <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Vorabzugriff</value>
+    <value>Vroegtijdige toegang</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
-    <value>Ausrichtung</value>
+    <value>Uitlijning</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Klicken, um eine orthogonale Linie zu erstellen</value>
+    <value>Klik om een loodrechte lijn te maken</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
-    <value>Klicken, um die orthogonale Linie zu löschen</value>
+    <value>Klik om de loodrechte lijn te verwijderen</value>
   </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
-    <value>Zebrastreifen</value>
+    <value>Zebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
-    <value>Originale Fußgängerüberweg-Markierung</value>
+    <value>Bestaande zebrapad</value>
   </data>
   <data name="StyleOption_OffsetBetween" xml:space="preserve">
-    <value>Abstand dazwischen</value>
+    <value>Correctieafstand tussen</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
-    <value>Fußgängerüberwege</value>
+    <value>Zebrapaden</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>Es befinden sich noch keine Fußgängerüberweg-Markierungen auf dieser Kreuzung.
-Zum Erstellen einer Fußgängerüberweg-Markierung {0} gedrückt halten.</value>
+    <value>Er zijn nog geen zebrapaden op deze kruising.
+Houd {0} ingedrukt om een zebrapad te maken.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>Fußgängerüberweg</value>
+    <value>zebrapad</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
-    <value>Fußgängerüberwege</value>
+    <value>Zebrapaden</value>
   </data>
   <data name="FillerStyle_Group" xml:space="preserve">
-    <value>Füllungen</value>
+    <value>Opvullingen</value>
   </data>
   <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
-    <value>Reguläre Linien</value>
+    <value>Normale lijnen</value>
   </data>
   <data name="LineStyle_StopLinesGroup" xml:space="preserve">
-    <value>Haltelinie</value>
+    <value>Stoplijnen</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
-    <value>Linien gruppieren</value>
+    <value>Groepeer lijnen</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>Stilvorlagen gruppieren</value>
+    <value>Groepeer sjablonen</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
-    <value>Klicken um eine Fußgängerüberweg-Markierung zu erstellen</value>
+    <value>Klik om een zebrapad te maken</value>
   </data>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
-    <value>Zum Löschen der Fußgängerüberweg-Markierung klicken</value>
+    <value>Klik om een zebrapad te verwijderen</value>
   </data>
   <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
-    <value>Nach Stil</value>
+    <value>Op stijl</value>
   </data>
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
-    <value>Nach Typ</value>
+    <value>Op type</value>
   </data>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
-    <value>Zweigeteilter Zebrastreifen</value>
+    <value>Dubbel zebra</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
-    <value>Linienstärke</value>
+    <value>Lijnbreedte</value>
   </data>
   <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Abstand dahinter</value>
+    <value>Correctieafstand na</value>
   </data>
   <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Abstand davor</value>
+    <value>Correctieafstand voor</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Parallel zu Fahrspuren</value>
+    <value>Parallel aan rijstroken</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
-    <value>Parallele durchgezogene Linien</value>
+    <value>Parallelle ononderbroken lijnen</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
-    <value>Linker Rand</value>
+    <value>Linker grens</value>
   </data>
   <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
-    <value>Rechter Rand</value>
+    <value>Rechter grens</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
-    <value>Wähle den linken Rand der Fußgängerüberweg-Markierung</value>
+    <value>Selecteer de linker zebrapad grens</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
-    <value>Wähle den rechten Rand der Fußgängerüberweg-Markierung</value>
+    <value>Selecteer de rechter zebrapad grens</value>
   </data>
   <data name="Settings_GroupPointsOverlay" xml:space="preserve">
-    <value>Punkte-Gruppen Einblendung</value>
+    <value>Groepeer punten overlay</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
-    <value>Im Kreis anordnen</value>
+    <value>Stel samen in een cirkel</value>
   </data>
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
-    <value>In einer Linie anordnen</value>
+    <value>Stel samen in een rij</value>
   </data>
   <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
-    <value>Diese Regel wird von einer anderen Regel überlagert.
-Überprüfe die "Von" und "Zu" Punkte der anderen Regeln.</value>
+    <value>De regel wordt overlapt door een andere regel.
+Controleer de "Van" en "Naar" punten van andere regels.</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
-    <value>Linke Außenlinie der Fußgängerüberweg-Markierung</value>
+    <value>Zebrapad rand links</value>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
-    <value>Rechte Außenlinie der Fußgängerüberweg-Markierung</value>
+    <value>Zebrapad rand rechts</value>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
-    <value>Zurücksetzen</value>
+    <value>Reset</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
-    <value>Endpunkt auswählen</value>
+    <value>Selecteer eindpunt</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
-    <value>Wähle einen Punkt zum
-Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
+    <value>Selecteer een punt om
+een zebrapad te creëren of te verwijderen</value>
   </data>
   <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
-    <value>Parallele gestrichelte Linien</value>
+    <value>Parallelle onderbroken lijnen</value>
   </data>
   <data name="CrosswalkStyle_Ladder" xml:space="preserve">
-    <value>Leiter</value>
+    <value>Ladder</value>
   </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
-    <value>Keine Stilvorlagen</value>
+    <value>Geen sjablonen</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
-    <value>Vollständig gefüllt</value>
+    <value>Ononderbroken</value>
   </data>
   <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
-    <value>Fußgängerüberwege</value>
+    <value>Zebrapad lijnen</value>
   </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>Fußgängerüberweg</value>
+    <value>zebrapad</value>
   </data>
   <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>füllung</value>
+    <value>opvulling</value>
   </data>
   <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>Linie</value>
+    <value>lijn</value>
   </data>
   <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>Punkt</value>
+    <value>punt</value>
   </data>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>Stilvorlage</value>
+    <value>sjabloon</value>
   </data>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
-    <value>Laden mit Fehlern beendet.
-Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
+    <value>Er zijn fouten opgetreden tijdens het laden.
+Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
   </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
-    <value>Schachbrett</value>
+    <value>Schaakbord</value>
   </data>
   <data name="StyleOption_LineCount" xml:space="preserve">
-    <value>Linienanzahl</value>
+    <value>Aantal lijnen</value>
   </data>
   <data name="StyleOption_SharkToothBase" xml:space="preserve">
-    <value>Basis der Dreiecke</value>
+    <value>Haaientand breedte</value>
   </data>
   <data name="StyleOption_SharkToothHeight" xml:space="preserve">
-    <value>Höhe der Dreiecke</value>
+    <value>Haaientand lengte</value>
   </data>
   <data name="StyleOption_SharkToothSpace" xml:space="preserve">
-    <value>Abstand dazwischen</value>
+    <value>Tussenafstand</value>
   </data>
   <data name="StyleOption_SquareSide" xml:space="preserve">
-    <value>Quadrat-Breite</value>
+    <value>Vierkant lengte</value>
   </data>
   <data name="LineStyle_SharkTeeth" xml:space="preserve">
-    <value>Haifischzähne</value>
+    <value>Haaientanden</value>
   </data>
   <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
-    <value>Haifischzähne</value>
+    <value>Haaientanden</value>
   </data>
   <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
-    <value>Durchgezogen und Gestrichelt</value>
+    <value>Ononderbroken en onderbroken</value>
   </data>
   <data name="Panel_ClearMarking" xml:space="preserve">
-    <value>Markierung entfernen</value>
+    <value>Verwijder markering</value>
   </data>
   <data name="Panel_CopyMarking" xml:space="preserve">
-    <value>Markierung kopieren</value>
+    <value>Kopieer markering</value>
   </data>
   <data name="Panel_PasteMarking" xml:space="preserve">
-    <value>Markierung einfügen</value>
+    <value>Plak markering</value>
   </data>
   <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
-    <value>Markierung einfügen</value>
+    <value>Plak markering</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Möchtest Du wirklich die Markierungen einfügen?</value>
+    <value>Weet je zeker dat je de markering wilt plakken?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
-    <value>Tastenkombinationen für Fußgängerüberwege</value>
+    <value>Zebrapad sneltoetsen</value>
   </data>
   <data name="Settings_FillersModifier" xml:space="preserve">
-    <value>Tastenkombinationen für Füllungen</value>
+    <value>Opvulling sneltoetsen</value>
   </data>
   <data name="Settings_RegularLinesModifier" xml:space="preserve">
-    <value>Tastenkombinationen für reguläre Linien</value>
+    <value>Normale lijn sneltoetsen</value>
   </data>
   <data name="Settings_StopLinesModifier" xml:space="preserve">
-    <value>Tastenkombinationen für Haltelinien</value>
+    <value>Stoplijn sneltoetsen</value>
   </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
-    <value>Nicht festgelegt</value>
+    <value>Niet ingesteld</value>
   </data>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
-    <value>Ohne Tastenkombination</value>
+    <value>Zonder sneltoets</value>
   </data>
   <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
-    <value>Immer</value>
+    <value>Altijd</value>
   </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
-    <value>Nur wenn es Anderes beeinflussen wird</value>
+    <value>Alleen wanneer het impact heeft op afhankelijke markeringen</value>
   </data>
   <data name="Tool_DeleteDependence" xml:space="preserve">
-    <value>Dazugehöriges wird ebenfalls entfernt:</value>
+    <value>Afhankelijke markeringen worden ook verwijderd:</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
-    <value>Ränder von Fußgängerüberwegen - {0}</value>
+    <value>Zebrapad randen - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
-    <value>Fußgängerüberwege - {0}</value>
+    <value>Zebrapad - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
-    <value>Füllungen - {0}</value>
+    <value>Opvullingen - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceLines" xml:space="preserve">
-    <value>Linien - {0}</value>
+    <value>Lijnen - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceRules" xml:space="preserve">
-    <value>Regeln - {0}</value>
+    <value>Regels - {0}</value>
   </data>
   <data name="Settings_BackupTab" xml:space="preserve">
-    <value>Sicherung</value>
+    <value>Backup</value>
   </data>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
-    <value>Anzeige und Verwendung</value>
+    <value>Weergave en gebruik</value>
   </data>
   <data name="Settings_Groupings" xml:space="preserve">
-    <value>Gruppen</value>
+    <value>Groeperingen</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
-    <value>Tastenkürzel und Tastenkombinationen</value>
+    <value>Snelkoppelingen en Sneltoetsen</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
-    <value>Duplizieren</value>
+    <value>Dupliceren</value>
   </data>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
-    <value>Kopieren</value>
+    <value>Kopiëren</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
-    <value>Rand</value>
+    <value>Kant</value>
   </data>
   <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Beginnend von</value>
+    <value>Beginnend vanaf</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
-    <value>Scheitel</value>
+    <value>Hoekpunt</value>
   </data>
   <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
-    <value>Versätze aller Punkte zurücksetzen</value>
+    <value>Reset alle punt correctieafstanden</value>
   </data>
   <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
-    <value>Versätze aller Punkte zurücksetzen</value>
+    <value>Reset alle punt correctieafstanden</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Willst Du wirklich alle Versätze der Punkte des Netzwerk-Knotens #{0} zurücksetzen?</value>
+    <value>Wil je echt alle correctieafstanden op punt #{0} wissen?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
-    <value>Kreis halten, ziehen und loslassen um die Straßen-Reihenfolge zu ändern
-Kreis anklicken um die Punkte-Reihenfolge der Straße zu ändern</value>
+    <value>Sleep de cirkels om de wegvolgorde in te stellen
+Klik op een cirkel om de wegvolgorde te veranderen</value>
   </data>
   <data name="Tool_InfoRoadsDrop" xml:space="preserve">
-    <value>Kreis innerhalb/außerhalb des Ziels loslassen um die Straßen-Reihenfolge zu ändern/zurückzusetzen</value>
+    <value>Sleep de cirkel in of uit het doel om de wegvolgorde te bevestigen of ongedaan te maken</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
-    <value>Markierung kopieren</value>
+    <value>Kopieer markering</value>
   </data>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
-    <value>Markierung einfügen</value>
+    <value>Plak markering</value>
   </data>
   <data name="Tool_InfoInverseOrder" xml:space="preserve">
-    <value>Umgekehrte Reihenfolge</value>
+    <value>Volgorde omdraaien</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
-    <value>Im Uhrzeigersinn drehen</value>
+    <value>Draai met de klok mee</value>
   </data>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
-    <value>Gegen den Uhrzeigersinn drehen</value>
+    <value>Draai tegen de klok in</value>
   </data>
   <data name="StyleOption_AlignmentCenter" xml:space="preserve">
-    <value>Mittig</value>
+    <value>Midden</value>
   </data>
   <data name="StyleOption_AlignmentLeft" xml:space="preserve">
     <value>Links</value>
@@ -828,637 +804,599 @@ Kreis anklicken um die Punkte-Reihenfolge der Straße zu ändern</value>
     <value>Rechts</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
-    <value>Unbenannte Stilvorlage</value>
+    <value>Naamloos sjabloon</value>
   </data>
   <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
-    <value>Der Name wird bereits verwendet</value>
+    <value>Naam is al in gebruik</value>
   </data>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
-    <value>Der Name "{0}" wird bereits für eine andere Stilvorlage verwendet.
-Bist du dir sicher, dass du mehrere Stilvorlage mit dem gleichen Namen haben willst?</value>
+    <value>De naam "{0}" is al in gebruik door een ander sjabloon.
+Weet je zeker dat je meerdere sjablonen met dezelfde naam will hebben?</value>
   </data>
   <data name="Settings_BackupMarking" xml:space="preserve">
-    <value>Markierungsdaten sichern</value>
+    <value>Maak Markering Backup</value>
   </data>
   <data name="Settings_BackupTemplates" xml:space="preserve">
-    <value>Sicherungsvorlagen</value>
+    <value>Maak Sjablonen backup</value>
   </data>
   <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
-    <value>Alle Stilvorlagen löschen</value>
+    <value>Verwijder alle sjablonen</value>
   </data>
   <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
-    <value>Alle Stilvorlagen löschen</value>
+    <value>Verwijder alle sjablonen</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Willst du wirklich alle Stilvorlagen entfernen?</value>
+    <value>Weet je zeker dat je alle sjablonen wil verwijderen?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
-    <value>Stilvorlagen in einer Datei speichern</value>
+    <value>Exporteer sjablonen als bestand</value>
   </data>
   <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
-    <value>Stilvorlagen speichern</value>
+    <value>Exporteer sjablonen</value>
   </data>
   <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
-    <value>Stilvorlagen aus Datei wiederherstellen</value>
+    <value>Herstel sjablonen uit bestand</value>
   </data>
   <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
-    <value>Stilvorlagen wiederherstellen</value>
+    <value>Herstel sjablonen</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
-    <value>Möchtest du wirklich die Stilvorlagen wiederherstellen?
-Die wiederhergestellten Stilvorlagen werden alle vorhandenen Stilvorlagen ersetzen.</value>
+    <value>Weet je zeker dat je sjablonen wil herstellen?
+De herstelde sjablonen zullen alle bestaande sjablonen vervangen.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
-    <value>Wiederherstellen der Stilvorlagen fehlgeschlagen</value>
+    <value>Herstel sjablonen mislukt</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
-    <value>Stilvorlagen erfolgreich wiederhergestellt</value>
+    <value>Sjablonen zijn succesvol hersteld</value>
   </data>
   <data name="Tool_Apply" xml:space="preserve">
-    <value>Anwenden</value>
+    <value>Toepassen</value>
   </data>
   <data name="Tool_Continue" xml:space="preserve">
-    <value>Fortsetzen</value>
+    <value>Doorgaan</value>
   </data>
   <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Einfügemodus verlassen</value>
+    <value>Uit plakmodus gaan</value>
   </data>
   <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Möchtest Du den Einfügemodus verlassen und das Eingefügte übernehmen?</value>
+    <value>Wil je de plakmodus verlaten en de kopie toepassen?</value>
   </data>
   <data name="Tool_NotApply" xml:space="preserve">
-    <value>Nicht anwenden</value>
+    <value>Niet toepassen</value>
   </data>
   <data name="Tool_InfoPasteApply" xml:space="preserve">
-    <value>Anwenden</value>
+    <value>Toepassen</value>
   </data>
   <data name="Tool_infoPasteNotApply" xml:space="preserve">
-    <value>Nicht anwenden</value>
+    <value>Niet toepassen</value>
   </data>
   <data name="Tool_InfoPasteReset" xml:space="preserve">
-    <value>Zurücksetzen</value>
+    <value>Reset</value>
   </data>
   <data name="Panel_EditMarking" xml:space="preserve">
-    <value>Reihenfolge der Markierungen ändern</value>
+    <value>Wijzig markeringsvolgorde</value>
   </data>
   <data name="Settings_ShortcutEditMarking" xml:space="preserve">
-    <value>Reihenfolge der Markierungen ändern</value>
+    <value>Wijzig markeringsvolgorde</value>
   </data>
   <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
-    <value>Straßen wurden geändert</value>
+    <value>Wegen zijn veranderd</value>
   </data>
   <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
-    <value>Die Straßen an dieser Kreuzung wurden verändert, daher können die bestehenden Markierungen nicht automatisch zugeordnet werden.
-Möchtest du die Markierungen manuell zuordnen?</value>
+    <value>De wegen op deze kruising zijn veranderd, daarom kan de huidige markering niet automatisch worden toegepast.
+Wil je de markering handmatig toepassen?</value>
   </data>
   <data name="Tool_EndEditOrderCaption" xml:space="preserve">
-    <value>Reihenfolge ändern-Modus verlassen</value>
+    <value>Volgordemodus verlaten</value>
   </data>
   <data name="Tool_EndEditOrderMessage" xml:space="preserve">
-    <value>Möchtest Du den Bearbeitungsmodus verlassen und die neue Reihenfolge übernehmen?</value>
+    <value>Wil je de wijzigingsmodus verlaten en de nieuwe volgorde toepassen?</value>
   </data>
   <data name="Tool_InfoPointsDrag" xml:space="preserve">
-    <value>Kreis halten, ziehen und loslassen um die Punkte-Reihenfolge zu ändern</value>
+    <value>Sleep de cirkel om de puntvolgorde in te stellen</value>
   </data>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
-    <value>Kreis innerhalb/außerhalb des Ziels loslassen um die Punkte-Reihenfolge zu ändern/zurückzusetzen</value>
+    <value>Sleep de cirkel in of uit het doel om de puntvolgorde te bevestigen of ongedaan te maken</value>
   </data>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
-    <value>Durchgezogene Linie zentriert</value>
+    <value>Ononderbroken centreren</value>
   </data>
   <data name="StyleOption_No" xml:space="preserve">
-    <value>Nein</value>
+    <value>Nee</value>
   </data>
   <data name="StyleOption_Yes" xml:space="preserve">
     <value>Ja</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>{0} halten erstellt eine Fußgängerüberweg-Markierung</value>
+    <value>Houd {0} ingedrukt om een zebrapad te creëren</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>{0} halten um eine Füllung zu erstellen</value>
+    <value>Houd {0} ingedrukt om een opvulling te creëren</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>{0} halten und Ziehen um den Punkt zu verschieben</value>
+    <value>Houd {0} ingedrukt om het punt te verslepen</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
-    <value>Diese Aktion kann nicht rückgängig gemacht werden.</value>
+    <value>Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
   <data name="LineStyle_Empty" xml:space="preserve">
-    <value>Ohne Linienstil</value>
+    <value>Leeg</value>
   </data>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
-    <value>Randlinien erstellen</value>
+    <value>Maak kantlijn</value>
   </data>
   <data name="Panel_CreateEdgeLines" xml:space="preserve">
-    <value>Randlinien erstellen</value>
+    <value>Maak kantlijnen</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
-    <value>Versätze aller Punkte zurücksetzen</value>
+    <value>Reset alle punt correctieafstanden</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
-    <value>Schnellerstellung Fußgängerüberwegeränder</value>
+    <value>Snelle zebrapad randen setup</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Markierung unter Gleisen</value>
+    <value>Markeringen onder spoor</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
-    <value>Achtung: Diese Option ändert die Reihenfolge in der die Spiel-Objekte gerendert werden</value>
+    <value>Waarschuwing: Deze optie veranderd de volgorde waarin objecten gerenderd worden</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
-    <value>[NEW] Möglichkeit hinzugefügt, Markierungen unter Gleisen verlaufen zu lassen. Dies kann in den Optionen deaktiviert werden. WARNUNG: Diese Funktion ändert die Reihenfolge, in der Spiel-Objekte gerendert werden.
-[NEW] Funktion hinzugefügt um unsichtbare Linien zu erstellen (ohne Regeln).
-[NEW] Funktion hinzugefügt alle Randlinien gleichzeitig zu erstellen (Linie vom, letzten Punkt der Straße zum ersten Punkt der nächsten Straße).
-[NEW] Linien überlagern nicht mehr den Bürgersteig. Funktioniert nur für Linien vom ersten oder letzten Punkt einer Straße.
-[NEW] "Schnell-Erstellung für Fußgängerüberwegsmarkierungen" hinzugefügt - öffnet automatisch den Ränder-Auswahl sowie es bei der "Schnell-Regel-Erstellung" der Fall ist. Kann in den Einstellungen deaktiviert werden.
-[NEW] Menü für "Zusätzliche Funktionen" hinzugefügt.
-[FIXED] Oberfläche außerhalb des Bildschirms repariert.
-[UPDATED] Overlay-Farbe beim hinüberfahren mit der Maus von weiß in ein schwaches blau geändert, damit es sich besser von den Markierungen abhebt.
-[UPDATED] Fußgängerüberwegemarkierungen erstellen keine unnötigen Überschneidungen mehr. Möglicherweise musst du für bereits erstellte Fußgängerüberwegemarkierungen nun Ränder festlegen.</value>
-  </data>
+  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
-    <value>Als Asset speichern</value>
+    <value>Opslaan als asset</value>
   </data>
   <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
     <value>{0}
-von {1}</value>
+door {1}</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
-    <value>Die Liste mit Kreuzungsvorlagen ist leer.
-Um eine Kreuzungsvorlage zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
+    <value>De lijst met presets is leeg.
+Klik bovenaan in het paneel op «{0}» om een preset te maken.</value>
   </data>
   <data name="PresetEditor_Presets" xml:space="preserve">
-    <value>Kreuzungsvorlagen</value>
+    <value>Presets</value>
   </data>
   <data name="Panel_SaveAsPreset" xml:space="preserve">
-    <value>Als Kreuzungsvorlage speichern</value>
+    <value>Opslaan als preset</value>
   </data>
   <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
-    <value>Als Kreuzungsvorlage speichern</value>
+    <value>Opslaan als preset</value>
   </data>
   <data name="HeaderPanel_NoPresets" xml:space="preserve">
-    <value>Keine Kreuzungsvorlagen</value>
+    <value>Geen presets</value>
   </data>
   <data name="PresetEditor_ApplyPreset" xml:space="preserve">
-    <value>Kreuzungsvorlage übernehmen</value>
+    <value>Preset toepassen</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
-    <value>Neue Kreuzungsvorlage</value>
+    <value>Nieuwe preset</value>
   </data>
   <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Modus zum Übernehmen von Kreuzungsvorlagen verlassen</value>
+    <value>Preset toepas modus verlaten</value>
   </data>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Möchtest du die Kreuzungsvorlage anwenden?</value>
+    <value>Wil je een preset toepassen?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
-    <value>Ersteller</value>
+    <value>Auteur</value>
   </data>
   <data name="Settings_ApplyAfterRestart" xml:space="preserve">
-    <value>Nach Neustart des Spiels anwenden</value>
+    <value>Toepassen na game herstart</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
-    <value>Lade Markierungs-Objekte</value>
+    <value>Markerings assets laden</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
-    <value>Fußgängerüberwege:</value>
+    <value>Zebrapaden:</value>
   </data>
   <data name="PresetInfo_Fillers" xml:space="preserve">
-    <value>Füllungen:</value>
+    <value>Opvullingen:</value>
   </data>
   <data name="PresetInfo_Lines" xml:space="preserve">
-    <value>Linien:</value>
+    <value>Lijnen:</value>
   </data>
   <data name="PresetInfo_NoScreenshot" xml:space="preserve">
-    <value>Kein Bildschirmfoto vorhanden</value>
+    <value>Geen screenshot</value>
   </data>
   <data name="PresetInfo_RoadPoints" xml:space="preserve">
-    <value>Straße #{0} Punkte:</value>
+    <value>Weg #{0} punten:</value>
   </data>
   <data name="PresetInfo_Roads" xml:space="preserve">
-    <value>Straßen:</value>
+    <value>Wegen:</value>
   </data>
   <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
-    <value>Neue Linien am Fußgängerüberweg beenden</value>
+    <value>Nieuwe lijn snijden op basis van zebrapad</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
-    <value>Linien an diesem Fußgängerüberweg beenden</value>
+    <value>Lijnen bij dit zebrapad afsnijden</value>
   </data>
   <data name="Settings_BackupPresets" xml:space="preserve">
-    <value>Kreuzungsvorlagen sichern</value>
+    <value>Backup presets</value>
   </data>
   <data name="Settings_DeletePresetsButton" xml:space="preserve">
-    <value>Alle Kreuzungsvorlagen löschen</value>
+    <value>Verwijder alle presets</value>
   </data>
   <data name="Settings_DeletePresetsCaption" xml:space="preserve">
-    <value>Alle Kreuzungsvorlagen löschen</value>
+    <value>Verwijder alle presets</value>
   </data>
   <data name="Settings_DeletePresetsMessage" xml:space="preserve">
-    <value>Willst du wirklich alle Voreinstellungen entfernen?</value>
+    <value>Weet je zeker dat je alle presets wil verwijderen?</value>
   </data>
   <data name="Settings_DumpPresetsButton" xml:space="preserve">
-    <value>Kreuzungsvorlagen in Datei sichern</value>
+    <value>Exporteer presets als bestand</value>
   </data>
   <data name="Settings_DumpPresetsCaption" xml:space="preserve">
-    <value>Kreuzungsvorlagen sichern</value>
+    <value>Exporteer presets</value>
   </data>
   <data name="Settings_RestorePresetsButton" xml:space="preserve">
-    <value>Kreuzungsvorlagen aus Datei wiederherstellen</value>
+    <value>Herstel presets uit bestand</value>
   </data>
   <data name="Settings_RestorePresetsCaption" xml:space="preserve">
-    <value>Kreuzungsvorlagen wieder herstellen</value>
+    <value>Herstel presets</value>
   </data>
   <data name="Settings_RestorePresetsMessage" xml:space="preserve">
-    <value>Möchtest du die Kreuzungsvorlagen wirklich wiederherstellen?
-Die wieder hergestellten Kreuzungsvorlagen werden alle vorhandenen Kreuzungsvorlagen ersetzen.</value>
+    <value>Weet je zeker dat je presets wil herstellen?
+De herstelde presets zullen alle bestaande presets vervangen.</value>
   </data>
   <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
-    <value>Wiederherstellen der Kreuzungsvorlagen fehlgeschlagen</value>
+    <value>Herstellen presets mislukt</value>
   </data>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
-    <value>Kreuzungsvorlagen erfolgreich wiederhergestellt</value>
+    <value>Presets zijn succesvol hersteld</value>
   </data>
   <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
-    <value>Linien an allen Fußgängerüberwegen beenden</value>
+    <value>Lijnen bij alle zebrapaden afsnijden</value>
   </data>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
-    <value>Linien an allen Fußgängerüberwegen beenden</value>
+    <value>Lijnen bij alle zebrapaden afsnijden</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>Kreuzungsvorlage-Objekt überschreiben</value>
+    <value>Preset asset overschrijven</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>Um den Namen zu ändern muss die Objekt-Datei neu geschrieben werden. Fortfahren?</value>
+    <value>Om de naam te wijzigen moet het asset-bestand overschreven worden. Doorgaan?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>Stilvorlagen-Spiel-Objekt überschreiben</value>
+    <value>Sjabloon asset overschrijven</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Um den Namen und die Werte zu ändern muss die Objekt-Datei neu geschrieben werden. Fortfahren?</value>
+    <value>Om de naam en waardes te wijzigen moet het asset-bestand overschreven worden. Doorgaan?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
-    <value>Um Fußgängerüberwege-Ränder festzusetzen, müssen Linien vorhanden sein, die von dem selben Punkt starten wie die Fußgängerüberweg-Markierung</value>
+    <value>Om zebrapad randen in te stellen moeten er lijnen zijn die starten vanaf dezelfde punten als het zebrapad</value>
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
-    <value>Um Regeln von "Von" und "Zu" Punkten verändern zu können und zusätzliche Regeln zu erstellen, müssen Linien vorhanden sein, die sich mit dieser Linie überschneiden.</value>
+    <value>Er moeten lijnen zijn die deze lijn snijden om de "Van" en "Naar" punten te wijzigen of om extra regels te maken.</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
-    <value>Tipps in der Oberfläche anzeigen</value>
+    <value>Laat hints in UI zien</value>
   </data>
   <data name="HeaderPanel_Edit" xml:space="preserve">
-    <value>Bearbeiten</value>
+    <value>Wijzigen</value>
   </data>
   <data name="HeaderPanel_Save" xml:space="preserve">
-    <value>Änderungen speichern</value>
+    <value>Wijzigingen opslaan</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
-    <value>Änderungen nicht speichern</value>
+    <value>Wijzigingen niet opslaan</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
-    <value>Möchtest du die Namensänderung der Kreuzungsvorlage speichern?</value>
+    <value>Wil je de preset naamsverandering opslaan?</value>
   </data>
   <data name="TemplateEditor_SaveChanges" xml:space="preserve">
-    <value>Änderungen speichern</value>
+    <value>Wijzigingen opslaan</value>
   </data>
   <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
-    <value>Möchtest du die Änderungen der Stilvorlagen-Werte speichern?</value>
+    <value>Wil je de sjabloon wijzigingen opslaan?</value>
   </data>
   <data name="PresetEditor_NameExistMessage" xml:space="preserve">
-    <value>Der Name "{0}" wird bereits für eine andere Vorlage verwendet.
-Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst?</value>
+    <value>De naam "{0}" is al in gebruik door een andere preset.
+Weet je zeker dat je meerdere presets wil hebben met dezelfde naam?</value>
   </data>
   <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>Du kannst sie nur über die Inhaltsverwaltung des Spiels löschen.</value>
+    <value>Het kan alleen verwijderd worden vanuit de content manager.</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Du kannst diese Kreuzungsvorlage nicht bearbeiten. Sie kann nur über die Inhaltsverwaltung des Spiels gelöscht oder im Steam Workshop deabonniert werden.</value>
+    <value>Deze preset kan niet aangepast worden. Het kan alleen verwijderd worden vanuit de content manager of door deze af te melden in de Steam Workshop.</value>
   </data>
   <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
-    <value>Diese Kreuzungsvorlage ist ein Spiel-Objekt.</value>
+    <value>Deze preset is een asset.</value>
   </data>
   <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>Du kannst sie nur über die Inhaltsverwaltung des Spiels löschen.</value>
+    <value>Het kan alleen verwijderd worden vanuit de content manager.</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Du kannst diese Stilvorlage nicht bearbeiten. Sie kann nur über die Inhaltsverwaltung des Spiels gelöscht oder im Steam Workshop deabonniert werden.</value>
+    <value>Dit sjabloon kan niet aangepast worden. Het kan alleen verwijderd worden vanuit de content manager of door deze af te melden in de Steam Workshop.</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
-    <value>Diese Stilvorlage ist ein Spiel-Objekt.</value>
+    <value>Dit sjabloon is een asset.</value>
   </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>Kreuzungsvorlagen</value>
+    <value>preset</value>
   </data>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>Kreuzungsvorlagen</value>
+    <value>preset</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
-    <value>[NEW] Die Möglichkeit hinzugefügt, alle Markierungen einer Kreuzung als Kreuzungsvorlage zu speichern und später auf jede beliebige andere Andeutung anwenden zu können.
-[NEW] Die Möglichkeit hinzugefügt, Stilvorlagen und Kreuzungs-Vorlagen als Objekte zu speichern und über den Workshop zu teilen.
-[UPDATED] UI aktualisiert und ihre Performance verbessert. Die Verzögerung beim Umschalten der Tabulatoren und dem auswählen würde reduziert.
-[UPDATED] Nun können Vorlagenwerte nur noch im Bearbeitungsmodus geändert werden. So werden versehentliche Änderungen verhindert.
-[NEW] Hinweis-Einblendungen hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
-[NEW] Funktion das neue Linien von Fußgängerüberwegmarkierungen getrennt werden hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
-[NEW] Funktion zum Ändern von Farben Mithilfe des Mauerrades hinzugefugt.
-[FIXED] Korrektur für Zug- und Monorail-Straßen (und alle anderen Straßen ohne Punkte
-[FIXED] Korrektur und Verbesserung an der Punkte-Gruppen-Einblendung
-[TRANSLATION] Britisch-Englische Übersetzung hinzugefügt.</value>
-  </data>
+  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
-    <value>Dieser Linientyp unterstützt keine Regeln</value>
+    <value>Dit lijntype heeft geen ondersteuning voor regels</value>
   </data>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
-    <value>Linie nicht am Fußgängerüberweg beenden, wenn diese dessen Rand bildet</value>
+    <value>Lijnen bij een zebrapad niet afsnijden als het de rand is</value>
   </data>
   <data name="Template_UnknownAuthor" xml:space="preserve">
-    <value>Unbekannter Autor</value>
+    <value>Onbekende auteur</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
-    <value>[UPDATED] Informationen bei Ladefehlern korrigiert.
-[FIXED] Lokalisierungen aktualisiert und verbessert.</value>
-  </data>
+  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>Laden mit Fehlern beendet.
-Nicht alle Markierungen der Kreuzungen konnten geladen werden.</value>
+    <value>Er zijn fouten opgetreden tijdens het laden.
+Het laden van de markeringen is voor alle kruispunten mislukt.</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
-    <value>Markierungen von Segment #{0} bearbeiten</value>
+    <value>Bewerk segment #{0} markering</value>
   </data>
   <data name="FillerStyle_Grass" xml:space="preserve">
     <value>Gras</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Bürgersteig</value>
+    <value>Bestrating</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
-    <value>Höhe</value>
+    <value>Hoogte</value>
   </data>
   <data name="LineStyle_Elevation" xml:space="preserve">
-    <value>Höhe</value>
+    <value>Hoogte</value>
   </data>
   <data name="LineStyle_Grass" xml:space="preserve">
     <value>Gras</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
-    <value>Randstein</value>
+    <value>Bestrating</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
-    <value>LOD Distanz</value>
+    <value>Detail-niveau (LOD) afstand</value>
   </data>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Segment #{0}
-Klicken um die Markierungen zu bearbeiten</value>
+Klik om de markering te wijzigen</value>
   </data>
   <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Folge den Leitlinien</value>
+    <value>Hulplijnen volgen</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Linke Leitlinie</value>
+    <value>Linker hulplijn</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Rechte Leitlinie</value>
+    <value>Rechter hulplijn</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
-    <value>Wählen den Startpunkt oder eine Linie als Leitlinie aus</value>
+    <value>Selecteer beginpunt van de hulplijn, of kies een bestaande lijn als hulplijn</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
-    <value>Wähle den zweiten Punkt der Leitlinie</value>
+    <value>Selecteer tweede punt van de hulplijn</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
-    <value>[UPDATED] Harmony Abhängigkeiten aktualisiert: Probleme mit anderen Mods gelöst</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
-    <value>[FIXED] Fehler behoben, bei dem Markierungen aus dem Speicherstand verschwanden</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
-    <value>[NEW] Möglichkeit zum Erstellen von Markierungen auf Segmenten hinzugefügt.
-[NEW] 3D Füllungsstil hinzugefügt: "Gehweg" and "Gras".
-[NEW] 3D Linienstil hinzugefügt: "Gehweg".
-[NEW] "Leitlinien folgen" für die Füllungsstile "Streifen" and "Winkel".
-[NEW] Performance-Verbesserung durch LOD (Level Of Detail) für Markierungen. Die Distanzeinstellungen ist in den Optionen zu finden.
-[NEW] Unterstützung für Rollbahnen hinzugefügt.
-[FIXED] Konflikt mit anderen Mods behoben, der dafür sorgen knnte, dass der Button nicht sichtbar war.
-[FIXED] Konflikt zwischen Scrollbalken und Mausscroll behoben.
-[UPDATED] Sowohl Komma als auch Punkt können nun als Zifferntrennzeichen verwendet werden.</value>
-  </data>
+  
+  
+  
   <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Anzahl der Farben</value>
+    <value>Aantal kleuren</value>
   </data>
   <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Eine</value>
+    <value>Een</value>
   </data>
   <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Zwei</value>
+    <value>Twee</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
-    <value>Aus der Zwischenablage</value>
+    <value>Vanaf klembord</value>
   </data>
   <data name="LineEditor_LineAlignment" xml:space="preserve">
-    <value>Linien-Ausrichtung</value>
+    <value>Lijn uitlijning</value>
   </data>
   <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
-    <value>In zwei aufteilen</value>
+    <value>Splits in twee</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
-    <value>Versatz aufteilen</value>
+    <value>Splits offset</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
-    <value>Punkte gruppieren</value>
+    <value>Groepeer punten</value>
   </data>
   <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
-    <value>Zwischen Kreuzungen anwenden</value>
+    <value>Toepassen tussen kruisingen</value>
   </data>
   <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
-    <value>Zwischen Kreuzungen anwenden</value>
+    <value>Toepassen tussen kruisingen</value>
   </data>
   <data name="Panel_ApplyWholeStreet" xml:space="preserve">
-    <value>Auf die ganz Straße anwenden</value>
+    <value>Toepassen op gehele straat</value>
   </data>
   <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
-    <value>Auf die ganz Straße anwenden</value>
+    <value>Toepassen op gehele straat</value>
   </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
-    <value>Dies wird alle vorhandenen Markierungen ersetzen.</value>
+    <value>Het zal de huidige markering vervangen.</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
-    <value>Markierung zwischen Kreuzungen anwenden</value>
+    <value>Markering toepassen tussen kruisingen</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
-    <value>Möchtest du wirklich die Markierung zwischen den Kreuzungen anwenden?</value>
+    <value>Weet je zeker dat je de markeringen wilt toepassen tussen kruisingen?</value>
   </data>
   <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
-    <value>Markierung auf die ganz Straße anwenden</value>
+    <value>Markering toepassen op gehele straat</value>
   </data>
   <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
-    <value>Möchtest du wirklich die Markierung auf die komplette Straße "{0}" anwenden?</value>
+    <value>Weet je zeker dat je de markeringen wilt toepassen op de gehele "{0}"?</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
-    <value>Hinter den Punkt zurückziehen um eine orthogonale Linie zu erstellen</value>
+    <value>Sleep achter het punt voor een loodrechte lijn</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
-    <value>Endpunkt für eine reguläre oder Haltelinie auswählen</value>
+    <value>Selecteer een eindpunt voor een normale lijn of stoplijn</value>
   </data>
   
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
-    <value>Ausrichtung des Linien-Endes</value>
+    <value>Uitlijning lijn einde</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
-    <value>Ausrichtung des Linien-Starts</value>
+    <value>Uitlijning lijn start</value>
   </data>
   
   
   
   
   <data name="Settings_HideStreetName" xml:space="preserve">
-    <value>Straßennamen während der Verwendung ausblenden</value>
+    <value>Verberg straatnamen tijdens het gebruik van IMT</value>
   </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
-    <value>Randstein</value>
+    <value>Bestrating</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>{0}+Klick um den Überweg auszuwählen</value>
+    <value>Klik met {0} om een oversteekplaats te selecteren</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>{0}+Klick um die Linie auszuwählen</value>
+    <value>Klik met {0} om een lijn te selecteren</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Kies</value>
+    <value>Grind</value>
   </data>
   <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Felsen</value>
+    <value>Klif</value>
   </data>
   <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Abgenutzte Oberfläche</value>
+    <value>Geruïneerd</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Abstand von den Linien</value>
+    <value>Afstand van lijnen</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
-    <value>Eckenradius</value>
+    <value>Hoekstraal</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Eckenradius an Mittelstreifen</value>
+    <value>Hoekstraal op mediaan</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>Größe der Bordsteine</value>
+    <value>Stoeprand hoogte</value>
   </data>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Größe der Bordsteine an Mittelstreifen</value>
+    <value>Stoeprand hoogte op middenbermen</value>
   </data>
   
   
   <data name="HeaderPanel_Discard" xml:space="preserve">
-    <value>Verwerfen</value>
+    <value>Weggooien</value>
   </data>
   
   <data name="Settings_Sortings" xml:space="preserve">
-    <value>Sortierungen</value>
+    <value>Sorteringen</value>
   </data>
   <data name="Settings_SortPresetType" xml:space="preserve">
-    <value>Kreuzungsvorlagen sortieren</value>
+    <value>Voorinstellingen sorteren</value>
   </data>
   <data name="Settings_SortPresetByNames" xml:space="preserve">
-    <value>Nach Namen</value>
+    <value>Op naam</value>
   </data>
   <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
-    <value>Nach Anzahl der Straßen, dann nach Namen</value>
+    <value>Op aantal wegen, dan op naam</value>
   </data>
   <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
-    <value>Nach Author, dann nach Typ, dann nach Name</value>
+    <value>Op auteur, dan op type, dan op naam</value>
   </data>
   <data name="Settings_SortTemplateByNames" xml:space="preserve">
-    <value>Nach Name, dann nach Typ</value>
+    <value>Op naam, dan op type</value>
   </data>
   <data name="Settings_SortTemplateByType" xml:space="preserve">
-    <value>Nach Typ, dann nach Namen</value>
+    <value>Op naam, dan op type</value>
   </data>
   <data name="Settings_SortTemplateType" xml:space="preserve">
-    <value>Stilvorlagen sortieren</value>
+    <value>Sjablonen sorteren</value>
   </data>
   <data name="Settings_SortApplyByAuthor" xml:space="preserve">
-    <value>Nach Author, dann nach Typ, dann nach Name</value>
+    <value>Op auteur, dan op type, dan op naam</value>
   </data>
   <data name="Settings_SortApplyByNames" xml:space="preserve">
-    <value>Nach Name, dann nach Typ</value>
+    <value>Op naam, dan op type</value>
   </data>
   <data name="Settings_SortApplyByType" xml:space="preserve">
-    <value>Nach Typ, dann nach Namen</value>
+    <value>Op type, dan op naam</value>
   </data>
   <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
-    <value>Zeige Standard Vorlagen oben in der Liste an</value>
+    <value>Toon standaardsjablonen bovenaan de lijst</value>
   </data>
   <data name="Settings_SortApplyType" xml:space="preserve">
-    <value>Sortiere Vorlagen in der Anwendeliste</value>
+    <value>Sjablonen sorteren in de lijst</value>
   </data>
   <data name="Settings_IlluminationAtNight" xml:space="preserve">
-    <value>Beleuchtung der Editiermarkierung in der Nacht</value>
+    <value>Verlichting van bewerkingsmarkering in de nacht</value>
   </data>
   <data name="Settings_IlluminationIntensity" xml:space="preserve">
-    <value>Beleuchtungsstärke</value>
+    <value>Verlichtingssterkte</value>
   </data>
   <data name="Settings_Gameplay" xml:space="preserve">
-    <value>Spielmechanik</value>
+    <value>Gameplay</value>
   </data>
   <data name="Settings_GroupPresets" xml:space="preserve">
-    <value>Gruppen-Vorlagen</value>
+    <value>Voorinstellingen groeperen</value>
   </data>
   <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
-    <value>Passend</value>
+    <value>Past nauwelijks</value>
   </data>
   <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
-    <value>Passgenau</value>
+    <value>Past perfect</value>
   </data>
   <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
-    <value>Kaum passend</value>
+    <value>Past slecht</value>
   </data>
   <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
-    <value>Möglicherweise passend</value>
+    <value>Past mogelijk</value>
   </data>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
-    <value>Markierungen unter Bahnübergängen</value>
+    <value>Markeringen onder spoorwegovergangen</value>
   </data>
   <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Lückenlänge</value>
+    <value>Lengte van tussenruimte</value>
   </data>
   <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Lückenintervall</value>
+    <value>Frequentie van tussenruimte</value>
   </data>
   <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Lücken verwenden</value>
+    <value>Gebruik van tussenruimte</value>
   </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
-    <value>Versätze zurücksetzen</value>
+    <value>Reset offsets</value>
   </data>
   <data name="PointEditor_SaveOffsets" xml:space="preserve">
-    <value>Versätze speichern</value>
+    <value>Bewaar offsets</value>
   </data>
   <data name="PointEditor_RoadName" xml:space="preserve">
-    <value>Straßenname</value>
+    <value>Straatnaam</value>
   </data>
   
   <data name="LineStyle_Prop" xml:space="preserve">
-    <value>Dekoration</value>
+    <value>Prop</value>
   </data>
   <data name="LineStyle_Tree" xml:space="preserve">
-    <value>Baum</value>
+    <value>Boom</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
-    <value>Winkel</value>
+    <value>Hoek</value>
   </data>
   <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Höhe</value>
+    <value>Hoogte</value>
   </data>
   <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Name</value>
+    <value>Naam</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
-    <value>Skalierung</value>
+    <value>Schaal</value>
   </data>
   <data name="StyleOption_ObjectShift" xml:space="preserve">
-    <value>Verschiebung</value>
+    <value>Shift</value>
   </data>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
-    <value>Schritt</value>
+    <value>Stap</value>
   </data>
   <data name="NumberFormat_Degree" xml:space="preserve">
     <value>{0}°</value>
@@ -1470,103 +1408,165 @@ Klicken um die Markierungen zu bearbeiten</value>
     <value>{0}%</value>
   </data>
   <data name="StyleOption_Color1" xml:space="preserve">
-    <value>Variante #1</value>
+    <value>Variant #1</value>
   </data>
   <data name="StyleOption_Color2" xml:space="preserve">
-    <value>Variante #2</value>
+    <value>Variant #2</value>
   </data>
   <data name="StyleOption_Color3" xml:space="preserve">
-    <value>Variante #3</value>
+    <value>Variant #3</value>
   </data>
   <data name="StyleOption_Color4" xml:space="preserve">
-    <value>Variante #4</value>
+    <value>Variant #4</value>
   </data>
   <data name="StyleOption_ColorCustom" xml:space="preserve">
-    <value>Benutzerdefiniert</value>
+    <value>Aangepast</value>
   </data>
   <data name="StyleOption_ColorRandom" xml:space="preserve">
-    <value>Zufällig</value>
+    <value>Willekeurig</value>
   </data>
   <data name="StyleOption_ColorOption" xml:space="preserve">
-    <value>Farbvarianten</value>
+    <value>Kleurvarianten</value>
   </data>
   <data name="LineEditor_ClipSidewalk" xml:space="preserve">
-    <value>Bürgersteig stutzen</value>
+    <value>Clip voetpad</value>
   </data>
   <data name="StyleOption_SharkToothAngle" xml:space="preserve">
-    <value>Winkel</value>
+    <value>Hoek</value>
   </data>
   <data name="LineStyle_Network" xml:space="preserve">
-    <value>Dekorative Netzwerke</value>
+    <value>Decoratief netwerk</value>
   </data>
   <data name="StyleOption_NetWidthScale" xml:space="preserve">
-    <value>Breitenskalierung</value>
+    <value>Breedte schaal</value>
   </data>
   <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
-    <value>Wiederholungsdistanz</value>
+    <value>Herhaal afstand</value>
   </data>
   <data name="StyleOption_AssetNetwork" xml:space="preserve">
-    <value>Netzwerk</value>
+    <value>Netwerk</value>
   </data>
   <data name="StyleOption_AssetNotSet" xml:space="preserve">
-    <value>Nicht festgelegt</value>
+    <value>Niet ingesteld</value>
   </data>
   <data name="StyleOption_AssetProp" xml:space="preserve">
-    <value>Dekoration</value>
+    <value>Prop</value>
   </data>
   <data name="StyleOption_AssetTree" xml:space="preserve">
-    <value>Baum</value>
+    <value>Boom</value>
   </data>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
-    <value>Keine Treffer</value>
+    <value>Niets gevonden</value>
   </data>
   <data name="Settings_AutoApplyPasting" xml:space="preserve">
-    <value>Automatisch die Markierungen vom Kopieren einfügen, wenn die Quelle dem Ziel entspricht</value>
+    <value>Voeg automatisch de markeringen van het kopiëren in als de bron overeenkomt met de bestemming</value>
   </data>
   <data name="StyleOption_ObjectProbability" xml:space="preserve">
-    <value>Wahrscheinlichkeit</value>
+    <value>Waarschijnlijkheid</value>
   </data>
   <data name="StyleOption_ObjectRange" xml:space="preserve">
-    <value>Reichweite</value>
+    <value>Bereik</value>
   </data>
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
-    <value>Statisch</value>
+    <value>Enkel</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
-    <value>[NEW] Dekorationen und Bäume als Linienstil hinzugefügt. Dies ermöglicht Dekorationen oder Bäume auf Linien hinzuzufügen. Diese Objekte reduzieren nicht in die Dekorations- und Baum-Limits.
-[NEW] Dekorative Netzwerke als Linien hinzugefügt. Dies ermöglicht jeda Art dekorativen Netzwerkes, wie z.B. Zäune, als Linien hinzuzufügen. Diese Netzwerke reduzieren nicht die Kreuzungs- und Segmente-Limits.
-[NEW] Die Möglichkeit Markierungen auf Gleisen, U-Bahn-Gleisen und Fußgängerwegen zu erstellen wurde hinzugefügt.
-[NEW] Automatisches Anwenden von kopierten Markierungen, die aus der Zwischenablage oder den Vorlagen eingefügt werden, wenn die Ziel-Kreuzung zu der Quell-Kreuzung passt. Kann in den Mod-Einstellungen deaktiviert werden.
-[NEW] Die Möglichkeit, das Überlagern der Markierungen auf Bürgersteigen zu deaktivieren wurde hinzugefügt.
-[NEW] Das Überlagern der Markierungen auf Bürgersteigen ist auch für Segmente verfügbar.
-[UPDATED] 3D Füllungs-Mesh geht nun unter der Straßenoberfläche weiter um Lücken bei Straßen mit Gefälle oder Steigung zu verhindern.
-[UPDATED] Heifischzahn-Markierungen können nun rotiert werden.
-[FIXED] Das Loch in der Überlagerung bei der Auswahl von sehr gestreckten Netwerk-Knoten wurde behoben.
-[FIXED] Der fehlerhafte Schatten ander Bürgersteigkante als Linienstil wurde berhoben.
-[UPDATED] Zahlenformat (m, %, °) zu allen Eingabewerten hinzugefügt.
-[FIXED] Fehlende Füll-Eckpunkte auf Kreuzungen zwischen normalen Linien wurden behoben.</value>
+    <value>[NEW] Versieringen en bomen toegevoegd als lijnstijl. Hierdoor kunnen versieringen of bomen op lijnen worden aangebracht. Deze voorwerpen vallen niet binnen de grenzen van de decoratie en de boom.
+[NEW] Decoratieve netwerken toegevoegd als lijnen. Hierdoor kan elk type decoratief netwerk, zoals hekken, als lijnen worden toegevoegd. Deze netwerken verlagen de grenswaarden voor kruisingen en segmenten niet.
+[NEW] De mogelijkheid toegevoegd om markeringen aan te brengen op treinsporen, ondergrondse sporen en voetgangerspaden.
+[NEW] Pas automatisch gekopieerde markeringen, geplakt van klembord of sjablonen, toe wanneer het doel snijpunt overeenkomt met het bron snijpunt. Kan worden uitgeschakeld in de mod instellingen.
+[NEW] Mogelijkheid toegevoegd om overlappende markeringen op voetpaden uit te schakelen.
+[NEW] Overlaying markers op verhardingen is ook beschikbaar voor segmenten.
+[UPDATED] 3D opvuller loopt nu door onder het wegdek om gaten te voorkomen op wegen met hellingen.
+[UPDATED] De haaientanden kunnen nu gedraaid worden.
+[FIXED] Repareerde het gat in de overlay bij het selecteren van zeer uitgerekte mesh nodes.
+[FIXED] Verkeerde schaduw op stoeprand als lijnstijl opgelost.
+[UPDATED] Getalformaat (m, %, °) toegevoegd aan alle invoerwaarden.
+[FIXED] Ontbrekende punten van opvullers op kruisingen tussen normale lijnen opgelost.</value>
   </data>
   <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
-    <value>Direkt und Reihenfolge invertieren</value>
+    <value>Directe en omgekeerde volgorde</value>
   </data>
   <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
-    <value>Nur direkt</value>
+    <value>Alleen directe volgorde</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
-    <value>[UPDATED] Automatisches Anwenden von Markierungen ist nur aktiv, wenn es nur eine Möglichkeit gibt, die Markierungen einzufügen.
-[NEW] Optionen "Nur direkt" und "Direkt und invertiert" für das automatische Anwenden von Markierungen hinzugefügt.
-[FIXED] Berechnung und Beleuchtung von Füllungen korrigiert.
-[UPDATED] "Standardfarbe"-Button beim Farbwahl er auf den Standard des Stils eingestellt, anstelle der Standardwerte der Mod. </value>
+    <value>[UPDATED] Automatisch aanbrengen van markering is alleen ingeschakeld als er maar één manier is om de markering in te voegen.
+[NEW] Opties "Alleen directe volgorde" en "Directe en omgekeerde volgorde" toegevoegd voor het automatisch aanbrengen van markeringen.
+[FIXED] Berekening en belichting van vullingen gecorrigeerd.
+[UPDATED] "Standaard kleur" knop bij de kleurselector stelt standaard kleur van stijl in in plaats van standaard kleur van mod.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
-    <value>[UPDATED] Plazas &amp; Promenades DLC Unterstützung hinzugefügt.
-[NEW] Loading Screen Mod Revisited Unterstützung hinzugefügt.
-[FIXED] Blinkende UI beim suchen von Dekorationen/Bäumen/Netzwerken behoben.</value>
+    <value>[UPDATED] Ondersteuning toegevoegd voor Plazas &amp; Promenades DLC.
+[FIXED] Probleem met knipperende UI bij het zoeken naar props/bomen/netwerken opgelost.</value>
   </data>
   <data name="StyleOption_Slope" xml:space="preserve">
-    <value>Gefälle</value>
+    <value>Helling</value>
   </data>
   <data name="StyleOption_Tilt" xml:space="preserve">
-    <value>Neigung</value>
+    <value>Kantelen</value>
+  </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Ondergrondse modus activeren</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Ondergrondse modus verlaten</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Ondergrondse weergave omschakelen</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Druk op {0} om binnen te gaan en op {1} om te verlaten</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Houd {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Druk op {0} om de ondergrondse modus in te gaan</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Druk op {0} om de ondergrondse modus te verlaten</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Houd {0} om in ondergrondse modus te gaan</value>
+  </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Het automatische interval van de prop hangt af van de grootte ervan</value>
+  </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>LOD-afstand voor 2D markeringen</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>LOD-afstand voor netwerken</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>LOD-afstand voor props</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>LOD-afstand voor bomen</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Automatisch</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>LOD-afstand voor 3D markeringen</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Render</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Minder opties</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Meer opties</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Extra stijlopties samenvouwen</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Hoofdkleur</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Tweede kleur</value>
   </data>
 </root>

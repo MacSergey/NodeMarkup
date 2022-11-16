@@ -1666,12 +1666,78 @@ Cliquez pour modifier le marquage</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
     <value>[UPDATED] Ajout du support du DLC Plazas &amp; Promenades.
-[FIXED] Problème d'UI qui clignotait en cherchant des props/arbres/réseaux réglé.</value>
+[NEW] Ajout du support de Loading Screen Mod Revisited.
+[FIXED] Correction du clignotement de l'interface lors de la recherche de props/arbres/réseaux.</value>
   </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Pente</value>
   </data>
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>Inclinaison</value>
+  </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Passer en mode souterrain</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Quitter le mode souterrain</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Activer le souterrain</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Appuyez sur {0} pour entrer et {1} pour quitter</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Maintenez {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Appuyez sur {0} pour entrer
+en mode souterrain</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Appuyez sur {0} pour quitter
+le mode souterrain</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Maintenez {0} pour utiliser le mode souterrain</value>
+  </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>L'intervalle automatique de l'accessoire dépend de sa taille</value>
+  </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>Distance de LOD du marquage 2D</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Distance de LOD des réseaux</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Distance de LOD des accessoires</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Distance de LOD des arbres</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Automatique</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>Distance de LOD du marquage 3D</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Rendu</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Moins d'options</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Plus d'options</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Réduire les options de style supplémentaires</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Couleur principale</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Couleur secondaire</value>
   </data>
 </root>

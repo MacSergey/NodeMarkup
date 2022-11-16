@@ -19,7 +19,7 @@ namespace NodeMarkup.Utilities
         public static string Description(this StyleModifier modifier)
         {
             if (modifier.GetAttr<DescriptionAttribute, StyleModifier>() is DescriptionAttribute description)
-                return Localize.ResourceManager.GetString(description.Description, Localize.Culture);
+                return Localize.LocaleManager.GetString(description.Description, Localize.Culture);
             else if (modifier.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute inputKey)
                 return LocalizeExtension.GetModifiers(inputKey.Control, inputKey.Alt, inputKey.Shift);
             else

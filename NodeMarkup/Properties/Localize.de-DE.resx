@@ -118,1288 +118,1347 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Tool_DeleteCaption" xml:space="preserve">
-    <value>{0} を削除しますか？</value>
+    <value>Lösche {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>{0} - "{1}" を削除してもよろしいですか？</value>
+    <value>Willst du {0} "{1}" wirklich löschen?</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>テンプレートの適用</value>
+    <value>Vorlage anwenden</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>テンプレートの保存</value>
+    <value>Als Vorlage speichern</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>デフォルトに設定</value>
+    <value>Als Standard festlegen</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>デフォルトの設定解除</value>
+    <value>Als Standard entfernen</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>ルールを追加</value>
+    <value>Regel hinzufügen</value>
   </data>
   <data name="StyleOption_Color" xml:space="preserve">
-    <value>カラー</value>
+    <value>Farbe</value>
   </data>
   <data name="StyleOption_DashedLength" xml:space="preserve">
-    <value>線の長さ</value>
+    <value>Strichlänge</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>ルールを削除</value>
+    <value>Regel löschen</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>追加したルールを削除してもよろしいですか?</value>
+    <value>Willst du die Regel wirklich löschen?</value>
   </data>
   <data name="LineRule_From" xml:space="preserve">
-    <value>始点</value>
+    <value>Von</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>始点側のポイントを選択</value>
+    <value>Startpunkt der Regel auswählen</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>終点側のポイントを選択</value>
+    <value>Endpunkt der Regel auswählen</value>
   </data>
   <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>ライン</value>
+    <value>Linie</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>ライン</value>
+    <value>Linien</value>
   </data>
   <data name="StyleOption_Offset" xml:space="preserve">
-    <value>オフセット</value>
+    <value>Versatz</value>
   </data>
   <data name="StyleOption_SpaceLength" xml:space="preserve">
-    <value>空白の長さ</value>
+    <value>Länge des Zwischenraums</value>
   </data>
   <data name="Editor_Style" xml:space="preserve">
-    <value>スタイル</value>
+    <value>Stil</value>
   </data>
   <data name="LineRule_To" xml:space="preserve">
-    <value>終点</value>
+    <value>Zu</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>交差点・ノード内 {0}</value>
+    <value>Überschneidung mit {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>端点・原点 {0}</value>
+    <value>Eckpunkt {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>破線</value>
+    <value>Gestrichelt</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>2重破線</value>
+    <value>Doppelt gestrichelt</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>2重線</value>
+    <value>Doppelt durchgezogen</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>実線</value>
+    <value>Durchgezogen</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>交差点や高速道路のJCT・IC内に、ラインの作成・編集が出来るようになります</value>
+    <value>Markierungen an Kreuzungen erstellen</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
-    <value>#{0} のノードを編集中</value>
+    <value>Markierungen von Netzwerk-Knoten #{0} bearbeiten</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>ポイント</value>
+    <value>Punkt</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
-    <value>オフセット</value>
+    <value>Versatz</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>ポイント</value>
+    <value>Punkte</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>未設定</value>
+    <value>Nicht festgelegt</value>
   </data>
   <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
-    <value>新規ルールを追加</value>
+    <value>Neue Linienregel hinzufügen</value>
   </data>
   <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
-    <value>マーキングを全て削除</value>
+    <value>Alle Linien an Netzwerk-Knoten löschen</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>全ての交差点からマーキングを削除</value>
+    <value>Markierungen von allen Kreuzungen löschen</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>マップ上にある全てのマーキングを削除</value>
+    <value>Alle Markierungen löschen</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>マップ上にある、全てのマーキングを削除してもよろしいですか？</value>
+    <value>Willst du wirklich alle Markierungen entfernen?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>マーキングデータをファイルに保存</value>
+    <value>Markierungsdaten in Datei speichern</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>ファイルのパスをクリップボードにコピー</value>
+    <value>Dateipfad in die Zwischenablage kopieren</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>マーキングデータのダンプ出力</value>
+    <value>Markierungsdaten speichern</value>
   </data>
   <data name="Settings_DumpMessageFailed" xml:space="preserve">
-    <value>ダンプ出力に失敗しました。</value>
+    <value>Speichern fehlgeschlagen</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>ダンプ出力は正常に行われました。</value>
+    <value>Erfolgreich gespeichert</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
-    <value>マーキングデータをファイルから復元</value>
+    <value>Markierungsdaten aus Datei importieren</value>
   </data>
   <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
-    <value>マーキングデータの復元</value>
+    <value>Markierungsdaten wiederherstellen</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
-    <value>本当にデータを復元しますか？
-復元すると、既存のマーキングデータを全て置き換えます。</value>
+    <value>Möchtest du die Daten wirklich wiederherstellen?
+Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
-    <value>マーキングデータの復元に失敗しました。</value>
+    <value>Wiederherstellen der Markierungsdaten fehlgeschlagen</value>
   </data>
   <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
-    <value>マーキングデータの復元に成功しました。</value>
+    <value>Markierungsdaten erfolgreich wiederhergestellt</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>追加ルールのクイックセットアップ</value>
+    <value>Schnelle Regel-Erstellung</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>マーキングの描画距離(m)</value>
+    <value>Render-Distanz</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>削除前の確認方法</value>
+    <value>Löschwarnungen anzeigen</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>テンプレート</value>
+    <value>Stilvorlage</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>名前</value>
+    <value>Name</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>テンプレート</value>
+    <value>Stilvorlagen</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
-    <value>新規テンプレート</value>
+    <value>Neue Vorlage</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>マーキングを全て消去</value>
+    <value>Node-Markierungen löschen</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>ノード(セグメント) #{0} のマーキングを全て削除してもよろしいですか？</value>
+    <value>Willst Du wirklich alle Markierungen von Node #{0} entfernen?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>クリックしてラインの追加</value>
+    <value>Klicken um eine Linie zu erstellen</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>クリックしてラインを削除</value>
+    <value>Zum Löschen der Linie klicken</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>ノード #{0}
-クリックしてマーキングの編集</value>
+    <value>Node #{0}
+Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
-    <value>マーキングを編集したい、ノード・セグメントを選択</value>
+    <value>Netzwerk-Knoten oder Segment zum Ändern der Markierungen auswählen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>ラインの終点を選択</value>
+    <value>Endpunkt für eine reguläre Linie auswählen</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>ポイントを選択して、ラインを作成＆削除</value>
+    <value>Startpunkt wählen zum Linie erstellen oder löschen</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
+    <value>[NEW] Füllungen. Der Bereich zwischen Linien kann gefüllt werden um zu zeigen, dass ein Befahren oder Parken verboten ist. 3 Stile stehen zur Verfügung: Linien, Gitter oder Fläche. ALT gedrückt halten zum Erstellen.
+[NEW] Haltelinien. Es ist nun möglich zwei nebeneinander liegende Punkte auf der gleichen Straße zu verbinden um eine Haltelinie zu erstellen. 2 Stile verfügbar: Durchgezogen und gestrichelt.
+[NEW] Neuer Linien-Stil: "Durchgezogen &amp; gestrichelt".
+[NEW] Linien und Vorlagen haben in Listen nun Icons, die den Stil und die Farbe anzeigen.
+[NEW] Markierungen werden kopiert, wenn man eine Kreuzung mit Move it kopiert (Steht erst zur Verfügung, wenn Move it ein Update bereit stellt).
+[NEW] Kopieren und Einfügen Funktion für Linien-Farben hinzugefügt.
+[UPDATED] Beim Upgraden einer Straße auf eine andere mit gleicher Anzahl an Spuren, bleiben die Markierungen nun erhalten.
+[NEW] Das Liniensegment mit der jeweiligen Regel wird hervorgehoben, wenn man in der Bearbeitungsliste auf die jeweilige Regel zeigt.
+[TRANSLATION] Vereinfachtes Chinesisch als Übersetzung hinzugefügt.</value>
+  </data>
   <data name="Settings_Restore" xml:space="preserve">
-    <value>復元</value>
+    <value>Wiederherstellen</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
-    <value>ラインを反転</value>
+    <value>Invertieren</value>
   </data>
   <data name="StyleOption_Width" xml:space="preserve">
-    <value>太さ・幅</value>
+    <value>Breite</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>破線＆実線</value>
+    <value>Durchgezogen und Gestrichelt</value>
   </data>
   <data name="LineStyle_StopSolid" xml:space="preserve">
-    <value>実線</value>
+    <value>Durchgezogen</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
-    <value>クリックして停止線を削除</value>
+    <value>Zum Löschen der Haltelinie klicken</value>
   </data>
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
-    <value>クリックして停止線を追加</value>
+    <value>Klicken um eine Haltelinie zu erstellen</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>塗り潰し</value>
+    <value>Füllungen</value>
   </data>
   <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>塗り潰し</value>
+    <value>füllung</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
-    <value>斜線</value>
+    <value>Streifen</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>網掛け</value>
+    <value>Gitter</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>破線</value>
+    <value>Gestrichelt</value>
   </data>
   <data name="StyleOption_Step" xml:space="preserve">
-    <value>間隔</value>
+    <value>Schritt</value>
   </data>
   <data name="StyleOption_Angle" xml:space="preserve">
-    <value>角度</value>
+    <value>Winkel</value>
   </data>
   <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>オフセット(ライン側)</value>
+    <value>Abstand der Linien</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
-    <value>このポイントから塗り潰しを開始</value>
+    <value>Klicken um mit der Füllung zu beginnen</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
-    <value>終点(開始)のポイントを選択して、塗り潰しを作成</value>
+    <value>Klicken um das Erstellen der Füllung zu beenden</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
-    <value>このポイントを選択して、次のポイントへ移動</value>
+    <value>Klicken um den nächsten Punkt des Umrisses auszuwählen</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>塗り潰し開始のポイントを選択</value>
+    <value>Wähle einen Punkt um mit dem Erstellen einer Füllung zu beginnen</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
-    <value>次のポイントを選択</value>
+    <value>Wähle den nächsten Punkt des Umrisses</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>オフセット(分離帯側)</value>
+    <value>Abstand vom Median</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
-    <value>コピー</value>
+    <value>Kopieren</value>
   </data>
   <data name="Editor_ColorPaste" xml:space="preserve">
-    <value>貼り付け</value>
+    <value>Einfügen</value>
   </data>
   <data name="Editor_ColorDefault" xml:space="preserve">
-    <value>既定色</value>
+    <value>Standard</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>ベタ塗り</value>
+    <value>Vollständig gefüllt</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>[FIXED] Fix Alt, Strg und Shift Tasten halten unter Mac OS und Linux.
+[NEW] "Doppelt durchgezogen" und "Doppelt gestrichelte" Haltelinien-Stile hinzugefügt.
+[TRANSLATION] Italienische und Portugiesische Übersetzung hinzugefügt.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
+    <value>[UPDATED] "Was ist Neu" Nachricht erscheint nur noch einmal nach einem Update und kann im Options-Menu ausgeschaltet werden.
+[TRANSLATION] Übersetzungen hinzugefügt:  Tschechisch, Niederländisch, Französisch, Deutsch, Japanisch, Polnisch, Russisch und Spanisch.
+[NEW] Endpunkte können nun von einem zum anderen gezogen werden, wenn man Strg hält.
+[NEW] Backups - In den Einstellungen können alle gesetzten Markierungen einer Map als Backup gespeichert und später wieder importiert werden. Dies wird benötigt, wenn du den Mod deaktivieren willst, den Spielstand dann nochmal speichern möchtest und nach der erneuten Aktivierung des Mods die Markierungen wieder herstellen möchtest.
+[NEW] Es gibt nun einen Warnhinweis wenn etwas gelöscht werden soll. Dies gilt für Linien, Regeln und Vorlagen. Die Warnung kann in den Einstellungen deaktiviert werden.
+[NEW] Neues Tastenkürzel zum Hinzufügen neuer Regeln eingestellt - Shift+Ctrl+A (änderbar).
+[NEW] Schnell-Regeln-Einstellungen: Nach dem Hinzufügen einer neuen Regel öffnet sich die Mod-Oberfläche zum Auswählen des Start- und Endpunktes automatisch. "Von" und "Zu" muss nicht mehr zusätzlich angeklickt werden. Das kann in den Einstellungen deaktiviert werden.
+[FIXED] Fehler behoben, durch den Linien unterbrochen oder geteilt erschienen - dies kam nur bei Verbindungen zwischen Autobahnen und Stadtstraßen vor.
+[UPDATED] Linien werden nicht mehr gerendert, wenn die Info-Ansichten geöffnet sind.
+[UPDATED] Der Aktivierungsshortcut wird nun angesprochen, wenn ein anderes Tool geöffnet wird, während das Marking Tool schon geöffnet ist.</value>
+  </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
-    <value>新しい塗り潰しを追加</value>
+    <value>Neue Füllung hinzufügen</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>2重線</value>
+    <value>Doppelt durchgezogen</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>2重破線</value>
+    <value>Doppelt gestrichelt</value>
   </data>
   <data name="HeaderPanel_StyleCopy" xml:space="preserve">
-    <value>コピー</value>
+    <value>Kopieren</value>
   </data>
   <data name="HeaderPanel_StylePaste" xml:space="preserve">
-    <value>貼り付け</value>
+    <value>Einfügen</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>V字型</value>
+    <value>Winkel</value>
   </data>
   <data name="StyleOption_AngleBetween" xml:space="preserve">
-    <value>V字の角度</value>
+    <value>Winkel-Grad</value>
   </data>
   <data name="StyleOption_Turn" xml:space="preserve">
-    <value>左右に回転</value>
+    <value>Umdrehen</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
-    <value>どこにもラインの設定がありません。
-2つのポイントを繋げて作りましょう。</value>
+    <value>Es befinden sich noch keine Linien auf dieser Kreuzung.
+Zum Erstellen einer Linie zwei Punkte miteinander verbinden.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>どこにも塗り潰しの設定がありません。
-{0} + 押下 or {1} で、塗り潰しを始めましょう。</value>
+    <value>Es befinden sich noch keine Füllungen auf dieser Kreuzung.
+Zum Erstellen einer Füllung halte {0} oder drücke {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>テンプレートの一覧は空です。
-作成するにはライン・横断歩道・塗り潰しのスタイルから、 {0} をクリックします。</value>
+    <value>Die Liste mit Stilvorlagen ist leer.
+Um eine Stilvorlage zu erstellen klicke «{0}» beim Linien-, Fußgängerüberweg- oder Füllungs-Stil.</value>
   </data>
   <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>アクセスIDで有効化する</value>
+    <value>Aktivierungscode eingeben</value>
   </data>
   <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>有効化に失敗しました</value>
+    <value>Aktivierung fehlgeschlagen</value>
   </data>
   <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>有効化に成功しました</value>
+    <value>Aktivierung erfolgreich</value>
   </data>
   <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>この操作は利用できません</value>
+    <value>Die Funktion ist nicht verfügbar</value>
   </data>
   <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>追加機能 {0} は現在、Patreonsの早期アクセスで利用可能です。
-後日、誰でも利用できるようになります。
-早期アクセスに登録することで、いち早く新機能の利用とMODの開発をサポートします。</value>
+    <value>Die Funktion «{0}» ist im Moment für Unterstützer vorab verfügbar.
+Sie wird zu einem späteren Zeitpunkt für alle freigeschaltet werden. 
+Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Möglichkeit den Mod in dieser Geschwindigkeit weiter zu entwickeln.</value>
   </data>
   <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>早期アクセスを受け取る</value>
+    <value>Vorabzugriff erhalten</value>
   </data>
   <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>あなたのアクセスID</value>
+    <value>Deine Zugangs-ID</value>
   </data>
   <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>アクセスID</value>
+    <value>Zugriffsschlüssel</value>
   </data>
   <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>有効化</value>
+    <value>Aktivieren</value>
   </data>
   <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>早期アクセスを有効化</value>
+    <value>Vorabzugriff-Aktivierung</value>
   </data>
   <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>早期アクセスを有効にするには、アクセスIDを入力する必要があります</value>
+    <value>Um den Vorabzugriff zu aktivieren, musst du einen Zugriffsschlüssel eingeben</value>
   </data>
   <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>Abbrechen</value>
   </data>
   <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>入力されたアクセスIDが、有効ではありません</value>
+    <value>Der eingegeben Schlüssel ist nicht gültig</value>
   </data>
   <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>接続中...</value>
+    <value>Verlinkung in Bearbeitung...</value>
   </data>
   <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Patreonアカウントと接続</value>
+    <value>Patreon-Account verlinken</value>
   </data>
   <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Patreonアカウントと接続する</value>
+    <value>Patreon-Account verlinken</value>
   </data>
   <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Patreonアカウントがリクエストを拒否したため、アカウントと連携できません。</value>
+    <value>Der Patreon-Account kann nicht verlinkt werden, da du die Anfrage abgelehnt hast.</value>
   </data>
   <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>アカウントを接続する際に、エラーが発生しました</value>
+    <value>Beim Verlinken des Accounts trat ein Fehler auf. Bitte versuche es erneut.</value>
   </data>
   <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>アカウントは接続されていますが、早期アクセスが開始できません</value>
+    <value>Dein Account wurde verlinkt, aber du hast keinen Vorabzugriff.</value>
   </data>
   <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>このページを閉じて、ゲームに戻ることができます。</value>
+    <value>Du kannst diese Seite nun schließen und zum Spiel zurückkehren.</value>
   </data>
   <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>Abbrechen</value>
   </data>
   <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>ステータス: {0}</value>
+    <value>Status: {0}</value>
   </data>
   <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>有効化</value>
+    <value>Aktiviert</value>
   </data>
   <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>未認証</value>
+    <value>Nicht aktiviert</value>
   </data>
   <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>ご支援頂いて、ありがとうございます。
-現在、あなたは全ての機能を利用することが出来ます。</value>
+    <value>Danke dir für deine Unterstützung, du kannst nun alle Funktionen genießen.</value>
   </data>
   <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>早期アクセス</value>
+    <value>Vorabzugriff</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
-    <value>位置合わせ</value>
+    <value>Ausrichtung</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>クリックして垂直線を追加</value>
+    <value>Klicken, um eine orthogonale Linie zu erstellen</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
-    <value>クリックして垂直線を削除</value>
+    <value>Klicken, um die orthogonale Linie zu löschen</value>
   </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
-    <value>ゼブラ模様</value>
+    <value>Zebrastreifen</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
-    <value>バニラの横断歩道</value>
+    <value>Originale Fußgängerüberweg-Markierung</value>
   </data>
   <data name="StyleOption_OffsetBetween" xml:space="preserve">
-    <value>横断歩道の始点</value>
+    <value>Abstand dazwischen</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
-    <value>横断歩道</value>
+    <value>Fußgängerüberwege</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>どこにも横断歩道の設定がありません。
-{0} + 押下で、横断歩道を作成しましょう。</value>
+    <value>Es befinden sich noch keine Fußgängerüberweg-Markierungen auf dieser Kreuzung.
+Zum Erstellen einer Fußgängerüberweg-Markierung {0} gedrückt halten.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>横断歩道</value>
+    <value>Fußgängerüberweg</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
-    <value>横断歩道のタブ</value>
+    <value>Fußgängerüberwege</value>
   </data>
   <data name="FillerStyle_Group" xml:space="preserve">
-    <value>塗り潰しのタブ</value>
+    <value>Füllungen</value>
   </data>
   <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
-    <value>ラインのタブ</value>
+    <value>Reguläre Linien</value>
   </data>
   <data name="LineStyle_StopLinesGroup" xml:space="preserve">
-    <value>停止線のタブ</value>
+    <value>Haltelinie</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
-    <value>ラインをタブで折り畳む</value>
+    <value>Linien gruppieren</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>テンプレートをタブで折り畳む</value>
+    <value>Stilvorlagen gruppieren</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
-    <value>クリックして横断歩道を作成</value>
+    <value>Klicken um eine Fußgängerüberweg-Markierung zu erstellen</value>
   </data>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
-    <value>クリックして横断歩道を削除</value>
+    <value>Zum Löschen der Fußgängerüberweg-Markierung klicken</value>
   </data>
   <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
-    <value>スタイル別</value>
+    <value>Nach Stil</value>
   </data>
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
-    <value>タイプ別</value>
+    <value>Nach Typ</value>
   </data>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
-    <value>2重のゼブラ模様</value>
+    <value>Zweigeteilter Zebrastreifen</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
-    <value>外枠線の幅</value>
+    <value>Linienstärke</value>
   </data>
   <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>縦方向のオフセット</value>
+    <value>Abstand dahinter</value>
   </data>
   <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>横方向のオフセット</value>
+    <value>Abstand davor</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>道路と平行にする</value>
+    <value>Parallel zu Fahrspuren</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
-    <value>2本の実線</value>
+    <value>Parallele durchgezogene Linien</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
-    <value>左側の基準線</value>
+    <value>Linker Rand</value>
   </data>
   <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
-    <value>右側の基準線</value>
+    <value>Rechter Rand</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
-    <value>左側の基準線を選択</value>
+    <value>Wähle den linken Rand der Fußgängerüberweg-Markierung</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
-    <value>右側の基準線を選択</value>
+    <value>Wähle den rechten Rand der Fußgängerüberweg-Markierung</value>
   </data>
   <data name="Settings_GroupPointsOverlay" xml:space="preserve">
-    <value>ポイントをグループ化して表示</value>
+    <value>Punkte-Gruppen Einblendung</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
-    <value>グループ化して表示</value>
+    <value>Im Kreis anordnen</value>
   </data>
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
-    <value>従来型で表示</value>
+    <value>In einer Linie anordnen</value>
   </data>
   <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
-    <value>追加したルールが重なっています。
-重なっている、始点と終点のポイントを確認してください。</value>
+    <value>Diese Regel wird von einer anderen Regel überlagert.
+Überprüfe die "Von" und "Zu" Punkte der anderen Regeln.</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
-    <value>左側の基準線</value>
+    <value>Linke Außenlinie der Fußgängerüberweg-Markierung</value>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
-    <value>右側の基準線</value>
+    <value>Rechte Außenlinie der Fußgängerüberweg-Markierung</value>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
-    <value>元に戻す</value>
+    <value>Zurücksetzen</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
-    <value>終点側のポイントを選択</value>
+    <value>Endpunkt auswählen</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
-    <value>ポイントを選択して、横断歩道の作成＆削除</value>
+    <value>Wähle einen Punkt zum
+Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
   </data>
   <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
-    <value>2本の破線</value>
+    <value>Parallele gestrichelte Linien</value>
   </data>
   <data name="CrosswalkStyle_Ladder" xml:space="preserve">
-    <value>ハシゴ型の横断歩道</value>
+    <value>Leiter</value>
   </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
-    <value>テンプレートがありません</value>
+    <value>Keine Stilvorlagen</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
-    <value>ベタ塗り</value>
+    <value>Vollständig gefüllt</value>
   </data>
   <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
-    <value>横断歩道のタブ</value>
+    <value>Fußgängerüberwege</value>
   </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>横断歩道</value>
+    <value>Fußgängerüberweg</value>
   </data>
   <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>塗り潰し</value>
+    <value>füllung</value>
   </data>
   <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>ライン</value>
+    <value>Linie</value>
   </data>
   <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>ポイント</value>
+    <value>Punkt</value>
   </data>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>テンプレート</value>
+    <value>Stilvorlage</value>
   </data>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
-    <value>マーキングが正常に描画されず、ロードエラーがありました。
-{0} ヶ所のノードやセグメントで、マーキングの描画に失敗しました。</value>
+    <value>Laden mit Fehlern beendet.
+Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
   </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
-    <value>チェス盤の横断歩道</value>
+    <value>Schachbrett</value>
   </data>
   <data name="StyleOption_LineCount" xml:space="preserve">
-    <value>正方形の数</value>
+    <value>Linienanzahl</value>
   </data>
   <data name="StyleOption_SharkToothBase" xml:space="preserve">
-    <value>三角形の長さ</value>
+    <value>Basis der Dreiecke</value>
   </data>
   <data name="StyleOption_SharkToothHeight" xml:space="preserve">
-    <value>三角形の高さ</value>
+    <value>Höhe der Dreiecke</value>
   </data>
   <data name="StyleOption_SharkToothSpace" xml:space="preserve">
-    <value>空白の長さ</value>
+    <value>Abstand dazwischen</value>
   </data>
   <data name="StyleOption_SquareSide" xml:space="preserve">
-    <value>正方形の大きさ</value>
+    <value>Quadrat-Breite</value>
   </data>
   <data name="LineStyle_SharkTeeth" xml:space="preserve">
-    <value>サメの歯型</value>
+    <value>Haifischzähne</value>
   </data>
   <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
-    <value>サメの歯型</value>
+    <value>Haifischzähne</value>
   </data>
   <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
-    <value>破線＆実線</value>
+    <value>Durchgezogen und Gestrichelt</value>
   </data>
   <data name="Panel_ClearMarking" xml:space="preserve">
-    <value>マーキングの削除</value>
+    <value>Markierung entfernen</value>
   </data>
   <data name="Panel_CopyMarking" xml:space="preserve">
-    <value>マーキングのコピー</value>
+    <value>Markierung kopieren</value>
   </data>
   <data name="Panel_PasteMarking" xml:space="preserve">
-    <value>マーキングの貼り付け</value>
+    <value>Markierung einfügen</value>
   </data>
   <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
-    <value>マーキングの貼り付け</value>
+    <value>Markierung einfügen</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>本当にマーキングを貼り付けますか？</value>
+    <value>Möchtest Du wirklich die Markierungen einfügen?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
-    <value>横断歩道のキーバインド</value>
+    <value>Tastenkombinationen für Fußgängerüberwege</value>
   </data>
   <data name="Settings_FillersModifier" xml:space="preserve">
-    <value>塗り潰しのキーバインド</value>
+    <value>Tastenkombinationen für Füllungen</value>
   </data>
   <data name="Settings_RegularLinesModifier" xml:space="preserve">
-    <value>ラインのキーバインド</value>
+    <value>Tastenkombinationen für reguläre Linien</value>
   </data>
   <data name="Settings_StopLinesModifier" xml:space="preserve">
-    <value>停止線のキーバインド</value>
+    <value>Tastenkombinationen für Haltelinien</value>
   </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
-    <value>未設定</value>
+    <value>Nicht festgelegt</value>
   </data>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
-    <value>デフォルト</value>
+    <value>Ohne Tastenkombination</value>
   </data>
   <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
-    <value>常に確認する</value>
+    <value>Immer</value>
   </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
-    <value>他の項目に影響がある場合のみ確認</value>
+    <value>Nur wenn es Anderes beeinflussen wird</value>
   </data>
   <data name="Tool_DeleteDependence" xml:space="preserve">
-    <value>他と依存性のあるライン等も、一緒に削除されます。</value>
+    <value>Dazugehöriges wird ebenfalls entfernt:</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
-    <value>横断歩道の基準線 - {0} ヶ所</value>
+    <value>Ränder von Fußgängerüberwegen - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
-    <value>横断歩道 - {0} ヶ所</value>
+    <value>Fußgängerüberwege - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
-    <value>塗り潰し - {0} ヶ所</value>
+    <value>Füllungen - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceLines" xml:space="preserve">
-    <value>ライン - {0} ヶ所</value>
+    <value>Linien - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceRules" xml:space="preserve">
-    <value>ルール - {0} ヶ所</value>
+    <value>Regeln - {0}</value>
   </data>
   <data name="Settings_BackupTab" xml:space="preserve">
-    <value>バックアップ</value>
+    <value>Sicherung</value>
   </data>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
-    <value>表示＆確認の設定</value>
+    <value>Anzeige und Verwendung</value>
   </data>
   <data name="Settings_Groupings" xml:space="preserve">
-    <value>グループ＆タブの設定</value>
+    <value>Gruppen</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
-    <value>ショートカット</value>
+    <value>Tastenkürzel und Tastenkombinationen</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
-    <value>テンプレートの複製</value>
+    <value>Duplizieren</value>
   </data>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
-    <value>コピー</value>
+    <value>Kopieren</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
-    <value>辺を基準</value>
+    <value>Rand</value>
   </data>
   <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>描画の基準</value>
+    <value>Beginnend von</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
-    <value>頂点を基準</value>
+    <value>Scheitel</value>
   </data>
   <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
-    <value>ポイントのオフセットを全てリセット</value>
+    <value>Versätze aller Punkte zurücksetzen</value>
   </data>
   <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
-    <value>ポイントのオフセットを全てリセット</value>
+    <value>Versätze aller Punkte zurücksetzen</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>ノード(セグメント) #{0} にある、ポイントのオフセットを全てリセットしますか？</value>
+    <value>Willst Du wirklich alle Versätze der Punkte des Netzwerk-Knotens #{0} zurücksetzen?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
-    <value>円周上のポイントをD&amp;Dで、道路側のマーキングの順序を入れ替え
-ポイントをクリックすると、道路上のラインの順序を入れ替え</value>
+    <value>Kreis halten, ziehen und loslassen um die Straßen-Reihenfolge zu ändern
+Kreis anklicken um die Punkte-Reihenfolge der Straße zu ändern</value>
   </data>
   <data name="Tool_InfoRoadsDrop" xml:space="preserve">
-    <value>円周上にあるポイントを内外にD&amp;Dして、マーキングの順序を入れ替え</value>
+    <value>Kreis innerhalb/außerhalb des Ziels loslassen um die Straßen-Reihenfolge zu ändern/zurückzusetzen</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
-    <value>マーキングのコピー</value>
+    <value>Markierung kopieren</value>
   </data>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
-    <value>マーキングの貼り付け</value>
+    <value>Markierung einfügen</value>
   </data>
   <data name="Tool_InfoInverseOrder" xml:space="preserve">
-    <value>マーキングの反転</value>
+    <value>Umgekehrte Reihenfolge</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
-    <value>時計回りに回転</value>
+    <value>Im Uhrzeigersinn drehen</value>
   </data>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
-    <value>反時計回りに回転</value>
+    <value>Gegen den Uhrzeigersinn drehen</value>
   </data>
   <data name="StyleOption_AlignmentCenter" xml:space="preserve">
-    <value>中央</value>
+    <value>Mittig</value>
   </data>
   <data name="StyleOption_AlignmentLeft" xml:space="preserve">
-    <value>左寄せ</value>
+    <value>Links</value>
   </data>
   <data name="StyleOption_AlignmentRight" xml:space="preserve">
-    <value>右寄せ</value>
+    <value>Rechts</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
-    <value>名無しのテンプレート</value>
+    <value>Unbenannte Stilvorlage</value>
   </data>
   <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
-    <value>名前が重複しています</value>
+    <value>Der Name wird bereits verwendet</value>
   </data>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
-    <value>{0} という名前は、他のテンプレートで使用されています。
-重複したテンプレートを保存しても良いですか？</value>
+    <value>Der Name "{0}" wird bereits für eine andere Stilvorlage verwendet.
+Bist du dir sicher, dass du mehrere Stilvorlage mit dem gleichen Namen haben willst?</value>
   </data>
   <data name="Settings_BackupMarking" xml:space="preserve">
-    <value>マーキングのバックアップ</value>
+    <value>Markierungsdaten sichern</value>
   </data>
   <data name="Settings_BackupTemplates" xml:space="preserve">
-    <value>テンプレートのバックアップ</value>
+    <value>Sicherungsvorlagen</value>
   </data>
   <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
-    <value>テンプレートを全て削除</value>
+    <value>Alle Stilvorlagen löschen</value>
   </data>
   <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
-    <value>テンプレートを全て削除</value>
+    <value>Alle Stilvorlagen löschen</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>本当に全てのテンプレートを削除しますか？</value>
+    <value>Willst du wirklich alle Stilvorlagen entfernen?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
-    <value>テンプレートをファイルに保存</value>
+    <value>Stilvorlagen in einer Datei speichern</value>
   </data>
   <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
-    <value>テンプレートのダンプ出力</value>
+    <value>Stilvorlagen speichern</value>
   </data>
   <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
-    <value>テンプレートをファイルから復元</value>
+    <value>Stilvorlagen aus Datei wiederherstellen</value>
   </data>
   <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
-    <value>テンプレートの復元</value>
+    <value>Stilvorlagen wiederherstellen</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
-    <value>本当にテンプレートを復元しますか？
-復元すると、既存のテンプレートを全て置き換えます。</value>
+    <value>Möchtest du wirklich die Stilvorlagen wiederherstellen?
+Die wiederhergestellten Stilvorlagen werden alle vorhandenen Stilvorlagen ersetzen.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
-    <value>テンプレートの復元に失敗しました。</value>
+    <value>Wiederherstellen der Stilvorlagen fehlgeschlagen</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
-    <value>テンプレートの復元に成功しました。</value>
+    <value>Stilvorlagen erfolgreich wiederhergestellt</value>
   </data>
   <data name="Tool_Apply" xml:space="preserve">
-    <value>適用する</value>
+    <value>Anwenden</value>
   </data>
   <data name="Tool_Continue" xml:space="preserve">
-    <value>作業を継続</value>
+    <value>Fortsetzen</value>
   </data>
   <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>マーキングの貼り付けモードを終了</value>
+    <value>Einfügemodus verlassen</value>
   </data>
   <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>貼り付けモードを終了して、変更したマーキングを適用しますか？</value>
+    <value>Möchtest Du den Einfügemodus verlassen und das Eingefügte übernehmen?</value>
   </data>
   <data name="Tool_NotApply" xml:space="preserve">
-    <value>適用しない</value>
+    <value>Nicht anwenden</value>
   </data>
   <data name="Tool_InfoPasteApply" xml:space="preserve">
-    <value>適用する</value>
+    <value>Anwenden</value>
   </data>
   <data name="Tool_infoPasteNotApply" xml:space="preserve">
-    <value>適用しない</value>
+    <value>Nicht anwenden</value>
   </data>
   <data name="Tool_InfoPasteReset" xml:space="preserve">
-    <value>元に戻す</value>
+    <value>Zurücksetzen</value>
   </data>
   <data name="Panel_EditMarking" xml:space="preserve">
-    <value>マーキングの順序を編集</value>
+    <value>Reihenfolge der Markierungen ändern</value>
   </data>
   <data name="Settings_ShortcutEditMarking" xml:space="preserve">
-    <value>マーキングの順序を変更</value>
+    <value>Reihenfolge der Markierungen ändern</value>
   </data>
   <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
-    <value>道路が変更・アップグレードされました</value>
+    <value>Straßen wurden geändert</value>
   </data>
   <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
-    <value>交差点の構成や道路の種類が変わって、マーキングが自動的に適用できません。
-マーキングの順序を手動で調整＆適用しますか？</value>
+    <value>Die Straßen an dieser Kreuzung wurden verändert, daher können die bestehenden Markierungen nicht automatisch zugeordnet werden.
+Möchtest du die Markierungen manuell zuordnen?</value>
   </data>
   <data name="Tool_EndEditOrderCaption" xml:space="preserve">
-    <value>マーキングの編集モードを終了</value>
+    <value>Reihenfolge ändern-Modus verlassen</value>
   </data>
   <data name="Tool_EndEditOrderMessage" xml:space="preserve">
-    <value>編集モードを終了して、変更したマーキングを適用しますか？</value>
+    <value>Möchtest Du den Bearbeitungsmodus verlassen und die neue Reihenfolge übernehmen?</value>
   </data>
   <data name="Tool_InfoPointsDrag" xml:space="preserve">
-    <value>ポイントを円からD&amp;Dして、順序を入れ替え</value>
+    <value>Kreis halten, ziehen und loslassen um die Punkte-Reihenfolge zu ändern</value>
   </data>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
-    <value>道路上にあるポイントを内外にD&amp;Dして、ラインの順序を入れ替え</value>
+    <value>Kreis innerhalb/außerhalb des Ziels loslassen um die Punkte-Reihenfolge zu ändern/zurückzusetzen</value>
   </data>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
-    <value>実線を中心</value>
+    <value>Durchgezogene Linie zentriert</value>
   </data>
   <data name="StyleOption_No" xml:space="preserve">
-    <value>No</value>
+    <value>Nein</value>
   </data>
   <data name="StyleOption_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Ja</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>{0} ＆ 押下で、横断歩道の作成</value>
+    <value>{0} halten erstellt eine Fußgängerüberweg-Markierung</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>{0} ＆ 押下で、塗り潰しを開始</value>
+    <value>{0} halten um eine Füllung zu erstellen</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>{0} + ドラッグで、ポイントを移動</value>
+    <value>{0} halten und Ziehen um den Punkt zu verschieben</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
-    <value>この操作は元に戻せません。</value>
+    <value>Diese Aktion kann nicht rückgängig gemacht werden.</value>
   </data>
   <data name="LineStyle_Empty" xml:space="preserve">
-    <value>空のスタイル</value>
+    <value>Ohne Linienstil</value>
   </data>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
-    <value>路肩にラインを一括で追加</value>
+    <value>Randlinien erstellen</value>
   </data>
   <data name="Panel_CreateEdgeLines" xml:space="preserve">
-    <value>路肩にラインを一括で追加</value>
+    <value>Randlinien erstellen</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
-    <value>ポイントのオフセットを全てリセット</value>
+    <value>Versätze aller Punkte zurücksetzen</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
-    <value>横断歩道の基準線を一緒に設定</value>
+    <value>Schnellerstellung Fußgängerüberwegeränder</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>軌道の下部でマーキングを描画</value>
+    <value>Markierung unter Gleisen</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
-    <value>警告：このオプションは、ゲーム内の描画順序を変更します</value>
+    <value>Achtung: Diese Option ändert die Reihenfolge in der die Spiel-Objekte gerendert werden</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
+    <value>[NEW] Möglichkeit hinzugefügt, Markierungen unter Gleisen verlaufen zu lassen. Dies kann in den Optionen deaktiviert werden. WARNUNG: Diese Funktion ändert die Reihenfolge, in der Spiel-Objekte gerendert werden.
+[NEW] Funktion hinzugefügt um unsichtbare Linien zu erstellen (ohne Regeln).
+[NEW] Funktion hinzugefügt alle Randlinien gleichzeitig zu erstellen (Linie vom, letzten Punkt der Straße zum ersten Punkt der nächsten Straße).
+[NEW] Linien überlagern nicht mehr den Bürgersteig. Funktioniert nur für Linien vom ersten oder letzten Punkt einer Straße.
+[NEW] "Schnell-Erstellung für Fußgängerüberwegsmarkierungen" hinzugefügt - öffnet automatisch den Ränder-Auswahl sowie es bei der "Schnell-Regel-Erstellung" der Fall ist. Kann in den Einstellungen deaktiviert werden.
+[NEW] Menü für "Zusätzliche Funktionen" hinzugefügt.
+[FIXED] Oberfläche außerhalb des Bildschirms repariert.
+[UPDATED] Overlay-Farbe beim hinüberfahren mit der Maus von weiß in ein schwaches blau geändert, damit es sich besser von den Markierungen abhebt.
+[UPDATED] Fußgängerüberwegemarkierungen erstellen keine unnötigen Überschneidungen mehr. Möglicherweise musst du für bereits erstellte Fußgängerüberwegemarkierungen nun Ränder festlegen.</value>
+  </data>
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
-    <value>カスタムアセットで保存</value>
+    <value>Als Asset speichern</value>
   </data>
   <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
     <value>{0}
-作成者: {1}</value>
+von {1}</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
-    <value>プリセットの一覧は空です。
-保存するにはパネルのヘッダー部分から、 {0} をクリックします。</value>
+    <value>Die Liste mit Kreuzungsvorlagen ist leer.
+Um eine Kreuzungsvorlage zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
   </data>
   <data name="PresetEditor_Presets" xml:space="preserve">
-    <value>プリセット</value>
+    <value>Kreuzungsvorlagen</value>
   </data>
   <data name="Panel_SaveAsPreset" xml:space="preserve">
-    <value>プリセットの保存</value>
+    <value>Als Kreuzungsvorlage speichern</value>
   </data>
   <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
-    <value>プリセットの保存</value>
+    <value>Als Kreuzungsvorlage speichern</value>
   </data>
   <data name="HeaderPanel_NoPresets" xml:space="preserve">
-    <value>プリセットがありません</value>
+    <value>Keine Kreuzungsvorlagen</value>
   </data>
   <data name="PresetEditor_ApplyPreset" xml:space="preserve">
-    <value>プリセットを適用</value>
+    <value>Kreuzungsvorlage übernehmen</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
-    <value>名無しのプリセット</value>
+    <value>Neue Kreuzungsvorlage</value>
   </data>
   <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>プリセットの編集モードを終了しますか？</value>
+    <value>Modus zum Übernehmen von Kreuzungsvorlagen verlassen</value>
   </data>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>プリセットを適用しますか？</value>
+    <value>Möchtest du die Kreuzungsvorlage anwenden?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
-    <value>作成者</value>
+    <value>Ersteller</value>
   </data>
   <data name="Settings_ApplyAfterRestart" xml:space="preserve">
-    <value>再起動後に有効</value>
+    <value>Nach Neustart des Spiels anwenden</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
-    <value>マーキングのカスタムアセットを読み込む</value>
+    <value>Lade Markierungs-Objekte</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
-    <value>横断歩道の数:</value>
+    <value>Fußgängerüberwege:</value>
   </data>
   <data name="PresetInfo_Fillers" xml:space="preserve">
-    <value>塗り潰しの数:</value>
+    <value>Füllungen:</value>
   </data>
   <data name="PresetInfo_Lines" xml:space="preserve">
-    <value>ラインの数:</value>
+    <value>Linien:</value>
   </data>
   <data name="PresetInfo_NoScreenshot" xml:space="preserve">
-    <value>画像なし</value>
+    <value>Kein Bildschirmfoto vorhanden</value>
   </data>
   <data name="PresetInfo_RoadPoints" xml:space="preserve">
-    <value>道路 #{0} のポイント数:</value>
+    <value>Straße #{0} Punkte:</value>
   </data>
   <data name="PresetInfo_Roads" xml:space="preserve">
-    <value>接続道路の数:</value>
+    <value>Straßen:</value>
   </data>
   <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
-    <value>横断歩道と重なる新たなラインは自動的に除去</value>
+    <value>Neue Linien am Fußgängerüberweg beenden</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
-    <value>横断歩道と重なるラインを除去</value>
+    <value>Linien an diesem Fußgängerüberweg beenden</value>
   </data>
   <data name="Settings_BackupPresets" xml:space="preserve">
-    <value>プリセットのバックアップ</value>
+    <value>Kreuzungsvorlagen sichern</value>
   </data>
   <data name="Settings_DeletePresetsButton" xml:space="preserve">
-    <value>プリセットを全て削除</value>
+    <value>Alle Kreuzungsvorlagen löschen</value>
   </data>
   <data name="Settings_DeletePresetsCaption" xml:space="preserve">
-    <value>プリセットを全て削除</value>
+    <value>Alle Kreuzungsvorlagen löschen</value>
   </data>
   <data name="Settings_DeletePresetsMessage" xml:space="preserve">
-    <value>本当に全てのプリセットを削除しますか？</value>
+    <value>Willst du wirklich alle Voreinstellungen entfernen?</value>
   </data>
   <data name="Settings_DumpPresetsButton" xml:space="preserve">
-    <value>プリセットをファイルに保存</value>
+    <value>Kreuzungsvorlagen in Datei sichern</value>
   </data>
   <data name="Settings_DumpPresetsCaption" xml:space="preserve">
-    <value>プリセットのダンプ出力</value>
+    <value>Kreuzungsvorlagen sichern</value>
   </data>
   <data name="Settings_RestorePresetsButton" xml:space="preserve">
-    <value>プリセットをファイルから復元</value>
+    <value>Kreuzungsvorlagen aus Datei wiederherstellen</value>
   </data>
   <data name="Settings_RestorePresetsCaption" xml:space="preserve">
-    <value>プリセットの復元</value>
+    <value>Kreuzungsvorlagen wieder herstellen</value>
   </data>
   <data name="Settings_RestorePresetsMessage" xml:space="preserve">
-    <value>本当にテンプレートを復元しますか？
-復元すると、既存のプリセットを全て置き換えます。</value>
+    <value>Möchtest du die Kreuzungsvorlagen wirklich wiederherstellen?
+Die wieder hergestellten Kreuzungsvorlagen werden alle vorhandenen Kreuzungsvorlagen ersetzen.</value>
   </data>
   <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
-    <value>プリセットの復元に失敗しました。</value>
+    <value>Wiederherstellen der Kreuzungsvorlagen fehlgeschlagen</value>
   </data>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
-    <value>プリセットの復元に成功しました。</value>
+    <value>Kreuzungsvorlagen erfolgreich wiederhergestellt</value>
   </data>
   <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
-    <value>全ての横断歩道で重なるラインを除去</value>
+    <value>Linien an allen Fußgängerüberwegen beenden</value>
   </data>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
-    <value>全ての横断歩道で重なるラインを除去</value>
+    <value>Linien an allen Fußgängerüberwegen beenden</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>プリセット(カスタムアセット)を上書きしますか？</value>
+    <value>Kreuzungsvorlage-Objekt überschreiben</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>名前の変更は、カスタムアセットのファイルを上書きします。</value>
+    <value>Um den Namen zu ändern muss die Objekt-Datei neu geschrieben werden. Fortfahren?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>テンプレート(カスタムアセット)を上書きしますか？</value>
+    <value>Stilvorlagen-Spiel-Objekt überschreiben</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>名前や内容の変更は、カスタムアセットのファイルを上書きします。</value>
+    <value>Um den Namen und die Werte zu ändern muss die Objekt-Datei neu geschrieben werden. Fortfahren?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
-    <value>基準線の設定方法
-横断歩道を設定した、同じポイントから始まるラインが必要です。</value>
+    <value>Um Fußgängerüberwege-Ränder festzusetzen, müssen Linien vorhanden sein, die von dem selben Punkt starten wie die Fußgängerüberweg-Markierung</value>
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
-    <value>追加ルールの作成方法
-始点や終点を変更したい場合は、他のラインと交差が必要です。</value>
+    <value>Um Regeln von "Von" und "Zu" Punkten verändern zu können und zusätzliche Regeln zu erstellen, müssen Linien vorhanden sein, die sich mit dieser Linie überschneiden.</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
-    <value>パネル内にTipsを表示</value>
+    <value>Tipps in der Oberfläche anzeigen</value>
   </data>
   <data name="HeaderPanel_Edit" xml:space="preserve">
-    <value>内容を編集</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="HeaderPanel_Save" xml:space="preserve">
-    <value>変更を保存する</value>
+    <value>Änderungen speichern</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
-    <value>変更を保存しない</value>
+    <value>Änderungen nicht speichern</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
-    <value>プリセット名を変更して保存しますか？</value>
+    <value>Möchtest du die Namensänderung der Kreuzungsvorlage speichern?</value>
   </data>
   <data name="TemplateEditor_SaveChanges" xml:space="preserve">
-    <value>変更内容を保存</value>
+    <value>Änderungen speichern</value>
   </data>
   <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
-    <value>テンプレートの内容を変更しますか？</value>
+    <value>Möchtest du die Änderungen der Stilvorlagen-Werte speichern?</value>
   </data>
   <data name="PresetEditor_NameExistMessage" xml:space="preserve">
-    <value>{0} という名前は、他のプリセットで使用されています。
-重複したプリセットを保存しても良いですか？</value>
+    <value>Der Name "{0}" wird bereits für eine andere Vorlage verwendet.
+Bist du dir sicher, dass du mehrere Vorlagen mit dem gleichen Namen haben willst?</value>
   </data>
   <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>削除方法はコンテンツマネージャーから行います。</value>
+    <value>Du kannst sie nur über die Inhaltsverwaltung des Spiels löschen.</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>編集不可になり、削除はコンテンツマネージャーから行います。
-もしくは、Steamのワークショップでサブスクライブを停止・解除します。</value>
+    <value>Du kannst diese Kreuzungsvorlage nicht bearbeiten. Sie kann nur über die Inhaltsverwaltung des Spiels gelöscht oder im Steam Workshop deabonniert werden.</value>
   </data>
   <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
-    <value>このプリセットはカスタムアセットです。</value>
+    <value>Diese Kreuzungsvorlage ist ein Spiel-Objekt.</value>
   </data>
   <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>削除方法はコンテンツマネージャーから行います。</value>
+    <value>Du kannst sie nur über die Inhaltsverwaltung des Spiels löschen.</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>編集不可になり、削除はコンテンツマネージャーから行います。
-もしくは、Steamのワークショップでサブスクライブを停止・解除します。</value>
+    <value>Du kannst diese Stilvorlage nicht bearbeiten. Sie kann nur über die Inhaltsverwaltung des Spiels gelöscht oder im Steam Workshop deabonniert werden.</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
-    <value>このテンプレートはカスタムアセットです。</value>
+    <value>Diese Stilvorlage ist ein Spiel-Objekt.</value>
   </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>プリセット</value>
+    <value>Kreuzungsvorlagen</value>
   </data>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>プリセット</value>
+    <value>Kreuzungsvorlagen</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
+    <value>[NEW] Die Möglichkeit hinzugefügt, alle Markierungen einer Kreuzung als Kreuzungsvorlage zu speichern und später auf jede beliebige andere Andeutung anwenden zu können.
+[NEW] Die Möglichkeit hinzugefügt, Stilvorlagen und Kreuzungs-Vorlagen als Objekte zu speichern und über den Workshop zu teilen.
+[UPDATED] UI aktualisiert und ihre Performance verbessert. Die Verzögerung beim Umschalten der Tabulatoren und dem auswählen würde reduziert.
+[UPDATED] Nun können Vorlagenwerte nur noch im Bearbeitungsmodus geändert werden. So werden versehentliche Änderungen verhindert.
+[NEW] Hinweis-Einblendungen hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
+[NEW] Funktion das neue Linien von Fußgängerüberwegmarkierungen getrennt werden hinzugefügt (Kann in den Einstellungen ausgeschaltet werden).
+[NEW] Funktion zum Ändern von Farben Mithilfe des Mauerrades hinzugefugt.
+[FIXED] Korrektur für Zug- und Monorail-Straßen (und alle anderen Straßen ohne Punkte
+[FIXED] Korrektur und Verbesserung an der Punkte-Gruppen-Einblendung
+[TRANSLATION] Britisch-Englische Übersetzung hinzugefügt.</value>
+  </data>
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
-    <value>このタイプは追加ルールをサポートしません。</value>
+    <value>Dieser Linientyp unterstützt keine Regeln</value>
   </data>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
-    <value>横断歩道の基準線に指定したラインは除去しない</value>
+    <value>Linie nicht am Fußgängerüberweg beenden, wenn diese dessen Rand bildet</value>
   </data>
   <data name="Template_UnknownAuthor" xml:space="preserve">
-    <value>不明な作成者</value>
+    <value>Unbekannter Autor</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>[UPDATED] Informationen bei Ladefehlern korrigiert.
+[FIXED] Lokalisierungen aktualisiert und verbessert.</value>
+  </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>マーキングが正常に描画されず、ロードエラーがありました。
-全てのマーキングで描画に失敗しました。</value>
+    <value>Laden mit Fehlern beendet.
+Nicht alle Markierungen der Kreuzungen konnten geladen werden.</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
-    <value>#{0} のセグメントを編集中</value>
+    <value>Markierungen von Segment #{0} bearbeiten</value>
   </data>
   <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>芝生(3Dスタイル)</value>
+    <value>Gras</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>舗装(3Dスタイル)</value>
+    <value>Bürgersteig</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
-    <value>高さ・厚み</value>
+    <value>Höhe</value>
   </data>
   <data name="LineStyle_Elevation" xml:space="preserve">
-    <value>高さ・厚み</value>
+    <value>Höhe</value>
   </data>
   <data name="LineStyle_Grass" xml:space="preserve">
-    <value>芝生(3Dスタイル)</value>
+    <value>Gras</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
-    <value>舗装(3Dスタイル)</value>
+    <value>Randstein</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
-    <value>LOD(3Dスタイル)の描画距離(m)</value>
+    <value>LOD Distanz</value>
   </data>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
-    <value>セグメント #{0}
-クリックしてマーキングの編集</value>
+    <value>Segment #{0}
+Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>ラインやポイントを基準に描画</value>
+    <value>Folge den Leitlinien</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>始点(左側)の基準</value>
+    <value>Linke Leitlinie</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>終点(右側)の基準</value>
+    <value>Rechte Leitlinie</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
-    <value>始点側のラインやポイントを選択</value>
+    <value>Wählen den Startpunkt oder eine Linie als Leitlinie aus</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
-    <value>終点側のラインやポイントを選択</value>
+    <value>Wähle den zweiten Punkt der Leitlinie</value>
   </data>
-  
-  
-  
+  <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
+    <value>[UPDATED] Harmony Abhängigkeiten aktualisiert: Probleme mit anderen Mods gelöst</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
+    <value>[FIXED] Fehler behoben, bei dem Markierungen aus dem Speicherstand verschwanden</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
+    <value>[NEW] Möglichkeit zum Erstellen von Markierungen auf Segmenten hinzugefügt.
+[NEW] 3D Füllungsstil hinzugefügt: "Gehweg" and "Gras".
+[NEW] 3D Linienstil hinzugefügt: "Gehweg".
+[NEW] "Leitlinien folgen" für die Füllungsstile "Streifen" and "Winkel".
+[NEW] Performance-Verbesserung durch LOD (Level Of Detail) für Markierungen. Die Distanzeinstellungen ist in den Optionen zu finden.
+[NEW] Unterstützung für Rollbahnen hinzugefügt.
+[FIXED] Konflikt mit anderen Mods behoben, der dafür sorgen knnte, dass der Button nicht sichtbar war.
+[FIXED] Konflikt zwischen Scrollbalken und Mausscroll behoben.
+[UPDATED] Sowohl Komma als auch Punkt können nun als Zifferntrennzeichen verwendet werden.</value>
+  </data>
   <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>横断歩道の色数</value>
+    <value>Anzahl der Farben</value>
   </data>
   <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>1色</value>
+    <value>Eine</value>
   </data>
   <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>2色</value>
+    <value>Zwei</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
-    <value>クリップボードから追加</value>
+    <value>Aus der Zwischenablage</value>
   </data>
   <data name="LineEditor_LineAlignment" xml:space="preserve">
-    <value>拡大したポイントの位置合わせ</value>
+    <value>Linien-Ausrichtung</value>
   </data>
   <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
-    <value>ポイントを拡大する</value>
+    <value>In zwei aufteilen</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
-    <value>拡大する大きさ</value>
+    <value>Versatz aufteilen</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
-    <value>ポイントをタブで折り畳む</value>
+    <value>Punkte gruppieren</value>
   </data>
   <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
-    <value>交差点間でマーキングを一括適用</value>
+    <value>Zwischen Kreuzungen anwenden</value>
   </data>
   <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
-    <value>交差点間でマーキングを一括適用</value>
+    <value>Zwischen Kreuzungen anwenden</value>
   </data>
   <data name="Panel_ApplyWholeStreet" xml:space="preserve">
-    <value>通り全体にマーキングを一括適用</value>
+    <value>Auf die ganz Straße anwenden</value>
   </data>
   <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
-    <value>通り全体にマーキングを一括適用</value>
+    <value>Auf die ganz Straße anwenden</value>
   </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
-    <value>既存であるマーキングは、全て置き換えます。</value>
+    <value>Dies wird alle vorhandenen Markierungen ersetzen.</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
-    <value>交差点間でマーキングを一括適用</value>
+    <value>Markierung zwischen Kreuzungen anwenden</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
-    <value>交差点間を繋ぐ道路で、マーキングを一括で適用しますか？</value>
+    <value>Möchtest du wirklich die Markierung zwischen den Kreuzungen anwenden?</value>
   </data>
   <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
-    <value>通り全体にマーキングを一括適用</value>
+    <value>Markierung auf die ganz Straße anwenden</value>
   </data>
   <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
-    <value>{0} で設定された通り全体に、マーキングを一括で適用しますか？</value>
+    <value>Möchtest du wirklich die Markierung auf die komplette Straße "{0}" anwenden?</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
-    <value>垂直線はポイントの後方へドラッグして作成</value>
+    <value>Hinter den Punkt zurückziehen um eine orthogonale Linie zu erstellen</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
-    <value>ライン・停止線の終点を選択</value>
+    <value>Endpunkt für eine reguläre oder Haltelinie auswählen</value>
   </data>
   
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
-    <value>拡大したポイント(終点)の位置合わせ</value>
+    <value>Ausrichtung des Linien-Endes</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
-    <value>拡大したポイント(始点)の位置合わせ</value>
+    <value>Ausrichtung des Linien-Starts</value>
   </data>
   
   
   
   
   <data name="Settings_HideStreetName" xml:space="preserve">
-    <value>ツール使用時に道路名を非表示</value>
+    <value>Straßennamen während der Verwendung ausblenden</value>
   </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
-    <value>舗装(3Dスタイル)</value>
+    <value>Randstein</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>{0} + クリックで、横断歩道を選択</value>
+    <value>{0}+Klick um den Überweg auszuwählen</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>{0} + クリックで、ラインを選択</value>
+    <value>{0}+Klick um die Linie auszuwählen</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>砂利(3Dスタイル)</value>
+    <value>Kies</value>
   </data>
   <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>崖(3Dスタイル)</value>
+    <value>Felsen</value>
   </data>
   <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>荒れ地(3Dスタイル)</value>
+    <value>Abgenutzte Oberfläche</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>オフセット(ライン側)</value>
+    <value>Abstand von den Linien</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
-    <value>角丸の半径(ライン側)</value>
+    <value>Eckenradius</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>角丸の半径(分離帯側)</value>
+    <value>Eckenradius an Mittelstreifen</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>縁石の幅(ライン側)</value>
+    <value>Größe der Bordsteine</value>
   </data>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>縁石の幅(分離帯側)</value>
+    <value>Größe der Bordsteine an Mittelstreifen</value>
   </data>
   
   
   <data name="HeaderPanel_Discard" xml:space="preserve">
-    <value>破棄</value>
+    <value>Verwerfen</value>
   </data>
   
   <data name="Settings_Sortings" xml:space="preserve">
-    <value>ソートの方法</value>
+    <value>Sortierungen</value>
   </data>
   <data name="Settings_SortPresetType" xml:space="preserve">
-    <value>プリセットのソート</value>
+    <value>Kreuzungsvorlagen sortieren</value>
   </data>
   <data name="Settings_SortPresetByNames" xml:space="preserve">
-    <value>名前順</value>
+    <value>Nach Namen</value>
   </data>
   <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
-    <value>接続道路の数 → 名前順</value>
+    <value>Nach Anzahl der Straßen, dann nach Namen</value>
   </data>
   <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
-    <value>作者順 → タイプ順 → 名前順</value>
+    <value>Nach Author, dann nach Typ, dann nach Name</value>
   </data>
   <data name="Settings_SortTemplateByNames" xml:space="preserve">
-    <value>名前順 → タイプ順</value>
+    <value>Nach Name, dann nach Typ</value>
   </data>
   <data name="Settings_SortTemplateByType" xml:space="preserve">
-    <value>タイプ順 → 名前順</value>
+    <value>Nach Typ, dann nach Namen</value>
   </data>
   <data name="Settings_SortTemplateType" xml:space="preserve">
-    <value>テンプレートのソート</value>
+    <value>Stilvorlagen sortieren</value>
   </data>
   <data name="Settings_SortApplyByAuthor" xml:space="preserve">
-    <value>作者順 → タイプ順 → 名前順</value>
+    <value>Nach Author, dann nach Typ, dann nach Name</value>
   </data>
   <data name="Settings_SortApplyByNames" xml:space="preserve">
-    <value>名前順 → タイプ順</value>
+    <value>Nach Name, dann nach Typ</value>
   </data>
   <data name="Settings_SortApplyByType" xml:space="preserve">
-    <value>タイプ順 → 名前順</value>
+    <value>Nach Typ, dann nach Namen</value>
   </data>
   <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
-    <value>テンプレートの適用部分で、デフォルトを先頭表示</value>
+    <value>Zeige Standard Vorlagen oben in der Liste an</value>
   </data>
   <data name="Settings_SortApplyType" xml:space="preserve">
-    <value>テンプレートを適用部分のソート</value>
+    <value>Sortiere Vorlagen in der Anwendeliste</value>
   </data>
   <data name="Settings_IlluminationAtNight" xml:space="preserve">
-    <value>夜間のマーキング編集時にライトを点灯</value>
+    <value>Beleuchtung der Editiermarkierung in der Nacht</value>
   </data>
   <data name="Settings_IlluminationIntensity" xml:space="preserve">
-    <value>ライトの明るさ</value>
+    <value>Beleuchtungsstärke</value>
   </data>
   <data name="Settings_Gameplay" xml:space="preserve">
-    <value>ゲームプレイ</value>
+    <value>Spielmechanik</value>
   </data>
   <data name="Settings_GroupPresets" xml:space="preserve">
-    <value>プリセットをタブで折り畳む</value>
+    <value>Gruppen-Vorlagen</value>
   </data>
   <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
-    <value>寸詰まりの一致</value>
+    <value>Passend</value>
   </data>
   <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
-    <value>完全に一致</value>
+    <value>Passgenau</value>
   </data>
   <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
-    <value>不一致</value>
+    <value>Kaum passend</value>
   </data>
   <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
-    <value>部分的に一致</value>
+    <value>Möglicherweise passend</value>
   </data>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
-    <value>踏切下部でマーキングを描画</value>
+    <value>Markierungen unter Bahnübergängen</value>
   </data>
   <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>ギャップの間隔</value>
+    <value>Lückenlänge</value>
   </data>
   <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>ギャップの回数</value>
+    <value>Lückenintervall</value>
   </data>
   <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>ギャップを追加</value>
+    <value>Lücken verwenden</value>
   </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
-    <value>オフセットを戻す</value>
+    <value>Versätze zurücksetzen</value>
   </data>
   <data name="PointEditor_SaveOffsets" xml:space="preserve">
-    <value>オフセットを保存</value>
+    <value>Versätze speichern</value>
   </data>
   <data name="PointEditor_RoadName" xml:space="preserve">
-    <value>道路の名前</value>
+    <value>Straßenname</value>
   </data>
   
   <data name="LineStyle_Prop" xml:space="preserve">
-    <value>Prop</value>
+    <value>Dekoration</value>
   </data>
   <data name="LineStyle_Tree" xml:space="preserve">
-    <value>ツリー</value>
+    <value>Baum</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
-    <value>角度</value>
+    <value>Winkel</value>
   </data>
   <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>高さ</value>
+    <value>Höhe</value>
   </data>
   <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>名前</value>
+    <value>Name</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
-    <value>縮尺</value>
+    <value>Skalierung</value>
   </data>
   <data name="StyleOption_ObjectShift" xml:space="preserve">
-    <value>シフト</value>
+    <value>Verschiebung</value>
   </data>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
-    <value>間隔</value>
+    <value>Schritt</value>
   </data>
   <data name="NumberFormat_Degree" xml:space="preserve">
     <value>{0}°</value>
@@ -1411,104 +1470,168 @@
     <value>{0}%</value>
   </data>
   <data name="StyleOption_Color1" xml:space="preserve">
-    <value>バリエーション #1</value>
+    <value>Variante #1</value>
   </data>
   <data name="StyleOption_Color2" xml:space="preserve">
-    <value>バリエーション #2</value>
+    <value>Variante #2</value>
   </data>
   <data name="StyleOption_Color3" xml:space="preserve">
-    <value>バリエーション #3</value>
+    <value>Variante #3</value>
   </data>
   <data name="StyleOption_Color4" xml:space="preserve">
-    <value>バリエーション #4</value>
+    <value>Variante #4</value>
   </data>
   <data name="StyleOption_ColorCustom" xml:space="preserve">
-    <value>カスタム</value>
+    <value>Benutzerdefiniert</value>
   </data>
   <data name="StyleOption_ColorRandom" xml:space="preserve">
-    <value>ランダム</value>
+    <value>Zufällig</value>
   </data>
   <data name="StyleOption_ColorOption" xml:space="preserve">
-    <value>カラーバリエーション</value>
+    <value>Farbvarianten</value>
   </data>
   <data name="LineEditor_ClipSidewalk" xml:space="preserve">
-    <value>歩道にクリッピング</value>
+    <value>Bürgersteig stutzen</value>
   </data>
   <data name="StyleOption_SharkToothAngle" xml:space="preserve">
-    <value>角度</value>
+    <value>Winkel</value>
   </data>
   <data name="LineStyle_Network" xml:space="preserve">
-    <value>装飾系ネットワーク</value>
+    <value>Dekorative Netzwerke</value>
   </data>
   <data name="StyleOption_NetWidthScale" xml:space="preserve">
-    <value>幅のスケール</value>
+    <value>Breitenskalierung</value>
   </data>
   <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
-    <value>リピートの距離</value>
+    <value>Wiederholungsdistanz</value>
   </data>
   <data name="StyleOption_AssetNetwork" xml:space="preserve">
-    <value>ネットワークのアセット</value>
+    <value>Netzwerk</value>
   </data>
   <data name="StyleOption_AssetNotSet" xml:space="preserve">
-    <value>未設定</value>
+    <value>Nicht festgelegt</value>
   </data>
   <data name="StyleOption_AssetProp" xml:space="preserve">
-    <value>Propのアセット</value>
+    <value>Dekoration</value>
   </data>
   <data name="StyleOption_AssetTree" xml:space="preserve">
-    <value>ツリーのアセット</value>
+    <value>Baum</value>
   </data>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
-    <value>何も見つかりませんでした</value>
+    <value>Keine Treffer</value>
   </data>
   <data name="Settings_AutoApplyPasting" xml:space="preserve">
-    <value>ソースとターゲットが一致する場合は、マーキングの貼り付けを自動的に適用</value>
+    <value>Automatisch die Markierungen vom Kopieren einfügen, wenn die Quelle dem Ziel entspricht</value>
   </data>
   <data name="StyleOption_ObjectProbability" xml:space="preserve">
-    <value>出現率</value>
+    <value>Wahrscheinlichkeit</value>
   </data>
   <data name="StyleOption_ObjectRange" xml:space="preserve">
-    <value>範囲</value>
+    <value>Reichweite</value>
   </data>
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
-    <value>固定</value>
+    <value>Statisch</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
-    <value>[NEW] Added Prop and Tree line styles. They allow place any prop or tree on lines. Those objects are not counted in game prop and tree limits.
-[NEW] Added Decorative network line style. It allows place any decorative network like fence on lines. Those networks are not counted in game node and segment limits.
-[NEW] Added the ability to use markings on train tracks, metro tracks and pedestrian paths.
-[NEW] Added auto applying marking when it is pasted from buffer or preset if target intersection matches source intersection. Can be disabled in mod settings.
-[NEW] Added ability to turn off sidewalk clipping.
-[NEW] Sidewalk clipping is available for segments.
-[UPDATED] 3D filler mesh extends below the road surface to prevent gap on slope nodes.
-[UPDATED] Added the ability to rotate Shark Teeth.
-[FIXED] Fixed hole in overlay while selection such a big nodes.
-[FIXED] Fixed shadow on pavement line.
-[UPDATED] Added number format (m, %, °) to all properties.
-[FIXED] Fixed missed filler's points on intersection between normal lines.
-[TRANSLATION] Added Romanian language.</value>
+    <value>[NEW] Dekorationen und Bäume als Linienstil hinzugefügt. Dies ermöglicht Dekorationen oder Bäume auf Linien hinzuzufügen. Diese Objekte reduzieren nicht in die Dekorations- und Baum-Limits.
+[NEW] Dekorative Netzwerke als Linien hinzugefügt. Dies ermöglicht jeda Art dekorativen Netzwerkes, wie z.B. Zäune, als Linien hinzuzufügen. Diese Netzwerke reduzieren nicht die Kreuzungs- und Segmente-Limits.
+[NEW] Die Möglichkeit Markierungen auf Gleisen, U-Bahn-Gleisen und Fußgängerwegen zu erstellen wurde hinzugefügt.
+[NEW] Automatisches Anwenden von kopierten Markierungen, die aus der Zwischenablage oder den Vorlagen eingefügt werden, wenn die Ziel-Kreuzung zu der Quell-Kreuzung passt. Kann in den Mod-Einstellungen deaktiviert werden.
+[NEW] Die Möglichkeit, das Überlagern der Markierungen auf Bürgersteigen zu deaktivieren wurde hinzugefügt.
+[NEW] Das Überlagern der Markierungen auf Bürgersteigen ist auch für Segmente verfügbar.
+[UPDATED] 3D Füllungs-Mesh geht nun unter der Straßenoberfläche weiter um Lücken bei Straßen mit Gefälle oder Steigung zu verhindern.
+[UPDATED] Heifischzahn-Markierungen können nun rotiert werden.
+[FIXED] Das Loch in der Überlagerung bei der Auswahl von sehr gestreckten Netwerk-Knoten wurde behoben.
+[FIXED] Der fehlerhafte Schatten ander Bürgersteigkante als Linienstil wurde berhoben.
+[UPDATED] Zahlenformat (m, %, °) zu allen Eingabewerten hinzugefügt.
+[FIXED] Fehlende Füll-Eckpunkte auf Kreuzungen zwischen normalen Linien wurden behoben.</value>
   </data>
   <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
-    <value>直接と反転の順序</value>
+    <value>Direkt und Reihenfolge invertieren</value>
   </data>
   <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
-    <value>直接の順序のみ</value>
+    <value>Nur direkt</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
-    <value>[UPDATED] Auto applying marking is enable only when there is only one posible option to paste marking.
-[NEW] Added option "Only direct order" and "Direct and invert order" to auto applying marking.
-[FIXED] Fixed fillers calculation and illumination.
-[UPDATED] "Default color" button on color selector set default color of style instead of default color of mod. </value>
+    <value>[UPDATED] Automatisches Anwenden von Markierungen ist nur aktiv, wenn es nur eine Möglichkeit gibt, die Markierungen einzufügen.
+[NEW] Optionen "Nur direkt" und "Direkt und invertiert" für das automatische Anwenden von Markierungen hinzugefügt.
+[FIXED] Berechnung und Beleuchtung von Füllungen korrigiert.
+[UPDATED] "Standardfarbe"-Button beim Farbwahl er auf den Standard des Stils eingestellt, anstelle der Standardwerte der Mod. </value>
   </data>
   <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
-    <value>[UPDATED] Added Plazas &amp; Promenades DLC support.
-[NEW] Added Loading Screen Mod Revisited support.
-[FIXED] Fixed UI blinking while searching props/trees/networks.</value>
+    <value>[UPDATED] Plazas &amp; Promenades DLC Unterstützung hinzugefügt.
+[NEW] Loading Screen Mod Revisited Unterstützung hinzugefügt.
+[FIXED] Blinkende UI beim suchen von Dekorationen/Bäumen/Netzwerken behoben.</value>
   </data>
   <data name="StyleOption_Slope" xml:space="preserve">
-    <value>傾斜</value>
+    <value>Gefälle</value>
   </data>
   <data name="StyleOption_Tilt" xml:space="preserve">
-    <value>傾き</value>
+    <value>Neigung</value>
+  </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Untergrundmodus aktivieren</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Untergrundmodus beenden</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Unterirdische Ansicht umschalten</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Drücke {0} zum Betreten und {1} zum Beenden</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Halte {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Drücke {0}, um in den unterirdischen Modus
+zu gelangen</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Drücke {0}, um den unterirdischen Modus
+zu verlassen</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Halte {0} gedrückt für den unterirdischen Modus</value>
+  </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Automatische Dekorations-Abstände basierend auf der Größe</value>
+  </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>LOD Distanz für 2D Markierungen</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>LOD Distanz für Netzwerke</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>LOD Distanz für Dekorationen</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>LOD Distanz für Bäume</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Automatisch</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>LOD Distanz für 3D Markierungen</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Rendern</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Optionen reduzieren</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Weitere Optionen</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Weitere Stil-Optionen zusammenklappen</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Hauptfarbe</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Zweite Farbe</value>
   </data>
 </root>

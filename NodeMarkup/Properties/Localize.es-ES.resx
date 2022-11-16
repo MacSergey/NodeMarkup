@@ -118,1233 +118,1288 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Tool_DeleteCaption" xml:space="preserve">
-    <value>Ștergere {0}</value>
+    <value>Eliminar {0}</value>
   </data>
   <data name="Tool_DeleteMessage" xml:space="preserve">
-    <value>Sigur doriți să ștergeți {0} "{1}"?</value>
+    <value>¿De verdad quieres eliminar {0} "{1}"?</value>
   </data>
   <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
-    <value>Aplică șablonul</value>
+    <value>Aplicar plantilla</value>
   </data>
   <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
-    <value>Salvează ca șablon</value>
+    <value>Guardar como plantilla</value>
   </data>
   <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
-    <value>Setare ca implicit</value>
+    <value>Establecer como predeterminado</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Eliminare ca implicit</value>
+    <value>Desmarcar como predeterminado</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
-    <value>Adaugă regulă</value>
+    <value>Añadir la regla</value>
   </data>
   <data name="StyleOption_Color" xml:space="preserve">
-    <value>Culoare</value>
+    <value>Color</value>
   </data>
   <data name="StyleOption_DashedLength" xml:space="preserve">
-    <value>Lungime linie</value>
+    <value>Longitud de trazos</value>
   </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
-    <value>Ștergere regulă</value>
+    <value>Eliminar la regla</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Sigur doriți să ștergeți regula?</value>
+    <value>¿De verdad quieres eliminar la regla?</value>
   </data>
   <data name="LineRule_From" xml:space="preserve">
-    <value>De la</value>
+    <value>Desde</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Selectați regula pentru punctul inițial</value>
+    <value>Seleccione el punto "Desde" de la regla</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Selectați regula pentru punctul final</value>
+    <value>Seleccione el punto "Hasta" de la regla</value>
   </data>
   <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>linie</value>
+    <value>línea</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>Linii</value>
+    <value>Líneas</value>
   </data>
   <data name="StyleOption_Offset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Desplazamiento</value>
   </data>
   <data name="StyleOption_SpaceLength" xml:space="preserve">
-    <value>Distanță între linii</value>
+    <value>Longitud del espacio</value>
   </data>
   <data name="Editor_Style" xml:space="preserve">
-    <value>Stil</value>
+    <value>Estilo</value>
   </data>
   <data name="LineRule_To" xml:space="preserve">
-    <value>La</value>
+    <value>Hasta</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Intersecție situată la {0}</value>
+    <value>Intersección con {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Punctul {0}</value>
+    <value>Punto propio {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Linie întreruptă</value>
+    <value>Discontinua</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
-    <value>Linie dublă întreruptă</value>
+    <value>Discontinua Doble</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Linie dublă continuă</value>
+    <value>Continua doble</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Linie continuă</value>
+    <value>Continua</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Faceți doar marcaje la intersecții</value>
+    <value>Solo haga las marcas en las intersecciones</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
-    <value>Editare marcaje la nodul #{0}</value>
+    <value>Editar las marcas del node #{0}</value>
   </data>
   <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>punct</value>
+    <value>punto</value>
   </data>
   <data name="PointEditor_Offset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Desplazamiento</value>
   </data>
   <data name="PointEditor_Points" xml:space="preserve">
-    <value>Puncte</value>
+    <value>Puntos</value>
   </data>
   <data name="SelectPanel_NotSet" xml:space="preserve">
-    <value>Nesetat</value>
+    <value>No establecido</value>
   </data>
   <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
-    <value>Adaugați o nouă regulă</value>
+    <value>Añadir nueva regla de la línea</value>
   </data>
   <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
-    <value>Eliminați toate nodurile</value>
+    <value>Eliminar todas las líneas del nodo</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Eliminați marcajele de la toate intersecțiile</value>
+    <value>Eliminar las marcas de todas las intersecciones</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>Eliminați toate marcajele</value>
+    <value>Eliminar todas las marcas</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Sigur doriți să ștergeți toate marcajele?</value>
+    <value>¿De verdad quieres borrar todas las marcas?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Salvare datele marcajelor într-un fișier</value>
+    <value>Exportar las marcas al archivo</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>Copiați adresa în clipboard</value>
+    <value>Copiar la ruta al portapapeles</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
-    <value>Salvare datele marcajelor</value>
+    <value>Exportar las marcas</value>
   </data>
   <data name="Settings_DumpMessageFailed" xml:space="preserve">
-    <value>Salvare eșuată</value>
+    <value>Exportación fallida</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>Salvare efectuată cu succes</value>
+    <value>Exportación guardada con éxito</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
-    <value>Încărcați datele marcajelor dintr-un fișier</value>
+    <value>Recuperar marcas desde archivo</value>
   </data>
   <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
-    <value>Încărcare datele marcajelor</value>
+    <value>Recuperar marcas</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
-    <value>Sunteți sigur că vreți să încărcați marcajele?
-Marcajele încărcate vor înlocui toate marcajele existente.</value>
+    <value>¿De verdad deseas recuperar los datos?
+Los datos restaurados reemplazarán todas las marcas existentes.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
-    <value>Încărcarea marcajelor a eșuat</value>
+    <value>Recuperación fallida</value>
   </data>
   <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
-    <value>Datele marcajelor au fost încărcate cu succes</value>
+    <value>Las marcas se han recuperado con éxito</value>
   </data>
   <data name="Settings_QuickRuleSetup" xml:space="preserve">
-    <value>Configurare rapidă a regulilor</value>
+    <value>Configuración rápida de la regla</value>
   </data>
   <data name="Settings_RenderDistance" xml:space="preserve">
-    <value>Distanță de render</value>
+    <value>Distancia de renderizado</value>
   </data>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
-    <value>Confirmare înainte de a elimina</value>
+    <value>Confirmar antes de eliminar</value>
   </data>
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>șablon</value>
+    <value>plantilla</value>
   </data>
   <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>Nume</value>
+    <value>Nombre</value>
   </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
-    <value>Șabloane</value>
+    <value>Plantillas</value>
   </data>
   <data name="Template_NewTemplate" xml:space="preserve">
-    <value>Șablon nou</value>
+    <value>Nueva plantilla</value>
   </data>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
-    <value>Eliminați marcajele în nod</value>
+    <value>Eliminar las marcas del nodo</value>
   </data>
   <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
-    <value>Sigur doriți să ștergeți toate marcajele din nodul #{0}?</value>
+    <value>¿De verdad quieres eliminar todas las marcas del nodo #{0}?</value>
   </data>
   <data name="Tool_InfoCreateLine" xml:space="preserve">
-    <value>Apăsați pentru a crea o linie</value>
+    <value>Haga clic para crear una línea</value>
   </data>
   <data name="Tool_InfoDeleteLine" xml:space="preserve">
-    <value>Apăsați pentru a elimina linia</value>
+    <value>Haga clic para borrar la línea</value>
   </data>
   <data name="Tool_InfoHoverNode" xml:space="preserve">
-    <value>Nodul #{0}
-Apăsați pentru a modifica marcajele</value>
+    <value>Nodo #{0}
+Haga clic para editar las marcas</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
-    <value>Selectați un nod sau un segment pentru a schimba marcajele</value>
+    <value>Seleccione un nodo o un segmento para editar las marcas</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Selectați punctul final pentru liniile regulare</value>
+    <value>Seleccione punto final para línea normal</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
-    <value>Selectați un punct pentru a crea ori șterge o linie</value>
+    <value>Seleccione el punto para crear o eliminar la línea</value>
   </data>
   
   <data name="Settings_Restore" xml:space="preserve">
-    <value>Restabilește</value>
+    <value>Recuperar</value>
   </data>
   <data name="StyleOption_Invert" xml:space="preserve">
-    <value>Inversați</value>
+    <value>Invertir</value>
   </data>
   <data name="StyleOption_Width" xml:space="preserve">
-    <value>Lățime</value>
+    <value>Ancho</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>Linie continuă și întreruptă</value>
+    <value>Doble Combinada</value>
   </data>
   <data name="LineStyle_StopSolid" xml:space="preserve">
-    <value>Linie continuă</value>
+    <value>Continua</value>
   </data>
   <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
-    <value>Apăsați pentru a elimina linia de stop</value>
+    <value>Haga clic para borrar la línea transversal</value>
   </data>
   <data name="Tool_InfoCreateStopLine" xml:space="preserve">
-    <value>Apăsați pentru a crea o linie de stop</value>
+    <value>Haga clic para crear una línea transversal</value>
   </data>
   <data name="FillerEditor_Fillers" xml:space="preserve">
-    <value>Umpluturi</value>
+    <value>Rellenos</value>
   </data>
   <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>umplutură</value>
+    <value>relleno</value>
   </data>
   <data name="FillerStyle_Stripe" xml:space="preserve">
-    <value>Dungi</value>
+    <value>Franjas</value>
   </data>
   <data name="FillerStyle_Grid" xml:space="preserve">
-    <value>Grilă</value>
+    <value>Cuadrícula</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Linie întreruptă</value>
+    <value>Discontinua</value>
   </data>
   <data name="StyleOption_Step" xml:space="preserve">
-    <value>Flux</value>
+    <value>Grado</value>
   </data>
   <data name="StyleOption_Angle" xml:space="preserve">
-    <value>Unghi</value>
+    <value>Ángulo</value>
   </data>
   <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Offset între linii</value>
+    <value>Desplazamiento desde las líneas</value>
   </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
-    <value>Apăsați pentru a crea o umplutură</value>
+    <value>Haga clic para comenzar a crear un relleno</value>
   </data>
   <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
-    <value>Apăsați pentru a termina umplutura</value>
+    <value>Haga clic para terminar de crear el relleno</value>
   </data>
   <data name="Tool_InfoFillerClickNext" xml:space="preserve">
-    <value>Apăsați pentru a selecta următorul punct în schiță</value>
+    <value>Haga clic para seleccionar el siguiente punto en el contorno</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Selectați un punct pentru a începe crearea unei umpluturi</value>
+    <value>Seleccione un punto para comenzar a crear el relleno</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
-    <value>Selectați următorul punct în schiță</value>
+    <value>Seleccione el siguiente punto en el contorno</value>
   </data>
   <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Offset de la mediană</value>
+    <value>Desplazamiento desde la mediana</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
-    <value>Copiere</value>
+    <value>Copiar</value>
   </data>
   <data name="Editor_ColorPaste" xml:space="preserve">
-    <value>Lipire</value>
+    <value>Pegar</value>
   </data>
   <data name="Editor_ColorDefault" xml:space="preserve">
-    <value>Implicit</value>
+    <value>Predeterminado</value>
   </data>
   <data name="FillerStyle_Solid" xml:space="preserve">
-    <value>Linie continuă</value>
+    <value>Continua</value>
   </data>
   
   
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
-    <value>Adăugare filtru nou</value>
+    <value>Añadir nuevo relleno</value>
   </data>
   <data name="LineStyle_StopDouble" xml:space="preserve">
-    <value>Linie dublă continuă</value>
+    <value>Continua doble</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>Linie dublă întreruptă</value>
+    <value>Discontinua Doble</value>
   </data>
   <data name="HeaderPanel_StyleCopy" xml:space="preserve">
-    <value>Copiere</value>
+    <value>Copiar</value>
   </data>
   <data name="HeaderPanel_StylePaste" xml:space="preserve">
-    <value>Lipire</value>
+    <value>Pegar</value>
   </data>
   <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>Parchet</value>
+    <value>Cebreado</value>
   </data>
   <data name="StyleOption_AngleBetween" xml:space="preserve">
-    <value>Unghi între</value>
+    <value>Ángulo entre</value>
   </data>
   <data name="StyleOption_Turn" xml:space="preserve">
-    <value>Comutare</value>
+    <value>Girar</value>
   </data>
   <data name="LineEditor_EmptyMessage" xml:space="preserve">
-    <value>Încă nu există linii în intersecția asta.
-Pentru a crea o linie conectează două puncte.</value>
+    <value>Todavía no hay líneas en este cruce.
+Para crear una línea, conecta dos puntos.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>Încă nu există umpleri în intersecția asta.
-Pentru a crea o umplutură mențineți apăsat {0} sau apăsați {1}.</value>
+    <value>Todavía no hay rellenos en este cruce.
+Para crear un relleno, mantener presionada la tecla {0} o presione {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
-    <value>Lista șabloanelor este goală.
-Pentru a crea un șablon, apăsați «{0}» pe linie sau trecere de pietoni sau pe stilul umplerii.</value>
+    <value>La lista de plantillas está vacía.
+Para crear una plantilla, haga clic en «{0}» en el estilo de línea, paso de peatones o relleno.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
+    <value>Activar con clave</value>
+  </data>
+  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
+    <value>Activación fallida</value>
+  </data>
+  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
+    <value>Activación finalizada con éxito</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
+    <value>Esta función no está disponible</value>
+  </data>
+  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
+    <value>La función «{0}» actualmente solo está disponible para el acceso anticipado de Patreons.
+Estará disponible para todos más tarde.
+Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod a la misma velocidad.</value>
+  </data>
+  <data name="EarlyAccess_GetButton" xml:space="preserve">
+    <value>Obtener acceso anticipado</value>
+  </data>
+  <data name="EarlyAccess_ID" xml:space="preserve">
+    <value>Su ID de acceso</value>
+  </data>
+  <data name="EarlyAccess_Key" xml:space="preserve">
+    <value>Clave de acceso</value>
+  </data>
+  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
+    <value>Activar</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
+    <value>Activación del acceso anticipado</value>
+  </data>
+  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
+    <value>Para activar el acceso anticipado, debe ingresar una clave</value>
+  </data>
+  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
+    <value>Anular</value>
+  </data>
+  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
+    <value>La clave que ha introducido no es válida</value>
+  </data>
+  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
+    <value>Procesando la vinculación...</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
+    <value>Vincular la cuenta de Patreon</value>
+  </data>
+  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
+    <value>Vincular la cuenta de Patreon</value>
+  </data>
+  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
+    <value>La cuenta de Patreon no se puede vincular porque denegó la solicitud de acceso.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
+    <value>Se ha producido un error al vincular la cuenta, inténtelo de nuevo.</value>
+  </data>
+  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
+    <value>Su cuenta está vinculada, pero no tiene acceso anticipado.</value>
+  </data>
+  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
+    <value>Puede cerrar esta página y volver al juego.</value>
+  </data>
+  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
+    <value>Anular</value>
+  </data>
+  <data name="EarlyAccess_Status" xml:space="preserve">
+    <value>Estado: {0}</value>
+  </data>
+  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
+    <value>Activado</value>
+  </data>
+  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
+    <value>No activado</value>
+  </data>
+  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
+    <value>Gracias por su apoyo, ahora puede disfrutar de todas las funciones.</value>
+  </data>
+  <data name="Settings_EarlyAccess" xml:space="preserve">
+    <value>Acceso anticipado</value>
+  </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
-    <value>Aliniere</value>
+    <value>Alineamiento</value>
   </data>
   <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
-    <value>Apăsați pentru a crea o linie perpendiculară</value>
+    <value>Haga clic para crear una línea perpendicular</value>
   </data>
   <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
-    <value>Apăsați pentru a elimina linia perpendiculară</value>
+    <value>Haga clic para eliminar la línea perpendicular</value>
   </data>
   <data name="CrosswalkStyle_Zebra" xml:space="preserve">
-    <value>Trecere de pietoni normală</value>
+    <value>Cebra</value>
   </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
-    <value>Trecere de pietoni existentă</value>
+    <value>Paso de peatones existente</value>
   </data>
   <data name="StyleOption_OffsetBetween" xml:space="preserve">
-    <value>Offset între</value>
+    <value>Desplazamiento detrás</value>
   </data>
   <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
-    <value>Treceri de pietoni</value>
+    <value>Paso de Peatones</value>
   </data>
   <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
-    <value>Nu sunt treceri de pietoni în intersecția asta.
-Pentru a crea o trecere de pietoni, apăsați {0}.</value>
+    <value>Todavía no hay pasos de peatones en este cruce.
+Para crear un paso de peatones, mantener presionada la tecla {0}.</value>
   </data>
   <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>trecere de pietoni</value>
+    <value>paso de peatones</value>
   </data>
   <data name="CrosswalkStyle_Group" xml:space="preserve">
-    <value>Treceri de pietoni</value>
+    <value>Paso de Peatones</value>
   </data>
   <data name="FillerStyle_Group" xml:space="preserve">
-    <value>Umpluturi</value>
+    <value>Rellenos</value>
   </data>
   <data name="LineStyle_RegularLinesGroup" xml:space="preserve">
-    <value>Linii regulare</value>
+    <value>Líneas normales</value>
   </data>
   <data name="LineStyle_StopLinesGroup" xml:space="preserve">
-    <value>Linii de stop</value>
+    <value>Líneas transversales</value>
   </data>
   <data name="Settings_GroupLines" xml:space="preserve">
-    <value>Grupare linii</value>
+    <value>Agrupar líneas</value>
   </data>
   <data name="Settings_GroupTemplates" xml:space="preserve">
-    <value>Grupare șabloane</value>
+    <value>Agrupar rellenos</value>
   </data>
   <data name="Tool_InfoCreateCrosswalk" xml:space="preserve">
-    <value>Apăsați pentru a crea o trecere de pietoni</value>
+    <value>Haga clic para crear un paso de peatones</value>
   </data>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
-    <value>Apăsați pentru a șterge trecerea de pietoni</value>
+    <value>Haga clic para borrar un paso de peatones</value>
   </data>
   <data name="Settings_GroupTemplatesByStyle" xml:space="preserve">
-    <value>După stil</value>
+    <value>Por estilo</value>
   </data>
   <data name="Settings_GroupTemplatesByType" xml:space="preserve">
-    <value>După tip</value>
+    <value>Por tipo</value>
   </data>
   <data name="CrosswalkStyle_DoubleZebra" xml:space="preserve">
-    <value>Trecere de pietoni dublă</value>
+    <value>Cebra doble</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
-    <value>Lățimea liniei</value>
+    <value>Ancho de línea</value>
   </data>
   <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Offset după</value>
+    <value>Desplazamiento delante</value>
   </data>
   <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Offset înainte</value>
+    <value>Desplazamiento detrás</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Paralel cu liniile</value>
+    <value>Paralelo a los carriles</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
-    <value>Linii continue paralele</value>
+    <value>Líneas paralelas continuas</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
-    <value>Margine stânga</value>
+    <value>Borde izquierdo</value>
   </data>
   <data name="CrosswalkEditor_RightBorder" xml:space="preserve">
-    <value>Margine dreapta</value>
+    <value>Borde derecho</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectLeftBorder" xml:space="preserve">
-    <value>Selectați marginea stângă a trecerii de pieton</value>
+    <value>Seleccione el borde izquierdo del paso de peatones</value>
   </data>
   <data name="CrosswalkEditor_InfoSelectRightBorder" xml:space="preserve">
-    <value>Selectați marginea dreaptă a trecerii de pieton</value>
+    <value>Seleccione el borde derecho del paso de peatones</value>
   </data>
   <data name="Settings_GroupPointsOverlay" xml:space="preserve">
-    <value>Puncte de grup suprapuse</value>
+    <value>Agrupar el resaltado de puntos</value>
   </data>
   <data name="Settings_GroupPointsArrangeCircle" xml:space="preserve">
-    <value>Aranjare în cerc</value>
+    <value>Organizar en un círculo</value>
   </data>
   <data name="Settings_GroupPointsArrangeLine" xml:space="preserve">
-    <value>Aranjare în linie</value>
+    <value>Organizar en una línea</value>
   </data>
   <data name="LineEditor_RuleOverlappedWarning" xml:space="preserve">
-    <value>Regula asta este suprapusă la o altă regulă.
-Verificați regulile la punctele de început și sfârșit.</value>
+    <value>La regla está superpuesta por otra regla.
+Compruebe los puntos "Desde" y "Hasta" de otra regla.</value>
   </data>
   <data name="LineRule_LeftBorder" xml:space="preserve">
-    <value>Marginea dreaptă a trecerii de pieton</value>
+    <value>Borde izquierdo del paso de peatones</value>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
-    <value>Marginea stângă a trecerii de pieton</value>
+    <value>Borde derecho del paso de peatones</value>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
-    <value>Resetează</value>
+    <value>Restablecer</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
-    <value>Selectați punctul final</value>
+    <value>Seleccione el punto final</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
-    <value>Selectați un punct pentru a
-crea ori șterge o trecere de pietoni</value>
+    <value>Seleccione el punto para
+crear o eliminar el paso de peatones</value>
   </data>
   <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
-    <value>Linii întrerupte paralele</value>
+    <value>Líneas paralelas discontinuas</value>
   </data>
   <data name="CrosswalkStyle_Ladder" xml:space="preserve">
-    <value>Scară</value>
+    <value>Escalera</value>
   </data>
   <data name="HeaderPanel_NoTemplates" xml:space="preserve">
-    <value>Fără șabloane</value>
+    <value>No hay plantillas</value>
   </data>
   <data name="CrosswalkStyle_Solid" xml:space="preserve">
-    <value>Linie continuă</value>
+    <value>Continua</value>
   </data>
   <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
-    <value>Linii pentru trecere de pietoni</value>
+    <value>Líneas de paso de peatones</value>
   </data>
   <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>trecere de pietoni</value>
+    <value>paso de peatones</value>
   </data>
   <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>umplutură</value>
+    <value>relleno</value>
   </data>
   <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>linie</value>
+    <value>línea</value>
   </data>
   <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>punct</value>
+    <value>punto</value>
   </data>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>șablon</value>
+    <value>plantilla</value>
   </data>
   
   <data name="Mod_LoadFailed" xml:space="preserve">
-    <value>Încărcarea a fost efectuată cu erori.
-Încărcarea marcajelor a {0} intersecții a eșuat.</value>
+    <value>La carga se completó con errores. Fallo al cargar las marcas para {0} intersecciones.</value>
   </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
-    <value>Tablă de șah</value>
+    <value>Tablero de ajedrez</value>
   </data>
   <data name="StyleOption_LineCount" xml:space="preserve">
-    <value>Numărul de linii</value>
+    <value>Número de líneas</value>
   </data>
   <data name="StyleOption_SharkToothBase" xml:space="preserve">
-    <value>Baza triunghiului</value>
+    <value>Base del triángulo</value>
   </data>
   <data name="StyleOption_SharkToothHeight" xml:space="preserve">
-    <value>Înălțimea triunghiului</value>
+    <value>Altura del triángulo</value>
   </data>
   <data name="StyleOption_SharkToothSpace" xml:space="preserve">
-    <value>Spațiu între elemente</value>
+    <value>Espacio entre</value>
   </data>
   <data name="StyleOption_SquareSide" xml:space="preserve">
-    <value>Latura pătratului</value>
+    <value>Lado del cuadrado</value>
   </data>
   <data name="LineStyle_SharkTeeth" xml:space="preserve">
-    <value>Dinți de rechin</value>
+    <value>Dientes de tiburón</value>
   </data>
   <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
-    <value>Dinți de rechin</value>
+    <value>Dientes de tiburón</value>
   </data>
   <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
-    <value>Linie continuă și întreruptă</value>
+    <value>Doble Combinada</value>
   </data>
   <data name="Panel_ClearMarking" xml:space="preserve">
-    <value>Eliminați marcajele</value>
+    <value>Eliminar marcas</value>
   </data>
   <data name="Panel_CopyMarking" xml:space="preserve">
-    <value>Copiați marcajele</value>
+    <value>Copiar marcas</value>
   </data>
   <data name="Panel_PasteMarking" xml:space="preserve">
-    <value>Lipește marcajele</value>
+    <value>Pegar marcas</value>
   </data>
   <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
-    <value>Lipire marcaje</value>
+    <value>Pegar marcas</value>
   </data>
   <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
-    <value>Sigur doriți să lipiți toate marcajele?</value>
+    <value>¿De verdad quieres pegar las marcas?</value>
   </data>
   <data name="Settings_CrosswalksModifier" xml:space="preserve">
-    <value>Modificare trecere de pietoni</value>
+    <value>Modificador de pasos de peatones</value>
   </data>
   <data name="Settings_FillersModifier" xml:space="preserve">
-    <value>Modificare umpleri</value>
+    <value>Modificador de rellenos</value>
   </data>
   <data name="Settings_RegularLinesModifier" xml:space="preserve">
-    <value>Modificare linii regulare</value>
+    <value>Modificador de líneas normales</value>
   </data>
   <data name="Settings_StopLinesModifier" xml:space="preserve">
-    <value>Modificare linii de stop</value>
+    <value>Modificador de líneas transversales</value>
   </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
-    <value>Nesetat</value>
+    <value>No establecido</value>
   </data>
   <data name="Settings_StyleModifierWithout" xml:space="preserve">
-    <value>Fără modificator</value>
+    <value>Sin modificador</value>
   </data>
   <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
-    <value>Întotdeauna</value>
+    <value>Siempre</value>
   </data>
   <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
-    <value>Doar dacă afectează celelalte elemente</value>
+    <value>Sólo si afecta a otros elementos</value>
   </data>
   <data name="Tool_DeleteDependence" xml:space="preserve">
-    <value>Elementele dependente vor fi, de asemenea, eliminate:</value>
+    <value>Los elementos dependientes también se eliminarán:</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
-    <value>Margini trecere de pietoni - {0}</value>
+    <value>Confines del paso de peatones - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
-    <value>Treceri de pietoni - {0}</value>
+    <value>Pasos de peatones - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
-    <value>Umpleri - {0}</value>
+    <value>Rellenos - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceLines" xml:space="preserve">
-    <value>Linii - {0}</value>
+    <value>Líneas - {0}</value>
   </data>
   <data name="Tool_DeleteDependenceRules" xml:space="preserve">
-    <value>Reguli - {0}</value>
+    <value>Reglas - {0}</value>
   </data>
   <data name="Settings_BackupTab" xml:space="preserve">
-    <value>Backup</value>
+    <value>Copia de seguridad</value>
   </data>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
-    <value>Afișare și folosire</value>
+    <value>Visualización y uso</value>
   </data>
   <data name="Settings_Groupings" xml:space="preserve">
-    <value>Grupare</value>
+    <value>Agrupaciones</value>
   </data>
   <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
-    <value>Scurtături și modificatori</value>
+    <value>Atajos y modificadores</value>
   </data>
   <data name="HeaderPanel_Duplicate" xml:space="preserve">
-    <value>Duplicare</value>
+    <value>Duplicar</value>
   </data>
   <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
-    <value>Copiere</value>
+    <value>Copiar</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
-    <value>Margine</value>
+    <value>Borde</value>
   </data>
   <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Pornire de la</value>
+    <value>Comienza desde</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
-    <value>Vârf</value>
+    <value>Vértice</value>
   </data>
   <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
-    <value>Resetare toate punctele de offset</value>
+    <value>Restablecer el desplazamiento de todos los puntos</value>
   </data>
   <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
-    <value>Resetare toate punctele de offset</value>
+    <value>Restablecer el desplazamiento de todos los puntos</value>
   </data>
   <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
-    <value>Sigur doriți să resetați toate offset-urile punctelor din nodul #{0}?</value>
+    <value>¿De verdad deseas restablecer el desplazamiento de todos los puntos del nodo #{0}?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
-    <value>Trageți și plasați cercurile pentru a seta ordinea străzilor
-Apăsați cercul pentru a modifica ordinea punctelor al străzii</value>
+    <value>Arrastre y suelte círculos para establecer el orden de las carreteras
+Haga clic en el círculo para editar el orden de los puntos de la carretera</value>
   </data>
   <data name="Tool_InfoRoadsDrop" xml:space="preserve">
-    <value>Plasați cercul înâuntru/afară targetului pentru a seta/neseta ordinea străzilor</value>
+    <value>Coloque el círculo dentro/fuera del objetivo para establecer/cancelar el orden de las carreteras</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
-    <value>Copiere marcaje</value>
+    <value>Copiar marcas</value>
   </data>
   <data name="Settings_ShortcutPasteMarking" xml:space="preserve">
-    <value>Lipește marcajele</value>
+    <value>Pegar marcas</value>
   </data>
   <data name="Tool_InfoInverseOrder" xml:space="preserve">
-    <value>Inversare ordine</value>
+    <value>Invertir el orden</value>
   </data>
   <data name="Tool_InfoTurnClockwise" xml:space="preserve">
-    <value>Rotește spre dreapta</value>
+    <value>Girar en sentido horario</value>
   </data>
   <data name="Tool_InfoTurnСounterClockwise" xml:space="preserve">
-    <value>Rotește spre stânga</value>
+    <value>Girar en sentido antihorario</value>
   </data>
   <data name="StyleOption_AlignmentCenter" xml:space="preserve">
-    <value>Centrat</value>
+    <value>Centro</value>
   </data>
   <data name="StyleOption_AlignmentLeft" xml:space="preserve">
-    <value>Stânga</value>
+    <value>Izquierdo</value>
   </data>
   <data name="StyleOption_AlignmentRight" xml:space="preserve">
-    <value>Dreapta</value>
+    <value>Derecho</value>
   </data>
   <data name="TemplateEditor_UnnamedTemplate" xml:space="preserve">
-    <value>Șablon nedenumit</value>
+    <value>Plantilla sin nombre</value>
   </data>
   <data name="TemplateEditor_NameExistCaption" xml:space="preserve">
-    <value>Numele este deja folosit</value>
+    <value>El nombre ya está en uso</value>
   </data>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
-    <value>Numele "{0}" este deja folosit de alt șablon.
-Sigur doriți să aveți mai multe șabloane cu același nume?</value>
+    <value>El nombre "{0}" ya lo utiliza otra plantilla.
+¿Está seguro de que desea tener varias plantillas con el mismo nombre?</value>
   </data>
   <data name="Settings_BackupMarking" xml:space="preserve">
-    <value>Backup marcaje</value>
+    <value>Copia de seguridad de las marcas</value>
   </data>
   <data name="Settings_BackupTemplates" xml:space="preserve">
-    <value>Backup șabloane</value>
+    <value>Copia de seguridad de las plantillas</value>
   </data>
   <data name="Settings_DeleteTemplatesButton" xml:space="preserve">
-    <value>Șterge toate șabloanele</value>
+    <value>Eliminar todas plantillas</value>
   </data>
   <data name="Settings_DeleteTemplatesCaption" xml:space="preserve">
-    <value>Șterge toate șabloanele</value>
+    <value>Eliminar todas plantillas</value>
   </data>
   <data name="Settings_DeleteTemplatesMessage" xml:space="preserve">
-    <value>Sigur doriți să ștergeți toate șabloanele?</value>
+    <value>¿De verdad quieres borrar todas las plantillas?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
-    <value>Salvare șabloane într-un fișier</value>
+    <value>Exportar las plantillas al archivo</value>
   </data>
   <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
-    <value>Salvare șabloane</value>
+    <value>Exportar las plantillas</value>
   </data>
   <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
-    <value>Încărcați șabloane din fișier</value>
+    <value>Recuperar plantillas desde archivo</value>
   </data>
   <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
-    <value>Restabilire șabloane</value>
+    <value>Recuperar plantillas</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
-    <value>Sunteți sigur că vreți să încărcați șabloanele?
-Șabloanele încărcate vor înlocui toate șabloanele existente.</value>
+    <value>¿De verdad deseas recuperar las plantillas?
+Las plantillas restauradas reemplazarán todas las plantillas existentes.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
-    <value>Eșec la încărcarea șabloanelor</value>
+    <value>Recuperación fallida</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
-    <value>Șabloanele au fost restabilite cu succes</value>
+    <value>Las plantillas se han recuperado con éxito</value>
   </data>
   <data name="Tool_Apply" xml:space="preserve">
-    <value>Aplică</value>
+    <value>Aplicar</value>
   </data>
   <data name="Tool_Continue" xml:space="preserve">
-    <value>Continuare</value>
+    <value>Continuar</value>
   </data>
   <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Ieșire mod lipire</value>
+    <value>Salir del modo pegar</value>
   </data>
   <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Vreți să ieșiți din modul lipire aplicând modificările?</value>
+    <value>¿Quieres salir del modo pegar y aplicar un cambio?</value>
   </data>
   <data name="Tool_NotApply" xml:space="preserve">
-    <value>Nu aplica</value>
+    <value>No aplicar</value>
   </data>
   <data name="Tool_InfoPasteApply" xml:space="preserve">
-    <value>Aplică</value>
+    <value>Aplicar</value>
   </data>
   <data name="Tool_infoPasteNotApply" xml:space="preserve">
-    <value>Nu aplica</value>
+    <value>No aplicar</value>
   </data>
   <data name="Tool_InfoPasteReset" xml:space="preserve">
-    <value>Resetează</value>
+    <value>Restablecer</value>
   </data>
   <data name="Panel_EditMarking" xml:space="preserve">
-    <value>Editați ordinea marcajelor</value>
+    <value>Editar orden de las marcas</value>
   </data>
   <data name="Settings_ShortcutEditMarking" xml:space="preserve">
-    <value>Schimbați ordinea marcajelor</value>
+    <value>Cambiar orden de las marcas</value>
   </data>
   <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
-    <value>Străzile au fost schimbate</value>
+    <value>Las carreteras han cambiado</value>
   </data>
   <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
-    <value>Străzile din intersecția asta au fost schimbate, deci marcajele existente nu se pot aplica în mod automat.
-Vreți să aplicați marcajele în mod automat?</value>
+    <value>Las carreteras en este cruce han cambiado, por lo que las marcas existentes no se puede aplicar automáticamente.
+¿Quieres aplicar las marcas manualmente?</value>
   </data>
   <data name="Tool_EndEditOrderCaption" xml:space="preserve">
-    <value>Ieșiți din modul editare ordine</value>
+    <value>Salir del modo de edición del orden</value>
   </data>
   <data name="Tool_EndEditOrderMessage" xml:space="preserve">
-    <value>Vreți să ieșiți din modul editare aplicând modificările?</value>
+    <value>¿Quieres salir del modo de edición y aplicar un nuevo orden?</value>
   </data>
   <data name="Tool_InfoPointsDrag" xml:space="preserve">
-    <value>Trageți și plasați cercul pentru a seta ordinea punctelor</value>
+    <value>Arrastre y suelte el círculo para establecer el orden de los puntos</value>
   </data>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
-    <value>Plasați cercul înâuntru/afară targetului pentru a seta/neseta ordinea punctelor</value>
+    <value>Coloque el círculo dentro/fuera del objetivo para establecer/cancelar el orden de los puntos</value>
   </data>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
-    <value>Continuă in centru</value>
+    <value>Continua en el centro</value>
   </data>
   <data name="StyleOption_No" xml:space="preserve">
-    <value>Nu</value>
+    <value>No</value>
   </data>
   <data name="StyleOption_Yes" xml:space="preserve">
-    <value>Da</value>
+    <value>Sí</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Țineți apăsat {0} pentru a crea o trecere de pietoni</value>
+    <value>Mantener presionada la tecla {0} para crear un paso de peatones</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
-    <value>Țineți apăsat {0} pentru a crea o umplutură</value>
+    <value>Mantener presionada la tecla {0} para crear un relleno</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Trageți punctul cu {0} pentru a-l muta</value>
+    <value>Arrastrar con la tecla {0} para mover el punto</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
-    <value>Această acțiune nu poate fi anulată.</value>
+    <value>No se puede deshacer esta acción.</value>
   </data>
   <data name="LineStyle_Empty" xml:space="preserve">
-    <value>Gol</value>
+    <value>Vacía</value>
   </data>
   <data name="Settings_ShortcutCreateEdgeLines" xml:space="preserve">
-    <value>Creează linii de margine</value>
+    <value>Crear líneas de los bordes</value>
   </data>
   <data name="Panel_CreateEdgeLines" xml:space="preserve">
-    <value>Creează linii de margine</value>
+    <value>Crear líneas de los bordes</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
-    <value>Resetare toate punctele de offset</value>
+    <value>Restablecer el desplazamiento de todos los puntos</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
-    <value>Configurare rapidă bordurile trecerilor de pietoni</value>
+    <value>Configuración rápida de bordes del paso de peatones</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Marcaje sub căile ferate</value>
+    <value>Las marcas debajo del carril</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
-    <value>Atenție: opțiunea asta schimbă ordinea de render a obiectelor din joc</value>
+    <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>
   </data>
   
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
-    <value>Salvați ca asset</value>
+    <value>Guardar como recurso</value>
   </data>
   <data name="TemplateEditor_TemplateByAuthor" xml:space="preserve">
     <value>{0}
-de la {1}</value>
+de {1}</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
-    <value>Lista de preset este goală.
-Pentru a crea un preset, apăsați «{0}» pe antetul panoului.</value>
+    <value>La lista de preajustes está vacía.
+Para crear un preajuste, haga clic en «{0}» en la cabecera del panel.</value>
   </data>
   <data name="PresetEditor_Presets" xml:space="preserve">
-    <value>Preseturi</value>
+    <value>Preajustes</value>
   </data>
   <data name="Panel_SaveAsPreset" xml:space="preserve">
-    <value>Salvați ca preset</value>
+    <value>Guardar como preajuste</value>
   </data>
   <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
-    <value>Salvare ca preset</value>
+    <value>Guardar como preajuste</value>
   </data>
   <data name="HeaderPanel_NoPresets" xml:space="preserve">
-    <value>Niciun preset</value>
+    <value>No hay preajustes</value>
   </data>
   <data name="PresetEditor_ApplyPreset" xml:space="preserve">
-    <value>Aplică preset</value>
+    <value>Aplicar preajuste</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
-    <value>Presetare nouă</value>
+    <value>Nuevo preajuste</value>
   </data>
   <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Ieșiți din modul aplicare preset</value>
+    <value>Salir del modo de aplicación de preajustes</value>
   </data>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Vreți să aplicați un preset?</value>
+    <value>¿Quiere aplicar un preajuste?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autor</value>
   </data>
   <data name="Settings_ApplyAfterRestart" xml:space="preserve">
-    <value>Se aplică la repornirea jocului</value>
+    <value>Se aplica después del reinicio del juego</value>
   </data>
   <data name="Settings_LoadMarkingAssets" xml:space="preserve">
-    <value>Încărcați datele marcajelor</value>
+    <value>Cargar recursos de marcas</value>
   </data>
   <data name="PresetInfo_Crosswalks" xml:space="preserve">
-    <value>Treceri de pietoni:</value>
+    <value>Pasos de peatones:</value>
   </data>
   <data name="PresetInfo_Fillers" xml:space="preserve">
-    <value>Umpluturi:</value>
+    <value>Rellenos:</value>
   </data>
   <data name="PresetInfo_Lines" xml:space="preserve">
-    <value>Linii:</value>
+    <value>Líneas:</value>
   </data>
   <data name="PresetInfo_NoScreenshot" xml:space="preserve">
-    <value>Nu sunt screenshot-uri</value>
+    <value>No hay captura de pantalla</value>
   </data>
   <data name="PresetInfo_RoadPoints" xml:space="preserve">
-    <value>Număr puncte străzii #{0}:</value>
+    <value>Puntos de carretera #{0}:</value>
   </data>
   <data name="PresetInfo_Roads" xml:space="preserve">
-    <value>Străzi:</value>
+    <value>Carreteras:</value>
   </data>
   <data name="Settings_CutLineByCrosswalk" xml:space="preserve">
-    <value>Se decupează o nouă linie la fiecare trecere de pietoni</value>
+    <value>Cortar nueva línea por los pasos de peatones</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
-    <value>Decupați liniile de la această trecere de pietoni</value>
+    <value>Cortar líneas por este paso de peatones</value>
   </data>
   <data name="Settings_BackupPresets" xml:space="preserve">
-    <value>Backup preseturi</value>
+    <value>Copia de seguridad de preajustes</value>
   </data>
   <data name="Settings_DeletePresetsButton" xml:space="preserve">
-    <value>Ștergeți toate preseturile</value>
+    <value>Borrar todos los preajustes</value>
   </data>
   <data name="Settings_DeletePresetsCaption" xml:space="preserve">
-    <value>Ștergeți toate preseturile</value>
+    <value>Borrar todos los preajustes</value>
   </data>
   <data name="Settings_DeletePresetsMessage" xml:space="preserve">
-    <value>Sigur doriți să ștergeți toate preseturile?</value>
+    <value>¿De verdad quieres borrar todos los preajustes?</value>
   </data>
   <data name="Settings_DumpPresetsButton" xml:space="preserve">
-    <value>Salvare preseturi într-un fișier</value>
+    <value>Exportar los preajustes al archivo</value>
   </data>
   <data name="Settings_DumpPresetsCaption" xml:space="preserve">
-    <value>Salvare preseturi</value>
+    <value>Exportar los preajustes</value>
   </data>
   <data name="Settings_RestorePresetsButton" xml:space="preserve">
-    <value>Încărcați preseturi din fișier</value>
+    <value>Recuperar preajustes desde archivo</value>
   </data>
   <data name="Settings_RestorePresetsCaption" xml:space="preserve">
-    <value>Încărcați preseturi</value>
+    <value>Recuperar los preajustes</value>
   </data>
   <data name="Settings_RestorePresetsMessage" xml:space="preserve">
-    <value>Sunteți sigur că vreți să încărcați preseturile?
-Preseturile încărcate vor înlocui toate preseturile existente.</value>
+    <value>¿De verdad deseas recuperar los preajustes?
+Los preajustes restaurados reemplazarán todos los preajustes existentes.</value>
   </data>
   <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
-    <value>Eșec la încărcarea preseturilor</value>
+    <value>Recuperación fallida</value>
   </data>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
-    <value>Preseturile au fost restabilite cu succes</value>
+    <value>Los preajustes se han recuperado con éxito</value>
   </data>
   <data name="Settings_ShortcutCutLinesByCrosswalks" xml:space="preserve">
-    <value>Decupare linii de la toate trecerile de pietoni</value>
+    <value>Cortar líneas por todos pasos de peatones</value>
   </data>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
-    <value>Decupați liniile de la toate trecerile de pietoni</value>
+    <value>Cortar líneas por todos pasos de peatones</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
-    <value>Rescriere datele preseturilor</value>
+    <value>Reescribir recurso de preajuste</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>Pentru a schimba numele, fișierul cu asset-uri trebuie rescris. Continuați?</value>
+    <value>Para cambiar su nombre, es necesario reescribir el archivo de recursos. ¿Seguir?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
-    <value>Rescriere datele șabloanelor</value>
+    <value>Reescribir recurso de plantilla</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Pentru a schimba numele și valorile, fișierul cu asset-uri trebuie rescris. Continuați?</value>
+    <value>Para cambiar su nombre y valores, es necesario reescribir el archivo de recursos. ¿Seguir?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
-    <value>Pentru a seta marginile trecerii de pietoni, trebuie să aveți linii care încep din aceeași punct ca și trecerea de pietoni</value>
+    <value>Para poder establecer los bordes del paso de peatones, debe tener líneas que comienzan desde los mismos puntos que el paso de peatones</value>
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
-    <value>Trebuie să aveți linii care intersectează cu linia asta pentru a schimba regulile din punctul de început și sfârșit și pentru a crea reguli adiționale.</value>
+    <value>Debe tener líneas que se crucen con esta línea para poder cambiar los puntos "Desde" y "Hasta" de la regla y crear reglas adicionales.</value>
   </data>
   <data name="Settings_ShowPaneltips" xml:space="preserve">
-    <value>Arată sugestii pe panou</value>
+    <value>Mostrar sugerencias en el panel</value>
   </data>
   <data name="HeaderPanel_Edit" xml:space="preserve">
-    <value>Editează</value>
+    <value>Editar</value>
   </data>
   <data name="HeaderPanel_Save" xml:space="preserve">
-    <value>Salvare modificări</value>
+    <value>Guardar los cambios</value>
   </data>
   <data name="HeaderPanel_NotSave" xml:space="preserve">
-    <value>Nu salva modificările</value>
+    <value>No guarde los cambios</value>
   </data>
   <data name="PresetEditor_SaveChangesMessage" xml:space="preserve">
-    <value>Vreți să salvați schimbarea numele presetului?</value>
+    <value>¿Quieres guardar el cambio del nombre del preajuste?</value>
   </data>
   <data name="TemplateEditor_SaveChanges" xml:space="preserve">
-    <value>Salvare modificări</value>
+    <value>Guardar los cambios</value>
   </data>
   <data name="TemplateEditor_SaveChangesMessage" xml:space="preserve">
-    <value>Doriți să salvați modificările la valorile șablonului?</value>
+    <value>¿Quieres guardar los cambios en los valores de la plantilla?</value>
   </data>
   <data name="PresetEditor_NameExistMessage" xml:space="preserve">
-    <value>Numele "{0}" este deja folosit de alt preset.
-Sigur doriți să aveți mai multe preseturi cu același nume?</value>
+    <value>El nombre "{0}" ya lo utiliza otro preajuste.
+¿Está seguro de que desea tener varios preajustes con el mismo nombre?</value>
   </data>
   <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>Poate fi șters doar de la managerul de conținut al jocului.</value>
+    <value>Solo se puede eliminar del administrador de contenido del juego.</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Presetul nu poate fi modificat. Poate fi șters doar de la managerul de conținut al jocului sau dezabonându-se de la Steam Workshop.</value>
+    <value>Este preajusto no se puede modificar. Solo se puede eliminar del administrador de contenido del juego o cancelar la suscripción en Steam Workshop.</value>
   </data>
   <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
-    <value>Presetul acesta este un asset.</value>
+    <value>Este preajusto es un recurso.</value>
   </data>
   <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
-    <value>Poate fi șters doar de la managerul de conținut al jocului.</value>
+    <value>Solo se puede eliminar del administrador de contenido del juego.</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Șablonul nu poate fi modificat. Poate fi șters doar de la managerul de conținut al jocului sau dezabonându-se de la Steam Workshop.</value>
+    <value>Esta plantilla no se puede modificar. Solo se puede eliminar del administrador de contenido del juego o cancelar la suscripción en Steam Workshop.</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
-    <value>Șablonul acesta este un asset.</value>
+    <value>Esta plantilla es un recurso.</value>
   </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>preset</value>
+    <value>preajusto</value>
   </data>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>preset</value>
+    <value>preajusto</value>
   </data>
   
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
-    <value>Nu se pot aplica reguli la acest tip de linie</value>
+    <value>Este tipo de línea no apoya reglas</value>
   </data>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
-    <value>Nu decupați linia cu trecerea de pietoni dacă acesta este marginea lui</value>
+    <value>No corte línea por paso de peatones si es su confine</value>
   </data>
   <data name="Template_UnknownAuthor" xml:space="preserve">
-    <value>Autor necunoscut</value>
+    <value>Autor desconocido</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>[UPDATED] Mejorados mensajes de errores al cargar datos de marcado.
+[FIXED] Traducciones fijas y actualizadas.</value>
+  </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>Încărcarea a fost efectuată cu erori.
-Încărcarea marcajelor a toate intersecțiilor a eșuat.</value>
+    <value>La carga se completó con errores. Fallo al cargar las marcas para todas las {0} intersecciones.</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
-    <value>Editare marcaje la segmentul #{0}</value>
+    <value>Editar las marcas del segmento #{0}</value>
   </data>
   <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Iarbă</value>
+    <value>Césped</value>
   </data>
   <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Trotuar</value>
+    <value>Acera</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
-    <value>Înălțime</value>
+    <value>Elevación</value>
   </data>
   <data name="LineStyle_Elevation" xml:space="preserve">
-    <value>Înălțime</value>
+    <value>Elevación</value>
   </data>
   <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Iarbă</value>
+    <value>Césped</value>
   </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
-    <value>Trotuar</value>
+    <value>Acera</value>
   </data>
   <data name="Settings_LODDistance" xml:space="preserve">
-    <value>Distanța de LOD</value>
+    <value>Distancia LOD</value>
   </data>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
-    <value>Segmentul #{0}
-Apăsați pentru a modifica marcajele</value>
+    <value>Segmento #{0}
+Haga clic para editar las marcas</value>
   </data>
   <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Urmărește linia</value>
+    <value>Sigue las pautas</value>
   </data>
   <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Linia stângă</value>
+    <value>Pauta izquierda</value>
   </data>
   <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Linia dreaptă</value>
+    <value>Pauta derecha</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
-    <value>Selectați primul punct al ghidului sau linia ca ghid</value>
+    <value>Seleccione el primer punto de la pauta o una línea como pauta</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
-    <value>Selectați al doilea punct al ghidului</value>
+    <value>Seleccione el segundo punto de la pauta</value>
   </data>
   
   
   
   <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Numărare culori</value>
+    <value>Numero de colores</value>
   </data>
   <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Unu</value>
+    <value>Uno</value>
   </data>
   <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Doi</value>
+    <value>Dos</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
-    <value>Din clipboard</value>
+    <value>Desde el portapapeles</value>
   </data>
   <data name="LineEditor_LineAlignment" xml:space="preserve">
-    <value>Aliniere linie</value>
+    <value>Alineamento de línea</value>
   </data>
   <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
-    <value>Împărțiți în doi</value>
+    <value>Dividir en dos</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
-    <value>Offset împărțire</value>
+    <value>Desplazamiento del puntos divididos</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
-    <value>Grupare puncte</value>
+    <value>Agrupar puntos</value>
   </data>
   <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
-    <value>Aplicare între intersecții</value>
+    <value>Aplicar entre intersecciones</value>
   </data>
   <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
-    <value>Aplicare între intersecții</value>
+    <value>Aplicar entre intersecciones</value>
   </data>
   <data name="Panel_ApplyWholeStreet" xml:space="preserve">
-    <value>Aplică pe toată strada</value>
+    <value>Aplicar a toda la calle</value>
   </data>
   <data name="Settings_ShortcutApplyWholeStreet" xml:space="preserve">
-    <value>Aplică pe toată strada</value>
+    <value>Aplicar a toda la calle</value>
   </data>
   <data name="MessageBox_ItWillReplace" xml:space="preserve">
-    <value>O să înlocuiască marcajele existente.</value>
+    <value>Reemplazará las marcas existentes.</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsCaption" xml:space="preserve">
-    <value>Aplicare marcaje între intersecții</value>
+    <value>Aplicar marcas entre intersecciones</value>
   </data>
   <data name="Tool_ApplyBetweenIntersectionsMessage" xml:space="preserve">
-    <value>Sigur doriți să aplicați marcajele între intersecții?</value>
+    <value>¿De verdad quieres applicar marcas entre intersecciones?</value>
   </data>
   <data name="Tool_ApplyWholeStreetCaption" xml:space="preserve">
-    <value>Aplică marcajele pe toată strada</value>
+    <value>Aplicar marcas a toda la calle</value>
   </data>
   <data name="Tool_ApplyWholeStreetMessage" xml:space="preserve">
-    <value>Sigur doriți să aplicați marcajele pe toată "{0}"?</value>
+    <value>¿De verdad quieres applicar marcas a toda "{0}"?</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
-    <value>Trageți din spatele punctului pentru a face o linie perpendiculară</value>
+    <value>Arrastre detrás del punto para línea perpendicular</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
-    <value>Selectați punctul final pentru liniile regulare sau de stop</value>
+    <value>Seleccione punto final para línea normal o transversal</value>
   </data>
   
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
-    <value>Aliniere linie finală</value>
+    <value>Alineamento de extremo de línea</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
-    <value>Aliniere linie de început</value>
+    <value>Alineamento de inicio de línea</value>
   </data>
   
   
   
   
   <data name="Settings_HideStreetName" xml:space="preserve">
-    <value>Ascundeți numele străzilor între timp ce folosiți unealta</value>
+    <value>Esconder nombres de vías al usar la herramienta</value>
   </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
-    <value>Trotuar</value>
+    <value>Pavimento</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Apăsați cu {0} pentru a alege trecerea de pietoni</value>
+    <value>Clic con la tecla {0} para seleccionar el paso de peatones</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Apăsați cu {0} pentru a alege linia</value>
+    <value>Clic con la tecla {0} para seleccionar la línea</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Pietriş</value>
+    <value>Grava</value>
   </data>
   <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Râpa</value>
+    <value>Acantilado</value>
   </data>
   <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Ruinat</value>
+    <value>Arruinada</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Offset între linii</value>
+    <value>Desplazamiento desde líneas</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
-    <value>Raza colțurilor</value>
+    <value>Radio de esquina</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Raza colțurilor în mediane</value>
+    <value>Radio de esquina en las medianas</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>Dimensiunea curbei</value>
+    <value>Tamaño del bordillo</value>
   </data>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Dimensiunea curbei în mediane</value>
+    <value>Tamaño del bordillo en las medianas</value>
   </data>
   
   
   <data name="HeaderPanel_Discard" xml:space="preserve">
-    <value>Elimină</value>
+    <value>Descartar</value>
   </data>
   
   <data name="Settings_Sortings" xml:space="preserve">
-    <value>Ordinări</value>
+    <value>Ordenar</value>
   </data>
   <data name="Settings_SortPresetType" xml:space="preserve">
-    <value>Ordinare preseturi</value>
+    <value>Ordenar preajustes</value>
   </data>
   <data name="Settings_SortPresetByNames" xml:space="preserve">
-    <value>După nume</value>
+    <value>Por nombres</value>
   </data>
   <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
-    <value>După numărul de străzi, apoi după nume</value>
+    <value>Por número de carreteras, luego por nombres</value>
   </data>
   <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
-    <value>După autor, apoi după tip, apoi după nume</value>
+    <value>Por autor, luego por tipo, luego por nombre</value>
   </data>
   <data name="Settings_SortTemplateByNames" xml:space="preserve">
-    <value>După nume, apoi după tip</value>
+    <value>Por nombre, luego por tipo</value>
   </data>
   <data name="Settings_SortTemplateByType" xml:space="preserve">
-    <value>După tip, apoi după nume</value>
+    <value>Por tipo, luego por nombre</value>
   </data>
   <data name="Settings_SortTemplateType" xml:space="preserve">
-    <value>Ordinare șabloane</value>
+    <value>Ordenar plantillas</value>
   </data>
   <data name="Settings_SortApplyByAuthor" xml:space="preserve">
-    <value>După autor, apoi după tip, apoi după nume</value>
+    <value>Por autor, luego por tipo, luego por nombre</value>
   </data>
   <data name="Settings_SortApplyByNames" xml:space="preserve">
-    <value>După nume, apoi după tip</value>
+    <value>Por nombre, luego por tipo</value>
   </data>
   <data name="Settings_SortApplyByType" xml:space="preserve">
-    <value>După tip, apoi după nume</value>
+    <value>Por tipo, luego por nombre</value>
   </data>
   <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
-    <value>Afișați șabloanele implicite la începutul listei de aplicare</value>
+    <value>Mostrar plantillas predeterminadas al comienzo de la lista</value>
   </data>
   <data name="Settings_SortApplyType" xml:space="preserve">
-    <value>Ordinare șabloanele în lista de aplicare</value>
+    <value>Ordenar plantillas en lista de preajustes</value>
   </data>
   <data name="Settings_IlluminationAtNight" xml:space="preserve">
-    <value>Înluminare marcajele de editare la noapte</value>
+    <value>Iluminación al editar marcas en la noche</value>
   </data>
   <data name="Settings_IlluminationIntensity" xml:space="preserve">
-    <value>Intensitate înluminare</value>
+    <value>Intensidad de la luz</value>
   </data>
   <data name="Settings_Gameplay" xml:space="preserve">
-    <value>Dinamica jocului</value>
+    <value>Modo de juego</value>
   </data>
   <data name="Settings_GroupPresets" xml:space="preserve">
-    <value>Grupare preseturi</value>
+    <value>Ajustes de grupo</value>
   </data>
   <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
-    <value>Potrivire apropiată</value>
+    <value>Ajuste cercano</value>
   </data>
   <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
-    <value>Potrivire perfectă</value>
+    <value>Ajuste perfecto</value>
   </data>
   <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
-    <value>Potrivire slabă</value>
+    <value>Ajuste pobre</value>
   </data>
   <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
-    <value>Potrivire posibilă</value>
+    <value>Ajuste posible</value>
   </data>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
-    <value>Marcaje sub trecerile la nivel</value>
+    <value>Marcas por debajo de cruces de nivel</value>
   </data>
   <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Decalaj linie</value>
+    <value>Distancia entre secciones</value>
   </data>
   <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Decalaj perioadă</value>
+    <value>Número de secciones</value>
   </data>
   <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Folosește decalajul</value>
+    <value>Usar separación</value>
   </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
-    <value>Inversare offseturi</value>
+    <value>Revertir desplazamientos</value>
   </data>
   <data name="PointEditor_SaveOffsets" xml:space="preserve">
-    <value>Salvare offseturi</value>
+    <value>Guardar desplazamientos</value>
   </data>
   <data name="PointEditor_RoadName" xml:space="preserve">
-    <value>Numele străzii</value>
+    <value>Nombre de carretera</value>
   </data>
   
   <data name="LineStyle_Prop" xml:space="preserve">
-    <value>Obiect</value>
+    <value>Decoración</value>
   </data>
   <data name="LineStyle_Tree" xml:space="preserve">
-    <value>Arbore</value>
+    <value>Árbol</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
-    <value>Unghi</value>
+    <value>Ángulo</value>
   </data>
   <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Înălțime</value>
+    <value>Elevación</value>
   </data>
   <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Nume</value>
+    <value>Nombre</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
-    <value>Scală</value>
+    <value>Escala</value>
   </data>
   <data name="StyleOption_ObjectShift" xml:space="preserve">
-    <value>Shift</value>
+    <value>Desplazar</value>
   </data>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
-    <value>Flux</value>
+    <value>Separación</value>
   </data>
   <data name="NumberFormat_Degree" xml:space="preserve">
-    <value>{0}º</value>
+    <value>{0}°</value>
   </data>
   <data name="NumberFormat_Meter" xml:space="preserve">
     <value>{0}m</value>
@@ -1353,99 +1408,167 @@ Apăsați pentru a modifica marcajele</value>
     <value>{0}%</value>
   </data>
   <data name="StyleOption_Color1" xml:space="preserve">
-    <value>Varianta Nr.1</value>
+    <value>Variante #1</value>
   </data>
   <data name="StyleOption_Color2" xml:space="preserve">
-    <value>Varianta Nr.2</value>
+    <value>Variante #2</value>
   </data>
   <data name="StyleOption_Color3" xml:space="preserve">
-    <value>Varianta Nr.3</value>
+    <value>Variante #3</value>
   </data>
   <data name="StyleOption_Color4" xml:space="preserve">
-    <value>Varianta Nr.4</value>
+    <value>Variante #4</value>
   </data>
   <data name="StyleOption_ColorCustom" xml:space="preserve">
-    <value>Personalizat</value>
+    <value>Personalizado</value>
   </data>
   <data name="StyleOption_ColorRandom" xml:space="preserve">
-    <value>Random</value>
+    <value>Aleatorio</value>
   </data>
   <data name="StyleOption_ColorOption" xml:space="preserve">
-    <value>Variantă culoare</value>
+    <value>Variante de color</value>
   </data>
   <data name="LineEditor_ClipSidewalk" xml:space="preserve">
-    <value>Scurtează trotuarul</value>
+    <value>Cortar acera</value>
   </data>
   <data name="StyleOption_SharkToothAngle" xml:space="preserve">
-    <value>Unghi</value>
+    <value>Ángulo</value>
   </data>
   <data name="LineStyle_Network" xml:space="preserve">
-    <value>Rețea decorativă</value>
+    <value>Red decorativa</value>
   </data>
   <data name="StyleOption_NetWidthScale" xml:space="preserve">
-    <value>Raport lățime</value>
+    <value>Estirar</value>
   </data>
   <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
-    <value>Distanță de repetare</value>
+    <value>Distancia de repetición</value>
   </data>
   <data name="StyleOption_AssetNetwork" xml:space="preserve">
-    <value>Asset-ul rețelei</value>
+    <value>Redes</value>
   </data>
   <data name="StyleOption_AssetNotSet" xml:space="preserve">
-    <value>Nesetat</value>
+    <value>Sin definición</value>
   </data>
   <data name="StyleOption_AssetProp" xml:space="preserve">
-    <value>Asset-ul obiectului</value>
+    <value>Decoraciones</value>
   </data>
   <data name="StyleOption_AssetTree" xml:space="preserve">
-    <value>Asset-ul copacilor</value>
+    <value>Árboles</value>
   </data>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
-    <value>Nu s-a găsit nimic</value>
+    <value>No se ha encontrado nada</value>
   </data>
   <data name="Settings_AutoApplyPasting" xml:space="preserve">
-    <value>Aplică automat lipirea marcajelor dacă sursa se potrivește cu obiectul țintă</value>
+    <value>Aplicar marcas al pegar si la intersección de destino y origen son iguales</value>
   </data>
   <data name="StyleOption_ObjectProbability" xml:space="preserve">
-    <value>Probabilitate</value>
+    <value>Probabilidad</value>
   </data>
   <data name="StyleOption_ObjectRange" xml:space="preserve">
-    <value>Rază</value>
+    <value>Rango</value>
   </data>
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
-    <value>Unic</value>
+    <value>Único</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
-    <value>[NEW] Adăugată posibilitatea de a pune obiecte și copaci pe linii. Ele permit să se pună orice obiect și copaci pe linie. Obiectele astea nu sunt considerate în parametri obiectelor și a copacilor al jocului.
-[NEW] Adăugată stilul Rețea decorativă al liniilor. Aceasta permite să se pună orice rețea decorativa ca gardurile pe linii. Aceste obiecte nu sunt considerate in parametri nodurilor și segmentelor al jocului.
-[NEW] Adăugată posibilitatea de a folosi marcajele pe șiniile trenurilor, metrourilor și pe drumurile pietonale.
-[NEW] Adăugată aplicarea automată a marcajelor cănd vine lipită din buffer sau preset dacă intersecția interesată se potrivește intersecția sursă. Această opțiune poate fi dezacivată din setările modului.
-[NEW] Adăugată posibilitatea de a dezactiva tăierea trotuarului.
-[NEW] Opțiunea de tăiere a trotuarelor este valabilă și pentru segmente.
-[UPDATED] Plasa de umplutură 3D vine acum extinsă sub suprafeței strâzii pentru a preveni goluri în nodurile înclinate.
-[UPDATED] Adăugată posibilitatea de a roti Dinții de rechin.
-[FIXED] Rezolvată problema găurii în overlay cănd vin selectate noduri prea mari.
-[FIXED] Rezolvată problema umbrei în liniile trotuarelor.
-[UPDATED] Adăugată formatul numeric (m, %, °) la toate proprietățiile.
-[FIXED] Rezolvată problema punctelor fără umpluturi în intersecții între linii normale.</value>
+    <value>[NEW] Agregado Decoraciones y Árboles como estilos de línea. Permite colocar cualquier decoración o árboles como línea. Estos objetos no se toman en cuenta para los límites de objetos en el juego.
+[NEW] Agreagdo estilos de línea decorativa Permite agreras redes decorativas como vallas en las líneas. Estos objetos no se toman en cuenta para los límites de objetos en el juego.
+[NEW] Ahora se puede agregar marcas en vías de tren, metro y caminerias. 
+[NEW] Las marcas se aplican de forma automática cuando se pega del buffer o ajuste si la intersección de destino es similar a la intesección de origen. Se puede deshabilitar esta opción en la configuración del mod.
+[NEW] Se puede desactivar el clipping de las aceras. 
+[NEW] Se puede agregar clipping de aceras en segmentos.
+[UPDATED] Los 3D filler mesh se extienden por debajo del camino para prevenir espacios en nodos con inclinación.
+[UPDATED] Se puede rotar los "Dientes de Tiburón".
+[FIXED] Hueco en la capa cuando el nodo es muy grande.
+[FIXED] Sombra en las líneas de pavimento.
+[UPDATED] Agregado formatos de número (m, %, °) en todas las propiedades.
+[FIXED] Puntos de relleno en intersecciones entre líneas normales.</value>
   </data>
   <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
-    <value>Ordine directă și inversă</value>
+    <value>Orden Directo e Invertido</value>
   </data>
   <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
-    <value>Doar ordine directă</value>
+    <value>Únicamente orden directo</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
-    <value>[UPDATED] Marcajele aplicate in mod automat sunt activate doar când este posibilă doar o singură opțiune pentru a aplica marcajele.
-[NEW] Adăugată opțiunea "Doar ordine directă" și "Ordine directă și inversă" pentru a aplica marcajele în mod automat.
-[FIXED] Rezolvate calculatea ți înluminarea umpluturilor.
-[UPDATED] Butonul "Culoare împlicită" în selectorul de culori setează culoarea împlicită al stilului în loc de culoarea împlicită al modului.</value>
+    <value>[UPDATED] APlicar las marcas de foram automática solo está disponible cuando hay una sola posibilidad para copiar las marcas.
+[NEW] Opción de "Únicamente orden directo" y "Orden Directo e Invertido" a la copia automática de marcas.
+[FIXED] Cálculo de rellenos e iluminación.
+[UPDATED] Botón de "Color Predeterminado" en el selector de color, aplica el color predeterminado del estilo y no del mod.</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Soporte para DLC Plazas &amp; Promedades.
+[NEW] Soporte para el Loading Screen Mod Revisited mod.
+[FIXED] Salto en interfaz al buscar elementos / arboles y redes.</value>
+  </data>
   <data name="StyleOption_Slope" xml:space="preserve">
-    <value>Pantă</value>
+    <value>Pendiente</value>
   </data>
   <data name="StyleOption_Tilt" xml:space="preserve">
-    <value>Înclinare</value>
+    <value>Inclinación</value>
+  </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Entrar en modo subterráneo</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Salir del modo subterráneo</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Alternar modo subterráneo</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Presiona la tecla {0} para entrar y {1} para salir</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Mantener presionada la tecla {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Presiona la tecla {0} patra entrar en modo subterráneo</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Presiona la tecla {0} para salir del modo subterráneo</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Mantener presionada la tecla {0}
+para modo subterráneo</value>
+  </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Separación automática de elementos depende del tamaño</value>
+  </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>Distancia LOD en marcas 2D</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Distancia LOD de redes</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Distancia LOD en decoraciones</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Distancia LOD de árboles</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Automático</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>Distancia de LOD en marcas 3D</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Renderizado</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Menos opciones</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Más opciones</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Colapsar opciones adicionales de estilo</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Color principal</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Color secundario</value>
   </data>
 </root>

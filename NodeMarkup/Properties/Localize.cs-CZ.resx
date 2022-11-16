@@ -412,7 +412,7 @@ Klikněte pro změnu značení</value>
 Pro vytvoření čáry spojte dva body.</value>
   </data>
   <data name="FillerEditor_EmptyMessage" xml:space="preserve">
-    <value>Na této křižovatce nejsou žádné výplňě.
+    <value>Na této křižovatce nejsou žádné výplně.
 Pro vytvoření výplně držte {0}, nebo stiskněte {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
@@ -908,7 +908,7 @@ Chcete nastavit předchozí značení manuálně?</value>
     <value>Ano</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
-    <value>Podržte {0} Shift pro vytvoření přechodu</value>
+    <value>Podržte {0} pro vytvoření přechodu</value>
   </data>
   <data name="Tool_InfoStartCreateFiller" xml:space="preserve">
     <value>Podržte {0} pro vytvoření výplně</value>
@@ -1063,7 +1063,7 @@ Původní data připíší všechny existující předvolby.</value>
     <value>Tato šablona je součástí assetu, přejmenování nebo změna hodnot přepíše jeho soubor. Pokračovat?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
-    <value>Pro úpravu okrajů přechodu musíte mi čáry ze stejných bodů, jak přechod</value>
+    <value>Pro úpravu okrajů přechodu musíte mít čáry ze stejných bodů, jako přechod</value>
   </data>
   <data name="LineEditor_RulesWarning" xml:space="preserve">
     <value>Pro úpravů bodů "Z" a "Do" musíte mít vytvořeny čáry, které se s touto protínají.</value>
@@ -1243,7 +1243,7 @@ Klikněte pro změnu značení</value>
     <value>Určitě chcete použít značení pro celou {0}?</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointNormal" xml:space="preserve">
-    <value>Táhněte za bod pro vytvoření kolmé čáry</value>
+    <value>Táhněte za bodem pro vytvoření kolmé čáry</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Vyberte koncový bod čáry</value>
@@ -1266,10 +1266,10 @@ Klikněte pro změnu značení</value>
     <value>Chodník</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Podržte {0} pro výběr přechodu</value>
+    <value>Klikněte s {0} pro výběr přechodu</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
-    <value>Podržte {0} pro výběr čáry</value>
+    <value>Klikněte s {0} pro výběr čáry</value>
   </data>
   <data name="FillerStyle_Gravel" xml:space="preserve">
     <value>Štěrk</value>
@@ -1278,22 +1278,22 @@ Klikněte pro změnu značení</value>
     <value>Útes</value>
   </data>
   <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Suť</value>
+    <value>Rozbořený</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
     <value>Odsazení od čar</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
-    <value>Zaoblení rohů</value>
+    <value>Poloměr rohu</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Zaoblení rohů u mediánů</value>
+    <value>Poloměry rohů u mediánů</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>Šířka obrubníku</value>
+    <value>Velikost obrubníku</value>
   </data>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Šířka obrubníku u mediánů</value>
+    <value>Velikost obrubníku u mediánů</value>
   </data>
   
   
@@ -1301,31 +1301,81 @@ Klikněte pro změnu značení</value>
     <value>Zahodit</value>
   </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_Sortings" xml:space="preserve">
+    <value>Řazení</value>
+  </data>
+  <data name="Settings_SortPresetType" xml:space="preserve">
+    <value>Seřadit předvolby</value>
+  </data>
+  <data name="Settings_SortPresetByNames" xml:space="preserve">
+    <value>Podle jména</value>
+  </data>
+  <data name="Settings_SortPresetByRoadCount" xml:space="preserve">
+    <value>Podle počtu silnic, pak podle jména</value>
+  </data>
+  <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
+    <value>Podle autora, pak podle typu, pak podle jméma</value>
+  </data>
+  <data name="Settings_SortTemplateByNames" xml:space="preserve">
+    <value>Podle jména, pak podle typu</value>
+  </data>
+  <data name="Settings_SortTemplateByType" xml:space="preserve">
+    <value>Podle typu, pak podle jména</value>
+  </data>
+  <data name="Settings_SortTemplateType" xml:space="preserve">
+    <value>Seřadit šablony</value>
+  </data>
+  <data name="Settings_SortApplyByAuthor" xml:space="preserve">
+    <value>Podle autora, pak podle typu, pak podle jména</value>
+  </data>
+  <data name="Settings_SortApplyByNames" xml:space="preserve">
+    <value>Podle jména, pak podle typu</value>
+  </data>
+  <data name="Settings_SortApplyByType" xml:space="preserve">
+    <value>Podle typu, pak podle jména</value>
+  </data>
+  <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
+    <value>Zobrazit výchozí šablony na vrchu seznamu</value>
+  </data>
+  <data name="Settings_SortApplyType" xml:space="preserve">
+    <value>Seřadit šablony v seznamu</value>
+  </data>
+  <data name="Settings_IlluminationAtNight" xml:space="preserve">
+    <value>Osvětlení upravených značení v noci</value>
+  </data>
+  <data name="Settings_IlluminationIntensity" xml:space="preserve">
+    <value>Intenzita osvětlení</value>
+  </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Hratelnost</value>
+  </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Předvolby skupin</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Blízké dosednutí</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Perfektní dosednutí</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Špatné dosednutí</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Možné dosednutí</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Značení pod železničními přejezdy</value>
+  </data>
+  <data name="StyleOption_GapLength" xml:space="preserve">
+    <value>Délka mezery</value>
+  </data>
+  <data name="StyleOption_GapPeriod" xml:space="preserve">
+    <value>Rozestup mezer</value>
+  </data>
+  <data name="StyleOption_UseGap" xml:space="preserve">
+    <value>Použít mezeru</value>
+  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Vrátit odsazení</value>
   </data>
@@ -1336,43 +1386,201 @@ Klikněte pro změnu značení</value>
     <value>Název silnice</value>
   </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Objekt</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Strom</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Úhel</value>
+  </data>
+  <data name="StyleOption_ObjectElevation" xml:space="preserve">
+    <value>Vyvýšení</value>
+  </data>
+  <data name="StyleOption_ObjectName" xml:space="preserve">
+    <value>Název</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Měřítko</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Posun</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Krok</value>
+  </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Varianta 1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Varianta 2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Varianta 3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Varianta 4</value>
+  </data>
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Vlastní</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Náhodná</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Barevná varianta</value>
+  </data>
+  <data name="LineEditor_ClipSidewalk" xml:space="preserve">
+    <value>Oříznutí chodníku</value>
+  </data>
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Úhel</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Dekorativní silnice</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Měřítko šířky</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Opakovat vzdálenost</value>
+  </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>Silnice</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Nenastaveno</value>
+  </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>Objekt</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>Strom</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Nic nenalezeno</value>
+  </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Automaticky použít předvolbu, pokud zrdoj pasuje na cíl</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Pravděpodobnost</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Rozsah</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Samostatný</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] Přidán styl linie pro stromy a objekty. Povoluje umístění objektů a stromů na linie. Tyto objekty nejsou započítány do celkového limitu objektů.
+[NEW] Přidán styl Dekorativní linie. Umožňuje umisťovat všechny silniční dekorace, jako třeba plot na linie. Tyto sítě nejsou započítány do limitů uzlů a segmentů. 
+[NEW] Přidána možnost malovat značení na kolejích, tratích metra a pěších cestách.
+[NEW] Přidáno automatické použití značení z úložiště šablon pokud cílová křižovatka odpovídá zdrojové. Může být vypnuto v nastavení módu.
+[NEW] Přidána možnost vypnout přichycení chodníku.
+[NEW] Přichycení chodníku je dostupné pro segmenty.
+[UPDATED] 3D výplňová síť zasahuje pod povrch vozovky, aby se zabránilo vzniku mezer v nakloněných uzlech.
+[UPDATED] Přidána možnost otáčet Shark Teeth.
+[FIXED] Opraveny díry v překrytí při výběru velkých uzlů.
+[FIXED] Opraveny stíny na linii chodníku.
+[UPDATED] Přidán číselný formát (m, %, °) pro všechny vlastnosti.
+[FIXED] Oprava vynechaných bodů výplně na průsečíku normálních čar.
+[TRANSLATION] Přidán Rumunský překlad.</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Přímé a opačné pořadí</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Pouze přímé pořadí</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] Automatické použití značení je zapnuté pouze pokud je jen jedna možnost vložit označení.
+[NEW] Přidána volba "Pouze přímé řazení" a "Přímé a opačné řazení" pro automatické použití značení.
+[FIXED] Opraveny filtry výpočtů a osvětlení.
+[UPDATED] Tlačítko "Výchozí barva" na výběru barev nastavuje výchozí barvu ze stylu namísto výchozí barvy z módu.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Přidána podpora Plazas &amp; Promenades DLC.
+[NEW] Přidána podpora Loading Screen Mod Revisited.
+[FIXED] Opraveno problikávání UI během vyhledávání objektů/stromů/silnic.</value>
+  </data>
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Sklon</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Naklonění</value>
+  </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Vstoupit do podzemního režimu</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Ukončit podzemní režim</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Přepnout podzemní režim</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Stiskněte {0} pro vstup a {1} pro ukončení</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Držte {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Stiskněte {0} pro podzemní režim</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Stiskněte {0} pro ukončení podzemního režimu</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Podržte {0} pro podzemní režim</value>
+  </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Auto krok objektu závisí na jeho velikosti</value>
+  </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>2D značení vykreslovací vzdálenost</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Vzdálenost vykreslování silnice</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Vzdálenost vykreslování objektů</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Vzdálenost vykreslování stromů</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Automaticky</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>3D značení vykreslovací vzdálenost</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Vykreslování</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Méně možností</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Více možností</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Sbalení dalších možností stylu</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Hlavní barva</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Druhá barva</value>
+  </data>
 </root>

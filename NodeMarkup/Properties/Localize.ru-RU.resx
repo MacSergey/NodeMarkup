@@ -1676,4 +1676,70 @@
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>Наклон вправо/влево</value>
   </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Войти в подземный режим</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Выйти из подземного режима</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Переключение подземного режима</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Нажать {0} для входа и {1} для выхода</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Удерживать {0}</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Нажмите {0} для входа
+в подземный режим</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Нажмите {0} для выхода
+из подземного режима</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Удерживайте {0}
+для подземного режима</value>
+  </data>
+  <data name="Settings_AutoPropStep" xml:space="preserve">
+    <value>Авто шаг реквизита в зависимости от его размера</value>
+  </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>Дистанция отрисовки LOD 2D разметки</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Дистанция отрисовки LOD сетей</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Дистанция отрисовки LOD реквизита</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Дистанция отрисовки LOD деревьев</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Авто</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>Дистанция отрисовки LOD 3D разметки</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Отрисовка</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Меньше параметров</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Больше параметров</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Сворачивать дополнительные параметры стилей</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Основной цвет</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Дополнительный цвет</value>
+  </data>
 </root>

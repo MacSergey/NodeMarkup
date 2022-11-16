@@ -57,17 +57,23 @@
 [*] [url=https://github.com/MacSergey/NodeMarkup/wiki/Info-On-Released-Updates]Information on Released Updates[/url] 
 [/list] 
 
-[h3]Join to discord for discussion and support[/h3]
-[url=https://discord.gg/NnwhuBKMqj][img]https://i.imgur.com/bnDNN2x.png[/img][/url]
+[h1]Support[/h1]
+If you have any problems with mod or errors occur, you should describe your problem as much detailed as possible, comments like “mod does not work” will be ignored.
+Also, you should provide the game log, comments about errors without game log will be ignored too. Read [url=https://steamcommunity.com/sharedfiles/filedetails/?id=463645931]here[/url] how to share log. 
+
+Although, the best way to solve problems is joining to my discord and write to [b]#Support[/b] channel, unfortunately, steam comments is very useless for conversation. 
+
+[url=https://discord.gg/NnwhuBKMqj][h3]Join discord server[/h3]
+[img]https://i.imgur.com/bnDNN2x.png[/img][/url]
 
 [HR][/HR]
 [h1]Source code[/h1]
-[url=https://github.com/MacSergey/NodeMarkup][img]https://i.imgur.com/DczUXYq.png[/img][/url]
+[url=https://github.com/MacSergey/NodeMarkup][h3]Get from GitHub[/h3][img]https://i.imgur.com/DczUXYq.png[/img][/url]
 
 [HR][/HR]
 [h1]Translations[/h1]
 If you want to help improve existing translations or you want to translate into your own language (ask to add it to the translation project).
-[url=https://crowdin.com/project/intersection-marking-tool][img]https://i.imgur.com/uG2NKvG.png[/img][/url]
+[url=https://crowdin.com/project/intersection-marking-tool][h3]Translate on Crowdin[/h3][img]https://i.imgur.com/uG2NKvG.png[/img][/url]
 
 [HR][/HR]
 [h1]Thank you for your help in development, testing and translation:[/h1]
