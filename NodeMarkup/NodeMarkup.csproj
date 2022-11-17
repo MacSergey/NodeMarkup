@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.11.0.68</AssemblyVersion>
+    <AssemblyVersion>1.11.0.71</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -230,18 +230,7 @@
   <Import Project="..\ModsCommon\XmlExtension\XmlExtension.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\NetExtension\NetExtension.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\MathExtension\MathExtension.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\cs\LocalizeShared.cs.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\de\LocalizeShared.de.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\en-GB\LocalizeShared.en-GB.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\es\LocalizeShared.es.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\fi\LocalizeShared.fi.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\fr\LocalizeShared.fr.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\it\LocalizeShared.it.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\ja\LocalizeShared.ja.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\nl\LocalizeShared.nl.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\pl\LocalizeShared.pl.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\pt\LocalizeShared.pt.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\ru\LocalizeShared.ru.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\zh-CN\LocalizeShared.zh-CN.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\PluginsShared\PluginsShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\DependencyShared\DependencyShared.projitems" Label="Shared" />
@@ -253,14 +242,25 @@
   <Import Project="..\ModsCommon\NetObjectMapShared\NetObjectMapShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\NetAssetDataExtension\NetAssetDataExtension.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\ColorsShared\ColorsShared.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\id\LocalizeShared.id.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\UUIRegisterShared\UUIRegisterShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\ToolPanelShared\ToolPanelShared.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\ko\LocalizeShared.ko.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\LocalizeShared\tr\LocalizeShared.tr.projitems" Label="Shared" />
-  <Import Project="..\..\ModsCommon\LocalizeShared\ro\LocalizeShared.ro.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\TriangulatorShared\Triangulator.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\cs-CZ\LocalizeShared.cs-CZ.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\de-DE\LocalizeShared.de-DE.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\es-ES\LocalizeShared.es-ES.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\fi-FI\LocalizeShared.fi-FI.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\fr-FR\LocalizeShared.fr-FR.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\id-ID\LocalizeShared.id-ID.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\it-IT\LocalizeShared.it-IT.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ja-JP\LocalizeShared.ja-JP.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ko-KR\LocalizeShared.ko-KR.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\nl-NL\LocalizeShared.nl-NL.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\pl-PL\LocalizeShared.pl-PL.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\pt-PT\LocalizeShared.pt-PT.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ro-RO\LocalizeShared.ro-RO.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ru-RU\LocalizeShared.ru-RU.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\tr-TR\LocalizeShared.tr-TR.projitems" Label="Shared" />
 
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
