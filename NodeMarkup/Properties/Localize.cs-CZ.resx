@@ -1547,16 +1547,40 @@ Klikněte pro změnu značení</value>
   <data name="Settings_AutoPropStep" xml:space="preserve">
     <value>Auto krok objektu závisí na jeho velikosti</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>2D značení vykreslovací vzdálenost</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Vzdálenost vykreslování silnice</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Vzdálenost vykreslování objektů</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Vzdálenost vykreslování stromů</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Automaticky</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>3D značení vykreslovací vzdálenost</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Vykreslování</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Méně možností</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Více možností</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Sbalení dalších možností stylu</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Hlavní barva</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Druhá barva</value>
+  </data>
 </root>

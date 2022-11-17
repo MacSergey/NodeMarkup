@@ -1556,9 +1556,19 @@ para modo subterráneo</value>
   <data name="Settings_Render" xml:space="preserve">
     <value>Renderizado</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Menos opciones</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Más opciones</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Colapsar opciones adicionales de estilo</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Color principal</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Color secundario</value>
+  </data>
 </root>
