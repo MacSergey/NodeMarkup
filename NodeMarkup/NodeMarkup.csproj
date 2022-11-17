@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.11.0.71</AssemblyVersion>
+    <AssemblyVersion>1.11.0.76</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -54,10 +54,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Properties\Localize.cs-CZ.resx" />
+    <EmbeddedResource Remove="Properties\Localize.de-DE.resx" />
+    <EmbeddedResource Remove="Properties\Localize.en-GB.resx" />
+    <EmbeddedResource Remove="Properties\Localize.es-ES.resx" />
+    <EmbeddedResource Remove="Properties\Localize.fi-FI.resx" />
+    <EmbeddedResource Remove="Properties\Localize.fr-FR.resx" />
+    <EmbeddedResource Remove="Properties\Localize.id-ID.resx" />
+    <EmbeddedResource Remove="Properties\Localize.it-IT.resx" />
+    <EmbeddedResource Remove="Properties\Localize.ja-JP.resx" />
+    <EmbeddedResource Remove="Properties\Localize.ko-KR.resx" />
+    <EmbeddedResource Remove="Properties\Localize.nl-NL.resx" />
+    <EmbeddedResource Remove="Properties\Localize.pl-PL.resx" />
+    <EmbeddedResource Remove="Properties\Localize.pt-BR.resx" />
+    <EmbeddedResource Remove="Properties\Localize.pt-PT.resx" />
+    <EmbeddedResource Remove="Properties\Localize.resx" />
+    <EmbeddedResource Remove="Properties\Localize.ro-RO.resx" />
+    <EmbeddedResource Remove="Properties\Localize.ru-RU.resx" />
+    <EmbeddedResource Remove="Properties\Localize.tr-TR.resx" />
+    <EmbeddedResource Remove="Properties\Localize.zh-CN.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\launchSettings.json" />
     <None Remove="Resources\ButtonIcons\AutoButtonIcons.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Properties\launchSettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ButtonIcons\AutoButtonIcons.png" />
     <EmbeddedResource Include="Resources\ListItem\ListItemBackground.png" />
     <EmbeddedResource Include="Resources\SharkTooth.png" />
@@ -180,6 +206,69 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Properties\Localize.cs-CZ.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.de-DE.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.en-GB.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.es-ES.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.fi-FI.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.fr-FR.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.id-ID.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.it-IT.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.ja-JP.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.ko-KR.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.nl-NL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.pt-BR.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.pt-PT.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.resx">
+      <Generator>LocalizeGenerator</Generator>
+      <LastGenOutput>Localize.cs</LastGenOutput>
+      <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.ro-RO.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.ru-RU.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.tr-TR.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.zh-CN.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CitiesHarmony.API" Version="2.1.0" />
     <PackageReference Include="MoveItIntegration" Version="1.0.0" />
     <PackageReference Include="UnifiedUILib" Version="2.2.12" />
@@ -201,19 +290,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Localize.Designer.cs">
-      <AutoGen>True</AutoGen>
+    <Compile Update="Properties\Localize.cs">
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>Localize.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Localize.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Localize.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
-    </EmbeddedResource>
   </ItemGroup>
 
   <Import Project="..\ModsCommon\ModShared\ModsCommonShared.projitems" Label="Shared" />
@@ -261,7 +342,7 @@
   <Import Project="..\ModsCommon\LocalizeShared\ro-RO\LocalizeShared.ro-RO.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\ru-RU\LocalizeShared.ru-RU.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\tr-TR\LocalizeShared.tr-TR.projitems" Label="Shared" />
-
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeManager\LocalizeManager.projitems" Label="Shared" />
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
     <WorkshopId>2140418403</WorkshopId>
@@ -279,19 +360,21 @@
   </PropertyGroup>
 
   <Target Name="PdbToMdb" AfterTargets="Build">
-    <!--<Message Text="Convert pdb to mdb" Importance="high" />
-
-    <PropertyGroup>
-      <UnityPath>$(MSBuildExtensionsPath64)\..\Unity\</UnityPath>
-      <UnityPath Condition="! Exists ('$(UnityPath)')">..\Unity\</UnityPath>
-      <MonoDir>$(UnityPath)Editor\Data\MonoBleedingEdge\</MonoDir>
-    </PropertyGroup>
-
-    <Exec Command='"$(MonoDir)bin\mono.exe" "$(MonoDir)lib\mono\4.5\pdb2mdb.exe" "$(TargetPath)"' />-->
     <ItemGroup>
       <FilesToDelete Include="$(OutDir)*.pdb" />
     </ItemGroup>
     <Delete Files="@(FilesToDelete)" />
+
+	  <ItemGroup>
+		  <LocalizeToMove Include="$(OutDir)Properties\*.resx" />
+	  </ItemGroup>
+	  <Move SourceFiles="@(LocalizeToMove)" DestinationFiles="@(LocalizeToMove->'$(OutDir)Localize\%(Filename)%(Extension)')" />
+	  <RemoveDir Directories="$(OutDir)Properties" />
+
+	  <ItemGroup>
+		  <CommonLocalizeToMove Include="$(OutDir)*.resx" />
+	  </ItemGroup>
+	  <Move SourceFiles="@(CommonLocalizeToMove)" DestinationFiles="@(CommonLocalizeToMove->'$(OutDir)Localize\%(Filename)%(Extension)')" />
   </Target>
 
   <Target Name="DeployToLocal" AfterTargets="PdbToMdb">

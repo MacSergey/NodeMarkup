@@ -70,7 +70,7 @@ namespace NodeMarkup
 #endif
         #endregion
 
-        protected override ResourceManager LocalizeManager => Localize.ResourceManager;
+        protected override LocalizeManager LocalizeManager => Localize.LocaleManager;
         protected override bool NeedMonoDevelopImpl => true;
 
         #region BASIC
