@@ -1355,15 +1355,6 @@ Klik om de markering te wijzigen</value>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Markeringen onder spoorwegovergangen</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Lengte van tussenruimte</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Frequentie van tussenruimte</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Gebruik van tussenruimte</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Reset offsets</value>
   </data>
@@ -1569,4 +1560,22 @@ Klik om de markering te wijzigen</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Tweede kleur</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

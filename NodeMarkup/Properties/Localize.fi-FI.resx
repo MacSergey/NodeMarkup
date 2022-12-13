@@ -1364,15 +1364,6 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Merkinnät tasoristeysten alla</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Välimatka</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Välien jakso</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Käytä väliä</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Palauta siirtymät</value>
   </data>
@@ -1382,6 +1373,24 @@ Napauta muokataksesi merkintöjä</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Tien nimi</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

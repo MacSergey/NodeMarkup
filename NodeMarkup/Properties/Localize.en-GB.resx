@@ -662,9 +662,6 @@ crossings:</value>
   
   
   
-  
-  
-  
   <data name="StyleOption_ColorOption" xml:space="preserve">
     <value>Colour variant</value>
   </data>
@@ -714,4 +711,22 @@ crossings:</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Second colour</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

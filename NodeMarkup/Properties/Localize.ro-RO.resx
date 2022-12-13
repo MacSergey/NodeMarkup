@@ -1300,15 +1300,6 @@ Apăsați pentru a modifica marcajele</value>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Marcaje sub trecerile la nivel</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Decalaj linie</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Decalaj perioadă</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Folosește decalajul</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Inversare offseturi</value>
   </data>
@@ -1518,4 +1509,22 @@ modul Underground</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Culoare secundară</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

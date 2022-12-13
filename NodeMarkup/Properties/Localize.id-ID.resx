@@ -1312,15 +1312,6 @@ Klik untuk mengedit markah</value>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Markah di bawah persimpangan</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Panjang jeda</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Periode jeda</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Gunakan jeda</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Pulihkan pergeseran</value>
   </data>
@@ -1474,6 +1465,24 @@ mode bawah tanah</value>
     <value>Tekan dan tahan {0} untuk
 mode bawah tanah</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

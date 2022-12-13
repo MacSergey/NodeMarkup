@@ -1367,15 +1367,6 @@ Klikněte pro změnu značení</value>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Značení pod železničními přejezdy</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Délka mezery</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Rozestup mezer</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Použít mezeru</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Vrátit odsazení</value>
   </data>
@@ -1583,4 +1574,22 @@ Klikněte pro změnu značení</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Druhá barva</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

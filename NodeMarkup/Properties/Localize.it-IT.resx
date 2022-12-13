@@ -1509,15 +1509,6 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Segnaletica sotto i passaggi a livello</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Lunghezza del tratteggio</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Distanza del tratteggio</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Usa tratteggio</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Ripristina spostamenti</value>
   </data>
@@ -1636,6 +1627,24 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Tieni premuto {0} per
 modalità sotterranea</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

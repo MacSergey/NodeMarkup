@@ -1416,15 +1416,6 @@
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>在平交道下显示标线</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>间隔长度</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>间隔区间</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>使用间隔</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>重置偏移</value>
   </data>
@@ -1634,4 +1625,22 @@
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>次选颜色</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

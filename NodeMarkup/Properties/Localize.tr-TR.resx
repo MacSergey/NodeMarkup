@@ -1298,15 +1298,6 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Hemzemin geçitlerin altındaki işaretler</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Boşluk uzunluğu</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Boşluk periyotu</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Boşluk kullan</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Uzantıları geri al</value>
   </data>
@@ -1395,6 +1386,24 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Eğim</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

@@ -1511,15 +1511,6 @@
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Разметка под железнодорожным переездом</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Длина зазора</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Период зазора</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Использовать зазор</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Сбросить сдвиги</value>
   </data>
@@ -1741,5 +1732,79 @@
   </data>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Дополнительный цвет</value>
+  </data>
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Ассим. двойная пунктирная</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Каждые {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Разрыв</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>Обычный</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Медиана</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>Обычный</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Медиана</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Линия</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Длина</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>Линия</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Медиана</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>После</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>До</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Пробел</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Направляющие</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Основание</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Высота</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_11" xml:space="preserve">
+    <value>[NEW] Разметка сохраняется в ассетах и автоматически применяется при создание дороги.
+[NEW] Добавлена возможность использовать разметку в туннелях.
+[NEW] Добавлен стиль линии Ассиметричная двойная пунктирная.
+[NEW] Добавлена возможность сворачивать дополнительные свойства стилей.
+[NEW] Добавлена возможность задавать наклон для реквизита и деревьев.
+[NEW] Добавлена возможность задавать авто шаг для реквизита и деревьев в зависимости от их размета.
+[NEW] Добавлена возможность задавать диапозон для смещения и подъема реквизита и деревьев.
+[NEW] Добавлена возможность задавать второй цвет для двойных линий.
+[NEW] Реквизит/деревья/декоративные сети сортируются по имени.
+[NEW] Строка поиска реквизита/деревьев/декоративных сетей сохраняется при выборе.
+[FIXED] Исправлен цвет декоративных сетей использующих текстуры темы.
+[FIXED] 3D заполнители/реквизит/деревья/декоративные сети, добавленные с помощью IMT видимы при включенных оверлеях.
+[FIXED] Исправлено возможное мегание интерфейса при выборе реквизита/деревьев/декоративных сетей.
+[UPDATED] Дистанция LOD может быть задана для разных типов разметки по отдельности.
+[UPDATED] Свойство "Отступ до" и "Отступ после" объеденены в свойство "Отступ".
+[UPDATED] Свойство "Длина линии" и "Длина промежутка" объеденены в свойство "Длина".
+[UPDATED] Свойство "Использовать зазор", "Длина зазора" и "Периуд зазора" объеденены в свойство "Разрыв".
+[UPDATED] Свойство "Использовать направляющие", "Левая направляющая" и "Правая направляющая" объеденены в свойство "Направляющие".
+[UPDATED] Свойство "Основание" и "Высота" объеденены в свойство "Треугольник".
+[UPDATED] Свойство "Радиус угла" и "Радиус угла у медианы" объеденены в свойство "Радиус угла".
+[UPDATED] Свойство "Размер бордюра" и "Размер бордюра у медианы" объеденены в свойство "Размер бордюра".</value>
   </data>
 </root>

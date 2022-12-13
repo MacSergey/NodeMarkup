@@ -1355,15 +1355,6 @@ Haga clic para editar las marcas</value>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Marcas por debajo de cruces de nivel</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Distancia entre secciones</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Número de secciones</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Usar separación</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Revertir desplazamientos</value>
   </data>
@@ -1571,4 +1562,22 @@ para modo subterráneo</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Color secundario</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

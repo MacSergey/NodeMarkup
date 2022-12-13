@@ -1300,15 +1300,6 @@
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>레벨 횡단보도 아래에 마킹</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>빈 공간 길이</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>빈 공간 간격</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>빈 공간 사용</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>오프셋 되돌리기</value>
   </data>
@@ -1519,4 +1510,22 @@
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>두번째 색상</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

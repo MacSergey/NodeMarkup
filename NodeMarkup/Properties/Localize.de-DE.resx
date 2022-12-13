@@ -1417,15 +1417,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Markierungen unter Bahnübergängen</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Lückenlänge</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Lückenintervall</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Lücken verwenden</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Versätze zurücksetzen</value>
   </data>
@@ -1634,4 +1625,22 @@ zu verlassen</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Zweite Farbe</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

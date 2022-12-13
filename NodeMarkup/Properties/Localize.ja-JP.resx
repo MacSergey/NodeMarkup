@@ -1207,10 +1207,10 @@
     <value>ポイントをタブで折り畳む</value>
   </data>
   <data name="Settings_ShortcutApplyBetweenIntersections" xml:space="preserve">
-    <value>交差点間でマーキングを一括適用</value>
+    <value>交差点間で一括適用</value>
   </data>
   <data name="Panel_ApplyBetweenIntersections" xml:space="preserve">
-    <value>交差点間でマーキングを一括適用</value>
+    <value>交差点間で一括適用</value>
   </data>
   <data name="Panel_ApplyWholeStreet" xml:space="preserve">
     <value>通り全体にマーキングを一括適用</value>
@@ -1357,15 +1357,6 @@
   </data>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>踏切下部でマーキングを描画</value>
-  </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>ギャップの間隔</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>ギャップの回数</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>ギャップを追加</value>
   </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>オフセットを戻す</value>
@@ -1576,4 +1567,56 @@
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>セカンドカラー</value>
   </data>
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>非対称2重破線</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>個々 {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>ギャップ</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>標準</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>分離帯</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>標準</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>分離帯</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>破線</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>長さ</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>ライン</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>分離帯</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>後方</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>前方</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>空白</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>基準</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>基本</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>高さ</value>
+  </data>
+  
 </root>

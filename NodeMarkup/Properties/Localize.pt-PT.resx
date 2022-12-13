@@ -1260,13 +1260,13 @@ Clique para editar marcações</value>
   
   
   <data name="Settings_HideStreetName" xml:space="preserve">
-    <value>Ocultar nomes de ruas ao usar a ferramenta</value>
+    <value>Ocultar nomes de ruas enquanto a ferramenta está em uso</value>
   </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>Pavimento</value>
   </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
-    <value>Clique com {0} para selecionar a faixa de pedestres</value>
+    <value>Clique com {0} para selecionar a passadeira</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Clique com {0} para selecionar a linha</value>
@@ -1278,7 +1278,7 @@ Clique para editar marcações</value>
     <value>Penhasco</value>
   </data>
   <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Arruinado</value>
+    <value>Em ruínas</value>
   </data>
   <data name="StyleOption_LineOffset" xml:space="preserve">
     <value>Deslocamento das linhas</value>
@@ -1290,10 +1290,10 @@ Clique para editar marcações</value>
     <value>Raio de canto em medianas</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>Tamanho do meio-fio</value>
+    <value>Tamanho do lancil</value>
   </data>
   <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Tamanho do meio-fio em medianas</value>
+    <value>Tamanho do lancil no separador central</value>
   </data>
   
   
@@ -1302,10 +1302,10 @@ Clique para editar marcações</value>
   </data>
   
   <data name="Settings_Sortings" xml:space="preserve">
-    <value>Classificações</value>
+    <value>Ordenações</value>
   </data>
   <data name="Settings_SortPresetType" xml:space="preserve">
-    <value>Classificar predefinições</value>
+    <value>Predefinições de ordenação</value>
   </data>
   <data name="Settings_SortPresetByNames" xml:space="preserve">
     <value>Por nomes</value>
@@ -1323,7 +1323,7 @@ Clique para editar marcações</value>
     <value>Por tipo, depois por nome</value>
   </data>
   <data name="Settings_SortTemplateType" xml:space="preserve">
-    <value>Classificar modelos</value>
+    <value>Ordenar modelos</value>
   </data>
   <data name="Settings_SortApplyByAuthor" xml:space="preserve">
     <value>Por autor, depois por tipo, depois por nome</value>
@@ -1338,7 +1338,7 @@ Clique para editar marcações</value>
     <value>Mostrar modelos padrão no topo da lista de aplicação</value>
   </data>
   <data name="Settings_SortApplyType" xml:space="preserve">
-    <value>Classificar modelos na lista de aplicação</value>
+    <value>Ordenar modelos na lista de aplicação</value>
   </data>
   <data name="Settings_IlluminationAtNight" xml:space="preserve">
     <value>Iluminação da marcação de edição à noite</value>
@@ -1374,6 +1374,55 @@ Clique para editar marcações</value>
   
   
   
+  <data name="StyleOption_ColorCustom" xml:space="preserve">
+    <value>Personalizado</value>
+  </data>
+  <data name="StyleOption_ColorRandom" xml:space="preserve">
+    <value>Aleatório</value>
+  </data>
+  
+  
+  <data name="StyleOption_SharkToothAngle" xml:space="preserve">
+    <value>Ângulo</value>
+  </data>
+  
+  
+  
+  
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Não definido</value>
+  </data>
+  
+  
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Sem resultados</value>
+  </data>
+  
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Probabilidade</value>
+  </data>
+  
+  
+  
+  
+  
+  
+  
+  <data name="StyleOption_Slope" xml:space="preserve">
+    <value>Declive</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Inclinação</value>
+  </data>
+  
+  
+  
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Pressione {0} para entrar e {1} para sair</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>Segure {0}</value>
+  </data>
   
   
   
@@ -1382,28 +1431,26 @@ Clique para editar marcações</value>
   
   
   
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
   
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Renderizar</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Menos opções</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Mais opções</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Cor principal</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Cor secundaria</value>
+  </data>
   
   
   
