@@ -41,8 +41,7 @@ namespace NodeMarkup.Manager
         public abstract IEnumerable<MarkupLineRawRule> Rules { get; }
         public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
 
-        protected ITrajectory LineTrajectory { get; private set; }
-        public ITrajectory Trajectory => LineTrajectory.Copy();
+        public ITrajectory Trajectory { get; private set; }
         public LodDictionaryArray<IStyleData> StyleData { get; } = new LodDictionaryArray<IStyleData>();
 
         public string XmlSection => XmlName;
@@ -59,7 +58,7 @@ namespace NodeMarkup.Manager
 
         public void Update(bool onlySelfUpdate = false)
         {
-            LineTrajectory = CalculateTrajectory();
+            Trajectory = CalculateTrajectory();
             if (!onlySelfUpdate)
                 Markup.Update(this);
         }
@@ -298,7 +297,7 @@ namespace NodeMarkup.Manager
 
             foreach (var rule in rules)
             {
-                var trajectoryPart = LineTrajectory.Cut(rule.Start, rule.End);
+                var trajectoryPart = Trajectory.Cut(rule.Start, rule.End);
                 yield return rule.LineStyle.Calculate(this, trajectoryPart, lod);
             }
         }
@@ -428,7 +427,7 @@ namespace NodeMarkup.Manager
         public override bool ContainsRule(MarkupLineRawRule rule) => rule != null && rule == Rule;
         protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod)
         {
-            yield return Rule.Style.Calculate(this, LineTrajectory, lod);
+            yield return Rule.Style.Calculate(this, Trajectory, lod);
         }
 
         public override XElement ToXml()

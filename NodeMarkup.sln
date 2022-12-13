@@ -199,12 +199,12 @@ Global
 		{A7F303AF-C11E-4DD8-A195-6D0D459DEE53} = {78F18B58-7B26-46A8-B934-FFFE6DD7B29E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2000/1/1
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
-		RESX_ExcelExportMode = MultipleSheets
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ConfirmAddLanguageFile = True
 		RESX_RemoveEmptyEntries = False
+		RESX_ConfirmAddLanguageFile = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ExcelExportMode = MultipleSheets
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		BuildVersion_StartDate = 2000/1/1
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ModsCommon\HeaderShared\HeaderShared.projitems*{0bf47c3f-c968-4759-8d99-d088b0d58fba}*SharedItemsImports = 13
