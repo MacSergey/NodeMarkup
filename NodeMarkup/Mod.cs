@@ -1,4 +1,6 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.Math;
+using ColossalFramework.UI;
+using Epic.OnlineServices.Presence;
 using HarmonyLib;
 using ICities;
 using ModsCommon;
@@ -15,6 +17,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Resources;
 using UnityEngine;
+using static NetInfo;
 
 namespace NodeMarkup
 {
@@ -95,7 +98,8 @@ namespace NodeMarkup
             success &= AddNetToolButton();
             success &= ToolOnEscape();
             success &= AssetDataExtensionFix();
-            success &= AssetDataLoad();
+            success &= BuildingAssetDataLoad();
+            success &= NetworkAssetDataLoad();
 
             PatchNetManager(ref success);
             PatchNetNode(ref success);
@@ -124,9 +128,13 @@ namespace NodeMarkup
         {
             return AddPostfix(typeof(Patcher), nameof(Patcher.LoadAssetPanelOnLoadPostfix), typeof(LoadAssetPanel), nameof(LoadAssetPanel.OnLoad));
         }
-        private bool AssetDataLoad()
+        private bool BuildingAssetDataLoad()
         {
             return AddTranspiler(typeof(Patcher), nameof(Patcher.BuildingDecorationLoadPathsTranspiler), typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
+        }
+        private bool NetworkAssetDataLoad()
+        {
+            return AddPostfix(typeof(Patcher), nameof(Patcher.NetManagerCreateSegmentPostfix), typeof(NetManager), nameof(NetManager.CreateSegment), new Type[] { typeof(ushort).MakeByRefType(), typeof(Randomizer).MakeByRefType(), typeof(NetInfo), typeof(TreeInfo), typeof(ushort), typeof(ushort), typeof(Vector3), typeof(Vector3), typeof(uint), typeof(uint), typeof(bool) });
         }
 
         #endregion
@@ -512,8 +520,13 @@ namespace NodeMarkup
 
         public static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.GameKeyShortcutsEscapeTranspiler<Mod, NodeMarkupTool>(generator, instructions);
 
-        public static void LoadAssetPanelOnLoadPostfix(LoadAssetPanel __instance, UIListBox ___m_SaveList) => ModsCommon.Patcher.LoadAssetPanelOnLoadPostfix<AssetDataExtension>(__instance, ___m_SaveList);
+        public static void LoadAssetPanelOnLoadPostfix(LoadAssetPanel __instance, UIListBox ___m_SaveList) => ModsCommon.Patcher.LoadAssetPanelOnLoadPostfix<BuildingAssetDataExtension>(__instance, ___m_SaveList);
 
-        public static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.BuildingDecorationLoadPathsTranspiler<AssetDataExtension>(instructions);
+        public static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.BuildingDecorationLoadPathsTranspiler<BuildingAssetDataExtension>(instructions);
+
+        public static void NetManagerCreateSegmentPostfix(NetInfo info, ushort segment, ushort startNode, ushort endNode)
+        {
+            SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segment, startNode, endNode);
+        }
     }
 }
