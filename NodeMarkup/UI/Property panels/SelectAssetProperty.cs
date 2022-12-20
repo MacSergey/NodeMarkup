@@ -224,7 +224,7 @@ namespace NodeMarkup.UI
         where EntityPanel : PopupEntity<PrefabType>
     {
         private bool CanSubmit { get; set; } = true;
-        private CustomUITextField Search { get; set; }
+        protected CustomUITextField Search { get; private set; }
         private CustomUILabel NothingFound { get; set; }
         private CustomUIButton ResetButton { get; set; }
 
@@ -317,14 +317,47 @@ namespace NodeMarkup.UI
     }
     public class SelectPropPopup : SelectPrefabPopup<PropInfo, PropEntity>
     {
+        private static string SearchText { get; set; } = string.Empty;
+        public override void Init(IEnumerable<PropInfo> values, Func<PropInfo, bool> selector = null)
+        {
+            Search.text = SearchText;
+            base.Init(values, selector);
+        }
+        public override void DeInit()
+        {
+            SearchText = Search.text;
+            base.DeInit();
+        }
         protected override string GetPrebName(PropInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
     }
     public class SelectTreePopup : SelectPrefabPopup<TreeInfo, TreeEntity>
     {
+        private static string SearchText { get; set; } = string.Empty;
+        public override void Init(IEnumerable<TreeInfo> values, Func<TreeInfo, bool> selector = null)
+        {
+            Search.text = SearchText;
+            base.Init(values, selector);
+        }
+        public override void DeInit()
+        {
+            SearchText = Search.text;
+            base.DeInit();
+        }
         protected override string GetPrebName(TreeInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
     }
     public class SelectNetPopup : SelectPrefabPopup<NetInfo, NetEntity>
     {
+        private static string SearchText { get; set; } = string.Empty;
+        public override void Init(IEnumerable<NetInfo> values, Func<NetInfo, bool> selector = null)
+        {
+            Search.text = SearchText;
+            base.Init(values, selector);
+        }
+        public override void DeInit()
+        {
+            SearchText = Search.text;
+            base.DeInit();
+        }
         protected override string GetPrebName(NetInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
     }
 
