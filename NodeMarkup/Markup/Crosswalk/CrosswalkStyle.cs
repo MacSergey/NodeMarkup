@@ -42,6 +42,10 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> OffsetBefore { get; }
         public PropertyValue<float> OffsetAfter { get; }
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+        protected virtual int OffsetIndex => 2;
+
         public override float GetTotalWidth(MarkupCrosswalk crosswalk) => OffsetBefore + GetVisibleWidth(crosswalk) + OffsetAfter;
         protected abstract float GetVisibleWidth(MarkupCrosswalk crosswalk);
 
@@ -63,12 +67,19 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddOffsetBeforeProperty(parent, true));
-            components.Add(AddOffsetAfterProperty(parent, true));
+            components.Add(AddOffsetProperty(parent, false));
         }
+        public override int GetUIComponentSortIndex(EditorItem item)
+        {
+            if (item.name == "Offset")
+                return OffsetIndex;
+            else
+                return base.GetUIComponentSortIndex(item);
+        }
+
         protected BoolListPropertyPanel AddParallelProperty(IParallel parallelStyle, UIComponent parent, bool canCollapse)
         {
-            var parallelProperty = ComponentPool.GetAfter<BoolListPropertyPanel>(parent, nameof(Width), nameof(parallelStyle.Parallel));
+            var parallelProperty = ComponentPool.GetAfter<BoolListPropertyPanel>(parent, "Offset", nameof(parallelStyle.Parallel));
             parallelProperty.Text = Localize.StyleOption_ParallelToLanes;
             parallelProperty.CanCollapse = canCollapse;
             parallelProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
@@ -78,42 +89,32 @@ namespace NodeMarkup.Manager
             return parallelProperty;
         }
 
-        protected FloatPropertyPanel AddOffsetBeforeProperty(UIComponent parent, bool canCollapse)
+        protected virtual EditorItem AddOffsetProperty(UIComponent parent, bool canCollapse)
         {
-            var offsetBeforeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetBefore));
-            offsetBeforeProperty.Text = Localize.StyleOption_OffsetBefore;
-            offsetBeforeProperty.Format = Localize.NumberFormat_Meter;
-            offsetBeforeProperty.UseWheel = true;
-            offsetBeforeProperty.WheelStep = 0.1f;
-            offsetBeforeProperty.CheckMin = true;
-            offsetBeforeProperty.WheelTip = Settings.ShowToolTip;
-            offsetBeforeProperty.CanCollapse = canCollapse;
-            offsetBeforeProperty.Init();
-            offsetBeforeProperty.Value = OffsetBefore;
-            offsetBeforeProperty.OnValueChanged += (float value) => OffsetBefore.Value = value;
+            var offsetProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, "Offset");
+            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.FieldsWidth = 50f;
+            offsetProperty.SetLabels(Localize.StyleOption_OffsetBeforeAbrv, Localize.StyleOption_OffsetAfterAbrv);
+            offsetProperty.Format = Localize.NumberFormat_Meter;
+            offsetProperty.UseWheel = true;
+            offsetProperty.WheelStep = new Vector2(0.1f, 0.1f);
+            offsetProperty.CheckMin = true;
+            offsetProperty.WheelTip = Settings.ShowToolTip;
+            offsetProperty.CanCollapse = canCollapse;
+            offsetProperty.Init(0, 1);
+            offsetProperty.Value = new Vector2(OffsetBefore, OffsetAfter);
+            offsetProperty.OnValueChanged += (Vector2 value) =>
+            {
+                OffsetBefore.Value = value.x;
+                OffsetAfter.Value = value.y;
+            };
 
-            return offsetBeforeProperty;
-        }
-        protected FloatPropertyPanel AddOffsetAfterProperty(UIComponent parent, bool canCollapse)
-        {
-            var offsetAfterProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetAfter));
-            offsetAfterProperty.Text = Localize.StyleOption_OffsetAfter;
-            offsetAfterProperty.Format = Localize.NumberFormat_Meter;
-            offsetAfterProperty.UseWheel = true;
-            offsetAfterProperty.WheelStep = 0.1f;
-            offsetAfterProperty.CheckMin = true;
-            offsetAfterProperty.WheelTip = Settings.ShowToolTip;
-            offsetAfterProperty.CanCollapse = canCollapse;
-            offsetAfterProperty.Init();
-            offsetAfterProperty.Value = OffsetAfter;
-            offsetAfterProperty.OnValueChanged += (float value) => OffsetAfter.Value = value;
-
-            return offsetAfterProperty;
+            return offsetProperty;
         }
 
         protected FloatPropertyPanel AddLineWidthProperty(ILinedCrosswalk linedStyle, UIComponent parent, bool canCollapse)
         {
-            var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(linedStyle.LineWidth));
+            var widthProperty = ComponentPool.GetAfter<FloatPropertyPanel>(parent, nameof(Width), nameof(linedStyle.LineWidth));
             widthProperty.Text = Localize.StyleOption_LineWidth;
             widthProperty.Format = Localize.NumberFormat_Meter;
             widthProperty.UseWheel = true;
@@ -163,6 +164,11 @@ namespace NodeMarkup.Manager
     {
         public PropertyValue<float> LineWidth { get; }
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+        protected virtual int LineWidthIndex => 2;
+        protected override int OffsetIndex => 3;
+
         public LinedCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float lineWidth) :
             base(color, width, offsetBefore, offsetAfter)
         {
@@ -180,6 +186,14 @@ namespace NodeMarkup.Manager
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
             components.Add(AddLineWidthProperty(this, parent, false));
         }
+        public override int GetUIComponentSortIndex(EditorItem item)
+        {
+            if (item.name == nameof(LineWidth))
+                return LineWidthIndex;
+            else
+                return base.GetUIComponentSortIndex(item);
+        }
+
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -201,13 +215,21 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
         public PropertyBoolValue Parallel { get; }
-        public PropertyBoolValue UseSecondColor { get; }
+        public PropertyBoolValue ColorCount { get; }
         public PropertyColorValue SecondColor { get; }
 
         public PropertyValue<bool> UseGap { get; }
         public PropertyValue<float> GapLength { get; }
         public PropertyValue<int> GapPeriod { get; }
 
+        protected virtual int ColorCountIndex => 0;
+        protected override int ColorIndex => 1;
+        protected virtual int SecondColorIndex => 2;
+        protected override int WidthIndex => 3;
+        protected virtual int LengthIndex => 4;
+        protected override int OffsetIndex => 5;
+        protected virtual int ParallelIndex => 6;
+        protected virtual int GapIndex => 7;
 
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width, crosswalk);
         protected float GetLengthCoef(float length, MarkupCrosswalk crosswalk) => length / (Parallel ? 1 : Mathf.Sin(crosswalk.CornerAndNormalAngle));
@@ -218,21 +240,21 @@ namespace NodeMarkup.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
             Parallel = GetParallelProperty(parallel);
 
-            UseSecondColor = GetUseSecondColorProperty(useSecondColor);
-            SecondColor = GetSecondColorProperty(UseSecondColor ? secondColor : color);
+            ColorCount = GetUseSecondColorProperty(useSecondColor);
+            SecondColor = GetSecondColorProperty(ColorCount ? secondColor : color);
 
             UseGap = GetUseGapProperty(useGap);
             GapLength = GetGapLengthProperty(gapLength);
             GapPeriod = GetGapPeriodProperty(gapPeriod);
         }
-        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, UseSecondColor, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel);
+        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, ColorCount, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
 
             if (target is ZebraCrosswalkStyle zebraTarget)
             {
-                zebraTarget.UseSecondColor.Value = UseSecondColor;
+                zebraTarget.ColorCount.Value = ColorCount;
                 zebraTarget.SecondColor.Value = SecondColor;
 
                 zebraTarget.UseGap.Value = UseGap;
@@ -298,34 +320,47 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        protected Color32 GetColor(int index) => UseSecondColor && index % 2 != 0 ? SecondColor : Color;
+        protected Color32 GetColor(int index) => ColorCount && index % 2 != 0 ? SecondColor : Color;
 
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
 
-            components.Add(AddParallelProperty(this, parent, true));
-
             components.Add(AddUseSecondColorProperty(parent, true));
             components.Add(AddSecondColorProperty(parent, true));
-            UseSecondColorChanged(parent, UseSecondColor);
+            UseSecondColorChanged(parent, ColorCount);
 
-            components.Add(AddDashLengthProperty(this, parent, false));
-            components.Add(AddSpaceLengthProperty(this, parent, false));
+            components.Add(AddLengthProperty(this, parent, false));
+            components.Add(AddParallelProperty(this, parent, true));
 
             components.Add(AddGapProperty(parent, true));
+        }
+        public override int GetUIComponentSortIndex(EditorItem item)
+        {
+            if (item.name == "Length")
+                return LengthIndex;
+            else if (item.name == nameof(Parallel))
+                return ParallelIndex;
+            else if (item.name == nameof(SecondColor))
+                return SecondColorIndex;
+            else if (item.name == nameof(ColorCount))
+                return ColorCountIndex;
+            else if (item.name == "Gap")
+                return GapIndex;
+            else
+                return base.GetUIComponentSortIndex(item);
         }
 
         protected BoolListPropertyPanel AddUseSecondColorProperty(UIComponent parent, bool canCollapse)
         {
-            var useSecondColorProperty = ComponentPool.GetBefore<BoolListPropertyPanel>(parent, nameof(Color), nameof(UseSecondColor));
+            var useSecondColorProperty = ComponentPool.GetBefore<BoolListPropertyPanel>(parent, nameof(Color), nameof(ColorCount));
             useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
             useSecondColorProperty.CanCollapse = canCollapse;
             useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
-            useSecondColorProperty.SelectedObject = UseSecondColor;
+            useSecondColorProperty.SelectedObject = ColorCount;
             useSecondColorProperty.OnSelectObjectChanged += (value) =>
                 {
-                    UseSecondColor.Value = value;
+                    ColorCount.Value = value;
                     UseSecondColorChanged(parent, value);
                 };
 
@@ -362,7 +397,7 @@ namespace NodeMarkup.Manager
 
         protected GapProperty AddGapProperty(UIComponent parent, bool canCollapse)
         {
-            var gapProperty = ComponentPool.Get<GapProperty>(parent, nameof(UseGap));
+            var gapProperty = ComponentPool.Get<GapProperty>(parent, "Gap");
             gapProperty.Text = Localize.StyleOption_CrosswalkGap;
             gapProperty.CanCollapse = canCollapse;
             gapProperty.Init();
@@ -393,7 +428,7 @@ namespace NodeMarkup.Manager
             DashLength.ToXml(config);
             SpaceLength.ToXml(config);
             Parallel.ToXml(config);
-            UseSecondColor.ToXml(config);
+            ColorCount.ToXml(config);
             SecondColor.ToXml(config);
             UseGap.ToXml(config);
             GapLength.ToXml(config);
@@ -406,7 +441,7 @@ namespace NodeMarkup.Manager
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
             Parallel.FromXml(config, true);
-            UseSecondColor.FromXml(config, false);
+            ColorCount.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             UseGap.FromXml(config, false);
             GapLength.FromXml(config, DefaultSpaceLength);
@@ -420,13 +455,22 @@ namespace NodeMarkup.Manager
 
         public PropertyValue<float> Offset { get; }
 
+        protected override int ColorCountIndex => 0;
+        protected override int ColorIndex => 1;
+        protected override int SecondColorIndex => 2;
+        protected override int WidthIndex => 3;
+        protected override int LengthIndex => 4;
+        protected override int OffsetIndex => 5;
+        protected override int ParallelIndex => 6;
+        protected override int GapIndex => 7;
+
         public DoubleZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel, float offset) :
             base(color, secondColor, useSecondColor, width, offsetBefore, offsetAfter, dashLength, spaceLength, useGap, gapLength, gapPeriod, parallel)
         {
             Offset = GetOffsetProperty(offset);
         }
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width * 2 + Offset, crosswalk);
-        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, UseSecondColor, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel, Offset);
+        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, ColorCount, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel, Offset);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
@@ -503,26 +547,30 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            var offsetBetween = AddOffsetBetweenProperty(parent, false);
-            components.Add(offsetBetween);
         }
 
-        protected FloatPropertyPanel AddOffsetBetweenProperty(UIComponent parent, bool canCollapse)
+        protected override EditorItem AddOffsetProperty(UIComponent parent, bool canCollapse)
         {
-            var offsetBetweenProperty = ComponentPool.GetAfter<FloatPropertyPanel>(parent, nameof(OffsetBefore), nameof(Offset));
-            offsetBetweenProperty.Text = Localize.StyleOption_OffsetBetween;
-            offsetBetweenProperty.Format = Localize.NumberFormat_Meter;
-            offsetBetweenProperty.UseWheel = true;
-            offsetBetweenProperty.WheelStep = 0.1f;
-            offsetBetweenProperty.CheckMin = true;
-            offsetBetweenProperty.MinValue = 0.1f;
-            offsetBetweenProperty.WheelTip = Settings.ShowToolTip;
-            offsetBetweenProperty.CanCollapse = canCollapse;
-            offsetBetweenProperty.Init();
-            offsetBetweenProperty.Value = Offset;
-            offsetBetweenProperty.OnValueChanged += (float value) => Offset.Value = value;
+            var offsetProperty = ComponentPool.Get<Vector3PropertyPanel>(parent, "Offset");
+            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.FieldsWidth = 50f;
+            offsetProperty.SetLabels(Localize.StyleOption_OffsetBeforeAbrv, Localize.StyleOption_OffsetBetweenAbrv, Localize.StyleOption_OffsetAfterAbrv);
+            offsetProperty.Format = Localize.NumberFormat_Meter;
+            offsetProperty.UseWheel = true;
+            offsetProperty.WheelStep = new Vector3(0.1f, 0.1f, 0.1f);
+            offsetProperty.CheckMin = true;
+            offsetProperty.WheelTip = Settings.ShowToolTip;
+            offsetProperty.CanCollapse = canCollapse;
+            offsetProperty.Init(0, 1, 2);
+            offsetProperty.Value = new Vector3(OffsetBefore, Offset, OffsetAfter);
+            offsetProperty.OnValueChanged += (Vector3 value) =>
+            {
+                OffsetBefore.Value = value.x;
+                Offset.Value = value.y;
+                OffsetAfter.Value = value.z;
+            };
 
-            return offsetBetweenProperty;
+            return offsetProperty;
         }
 
         public override XElement ToXml()
@@ -541,6 +589,12 @@ namespace NodeMarkup.Manager
     {
         public override StyleType Type => StyleType.CrosswalkParallelSolidLines;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+        protected override int LineWidthIndex => 2;
+        protected override int OffsetIndex => 3;
+
 
         public ParallelSolidLinesCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float lineWidth) :
             base(color, width, offsetBefore, offsetAfter, lineWidth)
@@ -569,6 +623,12 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.CrosswalkParallelDashedLines;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+        protected override int LineWidthIndex => 2;
+        protected virtual int LengthIndex => 3;
+        protected override int OffsetIndex => 4;
+
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
 
@@ -593,8 +653,14 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent, false));
-            components.Add(AddSpaceLengthProperty(this, parent, false));
+            components.Add(AddLengthProperty(this, parent, false));
+        }
+        public override int GetUIComponentSortIndex(EditorItem item)
+        {
+            if (item.name == "Length")
+                return LengthIndex;
+            else
+                return base.GetUIComponentSortIndex(item);
         }
 
         protected override IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod)
@@ -638,6 +704,13 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+        protected override int LineWidthIndex => 2;
+        protected virtual int LengthIndex => 3;
+        protected override int OffsetIndex => 4;
+
+
         public LadderCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, float lineWidth) : base(color, width, offsetBefore, offsetAfter, lineWidth)
         {
             DashLength = GetDashLengthProperty(dashLength);
@@ -679,8 +752,14 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent, false));
-            components.Add(AddSpaceLengthProperty(this, parent, false));
+            components.Add(AddLengthProperty(this, parent, false));
+        }
+        public override int GetUIComponentSortIndex(EditorItem item)
+        {
+            if (item.name == "Length")
+                return LengthIndex;
+            else
+                return base.GetUIComponentSortIndex(item);
         }
 
         public override XElement ToXml()
@@ -701,6 +780,10 @@ namespace NodeMarkup.Manager
     {
         public override StyleType Type => StyleType.CrosswalkSolid;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+        protected override int OffsetIndex => 2;
 
         public SolidCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter) : base(color, width, offsetBefore, offsetAfter) { }
 
@@ -727,6 +810,13 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> SquareSide { get; }
         public PropertyValue<int> LineCount { get; }
         public PropertyBoolValue Invert { get; }
+
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+        protected virtual int SquareSideIndex => 2;
+        protected virtual int LineCountIndex => 3;
+        protected override int OffsetIndex => 4;
+        protected virtual int InvertIndex => 5;
 
         public ChessBoardCrosswalkStyle(Color32 color, float offsetBefore, float offsetAfter, float squareSide, int lineCount, bool invert) : base(color, 0, offsetBefore, offsetAfter)
         {
@@ -781,6 +871,18 @@ namespace NodeMarkup.Manager
             if (!isTemplate)
                 components.Add(AddInvertProperty(this, parent, false));
         }
+        public override int GetUIComponentSortIndex(EditorItem item)
+        {
+            if (item.name == nameof(SquareSide))
+                return SquareSideIndex;
+            else if (item.name == nameof(LineCount))
+                return LineCountIndex;
+            else if (item.name == nameof(Invert))
+                return InvertIndex;
+            else
+                return base.GetUIComponentSortIndex(item);
+        }
+
         protected FloatPropertyPanel AddSquareSideProperty(UIComponent parent, bool canCollapse)
         {
             var squareSideProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(SquareSide));

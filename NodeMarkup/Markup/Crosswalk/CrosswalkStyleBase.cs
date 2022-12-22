@@ -61,39 +61,28 @@ namespace NodeMarkup.Manager
         }
         protected abstract IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod);
 
-        protected FloatPropertyPanel AddDashLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, bool canCollapse)
+        protected Vector2PropertyPanel AddLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, bool canCollapse)
         {
-            var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.DashLength));
-            dashLengthProperty.Text = Localize.StyleOption_DashedLength;
-            dashLengthProperty.Format = Localize.NumberFormat_Meter;
-            dashLengthProperty.UseWheel = true;
-            dashLengthProperty.WheelStep = 0.1f;
-            dashLengthProperty.WheelTip = Settings.ShowToolTip;
-            dashLengthProperty.CheckMin = true;
-            dashLengthProperty.MinValue = 0.1f;
-            dashLengthProperty.CanCollapse = canCollapse;
-            dashLengthProperty.Init();
-            dashLengthProperty.Value = dashedStyle.DashLength;
-            dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength.Value = value;
+            var lengthProperty = ComponentPool.GetAfter<Vector2PropertyPanel>(parent, nameof(Width), "Length");
+            lengthProperty.Text = Localize.StyleOption_Length;
+            lengthProperty.FieldsWidth = 50f;
+            lengthProperty.SetLabels(new string[] {Localize.StyleOption_Dash, Localize.StyleOption_Space });
+            lengthProperty.Format = Localize.NumberFormat_Meter;
+            lengthProperty.UseWheel = true;
+            lengthProperty.WheelStep = new Vector2(0.1f, 0.1f);
+            lengthProperty.WheelTip = Settings.ShowToolTip;
+            lengthProperty.CheckMin = true;
+            lengthProperty.MinValue = new Vector2(0.1f, 0.1f);
+            lengthProperty.CanCollapse = canCollapse;
+            lengthProperty.Init(0, 1);
+            lengthProperty.Value = new Vector2(dashedStyle.DashLength, dashedStyle.SpaceLength);
+            lengthProperty.OnValueChanged += (Vector2 value) =>
+                {
+                    dashedStyle.DashLength.Value = value.x;
+                    dashedStyle.SpaceLength.Value = value.y;
+                };
 
-            return dashLengthProperty;
-        }
-        protected FloatPropertyPanel AddSpaceLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, bool canCollapse)
-        {
-            var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.SpaceLength));
-            spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
-            spaceLengthProperty.Format = Localize.NumberFormat_Meter;
-            spaceLengthProperty.UseWheel = true;
-            spaceLengthProperty.WheelStep = 0.1f;
-            spaceLengthProperty.WheelTip = Settings.ShowToolTip;
-            spaceLengthProperty.CheckMin = true;
-            spaceLengthProperty.MinValue = 0.1f;
-            spaceLengthProperty.CanCollapse = canCollapse;
-            spaceLengthProperty.Init();
-            spaceLengthProperty.Value = dashedStyle.SpaceLength;
-            spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength.Value = value;
-
-            return spaceLengthProperty;
+            return lengthProperty;
         }
 
         protected IEnumerable<MarkupPartData> CalculateCroswalkPart(ITrajectory trajectory, float startT, float endT, Vector3 direction, ITrajectory[] borders, float length, float width, Color32 color)

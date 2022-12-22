@@ -94,6 +94,10 @@ namespace NodeMarkup.Manager
 
         public PropertyColorValue Color { get; }
         public PropertyStructValue<float> Width { get; }
+
+        protected virtual int ColorIndex => 0;
+        protected virtual int WidthIndex => 1;
+
         public Style(Color32 color, float width)
         {
             Color = GetColorProperty(color);
@@ -133,6 +137,15 @@ namespace NodeMarkup.Manager
 
             return components;
         }
+        public virtual int GetUIComponentSortIndex(EditorItem item)
+        {
+            if (item.name == nameof(Color))
+                return ColorIndex;
+            else if (item.name == nameof(Width))
+                return WidthIndex;
+            else
+                return int.MaxValue;
+        }
         private ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent, bool canCollapse)
         {
             var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(Color));
@@ -161,6 +174,29 @@ namespace NodeMarkup.Manager
             widthProperty.OnValueChanged += (float value) => Width.Value = value;
 
             return widthProperty;
+        }
+        protected Vector2PropertyPanel AddLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
+        {
+            var lengthProperty = ComponentPool.GetAfter<Vector2PropertyPanel>(parent, nameof(Width), "Length");
+            lengthProperty.Text = Localize.StyleOption_Length;
+            lengthProperty.FieldsWidth = 50f;
+            lengthProperty.SetLabels(new string[] { Localize.StyleOption_Dash, Localize.StyleOption_Space });
+            lengthProperty.Format = Localize.NumberFormat_Meter;
+            lengthProperty.UseWheel = true;
+            lengthProperty.WheelStep = new Vector2(0.1f, 0.1f);
+            lengthProperty.WheelTip = Settings.ShowToolTip;
+            lengthProperty.CheckMin = true;
+            lengthProperty.MinValue = new Vector2(0.1f, 0.1f);
+            lengthProperty.CanCollapse = canCollapse;
+            lengthProperty.Init(0, 1);
+            lengthProperty.Value = new Vector2(dashedStyle.DashLength, dashedStyle.SpaceLength);
+            lengthProperty.OnValueChanged += (Vector2 value) =>
+            {
+                dashedStyle.DashLength.Value = value.x;
+                dashedStyle.SpaceLength.Value = value.y;
+            };
+
+            return lengthProperty;
         }
         protected FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
         {

@@ -1741,4 +1741,22 @@ underground mode</value>
   <data name="StyleOption_CrosswalkGap" xml:space="preserve">
     <value>Gap</value>
   </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Dash</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>Aft</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>Bfr</value>
+  </data>
+  <data name="StyleOption_OffsetBetweenAbrv" xml:space="preserve">
+    <value>Btw</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Space</value>
+  </data>
 </root>

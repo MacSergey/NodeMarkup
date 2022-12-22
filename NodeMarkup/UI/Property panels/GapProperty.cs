@@ -99,7 +99,7 @@ namespace NodeMarkup.UI
 
             LengthField = Content.AddUIComponent<FloatUITextField>();
             LengthField.SetDefaultStyle();
-            LengthField.width = 70f;
+            LengthField.width = 50f;
             LengthField.name = nameof(LengthField);
             LengthField.Format = NodeMarkup.Localize.NumberFormat_Meter;
             LengthField.OnValueChanged += LengthChanged;

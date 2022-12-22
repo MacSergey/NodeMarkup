@@ -2429,5 +2429,35 @@ namespace NodeMarkup
 		/// Gap
 		/// </summary>
 		public static string StyleOption_CrosswalkGap => LocaleManager.GetString("StyleOption_CrosswalkGap", Culture);
+
+		/// <summary>
+		/// Dash
+		/// </summary>
+		public static string StyleOption_Dash => LocaleManager.GetString("StyleOption_Dash", Culture);
+
+		/// <summary>
+		/// Length
+		/// </summary>
+		public static string StyleOption_Length => LocaleManager.GetString("StyleOption_Length", Culture);
+
+		/// <summary>
+		/// Aft
+		/// </summary>
+		public static string StyleOption_OffsetAfterAbrv => LocaleManager.GetString("StyleOption_OffsetAfterAbrv", Culture);
+
+		/// <summary>
+		/// Bfr
+		/// </summary>
+		public static string StyleOption_OffsetBeforeAbrv => LocaleManager.GetString("StyleOption_OffsetBeforeAbrv", Culture);
+
+		/// <summary>
+		/// Btw
+		/// </summary>
+		public static string StyleOption_OffsetBetweenAbrv => LocaleManager.GetString("StyleOption_OffsetBetweenAbrv", Culture);
+
+		/// <summary>
+		/// Space
+		/// </summary>
+		public static string StyleOption_Space => LocaleManager.GetString("StyleOption_Space", Culture);
 	}
 }
