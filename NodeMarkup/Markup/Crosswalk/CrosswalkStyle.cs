@@ -313,10 +313,7 @@ namespace NodeMarkup.Manager
             components.Add(AddDashLengthProperty(this, parent, false));
             components.Add(AddSpaceLengthProperty(this, parent, false));
 
-            components.Add(AddUseGapProperty(parent, true));
-            components.Add(AddGapLengthProperty(parent, true));
-            components.Add(AddGapPeriodProperty(parent, true));
-            UseGapChanged(parent, UseGap);
+            components.Add(AddGapProperty(parent, true));
         }
 
         protected BoolListPropertyPanel AddUseSecondColorProperty(UIComponent parent, bool canCollapse)
@@ -363,61 +360,31 @@ namespace NodeMarkup.Manager
             return colorProperty;
         }
 
-        protected BoolListPropertyPanel AddUseGapProperty(UIComponent parent, bool canCollapse)
+        protected GapProperty AddGapProperty(UIComponent parent, bool canCollapse)
         {
-            var useGapProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(UseGap));
-            useGapProperty.Text = Localize.StyleOption_UseGap;
-            useGapProperty.CanCollapse = canCollapse;
-            useGapProperty.Init();
-            useGapProperty.SelectedObject = UseGap;
-            useGapProperty.OnSelectObjectChanged += (value) =>
+            var gapProperty = ComponentPool.Get<GapProperty>(parent, nameof(UseGap));
+            gapProperty.Text = Localize.StyleOption_CrosswalkGap;
+            gapProperty.CanCollapse = canCollapse;
+            gapProperty.Init();
+            gapProperty.UseWheel = true;
+            gapProperty.WheelTip = Settings.ShowToolTip;
+            gapProperty.WheelStepLength = 0.1f;
+            gapProperty.CheckMinLength = true;
+            gapProperty.MinLength = 0.1f;
+            gapProperty.WheelStepPeriod = 1;
+            gapProperty.CheckMinPeriod = true;
+            gapProperty.MinPeriod = DefaultCrosswalkLineCount;
+            gapProperty.Use = UseGap;
+            gapProperty.Length = GapLength;
+            gapProperty.Period = GapPeriod;
+            gapProperty.OnValueChanged += (use, length, period) =>
             {
-                UseGap.Value = value;
-                UseGapChanged(parent, value);
+                UseGap.Value = use;
+                GapLength.Value = length;
+                GapPeriod.Value = period;
             };
 
-            return useGapProperty;
-        }
-        protected void UseGapChanged(UIComponent parent, bool value)
-        {
-            if (parent.Find<FloatPropertyPanel>(nameof(GapLength)) is FloatPropertyPanel gapLengthProperty)
-                gapLengthProperty.IsHidden = !value;
-            if (parent.Find<IntPropertyPanel>(nameof(GapPeriod)) is IntPropertyPanel gapPeriodProperty)
-                gapPeriodProperty.IsHidden = !value;
-        }
-
-        protected FloatPropertyPanel AddGapLengthProperty(UIComponent parent, bool canCollapse)
-        {
-            var gapLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(GapLength));
-            gapLengthProperty.Text = Localize.StyleOption_GapLength;
-            gapLengthProperty.Format = Localize.NumberFormat_Meter;
-            gapLengthProperty.UseWheel = true;
-            gapLengthProperty.WheelStep = 0.1f;
-            gapLengthProperty.WheelTip = Settings.ShowToolTip;
-            gapLengthProperty.CheckMin = true;
-            gapLengthProperty.MinValue = 0.1f;
-            gapLengthProperty.CanCollapse = canCollapse;
-            gapLengthProperty.Init();
-            gapLengthProperty.Value = GapLength;
-            gapLengthProperty.OnValueChanged += (float value) => GapLength.Value = value;
-
-            return gapLengthProperty;
-        }
-        protected IntPropertyPanel AddGapPeriodProperty(UIComponent parent, bool canCollapse)
-        {
-            var gapPeriodProperty = ComponentPool.Get<IntPropertyPanel>(parent, nameof(GapPeriod));
-            gapPeriodProperty.Text = Localize.StyleOption_GapPeriod;
-            gapPeriodProperty.UseWheel = true;
-            gapPeriodProperty.WheelStep = 1;
-            gapPeriodProperty.WheelTip = Settings.ShowToolTip;
-            gapPeriodProperty.CheckMin = true;
-            gapPeriodProperty.MinValue = DefaultCrosswalkLineCount;
-            gapPeriodProperty.CanCollapse = canCollapse;
-            gapPeriodProperty.Init();
-            gapPeriodProperty.Value = GapPeriod;
-            gapPeriodProperty.OnValueChanged += (int value) => GapPeriod.Value = value;
-
-            return gapPeriodProperty;
+            return gapProperty;
         }
 
         public override XElement ToXml()

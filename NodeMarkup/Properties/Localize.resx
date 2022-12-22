@@ -1510,15 +1510,6 @@ Click to edit markings</value>
   <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
     <value>Markings under level crossings</value>
   </data>
-  <data name="StyleOption_GapLength" xml:space="preserve">
-    <value>Gap length</value>
-  </data>
-  <data name="StyleOption_GapPeriod" xml:space="preserve">
-    <value>Gap period</value>
-  </data>
-  <data name="StyleOption_UseGap" xml:space="preserve">
-    <value>Use gap</value>
-  </data>
   <data name="PointEditor_RevertOffsets" xml:space="preserve">
     <value>Revert offsets</value>
   </data>
@@ -1743,5 +1734,11 @@ underground mode</value>
   </data>
   <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
     <value>Double dashed asym</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Each {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Gap</value>
   </data>
 </root>

@@ -2096,21 +2096,6 @@ namespace NodeMarkup
 		public static string Settings_LevelCrossingUnderMarking => LocaleManager.GetString("Settings_LevelCrossingUnderMarking", Culture);
 
 		/// <summary>
-		/// Gap length
-		/// </summary>
-		public static string StyleOption_GapLength => LocaleManager.GetString("StyleOption_GapLength", Culture);
-
-		/// <summary>
-		/// Gap period
-		/// </summary>
-		public static string StyleOption_GapPeriod => LocaleManager.GetString("StyleOption_GapPeriod", Culture);
-
-		/// <summary>
-		/// Use gap
-		/// </summary>
-		public static string StyleOption_UseGap => LocaleManager.GetString("StyleOption_UseGap", Culture);
-
-		/// <summary>
 		/// Revert offsets
 		/// </summary>
 		public static string PointEditor_RevertOffsets => LocaleManager.GetString("PointEditor_RevertOffsets", Culture);
@@ -2434,5 +2419,15 @@ namespace NodeMarkup
 		/// Double dashed asym
 		/// </summary>
 		public static string LineStyle_DoubleDashedAsym => LocaleManager.GetString("LineStyle_DoubleDashedAsym", Culture);
+
+		/// <summary>
+		/// Each {0}
+		/// </summary>
+		public static string NumberFormat_Period => LocaleManager.GetString("NumberFormat_Period", Culture);
+
+		/// <summary>
+		/// Gap
+		/// </summary>
+		public static string StyleOption_CrosswalkGap => LocaleManager.GetString("StyleOption_CrosswalkGap", Culture);
 	}
 }
