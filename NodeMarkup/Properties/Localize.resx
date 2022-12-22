@@ -1741,4 +1741,7 @@ underground mode</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Second color</value>
   </data>
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Double dashed asym</value>
+  </data>
 </root>

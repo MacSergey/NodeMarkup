@@ -2429,5 +2429,10 @@ namespace NodeMarkup
 		/// Second color
 		/// </summary>
 		public static string StyleOption_SecondColor => LocaleManager.GetString("StyleOption_SecondColor", Culture);
+
+		/// <summary>
+		/// Double dashed asym
+		/// </summary>
+		public static string LineStyle_DoubleDashedAsym => LocaleManager.GetString("LineStyle_DoubleDashedAsym", Culture);
 	}
 }

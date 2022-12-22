@@ -251,6 +251,7 @@ namespace NodeMarkup.Manager
             {RegularLineType.Dashed, new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength)},
             {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDoubleOffset)},
             {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
+            {RegularLineType.DoubleDashedAsym, new DoubleDashedAsymLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultSpaceLength * 2f, DefaultDoubleOffset)},
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength, DefaultSharkAngle) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
@@ -306,6 +307,10 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
             SharkTeeth = StyleType.LineSharkTeeth,
+
+            [Description(nameof(Localize.LineStyle_DoubleDashedAsym))]
+            [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            DoubleDashedAsym = StyleType.LineDoubleDashedAsym,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             [NetworkType(NetworkType.All)]

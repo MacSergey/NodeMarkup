@@ -314,6 +314,10 @@ namespace NodeMarkup.Manager
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             LineSharkTeeth,
 
+            [Description(nameof(Localize.LineStyle_DoubleDashedAsym))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            LineDoubleDashedAsym,
+
             [NotItem]
             Regular3DLine = Markup.Item.RegularLine + 0x80,
 

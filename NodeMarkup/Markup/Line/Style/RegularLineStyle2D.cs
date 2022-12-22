@@ -268,6 +268,188 @@ namespace NodeMarkup.Manager
                 Alignment.Value = Alignment.Value.Invert();
         }
     }
+    public class DoubleDashedAsymLineStyle : RegularLineStyle, IRegularLine, IDashedLine, IDoubleLine, IDoubleAlignmentLine, IAsymLine
+    {
+        public override StyleType Type => StyleType.LineDoubleDashedAsym;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+
+        public PropertyValue<float> DashLengthA { get; }
+        public PropertyValue<float> DashLengthB { get; }
+        public PropertyValue<float> DashLength
+        {
+            get
+            {
+                PropertyStructValue<float> dashLength = null;
+                dashLength = new PropertyStructValue<float>(() => DashLengthValue = dashLength.Value, DashLengthValue);
+
+                return dashLength;
+            }
+        }
+        public PropertyValue<float> SpaceLength { get; }
+
+        public PropertyValue<float> Offset { get; }
+        public PropertyEnumValue<Alignment> Alignment { get; }
+        public PropertyBoolValue UseSecondColor { get; }
+        public PropertyColorValue SecondColor { get; }
+
+        public PropertyBoolValue Invert { get; }
+
+        private float DashLengthValue
+        {
+            get => Mathf.Max(DashLengthA, DashLengthB);
+            set
+            {
+                DashLengthA.Value = value;
+                DashLengthB.Value = value;
+            }
+        }
+
+        public DoubleDashedAsymLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLengthA, float dashLengthB, float spaceLength, float offset) : base(color, width)
+        {
+            DashLengthA = new PropertyStructValue<float>("DLA", StyleChanged, dashLengthA);
+            DashLengthB = new PropertyStructValue<float>("DLB", StyleChanged, dashLengthB);
+            SpaceLength = GetSpaceLengthProperty(spaceLength);
+
+            Offset = GetOffsetProperty(offset);
+            Alignment = GetAlignmentProperty(Manager.Alignment.Centre);
+            UseSecondColor = GetUseSecondColorProperty(useSecondColor);
+            SecondColor = GetSecondColorProperty(UseSecondColor ? secondColor : color);
+
+            Invert = GetInvertProperty(false);
+        }
+
+        public override RegularLineStyle CopyLineStyle() => new DoubleDashedAsymLineStyle(Color, SecondColor, UseSecondColor, Width, DashLengthB, DashLengthA, DashLengthB, Offset);
+
+        public override void CopyTo(LineStyle target)
+        {
+            base.CopyTo(target);
+            if (target is IDashedLine dashedTarget)
+            {
+                dashedTarget.DashLength.Value = DashLengthValue;
+                dashedTarget.SpaceLength.Value = SpaceLength;
+            }
+            if (target is IDoubleLine doubleTarget)
+            {
+                doubleTarget.Offset.Value = Offset;
+                doubleTarget.SecondColor.Value = SecondColor;
+                doubleTarget.UseSecondColor.Value = UseSecondColor;
+            }
+            if (target is IDoubleAlignmentLine doubleAlignmentTarget)
+                doubleAlignmentTarget.Alignment.Value = Alignment;
+        }
+
+        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        {
+            if (!CheckDashedLod(lod, Width, DashLengthValue))
+                return new MarkupPartGroupData(lod);
+
+            var borders = line.Borders;
+            return new MarkupPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, DashLengthValue, SpaceLength, GetDashes));
+
+            IEnumerable<MarkupPartData> GetDashes(ITrajectory trajectory, float startT, float endT)
+                => CalculateDashes(trajectory, startT, endT, borders);
+        }
+
+        protected IEnumerable<MarkupPartData> CalculateDashes(ITrajectory trajectory, float startT, float endT, LineBorders borders)
+        {
+            var offsetA = Alignment.Value switch
+            {
+                Manager.Alignment.Left => 2 * Offset,
+                Manager.Alignment.Centre => Offset,
+                Manager.Alignment.Right => 0,
+                _ => 0,
+            };
+            var offsetB = Alignment.Value switch
+            {
+                Manager.Alignment.Left => 0,
+                Manager.Alignment.Centre => -Offset,
+                Manager.Alignment.Right => -2 * Offset,
+                _ => 0,
+            };
+
+            if(Invert)
+            {
+                offsetA = -offsetA;
+                offsetB = -offsetB;
+            }
+
+            if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLengthA, offsetA, Width, Color, out MarkupPartData firstDash))
+                yield return firstDash;
+
+            if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLengthB, offsetB, Width, UseSecondColor ? SecondColor : Color, out MarkupPartData secondDash))
+                yield return secondDash;
+        }
+
+        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        {
+            base.GetUIComponents(line, components, parent, isTemplate);
+
+            components.Add(AddDashLengthProperty(parent, false));
+            components.Add(AddSpaceLengthProperty(this, parent, false));
+
+            components.Add(AddUseSecondColorProperty(this, parent, true));
+            components.Add(AddSecondColorProperty(this, parent, true));
+            components.Add(AddOffsetProperty(this, parent, false));
+            if (!isTemplate)
+            {
+                components.Add(AddAlignmentProperty(this, parent, false));
+                components.Add(AddInvertProperty(this, parent, false));
+            }
+
+            UseSecondColorChanged(this, parent, UseSecondColor);
+        }
+        protected FloatRangePropertyPanel AddDashLengthProperty(UIComponent parent, bool canCollapse)
+        {
+            var dashLengthProperty = ComponentPool.Get<FloatRangePropertyPanel>(parent, nameof(DashLengthB));
+            dashLengthProperty.Text = Localize.StyleOption_DashedLength;
+            dashLengthProperty.Format = Localize.NumberFormat_Meter;
+            dashLengthProperty.UseWheel = true;
+            dashLengthProperty.WheelStep = 0.1f;
+            dashLengthProperty.WheelTip = Settings.ShowToolTip;
+            dashLengthProperty.CheckMin = true;
+            dashLengthProperty.MinValue = 0.1f;
+            dashLengthProperty.CanCollapse = canCollapse;
+            dashLengthProperty.FieldWidth = 70f;
+            dashLengthProperty.Init();
+            dashLengthProperty.SetValues(DashLengthA, DashLengthB);
+            dashLengthProperty.OnValueChanged += (float valueA, float valueB) =>
+                {
+                    DashLengthA.Value = valueA;
+                    DashLengthB.Value = valueB;
+                };
+
+            return dashLengthProperty;
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            DashLengthA.ToXml(config);
+            DashLengthB.ToXml(config);
+            SpaceLength.ToXml(config);
+            UseSecondColor.ToXml(config);
+            SecondColor.ToXml(config);
+            Offset.ToXml(config);
+            Alignment.ToXml(config);
+            Invert.ToXml(config);
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            base.FromXml(config, map, invert);
+            DashLengthA.FromXml(config, DefaultDashLength);
+            DashLengthB.FromXml(config, DefaultDashLength * 2f);
+            SpaceLength.FromXml(config, DefaultSpaceLength);
+            UseSecondColor.FromXml(config, false);
+            SecondColor.FromXml(config, DefaultColor);
+            Offset.FromXml(config, DefaultDoubleOffset);
+            Alignment.FromXml(config, Manager.Alignment.Centre);
+            Invert.FromXml(config, false);
+            Invert.Value ^= map.IsMirror ^ invert;
+            if (invert)
+                Alignment.Value = Alignment.Value.Invert();
+        }
+    }
     public class SolidAndDashedLineStyle : RegularLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine, IDashedLine, IAsymLine
     {
         public override StyleType Type => StyleType.LineSolidAndDashed;
