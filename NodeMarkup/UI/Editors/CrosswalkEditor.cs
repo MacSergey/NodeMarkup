@@ -28,7 +28,7 @@ namespace NodeMarkup.UI.Editors
         private CrosswalkBorderToolMode CrosswalkBorderToolMode { get; }
         private bool ShowMoreOptions { get; set; }
 
-        public CrosswalkBorderSelectPropertyPanel HoverBorderPanel { get; private set; }
+        public CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton HoverBorderButton { get; private set; }
 
         #endregion
 
@@ -119,8 +119,8 @@ namespace NodeMarkup.UI.Editors
         private void FillBorder(CrosswalkBorderSelectPropertyPanel panel, Action<MarkupRegularLine> action, MarkupRegularLine[] lines, MarkupRegularLine value)
         {
             panel.OnValueChanged -= action;
-            panel.Clear();
-            panel.AddRange(lines);
+            panel.Selector.Clear();
+            panel.Selector.AddRange(lines);
             panel.Value = value;
 
             if (Settings.ShowPanelTip)
@@ -158,7 +158,7 @@ namespace NodeMarkup.UI.Editors
         {
             var border = ComponentPool.Get<CrosswalkBorderSelectPropertyPanel>(PropertiesPanel, name);
             border.Text = text;
-            border.Position = position;
+            border.Selector.Position = position;
             border.Init();
             border.OnSelect += (panel) => SelectBorder(panel);
             border.OnReset += (panel) => Tool.SetDefaultMode();
@@ -263,13 +263,13 @@ namespace NodeMarkup.UI.Editors
         }
         private void CutLines() => Markup.CutLinesByCrosswalk(EditObject);
 
-        public void HoverBorder(CrosswalkBorderSelectPropertyPanel selectPanel) => HoverBorderPanel = selectPanel;
-        public void LeaveBorder(CrosswalkBorderSelectPropertyPanel selectPanel) => HoverBorderPanel = null;
+        public void HoverBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton) => HoverBorderButton = selectButton;
+        public void LeaveBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton) => HoverBorderButton = null;
 
-        public bool SelectBorder(CrosswalkBorderSelectPropertyPanel selectPanel) => SelectBorder(selectPanel, null);
-        public bool SelectBorder(CrosswalkBorderSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
+        public bool SelectBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton) => SelectBorder(selectButton, null);
+        public bool SelectBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton, Func<Event, bool> afterAction)
         {
-            if (Tool.Mode == CrosswalkBorderToolMode && selectPanel == CrosswalkBorderToolMode.SelectPanel)
+            if (Tool.Mode == CrosswalkBorderToolMode && selectButton == CrosswalkBorderToolMode.SelectButton)
             {
                 Tool.SetDefaultMode();
                 return true;
@@ -277,16 +277,16 @@ namespace NodeMarkup.UI.Editors
             else
             {
                 Tool.SetMode(CrosswalkBorderToolMode);
-                CrosswalkBorderToolMode.SelectPanel = selectPanel;
-                CrosswalkBorderToolMode.AfterSelectPanel = afterAction;
-                selectPanel.Focus();
+                CrosswalkBorderToolMode.SelectButton = selectButton;
+                CrosswalkBorderToolMode.AfterSelectButton = afterAction;
+                selectButton.Focus();
                 return false;
             }
         }
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
-            HoverBorderPanel?.Value?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+            HoverBorderButton?.Value?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
         }
 
         public void BorderSetup()
@@ -294,13 +294,13 @@ namespace NodeMarkup.UI.Editors
             if (!Settings.QuickBorderSetup)
                 return;
 
-            var hasLeft = LeftBorder.Objects.Any();
-            var hasRight = RightBorder.Objects.Any();
+            var hasLeft = LeftBorder.Selector.Objects.Any();
+            var hasRight = RightBorder.Selector.Objects.Any();
 
             if (hasLeft)
-                SelectBorder(LeftBorder, hasRight ? (_) => SelectBorder(RightBorder) : (Func<Event, bool>)null);
+                SelectBorder(LeftBorder.Selector, hasRight ? (_) => SelectBorder(RightBorder.Selector) : null);
             else if (hasRight)
-                SelectBorder(RightBorder);
+                SelectBorder(RightBorder.Selector);
         }
 
         #endregion
@@ -326,23 +326,23 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class CrosswalkBorderToolMode : BasePanelMode<CrosswalksEditor, CrosswalkBorderSelectPropertyPanel, MarkupRegularLine>
+    public class CrosswalkBorderToolMode : BasePanelMode<CrosswalksEditor, CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton, MarkupRegularLine>
     {
         protected override bool IsHover => LineSelector.IsHoverLine;
         protected override MarkupRegularLine Hover => LineSelector.HoverLine?.Line;
 
         private LinesSelector<MarkupLineBound> LineSelector { get; set; }
 
-        protected override void OnSetPanel()
+        protected override void OnSetButton()
         {
-            var color = SelectPanel.Position == BorderPosition.Left ? Colors.Green : Colors.Red;
-            LineSelector = new LinesSelector<MarkupLineBound>(SelectPanel.Objects.Select(i => new MarkupLineBound(i, 0.5f)).ToArray(), color);
+            var color = SelectButton.Position == BorderPosition.Left ? Colors.Green : Colors.Red;
+            LineSelector = new LinesSelector<MarkupLineBound>(SelectButton.Objects.Select(i => new MarkupLineBound(i, 0.5f)).ToArray(), color);
         }
 
         public override void OnToolUpdate() => LineSelector.OnUpdate();
         public override string GetToolInfo()
         {
-            return SelectPanel.Position switch
+            return SelectButton.Position switch
             {
                 BorderPosition.Right => Localize.CrosswalkEditor_InfoSelectRightBorder,
                 BorderPosition.Left => Localize.CrosswalkEditor_InfoSelectLeftBorder,

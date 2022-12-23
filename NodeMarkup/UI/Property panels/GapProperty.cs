@@ -20,7 +20,7 @@ namespace NodeMarkup.UI
 
         public bool Use
         {
-            get => UseSegmented;
+            get => UseSegmented.SelectedObject;
             set
             {
                 UseSegmented.SelectedObject = value;

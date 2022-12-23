@@ -103,14 +103,14 @@ namespace NodeMarkup.UI.Editors
         {
             var edgeProperty = ComponentPool.Get<RuleEdgeSelectPropertyPanel>(this, name);
             edgeProperty.Text = text;
-            edgeProperty.Position = position;
+            edgeProperty.Selector.Position = position;
             edgeProperty.Init();
             edgeProperty.OnSelect += OnSelectPanel;
             edgeProperty.OnEnter += Editor.EnterRuleEdge;
             edgeProperty.OnLeave += Editor.LeaveRuleEdge;
             return edgeProperty;
         }
-        private void OnSelectPanel(RuleEdgeSelectPropertyPanel panel) => Editor.SelectRuleEdge(panel);
+        private void OnSelectPanel(RuleEdgeSelectPropertyPanel.RuleEdgeSelectButton button) => Editor.SelectRuleEdge(button);
 
         private void FillEdges()
         {
@@ -124,8 +124,8 @@ namespace NodeMarkup.UI.Editors
                 return;
 
             panel.OnValueChanged -= action;
-            panel.Clear();
-            panel.AddRange(Editor.SupportPoints);
+            panel.Selector.Clear();
+            panel.Selector.AddRange(Editor.SupportPoints);
             panel.Value = value;
 
             if (Settings.ShowPanelTip && Line.IsSupportRules)

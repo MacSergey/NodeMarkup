@@ -1,13 +1,16 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Xml.Linq;
 using UnityEngine;
+using static NodeMarkup.Manager.FillerStyle;
 
 namespace NodeMarkup.Manager
 {
@@ -29,8 +32,7 @@ namespace NodeMarkup.Manager
         public static float DefaultCurbSize => 0f;
         public static bool DefaultFollowRails => false;
 
-        protected static string LeftRail => nameof(LeftRail);
-        protected static string RightRail => nameof(RightRail);
+        protected static string Rail => nameof(Rail);
 
         public static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
@@ -130,7 +132,7 @@ namespace NodeMarkup.Manager
         protected FloatPropertyPanel AddLineOffsetProperty(UIComponent parent, bool canCollapse)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, "Offset");
-            offsetProperty.Text = Localize.StyleOption_LineOffset;
+            offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
@@ -203,54 +205,27 @@ namespace NodeMarkup.Manager
 
             return stepProperty;
         }
-        protected BoolListPropertyPanel AddFollowRailsProperty(IFollowRailFiller followRailStyle, UIComponent parent, bool canCollapse)
-        {
-            var followRailsProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(followRailStyle.FollowRails));
-            followRailsProperty.Text = Localize.StyleOption_FollowRails;
-            followRailsProperty.CanCollapse = canCollapse;
-            followRailsProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
-            followRailsProperty.SelectedObject = followRailStyle.FollowRails;
-            followRailsProperty.OnSelectObjectChanged += (bool value) =>
-            {
-                followRailStyle.FollowRails.Value = value;
-                FollowRailChanged(parent, value);
-            };
-            return followRailsProperty;
-        }
-        protected void FollowRailChanged(UIComponent parent, bool value)
-        {
-            if (parent.Find<FillerRailSelectPropertyPanel>(LeftRail) is FillerRailSelectPropertyPanel leftRailProperty)
-                leftRailProperty.IsHidden = !value;
-            if (parent.Find<FillerRailSelectPropertyPanel>(RightRail) is FillerRailSelectPropertyPanel rightRailProperty)
-                rightRailProperty.IsHidden = !value;
-            if (parent.Find<ButtonPanel>("Turn") is ButtonPanel turnButton)
-                turnButton.IsHidden = !value;
-        }
 
-        protected void AddRailProperty(IRailFiller railStyle, FillerContour contour, UIComponent parent, bool canCollapse, out FillerRailSelectPropertyPanel leftRailProperty, out FillerRailSelectPropertyPanel rightRailProperty)
+        protected FillerRailPropertyPanel AddRailProperty(IRailFiller railStyle, FillerContour contour, UIComponent parent, bool canCollapse)
         {
-            leftRailProperty = AddRailProperty(contour, parent, canCollapse, LeftRail, railStyle.LeftRailA, railStyle.LeftRailB, RailType.Left, Localize.StyleOption_LeftRail);
-            rightRailProperty = AddRailProperty(contour, parent, canCollapse, RightRail, railStyle.RightRailA, railStyle.RightRailB, RailType.Right, Localize.StyleOption_RightRail);
-
-            leftRailProperty.OtherRail = rightRailProperty;
-            rightRailProperty.OtherRail = leftRailProperty;
-        }
-        private FillerRailSelectPropertyPanel AddRailProperty(FillerContour contour, UIComponent parent, bool canCollapse, string name, PropertyValue<int> railA, PropertyValue<int> railB, RailType railType, string label)
-        {
-            var rail = new FillerRail(contour.GetCorrectIndex(railA), contour.GetCorrectIndex(railB));
-            var railProperty = ComponentPool.Get<FillerRailSelectPropertyPanel>(parent, name);
-            railProperty.Text = label;
+            var railProperty = ComponentPool.Get<FillerRailPropertyPanel>(parent, Rail);
+            railProperty.Text = Localize.StyleOption_Rails;
             railProperty.CanCollapse = canCollapse;
-            railProperty.Init(railType);
-            railProperty.Value = rail;
-            railProperty.OnValueChanged += RailPropertyChanged;
-            return railProperty;
-
-            void RailPropertyChanged(FillerRail rail)
+            railProperty.Init();
+            railProperty.LeftRail = new FillerRail(contour.GetCorrectIndex(railStyle.LeftRailA), contour.GetCorrectIndex(railStyle.LeftRailB));
+            railProperty.RightRail = new FillerRail(contour.GetCorrectIndex(railStyle.RightRailA), contour.GetCorrectIndex(railStyle.RightRailB));
+            railProperty.Follow = (railStyle as IFollowRailFiller)?.FollowRails.Value;
+            railProperty.OnValueChanged += (bool follow, FillerRail left, FillerRail right) =>
             {
-                railA.Value = rail.A;
-                railB.Value = rail.B;
-            }
+                if(railStyle is IFollowRailFiller followRailStyle)
+                    followRailStyle.FollowRails.Value = follow;
+
+                railStyle.LeftRailA.Value = left.A;
+                railStyle.LeftRailB.Value = left.B;
+                railStyle.RightRailA.Value = right.A;
+                railStyle.RightRailB.Value = right.B;
+            };
+            return railProperty;
         }
 
         public enum FillerType

@@ -3,6 +3,7 @@ using ColossalFramework.UI;
 using ICities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
 using System;
@@ -508,6 +509,7 @@ namespace NodeMarkup.Manager
         protected virtual int AngleIndex => 3;
         protected override int OffsetIndex => 4;
         protected override int RailIndex => 5;
+        protected virtual int TurnIndex => 6;
 
         public StripeFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angle, float step, bool followRails = false) : base(color, width, step, lineOffset, medianOffset)
         {
@@ -534,19 +536,16 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddFollowRailsProperty(this, parent, true));
-                AddRailProperty(this, filler.Contour, parent, true, out var leftRail, out var rightRail);
-                components.Add(leftRail);
-                components.Add(rightRail);
+                components.Add(AddRailProperty(this, filler.Contour, parent, true));
                 components.Add(AddTurnProperty(filler, parent, false));
-
-                FollowRailChanged(parent, FollowRails);
             }
         }
         public override int GetUIComponentSortIndex(EditorItem item)
         {
             if (item.name == nameof(Angle))
                 return AngleIndex;
+            if (item.name == "Turn")
+                return TurnIndex;
             else
                 return base.GetUIComponentSortIndex(item);
         }
@@ -562,10 +561,11 @@ namespace NodeMarkup.Manager
             {
                 var vertexCount = filler.Contour.ProcessedCount;
 
-                if (parent.Find<FillerRailSelectPropertyPanel>("LeftRail") is FillerRailSelectPropertyPanel leftRailProperty)
-                    leftRailProperty.Value = (leftRailProperty.Value + 1) % vertexCount;
-                if (parent.Find<FillerRailSelectPropertyPanel>("RightRail") is FillerRailSelectPropertyPanel rightRailProperty)
-                    rightRailProperty.Value = (rightRailProperty.Value + 1) % vertexCount;
+                if (parent.Find<FillerRailPropertyPanel>(Rail) is FillerRailPropertyPanel railProperty)
+                {
+                    railProperty.LeftRail = (railProperty.LeftRail + 1) % vertexCount;
+                    railProperty.RightRail = (railProperty.RightRail + 1) % vertexCount;
+                }
             };
 
             return turnButton;
@@ -675,9 +675,7 @@ namespace NodeMarkup.Manager
             components.Add(AddAngleBetweenProperty(parent, false));
             if (!isTemplate)
             {
-                AddRailProperty(this, filler.Contour, parent, true, out var leftRail, out var rightRail);
-                components.Add(leftRail);
-                components.Add(rightRail);
+                components.Add(AddRailProperty(this, filler.Contour, parent, true));
                 components.Add(AddInvertAndTurnProperty(filler, parent, false));
             }
         }
@@ -727,11 +725,11 @@ namespace NodeMarkup.Manager
                 else if (buttonIndex == turnIndex)
                 {
                     var vertexCount = filler.Contour.ProcessedCount;
-
-                    if (parent.Find<FillerRailSelectPropertyPanel>(LeftRail) is FillerRailSelectPropertyPanel leftRailProperty)
-                        leftRailProperty.Value = (leftRailProperty.Value + 1) % vertexCount;
-                    if (parent.Find<FillerRailSelectPropertyPanel>(RightRail) is FillerRailSelectPropertyPanel rightRailProperty)
-                        rightRailProperty.Value = (rightRailProperty.Value + 1) % vertexCount;
+                    if (parent.Find<FillerRailPropertyPanel>(Rail) is FillerRailPropertyPanel railProperty)
+                    {
+                        railProperty.LeftRail = (railProperty.LeftRail + 1) % vertexCount;
+                        railProperty.RightRail = (railProperty.RightRail + 1) % vertexCount;
+                    }
                 }
             };
 
@@ -965,11 +963,7 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddFollowRailsProperty(this, parent, true));
-                AddRailProperty(this, filler.Contour, parent, true, out var leftRail, out var rightRail);
-
-                components.Add(leftRail);
-                components.Add(rightRail);
+                components.Add(AddRailProperty(this, filler.Contour, parent, true));
             }
         }
         public override int GetUIComponentSortIndex(EditorItem item)

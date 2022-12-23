@@ -2471,12 +2471,12 @@ namespace NodeMarkup
 		public static string StyleOption_MedianOffsetAbrv => LocaleManager.GetString("StyleOption_MedianOffsetAbrv", Culture);
 
 		/// <summary>
-		/// Aft
+		/// After
 		/// </summary>
 		public static string StyleOption_OffsetAfterAbrv => LocaleManager.GetString("StyleOption_OffsetAfterAbrv", Culture);
 
 		/// <summary>
-		/// Bfr
+		/// Before
 		/// </summary>
 		public static string StyleOption_OffsetBeforeAbrv => LocaleManager.GetString("StyleOption_OffsetBeforeAbrv", Culture);
 
@@ -2489,5 +2489,10 @@ namespace NodeMarkup
 		/// Space
 		/// </summary>
 		public static string StyleOption_Space => LocaleManager.GetString("StyleOption_Space", Culture);
+
+		/// <summary>
+		/// Guides
+		/// </summary>
+		public static string StyleOption_Rails => LocaleManager.GetString("StyleOption_Rails", Culture);
 	}
 }

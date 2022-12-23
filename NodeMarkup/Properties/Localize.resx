@@ -1766,15 +1766,18 @@ underground mode</value>
     <value>Median</value>
   </data>
   <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
-    <value>Aft</value>
+    <value>After</value>
   </data>
   <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
-    <value>Bfr</value>
+    <value>Before</value>
   </data>
   <data name="StyleOption_OffsetBetweenAbrv" xml:space="preserve">
     <value>Btw</value>
   </data>
   <data name="StyleOption_Space" xml:space="preserve">
     <value>Space</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Guides</value>
   </data>
 </root>
