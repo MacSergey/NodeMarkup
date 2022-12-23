@@ -13,6 +13,9 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.StopLineSolid;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+
         public SolidStopLineStyle(Color32 color, float width) : base(color, width) { }
 
         protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
@@ -100,6 +103,9 @@ namespace NodeMarkup.Manager
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
+
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
 
         public DashedStopLineStyle(Color32 color, float width, float dashLength, float spaceLength) : base(color, width)
         {
@@ -234,6 +240,9 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+
         public SolidAndDashedStopLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLength, float spaceLength, float offset) : base(color, width)
         {
             UseSecondColor = GetUseSecondColorProperty(useSecondColor);
@@ -324,6 +333,10 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Base { get; }
         public PropertyValue<float> Height { get; }
         public PropertyValue<float> Space { get; }
+
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+
         public SharkTeethStopLineStyle(Color32 color, float baseValue, float height, float space) : base(color, 0)
         {
             Base = GetBaseProperty(baseValue);
@@ -425,6 +438,9 @@ namespace NodeMarkup.Manager
         public override StyleType Type { get; } = StyleType.StopLinePavement;
         public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
         protected override MaterialType MaterialType => MaterialType.Pavement;
+
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
 
         public PavementStopLineStyle(float width, float elevation) : base(width, elevation) { }
 

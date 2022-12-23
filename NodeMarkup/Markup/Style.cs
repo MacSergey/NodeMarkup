@@ -95,8 +95,8 @@ namespace NodeMarkup.Manager
         public PropertyColorValue Color { get; }
         public PropertyStructValue<float> Width { get; }
 
-        protected virtual int ColorIndex => 0;
-        protected virtual int WidthIndex => 1;
+        protected abstract int ColorIndex { get; }
+        protected abstract int WidthIndex { get; }
 
         public Style(Color32 color, float width)
         {
@@ -180,7 +180,7 @@ namespace NodeMarkup.Manager
             var lengthProperty = ComponentPool.GetAfter<Vector2PropertyPanel>(parent, nameof(Width), "Length");
             lengthProperty.Text = Localize.StyleOption_Length;
             lengthProperty.FieldsWidth = 50f;
-            lengthProperty.SetLabels(new string[] { Localize.StyleOption_Dash, Localize.StyleOption_Space });
+            lengthProperty.SetLabels(Localize.StyleOption_Dash, Localize.StyleOption_Space);
             lengthProperty.Format = Localize.NumberFormat_Meter;
             lengthProperty.UseWheel = true;
             lengthProperty.WheelStep = new Vector2(0.1f, 0.1f);

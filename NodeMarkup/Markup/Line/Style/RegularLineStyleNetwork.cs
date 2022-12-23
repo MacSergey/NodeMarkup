@@ -30,6 +30,9 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> RepeatDistance { get; }
         public PropertyBoolValue Invert { get; }
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+
         public NetworkLineStyle(NetInfo prefab, float shift, float elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(new Color32(), 0f)
         {
             Prefab = new PropertyPrefabValue<NetInfo>("PRF", StyleChanged, prefab);

@@ -15,6 +15,9 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.CrosswalkExistent;
         public override MarkupLOD SupportLOD => 0;
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+
         public override float GetTotalWidth(MarkupCrosswalk crosswalk) => Width;
 
         public ExistCrosswalkStyle(float width) : base(new Color32(0, 0, 0, 0), width) { }

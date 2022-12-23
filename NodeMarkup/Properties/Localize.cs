@@ -2431,6 +2431,26 @@ namespace NodeMarkup
 		public static string StyleOption_CrosswalkGap => LocaleManager.GetString("StyleOption_CrosswalkGap", Culture);
 
 		/// <summary>
+		/// Regular
+		/// </summary>
+		public static string FillerStyle_CornerRadiusAbrv => LocaleManager.GetString("FillerStyle_CornerRadiusAbrv", Culture);
+
+		/// <summary>
+		/// Median
+		/// </summary>
+		public static string FillerStyle_CornerRadiusMedianAbrv => LocaleManager.GetString("FillerStyle_CornerRadiusMedianAbrv", Culture);
+
+		/// <summary>
+		/// Regular
+		/// </summary>
+		public static string FillerStyle_CurbSizeAbrv => LocaleManager.GetString("FillerStyle_CurbSizeAbrv", Culture);
+
+		/// <summary>
+		/// Median
+		/// </summary>
+		public static string FillerStyle_CurbSizeMedianAbrv => LocaleManager.GetString("FillerStyle_CurbSizeMedianAbrv", Culture);
+
+		/// <summary>
 		/// Dash
 		/// </summary>
 		public static string StyleOption_Dash => LocaleManager.GetString("StyleOption_Dash", Culture);
@@ -2439,6 +2459,16 @@ namespace NodeMarkup
 		/// Length
 		/// </summary>
 		public static string StyleOption_Length => LocaleManager.GetString("StyleOption_Length", Culture);
+
+		/// <summary>
+		/// Line
+		/// </summary>
+		public static string StyleOption_LineOffsetAbrv => LocaleManager.GetString("StyleOption_LineOffsetAbrv", Culture);
+
+		/// <summary>
+		/// Median
+		/// </summary>
+		public static string StyleOption_MedianOffsetAbrv => LocaleManager.GetString("StyleOption_MedianOffsetAbrv", Culture);
 
 		/// <summary>
 		/// Aft

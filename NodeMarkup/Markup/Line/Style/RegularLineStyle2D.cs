@@ -14,6 +14,9 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.LineSolid;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+
         public SolidLineStyle(Color32 color, float width) : base(color, width) { }
 
         public override RegularLineStyle CopyLineStyle() => new SolidLineStyle(Color, Width);
@@ -125,6 +128,9 @@ namespace NodeMarkup.Manager
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
+
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
 
         public DashedLineStyle(Color32 color, float width, float dashLength, float spaceLength) : base(color, width)
         {
@@ -304,6 +310,9 @@ namespace NodeMarkup.Manager
             }
         }
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+
         public DoubleDashedAsymLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLengthA, float dashLengthB, float spaceLength, float offset) : base(color, width)
         {
             DashLengthA = new PropertyStructValue<float>("DLA", StyleChanged, dashLengthA);
@@ -465,6 +474,9 @@ namespace NodeMarkup.Manager
         private FakeAligmentProperty FakeAligment { get; }
         public PropertyEnumValue<Alignment> Alignment => FakeAligment;
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+
         public SolidAndDashedLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLength, float spaceLength, float offset) : base(color, width)
         {
             UseSecondColor = GetUseSecondColorProperty(useSecondColor);
@@ -605,6 +617,9 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Space { get; }
         public PropertyBoolValue Invert { get; }
         public PropertyValue<float> Angle { get; }
+
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
 
         public SharkTeethLineStyle(Color32 color, float baseValue, float height, float space, float angle) : base(color, 0)
         {

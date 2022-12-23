@@ -48,6 +48,8 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> MedianOffset { get; }
         public PropertyValue<float> LineOffset { get; }
 
+        protected abstract int OffsetIndex { get; }
+
         public FillerStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width)
         {
             MedianOffset = GetMedianOffsetProperty(medianOffset);
@@ -77,10 +79,18 @@ namespace NodeMarkup.Manager
         {
             if (!isTemplate)
             {
-                components.Add(AddLineOffsetProperty(parent, false));
-                if (filler.IsMedian)
-                    components.Add(AddMedianOffsetProperty(parent, true));
+                if (!filler.IsMedian)
+                    components.Add(AddLineOffsetProperty(parent, false));
+                else
+                    components.Add(AddMedianOffsetProperty(parent, false));
             }
+        }
+        public override int GetUIComponentSortIndex(EditorItem item)
+        {
+            if (item.name == "Offset")
+                return OffsetIndex;
+            else
+                return base.GetUIComponentSortIndex(item);
         }
 
         public virtual IEnumerable<IStyleData> Calculate(MarkupFiller filler)
@@ -119,7 +129,7 @@ namespace NodeMarkup.Manager
 
         protected FloatPropertyPanel AddLineOffsetProperty(UIComponent parent, bool canCollapse)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(LineOffset));
+            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, "Offset");
             offsetProperty.Text = Localize.StyleOption_LineOffset;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
@@ -134,20 +144,26 @@ namespace NodeMarkup.Manager
 
             return offsetProperty;
         }
-        private FloatPropertyPanel AddMedianOffsetProperty(UIComponent parent, bool canCollapse)
+        private Vector2PropertyPanel AddMedianOffsetProperty(UIComponent parent, bool canCollapse)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianOffset));
-            offsetProperty.Text = Localize.StyleOption_MedianOffset;
+            var offsetProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, "Offset");
+            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.FieldsWidth = 50f;
+            offsetProperty.SetLabels(Localize.StyleOption_LineOffsetAbrv, Localize.StyleOption_MedianOffsetAbrv);
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.WheelStep = new Vector2(0.1f, 0.1f);
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0f;
+            offsetProperty.MinValue = new Vector2(0f, 0f);
             offsetProperty.CanCollapse = canCollapse;
-            offsetProperty.Init();
-            offsetProperty.Value = MedianOffset;
-            offsetProperty.OnValueChanged += (float value) => MedianOffset.Value = value;
+            offsetProperty.Init(0, 1);
+            offsetProperty.Value = new Vector2(LineOffset, MedianOffset);
+            offsetProperty.OnValueChanged += (Vector2 value) =>
+            {
+                LineOffset.Value = value.x;
+                MedianOffset.Value = value.y;
+            };
 
             return offsetProperty;
         }

@@ -56,6 +56,9 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+
         public PavementLineStyle(float width, float elevation) : base(width, elevation) { }
 
         public override RegularLineStyle CopyLineStyle() => new PavementLineStyle(Width, Elevation);

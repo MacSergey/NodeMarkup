@@ -497,6 +497,9 @@ namespace NodeMarkup.Manager
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
+
         public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
         {
             Color.Value = color;
@@ -618,6 +621,9 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.LineTree;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
+
+        protected override int ColorIndex => 0;
+        protected override int WidthIndex => 1;
 
         public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter) { }
 
