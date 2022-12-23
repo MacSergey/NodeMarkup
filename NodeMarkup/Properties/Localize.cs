@@ -2499,5 +2499,10 @@ namespace NodeMarkup
 		/// Height
 		/// </summary>
 		public static string StyleOption_SharkToothHeightAbrv => LocaleManager.GetString("StyleOption_SharkToothHeightAbrv", Culture);
+
+		/// <summary>
+		/// [NEW] Save marking data into network asset and auto apply it when network is placed.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_11 => LocaleManager.GetString("Mod_WhatsNewMessage1_11", Culture);
 	}
 }
