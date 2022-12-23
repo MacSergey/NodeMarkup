@@ -1625,23 +1625,55 @@ zu verlassen</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Zweite Farbe</value>
   </data>
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Doppelt gestrichelt asym</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Jede {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Abstand</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>Regulär</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Median</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>Regulär</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Median</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Streifen</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Länge</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>Linie</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Median</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>Danach</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>Davor</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Freiraum</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Leitlinien</value>
+  </data>
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Dreieck</value>
+  </data>
 </root>

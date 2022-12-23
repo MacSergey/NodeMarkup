@@ -1618,6 +1618,30 @@
   <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
     <value>高さ</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_11" xml:space="preserve">
+    <value>[NEW] Save marking data into network asset and auto apply it when network is placed.
+[NEW] Added the ability to set markings in tunnels.
+[NEW] Added Double dashed asym style.
+[NEW] Added the ability to collapse unnecessary options.
+[NEW] Added the ability to set tilt and slope to props and trees.
+[NEW] Added the ability to set auto props step depends on their size.
+[NEW] Added the ability to set range to props/trees shift and elevation. 
+[NEW] Added the ability to set second color to double lines.
+[NEW] Props/trees/networks are sorted by name.
+[NEW] Remember searched text when searching for props/trees/networks.
+[FIXED] Color of decorative networks which use theme textures.
+[FIXED] 3D fillers, props, trees and networks which are added by IMT are visible in info views.
+[FIXED] UI flickering while searching props/trees/networks.
+[UPDATED] LOD distance can be set for each type of marking separetly.
+[UPDATED] properties "Offset before" and "Offset after" are combined into "Offset" property.
+[UPDATED] properties "Dash length" and "Space length" are combined into "Length" property.
+[UPDATED] properties "Use gap", "Gap length" and "Gap period" are combined into "Gap" property.
+[UPDATED] properties "Use guides", "Left guide" and "Right guide" are combined into "Guide" property.
+[UPDATED] properties "Base" and "Height" are combined into "Triangle" property.
+[UPDATED] properties "Corner radius" and "Median Corner radius" are combined into "Corner radius" property.
+[UPDATED] properties "Curb size" and "Median curb size" are combined into "Curb size" property.</value>
+  </data>
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>三角形</value>
+  </data>
 </root>
