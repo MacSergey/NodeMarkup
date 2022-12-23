@@ -8,6 +8,7 @@ using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -26,6 +27,9 @@ namespace NodeMarkup.Manager
     {
         public static float DefaultDashLength => 1.5f;
         public static float DefaultSpaceLength => 1.5f;
+
+        protected static string Length => string.Empty;
+        protected static string Offset => string.Empty;
 
         public static bool FromXml<T>(XElement config, ObjectsMap map, bool invert, out T style) where T : Style
         {
@@ -95,8 +99,16 @@ namespace NodeMarkup.Manager
         public PropertyColorValue Color { get; }
         public PropertyStructValue<float> Width { get; }
 
-        protected abstract int ColorIndex { get; }
-        protected abstract int WidthIndex { get; }
+        public abstract Dictionary<string, int> PropertyIndices { get; }
+        protected static Dictionary<string, int> CreatePropertyIndices(IEnumerable<string> names)
+        {
+            var dic = new Dictionary<string, int>();
+            foreach(var name in names)
+            {
+                dic[name] = dic.Count;
+            }
+            return dic;
+        }
 
         public Style(Color32 color, float width)
         {
@@ -137,12 +149,10 @@ namespace NodeMarkup.Manager
 
             return components;
         }
-        public virtual int GetUIComponentSortIndex(EditorItem item)
+        public int GetUIComponentSortIndex(EditorItem item)
         {
-            if (item.name == nameof(Color))
-                return ColorIndex;
-            else if (item.name == nameof(Width))
-                return WidthIndex;
+            if(PropertyIndices.TryGetValue(item.name, out var index))
+                return index;
             else
                 return int.MaxValue;
         }
@@ -177,7 +187,7 @@ namespace NodeMarkup.Manager
         }
         protected Vector2PropertyPanel AddLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
         {
-            var lengthProperty = ComponentPool.GetAfter<Vector2PropertyPanel>(parent, nameof(Width), "Length");
+            var lengthProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Length));
             lengthProperty.Text = Localize.StyleOption_Length;
             lengthProperty.FieldsWidth = 50f;
             lengthProperty.SetLabels(Localize.StyleOption_Dash, Localize.StyleOption_Space);

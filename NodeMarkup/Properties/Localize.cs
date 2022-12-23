@@ -2481,11 +2481,6 @@ namespace NodeMarkup
 		public static string StyleOption_OffsetBeforeAbrv => LocaleManager.GetString("StyleOption_OffsetBeforeAbrv", Culture);
 
 		/// <summary>
-		/// Btw
-		/// </summary>
-		public static string StyleOption_OffsetBetweenAbrv => LocaleManager.GetString("StyleOption_OffsetBetweenAbrv", Culture);
-
-		/// <summary>
 		/// Space
 		/// </summary>
 		public static string StyleOption_Space => LocaleManager.GetString("StyleOption_Space", Culture);
@@ -2494,5 +2489,15 @@ namespace NodeMarkup
 		/// Guides
 		/// </summary>
 		public static string StyleOption_Rails => LocaleManager.GetString("StyleOption_Rails", Culture);
+
+		/// <summary>
+		/// Base
+		/// </summary>
+		public static string StyleOption_SharkToothBaseAbrv => LocaleManager.GetString("StyleOption_SharkToothBaseAbrv", Culture);
+
+		/// <summary>
+		/// Height
+		/// </summary>
+		public static string StyleOption_SharkToothHeightAbrv => LocaleManager.GetString("StyleOption_SharkToothHeightAbrv", Culture);
 	}
 }

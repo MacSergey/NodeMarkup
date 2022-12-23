@@ -10,7 +10,6 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Xml.Linq;
 using UnityEngine;
-using static NodeMarkup.Manager.FillerStyle;
 
 namespace NodeMarkup.Manager
 {
@@ -50,8 +49,6 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> MedianOffset { get; }
         public PropertyValue<float> LineOffset { get; }
 
-        protected abstract int OffsetIndex { get; }
-
         public FillerStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width)
         {
             MedianOffset = GetMedianOffsetProperty(medianOffset);
@@ -86,13 +83,6 @@ namespace NodeMarkup.Manager
                 else
                     components.Add(AddMedianOffsetProperty(parent, false));
             }
-        }
-        public override int GetUIComponentSortIndex(EditorItem item)
-        {
-            if (item.name == "Offset")
-                return OffsetIndex;
-            else
-                return base.GetUIComponentSortIndex(item);
         }
 
         public virtual IEnumerable<IStyleData> Calculate(MarkupFiller filler)
@@ -171,7 +161,7 @@ namespace NodeMarkup.Manager
         }
         protected FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent, bool canCollapse)
         {
-            var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(rotateStyle.Angle));
+            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(rotateStyle.Angle));
             angleProperty.Text = Localize.StyleOption_Angle;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
@@ -191,7 +181,7 @@ namespace NodeMarkup.Manager
         }
         protected FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent, bool canCollapse)
         {
-            var stepProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(periodicStyle.Step));
+            var stepProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(periodicStyle.Step));
             stepProperty.Text = Localize.StyleOption_Step;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;

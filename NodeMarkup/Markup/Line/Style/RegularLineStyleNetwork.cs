@@ -30,8 +30,21 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> RepeatDistance { get; }
         public PropertyBoolValue Invert { get; }
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Prefab);
+                yield return nameof(Shift);
+                yield return nameof(Elevation);
+                yield return nameof(Scale);
+                yield return nameof(RepeatDistance);
+                yield return nameof(Offset);
+                yield return nameof(Invert);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public NetworkLineStyle(NetInfo prefab, float shift, float elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(new Color32(), 0f)
         {
@@ -110,8 +123,7 @@ namespace NodeMarkup.Manager
             components.Add(AddElevationProperty(parent, false));
             components.Add(AddScaleProperty(parent, true));
             components.Add(AddRepeatDistanceProperty(parent, true));
-            components.Add(AddOffsetBeforeProperty(parent, true));
-            components.Add(AddOffsetAfterProperty(parent, true));
+            components.Add(AddOffsetProperty(parent, true));
             components.Add(AddInvertProperty(this, parent, false));
 
             PrefabChanged(parent, Prefab);
@@ -221,37 +233,26 @@ namespace NodeMarkup.Manager
 
             return repeatDistanceProperty;
         }
-        protected FloatPropertyPanel AddOffsetBeforeProperty(UIComponent parent, bool canCollapse)
+        protected Vector2PropertyPanel AddOffsetProperty(UIComponent parent, bool canCollapse)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetBefore));
-            offsetProperty.Text = Localize.StyleOption_OffsetBefore;
+            var offsetProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Offset));
+            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.FieldsWidth = 50f;
+            offsetProperty.SetLabels(Localize.StyleOption_OffsetBeforeAbrv, Localize.StyleOption_OffsetAfterAbrv);
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.WheelStep = new Vector2(0.1f, 0.1f);
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0;
+            offsetProperty.MinValue = Vector2.zero;
             offsetProperty.CanCollapse = canCollapse;
-            offsetProperty.Init();
-            offsetProperty.Value = OffsetBefore;
-            offsetProperty.OnValueChanged += (float value) => OffsetBefore.Value = value;
-
-            return offsetProperty;
-        }
-        protected FloatPropertyPanel AddOffsetAfterProperty(UIComponent parent, bool canCollapse)
-        {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetAfter));
-            offsetProperty.Text = Localize.StyleOption_OffsetAfter;
-            offsetProperty.Format = Localize.NumberFormat_Meter;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0;
-            offsetProperty.CanCollapse = canCollapse;
-            offsetProperty.Init();
-            offsetProperty.Value = OffsetAfter;
-            offsetProperty.OnValueChanged += (float value) => OffsetAfter.Value = value;
+            offsetProperty.Init(0, 1);
+            offsetProperty.Value = new Vector2(OffsetBefore, OffsetAfter);
+            offsetProperty.OnValueChanged += (Vector2 value) =>
+            {
+                OffsetBefore.Value = value.x;
+                OffsetAfter.Value = value.y;
+            };
 
             return offsetProperty;
         }

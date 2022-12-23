@@ -5,6 +5,7 @@ using NodeMarkup.Utilities;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using static ColossalFramework.IO.EncodedArray;
 
 namespace NodeMarkup.Manager
 {
@@ -13,8 +14,16 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.StopLineSolid;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public SolidStopLineStyle(Color32 color, float width) : base(color, width) { }
 
@@ -33,14 +42,28 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.StopLineDoubleSolid;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
-        public PropertyBoolValue UseSecondColor { get; }
+        public PropertyBoolValue ColorCount { get; }
         public PropertyColorValue SecondColor { get; }
         public PropertyValue<float> Offset { get; }
 
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(ColorCount);
+                yield return nameof(Color);
+                yield return nameof(SecondColor);
+                yield return nameof(Width);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+
         public DoubleSolidStopLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offset) : base(color, width)
         {
-            UseSecondColor = GetUseSecondColorProperty(useSecondColor);
-            SecondColor = GetSecondColorProperty(UseSecondColor ? secondColor : color);
+            ColorCount = GetUseSecondColorProperty(useSecondColor);
+            SecondColor = GetSecondColorProperty(ColorCount ? secondColor : color);
             Offset = GetOffsetProperty(offset);
         }
         protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
@@ -54,11 +77,11 @@ namespace NodeMarkup.Manager
             IEnumerable<MarkupPartData> CalculateDashes(ITrajectory dashTrajectory)
             {
                 yield return StyleHelper.CalculateSolidPart(dashTrajectory, offsetLeft, offsetLeft, Width, Color);
-                yield return StyleHelper.CalculateSolidPart(dashTrajectory, offsetRight, offsetRight, Width, UseSecondColor ? SecondColor : Color);
+                yield return StyleHelper.CalculateSolidPart(dashTrajectory, offsetRight, offsetRight, Width, ColorCount ? SecondColor : Color);
             }
         }
 
-        public override StopLineStyle CopyLineStyle() => new DoubleSolidStopLineStyle(Color, SecondColor, UseSecondColor, Width, Offset);
+        public override StopLineStyle CopyLineStyle() => new DoubleSolidStopLineStyle(Color, SecondColor, ColorCount, Width, Offset);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -66,7 +89,7 @@ namespace NodeMarkup.Manager
             {
                 doubleTarget.Offset.Value = Offset;
                 doubleTarget.SecondColor.Value = SecondColor;
-                doubleTarget.UseSecondColor.Value = UseSecondColor;
+                doubleTarget.ColorCount.Value = ColorCount;
             }
         }
 
@@ -76,14 +99,14 @@ namespace NodeMarkup.Manager
 
             components.Add(AddUseSecondColorProperty(this, parent, true));
             components.Add(AddSecondColorProperty(this, parent, true));
-            UseSecondColorChanged(this, parent, UseSecondColor);
+            UseSecondColorChanged(this, parent, ColorCount);
 
             components.Add(AddOffsetProperty(this, parent, false));
         }
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            UseSecondColor.ToXml(config);
+            ColorCount.ToXml(config);
             SecondColor.ToXml(config);
             Offset.ToXml(config);
             return config;
@@ -91,7 +114,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            UseSecondColor.FromXml(config, false);
+            ColorCount.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
         }
@@ -104,8 +127,17 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Length);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public DashedStopLineStyle(Color32 color, float width, float dashLength, float spaceLength) : base(color, width)
         {
@@ -140,8 +172,7 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddDashLengthProperty(this, parent, false));
-            components.Add(AddSpaceLengthProperty(this, parent, false));
+            components.Add(AddLengthProperty(this, parent, false));
         }
 
         public override XElement ToXml()
@@ -163,17 +194,31 @@ namespace NodeMarkup.Manager
         public override StyleType Type { get; } = StyleType.StopLineDoubleDashed;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
-        public PropertyBoolValue UseSecondColor { get; }
+        public PropertyBoolValue ColorCount { get; }
         public PropertyColorValue SecondColor { get; }
         public PropertyValue<float> Offset { get; }
 
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(ColorCount);
+                yield return nameof(Color);
+                yield return nameof(SecondColor);
+                yield return nameof(Width);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+
         public DoubleDashedStopLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
         {
-            UseSecondColor = GetUseSecondColorProperty(useSecondColor);
-            SecondColor = GetSecondColorProperty(UseSecondColor ? secondColor : color);
+            ColorCount = GetUseSecondColorProperty(useSecondColor);
+            SecondColor = GetSecondColorProperty(ColorCount ? secondColor : color);
             Offset = GetOffsetProperty(offset);
         }
-        public override StopLineStyle CopyLineStyle() => new DoubleDashedStopLineStyle(Color, SecondColor, UseSecondColor, Width, DashLength, SpaceLength, Offset);
+        public override StopLineStyle CopyLineStyle() => new DoubleDashedStopLineStyle(Color, SecondColor, ColorCount, Width, DashLength, SpaceLength, Offset);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -181,7 +226,7 @@ namespace NodeMarkup.Manager
             {
                 doubleTarget.Offset.Value = Offset;
                 doubleTarget.SecondColor.Value = SecondColor;
-                doubleTarget.UseSecondColor.Value = UseSecondColor;
+                doubleTarget.ColorCount.Value = ColorCount;
             }
         }
 
@@ -199,7 +244,7 @@ namespace NodeMarkup.Manager
             IEnumerable<MarkupPartData> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
             {
                 yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offsetLeft, offsetLeft, Width, Color);
-                yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offsetRight, offsetRight, Width, UseSecondColor ? SecondColor : Color);
+                yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offsetRight, offsetRight, Width, ColorCount ? SecondColor : Color);
             }
         }
 
@@ -209,14 +254,14 @@ namespace NodeMarkup.Manager
 
             components.Add(AddUseSecondColorProperty(this, parent, true));
             components.Add(AddSecondColorProperty(this, parent, true));
-            UseSecondColorChanged(this, parent, UseSecondColor);
+            UseSecondColorChanged(this, parent, ColorCount);
 
             components.Add(AddOffsetProperty(this, parent, false));
         }
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            UseSecondColor.ToXml(config);
+            ColorCount.ToXml(config);
             SecondColor.ToXml(config);
             Offset.ToXml(config);
             return config;
@@ -224,7 +269,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            UseSecondColor.FromXml(config, false);
+            ColorCount.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
         }
@@ -234,19 +279,30 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.StopLineSolidAndDashed;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
-        public PropertyBoolValue UseSecondColor { get; }
+        public PropertyBoolValue ColorCount { get; }
         public PropertyColorValue SecondColor { get; }
         public PropertyValue<float> Offset { get; }
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(ColorCount);
+                yield return nameof(Color);
+                yield return nameof(SecondColor);
+                yield return nameof(Width);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public SolidAndDashedStopLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLength, float spaceLength, float offset) : base(color, width)
         {
-            UseSecondColor = GetUseSecondColorProperty(useSecondColor);
-            SecondColor = GetSecondColorProperty(UseSecondColor ? secondColor : color);
+            ColorCount = GetUseSecondColorProperty(useSecondColor);
+            SecondColor = GetSecondColorProperty(ColorCount ? secondColor : color);
             Offset = GetOffsetProperty(offset);
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
@@ -270,11 +326,11 @@ namespace NodeMarkup.Manager
 
             IEnumerable<MarkupPartData> CalculateDashedDash(ITrajectory lineTrajectory, float startT, float endT)
             {
-                yield return StyleHelper.CalculateDashedPart(lineTrajectory, startT, endT, DashLength, dashedOffset, dashedOffset, Width, UseSecondColor ? SecondColor : Color);
+                yield return StyleHelper.CalculateDashedPart(lineTrajectory, startT, endT, DashLength, dashedOffset, dashedOffset, Width, ColorCount ? SecondColor : Color);
             }
         }
 
-        public override StopLineStyle CopyLineStyle() => new SolidAndDashedStopLineStyle(Color, SecondColor, UseSecondColor, Width, DashLength, SpaceLength, Offset);
+        public override StopLineStyle CopyLineStyle() => new SolidAndDashedStopLineStyle(Color, SecondColor, ColorCount, Width, DashLength, SpaceLength, Offset);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -288,7 +344,7 @@ namespace NodeMarkup.Manager
             {
                 doubleTarget.Offset.Value = Offset;
                 doubleTarget.SecondColor.Value = SecondColor;
-                doubleTarget.UseSecondColor.Value = UseSecondColor;
+                doubleTarget.ColorCount.Value = ColorCount;
             }
         }
         public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
@@ -297,17 +353,16 @@ namespace NodeMarkup.Manager
 
             components.Add(AddUseSecondColorProperty(this, parent, true));
             components.Add(AddSecondColorProperty(this, parent, true));
-            UseSecondColorChanged(this, parent, UseSecondColor);
+            UseSecondColorChanged(this, parent, ColorCount);
 
-            components.Add(AddDashLengthProperty(this, parent, false));
-            components.Add(AddSpaceLengthProperty(this, parent, false));
+            components.Add(AddLengthProperty(this, parent, false));
             components.Add(AddOffsetProperty(this, parent, false));
         }
 
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            UseSecondColor.ToXml(config);
+            ColorCount.ToXml(config);
             SecondColor.ToXml(config);
             Offset.ToXml(config);
             DashLength.ToXml(config);
@@ -317,7 +372,7 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
-            UseSecondColor.FromXml(config, false);
+            ColorCount.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             DashLength.FromXml(config, DefaultDashLength);
@@ -334,8 +389,17 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Height { get; }
         public PropertyValue<float> Space { get; }
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Triangle);
+                yield return nameof(Space);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public SharkTeethStopLineStyle(Color32 color, float baseValue, float height, float space) : base(color, 0)
         {
@@ -374,8 +438,7 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddBaseProperty(this, parent, false));
-            components.Add(AddHeightProperty(this, parent, false));
+            components.Add(AddTriangleProperty(this, parent, false));
             components.Add(AddSpaceProperty(this, parent, false));
         }
 
@@ -439,8 +502,16 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public PavementStopLineStyle(float width, float elevation) : base(width, elevation) { }
 

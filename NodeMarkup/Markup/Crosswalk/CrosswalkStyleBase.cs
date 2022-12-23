@@ -22,6 +22,8 @@ namespace NodeMarkup.Manager
 
         public static int DefaulCrosswalkGapPeriod => 2;
 
+        protected static string Gap => string.Empty;
+
         public static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
         {
             {CrosswalkType.Existent, new ExistCrosswalkStyle(DefaultCrosswalkWidth) },
@@ -63,7 +65,7 @@ namespace NodeMarkup.Manager
 
         protected Vector2PropertyPanel AddLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, bool canCollapse)
         {
-            var lengthProperty = ComponentPool.GetAfter<Vector2PropertyPanel>(parent, nameof(Width), "Length");
+            var lengthProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Length));
             lengthProperty.Text = Localize.StyleOption_Length;
             lengthProperty.FieldsWidth = 50f;
             lengthProperty.SetLabels(Localize.StyleOption_Dash, Localize.StyleOption_Space);

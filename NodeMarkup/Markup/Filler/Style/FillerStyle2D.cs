@@ -272,8 +272,6 @@ namespace NodeMarkup.Manager
     {
         public PropertyValue<float> Step { get; }
 
-        protected abstract int StepIndex { get; }
-
         public PeriodicFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
         {
             Step = GetStepProperty(step);
@@ -290,13 +288,6 @@ namespace NodeMarkup.Manager
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
             components.Add(AddStepProperty(this, parent, false));
-        }
-        public override int GetUIComponentSortIndex(EditorItem item)
-        {
-            if (item.name == nameof(Step))
-                return StepIndex;
-            else
-                return base.GetUIComponentSortIndex(item);
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
@@ -438,8 +429,6 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> LeftRailB { get; }
         public PropertyValue<int> RightRailB { get; }
 
-        protected abstract int RailIndex { get; }
-
         public RailFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset) : base(color, width, step, lineOffset, medianOffset)
         {
             LeftRailA = GetLeftRailAProperty(0);
@@ -468,14 +457,6 @@ namespace NodeMarkup.Manager
             right = contour.GetRail(RightRailA, RightRailB, LeftRailA, LeftRailB);
         }
 
-        public override int GetUIComponentSortIndex(EditorItem item)
-        {
-            if (item.name == "Rail")
-                return RailIndex;
-            else
-                return base.GetUIComponentSortIndex(item);
-        }
-
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -500,16 +481,26 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerStripe;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
+        protected static string Turn => string.Empty;
+
         public PropertyValue<float> Angle { get; }
         public PropertyValue<bool> FollowRails { get; }
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
-        protected override int StepIndex => 2;
-        protected virtual int AngleIndex => 3;
-        protected override int OffsetIndex => 4;
-        protected override int RailIndex => 5;
-        protected virtual int TurnIndex => 6;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Step);
+                yield return nameof(Angle);
+                yield return nameof(Offset);
+                yield return nameof(Rail);
+                yield return nameof(Turn);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public StripeFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angle, float step, bool followRails = false) : base(color, width, step, lineOffset, medianOffset)
         {
@@ -540,19 +531,10 @@ namespace NodeMarkup.Manager
                 components.Add(AddTurnProperty(filler, parent, false));
             }
         }
-        public override int GetUIComponentSortIndex(EditorItem item)
-        {
-            if (item.name == nameof(Angle))
-                return AngleIndex;
-            if (item.name == "Turn")
-                return TurnIndex;
-            else
-                return base.GetUIComponentSortIndex(item);
-        }
 
         private ButtonPanel AddTurnProperty(MarkupFiller filler, UIComponent parent, bool canCollapse)
         {
-            var turnButton = ComponentPool.Get<ButtonPanel>(parent, "Turn");
+            var turnButton = ComponentPool.Get<ButtonPanel>(parent, nameof(Turn));
             turnButton.Text = Localize.StyleOption_Turn;
             turnButton.CanCollapse = canCollapse;
             turnButton.Init();
@@ -638,13 +620,21 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> Output { get; }
         public PropertyEnumValue<From> StartingFrom { get; }
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
-        protected override int StepIndex => 2;
-        protected virtual int AngleBetweenIndex => 3;
-        protected override int OffsetIndex => 4;
-        protected override int RailIndex => 5;
-        protected virtual int InvertIndex => 6;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Step);
+                yield return nameof(AngleBetween);
+                yield return nameof(Offset);
+                yield return nameof(Rail);
+                yield return nameof(Invert);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public ChevronFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angleBetween, float step) : base(color, width, step, lineOffset, medianOffset)
         {
@@ -679,19 +669,10 @@ namespace NodeMarkup.Manager
                 components.Add(AddInvertAndTurnProperty(filler, parent, false));
             }
         }
-        public override int GetUIComponentSortIndex(EditorItem item)
-        {
-            if (item.name == nameof(AngleBetween))
-                return AngleBetweenIndex;
-            else if (item.name == nameof(Invert))
-                return InvertIndex;
-            else
-                return base.GetUIComponentSortIndex(item);
-        }
 
         protected FloatPropertyPanel AddAngleBetweenProperty(UIComponent parent, bool canCollapse)
         {
-            var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(AngleBetween));
+            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(AngleBetween));
             angleProperty.Text = Localize.StyleOption_AngleBetween;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
@@ -816,11 +797,19 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Angle { get; }
         public PropertyValue<float> Step { get; }
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
-        protected virtual int StepIndex => 2;
-        protected virtual int AngleIndex => 3;
-        protected override int OffsetIndex => 4;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Step);
+                yield return nameof(Angle);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public GridFillerStyle(Color32 color, float width, float angle, float step, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
         {
@@ -845,15 +834,6 @@ namespace NodeMarkup.Manager
             components.Add(AddStepProperty(this, parent, false));
             if (!isTemplate)
                 components.Add(AddAngleProperty(this, parent, false));
-        }
-        public override int GetUIComponentSortIndex(EditorItem item)
-        {
-            if (item.name == nameof(Angle))
-                return AngleIndex;
-            else if (item.name == nameof(Step))
-                return StepIndex;
-            else
-                return base.GetUIComponentSortIndex(item);
         }
 
         protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
@@ -900,10 +880,18 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> RightRailB { get; }
         public PropertyValue<bool> FollowRails { get; }
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
-        protected override int OffsetIndex => 2;
-        protected virtual int RailIndex => 3;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Offset);
+                yield return nameof(Rail);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset, bool followRails = false) : base(color, DefaultSolidWidth, lineOffset, medianOffset)
         {
@@ -965,13 +953,6 @@ namespace NodeMarkup.Manager
             {
                 components.Add(AddRailProperty(this, filler.Contour, parent, true));
             }
-        }
-        public override int GetUIComponentSortIndex(EditorItem item)
-        {
-            if (item.name == "Rail")
-                return RailIndex;
-            else
-                return base.GetUIComponentSortIndex(item);
         }
 
         public override XElement ToXml()

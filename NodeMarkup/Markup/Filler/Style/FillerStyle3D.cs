@@ -29,9 +29,6 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> CornerRadius { get; }
         public PropertyValue<float> MedianCornerRadius { get; }
 
-        protected abstract int ElevationIndex { get; }
-        protected abstract int CornerRadiusIndex { get; }
-
         public TriangulationFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset)
         {
             Elevation = GetElevationProperty(elevation);
@@ -370,15 +367,6 @@ namespace NodeMarkup.Manager
             //}
 #endif
         }
-        public override int GetUIComponentSortIndex(EditorItem item)
-        {
-            if (item.name == nameof(Elevation))
-                return ElevationIndex;
-            else if (item.name == nameof(CornerRadius))
-                return CornerRadiusIndex;
-            else
-                return base.GetUIComponentSortIndex(item);
-        }
 
         private static FloatPropertyPanel AddElevationProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, bool canCollapse)
         {
@@ -471,7 +459,6 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> CurbSize { get; }
         public PropertyValue<float> MedianCurbSize { get; }
 
-        protected abstract int CurbSizeIndex { get; }
 
         public CurbTriangulationFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius)
         {
@@ -622,13 +609,6 @@ namespace NodeMarkup.Manager
                     components.Add(AddMedianCurbSizeProperty(this, parent, true));
             }
         }
-        public override int GetUIComponentSortIndex(EditorItem item)
-        {
-            if (item.name == nameof(CurbSize))
-                return CurbSizeIndex;
-            else
-                return base.GetUIComponentSortIndex(item);
-        }
 
         private static FloatPropertyPanel AddCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent, bool canCollapse)
         {
@@ -695,11 +675,19 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
-        protected override int ElevationIndex => 2;
-        protected override int CornerRadiusIndex => 3;
-        protected override int OffsetIndex => 4;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+                yield return nameof(CornerRadius);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public PavementFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
 
@@ -711,12 +699,20 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Grass;
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
-        protected override int ElevationIndex => 2;
-        protected override int CornerRadiusIndex => 3;
-        protected override int CurbSizeIndex => 4;
-        protected override int OffsetIndex => 5;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+                yield return nameof(CornerRadius);
+                yield return nameof(CurbSize);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public GrassFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
@@ -728,12 +724,20 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Gravel;
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
-        protected override int ElevationIndex => 2;
-        protected override int CornerRadiusIndex => 3;
-        protected override int CurbSizeIndex => 4;
-        protected override int OffsetIndex => 5;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+                yield return nameof(CornerRadius);
+                yield return nameof(CurbSize);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public GravelFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
@@ -745,12 +749,20 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Ruined;
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
-        protected override int ElevationIndex => 2;
-        protected override int CornerRadiusIndex => 3;
-        protected override int CurbSizeIndex => 4;
-        protected override int OffsetIndex => 5;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+                yield return nameof(CornerRadius);
+                yield return nameof(CurbSize);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public RuinedFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
@@ -762,12 +774,20 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Cliff;
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
-        protected override int ElevationIndex => 2;
-        protected override int CornerRadiusIndex => 3;
-        protected override int CurbSizeIndex => 4;
-        protected override int OffsetIndex => 5;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+                yield return nameof(CornerRadius);
+                yield return nameof(CurbSize);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public CliffFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 

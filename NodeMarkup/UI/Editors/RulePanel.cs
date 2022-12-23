@@ -187,7 +187,13 @@ namespace NodeMarkup.UI.Editors
 
         private void AddStyleProperties()
         {
-            StyleProperties = Rule.Style.Value.GetUIComponents(Rule.Line, this);
+            var startIndex = childCount;
+            var style = Rule.Style.Value;
+            StyleProperties = style.GetUIComponents(Rule.Line, this);
+            StyleProperties.Sort((x, y) => style.GetUIComponentSortIndex(x) - style.GetUIComponentSortIndex(y));
+            for (int i = 0; i < StyleProperties.Count; i += 1)
+                StyleProperties[i].zOrder = startIndex + i;
+
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
 

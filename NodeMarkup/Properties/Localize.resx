@@ -1771,13 +1771,16 @@ underground mode</value>
   <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
     <value>Before</value>
   </data>
-  <data name="StyleOption_OffsetBetweenAbrv" xml:space="preserve">
-    <value>Btw</value>
-  </data>
   <data name="StyleOption_Space" xml:space="preserve">
     <value>Space</value>
   </data>
   <data name="StyleOption_Rails" xml:space="preserve">
     <value>Guides</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Height</value>
   </data>
 </root>

@@ -56,8 +56,17 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
-        protected override int ColorIndex => 0;
-        protected override int WidthIndex => 1;
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public PavementLineStyle(float width, float elevation) : base(width, elevation) { }
 
