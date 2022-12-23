@@ -311,46 +311,57 @@ namespace NodeMarkup.Manager
         {
             [Description(nameof(Localize.LineStyle_Solid))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(0)]
             Solid = StyleType.LineSolid,
 
             [Description(nameof(Localize.LineStyle_Dashed))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(1)]
             Dashed = StyleType.LineDashed,
 
             [Description(nameof(Localize.LineStyle_DoubleSolid))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(2)]
             DoubleSolid = StyleType.LineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_DoubleDashed))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(3)]
             DoubleDashed = StyleType.LineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(5)]
             SolidAndDashed = StyleType.LineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(6)]
             SharkTeeth = StyleType.LineSharkTeeth,
 
             [Description(nameof(Localize.LineStyle_DoubleDashedAsym))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(4)]
             DoubleDashedAsym = StyleType.LineDoubleDashedAsym,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             [NetworkType(NetworkType.All)]
+            [Order(7)]
             Pavement = StyleType.LinePavement,
 
             [Description(nameof(Localize.LineStyle_Prop))]
             [NetworkType(NetworkType.All)]
+            [Order(8)]
             Prop = StyleType.LineProp,
 
             [Description(nameof(Localize.LineStyle_Tree))]
             [NetworkType(NetworkType.All)]
+            [Order(9)]
             Tree = StyleType.LineTree,
 
             [Description(nameof(Localize.LineStyle_Network))]
             [NetworkType(NetworkType.All)]
+            [Order(10)]
             Network = StyleType.LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]
