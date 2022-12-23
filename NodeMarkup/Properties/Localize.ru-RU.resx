@@ -1404,7 +1404,7 @@
     <value>Отступ от линий</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
-    <value>Радиус скругления углов</value>
+    <value>Радиус углов</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
     <value>Радиус скругления углов у разделительной полосы</value>
@@ -1806,5 +1806,8 @@
 [UPDATED] Свойство "Основание" и "Высота" объеденены в свойство "Треугольник".
 [UPDATED] Свойство "Радиус угла" и "Радиус угла у медианы" объеденены в свойство "Радиус угла".
 [UPDATED] Свойство "Размер бордюра" и "Размер бордюра у медианы" объеденены в свойство "Размер бордюра".</value>
+  </data>
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Треугольник</value>
   </data>
 </root>
