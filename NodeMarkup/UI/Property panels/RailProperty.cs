@@ -91,6 +91,9 @@ namespace NodeMarkup.UI
             OnEnter = null;
             OnLeave = null;
             OnValueChanged = null;
+            FollowRail.isVisible = true;
+            LeftRailSelector.isEnabled = true;
+            RightRailSelector.isEnabled = true;
         }
 
         private void FollowChanged(bool value)

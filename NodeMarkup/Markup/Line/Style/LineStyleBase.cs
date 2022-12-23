@@ -95,7 +95,7 @@ namespace NodeMarkup.Manager
         protected Vector2PropertyPanel AddTriangleProperty(ISharkLine sharkTeethStyle, UIComponent parent, bool canCollapse)
         {
             var triangleProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Triangle));
-            triangleProperty.Text = Localize.StyleOption_SharkToothBase;
+            triangleProperty.Text = Localize.StyleOption_Triangle;
             triangleProperty.FieldsWidth = 50f;
             triangleProperty.SetLabels(Localize.StyleOption_SharkToothBaseAbrv, Localize.StyleOption_SharkToothHeightAbrv);
             triangleProperty.Format = Localize.NumberFormat_Meter;

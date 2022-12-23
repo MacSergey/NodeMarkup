@@ -1806,4 +1806,7 @@ underground mode</value>
 [UPDATED] properties "Corner radius" and "Median Corner radius" are combined into "Corner radius" property.
 [UPDATED] properties "Curb size" and "Median curb size" are combined into "Curb size" property.</value>
   </data>
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Triangle</value>
+  </data>
 </root>
