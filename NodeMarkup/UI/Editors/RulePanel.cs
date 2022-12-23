@@ -103,14 +103,14 @@ namespace NodeMarkup.UI.Editors
         {
             var edgeProperty = ComponentPool.Get<RuleEdgeSelectPropertyPanel>(this, name);
             edgeProperty.Text = text;
-            edgeProperty.Position = position;
+            edgeProperty.Selector.Position = position;
             edgeProperty.Init();
             edgeProperty.OnSelect += OnSelectPanel;
             edgeProperty.OnEnter += Editor.EnterRuleEdge;
             edgeProperty.OnLeave += Editor.LeaveRuleEdge;
             return edgeProperty;
         }
-        private void OnSelectPanel(RuleEdgeSelectPropertyPanel panel) => Editor.SelectRuleEdge(panel);
+        private void OnSelectPanel(RuleEdgeSelectPropertyPanel.RuleEdgeSelectButton button) => Editor.SelectRuleEdge(button);
 
         private void FillEdges()
         {
@@ -124,8 +124,8 @@ namespace NodeMarkup.UI.Editors
                 return;
 
             panel.OnValueChanged -= action;
-            panel.Clear();
-            panel.AddRange(Editor.SupportPoints);
+            panel.Selector.Clear();
+            panel.Selector.AddRange(Editor.SupportPoints);
             panel.Value = value;
 
             if (Settings.ShowPanelTip && Line.IsSupportRules)
@@ -187,7 +187,13 @@ namespace NodeMarkup.UI.Editors
 
         private void AddStyleProperties()
         {
-            StyleProperties = Rule.Style.Value.GetUIComponents(Rule.Line, this);
+            var startIndex = childCount;
+            var style = Rule.Style.Value;
+            StyleProperties = style.GetUIComponents(Rule.Line, this);
+            StyleProperties.Sort((x, y) => style.GetUIComponentSortIndex(x) - style.GetUIComponentSortIndex(y));
+            for (int i = 0; i < StyleProperties.Count; i += 1)
+                StyleProperties[i].zOrder = startIndex + i;
+
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
 

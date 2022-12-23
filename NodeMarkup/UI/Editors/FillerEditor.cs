@@ -26,7 +26,7 @@ namespace NodeMarkup.UI.Editors
 
         private FillerRailToolMode FillerRailToolMode { get; }
 
-        public FillerRailSelectPropertyPanel HoverRailPanel { get; private set; }
+        public FillerRailPropertyPanel.SelectRailButton HoverRailSelectButton { get; private set; }
 
         #endregion
 
@@ -99,13 +99,18 @@ namespace NodeMarkup.UI.Editors
 
         private void AddStyleProperties()
         {
-            StyleProperties = EditObject.Style.Value.GetUIComponents(EditObject, PropertiesPanel);
+            var startIndex = PropertiesPanel.childCount;
+            var style = EditObject.Style.Value;
+            StyleProperties = style.GetUIComponents(EditObject, PropertiesPanel);
+            StyleProperties.Sort((x, y) => style.GetUIComponentSortIndex(x) - style.GetUIComponentSortIndex(y));
+            for (int i = 0; i < StyleProperties.Count; i += 1)
+                StyleProperties[i].zOrder = startIndex + i;
 
             foreach (var property in StyleProperties)
             {
                 if (property is ColorPropertyPanel colorProperty)
                     colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
-                else if (property is FillerRailSelectPropertyPanel railProperty)
+                else if (property is FillerRailPropertyPanel railProperty)
                 {
                     railProperty.OnSelect += (panel) => SelectRail(panel);
                     railProperty.OnEnter += HoverRail;
@@ -183,12 +188,12 @@ namespace NodeMarkup.UI.Editors
                 ApplyStyle(style);
         }
 
-        public void HoverRail(FillerRailSelectPropertyPanel selectPanel) => HoverRailPanel = selectPanel;
-        public void LeaveRail(FillerRailSelectPropertyPanel selectPanel) => HoverRailPanel = null;
-        public bool SelectRail(FillerRailSelectPropertyPanel selectPanel) => SelectRail(selectPanel, null);
-        public bool SelectRail(FillerRailSelectPropertyPanel selectPanel, Func<Event, bool> afterAction)
+        public void HoverRail(FillerRailPropertyPanel.SelectRailButton selectButton) => HoverRailSelectButton = selectButton;
+        public void LeaveRail(FillerRailPropertyPanel.SelectRailButton selectButton) => HoverRailSelectButton = null;
+        public bool SelectRail(FillerRailPropertyPanel.SelectRailButton selectButton) => SelectRail(selectButton, null);
+        public bool SelectRail(FillerRailPropertyPanel.SelectRailButton selectButton, Func<Event, bool> afterAction)
         {
-            if (Tool.Mode == FillerRailToolMode && selectPanel == FillerRailToolMode.SelectPanel)
+            if (Tool.Mode == FillerRailToolMode && selectButton == FillerRailToolMode.SelectButton)
             {
                 Tool.SetDefaultMode();
                 return true;
@@ -197,9 +202,9 @@ namespace NodeMarkup.UI.Editors
             {
                 Tool.SetMode(FillerRailToolMode);
                 FillerRailToolMode.Contour = EditObject.Contour;
-                FillerRailToolMode.SelectPanel = selectPanel;
-                FillerRailToolMode.AfterSelectPanel = afterAction;
-                selectPanel.Focus();
+                FillerRailToolMode.SelectButton = selectButton;
+                FillerRailToolMode.AfterSelectButton = afterAction;
+                selectButton.Focus();
                 return false;
             }
         }
@@ -208,9 +213,9 @@ namespace NodeMarkup.UI.Editors
         {
             ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
 
-            if (HoverRailPanel != null)
+            if (HoverRailSelectButton != null)
             {
-                var rail = EditObject.Contour.GetRail(HoverRailPanel.Value.A, HoverRailPanel.Value.B, HoverRailPanel.OtherRail.Value.A, HoverRailPanel.OtherRail.Value.B);
+                var rail = EditObject.Contour.GetRail(HoverRailSelectButton.Value.A, HoverRailSelectButton.Value.B, HoverRailSelectButton.Other.A, HoverRailSelectButton.Other.B);
                 rail.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }
@@ -232,7 +237,7 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class FillerRailToolMode : BasePanelMode<FillerEditor, FillerRailSelectPropertyPanel, FillerRail>
+    public class FillerRailToolMode : BasePanelMode<FillerEditor, FillerRailPropertyPanel.SelectRailButton, FillerRail>
     {
         protected override FillerRail Hover => throw new NotImplementedException();
         protected override bool IsHover => throw new NotImplementedException();
@@ -244,7 +249,7 @@ namespace NodeMarkup.UI.Editors
         private PointsSelector<IFillerVertex> PointsSelector { get; set; }
         private LinesSelector<RailBound> LineSelector { get; set; }
 
-        protected override void OnSetPanel()
+        protected override void OnSetButton()
         {
             FirstPoint = null;
             PointsSelector = GetPointsSelector();
@@ -284,8 +289,8 @@ namespace NodeMarkup.UI.Editors
         }
         private void SetValue(Event e, int a, int b)
         {
-            SelectPanel.Value = new FillerRail(a % Contour.ProcessedCount, b % Contour.ProcessedCount);
-            if (AfterSelectPanel?.Invoke(e) ?? true)
+            SelectButton.Value = new FillerRail(a % Contour.ProcessedCount, b % Contour.ProcessedCount);
+            if (AfterSelectButton?.Invoke(e) ?? true)
                 Tool.SetDefaultMode();
         }
         public override string GetToolInfo() => !IsFirstSelected ? Localize.FillerEditor_InfoSelectRailFirst : Localize.FillerEditor_InfoSelectRailSecond;

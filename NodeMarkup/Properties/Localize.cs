@@ -2096,21 +2096,6 @@ namespace NodeMarkup
 		public static string Settings_LevelCrossingUnderMarking => LocaleManager.GetString("Settings_LevelCrossingUnderMarking", Culture);
 
 		/// <summary>
-		/// Gap length
-		/// </summary>
-		public static string StyleOption_GapLength => LocaleManager.GetString("StyleOption_GapLength", Culture);
-
-		/// <summary>
-		/// Gap period
-		/// </summary>
-		public static string StyleOption_GapPeriod => LocaleManager.GetString("StyleOption_GapPeriod", Culture);
-
-		/// <summary>
-		/// Use gap
-		/// </summary>
-		public static string StyleOption_UseGap => LocaleManager.GetString("StyleOption_UseGap", Culture);
-
-		/// <summary>
 		/// Revert offsets
 		/// </summary>
 		public static string PointEditor_RevertOffsets => LocaleManager.GetString("PointEditor_RevertOffsets", Culture);
@@ -2429,5 +2414,95 @@ namespace NodeMarkup
 		/// Second color
 		/// </summary>
 		public static string StyleOption_SecondColor => LocaleManager.GetString("StyleOption_SecondColor", Culture);
+
+		/// <summary>
+		/// Double dashed asym
+		/// </summary>
+		public static string LineStyle_DoubleDashedAsym => LocaleManager.GetString("LineStyle_DoubleDashedAsym", Culture);
+
+		/// <summary>
+		/// Each {0}
+		/// </summary>
+		public static string NumberFormat_Period => LocaleManager.GetString("NumberFormat_Period", Culture);
+
+		/// <summary>
+		/// Gap
+		/// </summary>
+		public static string StyleOption_CrosswalkGap => LocaleManager.GetString("StyleOption_CrosswalkGap", Culture);
+
+		/// <summary>
+		/// Regular
+		/// </summary>
+		public static string FillerStyle_CornerRadiusAbrv => LocaleManager.GetString("FillerStyle_CornerRadiusAbrv", Culture);
+
+		/// <summary>
+		/// Median
+		/// </summary>
+		public static string FillerStyle_CornerRadiusMedianAbrv => LocaleManager.GetString("FillerStyle_CornerRadiusMedianAbrv", Culture);
+
+		/// <summary>
+		/// Regular
+		/// </summary>
+		public static string FillerStyle_CurbSizeAbrv => LocaleManager.GetString("FillerStyle_CurbSizeAbrv", Culture);
+
+		/// <summary>
+		/// Median
+		/// </summary>
+		public static string FillerStyle_CurbSizeMedianAbrv => LocaleManager.GetString("FillerStyle_CurbSizeMedianAbrv", Culture);
+
+		/// <summary>
+		/// Dash
+		/// </summary>
+		public static string StyleOption_Dash => LocaleManager.GetString("StyleOption_Dash", Culture);
+
+		/// <summary>
+		/// Length
+		/// </summary>
+		public static string StyleOption_Length => LocaleManager.GetString("StyleOption_Length", Culture);
+
+		/// <summary>
+		/// Line
+		/// </summary>
+		public static string StyleOption_LineOffsetAbrv => LocaleManager.GetString("StyleOption_LineOffsetAbrv", Culture);
+
+		/// <summary>
+		/// Median
+		/// </summary>
+		public static string StyleOption_MedianOffsetAbrv => LocaleManager.GetString("StyleOption_MedianOffsetAbrv", Culture);
+
+		/// <summary>
+		/// After
+		/// </summary>
+		public static string StyleOption_OffsetAfterAbrv => LocaleManager.GetString("StyleOption_OffsetAfterAbrv", Culture);
+
+		/// <summary>
+		/// Before
+		/// </summary>
+		public static string StyleOption_OffsetBeforeAbrv => LocaleManager.GetString("StyleOption_OffsetBeforeAbrv", Culture);
+
+		/// <summary>
+		/// Space
+		/// </summary>
+		public static string StyleOption_Space => LocaleManager.GetString("StyleOption_Space", Culture);
+
+		/// <summary>
+		/// Guides
+		/// </summary>
+		public static string StyleOption_Rails => LocaleManager.GetString("StyleOption_Rails", Culture);
+
+		/// <summary>
+		/// Base
+		/// </summary>
+		public static string StyleOption_SharkToothBaseAbrv => LocaleManager.GetString("StyleOption_SharkToothBaseAbrv", Culture);
+
+		/// <summary>
+		/// Height
+		/// </summary>
+		public static string StyleOption_SharkToothHeightAbrv => LocaleManager.GetString("StyleOption_SharkToothHeightAbrv", Culture);
+
+		/// <summary>
+		/// [NEW] Save marking data into network asset and auto apply it when network is placed.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_11 => LocaleManager.GetString("Mod_WhatsNewMessage1_11", Culture);
 	}
 }

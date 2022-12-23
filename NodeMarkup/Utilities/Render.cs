@@ -1027,6 +1027,9 @@ namespace NodeMarkup.Utilities
             public Vector3 position;
             public Matrix4x4 left;
             public Matrix4x4 right;
+            public Color color;
+            public Texture surfaceTexA;
+            public Texture surfaceTexB;
             public Texture heightMap;
             public Vector4 heightMapping;
             public Vector4 surfaceMapping;
@@ -1057,8 +1060,12 @@ namespace NodeMarkup.Utilities
                         Datas[index].position = position;
                         Datas[index].left = left;
                         Datas[index].right = right;
+                        Datas[index].color = info.m_color;
+                        Datas[index].color.a = 0f;
 
-                        if (segment.m_requireHeightMap)
+                        if(segment.m_requireSurfaceMaps)
+                            Singleton<TerrainManager>.instance.GetSurfaceMapping(Datas[index].position, out Datas[index].surfaceTexA, out Datas[i].surfaceTexB, out Datas[index].surfaceMapping);
+                        else if (segment.m_requireHeightMap)
                             Singleton<TerrainManager>.instance.GetHeightMapping(Datas[index].position, out Datas[index].heightMap, out Datas[i].heightMapping, out Datas[index].surfaceMapping);
 
                         j += 1;
@@ -1084,7 +1091,14 @@ namespace NodeMarkup.Utilities
                     instance.m_materialBlock.SetMatrix(instance.ID_LeftMatrix, data.left);
                     instance.m_materialBlock.SetMatrix(instance.ID_RightMatrix, data.right);
                     instance.m_materialBlock.SetVector(instance.ID_MeshScale, Scale);
-                    if (data.segment.m_requireHeightMap)
+                    instance.m_materialBlock.SetColor(instance.ID_Color, data.color);
+                    if (data.segment.m_requireSurfaceMaps)
+                    {
+                        instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, data.surfaceTexA);
+                        instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, data.surfaceTexB);
+                        instance.m_materialBlock.SetVector(instance.ID_SurfaceMapping, data.surfaceMapping);
+                    }
+                    else if (data.segment.m_requireHeightMap)
                     {
                         instance.m_materialBlock.SetTexture(instance.ID_HeightMap, data.heightMap);
                         instance.m_materialBlock.SetVector(instance.ID_HeightMapping, data.heightMapping);

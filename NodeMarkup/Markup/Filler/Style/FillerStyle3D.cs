@@ -323,9 +323,10 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddCornerRadiusProperty(this, parent, false));
-                if (filler.IsMedian)
-                    components.Add(AddMedianCornerRadiusProperty(this, parent, true));
+                if (!filler.IsMedian)
+                    components.Add(AddCornerRadiusProperty(this, parent, false));
+                else
+                    components.Add(AddMedianCornerRadiusProperty(this, parent, false));
             }
 #if DEBUG
             //var material = GetVectorProperty(parent, "Material");
@@ -405,22 +406,28 @@ namespace NodeMarkup.Manager
 
             return cornerRadiusProperty;
         }
-        private static FloatPropertyPanel AddMedianCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, bool canCollapse)
+        private static Vector2PropertyPanel AddMedianCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, bool canCollapse)
         {
-            var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCornerRadius));
-            cornerRadiusProperty.Text = Localize.FillerStyle_MedianCornerRadius;
+            var cornerRadiusProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(CornerRadius));
+            cornerRadiusProperty.Text = Localize.FillerStyle_CornerRadius;
+            cornerRadiusProperty.FieldsWidth = 50f;
+            cornerRadiusProperty.SetLabels(Localize.FillerStyle_CornerRadiusAbrv, Localize.FillerStyle_CornerRadiusMedianAbrv);
             cornerRadiusProperty.Format = Localize.NumberFormat_Meter;
             cornerRadiusProperty.UseWheel = true;
-            cornerRadiusProperty.WheelStep = 0.1f;
+            cornerRadiusProperty.WheelStep = new Vector2(0.1f, 0.1f);
             cornerRadiusProperty.WheelTip = Settings.ShowToolTip;
             cornerRadiusProperty.CheckMin = true;
-            cornerRadiusProperty.MinValue = 0f;
+            cornerRadiusProperty.MinValue = new Vector2(0f, 0f);
             cornerRadiusProperty.CheckMax = true;
-            cornerRadiusProperty.MaxValue = 10f;
+            cornerRadiusProperty.MaxValue = new Vector2(10f, 10f);
             cornerRadiusProperty.CanCollapse = canCollapse;
-            cornerRadiusProperty.Init();
-            cornerRadiusProperty.Value = triangulationStyle.MedianCornerRadius;
-            cornerRadiusProperty.OnValueChanged += (float value) => triangulationStyle.MedianCornerRadius.Value = value;
+            cornerRadiusProperty.Init(0, 1);
+            cornerRadiusProperty.Value = new Vector2(triangulationStyle.CornerRadius, triangulationStyle.MedianCornerRadius);
+            cornerRadiusProperty.OnValueChanged += (Vector2 value) =>
+            {
+                triangulationStyle.CornerRadius.Value = value.x;
+                triangulationStyle.MedianCornerRadius.Value = value.y;
+            };
 
             return cornerRadiusProperty;
         }
@@ -451,6 +458,7 @@ namespace NodeMarkup.Manager
 
         public PropertyValue<float> CurbSize { get; }
         public PropertyValue<float> MedianCurbSize { get; }
+
 
         public CurbTriangulationFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius)
         {
@@ -595,11 +603,13 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddCurbSizeProperty(this, parent, false));
-                if (filler.IsMedian)
+                if (!filler.IsMedian)
+                    components.Add(AddCurbSizeProperty(this, parent, false));
+                else
                     components.Add(AddMedianCurbSizeProperty(this, parent, true));
             }
         }
+
         private static FloatPropertyPanel AddCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent, bool canCollapse)
         {
             var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CurbSize));
@@ -619,22 +629,28 @@ namespace NodeMarkup.Manager
 
             return curbSizeProperty;
         }
-        private static FloatPropertyPanel AddMedianCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent, bool canCollapse)
+        private static Vector2PropertyPanel AddMedianCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent, bool canCollapse)
         {
-            var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MedianCurbSize));
-            curbSizeProperty.Text = Localize.FillerStyle_MedianCurbSize;
+            var curbSizeProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(CurbSize));
+            curbSizeProperty.Text = Localize.FillerStyle_CurbSize;
+            curbSizeProperty.FieldsWidth = 50f;
+            curbSizeProperty.SetLabels(Localize.FillerStyle_CurbSizeAbrv, Localize.FillerStyle_CurbSizeMedianAbrv);
             curbSizeProperty.Format = Localize.NumberFormat_Meter;
             curbSizeProperty.UseWheel = true;
-            curbSizeProperty.WheelStep = 0.1f;
+            curbSizeProperty.WheelStep = new Vector2(0.1f, 0.1f);
             curbSizeProperty.WheelTip = Settings.ShowToolTip;
             curbSizeProperty.CheckMin = true;
-            curbSizeProperty.MinValue = 0f;
+            curbSizeProperty.MinValue = new Vector2(0f, 0f);
             curbSizeProperty.CheckMax = true;
-            curbSizeProperty.MaxValue = 10f;
+            curbSizeProperty.MaxValue = new Vector2(10f, 10f);
             curbSizeProperty.CanCollapse = canCollapse;
-            curbSizeProperty.Init();
-            curbSizeProperty.Value = curbStyle.MedianCurbSize;
-            curbSizeProperty.OnValueChanged += (float value) => curbStyle.MedianCurbSize.Value = value;
+            curbSizeProperty.Init(0, 1);
+            curbSizeProperty.Value = new Vector2(curbStyle.CurbSize, curbStyle.MedianCurbSize);
+            curbSizeProperty.OnValueChanged += (Vector2 value) =>
+            {
+                curbStyle.CurbSize.Value = value.x;
+                curbStyle.MedianCurbSize.Value = value.y;
+            };
 
             return curbSizeProperty;
         }
@@ -659,6 +675,20 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+                yield return nameof(CornerRadius);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+
         public PavementFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
 
         public override FillerStyle CopyStyle() => new PavementFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
@@ -668,6 +698,21 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerGrass;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Grass;
+
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+                yield return nameof(CornerRadius);
+                yield return nameof(CurbSize);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public GrassFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
@@ -679,6 +724,21 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Gravel;
 
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+                yield return nameof(CornerRadius);
+                yield return nameof(CurbSize);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+
         public GravelFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
         public override FillerStyle CopyStyle() => new GravelFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius, CurbSize, DefaultCurbSize);
@@ -689,6 +749,21 @@ namespace NodeMarkup.Manager
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Ruined;
 
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+                yield return nameof(CornerRadius);
+                yield return nameof(CurbSize);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+
         public RuinedFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
         public override FillerStyle CopyStyle() => new RuinedFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius, CurbSize, DefaultCurbSize);
@@ -698,6 +773,21 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerCliff;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override MaterialType MaterialType => MaterialType.Cliff;
+
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Elevation);
+                yield return nameof(CornerRadius);
+                yield return nameof(CurbSize);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public CliffFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 

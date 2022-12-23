@@ -80,8 +80,7 @@ namespace NodeMarkup.Manager
             components.Add(AddTiltRangeProperty(parent, true));
             components.Add(AddSlopeRangeProperty(parent, true));
             components.Add(AddScaleRangeProperty(parent, true));
-            components.Add(AddOffsetBeforeProperty(parent, true));
-            components.Add(AddOffsetAfterProperty(parent, true));
+            components.Add(AddOffsetProperty(parent, true));
         }
 
         protected abstract EditorItem AddPrefabProperty(UIComponent parent, bool canCollapse);
@@ -160,7 +159,7 @@ namespace NodeMarkup.Manager
 
         protected FloatStaticRangeProperty AddTiltRangeProperty(UIComponent parent, bool canCollapse)
         {
-            var tiltProperty = ComponentPool.GetAfter<FloatStaticRangeProperty>(parent, nameof(Angle), nameof(Tilt));
+            var tiltProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Tilt));
             tiltProperty.Text = Localize.StyleOption_Tilt;
             tiltProperty.Format = Localize.NumberFormat_Degree;
             tiltProperty.UseWheel = true;
@@ -182,7 +181,7 @@ namespace NodeMarkup.Manager
 
         protected FloatStaticRangeAutoProperty AddSlopeRangeProperty(UIComponent parent, bool canCollapse)
         {
-            var slopeProperty = ComponentPool.GetAfter<FloatStaticRangeAutoProperty>(parent, nameof(Tilt), nameof(Slope));
+            var slopeProperty = ComponentPool.Get<FloatStaticRangeAutoProperty>(parent, nameof(Slope));
             slopeProperty.Text = Localize.StyleOption_Slope;
             slopeProperty.Format = Localize.NumberFormat_Degree;
             slopeProperty.UseWheel = true;
@@ -273,20 +272,26 @@ namespace NodeMarkup.Manager
 
             return elevationProperty;
         }
-        protected FloatPropertyPanel AddOffsetBeforeProperty(UIComponent parent, bool canCollapse)
+        protected Vector2PropertyPanel AddOffsetProperty(UIComponent parent, bool canCollapse)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetBefore));
-            offsetProperty.Text = Localize.StyleOption_OffsetBefore;
+            var offsetProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Offset));
+            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.SetLabels(Localize.StyleOption_OffsetBeforeAbrv, Localize.StyleOption_OffsetAfterAbrv);
+            offsetProperty.FieldsWidth = 50f;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.WheelStep = new Vector2(0.1f, 0.1f);
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0;
+            offsetProperty.MinValue = Vector2.zero;
             offsetProperty.CanCollapse = canCollapse;
-            offsetProperty.Init();
-            offsetProperty.Value = OffsetBefore;
-            offsetProperty.OnValueChanged += (float value) => OffsetBefore.Value = value;
+            offsetProperty.Init(0, 1);
+            offsetProperty.Value = new Vector2(OffsetBefore, OffsetAfter);
+            offsetProperty.OnValueChanged += (Vector2 value) =>
+            {
+                OffsetBefore.Value = value.x;
+                OffsetAfter.Value = value.y;
+            };
 
             return offsetProperty;
         }
@@ -497,6 +502,27 @@ namespace NodeMarkup.Manager
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Prefab);
+                yield return nameof(ColorOption);
+                yield return nameof(Color);
+                yield return nameof(Probability);
+                yield return nameof(Step);
+                yield return nameof(Angle);
+                yield return nameof(Tilt);
+                yield return nameof(Slope);
+                yield return nameof(Shift);
+                yield return nameof(Elevation);
+                yield return nameof(Scale);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+
         public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
         {
             Color.Value = color;
@@ -544,7 +570,7 @@ namespace NodeMarkup.Manager
         }
         protected PropColorPropertyPanel AddColorOptionProperty(UIComponent parent, bool canCollapse)
         {
-            var colorOptionProperty = ComponentPool.GetAfter<PropColorPropertyPanel>(parent, nameof(Prefab), nameof(ColorOption));
+            var colorOptionProperty = ComponentPool.Get<PropColorPropertyPanel>(parent, nameof(ColorOption));
             colorOptionProperty.Text = Localize.StyleOption_ColorOption;
             colorOptionProperty.UseWheel = true;
             colorOptionProperty.CanCollapse = canCollapse;
@@ -565,7 +591,7 @@ namespace NodeMarkup.Manager
 
         protected ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent, bool canCollapse)
         {
-            var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(ColorOption), nameof(Color));
+            var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(Color));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.CanCollapse = canCollapse;
@@ -618,6 +644,25 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.LineTree;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
+
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Prefab);
+                yield return nameof(Probability);
+                yield return nameof(Step);
+                yield return nameof(Angle);
+                yield return nameof(Tilt);
+                yield return nameof(Slope);
+                yield return nameof(Shift);
+                yield return nameof(Elevation);
+                yield return nameof(Scale);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter) { }
 

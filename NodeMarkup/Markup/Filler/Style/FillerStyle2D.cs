@@ -3,6 +3,7 @@ using ColossalFramework.UI;
 using ICities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
 using System;
@@ -480,8 +481,26 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.FillerStripe;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
+        protected static string Turn => string.Empty;
+
         public PropertyValue<float> Angle { get; }
         public PropertyValue<bool> FollowRails { get; }
+
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Step);
+                yield return nameof(Angle);
+                yield return nameof(Offset);
+                yield return nameof(Rail);
+                yield return nameof(Turn);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public StripeFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angle, float step, bool followRails = false) : base(color, width, step, lineOffset, medianOffset)
         {
@@ -508,18 +527,14 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddFollowRailsProperty(this, parent, true));
-                AddRailProperty(this, filler.Contour, parent, true, out var leftRail, out var rightRail);
-                components.Add(leftRail);
-                components.Add(rightRail);
+                components.Add(AddRailProperty(this, filler.Contour, parent, true));
                 components.Add(AddTurnProperty(filler, parent, false));
-
-                FollowRailChanged(parent, FollowRails);
             }
         }
+
         private ButtonPanel AddTurnProperty(MarkupFiller filler, UIComponent parent, bool canCollapse)
         {
-            var turnButton = ComponentPool.Get<ButtonPanel>(parent, "Turn");
+            var turnButton = ComponentPool.Get<ButtonPanel>(parent, nameof(Turn));
             turnButton.Text = Localize.StyleOption_Turn;
             turnButton.CanCollapse = canCollapse;
             turnButton.Init();
@@ -528,10 +543,11 @@ namespace NodeMarkup.Manager
             {
                 var vertexCount = filler.Contour.ProcessedCount;
 
-                if (parent.Find<FillerRailSelectPropertyPanel>("LeftRail") is FillerRailSelectPropertyPanel leftRailProperty)
-                    leftRailProperty.Value = (leftRailProperty.Value + 1) % vertexCount;
-                if (parent.Find<FillerRailSelectPropertyPanel>("RightRail") is FillerRailSelectPropertyPanel rightRailProperty)
-                    rightRailProperty.Value = (rightRailProperty.Value + 1) % vertexCount;
+                if (parent.Find<FillerRailPropertyPanel>(Rail) is FillerRailPropertyPanel railProperty)
+                {
+                    railProperty.LeftRail = (railProperty.LeftRail + 1) % vertexCount;
+                    railProperty.RightRail = (railProperty.RightRail + 1) % vertexCount;
+                }
             };
 
             return turnButton;
@@ -604,6 +620,22 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> Output { get; }
         public PropertyEnumValue<From> StartingFrom { get; }
 
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Step);
+                yield return nameof(AngleBetween);
+                yield return nameof(Offset);
+                yield return nameof(Rail);
+                yield return nameof(Invert);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+
         public ChevronFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angleBetween, float step) : base(color, width, step, lineOffset, medianOffset)
         {
             AngleBetween = GetAngleBetweenProperty(angleBetween);
@@ -633,15 +665,14 @@ namespace NodeMarkup.Manager
             components.Add(AddAngleBetweenProperty(parent, false));
             if (!isTemplate)
             {
-                AddRailProperty(this, filler.Contour, parent, true, out var leftRail, out var rightRail);
-                components.Add(leftRail);
-                components.Add(rightRail);
+                components.Add(AddRailProperty(this, filler.Contour, parent, true));
                 components.Add(AddInvertAndTurnProperty(filler, parent, false));
             }
         }
+
         protected FloatPropertyPanel AddAngleBetweenProperty(UIComponent parent, bool canCollapse)
         {
-            var angleProperty = ComponentPool.GetBefore<FloatPropertyPanel>(parent, nameof(LineOffset), nameof(AngleBetween));
+            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(AngleBetween));
             angleProperty.Text = Localize.StyleOption_AngleBetween;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
@@ -675,11 +706,11 @@ namespace NodeMarkup.Manager
                 else if (buttonIndex == turnIndex)
                 {
                     var vertexCount = filler.Contour.ProcessedCount;
-
-                    if (parent.Find<FillerRailSelectPropertyPanel>(LeftRail) is FillerRailSelectPropertyPanel leftRailProperty)
-                        leftRailProperty.Value = (leftRailProperty.Value + 1) % vertexCount;
-                    if (parent.Find<FillerRailSelectPropertyPanel>(RightRail) is FillerRailSelectPropertyPanel rightRailProperty)
-                        rightRailProperty.Value = (rightRailProperty.Value + 1) % vertexCount;
+                    if (parent.Find<FillerRailPropertyPanel>(Rail) is FillerRailPropertyPanel railProperty)
+                    {
+                        railProperty.LeftRail = (railProperty.LeftRail + 1) % vertexCount;
+                        railProperty.RightRail = (railProperty.RightRail + 1) % vertexCount;
+                    }
                 }
             };
 
@@ -766,6 +797,20 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Angle { get; }
         public PropertyValue<float> Step { get; }
 
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Step);
+                yield return nameof(Angle);
+                yield return nameof(Offset);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+
         public GridFillerStyle(Color32 color, float width, float angle, float step, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
         {
             Angle = GetAngleProperty(angle);
@@ -835,6 +880,19 @@ namespace NodeMarkup.Manager
         public PropertyValue<int> RightRailB { get; }
         public PropertyValue<bool> FollowRails { get; }
 
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Offset);
+                yield return nameof(Rail);
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+
         public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset, bool followRails = false) : base(color, DefaultSolidWidth, lineOffset, medianOffset)
         {
             LeftRailA = GetLeftRailAProperty(0);
@@ -893,11 +951,7 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddFollowRailsProperty(this, parent, true));
-                AddRailProperty(this, filler.Contour, parent, true, out var leftRail, out var rightRail);
-
-                components.Add(leftRail);
-                components.Add(rightRail);
+                components.Add(AddRailProperty(this, filler.Contour, parent, true));
             }
         }
 

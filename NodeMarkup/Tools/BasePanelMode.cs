@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public abstract class BasePanelMode<EditorType, PanelType, ObjectType> : NodeMarkupToolMode
+    public abstract class BasePanelMode<EditorType, ButtonType, ObjectType> : NodeMarkupToolMode
         where EditorType : Editor
-        where PanelType : SelectPropertyPanel<ObjectType, PanelType>
+        where ButtonType : SelectPropertyButton<ObjectType>
     {
         public override ToolModeType Type => ToolModeType.PanelAction;
 
@@ -16,51 +16,51 @@ namespace NodeMarkup.Tools
         protected abstract bool IsHover { get; }
         protected abstract ObjectType Hover { get; }
 
-        private PanelType _selectPanel;
-        public PanelType SelectPanel
+        private ButtonType _selectButton;
+        public ButtonType SelectButton
         {
-            get => _selectPanel;
+            get => _selectButton;
             set
             {
-                if (_selectPanel != null)
+                if (_selectButton != null)
                 {
-                    _selectPanel.eventLeaveFocus -= SelectPanelLeaveFocus;
-                    _selectPanel.Selected = false;
+                    _selectButton.eventLeaveFocus -= SelectButtonLeaveFocus;
+                    _selectButton.Selected = false;
                 }
 
-                _selectPanel = value;
+                _selectButton = value;
 
-                if (_selectPanel != null)
+                if (_selectButton != null)
                 {
-                    OnSetPanel();
-                    _selectPanel.eventLeaveFocus += SelectPanelLeaveFocus;
-                    _selectPanel.Selected = true;
+                    OnSetButton();
+                    _selectButton.eventLeaveFocus += SelectButtonLeaveFocus;
+                    _selectButton.Selected = true;
                 }
             }
         }
 
-        public Func<Event, bool> AfterSelectPanel { get; set; }
+        public Func<Event, bool> AfterSelectButton { get; set; }
 
         public void Init(EditorType editor) => Editor = editor;
 
         public void Update()
         {
-            if (SelectPanel is PanelType panel)
-                panel.Selected = true;
+            if (SelectButton is ButtonType button)
+                button.Selected = true;
         }
         public override void Deactivate()
         {
             base.Deactivate();
-            SelectPanel = null;
+            SelectButton = null;
         }
-        protected virtual void OnSetPanel() { }
+        protected virtual void OnSetButton() { }
 
         public override void OnPrimaryMouseClicked(Event e)
         {
             if (IsHover)
             {
-                SelectPanel.Value = Hover;
-                if (AfterSelectPanel?.Invoke(e) ?? true)
+                SelectButton.Value = Hover;
+                if (AfterSelectButton?.Invoke(e) ?? true)
                     Tool.SetDefaultMode();
             }
         }
@@ -72,6 +72,6 @@ namespace NodeMarkup.Tools
         }
         private void Exit() => Tool.SetDefaultMode();
 
-        private void SelectPanelLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => Tool.SetDefaultMode();
+        private void SelectButtonLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => Tool.SetDefaultMode();
     }
 }

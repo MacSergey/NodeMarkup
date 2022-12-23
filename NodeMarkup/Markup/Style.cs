@@ -8,6 +8,7 @@ using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -26,6 +27,9 @@ namespace NodeMarkup.Manager
     {
         public static float DefaultDashLength => 1.5f;
         public static float DefaultSpaceLength => 1.5f;
+
+        protected static string Length => string.Empty;
+        protected static string Offset => string.Empty;
 
         public static bool FromXml<T>(XElement config, ObjectsMap map, bool invert, out T style) where T : Style
         {
@@ -94,6 +98,18 @@ namespace NodeMarkup.Manager
 
         public PropertyColorValue Color { get; }
         public PropertyStructValue<float> Width { get; }
+
+        public abstract Dictionary<string, int> PropertyIndices { get; }
+        protected static Dictionary<string, int> CreatePropertyIndices(IEnumerable<string> names)
+        {
+            var dic = new Dictionary<string, int>();
+            foreach(var name in names)
+            {
+                dic[name] = dic.Count;
+            }
+            return dic;
+        }
+
         public Style(Color32 color, float width)
         {
             Color = GetColorProperty(color);
@@ -133,6 +149,13 @@ namespace NodeMarkup.Manager
 
             return components;
         }
+        public int GetUIComponentSortIndex(EditorItem item)
+        {
+            if(PropertyIndices.TryGetValue(item.name, out var index))
+                return index;
+            else
+                return int.MaxValue;
+        }
         private ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent, bool canCollapse)
         {
             var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(Color));
@@ -161,6 +184,29 @@ namespace NodeMarkup.Manager
             widthProperty.OnValueChanged += (float value) => Width.Value = value;
 
             return widthProperty;
+        }
+        protected Vector2PropertyPanel AddLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
+        {
+            var lengthProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Length));
+            lengthProperty.Text = Localize.StyleOption_Length;
+            lengthProperty.FieldsWidth = 50f;
+            lengthProperty.SetLabels(Localize.StyleOption_Dash, Localize.StyleOption_Space);
+            lengthProperty.Format = Localize.NumberFormat_Meter;
+            lengthProperty.UseWheel = true;
+            lengthProperty.WheelStep = new Vector2(0.1f, 0.1f);
+            lengthProperty.WheelTip = Settings.ShowToolTip;
+            lengthProperty.CheckMin = true;
+            lengthProperty.MinValue = new Vector2(0.1f, 0.1f);
+            lengthProperty.CanCollapse = canCollapse;
+            lengthProperty.Init(0, 1);
+            lengthProperty.Value = new Vector2(dashedStyle.DashLength, dashedStyle.SpaceLength);
+            lengthProperty.OnValueChanged += (Vector2 value) =>
+            {
+                dashedStyle.DashLength.Value = value.x;
+                dashedStyle.SpaceLength.Value = value.y;
+            };
+
+            return lengthProperty;
         }
         protected FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
         {
@@ -313,6 +359,10 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             LineSharkTeeth,
+
+            [Description(nameof(Localize.LineStyle_DoubleDashedAsym))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            LineDoubleDashedAsym,
 
             [NotItem]
             Regular3DLine = Markup.Item.RegularLine + 0x80,

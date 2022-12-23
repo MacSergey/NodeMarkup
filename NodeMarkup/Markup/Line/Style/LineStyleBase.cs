@@ -22,7 +22,7 @@ namespace NodeMarkup.Manager
     public interface IDoubleLine
     {
         PropertyValue<float> Offset { get; }
-        public PropertyBoolValue UseSecondColor { get; }
+        public PropertyBoolValue ColorCount { get; }
         public PropertyColorValue SecondColor { get; }
     }
     public interface IDoubleAlignmentLine : IDoubleLine
@@ -45,7 +45,7 @@ namespace NodeMarkup.Manager
     }
     public interface IDoubleCrosswalk
     {
-        PropertyValue<float> Offset { get; }
+        PropertyValue<float> OffsetBetween { get; }
     }
     public interface ILinedCrosswalk
     {
@@ -63,6 +63,8 @@ namespace NodeMarkup.Manager
 
     public abstract class LineStyle : Style<LineStyle>
     {
+        protected static string Triangle => string.Empty;
+
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public abstract IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod);
@@ -89,6 +91,29 @@ namespace NodeMarkup.Manager
             offsetProperty.OnValueChanged += (float value) => doubleStyle.Offset.Value = value;
 
             return offsetProperty;
+        }
+        protected Vector2PropertyPanel AddTriangleProperty(ISharkLine sharkTeethStyle, UIComponent parent, bool canCollapse)
+        {
+            var triangleProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Triangle));
+            triangleProperty.Text = Localize.StyleOption_SharkToothBase;
+            triangleProperty.FieldsWidth = 50f;
+            triangleProperty.SetLabels(Localize.StyleOption_SharkToothBaseAbrv, Localize.StyleOption_SharkToothHeightAbrv);
+            triangleProperty.Format = Localize.NumberFormat_Meter;
+            triangleProperty.UseWheel = true;
+            triangleProperty.WheelStep = new Vector2(0.1f, 0.1f);
+            triangleProperty.WheelTip = Settings.ShowToolTip;
+            triangleProperty.CheckMin = true;
+            triangleProperty.MinValue = new Vector2(0.3f, 0.3f);
+            triangleProperty.CanCollapse = canCollapse;
+            triangleProperty.Init(0, 1);
+            triangleProperty.Value = new Vector2(sharkTeethStyle.Base, sharkTeethStyle.Height);
+            triangleProperty.OnValueChanged += (Vector2 value) =>
+            {
+                sharkTeethStyle.Base.Value = value.x;
+                sharkTeethStyle.Height.Value = value.y;
+            };
+
+            return triangleProperty;
         }
         protected FloatPropertyPanel AddBaseProperty(ISharkLine sharkTeethStyle, UIComponent parent, bool canCollapse)
         {
@@ -172,14 +197,14 @@ namespace NodeMarkup.Manager
 
         protected BoolListPropertyPanel AddUseSecondColorProperty(IDoubleLine doubleLine, UIComponent parent, bool canCollapse)
         {
-            var useSecondColorProperty = ComponentPool.GetBefore<BoolListPropertyPanel>(parent, nameof(Color), nameof(doubleLine.UseSecondColor));
+            var useSecondColorProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(doubleLine.ColorCount));
             useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
             useSecondColorProperty.CanCollapse = canCollapse;
             useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
-            useSecondColorProperty.SelectedObject = doubleLine.UseSecondColor;
+            useSecondColorProperty.SelectedObject = doubleLine.ColorCount;
             useSecondColorProperty.OnSelectObjectChanged += (value) =>
                 {
-                    doubleLine.UseSecondColor.Value = value;
+                    doubleLine.ColorCount.Value = value;
                     UseSecondColorChanged(doubleLine, parent, value);
                 };
 
@@ -201,7 +226,7 @@ namespace NodeMarkup.Manager
 
         protected ColorAdvancedPropertyPanel AddSecondColorProperty(IDoubleLine doubleLine, UIComponent parent, bool canCollapse)
         {
-            var colorProperty = ComponentPool.GetAfter<ColorAdvancedPropertyPanel>(parent, nameof(Color), nameof(doubleLine.SecondColor));
+            var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(doubleLine.SecondColor));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.CanCollapse = canCollapse;
@@ -251,6 +276,7 @@ namespace NodeMarkup.Manager
             {RegularLineType.Dashed, new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength)},
             {RegularLineType.DoubleSolid, new DoubleSolidLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDoubleOffset)},
             {RegularLineType.DoubleDashed, new DoubleDashedLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
+            {RegularLineType.DoubleDashedAsym, new DoubleDashedAsymLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultSpaceLength * 2f, DefaultDoubleOffset)},
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength, DefaultSharkAngle) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
@@ -285,42 +311,57 @@ namespace NodeMarkup.Manager
         {
             [Description(nameof(Localize.LineStyle_Solid))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(0)]
             Solid = StyleType.LineSolid,
 
             [Description(nameof(Localize.LineStyle_Dashed))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(1)]
             Dashed = StyleType.LineDashed,
 
             [Description(nameof(Localize.LineStyle_DoubleSolid))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(2)]
             DoubleSolid = StyleType.LineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_DoubleDashed))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(3)]
             DoubleDashed = StyleType.LineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(5)]
             SolidAndDashed = StyleType.LineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(6)]
             SharkTeeth = StyleType.LineSharkTeeth,
+
+            [Description(nameof(Localize.LineStyle_DoubleDashedAsym))]
+            [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [Order(4)]
+            DoubleDashedAsym = StyleType.LineDoubleDashedAsym,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             [NetworkType(NetworkType.All)]
+            [Order(7)]
             Pavement = StyleType.LinePavement,
 
             [Description(nameof(Localize.LineStyle_Prop))]
             [NetworkType(NetworkType.All)]
+            [Order(8)]
             Prop = StyleType.LineProp,
 
             [Description(nameof(Localize.LineStyle_Tree))]
             [NetworkType(NetworkType.All)]
+            [Order(9)]
             Tree = StyleType.LineTree,
 
             [Description(nameof(Localize.LineStyle_Network))]
             [NetworkType(NetworkType.All)]
+            [Order(10)]
             Network = StyleType.LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]

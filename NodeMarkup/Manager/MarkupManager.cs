@@ -3,6 +3,7 @@ using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Utilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -95,7 +96,7 @@ namespace NodeMarkup.Manager
             SingletonManager<NodeMarkupManager>.Instance.FromXml(config, map, version, needUpdate);
             SingletonManager<SegmentMarkupManager>.Instance.FromXml(config, map, version, needUpdate);
         }
-        private static Version GetVersion(XElement config)
+        public static Version GetVersion(XElement config)
         {
             try { return new Version(config.Attribute("V").Value); }
             catch { return SingletonMod<Mod>.Version; }
@@ -106,13 +107,14 @@ namespace NodeMarkup.Manager
             Errors = -1;
         }
     }
-    public abstract class MarkupManager<TypeMarkup> : IManager
+    public abstract class MarkupManager<TypeMarkup> : IManager, IEnumerable<TypeMarkup>
         where TypeMarkup : Markup
     {
         protected Dictionary<ushort, TypeMarkup> Markups { get; } = new Dictionary<ushort, TypeMarkup>();
         protected abstract MarkupType Type { get; }
         protected abstract string XmlName { get; }
         protected abstract ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map);
+
 
         private static PropManager PropManager => Singleton<PropManager>.instance;
 
@@ -228,6 +230,10 @@ namespace NodeMarkup.Manager
                 }
             }
         }
+
+        public IEnumerator<TypeMarkup> GetEnumerator() => Markups.Values.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
     public class NodeMarkupManager : MarkupManager<NodeMarkup>
     {

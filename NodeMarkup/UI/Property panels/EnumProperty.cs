@@ -3,27 +3,25 @@ using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NodeMarkup.UI
 {
     public abstract class StylePropertyPanel : EnumOncePropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown>
     {
-        protected override bool IsEqual(Style.StyleType first, Style.StyleType second) => first == second;
         public class StyleDropDown : UIDropDown<Style.StyleType> { }
-        protected override string GetDescription(Style.StyleType value) => value.Description();
     }
     public abstract class StylePropertyPanel<StyleType> : StylePropertyPanel
         where StyleType : Enum
     {
-        protected override void FillItems(Func<Style.StyleType, bool> selector)
+        protected override IEnumerable<Style.StyleType> GetValues()
         {
-            foreach (var value in Enum.GetValues(typeof(StyleType)).Cast<object>().Cast<Style.StyleType>())
-            {
-                if (selector?.Invoke(value) != false && value.IsVisible())
-                    Selector.AddItem(value, GetDescription(value));
-            }
+            foreach (var value in EnumExtension.GetEnumValues<StyleType>())
+                yield return value.ToEnum<Style.StyleType, StyleType>();
         }
+        protected override bool IsEqual(Style.StyleType first, Style.StyleType second) => first == second;
+        protected override string GetDescription(Style.StyleType value) => value.Description();
     }
     public class RegularStylePropertyPanel : StylePropertyPanel<RegularLineStyle.RegularLineType> { }
     public class StopStylePropertyPanel : StylePropertyPanel<StopLineStyle.StopLineType> { }
