@@ -86,8 +86,10 @@ namespace NodeMarkup.Utilities
                     instance.m_materialBlock.SetColor(instance.ID_Color, data.color);
                     if (data.segment.m_requireSurfaceMaps)
                     {
-                        instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, data.surfaceTexA);
-                        instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, data.surfaceTexB);
+                        if (data.surfaceTexA != null)
+                            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, data.surfaceTexA);
+                        if (data.surfaceTexB != null)
+                            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, data.surfaceTexB);
                         instance.m_materialBlock.SetVector(instance.ID_SurfaceMapping, data.surfaceMapping);
                     }
                     else if (data.segment.m_requireHeightMap)
