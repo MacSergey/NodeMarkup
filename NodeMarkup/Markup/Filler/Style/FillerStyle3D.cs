@@ -268,6 +268,7 @@ namespace NodeMarkup.Manager
         private IStyleData GetTriangulationLines(Vector3[] points, int[] triangles, Color32 color, MaterialType materialType)
         {
             var dashes = new List<MarkupPartData>();
+            var material = RenderHelper.MaterialLib[materialType];
 
             for (int i = 0; i < triangles.Length; i += 3)
             {
@@ -275,9 +276,9 @@ namespace NodeMarkup.Manager
                 var point2 = points[triangles[i + 1]];
                 var point3 = points[triangles[i + 2]];
 
-                dashes.Add(new MarkupPartData(point1, point2, 0.05f, color, materialType));
-                dashes.Add(new MarkupPartData(point2, point3, 0.05f, color, materialType));
-                dashes.Add(new MarkupPartData(point3, point1, 0.05f, color, materialType));
+                dashes.Add(new MarkupPartData(point1, point2, 0.05f, color, material));
+                dashes.Add(new MarkupPartData(point2, point3, 0.05f, color, material));
+                dashes.Add(new MarkupPartData(point3, point1, 0.05f, color, material));
             }
 
             return new MarkupPartGroupData(MarkupLOD.NoLOD, dashes);

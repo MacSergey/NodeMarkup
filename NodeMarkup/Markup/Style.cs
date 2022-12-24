@@ -382,6 +382,11 @@ namespace NodeMarkup.Manager
             [NetworkType(NetworkType.All)]
             LineTree,
 
+            [Description("Text")]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            LineText,
+
+
             [NotItem]
             RegularNetworkLine = Regular3DLine + 0x20,
 

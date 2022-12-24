@@ -204,7 +204,7 @@ namespace NodeMarkup.Manager
             if (style != null)
             {
                 AddRule(style, false, false);
-                RecalculateStyleData();
+                Markup.RecalculateStyleData(this);
             }
         }
 
@@ -417,7 +417,7 @@ namespace NodeMarkup.Manager
             SetRule(rule);
 
             Update(true);
-            RecalculateStyleData();
+            Markup.RecalculateStyleData(this);
         }
 
         private void AlignmentChanged() => Markup.Update(this, true, true);

@@ -824,7 +824,7 @@ namespace NodeMarkup.Manager
             for (var i = 0; i < count; i += 1)
             {
                 var trajectory = crosswalk.GetTrajectory(startOffset + partOffset * i + OffsetBefore);
-                yield return new MarkupPartData(trajectory.StartPosition, trajectory.EndPosition, trajectory.Direction, partWidth, Color);
+                yield return new MarkupPartData(trajectory.StartPosition, trajectory.EndPosition, trajectory.Direction, partWidth, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
             }
         }
     }

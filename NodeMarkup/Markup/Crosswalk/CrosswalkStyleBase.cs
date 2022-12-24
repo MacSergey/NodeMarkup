@@ -111,7 +111,7 @@ namespace NodeMarkup.Manager
                 var startPosition = position + direction * start;
                 var endPosition = position + direction * end;
 
-                yield return new MarkupPartData(startPosition, endPosition, direction, width, color);
+                yield return new MarkupPartData(startPosition, endPosition, direction, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
             }
 
             static float GetOffset(Intersection intersect, float offset)

@@ -732,7 +732,7 @@ namespace NodeMarkup.Manager
             {
                 if (StyleHelper.CalculateDashedParts(borders, trajectory, Invert ? endT : startT, Invert ? startT : endT, Base, Height / (Invert ? 2 : -2), Height, Color, out MarkupPartData dash))
                 {
-                    dash.MaterialType = MaterialType.Triangle;
+                    dash.Material = RenderHelper.MaterialLib[MaterialType.Triangle];
                     dash.Angle -= Angle * Mathf.Deg2Rad;
                     yield return dash;
                 }

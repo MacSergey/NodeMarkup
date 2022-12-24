@@ -195,7 +195,7 @@ namespace NodeMarkup.Manager
 
             var dir = angle?.Direction() ?? (endPosition - startPosition);
 
-            return new MarkupPartData(startPosition, endPosition, dir, dashLength, width, color);
+            return new MarkupPartData(startPosition, endPosition, dir, dashLength, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
         }
 
         public static bool CalculateSolidPart(LineBorders borders, ITrajectory trajectory, float offset, float width, Color32 color, out MarkupPartData part)
@@ -237,7 +237,7 @@ namespace NodeMarkup.Manager
             {
                 var dir = part.Angle.Direction() * (part.Length / 2);
                 var line = new StraightTrajectory(part.Position + dir, part.Position - dir).Cut(from, to);
-                part = new MarkupPartData(line.StartPosition, line.EndPosition, line.Direction, part.Width, part.Color);
+                part = new MarkupPartData(line.StartPosition, line.EndPosition, line.Direction, part.Width, part.Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
             }
             return true;
         }
@@ -256,7 +256,7 @@ namespace NodeMarkup.Manager
         {
             var startPosition = trajectory.StartPosition + startOffset;
             var endPosition = trajectory.EndPosition + endOffset;
-            return new MarkupPartData(startPosition, endPosition, endPosition - startPosition, width, color);
+            return new MarkupPartData(startPosition, endPosition, endPosition - startPosition, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
         }
         private static Dictionary<MarkupLOD, float> LodMax { get; } = new Dictionary<MarkupLOD, float>
         {

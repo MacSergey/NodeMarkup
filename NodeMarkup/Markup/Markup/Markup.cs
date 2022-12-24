@@ -68,7 +68,9 @@ namespace NodeMarkup.Manager
 
 
         public bool NeedRecalculateDrawData { get; private set; }
+        private HashSet<IStyleItem> RecalculateList { get; set; } = new HashSet<IStyleItem>();
         public MarkupRenderData DrawData { get; } = new MarkupRenderData();
+
 
         private bool _needSetOrder;
         public bool NeedSetOrder
@@ -387,20 +389,25 @@ namespace NodeMarkup.Manager
         }
         public void RecalculateStyleData(IStyleItem toRecalculate = null)
         {
-            toRecalculate?.RecalculateStyleData();
             NeedRecalculateDrawData = true;
+            if (toRecalculate != null)
+                RecalculateList.Add(toRecalculate);
         }
         public void RecalculateStyleData(HashSet<IStyleItem> toRecalculate)
         {
-            foreach (var item in toRecalculate)
-                item.RecalculateStyleData();
-
             NeedRecalculateDrawData = true;
+            RecalculateList.AddRange(toRecalculate);
         }
 
         public void RecalculateDrawData()
         {
             DrawData.Clear();
+
+            var recalculateList = RecalculateList;
+            RecalculateList = new HashSet<IStyleItem>();
+
+            foreach(var item in recalculateList)
+                item.RecalculateStyleData();
 
             var dashesLOD0 = new List<MarkupPartData>();
             var dashesLOD1 = new List<MarkupPartData>();

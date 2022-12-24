@@ -181,7 +181,7 @@ namespace NodeMarkup.Manager
                 var end = intersects[i];
                 var startPos = start.Second.Position(start.SecondT);
                 var endPos = end.Second.Position(end.SecondT);
-                yield return new MarkupPartData(startPos, endPos, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
+                yield return new MarkupPartData(startPos, endPos, item.Direction, item.Width, Color.Value, RenderHelper.MaterialLib[MaterialType.RectangleFillers]);
             }
         }
         protected IEnumerable<MarkupPartData> GetDashesWithOrder(PartItem item, List<List<FillerContour.Part>> contours)
@@ -204,7 +204,7 @@ namespace NodeMarkup.Manager
                 {
                     var start = item.Position + item.Direction * input;
                     var end = item.Position + item.Direction * output;
-                    yield return new MarkupPartData(start, end, item.Direction, item.Width, Color.Value, MaterialType.RectangleFillers);
+                    yield return new MarkupPartData(start, end, item.Direction, item.Width, Color.Value, RenderHelper.MaterialLib[MaterialType.RectangleFillers]);
                 }
             }
         }

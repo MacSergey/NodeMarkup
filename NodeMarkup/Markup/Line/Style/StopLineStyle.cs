@@ -414,7 +414,7 @@ namespace NodeMarkup.Manager
 
             var styleData = new MarkupPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes));
             foreach (var dash in styleData)
-                dash.MaterialType = MaterialType.Triangle;
+                dash.Material = RenderHelper.MaterialLib[MaterialType.Triangle];
 
             return styleData;
         }
