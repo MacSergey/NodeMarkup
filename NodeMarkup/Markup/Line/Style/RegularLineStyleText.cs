@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Manager
@@ -18,9 +19,11 @@ namespace NodeMarkup.Manager
 
         public override StyleType Type => StyleType.LineText;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0/* | MarkupLOD.LOD1*/;
+        public override bool CanOverlap => true;
 
         private PropertyStringValue Text { get; }
         private PropertyStructValue<float> Scale { get; }
+        private PropertyStructValue<float> Shift { get; }
         private PropertyStructValue<float> Angle { get; }
         private PropertyBoolValue Vertical { get; }
 #if DEBUG
@@ -35,6 +38,7 @@ namespace NodeMarkup.Manager
                 yield return nameof(Text);
                 yield return nameof(Color);
                 yield return nameof(Scale);
+                yield return nameof(Shift);
                 yield return nameof(Angle);
                 yield return nameof(Vertical);
 #if DEBUG
@@ -44,25 +48,28 @@ namespace NodeMarkup.Manager
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
-        public RegularLineStyleText(Color32 color, string text, float scale, float angle, bool vertical) : base(color, default)
+        public RegularLineStyleText(Color32 color, string text, float scale, float angle, float shift, bool vertical) : base(color, default)
         {
-            Text = new PropertyStringValue("T", StyleChanged, text);
-            Scale = new PropertyStructValue<float>(StyleChanged, scale);
-            Angle = new PropertyStructValue<float>(StyleChanged, angle);
-            Vertical = new PropertyBoolValue(StyleChanged, vertical);
+            Text = new PropertyStringValue("TX", StyleChanged, text);
+            Scale = new PropertyStructValue<float>("S", StyleChanged, scale);
+            Angle = new PropertyStructValue<float>("A", StyleChanged, angle);
+            Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
+            Vertical = new PropertyBoolValue("V", StyleChanged, vertical);
 #if DEBUG
             Ratio = new PropertyStructValue<float>(StyleChanged, 0.05f);
 #endif
         }
 
-        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Text, Scale, Angle, Vertical);
+        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Text, Scale, Angle, Shift, Vertical);
 
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
+            if (string.IsNullOrEmpty(Text))
+                return new MarkupPartGroupData(lod);
+
             var text = Text.Value;
             if(Vertical)
             {
-                text = text.Replace(" ", "\n");
                 text = string.Join("\n",text.Select(c => c.ToString()).ToArray());
             }
 
@@ -77,8 +84,9 @@ namespace NodeMarkup.Manager
 
             Material material = RenderHelper.CreateDecalMaterial(mainTexture, aciTexture);
 
-            var position = line.Trajectory.Position(0.5f);
-            var angle = line.Trajectory.Tangent(0.5f).AbsoluteAngle() + Angle * Mathf.Deg2Rad;
+            var direction = line.Trajectory.Tangent(0.5f);
+            var position = line.Trajectory.Position(0.5f) + direction.MakeFlatNormalized().Turn90(true) * Shift;
+            var angle = direction.AbsoluteAngle() + (Angle + 90) * Mathf.Deg2Rad;
             var width = aciTexture.width * Ratio;
             var height = aciTexture.height * Ratio;
             var data = new MarkupPartData(position, angle, width, height, Color, material);
@@ -93,6 +101,7 @@ namespace NodeMarkup.Manager
             components.Add(AddTextProperty(parent, false));
             components.Add(AddScaleProperty(parent, false));
             components.Add(AddAngleProperty(parent, false));
+            components.Add(AddShiftProperty(parent, false));
             components.Add(AddVerticalProperty(parent, false));
 #if DEBUG
             components.Add(AddRatioProperty(parent, false));
@@ -146,6 +155,26 @@ namespace NodeMarkup.Manager
 
             return angleProperty;
         }
+        protected FloatPropertyPanel AddShiftProperty(UIComponent parent, bool canCollapse)
+        {
+            var shiftProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Shift));
+            shiftProperty.Text = Localize.StyleOption_ObjectShift;
+            shiftProperty.Format = Localize.NumberFormat_Meter;
+            shiftProperty.UseWheel = true;
+            shiftProperty.WheelStep = 0.1f;
+            shiftProperty.WheelTip = Settings.ShowToolTip;
+            shiftProperty.CheckMin = true;
+            shiftProperty.CheckMax = true;
+            shiftProperty.MinValue = -50;
+            shiftProperty.MaxValue = 50;
+            shiftProperty.CyclicalValue = false;
+            shiftProperty.CanCollapse = canCollapse;
+            shiftProperty.Init();
+            shiftProperty.Value = Shift;
+            shiftProperty.OnValueChanged += (float value) => Shift.Value = value;
+
+            return shiftProperty;
+        }
         protected BoolListPropertyPanel AddVerticalProperty(UIComponent parent, bool canCollapse)
         {
             var parallelProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Vertical));
@@ -177,5 +206,26 @@ namespace NodeMarkup.Manager
             return sizeProperty;
         }
 #endif
+
+        public override XElement ToXml()
+        {
+            var config = BaseToXml();
+            Text.ToXml(config);
+            Scale.ToXml(config);
+            Angle.ToXml(config);
+            Shift.ToXml(config);
+            Vertical.ToXml(config);
+            return config;
+        }
+
+        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        {
+            base.FromXml(config, map, invert);
+            Text.FromXml(config, string.Empty);
+            Scale.FromXml(config, DefaultTextScale);
+            Angle.FromXml(config, DefaultObjectAngle);
+            Shift.FromXml(config, DefaultObjectShift);
+            Vertical.FromXml(config, false);
+        }
     }
 }

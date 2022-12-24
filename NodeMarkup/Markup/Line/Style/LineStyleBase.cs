@@ -262,6 +262,8 @@ namespace NodeMarkup.Manager
         public static float DefaultNetworkScale => 1f;
         public static int DefaultRepeatDistance => 64;
 
+        public static float DefaultTextScale => 5f;
+
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public override LineStyle CopyStyle() => CopyLineStyle();
@@ -282,7 +284,7 @@ namespace NodeMarkup.Manager
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
             {RegularLineType.Prop, new PropLineStyle(null, DefaultObjectProbability, PropLineStyle.DefaultColorOption, PropLineStyle.DefaultColor, DefaultObjectStep, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectShift,DefaultObjectShift), new Vector2(DefaultObjectScale, DefaultObjectScale), new Vector2(DefaultObjectElevation,DefaultObjectElevation), DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
             {RegularLineType.Tree, new TreeLineStyle(null, DefaultObjectProbability, DefaultObjectStep, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectShift,DefaultObjectShift), new Vector2(DefaultObjectScale, DefaultObjectScale), new Vector2(DefaultObjectElevation,DefaultObjectElevation), DefaultObjectOffsetBefore, DefaultObjectOffsetAfter) },
-            {RegularLineType.Text, new RegularLineStyleText(DefaultColor, string.Empty, 5f, 0f, false)},
+            {RegularLineType.Text, new RegularLineStyleText(DefaultColor, string.Empty, DefaultTextScale, DefaultObjectAngle, DefaultObjectShift, false)},
             {RegularLineType.Network, new NetworkLineStyle(null, DefaultObjectShift, DefaultObjectElevation, DefaultNetworkScale, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DefaultRepeatDistance, false) },
         };
 

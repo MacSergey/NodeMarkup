@@ -1,15 +1,11 @@
 ﻿using ColossalFramework.UI;
 using ColossalFramework;
-using NodeMarkup.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Reflection.Emit;
 using UnityEngine;
 using static ColossalFramework.UI.UIDynamicFont;
-using System.Runtime.InteropServices;
-using static TerrainModify;
 
 namespace NodeMarkup.Utilities
 {
@@ -17,7 +13,7 @@ namespace NodeMarkup.Utilities
     {
         public class TextRenderer
         {
-            public static UIDynamicFont DefaultFont { get; }
+            private static UIDynamicFont DefaultFont { get; }
 
             public UIDynamicFont Font { get; }
             public float TextScale { get; set; }
@@ -38,7 +34,7 @@ namespace NodeMarkup.Utilities
             }
             public TextRenderer(UIDynamicFont font = null)
             {
-                Font = font ?? DefaultFont;
+                Font = DefaultFont;
             }
 
             public Texture2D Render(string text)
@@ -49,7 +45,7 @@ namespace NodeMarkup.Utilities
 
                 var lineTokens = CalculateLineBreaks(tokens);
 
-                var width = lineTokens.Max(l => l.Width);
+                var width = lineTokens.Count > 0 ? lineTokens.Max(l => l.Width) : 0;
                 var height = lineTokens.Sum(l => l.Height);
 
                 var texture = new Texture2D(Get2Pow(Mathf.CeilToInt(width)), Get2Pow(Mathf.CeilToInt(height)))
@@ -60,18 +56,18 @@ namespace NodeMarkup.Utilities
                 for (var i = 0; i < pixels.Length; i += 1)
                     pixels[i] = Color.red;
                 texture.SetPixels(pixels);
-
-                for (var i = 0; i < texture.width; i += 1)
-                {
-                    texture.SetPixel(i, 0, Color.black);
-                    texture.SetPixel(i, texture.height - 1, Color.black);
-                }
-                for (var i = 0; i < texture.height; i += 1)
-                {
-                    texture.SetPixel(0, i, Color.black);
-                    texture.SetPixel(texture.width - 1, 0, Color.black);
-                }
-
+//#if DEBUG
+//                for (var i = 0; i < texture.width; i += 1)
+//                {
+//                    texture.SetPixel(i, 0, Color.black);
+//                    texture.SetPixel(i, texture.height - 1, Color.black);
+//                }
+//                for (var i = 0; i < texture.height; i += 1)
+//                {
+//                    texture.SetPixel(0, i, Color.black);
+//                    texture.SetPixel(texture.width - 1, 0, Color.black);
+//                }
+//#endif
                 var fontTexture = Font.texture.MakeReadable();
                 var position = new Vector2(0f, (texture.height - height) * 0.5f);
                 for(int i = lineTokens.Count - 1; i >= 0; i -= 1)
@@ -86,12 +82,13 @@ namespace NodeMarkup.Utilities
             }
             private void RenderLine(Texture2D texture, Vector2 position, LineToken line, List<Token> tokens, Texture2D fontTexture)
             {
-                for (var i = 0; i < texture.width; i += 1)
-                {
-                    texture.SetPixel(i, Mathf.CeilToInt(position.y), Color.black);
-                    texture.SetPixel(i, Mathf.CeilToInt(position.y + line.Height), Color.black);
-                }
-
+//#if DEBUG
+//                for (var i = 0; i < texture.width; i += 1)
+//                {
+//                    texture.SetPixel(i, Mathf.CeilToInt(position.y), Color.black);
+//                    texture.SetPixel(i, Mathf.CeilToInt(position.y + line.Height), Color.black);
+//                }
+//#endif
                 position.x = (texture.width - line.Width) * 0.5f;
                 for (var i = line.StartIndex; i <= line.EndIndex; i += 1)
                 {
@@ -203,11 +200,13 @@ namespace NodeMarkup.Utilities
             }
             private void CalculateTokenRenderSize(Token token)
             {
+                var size = Mathf.CeilToInt(Font.size * TextScale);
+                Font.RequestCharacters(token.Text, size, FontStyle.Normal);
+
                 var width = 0f;
                 if (token.Type == TokenType.Text)
                 {
-                    var size = Mathf.CeilToInt(Font.size * TextScale);
-                    Font.RequestCharacters(token.Text, size, FontStyle.Normal);
+
                     for (var i = 0; i < token.Length; i++)
                     {
                         var c = token[i];
@@ -232,18 +231,16 @@ namespace NodeMarkup.Utilities
                 }
                 else if (token.Type == TokenType.Whitespace)
                 {
-                    var charSize = Mathf.CeilToInt(Font.size * TextScale);
-
-                    for (var j = 0; j < token.Length; j++)
+                    for (var i = 0; i < token.Length; i++)
                     {
-                        var c = token[j];
+                        var c = token[i];
                         switch (c)
                         {
                             case '\t':
                                 width += TabSize;
                                 break;
                             case ' ':
-                                Font.baseFont.GetCharacterInfo(c, out var info, charSize, FontStyle.Normal);
+                                Font.baseFont.GetCharacterInfo(c, out var info, size, FontStyle.Normal);
                                 width += info.advance + CharSpacing * TextScale;
                                 break;
                         }
@@ -326,17 +323,21 @@ namespace NodeMarkup.Utilities
             }
             private int Get2Pow(int length)
             {
-                if (length > 1024)
+                if (length >= 1024)
                     return 1024;
-
-                var i = 10;
-
-                while (i > 5 && ((1 << i) & length) == 0)
+                else if (length <= 32)
+                    return 32;
+                else
                 {
-                    i -= 1;
-                }
+                    var i = 10;
 
-                return 1 << (i + 1);
+                    while (i > 5 && ((1 << i) & length) == 0)
+                    {
+                        i -= 1;
+                    }
+
+                    return 1 << (i + 1);
+                }
             }
         }
 
