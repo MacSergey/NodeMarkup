@@ -1625,23 +1625,81 @@
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>次选颜色</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>不对称双虚线</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>每个 {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>间隔</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>分隔带</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>分隔带</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>虚线</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>长度</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>线段</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>分隔带</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>之后</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>之前</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>空格</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>边界</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>边长</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_11" xml:space="preserve">
+    <value>[NEW] 将划线数据保存到道路资产中，并在放置道路时自动应用。
+[NEW] 增加了在隧道中划线的功能。
+[NEW] 增加了不对称双虚线的样式。
+[NEW] 增加了折叠不必要选项的功能。
+[NEW] 增加了为摆件和树木设置倾斜和坡度的功能。
+[NEW] 增加了依摆件大小自动设置间距的功能。
+[NEW] 增加了设置摆件/树木偏移范围和高度范围的功能。 
+[NEW] 增加了设置不同颜色双线的功能。
+[NEW] 摆件/树木/网络按名称排序。
+[NEW] 记住搜索摆件/树木/网络时的文本。
+[FIXED] 使用主题纹理时装饰网络的颜色。
+[FIXED] IMT添加的3D填充物、摆件、树木和网络在信息视图中可见。
+[FIXED] 搜索摆件/树木/网络时UI闪烁。
+[UPDATED] 可以分别为每种类型的标线设置LOD距离。
+[UPDATED] 属性“从前方偏移”和“从后方偏移”合并为“偏移”属性。
+[UPDATED] 属性“虚线长度”和“间隔长度”合并为“长度”属性。
+[UPDATED] 属性“使用间隔”、“间隔长度”和“间隔区间”合并为“间隔”属性。
+[UPDATED] 属性“设定边界”、“左边界”和“有边界”合并为“边界”属性。
+[UPDATED] 属性“边长”和“高度”合并为“三角形”属性。
+[UPDATED] 属性“拐角半径”和“隔离带拐角半径”合并为“拐角半径”属性。
+[UPDATED] 属性“路肩大小”和“隔离带路肩大小”合并为“路肩大小”属性。</value>
+  </data>
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>三角形</value>
+  </data>
 </root>
