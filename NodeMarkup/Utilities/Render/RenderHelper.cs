@@ -197,11 +197,12 @@ namespace NodeMarkup.Utilities
             texture.Apply();
             return texture;
         }
-        public static Texture2D CreateTextTexture(string text, float scale)
+        public static Texture2D CreateTextTexture(string text, float scale, Vector2 spacing)
         {
             var renderer = new TextRenderHelper.TextRenderer()
             {
                 TextScale = scale,
+                Spacing = spacing,
             };
 
             var texture = renderer.Render(text);

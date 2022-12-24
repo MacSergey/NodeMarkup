@@ -5,11 +5,14 @@ using NodeMarkup.UI;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
+using static NodeMarkup.Manager.RegularLineStyleText.TextDirectionPanel;
 
 namespace NodeMarkup.Manager
 {
@@ -25,9 +28,13 @@ namespace NodeMarkup.Manager
         private PropertyStructValue<float> Scale { get; }
         private PropertyStructValue<float> Shift { get; }
         private PropertyStructValue<float> Angle { get; }
-        private PropertyBoolValue Vertical { get; }
+        private PropertyEnumValue<TextDirection> Direction { get; }
+        private PropertyVector2Value Spacing { get; }
+
 #if DEBUG
         private PropertyStructValue<float> Ratio { get; }
+#else
+        private static float Ratio => 0.05f;
 #endif
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
@@ -38,9 +45,10 @@ namespace NodeMarkup.Manager
                 yield return nameof(Text);
                 yield return nameof(Color);
                 yield return nameof(Scale);
+                yield return nameof(Spacing);
                 yield return nameof(Shift);
                 yield return nameof(Angle);
-                yield return nameof(Vertical);
+                yield return nameof(Direction);
 #if DEBUG
                 yield return nameof(Ratio);
 #endif
@@ -48,19 +56,20 @@ namespace NodeMarkup.Manager
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
-        public RegularLineStyleText(Color32 color, string text, float scale, float angle, float shift, bool vertical) : base(color, default)
+        public RegularLineStyleText(Color32 color, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing) : base(color, default)
         {
             Text = new PropertyStringValue("TX", StyleChanged, text);
             Scale = new PropertyStructValue<float>("S", StyleChanged, scale);
             Angle = new PropertyStructValue<float>("A", StyleChanged, angle);
             Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
-            Vertical = new PropertyBoolValue("V", StyleChanged, vertical);
+            Direction = new PropertyEnumValue<TextDirection>("V", StyleChanged, direction);
+            Spacing = new PropertyVector2Value(StyleChanged, spacing, "SPC", "SPL");
 #if DEBUG
             Ratio = new PropertyStructValue<float>(StyleChanged, 0.05f);
 #endif
         }
 
-        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Text, Scale, Angle, Shift, Vertical);
+        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Text, Scale, Angle, Shift, Direction, Spacing);
 
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
@@ -68,12 +77,12 @@ namespace NodeMarkup.Manager
                 return new MarkupPartGroupData(lod);
 
             var text = Text.Value;
-            if(Vertical)
-            {
+            if(Direction == TextDirection.Vertical)
                 text = string.Join("\n",text.Select(c => c.ToString()).ToArray());
-            }
+            else if(Direction == TextDirection.VerticalInverted)
+                text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
-            var aciTexture = RenderHelper.CreateTextTexture(text, Scale);
+            var aciTexture = RenderHelper.CreateTextTexture(text, Scale, Spacing);
 
             var textureId = (aciTexture.height << 16) + aciTexture.width;
             if (!Textures.TryGetValue(textureId, out var mainTexture))
@@ -103,6 +112,7 @@ namespace NodeMarkup.Manager
             components.Add(AddAngleProperty(parent, false));
             components.Add(AddShiftProperty(parent, false));
             components.Add(AddVerticalProperty(parent, false));
+            components.Add(AddSpacingProperty(parent, false));
 #if DEBUG
             components.Add(AddRatioProperty(parent, false));
 #endif
@@ -124,10 +134,12 @@ namespace NodeMarkup.Manager
             var sizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Scale));
             sizeProperty.Text = "Size";
             sizeProperty.UseWheel = true;
-            sizeProperty.WheelStep = 0.1f;
+            sizeProperty.WheelStep = 1f;
             sizeProperty.WheelTip = Settings.ShowToolTip;
             sizeProperty.CheckMin = true;
             sizeProperty.MinValue = 0.1f;
+            sizeProperty.CheckMax = true;
+            sizeProperty.MinValue = 10f;
             sizeProperty.CanCollapse = canCollapse;
             sizeProperty.Init();
             sizeProperty.Value = Scale;
@@ -175,16 +187,36 @@ namespace NodeMarkup.Manager
 
             return shiftProperty;
         }
-        protected BoolListPropertyPanel AddVerticalProperty(UIComponent parent, bool canCollapse)
+        protected TextDirectionPanel AddVerticalProperty(UIComponent parent, bool canCollapse)
         {
-            var parallelProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Vertical));
-            parallelProperty.Text = "Vertical";
+            var parallelProperty = ComponentPool.Get<TextDirectionPanel>(parent, nameof(Direction));
+            parallelProperty.Text = "Direction";
             parallelProperty.CanCollapse = canCollapse;
-            parallelProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
-            parallelProperty.SelectedObject = Vertical;
-            parallelProperty.OnSelectObjectChanged += (value) => Vertical.Value = value;
+            parallelProperty.Init();
+            parallelProperty.SelectedObject = Direction;
+            parallelProperty.OnSelectObjectChanged += (value) => Direction.Value = value;
 
             return parallelProperty;
+        }
+        protected Vector2PropertyPanel AddSpacingProperty(UIComponent parent, bool canCollapse)
+        {
+            var spacingProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Spacing));
+            spacingProperty.Text = "Spacing";
+            spacingProperty.SetLabels("Chars", "Lines");
+            spacingProperty.UseWheel = true;
+            spacingProperty.WheelStep = new Vector2(1f,1f);
+            spacingProperty.WheelTip = Settings.ShowToolTip;
+            spacingProperty.CheckMin = true;
+            spacingProperty.MinValue = new Vector2(-10f, -10f);
+            spacingProperty.CheckMax = true;
+            spacingProperty.MaxValue = new Vector2(10f, 10f);
+            spacingProperty.CanCollapse = canCollapse;
+            spacingProperty.FieldsWidth = 50f;
+            spacingProperty.Init(0, 1);
+            spacingProperty.Value = Spacing;
+            spacingProperty.OnValueChanged += (Vector2 value) => Spacing.Value = value;
+
+            return spacingProperty;
         }
 
 #if DEBUG
@@ -209,12 +241,13 @@ namespace NodeMarkup.Manager
 
         public override XElement ToXml()
         {
-            var config = BaseToXml();
+            var config = base.ToXml();
             Text.ToXml(config);
             Scale.ToXml(config);
             Angle.ToXml(config);
             Shift.ToXml(config);
-            Vertical.ToXml(config);
+            Direction.ToXml(config);
+            Spacing.ToXml(config);
             return config;
         }
 
@@ -225,7 +258,26 @@ namespace NodeMarkup.Manager
             Scale.FromXml(config, DefaultTextScale);
             Angle.FromXml(config, DefaultObjectAngle);
             Shift.FromXml(config, DefaultObjectShift);
-            Vertical.FromXml(config, false);
+            Direction.FromXml(config, TextDirection.Horizontal);
+            Spacing.FromXml(config, Vector2.zero);
+        }
+
+        public enum TextDirection
+        {
+            [Description("L to R")]
+            Horizontal,
+
+            [Description("T to B")]
+            Vertical,
+
+            [Description("B to T")]
+            VerticalInverted,
+        }
+        public class TextDirectionPanel : EnumOncePropertyPanel<TextDirection, TextDirectionPanel.TextDirectionSegmented>
+        {
+            protected override bool IsEqual(TextDirection first, TextDirection second) => first == second;
+            protected override string GetDescription(TextDirection value) => value.Description();
+            public class TextDirectionSegmented : UIOnceSegmented<TextDirection> { }
         }
     }
 }

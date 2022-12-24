@@ -17,9 +17,12 @@ namespace NodeMarkup.Utilities
 
             public UIDynamicFont Font { get; }
             public float TextScale { get; set; }
-            public int CharSpacing { get; set; }
+            public Vector2 Spacing { get; set; } = Vector2.one;
             public int TabSize { get; set; }
             public bool WordWrap { get; set; }
+
+            private float CharSpacing => Spacing.x * TextScale;
+            private float LineSpacing => Spacing.y * TextScale;
 
             static TextRenderer()
             {
@@ -46,7 +49,7 @@ namespace NodeMarkup.Utilities
                 var lineTokens = CalculateLineBreaks(tokens);
 
                 var width = lineTokens.Count > 0 ? lineTokens.Max(l => l.Width) : 0;
-                var height = lineTokens.Sum(l => l.Height);
+                var height = lineTokens.Sum(l => l.Height) + (lineTokens.Count - 1) * LineSpacing;
 
                 var texture = new Texture2D(Get2Pow(Mathf.CeilToInt(width)), Get2Pow(Mathf.CeilToInt(height)))
                 {
@@ -70,11 +73,11 @@ namespace NodeMarkup.Utilities
 //#endif
                 var fontTexture = Font.texture.MakeReadable();
                 var position = new Vector2(0f, (texture.height - height) * 0.5f);
-                for(int i = lineTokens.Count - 1; i >= 0; i -= 1)
+                for (int i = lineTokens.Count - 1; i >= 0; i -= 1)
                 {
                     var line = lineTokens[i];
                     RenderLine(texture, position, line, tokens, fontTexture);
-                    position.y += line.Height;
+                    position.y += line.Height + LineSpacing;
                 }
 
                 texture.Apply();
@@ -106,7 +109,7 @@ namespace NodeMarkup.Utilities
                 for (var i = 0; i < text.Length; i += 1)
                 {
                     if (i > 0)
-                        position.x += CharSpacing * TextScale;
+                        position.x += CharSpacing;
 
                     if (!Font.baseFont.GetCharacterInfo(text[i], out var info, size))
                         continue;
@@ -136,7 +139,8 @@ namespace NodeMarkup.Utilities
                                 if (x >= 0 && x < texture.width && y >= 0 && y < texture.height)
                                 {
                                     var color = fontTexture.GetPixel((int)uv.x, (int)uv.y);
-                                    texture.SetPixel(x, y, new Color(1f - color.a, 0f, 0f, 1f));
+                                    if (color.a > 0f)
+                                        texture.SetPixel(x, y, new Color(1f - color.a, 0f, 0f, 1f));
                                 }
                             }
                         }
@@ -218,7 +222,7 @@ namespace NodeMarkup.Utilities
                                 width += TabSize;
                                 break;
                             case ' ':
-                                width += info.advance + CharSpacing * TextScale;
+                                width += info.advance + CharSpacing;
                                 break;
                             default:
                                 width += info.maxX;
@@ -227,7 +231,7 @@ namespace NodeMarkup.Utilities
                     }
 
                     if (token.Length > 2)
-                        width += (token.Length - 2) * CharSpacing * TextScale;
+                        width += (token.Length - 1) * CharSpacing;
                 }
                 else if (token.Type == TokenType.Whitespace)
                 {
@@ -241,7 +245,7 @@ namespace NodeMarkup.Utilities
                                 break;
                             case ' ':
                                 Font.baseFont.GetCharacterInfo(c, out var info, size, FontStyle.Normal);
-                                width += info.advance + CharSpacing * TextScale;
+                                width += info.advance + CharSpacing;
                                 break;
                         }
                     }
