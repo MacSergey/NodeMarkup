@@ -1063,7 +1063,7 @@ namespace NodeMarkup.Utilities
                         Datas[index].color = info.m_color;
                         Datas[index].color.a = 0f;
 
-                        if(segment.m_requireSurfaceMaps)
+                        if (segment.m_requireSurfaceMaps)
                             Singleton<TerrainManager>.instance.GetSurfaceMapping(Datas[index].position, out Datas[index].surfaceTexA, out Datas[i].surfaceTexB, out Datas[index].surfaceMapping);
                         else if (segment.m_requireHeightMap)
                             Singleton<TerrainManager>.instance.GetHeightMapping(Datas[index].position, out Datas[index].heightMap, out Datas[i].heightMapping, out Datas[index].surfaceMapping);
@@ -1094,8 +1094,10 @@ namespace NodeMarkup.Utilities
                     instance.m_materialBlock.SetColor(instance.ID_Color, data.color);
                     if (data.segment.m_requireSurfaceMaps)
                     {
-                        instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, data.surfaceTexA);
-                        instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, data.surfaceTexB);
+                        if (data.surfaceTexA != null)
+                            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, data.surfaceTexA);
+                        if (data.surfaceTexB != null)
+                            instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, data.surfaceTexB);
                         instance.m_materialBlock.SetVector(instance.ID_SurfaceMapping, data.surfaceMapping);
                     }
                     else if (data.segment.m_requireHeightMap)
