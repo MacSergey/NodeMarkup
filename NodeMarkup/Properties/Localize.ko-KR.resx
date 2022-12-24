@@ -1510,10 +1510,82 @@
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>두번째 색상</value>
   </data>
-  
-  
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>비대칭 쌍점선</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>매 {0}</value>
+  </data>
   <data name="StyleOption_CrosswalkGap" xml:space="preserve">
-    <value>간격</value>
+    <value>빈 공간</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>중앙</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>중앙</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>점선</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>길이</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>선</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>중앙</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>뒤쪽</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>앞쪽</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>공백</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>가이드</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>밑변</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>높이</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_11" xml:space="preserve">
+    <value>[신규] 이제 네트워크 에셋에 마킹 데이터가 저장되었다가 네트워크에 연결되면 자동 적용됩니다.
+[신규] 터널 내에 마킹을 추가할 수 있습니다.
+[신규] 비대칭 쌍점선을 추가했습니다.
+[신규] 불필요한 설정을 접을 수 있습니다.
+[신규] 프롭과 나무에도 기울기와 경사를 설정할 수 있습니다.
+[신규] 크기에 따라 프롭 단계를 자동으로 설정할 수 있습니다.
+[신규] 프롭/나무의 이동 및 고도 범위를 설정할 수 있습니다.
+[신규] 쌍선에서 두 번째 색상을 선택할 수 있습니다.
+[신규] 프롭/나무/네트워크가 이름순으로 정렬됩니다.
+[신규] 프롭/나무/네트워크를 검색할 때 검색어를 기억합니다.
+[수정] 테마 텍스처를 이용하는 장식 네트워크의 색상을 수정했습니다.
+[수정] 이 모드로 추가한 3D 기둥, 프롭, 나무, 네트워크를 정보 창에서 확인할 수 있습니다.
+[수정] 프롭/나무/네트워크를 검색할 때 UI가 깜빡이는 현상을 수정했습니다.
+[변경] LOD 거리를 마킹 종류에 따라 각각 다르게 지정할 수 있습니다.
+[변경] "앞쪽 오프셋"과 "뒤쪽 오프셋" 속성을 "오프셋" 속성으로 통합했습니다.
+[변경] "점선 길이"와 "공백" 속성을 "길이" 속성으로 통합했습니다.
+[변경] "빈 공간 사용", "빈 공간 길이", "빈 공간 간격" 속성을 "빈 공간" 속성으로 통합했습니다.
+[변경] "가이드 사용", "왼쪽 가이드", "오른쪽 가이드" 속성을 "가이드" 속성으로 통합했습니다.
+[변경] "밑변", "높이" 속성을 "삼각형" 속성으로 통합했습니다.
+[변경] "모서리 반경", "중앙 모서리 반경" 속성을 "모서리 반경" 속성으로 통합했습니다.
+[변경] "연석 크기", "중앙 연석 크기" 속성을 "연석 크기" 속성으로 통합했습니다.</value>
+  </data>
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>삼각형</value>
   </data>
   
   

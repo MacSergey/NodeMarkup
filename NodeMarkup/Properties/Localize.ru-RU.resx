@@ -1810,4 +1810,52 @@
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>Треугольник</value>
   </data>
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Текст</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>Шрифт игры по умолчанию</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>Шрифт</value>
+  </data>
+  <data name="StyleOption_FontStyle" xml:space="preserve">
+    <value>Начертание</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>Жирный</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>Жирный курсив</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>Курсив</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>Обычный</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>Интервал</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>Символ</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>Линия</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Текст</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>Направление</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>Снизу вверх</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>Слева направо</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>Сверху вниз</value>
+  </data>
 </root>

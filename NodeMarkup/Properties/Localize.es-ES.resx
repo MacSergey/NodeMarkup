@@ -1562,9 +1562,83 @@ para modo subterráneo</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Color secundario</value>
   </data>
-  
-  
-  
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Doble punteado asimétrico</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Cada {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Intervalo</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Mediana</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Madiana</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Punteado</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Largo</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>Línea</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Mediana</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>Después</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>Antes</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Espacio</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Guías</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Alto</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_11" xml:space="preserve">
+    <value>[NEW] Guardado de informacion de marcas en el asset de red y auto aplica cuando es colocado.
+[NEW] Se agregó la capacidad de marcar en los túneles.
+[NEW] Se agregó estilo de doble punteado asimetrico.
+[NEW] Se agregó la capacidad de contraer opciones innecesarias.
+[NEW] Se agregó la capacidad de establecer la inclinación y la pendiente de los adornos y los árboles.
+[NEW] Se agregó la capacidad de configurar el paso de accesorios automáticos dependiendo de su tamaño.
+[NEW] Se agregó la capacidad de establecer el rango para el desplazamiento y la elevación de los accesorios/árboles.
+[NEW] Se agregó la capacidad de configurar un segundo color para líneas dobles.
+[NEW] Los adornos/árboles/redes se ordenan por nombre.
+[NEW] Recuerda el texto buscado al buscar accesorios/árboles/redes.
+[FIXED] Color de las redes decorativas que usan texturas temáticas.
+[FIXED] Los rellenos 3D, adornos, árboles y redes que agrega IMT son visibles en las vistas de información.
+[FIXED] Parpadeo de la UI al buscar objetos/árboles/redes.
+[UPDATED] La distancia LOD se puede configurar para cada tipo de marcado por separado.
+[UPDATED] Las propiedades "Desplazamiento antes" y "Desplazamiento después" se combinan en la propiedad "Desplazamiento".
+[UPDATED] Las propiedades "Longitud del guión" y "Longitud del espacio" se combinan en la propiedad "Longitud".
+[UPDATED] Las propiedades "Usar intervalo", "Longitud del intervalo" y "Período de intervalo" se combinan en la propiedad "Intervalo".
+[UPDATED] Las propiedades "Usar guías", "Guía izquierda" y "Guía derecha" se combinan en la propiedad "Guía".
+[UPDATED] Las propiedades "Base" y "Altura" se combinan en la propiedad "Triángulo".
+[UPDATED] Las propiedades "Radio de la esquina" y "Radio de la esquina mediana" se combinan en la propiedad "Radio de la esquina".
+[UPDATED] Las propiedades "Tamaño de la acera" y "Tamaño medio de la acera" se combinan en la propiedad "Tamaño de la acera".</value>
+  </data>
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Triángulo</value>
+  </data>
   
   
   
