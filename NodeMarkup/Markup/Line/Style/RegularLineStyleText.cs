@@ -215,14 +215,16 @@ namespace NodeMarkup.Manager
         }
         protected TextDirectionPanel AddDirectionProperty(UIComponent parent, bool canCollapse)
         {
-            var parallelProperty = ComponentPool.Get<TextDirectionPanel>(parent, nameof(Direction));
-            parallelProperty.Text = Localize.StyleOption_TextDirection;
-            parallelProperty.CanCollapse = canCollapse;
-            parallelProperty.Init();
-            parallelProperty.SelectedObject = Direction;
-            parallelProperty.OnSelectObjectChanged += (value) => Direction.Value = value;
+            var directionProperty = ComponentPool.Get<TextDirectionPanel>(parent, nameof(Direction));
+            directionProperty.Text = Localize.StyleOption_TextDirection;
+            directionProperty.CanCollapse = canCollapse;
+            directionProperty.Selector.AutoButtonSize = false;
+            directionProperty.Selector.ButtonWidth = 33f;
+            directionProperty.Init();
+            directionProperty.SelectedObject = Direction;
+            directionProperty.OnSelectObjectChanged += (value) => Direction.Value = value;
 
-            return parallelProperty;
+            return directionProperty;
         }
         protected Vector2PropertyPanel AddSpacingProperty(UIComponent parent, bool canCollapse)
         {
