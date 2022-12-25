@@ -1670,26 +1670,84 @@ zu verlassen</value>
   <data name="StyleOption_Rails" xml:space="preserve">
     <value>Leitlinien</value>
   </data>
-  
-  
-  
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Basis</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Höhe</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_11" xml:space="preserve">
+    <value>[NEW] Markierungsdaten im Netzwerkobjekt speichern und automatisch anwenden, wenn das Netzwerk platziert wird.
+[NEW] Möglichkeit hinzugefügt, Markierungen in Tunneln zu setzen.
+[NEW] Doppelter gestrichelter asymmetrischer Stil hinzugefügt.
+[NEW] Möglichkeit hinzugefügt, unnötige Optionen zu reduzieren.
+[NEW] Möglichkeit hinzugefügt, Neigung von Requisiten und Bäumen festzulegen.
+[NEW] Es wurde die Möglichkeit hinzugefügt, den Schritt für automatische Requisiten abhängig von ihrer Größe festzulegen.
+[NEW] Möglichkeit hinzugefügt, eine Reichweite auf die Verschiebung und Höhe von Requisiten/Bäumen einzustellen.
+[NEW] Möglichkeit hinzugefügt, die zweite Farbe auf Doppelten Linien einzustellen.
+[NEW] Requisiten/Bäume/Netzwerke werden nach Namen sortiert.
+[NEW] Speichern der eingegebenen Worte, wenn man nach Requisiten/Bäumen/Netzwerken sucht.
+[FIXED] Farbe von dekorativen Netzwerken korrigiert, die Thementexturen verwenden.
+[FIXED] 3D-Füllelemente, Requisiten, Bäume und Netzwerke, die von IMT hinzugefügt wurden, sind in Infoansichten sichtbar.
+[FIXED] Flackern der Benutzeroberfläche beim Durchsuchen von Requisiten/Bäumen/Netzwerken.
+[UPDATED] Der LOD-Abstand kann für jeden Markierungstyp separat eingestellt werden.
+[UPDATED] Die Eigenschaften „Offset before“ und „Offset after“ werden in der Eigenschaft „Offset“ zusammengefasst.
+[UPDATED] Die Eigenschaften „Strichlänge“ und „Leerzeichenlänge“ werden zu „Länge“ kombinierte.
+[UPDATED] Die Eigenschaften „Gap verwenden“, „Gap-Länge“ und „Gap-Periode“ werden in der Eigenschaft „Gap“ zusammengefasst.
+[UPDATED] Die Eigenschaften „Use guides“, „Left guide“ und „Right guide“ werden in der Eigenschaft „Guide“ kombiniert.
+[UPDATED] Die Eigenschaften „Basis“ und „Höhe“ werden zur Eigenschaft „Dreieck“ kombiniert.
+[UPDATED] Die Eigenschaften „Eckenradius“ und „Mitteleckenradius“ werden zur Eigenschaft „Eckenradius“ kombiniert.
+[UPDATED] Die Eigenschaften „Bordsteinkante“ und „mittlere Bordsteinkante“ werden zur Eigenschaft „Bordsteinkante“ zusammengefasst.</value>
+  </data>
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>Dreieck</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>Standardschriftart des Spiels</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>Schriftart</value>
+  </data>
+  <data name="StyleOption_FontStyle" xml:space="preserve">
+    <value>Schriftstil</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>Fett</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>Fett kursiv</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>Kursiv</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>Regulär</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>Abstand</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>Zeichen</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>Linie</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>Richtung</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>Von unten nach oben</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>Von links nach rechts</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>Von oben nach unten</value>
+  </data>
 </root>

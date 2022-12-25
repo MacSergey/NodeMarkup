@@ -1639,20 +1639,52 @@ para modo subterráneo</value>
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>Triángulo</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Texto</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>Fuente predeterminada</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>Fuente</value>
+  </data>
+  <data name="StyleOption_FontStyle" xml:space="preserve">
+    <value>Estilo de fuente</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>Negrita</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>Negrita itálica</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>Itálica</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>Espaciado</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>Caracteres</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>Línea</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Texto</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>De abajo hacia arriba</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>De izquierda a derecha</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>De arriba hacia abajo</value>
+  </data>
 </root>
