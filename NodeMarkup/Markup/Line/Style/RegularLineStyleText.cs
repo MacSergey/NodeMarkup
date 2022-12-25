@@ -3,6 +3,7 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.UI;
 using NodeMarkup.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -78,9 +79,9 @@ namespace NodeMarkup.Manager
                 return new MarkupPartGroupData(lod);
 
             var text = Text.Value;
-            if (Direction == TextDirection.Vertical)
+            if (Direction == TextDirection.TopToBottom)
                 text = string.Join("\n", text.Select(c => c.ToString()).ToArray());
-            else if (Direction == TextDirection.VerticalInverted)
+            else if (Direction == TextDirection.BottomToTop)
                 text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
             var fontName = FontStyle.Value switch
@@ -133,7 +134,7 @@ namespace NodeMarkup.Manager
             fontProperty.UseWheel = true;
             fontProperty.CanCollapse = canCollapse;
             fontProperty.Init();
-            fontProperty.Font = string.IsNullOrEmpty(Font) ? null : Font;
+            fontProperty.Font = string.IsNullOrEmpty(Font.Value) ? null : Font.Value;
             fontProperty.FontStyle = FontStyle;
             fontProperty.OnValueChanged += (string font, FontStyle style) =>
                 {
@@ -287,25 +288,46 @@ namespace NodeMarkup.Manager
             Scale.FromXml(config, DefaultTextScale);
             Angle.FromXml(config, DefaultObjectAngle);
             Shift.FromXml(config, DefaultObjectShift);
-            Direction.FromXml(config, TextDirection.Horizontal);
+            Direction.FromXml(config, TextDirection.LeftToRight);
             Spacing.FromXml(config, Vector2.zero);
         }
 
         public enum TextDirection
         {
             [Description(nameof(Localize.StyleOption_TextDirectionLtoR))]
-            Horizontal,
+            [Sprite(nameof(NodeMarkupTextures.LeftToRightButtonIcons))]
+            LeftToRight,
 
             [Description(nameof(Localize.StyleOption_TextDirectionTtoB))]
-            Vertical,
+            [Sprite(nameof(NodeMarkupTextures.TopToBottomButtonIcons))]
+            TopToBottom,
 
             [Description(nameof(Localize.StyleOption_TextDirectionBtoT))]
-            VerticalInverted,
+            [Sprite(nameof(NodeMarkupTextures.BottomToTopButtonIcons))]
+            BottomToTop,
         }
         public class TextDirectionPanel : EnumOncePropertyPanel<TextDirection, TextDirectionPanel.TextDirectionSegmented>
         {
             protected override bool IsEqual(TextDirection first, TextDirection second) => first == second;
             protected override string GetDescription(TextDirection value) => value.Description();
+
+            protected override void FillItems(Func<TextDirection, bool> selector)
+            {
+                Selector.StopLayout();
+                foreach (var value in GetValues())
+                {
+                    if (selector?.Invoke(value) != false)
+                    {
+                        var sprite = value.Sprite();
+                        if (string.IsNullOrEmpty(sprite))
+                            Selector.AddItem(value, GetDescription(value));
+                        else
+                            Selector.AddItem(value, GetDescription(value), NodeMarkupTextures.Atlas, sprite);
+                    }
+                }
+                Selector.StartLayout();
+            }
+
             public class TextDirectionSegmented : UIOnceSegmented<TextDirection> { }
         }
     }
