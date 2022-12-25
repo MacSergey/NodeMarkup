@@ -197,127 +197,15 @@ namespace NodeMarkup.Utilities
             texture.Apply();
             return texture;
         }
-        public static Texture2D CreateTextTexture(string text, float scale)
+        public static Texture2D CreateTextTexture(string font, string text, float scale, Vector2 spacing)
         {
-            var renderer = new TextRenderHelper.TextRenderer()
+            var renderer = new TextRenderHelper.TextRenderer(font)
             {
                 TextScale = scale,
+                Spacing = spacing,
             };
 
             var texture = renderer.Render(text);
-            return texture;
-        }
-
-        public static Texture2D CreateTextTexture2(string text, int width, int height)
-        {
-            var texture = new Texture2D(width, height)
-            {
-                name = "Text",
-            };
-            for (var x = 0; x < width; x += 1)
-            {
-                for (var y = 0; y < height; y += 1)
-                {
-                    texture.SetPixel(x, y, Color.red);
-                }
-            }
-
-            var view = UIView.GetAView();
-            var renderData = UIRenderData.Obtain();
-
-            var textRenderer = view.defaultFont.ObtainRenderer();
-            textRenderer.wordWrap = false;
-            textRenderer.multiLine = true;
-            textRenderer.maxSize = Vector2.one * int.MaxValue;
-            textRenderer.vectorOffset = new Vector3(5f, -5f, 0f);
-            textRenderer.pixelRatio = /*view.PixelsToUnits();*/1f;
-            textRenderer.textScale = 10f;
-            textRenderer.textAlign = UIHorizontalAlignment.Left;
-            textRenderer.opacity = 1f;
-
-            textRenderer.Render(text, renderData);
-            var fontTexture = renderData.material.mainTexture.MakeReadable();
-            File.WriteAllBytes(@"C:\Users\MacSergey\OneDrive\Рабочий стол\Texture_IMT.png", fontTexture.EncodeToPNG());
-
-            Rect area = new Rect();
-            for (var i = 0; i < renderData.vertices.Count; i += 1)
-            {
-                var vertex = renderData.vertices[i];
-                if (i == 0)
-                {
-                    area.x = vertex.x;
-                    area.y = vertex.y;
-                }
-                else
-                {
-                    area.min = Vector2.Min(area.min, vertex);
-                    area.max = Vector2.Max(area.max, vertex);
-                }
-            }
-
-            var xRatio = texture.width / area.width;
-            var yRatio = texture.height / area.height;
-
-            for (var i = 0; i < renderData.vertices.Count; i += 4)
-            {
-                var charArea = new Rect();
-                var charUV = new Rect();
-                for (int j = i; j < i + 4; j += 1)
-                {
-                    var vertex = renderData.vertices[j];
-                    var uv = renderData.uvs[j];
-                    if (j == i)
-                    {
-                        charArea.x = vertex.x;
-                        charArea.y = vertex.y;
-                        charUV.x = uv.x;
-                        charUV.y = uv.y;
-                    }
-                    else
-                    {
-                        charArea.min = Vector2.Min(charArea.min, vertex);
-                        charArea.max = Vector2.Max(charArea.max, vertex);
-                        charUV.min = Vector2.Min(charUV.min, uv);
-                        charUV.max = Vector2.Max(charUV.max, uv);
-                    }
-                }
-                charArea.position -= area.position;
-
-                charArea.xMin *= xRatio;
-                charArea.xMax *= xRatio;
-                charArea.yMin *= yRatio;
-                charArea.yMax *= yRatio;
-
-                charUV.xMin *= fontTexture.width;
-                charUV.xMax *= fontTexture.width;
-                charUV.yMin *= fontTexture.height;
-                charUV.yMax *= fontTexture.height;
-
-                var tepmTexture = new Texture2D((int)charUV.width, (int)charUV.height)
-                {
-                    name = "Text",
-                };
-
-                Graphics.CopyTexture(fontTexture, 0, 0, (int)charUV.x, (int)charUV.y, (int)charUV.width, (int)charUV.height, tepmTexture, 0, 0, 0, 0);
-                tepmTexture.Apply();
-                File.WriteAllBytes(@$"C:\Users\MacSergey\OneDrive\Рабочий стол\Texture_IMT{i}.png", tepmTexture.EncodeToPNG());
-                //for (var x = (int)charArea.xMin; x < (int)charArea.xMax; x += 1)
-                //{
-                //    for (var y = (int)charArea.yMin; y < (int)charArea.yMax; y += 1)
-                //    {
-                //        if (x >= 0 && x < 256 && y >= 0 && y < 256)
-                //        {
-                //            var uvx = charUV.xMin + charUV.width * (x / (float)charArea.width);
-                //            var uvy = charUV.yMin + charUV.height * (y / (float)charArea.height);
-                //            var color = fontTexture.GetPixel((int)(fontTexture.width * uvx), (int)(fontTexture.height * uvy));
-                //            texture.SetPixel(x, y, new Color(1f - color.a, 0f, 0f, 1f));
-                //        }
-                //    }
-                //}
-            }
-
-            texture.Apply();
-            //File.WriteAllBytes(@"C:\Users\MacSergey\OneDrive\Рабочий стол\Texture_IMT.png", texture.EncodeToPNG());
             return texture;
         }
     }

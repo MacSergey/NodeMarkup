@@ -5,9 +5,8 @@ using NodeMarkup.UI;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -22,12 +21,18 @@ namespace NodeMarkup.Manager
         public override bool CanOverlap => true;
 
         private PropertyStringValue Text { get; }
+        private PropertyStringValue Font { get; }
+        private PropertyEnumValue<FontStyle> FontStyle { get; }
         private PropertyStructValue<float> Scale { get; }
         private PropertyStructValue<float> Shift { get; }
         private PropertyStructValue<float> Angle { get; }
-        private PropertyBoolValue Vertical { get; }
+        private PropertyEnumValue<TextDirection> Direction { get; }
+        private PropertyVector2Value Spacing { get; }
+
 #if DEBUG
         private PropertyStructValue<float> Ratio { get; }
+#else
+        private static float Ratio => 0.05f;
 #endif
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
@@ -36,11 +41,14 @@ namespace NodeMarkup.Manager
             get
             {
                 yield return nameof(Text);
+                yield return nameof(Font);
+                yield return nameof(FontStyle);
                 yield return nameof(Color);
                 yield return nameof(Scale);
+                yield return nameof(Direction);
+                yield return nameof(Spacing);
                 yield return nameof(Shift);
                 yield return nameof(Angle);
-                yield return nameof(Vertical);
 #if DEBUG
                 yield return nameof(Ratio);
 #endif
@@ -48,19 +56,22 @@ namespace NodeMarkup.Manager
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
-        public RegularLineStyleText(Color32 color, string text, float scale, float angle, float shift, bool vertical) : base(color, default)
+        public RegularLineStyleText(Color32 color, string font, FontStyle fontStyle, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing) : base(color, default)
         {
             Text = new PropertyStringValue("TX", StyleChanged, text);
+            Font = new PropertyStringValue("F", StyleChanged, font);
+            FontStyle = new PropertyEnumValue<FontStyle>("FS", StyleChanged, fontStyle);
             Scale = new PropertyStructValue<float>("S", StyleChanged, scale);
             Angle = new PropertyStructValue<float>("A", StyleChanged, angle);
             Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
-            Vertical = new PropertyBoolValue("V", StyleChanged, vertical);
+            Direction = new PropertyEnumValue<TextDirection>("V", StyleChanged, direction);
+            Spacing = new PropertyVector2Value(StyleChanged, spacing, "SPC", "SPL");
 #if DEBUG
             Ratio = new PropertyStructValue<float>(StyleChanged, 0.05f);
 #endif
         }
 
-        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Text, Scale, Angle, Shift, Vertical);
+        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, FontStyle, Text, Scale, Angle, Shift, Direction, Spacing);
 
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
@@ -68,12 +79,19 @@ namespace NodeMarkup.Manager
                 return new MarkupPartGroupData(lod);
 
             var text = Text.Value;
-            if(Vertical)
-            {
-                text = string.Join("\n",text.Select(c => c.ToString()).ToArray());
-            }
+            if (Direction == TextDirection.TopToBottom)
+                text = string.Join("\n", text.Select(c => c.ToString()).ToArray());
+            else if (Direction == TextDirection.BottomToTop)
+                text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
-            var aciTexture = RenderHelper.CreateTextTexture(text, Scale);
+            var fontName = FontStyle.Value switch
+            {
+                UnityEngine.FontStyle.Bold => $"{Font.Value} Bold",
+                UnityEngine.FontStyle.Italic => $"{Font.Value} Italic",
+                UnityEngine.FontStyle.BoldAndItalic => $"{Font.Value} Bold Italic",
+                _ => Font
+            };
+            var aciTexture = RenderHelper.CreateTextTexture(fontName, text, Scale, Spacing);
 
             var textureId = (aciTexture.height << 16) + aciTexture.width;
             if (!Textures.TryGetValue(textureId, out var mainTexture))
@@ -98,19 +116,37 @@ namespace NodeMarkup.Manager
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
+            components.Add(AddFontProperty(parent, false));
             components.Add(AddTextProperty(parent, false));
             components.Add(AddScaleProperty(parent, false));
-            components.Add(AddAngleProperty(parent, false));
-            components.Add(AddShiftProperty(parent, false));
-            components.Add(AddVerticalProperty(parent, false));
+            components.Add(AddAngleProperty(parent, true));
+            components.Add(AddShiftProperty(parent, true));
+            components.Add(AddDirectionProperty(parent, true));
+            components.Add(AddSpacingProperty(parent, true));
 #if DEBUG
-            components.Add(AddRatioProperty(parent, false));
+            components.Add(AddRatioProperty(parent, true));
 #endif
+        }
+        protected FontPtopertyPanel AddFontProperty(UIComponent parent, bool canCollapse)
+        {
+            var fontProperty = ComponentPool.Get<FontPtopertyPanel>(parent, nameof(Font));
+            fontProperty.Text = Localize.StyleOption_Font;
+            fontProperty.UseWheel = true;
+            fontProperty.CanCollapse = canCollapse;
+            fontProperty.Init();
+            fontProperty.Font = string.IsNullOrEmpty(Font.Value) ? null : Font.Value;
+            fontProperty.FontStyle = FontStyle;
+            fontProperty.OnValueChanged += (string font, FontStyle style) =>
+                {
+                    Font.Value = font;
+                    FontStyle.Value = style;
+                };
+            return fontProperty;
         }
         protected StringPropertyPanel AddTextProperty(UIComponent parent, bool canCollapse)
         {
             var textProperty = ComponentPool.Get<StringPropertyPanel>(parent, nameof(Text));
-            textProperty.Text = "Text";
+            textProperty.Text = Localize.StyleOption_Text;
             textProperty.FieldWidth = 230f;
             textProperty.CanCollapse = canCollapse;
             textProperty.Init();
@@ -122,12 +158,14 @@ namespace NodeMarkup.Manager
         protected FloatPropertyPanel AddScaleProperty(UIComponent parent, bool canCollapse)
         {
             var sizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Scale));
-            sizeProperty.Text = "Size";
+            sizeProperty.Text = Localize.StyleOption_ObjectScale;
             sizeProperty.UseWheel = true;
             sizeProperty.WheelStep = 0.1f;
             sizeProperty.WheelTip = Settings.ShowToolTip;
             sizeProperty.CheckMin = true;
-            sizeProperty.MinValue = 0.1f;
+            sizeProperty.MinValue = 1f;
+            sizeProperty.CheckMax = true;
+            sizeProperty.MaxValue = 10f;
             sizeProperty.CanCollapse = canCollapse;
             sizeProperty.Init();
             sizeProperty.Value = Scale;
@@ -175,16 +213,36 @@ namespace NodeMarkup.Manager
 
             return shiftProperty;
         }
-        protected BoolListPropertyPanel AddVerticalProperty(UIComponent parent, bool canCollapse)
+        protected TextDirectionPanel AddDirectionProperty(UIComponent parent, bool canCollapse)
         {
-            var parallelProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Vertical));
-            parallelProperty.Text = "Vertical";
+            var parallelProperty = ComponentPool.Get<TextDirectionPanel>(parent, nameof(Direction));
+            parallelProperty.Text = Localize.StyleOption_TextDirection;
             parallelProperty.CanCollapse = canCollapse;
-            parallelProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
-            parallelProperty.SelectedObject = Vertical;
-            parallelProperty.OnSelectObjectChanged += (value) => Vertical.Value = value;
+            parallelProperty.Init();
+            parallelProperty.SelectedObject = Direction;
+            parallelProperty.OnSelectObjectChanged += (value) => Direction.Value = value;
 
             return parallelProperty;
+        }
+        protected Vector2PropertyPanel AddSpacingProperty(UIComponent parent, bool canCollapse)
+        {
+            var spacingProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Spacing));
+            spacingProperty.Text = Localize.StyleOption_Spacing;
+            spacingProperty.SetLabels(Localize.StyleOption_SpacingChar, Localize.StyleOption_SpacingLine);
+            spacingProperty.UseWheel = true;
+            spacingProperty.WheelStep = new Vector2(1f, 1f);
+            spacingProperty.WheelTip = Settings.ShowToolTip;
+            spacingProperty.CheckMin = true;
+            spacingProperty.MinValue = new Vector2(-10f, -10f);
+            spacingProperty.CheckMax = true;
+            spacingProperty.MaxValue = new Vector2(10f, 10f);
+            spacingProperty.CanCollapse = canCollapse;
+            spacingProperty.FieldsWidth = 50f;
+            spacingProperty.Init(0, 1);
+            spacingProperty.Value = Spacing;
+            spacingProperty.OnValueChanged += (Vector2 value) => Spacing.Value = value;
+
+            return spacingProperty;
         }
 
 #if DEBUG
@@ -209,23 +267,68 @@ namespace NodeMarkup.Manager
 
         public override XElement ToXml()
         {
-            var config = BaseToXml();
+            var config = base.ToXml();
+            Font.ToXml(config);
+            FontStyle.ToXml(config);
             Text.ToXml(config);
             Scale.ToXml(config);
             Angle.ToXml(config);
             Shift.ToXml(config);
-            Vertical.ToXml(config);
+            Direction.ToXml(config);
+            Spacing.ToXml(config);
             return config;
         }
 
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
         {
             base.FromXml(config, map, invert);
+            Font.FromXml(config, string.Empty);
+            FontStyle.FromXml(config, UnityEngine.FontStyle.Normal);
             Text.FromXml(config, string.Empty);
             Scale.FromXml(config, DefaultTextScale);
             Angle.FromXml(config, DefaultObjectAngle);
             Shift.FromXml(config, DefaultObjectShift);
-            Vertical.FromXml(config, false);
+            Direction.FromXml(config, TextDirection.LeftToRight);
+            Spacing.FromXml(config, Vector2.zero);
+        }
+
+        public enum TextDirection
+        {
+            [Description(nameof(Localize.StyleOption_TextDirectionLtoR))]
+            [Sprite(nameof(NodeMarkupTextures.LeftToRightButtonIcons))]
+            LeftToRight,
+
+            [Description(nameof(Localize.StyleOption_TextDirectionTtoB))]
+            [Sprite(nameof(NodeMarkupTextures.TopToBottomButtonIcons))]
+            TopToBottom,
+
+            [Description(nameof(Localize.StyleOption_TextDirectionBtoT))]
+            [Sprite(nameof(NodeMarkupTextures.BottomToTopButtonIcons))]
+            BottomToTop,
+        }
+        public class TextDirectionPanel : EnumOncePropertyPanel<TextDirection, TextDirectionPanel.TextDirectionSegmented>
+        {
+            protected override bool IsEqual(TextDirection first, TextDirection second) => first == second;
+            protected override string GetDescription(TextDirection value) => value.Description();
+
+            protected override void FillItems(Func<TextDirection, bool> selector)
+            {
+                Selector.StopLayout();
+                foreach (var value in GetValues())
+                {
+                    if (selector?.Invoke(value) != false)
+                    {
+                        var sprite = value.Sprite();
+                        if (string.IsNullOrEmpty(sprite))
+                            Selector.AddItem(value, GetDescription(value));
+                        else
+                            Selector.AddItem(value, GetDescription(value), NodeMarkupTextures.Atlas, sprite);
+                    }
+                }
+                Selector.StartLayout();
+            }
+
+            public class TextDirectionSegmented : UIOnceSegmented<TextDirection> { }
         }
     }
 }

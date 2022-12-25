@@ -60,6 +60,15 @@ namespace NodeMarkup.Utilities
         public static string SingleButtonIcons { get; } = nameof(SingleButtonIcons);
         public static string RangeButtonIcons { get; } = nameof(RangeButtonIcons);
 
+        public static string RegularButtonIcons { get; } = nameof(RegularButtonIcons);
+        public static string BoldButtonIcons { get; } = nameof(BoldButtonIcons);
+        public static string ItalicButtonIcons { get; } = nameof(ItalicButtonIcons);
+        public static string BoldItalicButtonIcons { get; } = nameof(BoldItalicButtonIcons);
+
+        public static string LeftToRightButtonIcons { get; } = nameof(LeftToRightButtonIcons);
+        public static string TopToBottomButtonIcons { get; } = nameof(TopToBottomButtonIcons);
+        public static string BottomToTopButtonIcons { get; } = nameof(BottomToTopButtonIcons);
+
         static NodeMarkupTextures()
         {
             var spriteParams = new Dictionary<string, RectOffset>();
@@ -109,6 +118,13 @@ namespace NodeMarkup.Utilities
             spriteParams[AutoButtonIcons] = new RectOffset();
             spriteParams[SingleButtonIcons] = new RectOffset();
             spriteParams[RangeButtonIcons] = new RectOffset();
+            spriteParams[RegularButtonIcons] = new RectOffset();
+            spriteParams[BoldButtonIcons] = new RectOffset();
+            spriteParams[ItalicButtonIcons] = new RectOffset();
+            spriteParams[BoldItalicButtonIcons] = new RectOffset();
+            spriteParams[LeftToRightButtonIcons] = new RectOffset();
+            spriteParams[TopToBottomButtonIcons] = new RectOffset();
+            spriteParams[BottomToTopButtonIcons] = new RectOffset();
 
             //ListItem
             spriteParams[ListItemBackground] = new RectOffset(4, 4, 4, 4);

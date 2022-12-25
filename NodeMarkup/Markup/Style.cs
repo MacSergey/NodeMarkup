@@ -382,7 +382,7 @@ namespace NodeMarkup.Manager
             [NetworkType(NetworkType.All)]
             LineTree,
 
-            [Description("Text")]
+            [Description(nameof(Localize.LineStyle_Text))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             LineText,
 
