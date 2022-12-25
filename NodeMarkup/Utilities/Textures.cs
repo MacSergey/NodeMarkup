@@ -59,6 +59,10 @@ namespace NodeMarkup.Utilities
         public static string AutoButtonIcons { get; } = nameof(AutoButtonIcons);
         public static string SingleButtonIcons { get; } = nameof(SingleButtonIcons);
         public static string RangeButtonIcons { get; } = nameof(RangeButtonIcons);
+        public static string RegularButtonIcons { get; } = nameof(RegularButtonIcons);
+        public static string BoldButtonIcons { get; } = nameof(BoldButtonIcons);
+        public static string ItalicButtonIcons { get; } = nameof(ItalicButtonIcons);
+        public static string BoldItalicButtonIcons { get; } = nameof(BoldItalicButtonIcons);
 
         static NodeMarkupTextures()
         {
@@ -109,6 +113,10 @@ namespace NodeMarkup.Utilities
             spriteParams[AutoButtonIcons] = new RectOffset();
             spriteParams[SingleButtonIcons] = new RectOffset();
             spriteParams[RangeButtonIcons] = new RectOffset();
+            spriteParams[RegularButtonIcons] = new RectOffset();
+            spriteParams[BoldButtonIcons] = new RectOffset();
+            spriteParams[ItalicButtonIcons] = new RectOffset();
+            spriteParams[BoldItalicButtonIcons] = new RectOffset();
 
             //ListItem
             spriteParams[ListItemBackground] = new RectOffset(4, 4, 4, 4);

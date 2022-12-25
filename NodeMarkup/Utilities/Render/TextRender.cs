@@ -6,14 +6,18 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using static ColossalFramework.UI.UIDynamicFont;
+using ModsCommon.Utilities;
 
 namespace NodeMarkup.Utilities
 {
     public static class TextRenderHelper
     {
+        public static string[] InstalledFonts { get; } = Font.GetOSInstalledFontNames();
+
         public class TextRenderer
         {
             private static UIDynamicFont DefaultFont { get; }
+            private static Dictionary<string, UIDynamicFont> Fonts { get; } = new Dictionary<string, UIDynamicFont>();
 
             public UIDynamicFont Font { get; }
             public float TextScale { get; set; }
@@ -27,16 +31,47 @@ namespace NodeMarkup.Utilities
             static TextRenderer()
             {
                 var view = UIView.GetAView();
-                var font = view.defaultFont as UIDynamicFont;
+   
+                DefaultFont = ScriptableObject.CreateInstance<UIDynamicFont>();
+                DefaultFont.baseFont = (view.defaultFont as UIDynamicFont).baseFont;
+                DefaultFont.material = DefaultFont.baseFont.material;
+                DefaultFont.size = DefaultFont.baseFont.fontSize;
+                DefaultFont.baseline = 18;
+                DefaultFont.lineHeight = 22;
 
-                DefaultFont = font;
-                //DefaultFont = GameObject.Instantiate(font);
-                //DefaultFont.baseFont = GameObject.Instantiate(font.baseFont);
-                //DefaultFont.baseFont.material = GameObject.Instantiate(font.baseFont.material);
-                //DefaultFont.baseFont.material.mainTexture = GameObject.Instantiate(font.baseFont.material.mainTexture);
+                //var baseFont = new Font(font.name);
+                //baseFont.fontNames = font.baseFont.fontNames;
+                //baseFont.material = new Material(Shader.Find("UI/Dynamic Font Shader"));
+                //baseFont.material.renderQueue = 4000;
+                //baseFont.material.name = "IMT font";
+                //baseFont.material.mainTexture = TextureHelper.CreateTexture(256, 256, new Color(0, 0, 0, 0));
+                //DefaultFont = ScriptableObject.CreateInstance<UIDynamicFont>();
+                //DefaultFont.baseFont = baseFont;
+                //DefaultFont.baseline = font.baseline;
+
             }
-            public TextRenderer(UIDynamicFont font = null)
+            public TextRenderer(string fontName)
             {
+                if(!string.IsNullOrEmpty(fontName))
+                {
+                    if (!Fonts.TryGetValue(fontName, out var font))
+                    {
+                        font = ScriptableObject.CreateInstance<UIDynamicFont>();
+                        font.baseFont = UnityEngine.Font.CreateDynamicFontFromOSFont(fontName, 16);
+                        font.material = font.baseFont.material;
+                        font.size = font.baseFont.fontSize;
+                        font.baseline = 18;
+                        font.lineHeight = 22;
+                        Fonts.Add(fontName, font);
+                    }
+
+                    if(font.isValid)
+                    {
+                        Font = font;
+                        return;
+                    }
+                }
+
                 Font = DefaultFont;
             }
 

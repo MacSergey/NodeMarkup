@@ -2509,5 +2509,85 @@ namespace NodeMarkup
 		/// Triangle
 		/// </summary>
 		public static string StyleOption_Triangle => LocaleManager.GetString("StyleOption_Triangle", Culture);
+
+		/// <summary>
+		/// Text
+		/// </summary>
+		public static string LineStyle_Text => LocaleManager.GetString("LineStyle_Text", Culture);
+
+		/// <summary>
+		/// Default game font
+		/// </summary>
+		public static string StyleOption_DefaultFont => LocaleManager.GetString("StyleOption_DefaultFont", Culture);
+
+		/// <summary>
+		/// Font
+		/// </summary>
+		public static string StyleOption_Font => LocaleManager.GetString("StyleOption_Font", Culture);
+
+		/// <summary>
+		/// Font style
+		/// </summary>
+		public static string StyleOption_FontStyle => LocaleManager.GetString("StyleOption_FontStyle", Culture);
+
+		/// <summary>
+		/// Bold
+		/// </summary>
+		public static string StyleOption_FontStyleBold => LocaleManager.GetString("StyleOption_FontStyleBold", Culture);
+
+		/// <summary>
+		/// Bold Italic
+		/// </summary>
+		public static string StyleOption_FontStyleBoldItalic => LocaleManager.GetString("StyleOption_FontStyleBoldItalic", Culture);
+
+		/// <summary>
+		/// Italic
+		/// </summary>
+		public static string StyleOption_FontStyleItalic => LocaleManager.GetString("StyleOption_FontStyleItalic", Culture);
+
+		/// <summary>
+		/// Regular
+		/// </summary>
+		public static string StyleOption_FontStyleRegular => LocaleManager.GetString("StyleOption_FontStyleRegular", Culture);
+
+		/// <summary>
+		/// Spacing
+		/// </summary>
+		public static string StyleOption_Spacing => LocaleManager.GetString("StyleOption_Spacing", Culture);
+
+		/// <summary>
+		/// Char
+		/// </summary>
+		public static string StyleOption_SpacingChar => LocaleManager.GetString("StyleOption_SpacingChar", Culture);
+
+		/// <summary>
+		/// Line
+		/// </summary>
+		public static string StyleOption_SpacingLine => LocaleManager.GetString("StyleOption_SpacingLine", Culture);
+
+		/// <summary>
+		/// Text
+		/// </summary>
+		public static string StyleOption_Text => LocaleManager.GetString("StyleOption_Text", Culture);
+
+		/// <summary>
+		/// Direction
+		/// </summary>
+		public static string StyleOption_TextDirection => LocaleManager.GetString("StyleOption_TextDirection", Culture);
+
+		/// <summary>
+		/// Buttom to Top
+		/// </summary>
+		public static string StyleOption_TextDirectionBtoT => LocaleManager.GetString("StyleOption_TextDirectionBtoT", Culture);
+
+		/// <summary>
+		/// Left to Rigth
+		/// </summary>
+		public static string StyleOption_TextDirectionLtoR => LocaleManager.GetString("StyleOption_TextDirectionLtoR", Culture);
+
+		/// <summary>
+		/// Top to Bottom
+		/// </summary>
+		public static string StyleOption_TextDirectionTtoB => LocaleManager.GetString("StyleOption_TextDirectionTtoB", Culture);
 	}
 }
