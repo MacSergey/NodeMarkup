@@ -1644,20 +1644,85 @@
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>三角形</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>テキスト</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>ゲームデフォルトのフォント</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>フォント</value>
+  </data>
+  <data name="StyleOption_FontStyle" xml:space="preserve">
+    <value>フォントのスタイル</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>太字</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>太字と斜体</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>斜体</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>標準</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>間隔</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>カーニング</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>ベースライン</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>テキスト</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>方向</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>下から上</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>左から右</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>上から下</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>レーン</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>クリックしてレーンの追加</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>クリックしてレーンを削除</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>{0} + クリックで、レーンを選択</value>
+  </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>レーン両側のラインを自動作成</value>
+  </data>
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>レーンの終点を選択</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>分布</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>動的な空白と固定の終端</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>動的な空白と自由な終端</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>固定の空白と固定の終端</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>固定の空白と自由な終端</value>
+  </data>
 </root>

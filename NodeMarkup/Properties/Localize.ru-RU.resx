@@ -1858,4 +1858,35 @@
   <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
     <value>Сверху вниз</value>
   </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>Полоса</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>Нажмите для создания полосы</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>Нажмите для удаления полосы</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>Нажмите c {0} для выбора полосы</value>
+  </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>Создавать боковые линии для полосы автоматически</value>
+  </data>
+  
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>Распределение</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>Подстраиваемый промежуток и фиксированные окончания</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>Подстраиваемый промежуток и свободные окончания</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>Фиксированный промежуток и фиксированные окончания</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>Фиксированный промежуток и свободные окончания</value>
+  </data>
 </root>

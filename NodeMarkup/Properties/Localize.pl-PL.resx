@@ -1565,34 +1565,111 @@ Kliknij aby edytować oznaczenia</value>
     <value>Drugi kolor</value>
   </data>
   
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Każdy {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Odstęp</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>Zwykły</value>
+  </data>
+  
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>Zwykły</value>
+  </data>
   
   
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Długość</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>Linia</value>
+  </data>
   
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>Po</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>Przed</value>
+  </data>
   
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Linie pomocnicze</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Baza</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Wysokość</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Trójkąt</value>
+  </data>
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Tekst</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>Domyślna czcionka gry</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>Czcionka</value>
+  </data>
+  <data name="StyleOption_FontStyle" xml:space="preserve">
+    <value>Styl czcionki</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>Pogrubiony</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>Pogrubiona kursywa</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>Kursywa</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>Zwykły</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>Odstęp</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>Znak</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>Linia</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Tekst</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>Kierunek</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>Od dołu do góry</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>Z lewej do prawej</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>Od góry do dołu</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>Pas ruchu</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>Kliknij, aby utworzyć pas ruchu</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>Kliknij, aby usunąć pas ruchu</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>Kliknij trzymając {0}, aby wybrać pas ruchu</value>
+  </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>Twórz automatycznie linie pasów ruchu</value>
+  </data>
   
   
   

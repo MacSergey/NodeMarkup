@@ -1659,13 +1659,13 @@
     <value>分隔带</value>
   </data>
   <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
-    <value>之后</value>
+    <value>后</value>
   </data>
   <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
-    <value>之前</value>
+    <value>前</value>
   </data>
   <data name="StyleOption_Space" xml:space="preserve">
-    <value>空格</value>
+    <value>间隔</value>
   </data>
   <data name="StyleOption_Rails" xml:space="preserve">
     <value>边界</value>
@@ -1702,20 +1702,85 @@
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>三角形</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>文本</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>游戏默认字体</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>字体</value>
+  </data>
+  <data name="StyleOption_FontStyle" xml:space="preserve">
+    <value>字体样式</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>粗体</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>斜体加粗</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>斜体</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>间距</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>字符</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>线段</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>文本</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>方向</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>从下到上</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>从左至右</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>自上而下</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>车道</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>点击以创建车道</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>点击以删除车道</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>按住{0}点击来选车道</value>
+  </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>自动创建车道边缘线</value>
+  </data>
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>点选终点来创建车道</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>分布</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>动态间隔和固定的终点</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>动态间隔和自由终点</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>固定的间隔和固定的终点</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>固定的间隔和自由终点</value>
+  </data>
 </root>

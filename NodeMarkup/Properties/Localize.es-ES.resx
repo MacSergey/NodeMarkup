@@ -1563,13 +1563,13 @@ para modo subterráneo</value>
     <value>Color secundario</value>
   </data>
   <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
-    <value>Doble punteado asimétrico</value>
+    <value>Discontinua doble asimétrica</value>
   </data>
   <data name="NumberFormat_Period" xml:space="preserve">
     <value>Cada {0}</value>
   </data>
   <data name="StyleOption_CrosswalkGap" xml:space="preserve">
-    <value>Intervalo</value>
+    <value>Separación</value>
   </data>
   <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
     <value>Normal</value>
@@ -1584,7 +1584,7 @@ para modo subterráneo</value>
     <value>Madiana</value>
   </data>
   <data name="StyleOption_Dash" xml:space="preserve">
-    <value>Punteado</value>
+    <value>Trazo</value>
   </data>
   <data name="StyleOption_Length" xml:space="preserve">
     <value>Largo</value>
@@ -1679,12 +1679,45 @@ para modo subterráneo</value>
     <value>Dirección</value>
   </data>
   <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
-    <value>De abajo hacia arriba</value>
+    <value>Abajo hacia arriba</value>
   </data>
   <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
-    <value>De izquierda a derecha</value>
+    <value>Izquierda a derecha</value>
   </data>
   <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
-    <value>De arriba hacia abajo</value>
+    <value>Arriba hacia abajo</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>Carril</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>Haga clic para crear un carril</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>Haga clic para borrar el carril</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>Clic con la tecla {0} para seleccionar el carril</value>
+  </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>Crear líneas de los bordes de carril automáticamente</value>
+  </data>
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Seleccione el punto final para crear un carril</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>Distribución</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>Espacio dinámico y final fijo</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>Espacio dinámico y final libre</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>Espacio fijo y final fijo</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>Espacio fijo y final libre</value>
   </data>
 </root>

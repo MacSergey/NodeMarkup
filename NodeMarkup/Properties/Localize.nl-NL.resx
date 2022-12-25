@@ -1275,7 +1275,7 @@ Klik om de markering te wijzigen</value>
     <value>Hoekstraal</value>
   </data>
   <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Hoekstraal op mediaan</value>
+    <value>Hoekstraal op middenberm</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Stoeprand hoogte</value>
@@ -1560,35 +1560,146 @@ Klik om de markering te wijzigen</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Tweede kleur</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Dubbel gestreept asym</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Elke {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Afstand</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>Normaal</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Middenberm</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>Normaal</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Middenberm</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Strepen</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Lengte</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>Lijn</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Middenberm</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>Na</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>Voor</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Leegte</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Hulplijnen</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Basis</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Hoogte</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_11" xml:space="preserve">
+    <value>[NEW] Bewaar markeringsgegevens in een netwerkobject en pas deze automatisch toe wanneer het netwerk wordt geplaatst.
+[NEW] Mogelijkheid toegevoegd om markeringen in tunnels te plaatsen.
+[NEW] Dubbel gestreept asymmetrische stijl toegevoegd.
+[NEW] Mogelijkheid toegevoegd om onnodige opties in te klappen.
+[NEW] Mogelijkheid toegevoegd om kanteling en helling van props en bomen in te stellen.
+[NEW] Mogelijkheid toegevoegd om automatisch props in te stellen, afhankelijk van hun grootte.
+[NEW] Mogelijkheid toegevoegd om een bereik in te stellen op de verplaatsing en hoogte van props/bomen.
+[NEW] Mogelijkheid toegevoegd om de tweede kleur op dubbele lijnen in te stellen.
+[NEW] Props/Bomen/Netwerken worden gesorteerd op naam.
+[NEW] Sla woorden op die zijn ingevoerd bij het zoeken naar props/bomen/netwerken.
+[FIXED] Kleur gecorrigeerd van decoratieve netwerken die thematexturen gebruiken.
+[FIXED] 3D vulelementen, props, bomen en netwerken toegevoegd door IMT zijn zichtbaar in infoweergaven.
+[FIXED] Gebruikersinterface flikkert bij bladeren door props/bomen/netwerken.
+[UPDATED] LOD-afstand kan apart worden ingesteld voor elk type markering.
+[UPDATED] De eigenschappen "Afstand voor" en "Afstand na" zijn gecombineerd in de eigenschap "Afstand".
+[UPDATED] De eigenschappen "Streeplengte" en "Afstand tussen" zijn gecombineerd in de eigenschap "Lengte".
+[UPDATED] De eigenschappen "Gebruik tussenruimte", "tussenruimte Lengte" en "tussenruimte periode" zijn gecombineerd in de eigenschap "Tussenruimte".
+[UPDATED] De eigenschappen "Gebruik hulplijnen", "Linker hulplijn" en "Rechter hulplijn" zijn gecombineerd in de eigenschap "Hulplijn".
+[UPDATED] De eigenschappen "Basis" en "Hoogte" zijn gecombineerd in de eigenschap "Driehoek".
+[UPDATED] De eigenschappen "Hoekstraal" en "Hoekstraal op middenberm" zijn gecombineerd in de eigenschap "Hoekradius".
+[UPDATED] De eigenschappen "Stoeprand" en "Stoeprand op middenberm" zijn gecombineerd in de eigenschap "Stoeprand".</value>
+  </data>
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Driehoek</value>
+  </data>
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Tekst</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>Standaard lettertype van het spel</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>Lettertype</value>
+  </data>
+  <data name="StyleOption_FontStyle" xml:space="preserve">
+    <value>Lettertype stijl</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>Vet</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>Vet en cursief</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>Cursief</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>Normaal</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>Afstand</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>Tekens</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>Lijn</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Tekst</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>Richting</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>Van onder naar boven</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>Van links naar rechts</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>Van boven naar onder</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>Rijstrook</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>Klik om een rijstrook te maken</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>Klik om de rijstrook te verwijderen</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>{0}+klik om de rijstrook te selecteren</value>
+  </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>Automatisch lijnen voor rijstroken maken</value>
+  </data>
   
   
   

@@ -1550,7 +1550,7 @@
     <value>앞쪽</value>
   </data>
   <data name="StyleOption_Space" xml:space="preserve">
-    <value>공백</value>
+    <value>간격</value>
   </data>
   <data name="StyleOption_Rails" xml:space="preserve">
     <value>가이드</value>
@@ -1587,20 +1587,85 @@
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>삼각형</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>내용</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>게임 기본 글꼴</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>글꼴</value>
+  </data>
+  <data name="StyleOption_FontStyle" xml:space="preserve">
+    <value>글자 서식</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>굵게</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>굵은 기울임꼴</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>기울임꼴</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>간격</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>자간</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>줄</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>내용</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>방향</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>아래에서 위</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>왼쪽에서 오른쪽</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>위에서 아래</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>차선</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>클릭해 차선을 생성하세요</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>클릭해 차선을 삭제하세요</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>{0} 키를 누른 채 클릭해 차선을 선택하세요</value>
+  </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>자동으로 차선 모서리 생성</value>
+  </data>
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>만들 차선의 끝점 선택</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>분포</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>동적 간격 및 고정된 끝점</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>동적 간격 및 자유로운 끝점</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>고정된 간격 및 고정된 끝점</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>고정된 간격 및 자유로운 끝점</value>
+  </data>
 </root>

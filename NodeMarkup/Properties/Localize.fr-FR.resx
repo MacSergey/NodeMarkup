@@ -1731,39 +1731,162 @@ le mode souterrain</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Couleur secondaire</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Double pointillé asymétrique</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Chaque {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Espace</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Médiane</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Médiane</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Pointillés</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Longueur</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>Ligne</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Médiane</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>Après</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>Avant</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Espace</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Rails</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Hauteur</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_11" xml:space="preserve">
+    <value>[NEW] Enregistrez les données de marquage dans la ressource du réseau et appliquez-les automatiquement lorsque le réseau est placé.
+[NEW] Ajout de la possibilité de créer des marquages dans les tunnels.
+[NEW] Ajout du style Double pointillé asymétrique.
+[NEW] Ajout de la possibilité de réduire les options inutiles.
+[NEW] Ajout de la possibilité de définir l'inclinaison et la pente des accessoires et des arbres.
+[NEW] Ajout de la possibilité de définir l'espacement des accessoires automatiquement en fonction de leur taille.
+[NEW] Ajout de la possibilité de définir la plage de déplacement et d'élévation des accessoires/arbres. 
+[NEW] Ajout de la possibilité de définir une deuxième couleur pour les lignes doubles.
+[NEW] Les accessoires/arbres/réseaux sont triés par nom.
+[NEW] La recherche mémorise le texte recherché lors de la recherche d'accessoires/arbres/réseaux.
+[FIXED] Couleur des réseaux décoratifs qui utilisent des textures du thème.
+[FIXED] Les remplissages 3D, les accessoires, les arbres et les réseaux qui sont ajoutés par IMT sont visibles dans les vues d'information.
+[FIXED] Clignotement de l'interface lors de la recherche d'accessoires/arbres/réseaux.
+[UPDATED] La distance d'affichage peut être définie pour chaque type de marquage séparément.
+[UPDATED] Les propriétés "Décalage avant" et "Décalage après" sont combinées dans la propriété "Décalage".
+[UPDATED] Les propriétés "Longueur du tiret" et "Longueur de l'espace" sont combinées dans la propriété "Longueur".
+[UPDATED] Les propriétés "Use gap", "Gap length" et "Gap period" sont combinées dans la propriété "Espace".
+[UPDATED] Les propriétés "Utiliser les rails", "Rail de gauche" et "Rail de droite" sont combinées dans la propriété "Rails".
+[UPDATED] Les propriétés "Base du triangle" et "Hauteur du triangle" sont combinées dans la propriété "Triangle".
+[UPDATED] Les propriétés "Rayon du coin" et "Rayon du coin depuis séparateur" sont combinées en une propriété "Rayon du coin".
+[UPDATED] Les propriétés "Taille de bordure" et "Taille de bordure depuis séparateur" sont combinées dans la propriété "Taille de bordure".</value>
+  </data>
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Triangle</value>
+  </data>
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Texte</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>Police par défaut du jeu</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>Police</value>
+  </data>
+  <data name="StyleOption_FontStyle" xml:space="preserve">
+    <value>Style de police</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>Gras</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>Gras italique</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>Italique</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>Espacement</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>Caractère</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>Ligne</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Texte</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>De bas en haut</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>De gauche à droite</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>De Haut en Bas</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>Voie</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>Cliquez pour créer une voie</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>Cliquez pour supprimer la voie</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>Cliquez sur {0} pour sélectionner la voie</value>
+  </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>Créez automatiquement les lignes de bordure des voies</value>
+  </data>
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Sélectionnez un point de fin pour créer une voie</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>Répartition</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>Espacement dynamique et extrémités fixes</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>Espacement dynamique et extrémités libres</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>Espacement fixe et extrémités fixes</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>Espacement fixe et extrémités libres</value>
+  </data>
 </root>
