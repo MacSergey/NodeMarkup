@@ -259,6 +259,9 @@ namespace NodeMarkup.Manager
         {
             foreach (var point in EnterPointsDic.Values)
                 point.Update();
+
+            foreach (var point in LanePointsDic.Values)
+                point.Update();
         }
 
         public void ResetPoints()

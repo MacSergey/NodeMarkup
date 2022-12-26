@@ -351,7 +351,11 @@ namespace NodeMarkup.Manager
             UpdateProcess();
         }
 
-        private void SourcePointUpdate(MarkupPoint point) => UpdateProcess();
+        private void SourcePointUpdate(MarkupPoint point)
+        {
+            UpdateProcess();
+            PointChanged();
+        }
         public override void UpdateProcess()
         {
             Position = (SourcePointA.Position + SourcePointB.Position) * 0.5f;
@@ -362,7 +366,6 @@ namespace NodeMarkup.Manager
             data.Color ??= Color;
             data.Width ??= DefaultWidth;
             data.Cut = true;
-            //(Position - Direction).RenderCircle(data);
             var trajectory = new StraightTrajectory(SourcePointA.Position - SourcePointA.Direction, SourcePointB.Position - SourcePointB.Direction);
             trajectory.Render(data);
         }
