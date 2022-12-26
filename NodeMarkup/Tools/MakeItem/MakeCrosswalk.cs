@@ -49,7 +49,7 @@ namespace NodeMarkup.Tools
                 }
                 else
                 {
-                    var style = Tool.GetStyleByModifier<CrosswalkStyle, CrosswalkStyle.CrosswalkType>(NetworkType.Road, CrosswalkStyle.CrosswalkType.Zebra);
+                    var style = Tool.GetStyleByModifier<CrosswalkStyle, CrosswalkStyle.CrosswalkType>(NetworkType.Road, LineType.Crosswalk, CrosswalkStyle.CrosswalkType.Zebra);
                     var newCrosswalkLine = Tool.Markup.AddCrosswalkLine(pointPair, style);
                     Panel.AddLine(newCrosswalkLine);
                     Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);
@@ -82,7 +82,7 @@ namespace NodeMarkup.Tools
             var leftIdx = ignoreIdx;
             var rightIdx = ignoreIdx;
 
-            foreach (var line in enter.Markup.Lines.Where(l => l.Type == MarkupLine.LineType.Crosswalk && l.Start.Enter == enter))
+            foreach (var line in enter.Markup.Lines.Where(l => l.Type == LineType.Crosswalk && l.Start.Enter == enter))
             {
                 var from = Math.Min(bridge[line.Start], bridge[line.End]);
                 var to = Math.Max(bridge[line.Start], bridge[line.End]);
@@ -132,7 +132,7 @@ namespace NodeMarkup.Tools
 
         private void RenderConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
-            var bezier = new Line3(SelectPoint.Position, HoverPoint.Position).GetBezier();
+            var bezier = new Line3(SelectPoint.MarkerPosition, HoverPoint.MarkerPosition).GetBezier();
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
             var color = Tool.Markup.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
 
@@ -140,10 +140,10 @@ namespace NodeMarkup.Tools
         }
         private void RenderNotConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
-            var dir = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _) - SelectPoint.Position;
+            var dir = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _) - SelectPoint.MarkerPosition;
             var lenght = dir.magnitude;
             dir.Normalize();
-            var bezier = new Line3(SelectPoint.Position, SelectPoint.Position + dir * Mathf.Max(lenght, 1f)).GetBezier();
+            var bezier = new Line3(SelectPoint.MarkerPosition, SelectPoint.MarkerPosition + dir * Mathf.Max(lenght, 1f)).GetBezier();
 
             bezier.RenderBezier(new OverlayData(cameraInfo) { Color = Colors.White, Width = MarkupCrosswalkPoint.Shift * 2, Cut = true });
         }

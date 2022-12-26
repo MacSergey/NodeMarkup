@@ -133,10 +133,10 @@ namespace NodeMarkup.Manager
             var textProperty = ComponentPool.Get<StringPropertyPanel>(parent, nameof(Text));
             textProperty.Text = Localize.StyleOption_Text;
             textProperty.FieldWidth = 230f;
-            textProperty.Multyline = true;
-            textProperty.TextScale = 1f;
+            //textProperty.Multyline = true;
+            //textProperty.TextScale = 1f;
             textProperty.CanCollapse = canCollapse;
-            textProperty.Init(70);
+            textProperty.Init();
             textProperty.Value = Text;
             textProperty.OnValueChanged += (string value) => Text.Value = value;
 

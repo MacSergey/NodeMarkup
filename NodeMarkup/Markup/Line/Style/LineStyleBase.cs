@@ -314,70 +314,84 @@ namespace NodeMarkup.Manager
         {
             [Description(nameof(Localize.LineStyle_Solid))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             [Order(0)]
             Solid = StyleType.LineSolid,
 
             [Description(nameof(Localize.LineStyle_Dashed))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             [Order(1)]
             Dashed = StyleType.LineDashed,
 
             [Description(nameof(Localize.LineStyle_DoubleSolid))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             [Order(2)]
             DoubleSolid = StyleType.LineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_DoubleDashed))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             [Order(3)]
             DoubleDashed = StyleType.LineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             [Order(5)]
             SolidAndDashed = StyleType.LineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             [Order(6)]
             SharkTeeth = StyleType.LineSharkTeeth,
 
             [Description(nameof(Localize.LineStyle_DoubleDashedAsym))]
             [NetworkType(NetworkType.Path | NetworkType.Road | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             [Order(4)]
             DoubleDashedAsym = StyleType.LineDoubleDashedAsym,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             [Order(7)]
             Pavement = StyleType.LinePavement,
 
             [Description(nameof(Localize.LineStyle_Prop))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             [Order(8)]
             Prop = StyleType.LineProp,
 
             [Description(nameof(Localize.LineStyle_Tree))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             [Order(9)]
             Tree = StyleType.LineTree,
 
             [Description(nameof(Localize.LineStyle_Text))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             Text = StyleType.LineText,
 
             [Description(nameof(Localize.LineStyle_Network))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             [Order(10)]
             Network = StyleType.LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             [NotVisible]
             Empty = StyleType.EmptyLine,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             [NotVisible]
             Buffer = StyleType.LineBuffer,
         }

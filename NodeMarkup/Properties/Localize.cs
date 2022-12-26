@@ -2576,12 +2576,12 @@ namespace NodeMarkup
 		public static string StyleOption_TextDirection => LocaleManager.GetString("StyleOption_TextDirection", Culture);
 
 		/// <summary>
-		/// Buttom to Top
+		/// Bottom to Top
 		/// </summary>
 		public static string StyleOption_TextDirectionBtoT => LocaleManager.GetString("StyleOption_TextDirectionBtoT", Culture);
 
 		/// <summary>
-		/// Left to Rigth
+		/// Left to Right
 		/// </summary>
 		public static string StyleOption_TextDirectionLtoR => LocaleManager.GetString("StyleOption_TextDirectionLtoR", Culture);
 
@@ -2589,5 +2589,25 @@ namespace NodeMarkup
 		/// Top to Bottom
 		/// </summary>
 		public static string StyleOption_TextDirectionTtoB => LocaleManager.GetString("StyleOption_TextDirectionTtoB", Culture);
+
+		/// <summary>
+		/// Lane
+		/// </summary>
+		public static string LineStyle_LaneGroup => LocaleManager.GetString("LineStyle_LaneGroup", Culture);
+
+		/// <summary>
+		/// Click to create a lane
+		/// </summary>
+		public static string Tool_InfoCreateLaneLine => LocaleManager.GetString("Tool_InfoCreateLaneLine", Culture);
+
+		/// <summary>
+		/// Click to delete the lane
+		/// </summary>
+		public static string Tool_InfoDeleteLaneLine => LocaleManager.GetString("Tool_InfoDeleteLaneLine", Culture);
+
+		/// <summary>
+		/// Click with {0} to select the lane
+		/// </summary>
+		public static string Tool_InfoSelectLane => LocaleManager.GetString("Tool_InfoSelectLane", Culture);
 	}
 }

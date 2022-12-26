@@ -54,8 +54,8 @@ namespace NodeMarkup.Manager
             style.OnStyleChanged = CrosswalkChanged;
             Style = new PropertyClassValue<CrosswalkStyle>(StyleChanged, style);
 
-            CrosswalkLine.Start.Enter.TryGetPoint(CrosswalkLine.Start.Num, MarkupPoint.PointType.Enter, out MarkupPoint startPoint);
-            CrosswalkLine.End.Enter.TryGetPoint(CrosswalkLine.End.Num, MarkupPoint.PointType.Enter, out MarkupPoint endPoint);
+            CrosswalkLine.Start.Enter.TryGetPoint(CrosswalkLine.Start.Index, MarkupPoint.PointType.Enter, out MarkupPoint startPoint);
+            CrosswalkLine.End.Enter.TryGetPoint(CrosswalkLine.End.Index, MarkupPoint.PointType.Enter, out MarkupPoint endPoint);
             EnterLine = new MarkupEnterLine(Markup, startPoint, endPoint);
         }
         private void StyleChanged()

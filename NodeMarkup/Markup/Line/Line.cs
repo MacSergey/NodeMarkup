@@ -152,6 +152,9 @@ namespace NodeMarkup.Manager
                     case LineType.Crosswalk:
                         line = new MarkupCrosswalkLine(markup, pointPair);
                         break;
+                    case LineType.Lane:
+                        line = new MarkupLaneLine(markup, pointPair);
+                        break;
                     default:
                         return false;
                 }
@@ -161,21 +164,6 @@ namespace NodeMarkup.Manager
         }
         public abstract void FromXml(XElement config, ObjectsMap map, bool invert);
 
-        public enum LineType
-        {
-            [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
-            Regular = Markup.Item.RegularLine,
-
-            [Description(nameof(Localize.LineStyle_StopLinesGroup))]
-            Stop = Markup.Item.StopLine,
-
-            [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
-            Crosswalk = Markup.Item.Crosswalk,
-
-
-            [NotVisible]
-            All = Regular | Stop | Crosswalk,
-        }
         public override string ToString() => PointPair.ToString();
     }
     public class MarkupRegularLine : MarkupLine
@@ -212,8 +200,8 @@ namespace NodeMarkup.Manager
         {
             var trajectory = new Bezier3
             {
-                a = PointPair.First.GetPosition(RawAlignment),
-                d = PointPair.Second.GetPosition(RawAlignment.Value.Invert()),
+                a = PointPair.First.GetAbsolutePosition(RawAlignment),
+                d = PointPair.Second.GetAbsolutePosition(RawAlignment.Value.Invert()),
             };
             NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
 
@@ -259,11 +247,11 @@ namespace NodeMarkup.Manager
         {
             var defaultStyle = Style.StyleType.LineDashed;
 
-            if((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0)
+            if((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0 && (defaultStyle.GetLineType() & Type) != 0)
             {
                 foreach (var style in EnumExtension.GetEnumValues<RegularLineStyle.RegularLineType>(i => true).Select(i => i.ToEnum<Style.StyleType, RegularLineStyle.RegularLineType>()))
                 {
-                    if ((style.GetNetworkType() & PointPair.NetworkType) != 0)
+                    if ((style.GetNetworkType() & PointPair.NetworkType) != 0 && (style.GetLineType() & Type) != 0)
                     {
                         defaultStyle = style;
                         break;
@@ -344,7 +332,7 @@ namespace NodeMarkup.Manager
     public class MarkupNormalLine : MarkupRegularLine
     {
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre) : base(markup, pointPair, style, alignment) { }
-        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetPosition(RawAlignment), End.GetPosition(RawAlignment.Value.Invert()));
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetAbsolutePosition(RawAlignment), End.GetAbsolutePosition(RawAlignment.Value.Invert()));
     }
     public class MarkupFillerTempLine : MarkupRegularLine
     {
@@ -396,6 +384,13 @@ namespace NodeMarkup.Manager
         }
     }
 
+    public class MarkupLaneLine : MarkupRegularLine
+    {
+        public override LineType Type => LineType.Lane;
+
+        public MarkupLaneLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null) : base(markup, pointPair, style) { }
+    }
+
     public class MarkupStopLine : MarkupLine
     {
         public override LineType Type => LineType.Stop;
@@ -421,7 +416,7 @@ namespace NodeMarkup.Manager
         }
 
         private void AlignmentChanged() => Markup.Update(this, true, true);
-        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.GetPosition(RawStartAlignment), PointPair.Second.GetPosition(RawEndAlignment));
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.GetAbsolutePosition(RawStartAlignment), PointPair.Second.GetAbsolutePosition(RawEndAlignment));
         protected void SetRule(MarkupLineRawRule<StopLineStyle> rule)
         {
             rule.OnRuleChanged = RuleChanged;
@@ -480,7 +475,7 @@ namespace NodeMarkup.Manager
             Update(onlySelfUpdate);
         }
 
-        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetPosition(StartAlignment), End.GetPosition(EndAlignment));
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetAbsolutePosition(StartAlignment), End.GetAbsolutePosition(EndAlignment));
         public override bool ContainsRule(MarkupLineRawRule rule) => false;
         protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod) { yield break; }
 
@@ -596,6 +591,34 @@ namespace NodeMarkup.Manager
                 new StraightTrajectory(Center, dash.Position + dirX - dirY),
                 new StraightTrajectory(Center, dash.Position - dirX - dirY),
             };
+        }
+    }
+
+    public enum LineType
+    {
+        [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
+        Regular = Markup.Item.RegularLine,
+
+        [Description(nameof(Localize.LineStyle_StopLinesGroup))]
+        Stop = Markup.Item.StopLine,
+
+        [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
+        Crosswalk = Markup.Item.Crosswalk,
+
+        [Description(nameof(Localize.LineStyle_LaneGroup))]
+        Lane = Markup.Item.Lane,
+
+        [NotVisible]
+        All = Regular | Stop | Crosswalk | Lane,
+    }
+    [AttributeUsage(AttributeTargets.Field)]
+    public class LineTypeAttribute : Attribute
+    {
+        public LineType Type { get; }
+
+        public LineTypeAttribute(LineType type)
+        {
+            Type = type;
         }
     }
     public enum Alignment

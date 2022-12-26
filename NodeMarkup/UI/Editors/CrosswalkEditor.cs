@@ -111,7 +111,7 @@ namespace NodeMarkup.UI.Editors
         private MarkupRegularLine[] GetBorderLines(BorderPosition border)
         {
             var point = border == BorderPosition.Right ? EditObject.CrosswalkLine.Start : EditObject.CrosswalkLine.End;
-            if (point.Enter.TryGetPoint(point.Num, MarkupPoint.PointType.Enter, out MarkupPoint enterPoint))
+            if (point.Enter.TryGetPoint(point.Index, MarkupPoint.PointType.Enter, out MarkupPoint enterPoint))
                 return enterPoint.Markup.GetPointLines(enterPoint).OfType<MarkupRegularLine>().ToArray();
             else
                 return new MarkupRegularLine[0];
@@ -311,7 +311,7 @@ namespace NodeMarkup.UI.Editors
         {
             int result;
             if ((result = x.CrosswalkLine.Start.Enter.CompareTo(y.CrosswalkLine.Start.Enter)) == 0)
-                result = x.CrosswalkLine.Start.Num.CompareTo(y.CrosswalkLine.Start.Num);
+                result = x.CrosswalkLine.Start.Index.CompareTo(y.CrosswalkLine.Start.Index);
             return result;
         }
     }

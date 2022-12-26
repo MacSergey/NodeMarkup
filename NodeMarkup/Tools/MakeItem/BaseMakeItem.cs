@@ -41,8 +41,8 @@ namespace NodeMarkup.Tools
 
             if (IsSelectPoint && SelectPoint.Type == MarkupPoint.PointType.Enter && (SelectPoint.Enter.SupportPoints & MarkupPoint.PointType.Normal) != 0)
             {
-                var connectLine = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _) - SelectPoint.Position;
-                if (connectLine.magnitude >= 2 && 135 <= Vector3.Angle(XZ(SelectPoint.Direction), XZ(connectLine)) && SelectPoint.Enter.TryGetPoint(SelectPoint.Num, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
+                var connectLine = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _) - SelectPoint.MarkerPosition;
+                if (connectLine.magnitude >= 2 && 135 <= Vector3.Angle(XZ(SelectPoint.Direction), XZ(connectLine)) && SelectPoint.Enter.TryGetPoint(SelectPoint.Index, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
                 {
                     HoverPoint = normalPoint;
                     return;
@@ -57,14 +57,17 @@ namespace NodeMarkup.Tools
             var exist = Tool.Markup.ExistLine(pointPair);
 
             if (pointPair.IsStopLine)
-                return exist ? $"{Localize.Tool_InfoDeleteStopLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine, pointPair.NetworkType);
+                return exist ? $"{Localize.Tool_InfoDeleteStopLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine, pointPair.NetworkType, pointPair.LineType);
             else if (pointPair.IsCrosswalk)
-                return exist ? $"{Localize.Tool_InfoDeleteCrosswalk}\n{string.Format(Localize.Tool_InfoSelectCrosswalk, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<CrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk, pointPair.NetworkType);
+                return exist ? $"{Localize.Tool_InfoDeleteCrosswalk}\n{string.Format(Localize.Tool_InfoSelectCrosswalk, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<CrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk, pointPair.NetworkType, pointPair.LineType);
             else if (pointPair.IsNormal)
-                return exist ? $"{Localize.Tool_InfoDeleteNormalLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateNormalLine, pointPair.NetworkType);
+                return exist ? $"{Localize.Tool_InfoDeleteNormalLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateNormalLine, pointPair.NetworkType, pointPair.LineType);
+            else if (pointPair.IsLane)
+                return exist ? $"{Localize.Tool_InfoDeleteLaneLine}\n{string.Format(Localize.Tool_InfoSelectLane, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLaneLine, pointPair.NetworkType, pointPair.LineType);
             else
-                return exist ? $"{Localize.Tool_InfoDeleteLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLine, pointPair.NetworkType);
+                return exist ? $"{Localize.Tool_InfoDeleteLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateLine, pointPair.NetworkType, pointPair.LineType);
         }
+
         public override void OnPrimaryMouseClicked(Event e)
         {
             SelectPoint = HoverPoint;

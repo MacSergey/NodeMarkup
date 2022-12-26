@@ -10,7 +10,6 @@ using System.Xml.Linq;
 using UnityEngine;
 using ObjectId = NodeMarkup.Utilities.ObjectId;
 using static ColossalFramework.Math.VectorUtils;
-using static NodeMarkup.Utilities.MarkupFillerMeshData;
 
 namespace NodeMarkup.Manager
 {
@@ -32,7 +31,7 @@ namespace NodeMarkup.Manager
         #region PROPERTIES
         public abstract MarkupType Type { get; }
         public abstract SupportType Support { get; }
-        public virtual MarkupLine.LineType SupportLines => MarkupLine.LineType.Regular;
+        public virtual LineType SupportLines => LineType.Regular | LineType.Lane;
 
         public ushort Id { get; }
         protected abstract bool IsExist { get; }
@@ -153,8 +152,10 @@ namespace NodeMarkup.Manager
             var notChanged = still.Except(changed).ToArray();
 
             var newEnters = notChanged.Select(id => oldEnters.Find(e => e.Id == id)).ToList();
-            newEnters.AddRange(add.Select(id => NewEnter(id)));
-            newEnters.AddRange(changed.Select(id => NewEnter(id)));
+            foreach (var addId in add)
+                newEnters.Add(NewEnter(addId));
+            foreach (var changedId in changed)
+                newEnters.Add(NewEnter(changedId));
 
             foreach (var enter in newEnters)
                 enter.Update();
@@ -294,6 +295,8 @@ namespace NodeMarkup.Manager
 
             if (recalculate && !UpdateInProgress)
                 RecalculateAllStyleData();
+
+
         }
         public void Update(MarkupLine line, bool recalculate = false, bool recalcDependences = false)
         {
@@ -459,9 +462,22 @@ namespace NodeMarkup.Manager
             return line;
         }
         public MarkupRegularLine AddRegularLine(MarkupPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
-            => AddLine(pointPair, () => pointPair.IsNormal ? new MarkupNormalLine(this, pointPair, style, alignment) : new MarkupRegularLine(this, pointPair, style, alignment));
-        public MarkupStopLine AddStopLine(MarkupPointPair pointPair, StopLineStyle style) => AddLine(pointPair, () => new MarkupStopLine(this, pointPair, style));
-        public MarkupCrosswalkLine AddCrosswalkLine(MarkupPointPair pointPair, CrosswalkStyle style) => AddLine(pointPair, () => new MarkupCrosswalkLine(this, pointPair, style));
+        {
+            if(pointPair.IsNormal)
+               return AddLine(pointPair, () => new MarkupNormalLine(this, pointPair, style, alignment));
+            else if(pointPair.IsLane)
+                return AddLine(pointPair, () => new MarkupLaneLine(this, pointPair, style));
+            else
+                return AddLine(pointPair, () => new MarkupRegularLine(this, pointPair, style, alignment));
+        }
+        public MarkupStopLine AddStopLine(MarkupPointPair pointPair, StopLineStyle style)
+        {
+            return AddLine(pointPair, () => new MarkupStopLine(this, pointPair, style));
+        }
+        public MarkupCrosswalkLine AddCrosswalkLine(MarkupPointPair pointPair, CrosswalkStyle style)
+        {
+            return AddLine(pointPair, () => new MarkupCrosswalkLine(this, pointPair, style));
+        }
 
 
         public void RemoveLine(MarkupLine line) => RemoveLine(line, true);
@@ -551,7 +567,7 @@ namespace NodeMarkup.Manager
         public void CutLinesByCrosswalk(MarkupCrosswalk crosswalk)
         {
             var enter = crosswalk.CrosswalkLine.Start.Enter;
-            var lines = Lines.Where(l => l.Type == MarkupLine.LineType.Regular && l.PointPair.ContainsEnter(enter)).ToArray();
+            var lines = Lines.Where(l => l.Type == LineType.Regular && l.PointPair.ContainsEnter(enter)).ToArray();
 
             foreach (var line in lines)
             {
@@ -843,6 +859,9 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             Crosswalk = 0x800,
+
+            [Description(nameof(Localize.LineStyle_LaneGroup))]
+            Lane = 0x1000,
         }
 
         protected class EnterDic<T> : Dictionary<int, T>
