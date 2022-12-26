@@ -22,7 +22,6 @@ namespace NodeMarkup.Manager
 
         private PropertyStringValue Text { get; }
         private PropertyStringValue Font { get; }
-        private PropertyEnumValue<FontStyle> FontStyle { get; }
         private PropertyStructValue<float> Scale { get; }
         private PropertyStructValue<float> Shift { get; }
         private PropertyStructValue<float> Angle { get; }
@@ -42,7 +41,6 @@ namespace NodeMarkup.Manager
             {
                 yield return nameof(Text);
                 yield return nameof(Font);
-                yield return nameof(FontStyle);
                 yield return nameof(Color);
                 yield return nameof(Scale);
                 yield return nameof(Direction);
@@ -56,11 +54,10 @@ namespace NodeMarkup.Manager
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
-        public RegularLineStyleText(Color32 color, string font, FontStyle fontStyle, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing) : base(color, default)
+        public RegularLineStyleText(Color32 color, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing) : base(color, default)
         {
             Text = new PropertyStringValue("TX", StyleChanged, text);
             Font = new PropertyStringValue("F", StyleChanged, font);
-            FontStyle = new PropertyEnumValue<FontStyle>("FS", StyleChanged, fontStyle);
             Scale = new PropertyStructValue<float>("S", StyleChanged, scale);
             Angle = new PropertyStructValue<float>("A", StyleChanged, angle);
             Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
@@ -71,7 +68,7 @@ namespace NodeMarkup.Manager
 #endif
         }
 
-        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, FontStyle, Text, Scale, Angle, Shift, Direction, Spacing);
+        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, Text, Scale, Angle, Shift, Direction, Spacing);
 
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
@@ -84,14 +81,7 @@ namespace NodeMarkup.Manager
             else if (Direction == TextDirection.BottomToTop)
                 text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
-            var fontName = FontStyle.Value switch
-            {
-                UnityEngine.FontStyle.Bold => $"{Font.Value} Bold",
-                UnityEngine.FontStyle.Italic => $"{Font.Value} Italic",
-                UnityEngine.FontStyle.BoldAndItalic => $"{Font.Value} Bold Italic",
-                _ => Font
-            };
-            var aciTexture = RenderHelper.CreateTextTexture(fontName, text, Scale, Spacing);
+            var aciTexture = RenderHelper.CreateTextTexture(Font, text, Scale, Spacing);
 
             var textureId = (aciTexture.height << 16) + aciTexture.width;
             if (!Textures.TryGetValue(textureId, out var mainTexture))
@@ -135,12 +125,7 @@ namespace NodeMarkup.Manager
             fontProperty.CanCollapse = canCollapse;
             fontProperty.Init();
             fontProperty.Font = string.IsNullOrEmpty(Font.Value) ? null : Font.Value;
-            fontProperty.FontStyle = FontStyle;
-            fontProperty.OnValueChanged += (string font, FontStyle style) =>
-                {
-                    Font.Value = font;
-                    FontStyle.Value = style;
-                };
+            fontProperty.OnValueChanged += (string value) => Font.Value = value;
             return fontProperty;
         }
         protected StringPropertyPanel AddTextProperty(UIComponent parent, bool canCollapse)
@@ -148,8 +133,10 @@ namespace NodeMarkup.Manager
             var textProperty = ComponentPool.Get<StringPropertyPanel>(parent, nameof(Text));
             textProperty.Text = Localize.StyleOption_Text;
             textProperty.FieldWidth = 230f;
+            textProperty.Multyline = true;
+            textProperty.TextScale = 1f;
             textProperty.CanCollapse = canCollapse;
-            textProperty.Init();
+            textProperty.Init(70);
             textProperty.Value = Text;
             textProperty.OnValueChanged += (string value) => Text.Value = value;
 
@@ -271,7 +258,6 @@ namespace NodeMarkup.Manager
         {
             var config = base.ToXml();
             Font.ToXml(config);
-            FontStyle.ToXml(config);
             Text.ToXml(config);
             Scale.ToXml(config);
             Angle.ToXml(config);
@@ -285,7 +271,6 @@ namespace NodeMarkup.Manager
         {
             base.FromXml(config, map, invert);
             Font.FromXml(config, string.Empty);
-            FontStyle.FromXml(config, UnityEngine.FontStyle.Normal);
             Text.FromXml(config, string.Empty);
             Scale.FromXml(config, DefaultTextScale);
             Angle.FromXml(config, DefaultObjectAngle);

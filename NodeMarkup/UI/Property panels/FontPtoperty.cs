@@ -14,12 +14,18 @@ namespace NodeMarkup.UI
     {
         bool IReusable.InCache { get; set; }
 
-        public event Action<string, UnityEngine.FontStyle> OnValueChanged;
+        public event Action<string> OnValueChanged;
 
 
         public string Font
         {
-            get => FontSelector.SelectedObject;
+            get => FontStyleSelector.SelectedObject switch
+            {
+                UnityEngine.FontStyle.Bold => $"{FontSelector.SelectedObject} Bold",
+                UnityEngine.FontStyle.Italic => $"{FontSelector.SelectedObject} Italic",
+                UnityEngine.FontStyle.BoldAndItalic => $"{FontSelector.SelectedObject} Bold Italic",
+                _ => FontSelector.SelectedObject
+            };
             set
             {
                 FontSelector.SelectedObject = value;
@@ -58,7 +64,7 @@ namespace NodeMarkup.UI
 
             FontSelector.AddItem(null, NodeMarkup.Localize.StyleOption_DefaultFont);
             var fonts = TextRenderHelper.InstalledFonts;
-            foreach(var font in fonts.Where(f => !f.EndsWith("Bold") && !f.EndsWith("Italic")))
+            foreach (var font in fonts.Where(f => !f.EndsWith("Bold") && !f.EndsWith("Italic")))
             {
                 FontSelector.AddItem(font);
             }
@@ -83,11 +89,11 @@ namespace NodeMarkup.UI
         private void FontChanged(string font)
         {
             RefreshFontStyle();
-            OnValueChanged?.Invoke(font, FontStyleSelector.SelectedObject);
+            OnValueChanged?.Invoke(Font);
         }
         private void FontStyleChanged(UnityEngine.FontStyle style)
         {
-            OnValueChanged?.Invoke(FontSelector.SelectedObject, style);
+            OnValueChanged?.Invoke(Font);
         }
 
         public override void DeInit()
@@ -132,9 +138,9 @@ namespace NodeMarkup.UI
                 {
                     FontStyleSelector.isVisible = true;
 
-                    foreach(var style in EnumExtension.GetEnumValues<UnityEngine.FontStyle>())
+                    foreach (var style in EnumExtension.GetEnumValues<UnityEngine.FontStyle>())
                     {
-                        if(styles.Contains(style))
+                        if (styles.Contains(style))
                         {
                             var label = style switch
                             {
