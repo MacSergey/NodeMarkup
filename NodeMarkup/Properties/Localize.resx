@@ -1869,4 +1869,7 @@ underground mode</value>
   <data name="Tool_InfoSelectLane" xml:space="preserve">
     <value>Click with {0} to select the lane</value>
   </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>Create lane edge lines automatically</value>
+  </data>
 </root>

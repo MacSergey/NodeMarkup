@@ -323,7 +323,7 @@ namespace NodeMarkup.Manager
 
         public MarkupEnterPoint SourcePointA { get; private set; }
         public MarkupEnterPoint SourcePointB { get; private set; }
-        private new NetLanePointSource Source => (NetLanePointSource)base.Source;
+        public new NetLanePointSource Source => (NetLanePointSource)base.Source;
         public override Vector3 MarkerPosition => Position - Direction;
         public float Width => (SourcePointB.Position - SourcePointA.Position).MakeFlat().magnitude;
         public override Color32 Color => Colors.GetOverlayColor(Index + Colors.OverlayColors.Length / 2, byte.MaxValue);

@@ -2609,5 +2609,10 @@ namespace NodeMarkup
 		/// Click with {0} to select the lane
 		/// </summary>
 		public static string Tool_InfoSelectLane => LocaleManager.GetString("Tool_InfoSelectLane", Culture);
+
+		/// <summary>
+		/// Create lane edge lines automatically
+		/// </summary>
+		public static string Settings_CreateLaneEdgeLines => LocaleManager.GetString("Settings_CreateLaneEdgeLines", Culture);
 	}
 }
