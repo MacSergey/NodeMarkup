@@ -14,8 +14,8 @@ namespace NodeMarkup.Manager
     public class NetInfoPointSource : IPointSource
     {
         public Enter Enter { get; }
-        private DriveLane LeftLane { get; }
-        private DriveLane RightLane { get; }
+        public DriveLane LeftLane { get; }
+        public DriveLane RightLane { get; }
         public MarkupPoint.LocationType Location { get; private set; }
         public NetworkType NetworkType { get; private set; }
 
@@ -139,7 +139,8 @@ namespace NodeMarkup.Manager
         private Enter Enter { get; }
 
         public uint LaneId { get; }
-        public NetLane NetLane => LaneId.GetLane();
+        public int Index { get; }
+        public ref NetLane NetLane => ref LaneId.GetLane();
         public NetworkType NetworkType { get; }
 
         public float Position { get; }
@@ -147,9 +148,10 @@ namespace NodeMarkup.Manager
         public float LeftSidePos => Position + (Enter.IsLaneInvert ? -HalfWidth : HalfWidth);
         public float RightSidePos => Position + (Enter.IsLaneInvert ? HalfWidth : -HalfWidth);
 
-        public DriveLane(Enter enter, uint laneId, NetInfo.Lane info, NetworkType type)
+        public DriveLane(Enter enter, int index, uint laneId, NetInfo.Lane info, NetworkType type)
         {
             Enter = enter;
+            Index= index;
             LaneId = laneId;
             Position = info.m_position;
             HalfWidth = Mathf.Abs(info.m_width) / 2;
