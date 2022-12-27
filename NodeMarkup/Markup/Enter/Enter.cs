@@ -67,7 +67,7 @@ namespace NodeMarkup.Manager
                     {
                         if (IsVehicleLane(lane))
                         {
-                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Road);
+                            var driveLane = new DriveLane(this, index, lanes[index], lane, NetworkType.Road);
                             yield return driveLane;
                         }
                     }
@@ -75,7 +75,7 @@ namespace NodeMarkup.Manager
                     {
                         if (IsTaxiwayLane(lane))
                         {
-                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Taxiway);
+                            var driveLane = new DriveLane(this, index, lanes[index], lane, NetworkType.Taxiway);
                             yield return driveLane;
                             yield return driveLane;
                         }
@@ -84,7 +84,7 @@ namespace NodeMarkup.Manager
                     {
                         if (IsTrackLane(lane))
                         {
-                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Track);
+                            var driveLane = new DriveLane(this, index, lanes[index], lane, NetworkType.Track);
                             yield return driveLane;
                         }
                     }
@@ -92,7 +92,7 @@ namespace NodeMarkup.Manager
                     {
                         if (IsPathLane(lane))
                         {
-                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Path);
+                            var driveLane = new DriveLane(this, index, lanes[index], lane, NetworkType.Path);
                             yield return driveLane;
                         }
                     }
