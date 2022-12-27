@@ -94,9 +94,9 @@ namespace NodeMarkup.Manager
             if ((Location & MarkupPoint.LocationType.Between) == MarkupPoint.LocationType.Between)
                 return (RightLane.Position + LeftLane.Position) * 0.5f + offset;
             else if ((Location & MarkupPoint.LocationType.LeftEdge) == MarkupPoint.LocationType.LeftEdge)
-                return RightLane.Position + offset;
+                return RightLane.Position - RightLane.HalfWidth + offset;
             else if ((Location & MarkupPoint.LocationType.RightEdge) == MarkupPoint.LocationType.RightEdge)
-                return LeftLane.Position + offset;
+                return LeftLane.Position + LeftLane.HalfWidth + offset;
 
             else
                 throw new Exception();

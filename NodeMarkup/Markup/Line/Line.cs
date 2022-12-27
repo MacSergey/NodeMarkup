@@ -9,6 +9,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using static ColossalFramework.IO.EncodedArray;
+using static RenderManager;
 
 namespace NodeMarkup.Manager
 {
@@ -109,6 +111,11 @@ namespace NodeMarkup.Manager
             }
         }
         public virtual void Render(OverlayData data) => Trajectory.Render(data);
+        public virtual void RenderRule(MarkupLineRawRule rule, OverlayData data)
+        {
+            if (rule.GetTrajectory(out var trajectory))
+                trajectory.Render(data);
+        }
         public abstract bool ContainsRule(MarkupLineRawRule rule);
         public bool ContainsEnter(Enter enter) => PointPair.ContainsEnter(enter);
 
@@ -247,7 +254,7 @@ namespace NodeMarkup.Manager
         {
             var defaultStyle = Style.StyleType.LineDashed;
 
-            if((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0 && (defaultStyle.GetLineType() & Type) != 0)
+            if ((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0 && (defaultStyle.GetLineType() & Type) != 0)
             {
                 foreach (var style in EnumExtension.GetEnumValues<RegularLineStyle.RegularLineType>(i => true).Select(i => i.ToEnum<Style.StyleType, RegularLineStyle.RegularLineType>()))
                 {
@@ -383,12 +390,57 @@ namespace NodeMarkup.Manager
             }
         }
     }
-
     public class MarkupLaneLine : MarkupRegularLine
     {
         public override LineType Type => LineType.Lane;
 
         public MarkupLaneLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null) : base(markup, pointPair, style) { }
+
+        public override void Render(OverlayData data)
+        {
+            var lanePointA = PointPair.First as MarkupLanePoint;
+            var lanePointB = PointPair.Second as MarkupLanePoint;
+
+            List<ITrajectory> trajectories;
+            if (lanePointA != null && lanePointB != null)
+            {
+                lanePointA.Source.GetPoints(out var leftPointA, out var rightPointA);
+                lanePointB.Source.GetPoints(out var leftPointB, out var rightPointB);
+                trajectories = new List<ITrajectory>()
+                {
+                    new BezierTrajectory(leftPointA.Position, leftPointA.Direction, rightPointB.Position, rightPointB.Direction),
+                    new StraightTrajectory(rightPointB.Position, leftPointB.Position),
+                    new BezierTrajectory(leftPointB.Position, leftPointB.Direction, rightPointA.Position, rightPointA.Direction),
+                    new StraightTrajectory(rightPointA.Position, leftPointA.Position),
+                };
+            }
+            else if (lanePointA != null)
+            {
+                lanePointA.Source.GetPoints(out var leftPointA, out var rightPointA);
+                trajectories = new List<ITrajectory>()
+                {
+                    new BezierTrajectory(leftPointA.Position, leftPointA.Direction, PointPair.Second.Position, PointPair.Second.Direction),
+                    new BezierTrajectory(PointPair.Second.Position, PointPair.Second.Direction, rightPointA.Position, rightPointA.Direction),
+                    new StraightTrajectory(rightPointA.Position, leftPointA.Position),
+                };
+            }
+            else if (lanePointB != null)
+            {
+                lanePointB.Source.GetPoints(out var leftPointB, out var rightPointB);
+                trajectories = new List<ITrajectory>()
+                {
+                    new BezierTrajectory(PointPair.First.Position, PointPair.First.Direction, rightPointB.Position, rightPointB.Direction),
+                    new StraightTrajectory(rightPointB.Position, leftPointB.Position),
+                    new BezierTrajectory(leftPointB.Position, leftPointB.Direction, PointPair.First.Position, PointPair.First.Direction),
+                };
+            }
+            else
+                return;
+
+            data.AlphaBlend = false;
+            var triangles = Triangulator.TriangulateSimple(trajectories, out var points);
+            points.RenderArea(triangles, data);
+        }
     }
 
     public class MarkupStopLine : MarkupLine

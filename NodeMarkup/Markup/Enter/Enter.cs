@@ -192,16 +192,25 @@ namespace NodeMarkup.Manager
         public abstract bool GetIsStartSide();
         public virtual bool TryGetPoint(byte index, MarkupPoint.PointType type, out MarkupPoint point)
         {
-            if (type == MarkupPoint.PointType.Enter && EnterPointsDic.TryGetValue(index, out MarkupEnterPoint enterPoint))
+            switch (type)
             {
-                point = enterPoint;
-                return true;
+                case MarkupPoint.PointType.Lane:
+                    if (LanePointsDic.TryGetValue(index, out var lanePoint))
+                    {
+                        point = lanePoint;
+                        return true;
+                    }
+                    break;
+                default:
+                    if (EnterPointsDic.TryGetValue(index, out var enterPoint))
+                    {
+                        point = enterPoint;
+                        return true;
+                    }
+                    break;
             }
-            else
-            {
-                point = null;
-                return false;
-            }
+            point = null;
+            return false;
         }
         public virtual bool TryGetSortedPoint(byte index, MarkupPoint.PointType type, out MarkupPoint point)
         {

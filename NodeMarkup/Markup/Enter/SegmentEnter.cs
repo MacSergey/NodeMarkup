@@ -45,8 +45,6 @@ namespace NodeMarkup.Manager
         {
             switch (type)
             {
-                case MarkupPoint.PointType.Enter:
-                    return base.TryGetPoint(pointIndex, type, out point);
                 case MarkupPoint.PointType.Crosswalk:
                     if (CrosswalkPointsDic.TryGetValue(pointIndex, out MarkupCrosswalkPoint crosswalkPoint))
                     {
@@ -61,6 +59,8 @@ namespace NodeMarkup.Manager
                         return true;
                     }
                     break;
+                default:
+                    return base.TryGetPoint(pointIndex, type, out point);
             }
             point = null;
             return false;

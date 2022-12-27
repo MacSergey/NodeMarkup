@@ -34,7 +34,7 @@ namespace NodeMarkup.Manager
         public ITrajectory RightBorderTrajectory { get; private set; }
         public ITrajectory LeftBorderTrajectory { get; private set; }
 
-        public ITrajectory[] BorderTrajectories => new ITrajectory[] { EnterLine.Trajectory, CrosswalkLine.Trajectory, RightBorderTrajectory, LeftBorderTrajectory };
+        public ITrajectory[] BorderTrajectories => new ITrajectory[] { EnterLine.Trajectory, RightBorderTrajectory, CrosswalkLine.Trajectory, LeftBorderTrajectory };
 
         public float TotalWidth => Style.Value.GetTotalWidth(this);
         public float CornerAndNormalAngle => EnterLine.Start.Enter.CornerAndNormalAngle;
@@ -163,8 +163,29 @@ namespace NodeMarkup.Manager
         public Dependences GetDependences() => Markup.GetCrosswalkDependences(this);
         public void Render(OverlayData data)
         {
-            foreach (var trajectory in BorderTrajectories)
-                trajectory.Render(data);
+            var trajectories = new ITrajectory[4];
+
+            trajectories[0] = EnterLine.Trajectory;
+
+            if (LeftBorder.Value == null)
+                trajectories[1] = LeftBorderTrajectory;
+            else if (LeftBorder.Value.PointPair.First == EnterLine.PointPair.Second)
+                trajectories[1] = LeftBorderTrajectory;
+            else
+                trajectories[1] = LeftBorderTrajectory.Invert();
+
+            trajectories[2] = CrosswalkLine.Trajectory.Invert();
+
+            if (RightBorder.Value == null)
+                trajectories[3] = RightBorderTrajectory.Invert();
+            else if (RightBorder.Value.PointPair.Second == EnterLine.PointPair.First)
+                trajectories[3] = RightBorderTrajectory;
+            else
+                trajectories[3] = RightBorderTrajectory.Invert();
+
+            data.AlphaBlend = false;
+            var triangles = Triangulator.TriangulateSimple(trajectories, out var points);
+            points.RenderArea(triangles, data);
         }
 
         #region XML

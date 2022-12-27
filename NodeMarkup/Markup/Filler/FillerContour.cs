@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static NodeMarkup.Manager.FillerContour;
 
 namespace NodeMarkup.Manager
 {
@@ -515,8 +516,17 @@ namespace NodeMarkup.Manager
 
         public void Render(OverlayData data)
         {
-            foreach (var part in Parts)
-                part.Trajectory.Render(data);
+            if (IsComplite)
+            {
+                data.AlphaBlend = false;
+                var triangles = Triangulator.TriangulateSimple(TrajectoriesRaw, out var points);
+                points.RenderArea(triangles, data);
+            }
+            else
+            {
+                foreach (var part in Parts)
+                    part.Trajectory.Render(data);
+            }
         }
 
         private class Comparer : IEqualityComparer<IFillerVertex>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using static NetInfo;
 
 namespace NodeMarkup.UI
@@ -76,13 +77,16 @@ namespace NodeMarkup.UI
             LeftRailSelector.Button.eventClick += ButtonClick;
             LeftRailSelector.Button.eventMouseEnter += ButtonMouseEnter;
             LeftRailSelector.Button.eventMouseLeave += ButtonMouseLeave;
+            LeftRailSelector.OnValueChanged += LeftRailChanged;
 
             RightRailSelector = Content.AddUIComponent<SelectRailButton>();
             RightRailSelector.width = 80f;
             RightRailSelector.Button.eventClick += ButtonClick;
             RightRailSelector.Button.eventMouseEnter += ButtonMouseEnter;
             RightRailSelector.Button.eventMouseLeave += ButtonMouseLeave;
+            RightRailSelector.OnValueChanged += RightRailChanged;
         }
+
         public override void DeInit()
         {
             base.DeInit();
@@ -100,6 +104,14 @@ namespace NodeMarkup.UI
         {
             Refresh();
             OnValueChanged?.Invoke(value, LeftRail, RightRail);
+        }
+        private void LeftRailChanged(FillerRail leftRail)
+        {
+            OnValueChanged?.Invoke(true, leftRail, RightRail);
+        }
+        private void RightRailChanged(FillerRail rightRail)
+        {
+            OnValueChanged?.Invoke(true, LeftRail, rightRail);
         }
 
         private void Refresh()

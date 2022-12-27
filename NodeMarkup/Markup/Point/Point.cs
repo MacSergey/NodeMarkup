@@ -59,23 +59,24 @@ namespace NodeMarkup.Manager
         public virtual Color32 Color => Colors.GetOverlayColor(Index - 1, byte.MaxValue);
         public virtual Vector3 Position
         {
-            get => Bounds.center;
-            protected set => Bounds = new Bounds(value, MarkerSize);
+            get => MarkerPosition;
+            protected set => MarkerPosition = value;
         }
-        public virtual Vector3 MarkerPosition => Position;
+        public virtual Vector3 MarkerPosition
+        {
+            get => Bounds.center;
+            set => Bounds = new Bounds(value, MarkerSize);
+        }
         public Vector3 Direction { get; protected set; }
-        public Bounds Bounds { get; protected set; }
-        public Bounds SaveBounds { get; private set; }
+        protected Bounds Bounds { get; set; }
 
         public IPointSource Source { get; }
         public Enter Enter => Source.Enter;
         public IEnumerable<MarkupLine> Lines => Markup.GetPointLines(this);
-        public bool HaveLines => Markup.HaveLines(this);
         public Markup Markup => Enter.Markup;
 
         public bool IsFirst => Index == 1;
         public bool IsLast => Index == Enter.PointCount;
-        public bool IsEdge => IsFirst || IsLast;
         public virtual bool IsSplit => false;
         public virtual float SplitOffsetValue => 0f;
 
@@ -106,7 +107,7 @@ namespace NodeMarkup.Manager
             Offset.Value = 0f;
         }
 
-        public bool IsHover(Ray ray) => Bounds.IntersectRay(ray);
+        public virtual bool IsHover(Ray ray) => Bounds.IntersectRay(ray);
         public override string ToString() => $"{Enter}:{Index}";
         public override int GetHashCode() => Id;
         protected void PointChanged() => Markup.Update(this, true, true);
@@ -235,6 +236,7 @@ namespace NodeMarkup.Manager
                 rightPos.RenderCircle(data);
             }
         }
+
         public override void FromXml(XElement config, ObjectsMap map)
         {
             base.FromXml(config, map);
@@ -324,7 +326,16 @@ namespace NodeMarkup.Manager
         public MarkupEnterPoint SourcePointA { get; private set; }
         public MarkupEnterPoint SourcePointB { get; private set; }
         public new NetLanePointSource Source => (NetLanePointSource)base.Source;
-        public override Vector3 MarkerPosition => Position - Direction;
+        public override Vector3 Position
+        {
+            get => MarkerPosition + Direction * 1.5f;
+            protected set => MarkerPosition = value - Direction * 1.5f;
+        }
+        public override Vector3 MarkerPosition
+        {
+            get => Bounds.center;
+            set => Bounds = new Bounds(value, new Vector3(1f, 1f, Width));
+        }
         public float Width => (SourcePointB.Position - SourcePointA.Position).MakeFlat().magnitude;
         public override Color32 Color => Colors.GetOverlayColor(Index + Colors.OverlayColors.Length / 2, byte.MaxValue);
 
@@ -340,7 +351,7 @@ namespace NodeMarkup.Manager
 
             if (SourcePointA != null)
                 SourcePointA.OnUpdate -= SourcePointUpdate;
-            if(SourcePointB != null)
+            if (SourcePointB != null)
                 SourcePointB.OnUpdate -= SourcePointUpdate;
 
             pointA.OnUpdate += SourcePointUpdate;
@@ -358,16 +369,41 @@ namespace NodeMarkup.Manager
         }
         public override void UpdateProcess()
         {
-            Position = (SourcePointA.Position + SourcePointB.Position) * 0.5f;
             Direction = (SourcePointA.Direction + SourcePointB.Direction) * 0.5f;
+            Position = (SourcePointA.Position + SourcePointB.Position) * 0.5f;
+        }
+        public override bool IsHover(Ray ray)
+        {
+            var bounds = Bounds;
+            var plane = new Plane(Vector3.up, -bounds.center.y);
+            plane.Raycast(ray, out var hit);
+            ray.origin += ray.direction * hit;
+            var angle = Vector3.Angle(Direction.MakeFlat(), Vector3.forward);
+            ray.direction = Quaternion.AngleAxis(angle, Vector3.up) * ray.direction;
+
+            return bounds.IntersectRay(ray);
         }
         public override void Render(OverlayData data)
         {
-            data.Color ??= Color;
+            var width = Width;
             data.Width ??= DefaultWidth;
-            data.Cut = true;
-            var trajectory = new StraightTrajectory(SourcePointA.Position - SourcePointA.Direction, SourcePointB.Position - SourcePointB.Direction);
-            trajectory.Render(data);
+
+            if (width >= 0.2f)
+            {
+                data.Color ??= Color;
+
+                var dir = (SourcePointB.Position - SourcePointA.Position).normalized;
+                var dx = data.Width.Value * 0.5f;
+                var dy = 0.15f + (DefaultWidth - data.Width.Value) * 0.5f;
+                var area = new Quad3()
+                {
+                    a = SourcePointA.Position + dir * dy - SourcePointA.Direction * (1.5f - dx),
+                    b = SourcePointA.Position + dir * dy - SourcePointA.Direction * (1.5f + dx),
+                    c = SourcePointB.Position - dir * dy - SourcePointB.Direction * (1.5f + dx),
+                    d = SourcePointB.Position - dir * dy - SourcePointB.Direction * (1.5f - dx),
+                };
+                area.RenderQuad(data);
+            }
         }
         public override string ToString() => $"{base.ToString()}L";
     }
