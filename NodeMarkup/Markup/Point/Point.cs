@@ -223,8 +223,8 @@ namespace NodeMarkup.Manager
             {
                 var normal = -Enter.CornerDir / Enter.TranformCoef;
 
-                var leftPos = Position - normal * SplitOffset - Direction;
-                var rightPos = Position + normal * SplitOffset - Direction;
+                var leftPos = Position - normal * SplitOffset + Direction;
+                var rightPos = Position + normal * SplitOffset + Direction;
 
                 var dataWhite = new OverlayData(data.CameraInfo);
                 leftPos.RenderCircle(dataWhite);

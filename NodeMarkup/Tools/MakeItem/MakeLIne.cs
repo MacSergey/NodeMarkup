@@ -27,18 +27,25 @@ namespace NodeMarkup.Tools
                 if ((Markup.Support & Markup.SupportType.Croswalks) != 0)
                     tips.Add(string.Format(Localize.Tool_InfoStartCreateCrosswalk, LocalizeExtension.Shift.AddInfoColor()));
             }
-            else if (IsHoverPoint)
-                tips.Add(base.GetToolInfo());
-            else
+            else if (!IsHoverPoint)
             {
-                if ((SelectPoint.Markup.SupportLines & LineType.Stop) == 0)
-                    tips.Add(Localize.Tool_InfoSelectLineEndPoint);
+                if (SelectPoint.Type == MarkupPoint.PointType.Lane)
+                {
+                    tips.Add(Localize.Tool_InfoSelectLaneEndPoint);
+                }
                 else
-                    tips.Add(Localize.Tool_InfoSelectLineEndPointStop);
+                {
+                    if ((SelectPoint.Markup.SupportLines & LineType.Stop) == 0)
+                        tips.Add(Localize.Tool_InfoSelectLineEndPoint);
+                    else
+                        tips.Add(Localize.Tool_InfoSelectLineEndPointStop);
 
-                if ((SelectPoint.Enter.SupportPoints & MarkupPoint.PointType.Normal) != 0)
-                    tips.Add(Localize.Tool_InfoSelectLineEndPointNormal);
+                    if ((SelectPoint.Enter.SupportPoints & MarkupPoint.PointType.Normal) != 0)
+                        tips.Add(Localize.Tool_InfoSelectLineEndPointNormal);
+                }
             }
+            else
+                tips.Add(base.GetToolInfo());
 
             return string.Join("\n", tips.ToArray());
         }
@@ -62,9 +69,14 @@ namespace NodeMarkup.Tools
             }
         }
 
-        public override void OnMouseDown(Event e)
+        //public override void OnMouseDown(Event e)
+        //{
+        //    if (!IsSelectPoint && IsHoverPoint && Utility.CtrlIsPressed)
+        //        Tool.SetMode(ToolModeType.DragPoint);
+        //}
+        public override void OnMouseDrag(Event e)
         {
-            if (!IsSelectPoint && IsHoverPoint && Utility.CtrlIsPressed)
+            if (!IsSelectPoint && IsHoverPoint)
                 Tool.SetMode(ToolModeType.DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)
@@ -314,7 +326,7 @@ namespace NodeMarkup.Tools
                 var pointPair = new MarkupPointPair(pointA, pointB);
                 var color = Tool.Markup.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
 
-                var triangles = Triangulator.TriangulateSimple(trajectories, out var points);
+                var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
                 points.RenderArea(triangles, new OverlayData(cameraInfo) { Color = color, AlphaBlend = false });
             }
         }
@@ -359,7 +371,7 @@ namespace NodeMarkup.Tools
                         new StraightTrajectory(trajectory.StartPosition - startNormal * halfWidth, trajectory.StartPosition + startNormal * halfWidth),
                     };
 
-                    var triangles = Triangulator.TriangulateSimple(trajectories, out var points);
+                    var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
                     points.RenderArea(triangles, new OverlayData(cameraInfo) { Color = Colors.Hover, AlphaBlend = false });
                 }
             }

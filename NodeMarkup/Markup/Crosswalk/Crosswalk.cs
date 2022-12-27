@@ -184,7 +184,7 @@ namespace NodeMarkup.Manager
                 trajectories[3] = RightBorderTrajectory.Invert();
 
             data.AlphaBlend = false;
-            var triangles = Triangulator.TriangulateSimple(trajectories, out var points);
+            var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
             points.RenderArea(triangles, data);
         }
 

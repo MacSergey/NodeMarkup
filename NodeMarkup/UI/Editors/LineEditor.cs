@@ -302,7 +302,7 @@ namespace NodeMarkup.UI.Editors
         {
             {
                 ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 2f });
-                HoverRulePanel?.Rule.Render(new OverlayData(cameraInfo) { Color = HoverAlpha, Width = 2f });
+                HoverRulePanel?.Rule.Line.RenderRule(HoverRulePanel.Rule, new OverlayData(cameraInfo) { Color = HoverAlpha, Width = 2f });
                 HoverPartEdgeButton?.Value?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }

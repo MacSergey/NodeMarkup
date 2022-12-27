@@ -398,47 +398,94 @@ namespace NodeMarkup.Manager
 
         public override void Render(OverlayData data)
         {
-            var lanePointA = PointPair.First as MarkupLanePoint;
-            var lanePointB = PointPair.Second as MarkupLanePoint;
+            var lanePointS = PointPair.First as MarkupLanePoint;
+            var lanePointE = PointPair.Second as MarkupLanePoint;
 
-            List<ITrajectory> trajectories;
-            if (lanePointA != null && lanePointB != null)
+            ITrajectory[] trajectories;
+            if (lanePointS != null && lanePointE != null)
             {
-                lanePointA.Source.GetPoints(out var leftPointA, out var rightPointA);
-                lanePointB.Source.GetPoints(out var leftPointB, out var rightPointB);
-                trajectories = new List<ITrajectory>()
+                lanePointS.Source.GetPoints(out var leftPointS, out var rightPointS);
+                lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
+                trajectories = new ITrajectory[]
                 {
-                    new BezierTrajectory(leftPointA.Position, leftPointA.Direction, rightPointB.Position, rightPointB.Direction),
-                    new StraightTrajectory(rightPointB.Position, leftPointB.Position),
-                    new BezierTrajectory(leftPointB.Position, leftPointB.Direction, rightPointA.Position, rightPointA.Direction),
-                    new StraightTrajectory(rightPointA.Position, leftPointA.Position),
+                    new BezierTrajectory(leftPointS.Position, leftPointS.Direction, rightPointE.Position, rightPointE.Direction),
+                    new StraightTrajectory(rightPointE.Position, leftPointE.Position),
+                    new BezierTrajectory(leftPointE.Position, leftPointE.Direction, rightPointS.Position, rightPointS.Direction),
+                    new StraightTrajectory(rightPointS.Position, leftPointS.Position),
                 };
             }
-            else if (lanePointA != null)
+            else if (lanePointS != null)
             {
-                lanePointA.Source.GetPoints(out var leftPointA, out var rightPointA);
-                trajectories = new List<ITrajectory>()
+                lanePointS.Source.GetPoints(out var leftPointS, out var rightPointS);
+                trajectories = new ITrajectory[]
                 {
-                    new BezierTrajectory(leftPointA.Position, leftPointA.Direction, PointPair.Second.Position, PointPair.Second.Direction),
-                    new BezierTrajectory(PointPair.Second.Position, PointPair.Second.Direction, rightPointA.Position, rightPointA.Direction),
-                    new StraightTrajectory(rightPointA.Position, leftPointA.Position),
+                    new BezierTrajectory(leftPointS.Position, leftPointS.Direction, PointPair.Second.Position, PointPair.Second.Direction),
+                    new BezierTrajectory(PointPair.Second.Position, PointPair.Second.Direction, rightPointS.Position, rightPointS.Direction),
+                    new StraightTrajectory(rightPointS.Position, leftPointS.Position),
                 };
             }
-            else if (lanePointB != null)
+            else if (lanePointE != null)
             {
-                lanePointB.Source.GetPoints(out var leftPointB, out var rightPointB);
-                trajectories = new List<ITrajectory>()
+                lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
+                trajectories = new ITrajectory[]
                 {
-                    new BezierTrajectory(PointPair.First.Position, PointPair.First.Direction, rightPointB.Position, rightPointB.Direction),
-                    new StraightTrajectory(rightPointB.Position, leftPointB.Position),
-                    new BezierTrajectory(leftPointB.Position, leftPointB.Direction, PointPair.First.Position, PointPair.First.Direction),
+                    new BezierTrajectory(PointPair.First.Position, PointPair.First.Direction, rightPointE.Position, rightPointE.Direction),
+                    new StraightTrajectory(rightPointE.Position, leftPointE.Position),
+                    new BezierTrajectory(leftPointE.Position, leftPointE.Direction, PointPair.First.Position, PointPair.First.Direction),
                 };
             }
             else
                 return;
 
             data.AlphaBlend = false;
-            var triangles = Triangulator.TriangulateSimple(trajectories, out var points);
+            var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
+            points.RenderArea(triangles, data);
+        }
+        public override void RenderRule(MarkupLineRawRule rule, OverlayData data)
+        {
+            if (!rule.GetT(out var fromT, out var toT) || fromT == toT)
+                return;
+
+            var lanePointS = PointPair.First as MarkupLanePoint;
+            var lanePointE = PointPair.Second as MarkupLanePoint;
+
+            ITrajectory[] trajectories;
+            if (lanePointS != null && lanePointE != null)
+            {
+                lanePointS.Source.GetPoints(out var leftPointS, out var rightPointS);
+                lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
+
+                trajectories = new ITrajectory[4];
+                trajectories[0] = new BezierTrajectory(leftPointS.Position, leftPointS.Direction, rightPointE.Position, rightPointE.Direction).Cut(fromT, toT);
+                trajectories[2] = new BezierTrajectory(leftPointE.Position, leftPointE.Direction, rightPointS.Position, rightPointS.Direction).Cut(1f - toT, 1f - fromT);
+                trajectories[1] = new StraightTrajectory(trajectories[0].EndPosition, trajectories[2].StartPosition);
+                trajectories[3] = new StraightTrajectory(trajectories[2].EndPosition, trajectories[0].StartPosition);
+            }
+            //else if (lanePointA != null)
+            //{
+            //    lanePointA.Source.GetPoints(out var leftPointA, out var rightPointA);
+            //    trajectories = new List<ITrajectory>()
+            //    {
+            //        new BezierTrajectory(leftPointA.Position, leftPointA.Direction, PointPair.Second.Position, PointPair.Second.Direction),
+            //        new BezierTrajectory(PointPair.Second.Position, PointPair.Second.Direction, rightPointA.Position, rightPointA.Direction),
+            //        new StraightTrajectory(rightPointA.Position, leftPointA.Position),
+            //    };
+            //}
+            //else if (lanePointB != null)
+            //{
+            //    lanePointB.Source.GetPoints(out var leftPointB, out var rightPointB);
+            //    trajectories = new List<ITrajectory>()
+            //    {
+            //        new BezierTrajectory(PointPair.First.Position, PointPair.First.Direction, rightPointB.Position, rightPointB.Direction),
+            //        new StraightTrajectory(rightPointB.Position, leftPointB.Position),
+            //        new BezierTrajectory(leftPointB.Position, leftPointB.Direction, PointPair.First.Position, PointPair.First.Direction),
+            //    };
+            //}
+            else
+                return;
+
+            data.AlphaBlend = false;
+            var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
             points.RenderArea(triangles, data);
         }
     }

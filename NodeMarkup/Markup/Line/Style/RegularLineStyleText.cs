@@ -277,6 +277,11 @@ namespace NodeMarkup.Manager
             Shift.FromXml(config, DefaultObjectShift);
             Direction.FromXml(config, TextDirection.LeftToRight);
             Spacing.FromXml(config, Vector2.zero);
+            if(map.IsMirror ^ invert)
+            {
+                Angle.Value = Angle.Value >= 0 ? Angle.Value - 180f : Angle.Value + 180f;
+                Shift.Value = -Shift.Value;
+            }
         }
 
         public enum TextDirection

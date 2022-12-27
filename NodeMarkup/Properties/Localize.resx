@@ -1872,4 +1872,7 @@ underground mode</value>
   <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
     <value>Create lane edge lines automatically</value>
   </data>
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Select endpoint to create a lane</value>
+  </data>
 </root>

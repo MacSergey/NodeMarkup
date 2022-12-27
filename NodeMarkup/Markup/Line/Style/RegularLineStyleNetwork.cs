@@ -282,6 +282,11 @@ namespace NodeMarkup.Manager
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
             Invert.FromXml(config, false);
             Invert.Value ^= map.IsMirror ^ invert;
+
+            if (map.IsMirror ^ invert)
+            {
+                Shift.Value = -Shift.Value;
+            }
         }
     }
 }

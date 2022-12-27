@@ -519,7 +519,7 @@ namespace NodeMarkup.Manager
             if (IsComplite)
             {
                 data.AlphaBlend = false;
-                var triangles = Triangulator.TriangulateSimple(TrajectoriesRaw, out var points);
+                var triangles = Triangulator.TriangulateSimple(TrajectoriesRaw, out var points, minAngle: 5, maxLength: 10f);
                 points.RenderArea(triangles, data);
             }
             else

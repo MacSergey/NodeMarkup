@@ -345,6 +345,11 @@ namespace NodeMarkup.Manager
                 Elevation.Value = new Vector2(elevation, elevation);
             OffsetBefore.FromXml(config, DefaultObjectOffsetBefore);
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
+
+            if (map.IsMirror ^ invert)
+            {
+                Shift.Value = -Shift.Value;
+            }
         }
     }
     public abstract class BaseObjectLineStyle<PrefabType, SelectPrefabType> : BaseObjectLineStyle
