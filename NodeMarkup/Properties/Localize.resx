@@ -1875,4 +1875,7 @@ underground mode</value>
   <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
     <value>Select endpoint to create a lane</value>
   </data>
+  <data name="StyleOption_FixedEnds" xml:space="preserve">
+    <value>Fixed ends</value>
+  </data>
 </root>

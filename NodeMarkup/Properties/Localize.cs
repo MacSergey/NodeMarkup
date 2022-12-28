@@ -2619,5 +2619,10 @@ namespace NodeMarkup
 		/// Select endpoint to create a lane
 		/// </summary>
 		public static string Tool_InfoSelectLaneEndPoint => LocaleManager.GetString("Tool_InfoSelectLaneEndPoint", Culture);
+
+		/// <summary>
+		/// Fixed ends
+		/// </summary>
+		public static string StyleOption_FixedEnds => LocaleManager.GetString("StyleOption_FixedEnds", Culture);
 	}
 }
