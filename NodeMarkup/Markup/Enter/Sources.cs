@@ -51,13 +51,13 @@ namespace NodeMarkup.Manager
         {
             if (RightLane == LeftLane)
             {
-                RightLane.NetLane.CalculatePositionAndDirection(Enter.T, out position, out direction);
+                RightLane.LaneId.GetLane().CalculatePositionAndDirection(Enter.T, out position, out direction);
                 direction = direction.normalized * Enter.SideSign;
             }
             else
             {
-                RightLane.NetLane.CalculatePositionAndDirection(Enter.T, out Vector3 rightPos, out Vector3 rightDir);
-                LeftLane.NetLane.CalculatePositionAndDirection(Enter.T, out Vector3 leftPos, out Vector3 leftDir);
+                RightLane.LaneId.GetLane().CalculatePositionAndDirection(Enter.T, out Vector3 rightPos, out Vector3 rightDir);
+                LeftLane.LaneId.GetLane().CalculatePositionAndDirection(Enter.T, out Vector3 leftPos, out Vector3 leftDir);
 
                 direction = ((rightDir + leftDir) / (Enter.SideSign * 2)).normalized;
 
@@ -73,11 +73,11 @@ namespace NodeMarkup.Manager
             switch (location)
             {
                 case MarkupPoint.LocationType.LeftEdge:
-                    RightLane.NetLane.CalculatePositionAndDirection(Enter.T, out position, out direction);
+                    RightLane.LaneId.GetLane().CalculatePositionAndDirection(Enter.T, out position, out direction);
                     lineShift = -RightLane.HalfWidth;
                     break;
                 case MarkupPoint.LocationType.RightEdge:
-                    LeftLane.NetLane.CalculatePositionAndDirection(Enter.T, out position, out direction);
+                    LeftLane.LaneId.GetLane().CalculatePositionAndDirection(Enter.T, out position, out direction);
                     lineShift = LeftLane.HalfWidth;
                     break;
                 default:
@@ -92,12 +92,26 @@ namespace NodeMarkup.Manager
         public float GetRelativePosition(float offset)
         {
             if ((Location & MarkupPoint.LocationType.Between) == MarkupPoint.LocationType.Between)
-                return (RightLane.Position + LeftLane.Position) * 0.5f + offset;
+            {
+                if(Enter.IsLaneInvert)
+                    return (RightLane.Position + LeftLane.Position) * 0.5f + offset;
+                else
+                    return -(RightLane.Position + LeftLane.Position) * 0.5f - offset;
+            }            
             else if ((Location & MarkupPoint.LocationType.LeftEdge) == MarkupPoint.LocationType.LeftEdge)
-                return RightLane.Position - RightLane.HalfWidth + offset;
+            {
+                if (Enter.IsLaneInvert)
+                    return RightLane.Position - RightLane.HalfWidth + offset;
+                else
+                    return -RightLane.Position - RightLane.HalfWidth + offset;
+            }
             else if ((Location & MarkupPoint.LocationType.RightEdge) == MarkupPoint.LocationType.RightEdge)
-                return LeftLane.Position + LeftLane.HalfWidth + offset;
-
+            {
+                if (Enter.IsLaneInvert)
+                    return LeftLane.Position + LeftLane.HalfWidth + offset;
+                else
+                    return -LeftLane.Position + LeftLane.HalfWidth + offset;
+            }
             else
                 throw new Exception();
         }
@@ -202,7 +216,6 @@ namespace NodeMarkup.Manager
 
         public uint LaneId { get; }
         public int Index { get; }
-        public ref NetLane NetLane => ref LaneId.GetLane();
         public NetworkType NetworkType { get; }
 
         public float Position { get; }
@@ -213,12 +226,13 @@ namespace NodeMarkup.Manager
         public DriveLane(Enter enter, int index, uint laneId, NetInfo.Lane info, NetworkType type)
         {
             Enter = enter;
-            Index= index;
+            Index = index;
             LaneId = laneId;
             Position = info.m_position;
             HalfWidth = Mathf.Abs(info.m_width) / 2;
             NetworkType = type;
         }
+
 
         public override string ToString() => LaneId.ToString();
     }

@@ -109,19 +109,19 @@ namespace NodeMarkup.Tools
                     var newLine = Tool.Markup.AddRegularLine(pointPair, style);
                     Panel.SelectLine(newLine);
 
-                    if (Settings.CreateLaneEdgeLines && pointPair.First is MarkupLanePoint lanePointA && pointPair.Second is MarkupLanePoint lanePointB)
+                    if (Settings.CreateLaneEdgeLines && pointPair.First is MarkupLanePoint lanePointS && pointPair.Second is MarkupLanePoint lanePointE)
                     {
-                        lanePointA.Source.GetPoints(out var pointAStart, out var pointAEnd);
-                        lanePointB.Source.GetPoints(out var pointBStart, out var pointBEnd);
+                        lanePointS.Source.GetPoints(out var leftPointS, out var rightPointS);
+                        lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
 
-                        var pairA = new MarkupPointPair(pointAStart, pointBEnd);
+                        var pairA = new MarkupPointPair(leftPointS, rightPointE);
                         if (!Markup.TryGetLine(pairA, out MarkupLine lineA))
                         {
                             lineA = Markup.AddRegularLine(pairA, null);
                             Panel.AddLine(lineA);
                         }
 
-                        var pairB = new MarkupPointPair(pointBStart, pointAEnd);
+                        var pairB = new MarkupPointPair(leftPointE, rightPointS);
                         if (!Markup.TryGetLine(pairB, out MarkupLine lineB))
                         {
                             lineB = Markup.AddRegularLine(pairB, null);

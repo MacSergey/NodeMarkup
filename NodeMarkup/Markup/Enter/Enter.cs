@@ -296,7 +296,7 @@ namespace NodeMarkup.Manager
         }
         public void SortPoints()
         {
-            var sortedIndexes = Points.OrderBy(p => (IsLaneInvert ? 1 : -1) * p.GetRelativePosition()).Select(p => p.Index).ToArray();
+            var sortedIndexes = Points.OrderBy(p => p.GetRelativePosition()).Select(p => p.Index).ToArray();
 
             if (SortedIndexes == null || SortedIndexes.Length != sortedIndexes.Length)
                 SortedIndexes = sortedIndexes;

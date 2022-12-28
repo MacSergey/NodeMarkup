@@ -719,7 +719,6 @@ namespace NodeMarkup.Manager
                 yield return nameof(Elevation);
                 yield return nameof(Scale);
                 yield return nameof(Offset);
-                yield return nameof(Distribution);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
