@@ -21,7 +21,7 @@ namespace NodeMarkup.Manager
         private static Dictionary<int, Texture2D> MainTextures { get; } = new Dictionary<int, Texture2D>();
 
         public override StyleType Type => StyleType.LineText;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0/* | MarkupLOD.LOD1*/;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         public override bool CanOverlap => true;
 
         private PropertyStringValue Text { get; }
@@ -138,10 +138,10 @@ namespace NodeMarkup.Manager
             else if (Direction == TextDirection.BottomToTop)
                 text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
-            var aciTextureId = new TextureId(Font, text, Scale, Spacing);
+            var aciTextureId = new TextureId(Font, text, lod == MarkupLOD.LOD0 ? Scale : Scale * 0.2f, Spacing);
             if (!ACITextures.TryGetValue(aciTextureId, out var aciTexture))
             {
-                aciTexture = RenderHelper.CreateTextTexture(Font, text, Scale, Spacing);
+                aciTexture = RenderHelper.CreateTextTexture(aciTextureId.font, aciTextureId.text, aciTextureId.scale, aciTextureId.spacing);
                 ACITextures[aciTextureId] = aciTexture;
             }
 
@@ -164,16 +164,13 @@ namespace NodeMarkup.Manager
             var direction = line.Trajectory.Tangent(0.5f);
             var position = line.Trajectory.Position(0.5f) + direction.MakeFlatNormalized().Turn90(true) * Shift;
             var angle = direction.AbsoluteAngle() + (Angle + 90) * Mathf.Deg2Rad;
-            var width = aciTexture.width * Ratio;
-            var height = aciTexture.height * Ratio;
+            var ratio = lod == MarkupLOD.LOD0 ? Ratio : Ratio * 5f;
+            var width = aciTexture.width * ratio;
+            var height = aciTexture.height * ratio;
             var data = new MarkupPartData(position, angle, width, height, Color, material);
 
             var groupData = new MarkupPartGroupData(lod, new MarkupPartData[] { data });
             return groupData;
-        }
-        private void GetTextures()
-        {
-
         }
 
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
