@@ -348,9 +348,6 @@ Haga clic para editar las marcas</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Ángulo</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Desplazamiento desde las líneas</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Haga clic para comenzar a crear un relleno</value>
   </data>
@@ -365,9 +362,6 @@ Haga clic para editar las marcas</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Seleccione el siguiente punto en el contorno</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Desplazamiento desde la mediana</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Copiar</value>
@@ -418,86 +412,6 @@ Para crear un relleno, mantener presionada la tecla {0} o presione {1}.</value>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La lista de plantillas está vacía.
 Para crear una plantilla, haga clic en «{0}» en el estilo de línea, paso de peatones o relleno.</value>
-  </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Activar con clave</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Activación fallida</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Activación finalizada con éxito</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Esta función no está disponible</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>La función «{0}» actualmente solo está disponible para el acceso anticipado de Patreons.
-Estará disponible para todos más tarde.
-Al registrar el acceso anticipado, apoyará la capacidad de desarrollar este mod a la misma velocidad.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Obtener acceso anticipado</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Su ID de acceso</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Clave de acceso</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Activar</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Activación del acceso anticipado</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Para activar el acceso anticipado, debe ingresar una clave</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Anular</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>La clave que ha introducido no es válida</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Procesando la vinculación...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Vincular la cuenta de Patreon</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Vincular la cuenta de Patreon</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>La cuenta de Patreon no se puede vincular porque denegó la solicitud de acceso.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Se ha producido un error al vincular la cuenta, inténtelo de nuevo.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Su cuenta está vinculada, pero no tiene acceso anticipado.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Puede cerrar esta página y volver al juego.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Anular</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Estado: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Activado</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>No activado</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Gracias por su apoyo, ahora puede disfrutar de todas las funciones.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Acceso anticipado</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alineamiento</value>
@@ -562,12 +476,6 @@ Para crear un paso de peatones, mantener presionada la tecla {0}.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Ancho de línea</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Desplazamiento delante</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Desplazamiento detrás</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Paralelo a los carriles</value>
@@ -651,7 +559,7 @@ crear o eliminar el paso de peatones</value>
     <value>La carga se completó con errores. Fallo al cargar las marcas para {0} intersecciones.</value>
   </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
-    <value>Tablero de ajedrez</value>
+    <value>Ajedrezado</value>
   </data>
   <data name="StyleOption_LineCount" xml:space="preserve">
     <value>Número de líneas</value>
@@ -754,9 +662,6 @@ crear o eliminar el paso de peatones</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Borde</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Comienza desde</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Vértice</value>
@@ -1148,9 +1053,6 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Elevación</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Césped</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Acera</value>
   </data>
@@ -1160,15 +1062,6 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Segmento #{0}
 Haga clic para editar las marcas</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Sigue las pautas</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Pauta izquierda</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Pauta derecha</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Seleccione el primer punto de la pauta o una línea como pauta</value>
@@ -1268,20 +1161,11 @@ Haga clic para editar las marcas</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Arruinada</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Desplazamiento desde líneas</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Radio de esquina</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Radio de esquina en las medianas</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Tamaño del bordillo</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Tamaño del bordillo en las medianas</value>
   </data>
   
   
@@ -1373,12 +1257,6 @@ Haga clic para editar las marcas</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Ángulo</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Elevación</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Nombre</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Escala</value>
@@ -1523,9 +1401,6 @@ Haga clic para editar las marcas</value>
     <value>Mantener presionada la tecla {0}
 para modo subterráneo</value>
   </data>
-  <data name="Settings_AutoPropStep" xml:space="preserve">
-    <value>Separación automática de elementos depende del tamaño</value>
-  </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
     <value>Distancia LOD en marcas 2D</value>
   </data>
@@ -1648,9 +1523,6 @@ para modo subterráneo</value>
   <data name="StyleOption_Font" xml:space="preserve">
     <value>Fuente</value>
   </data>
-  <data name="StyleOption_FontStyle" xml:space="preserve">
-    <value>Estilo de fuente</value>
-  </data>
   <data name="StyleOption_FontStyleBold" xml:space="preserve">
     <value>Negrita</value>
   </data>
@@ -1719,5 +1591,44 @@ para modo subterráneo</value>
   </data>
   <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
     <value>Espacio fijo y final libre</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Zigzag</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Izquierdo</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Derecho</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Desplazamiento</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Lado</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Empezar desde</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Línea</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Afuera</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Grado</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Alineamiento</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>Final</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Medio</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Inicio</value>
   </data>
 </root>

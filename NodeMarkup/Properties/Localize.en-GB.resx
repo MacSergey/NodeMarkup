@@ -253,38 +253,10 @@
   
   
   
-  
-  
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>The list of templates is empty.
 To create a template, click «{0}» at the line or pedestrian crossing or filler style.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
@@ -317,8 +289,6 @@ To create a pedestrian crossing hold {0}.</value>
   <data name="Tool_InfoDeleteCrosswalk" xml:space="preserve">
     <value>Click to delete the pedestrian crossing</value>
   </data>
-  
-  
   
   
   
@@ -396,7 +366,6 @@ create or delete a pedestrian crossing</value>
   <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
     <value>Pedestrian Crossings - {0}</value>
   </data>
-  
   
   
   
@@ -569,10 +538,6 @@ crossings:</value>
   
   
   
-  
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Colour count</value>
   </data>
@@ -606,11 +571,6 @@ crossings:</value>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
     <value>Click with {0} to select the pedestrian crossing</value>
   </data>
-  
-  
-  
-  
-  
   
   
   
@@ -704,13 +664,24 @@ crossings:</value>
   
   
   
-  
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Main colour</value>
   </data>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Second colour</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

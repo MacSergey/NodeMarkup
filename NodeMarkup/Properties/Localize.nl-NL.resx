@@ -349,9 +349,6 @@ een lijn te creëren of te verwijderen</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Hoek</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Afstand tot lijnen</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Klik om te beginnen met het maken van een opvulling</value>
   </data>
@@ -366,9 +363,6 @@ een lijn te creëren of te verwijderen</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Selecteer het volgende punt van de omtrek</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Afstand tot middenberm</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Kopiëren</value>
@@ -419,86 +413,6 @@ Houdt {0} ingedrukt of klik {1} om een opvulling te maken.</value>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>De lijst met sjablonen is leeg.
 Klik «{0}» bij de lijn-, zebrapad- of opvuliingstijl om een sjabloon te maken.</value>
-  </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Activeren met sleutel</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Activeren mislukt</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Succesvol geactiveerd</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Deze functie is niet beschikbaar</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>De functie «{0}» is op dit moment alleen beschikbaar voor Patreon's vroegtijdige toegang.
-Op een later moment is dit voor iedereen beschikbaar.
-Door je te registreren voor vroegtijdige toegang help je bij het behouden van de ontwikkelsnelheid van deze mod.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Krijg vroegtijdige toegang</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Uw toegang ID</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Toegangssleutel</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Activeren</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Vroegtijdige toegang activatie</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Voer een sleutel in om vroegtijdige toegang te activeren</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Annuleer</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>De ingevulde sleutel is niet geldig</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Aan het koppelen...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Koppel Patreon account</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Koppel Patreon account</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Het Patreon account kan niet gekoppeld worden omdat je het toegangsverzoek geweigerd hebt.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Er is een fout opgetreden bij het koppelen van het account, probeer het opnieuw.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Je account is gekoppeld, maar je hebt geen vroegtijdige toegang.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Je kan deze pagina sluiten en terugkeren naar het spel.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Annuleer</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Status: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Geactiveerd</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Niet geactiveerd</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Bedankt voor je steun, nu kan je genieten van alle functionaliteit.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Vroegtijdige toegang</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Uitlijning</value>
@@ -563,12 +477,6 @@ Houd {0} ingedrukt om een zebrapad te maken.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Lijnbreedte</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Correctieafstand na</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Correctieafstand voor</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Parallel aan rijstroken</value>
@@ -756,9 +664,6 @@ Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Kant</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Beginnend vanaf</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Hoekpunt</value>
@@ -1148,9 +1053,6 @@ Het laden van de markeringen is voor alle kruispunten mislukt.</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Hoogte</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Gras</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Bestrating</value>
   </data>
@@ -1160,15 +1062,6 @@ Het laden van de markeringen is voor alle kruispunten mislukt.</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Segment #{0}
 Klik om de markering te wijzigen</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Hulplijnen volgen</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Linker hulplijn</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Rechter hulplijn</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Selecteer beginpunt van de hulplijn, of kies een bestaande lijn als hulplijn</value>
@@ -1268,20 +1161,11 @@ Klik om de markering te wijzigen</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Geruïneerd</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Afstand van lijnen</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Hoekstraal</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Hoekstraal op middenberm</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Stoeprand hoogte</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Stoeprand hoogte op middenbermen</value>
   </data>
   
   
@@ -1373,12 +1257,6 @@ Klik om de markering te wijzigen</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Hoek</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Hoogte</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Naam</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Schaal</value>
@@ -1521,9 +1399,6 @@ Klik om de markering te wijzigen</value>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Houd {0} om in ondergrondse modus te gaan</value>
   </data>
-  <data name="Settings_AutoPropStep" xml:space="preserve">
-    <value>Het automatische interval van de prop hangt af van de grootte ervan</value>
-  </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
     <value>LOD-afstand voor 2D markeringen</value>
   </data>
@@ -1646,9 +1521,6 @@ Klik om de markering te wijzigen</value>
   <data name="StyleOption_Font" xml:space="preserve">
     <value>Lettertype</value>
   </data>
-  <data name="StyleOption_FontStyle" xml:space="preserve">
-    <value>Lettertype stijl</value>
-  </data>
   <data name="StyleOption_FontStyleBold" xml:space="preserve">
     <value>Vet</value>
   </data>
@@ -1700,10 +1572,61 @@ Klik om de markering te wijzigen</value>
   <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
     <value>Automatisch lijnen voor rijstroken maken</value>
   </data>
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Selecteer een eindpunt om een rijstrook te maken</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>Verdeling</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>Dynamische afstand en vaste uiteinden</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>Dynamische afstand en vrije uiteinden</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>Vaste afstand en vaste uiteinden</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>Vaste afstand en vrije uiteinden</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Zigzag</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Rechts</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Correctieafstand</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Zijkant</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Vanaf</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Lijn</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Buitenkant</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Stap</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Uitlijning</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>Einde</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Midden</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Begin</value>
+  </data>
 </root>

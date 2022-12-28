@@ -348,9 +348,6 @@
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>角度</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>从边线回缩</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>点击来开始创建填充</value>
   </data>
@@ -365,9 +362,6 @@
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>选择填充区域下一端点</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>往中心回缩</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>复制</value>
@@ -418,86 +412,6 @@
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>没有模板可选。
 在线段或填充格式上点击 «{0}» 来创建新模板。</value>
-  </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>使用密钥激活</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>激活失败</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>激活成功</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>该功能不可用。</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>此功能 “{0}” 目前只供Patreon抢先体验用户使用。
-一段时间后会面向大众开放。
-加入抢先体验后，你可以支持作者开发本mod。</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>获取抢先访问</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>您的激活ID</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>访问密钥</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>激活</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>激活抢先体验</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>需要激活码才可获取抢先体验</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>取消</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>输入的激活码无效。</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>连接中……</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>链接到Patreon帐户</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>链接到Patreon帐户</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Patreon账号无法连接，因为您据否了连接请求。</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>连接账号时出错，请重试。</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Pateron账号已连接，但没有抢先体验权限。</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>现在可以关闭此窗口并返回游戏。</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>取消</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>状态：{0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>已激活</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>未激活</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>多谢支持。全部功能已为您启用。</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>抢先体验版本</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>对齐</value>
@@ -562,12 +476,6 @@
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>线条宽度</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>从后方偏移</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>从前方偏移</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>与车道平行</value>
@@ -755,9 +663,6 @@
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>边界</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>起始点</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>顶点</value>
@@ -1150,9 +1055,6 @@
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>高度</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>草地</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>路肩</value>
   </data>
@@ -1162,15 +1064,6 @@
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>段落 #{0}
 点击以编辑地标线</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>垂直于边线</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>左边界</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>右边界</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>选择一条边线或者边线的一个端点</value>
@@ -1305,20 +1198,11 @@
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>砂石</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>从边线回缩</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>拐角半径</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>隔离带拐角半径</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>路肩大小</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>隔离带路肩大小</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
     <value>[NEW] 如同 MoveIt模组，添加了跳跃选择被覆盖住节点功能。Ctrl+空格键以跳跃选择。按键可以自定义。
@@ -1434,12 +1318,6 @@
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>角度</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>高度</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>名称</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>缩放</value>
@@ -1586,9 +1464,6 @@
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>按住{0}进入地下模式</value>
   </data>
-  <data name="Settings_AutoPropStep" xml:space="preserve">
-    <value>根据摆件的大小自动调整间距</value>
-  </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
     <value>2D标线LOD显示距离</value>
   </data>
@@ -1711,9 +1586,6 @@
   <data name="StyleOption_Font" xml:space="preserve">
     <value>字体</value>
   </data>
-  <data name="StyleOption_FontStyle" xml:space="preserve">
-    <value>字体样式</value>
-  </data>
   <data name="StyleOption_FontStyleBold" xml:space="preserve">
     <value>粗体</value>
   </data>
@@ -1782,5 +1654,44 @@
   </data>
   <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
     <value>固定的间隔和自由终点</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>之字形折线</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>左侧</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>右侧</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>偏移</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>侧面</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>起始点</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>线段</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>外侧</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>间隔</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>对齐</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>终点</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>中间</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>起始点</value>
   </data>
 </root>

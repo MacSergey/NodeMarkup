@@ -348,9 +348,6 @@
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>角度</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>オフセット(ライン側)</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>このポイントから塗り潰しを開始</value>
   </data>
@@ -365,9 +362,6 @@
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>次のポイントを選択</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>オフセット(分離帯側)</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>コピー</value>
@@ -418,87 +412,6 @@
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>テンプレートの一覧は空です。
 作成するにはライン・横断歩道・塗り潰しのスタイルから、 {0} をクリックします。</value>
-  </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>アクセスIDで有効化する</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>有効化に失敗しました</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>有効化に成功しました</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>この操作は利用できません</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>追加機能 {0} は現在、Patreonsの早期アクセスで利用可能です。
-後日、誰でも利用できるようになります。
-早期アクセスに登録することで、いち早く新機能の利用とMODの開発をサポートします。</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>早期アクセスを受け取る</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>あなたのアクセスID</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>アクセスID</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>有効化</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>早期アクセスを有効化</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>早期アクセスを有効にするには、アクセスIDを入力する必要があります</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>キャンセル</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>入力されたアクセスIDが、有効ではありません</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>接続中...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Patreonアカウントと接続</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Patreonアカウントと接続する</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Patreonアカウントがリクエストを拒否したため、アカウントと連携できません。</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>アカウントを接続する際に、エラーが発生しました</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>アカウントは接続されていますが、早期アクセスが開始できません</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>このページを閉じて、ゲームに戻ることができます。</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>キャンセル</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>ステータス: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>有効化</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>未認証</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>ご支援頂いて、ありがとうございます。
-現在、あなたは全ての機能を利用することが出来ます。</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>早期アクセス</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>位置合わせ</value>
@@ -563,12 +476,6 @@
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>外枠線の幅</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>縦方向のオフセット</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>横方向のオフセット</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>道路と平行にする</value>
@@ -755,9 +662,6 @@
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>辺を基準</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>描画の基準</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>頂点を基準</value>
@@ -1151,9 +1055,6 @@
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>高さ・厚み</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>芝生(3Dスタイル)</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>舗装(3Dスタイル)</value>
   </data>
@@ -1163,15 +1064,6 @@
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>セグメント #{0}
 クリックしてマーキングの編集</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>ラインやポイントを基準に描画</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>始点(左側)の基準</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>終点(右側)の基準</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>始点側のラインやポイントを選択</value>
@@ -1271,20 +1163,11 @@
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>荒れ地(3Dスタイル)</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>オフセット(ライン側)</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>角丸の半径(ライン側)</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>角丸の半径(分離帯側)</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>縁石の幅(ライン側)</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>縁石の幅(分離帯側)</value>
   </data>
   
   
@@ -1376,12 +1259,6 @@
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>角度</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>高さ</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>名前</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>縮尺</value>
@@ -1528,9 +1405,6 @@
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>{0} で、地下表示に切り替え</value>
   </data>
-  <data name="Settings_AutoPropStep" xml:space="preserve">
-    <value>自動的なPropの間隔はサイズに合わせる</value>
-  </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
     <value>2Dマーキング LODの描画距離</value>
   </data>
@@ -1653,9 +1527,6 @@
   <data name="StyleOption_Font" xml:space="preserve">
     <value>フォント</value>
   </data>
-  <data name="StyleOption_FontStyle" xml:space="preserve">
-    <value>フォントのスタイル</value>
-  </data>
   <data name="StyleOption_FontStyleBold" xml:space="preserve">
     <value>太字</value>
   </data>
@@ -1711,7 +1582,7 @@
     <value>レーンの終点を選択</value>
   </data>
   <data name="StyleOption_Distribution" xml:space="preserve">
-    <value>分布</value>
+    <value>配分</value>
   </data>
   <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
     <value>動的な空白と固定の終端</value>
@@ -1724,5 +1595,44 @@
   </data>
   <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
     <value>固定の空白と自由な終端</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>ジグザグ</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>オフセット</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>側面</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>開始点</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>ライン</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>外側</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>間隔</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>位置合わせ</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>終点</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>中間</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>始点</value>
   </data>
 </root>

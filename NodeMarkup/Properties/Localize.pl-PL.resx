@@ -348,9 +348,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Kąt</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Odstęp od linii</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Kliknij, aby rozpocząć tworzenie wypełnienia</value>
   </data>
@@ -365,9 +362,6 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Wybierz następny punkt konturu</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Odstęp od pasa rozdzielającego</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Kopiuj</value>
@@ -418,86 +412,6 @@ Aby utworzyć wypełnienie, przytrzymaj {0} lub naciśnij {1}.</value>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Lista szablonów jest pusta.
 Aby utworzyć szablon, kliknij «{0}» na wybranym stylu linii, przejścia dla pieszych lub wypełnienia.</value>
-  </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Aktywuj za pomocą klucza</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Aktywacja nie powiodła się</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Aktywacja powiodła się</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Ta funkcja jest niedostępna</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>Funkcja «{0}» jest aktualnie dostępna tylko dla Patronów wczesnego dostępu.
-Będzie ona dostępna dla wszystkich w późniejszym czasie.
-Rejestrując się do wcześniejszego dostępu, wspierasz obecne tempo rozwoju tego moda.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Uzyskaj wcześniejszy dostęp</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Twoje ID dostępu</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Klucz dostępu</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Aktywuj</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Aktywacja wczesnego dostępu</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Aby aktywować wczesny dostęp musisz prowadzić klucz dostępu</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Anuluj</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>Wprowadzony klucz jest niepoprawny</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Trwa łączenie...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Połącz z kontem Patreon</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Połącz z kontem Patreon</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Konto Patreon nie może zostać połączone, ponieważ żądanie zostało przez Ciebie odrzucone.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Wystąpił błąd podczas łączenia konta, spróbuj ponownie.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Twoje konto zostało połączone, ale nie jesteś uprawniony do wczesnego dostępu.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Możesz zamknąć tę stronę i powrócić do gry.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Anuluj</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Status: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Aktywowany</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Nieaktywny</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Dziękuję za wsparcie, teraz możesz się cieszyć dostępem do wszystkich funkcji.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Wczesny dostęp</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Wyrównanie</value>
@@ -562,12 +476,6 @@ Aby utworzyć przejście dla pieszych, przytrzymaj klawisz {0}.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Szerokość linii</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Odstęp za</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Odstęp przed</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Równolegle do pasów</value>
@@ -755,9 +663,6 @@ Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Krawędź</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Począwszy od</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Wierzchołek</value>
@@ -1150,9 +1055,6 @@ Nie udało się załadować oznaczeń dla wszystkich skrzyżowań.</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Wysokość</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Trawa</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Chodnik</value>
   </data>
@@ -1162,15 +1064,6 @@ Nie udało się załadować oznaczeń dla wszystkich skrzyżowań.</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Segment #{0}
 Kliknij aby edytować oznaczenia</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Podążaj za linią pomocniczą</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Lewa linia pomocnicza</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Prawa linia pomocnicza</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Wybierz pierwszy punkt linii pomocniczej lub istniejącą linię</value>
@@ -1270,20 +1163,11 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Zrujnowany</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Odstęp od linii</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Zaokrąglenie rogów</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Zaokrąglenie rogów na pasach rozdzielających</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Wielkość krawężnika</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Wielkość krawężnika na pasach rozdzielających</value>
   </data>
   
   
@@ -1375,12 +1259,6 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Kąt</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Wysokość</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Nazwa</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Skala</value>
@@ -1525,9 +1403,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Przytrzymaj {0} by przejść w tryb podziemny</value>
   </data>
-  <data name="Settings_AutoPropStep" xml:space="preserve">
-    <value>Automatyczny krok dla rekwizytów zależny od jego rozmiaru</value>
-  </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
     <value>Odległość rysowania oznaczeń 2D</value>
   </data>
@@ -1616,9 +1491,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="StyleOption_Font" xml:space="preserve">
     <value>Czcionka</value>
   </data>
-  <data name="StyleOption_FontStyle" xml:space="preserve">
-    <value>Styl czcionki</value>
-  </data>
   <data name="StyleOption_FontStyleBold" xml:space="preserve">
     <value>Pogrubiony</value>
   </data>
@@ -1670,6 +1542,19 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
     <value>Twórz automatycznie linie pasów ruchu</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
