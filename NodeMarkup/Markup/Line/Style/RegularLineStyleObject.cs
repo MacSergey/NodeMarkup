@@ -407,6 +407,7 @@ namespace NodeMarkup.Manager
             MarkupPropItemData[] items;
             int startIndex;
             int count;
+            float startOffset;
 
             switch (Distribution.Value)
             {
@@ -414,6 +415,7 @@ namespace NodeMarkup.Manager
                     {
                         startIndex = 0;
                         count = Mathf.CeilToInt(length / stepValue);
+                        startOffset = (length - (count - 1) * stepValue) * 0.5f;
                         items = new MarkupPropItemData[count];
                         break;
                     }
@@ -421,6 +423,7 @@ namespace NodeMarkup.Manager
                     {
                         startIndex = 1;
                         count = Math.Max(Mathf.RoundToInt(length / stepValue - 1.5f), 0);
+                        startOffset = (length - (count - 1) * stepValue) * 0.5f;
                         items = new MarkupPropItemData[count + 2];
 
                         CalculateItem(trajectory, 0f, prefab, ref items[0]);
@@ -432,6 +435,7 @@ namespace NodeMarkup.Manager
                         startIndex = 0;
                         count = Mathf.RoundToInt(length / stepValue);
                         stepValue = length / count;
+                        startOffset = (length - (count - 1) * stepValue) * 0.5f;
                         items = new MarkupPropItemData[count];
                         break;
                     }
@@ -439,7 +443,8 @@ namespace NodeMarkup.Manager
                     {
                         startIndex = 1;
                         count = Math.Max(Mathf.RoundToInt(length / stepValue) - 1, 0);
-                        stepValue = length / count;
+                        stepValue = length / (count + 1);
+                        startOffset = stepValue;
                         items = new MarkupPropItemData[count + 2];
 
                         CalculateItem(trajectory, 0f, prefab, ref items[0]);
@@ -450,7 +455,6 @@ namespace NodeMarkup.Manager
                     return new MarkupPartGroupData(lod);
             }
 
-            float startOffset = (length - (count - 1) * stepValue) * 0.5f;
             for (int i = 0; i < count; i += 1)
             {
                 if (SimulationManager.instance.m_randomizer.Int32(1, 100) > Probability)
