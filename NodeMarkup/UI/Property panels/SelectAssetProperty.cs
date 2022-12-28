@@ -198,8 +198,8 @@ namespace NodeMarkup.UI
 
         protected override void OnSizeChanged()
         {
-            base.OnSizeChanged();
             SetSize();
+            base.OnSizeChanged();
         }
         private void SetSize()
         {

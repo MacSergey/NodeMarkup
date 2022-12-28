@@ -24,6 +24,26 @@ namespace NodeMarkup.Manager
         }
 
         protected void RuleChanged() => OnRuleChanged?.Invoke();
+        public bool GetT(out float from, out float to)
+        {
+            var isFrom = GetFromT(out from);
+            var isTo = GetToT(out to);
+
+            if (isFrom && isTo)
+                return true;
+            else if (isFrom)
+            {
+                to = from;
+                return true;
+            }
+            else if (isTo)
+            {
+                from = to;
+                return true;
+            }
+            else
+                return false;
+        }
         public bool GetFromT(out float t) => GetT(From.Value, out t);
         public bool GetToT(out float t) => GetT(To.Value, out t);
         private bool GetT(ISupportPoint partEdge, out float t)
@@ -38,13 +58,9 @@ namespace NodeMarkup.Manager
         }
         public bool GetTrajectory(out ITrajectory bezier)
         {
-            var succes = false;
-            succes |= GetFromT(out float from);
-            succes |= GetToT(out float to);
-
-            if (succes)
+            if (GetT(out float from, out float to))
             {
-                bezier = Line.Trajectory.Cut(from != -1 ? from : to, to != -1 ? to : from);
+                bezier = Line.Trajectory.Cut(from, to);
                 return true;
             }
             else

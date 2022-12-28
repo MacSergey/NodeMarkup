@@ -9,6 +9,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using static ColossalFramework.IO.EncodedArray;
+using static RenderManager;
 
 namespace NodeMarkup.Manager
 {
@@ -109,6 +111,11 @@ namespace NodeMarkup.Manager
             }
         }
         public virtual void Render(OverlayData data) => Trajectory.Render(data);
+        public virtual void RenderRule(MarkupLineRawRule rule, OverlayData data)
+        {
+            if (rule.GetTrajectory(out var trajectory))
+                trajectory.Render(data);
+        }
         public abstract bool ContainsRule(MarkupLineRawRule rule);
         public bool ContainsEnter(Enter enter) => PointPair.ContainsEnter(enter);
 
@@ -152,6 +159,9 @@ namespace NodeMarkup.Manager
                     case LineType.Crosswalk:
                         line = new MarkupCrosswalkLine(markup, pointPair);
                         break;
+                    case LineType.Lane:
+                        line = new MarkupLaneLine(markup, pointPair);
+                        break;
                     default:
                         return false;
                 }
@@ -161,21 +171,6 @@ namespace NodeMarkup.Manager
         }
         public abstract void FromXml(XElement config, ObjectsMap map, bool invert);
 
-        public enum LineType
-        {
-            [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
-            Regular = Markup.Item.RegularLine,
-
-            [Description(nameof(Localize.LineStyle_StopLinesGroup))]
-            Stop = Markup.Item.StopLine,
-
-            [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
-            Crosswalk = Markup.Item.Crosswalk,
-
-
-            [NotVisible]
-            All = Regular | Stop | Crosswalk,
-        }
         public override string ToString() => PointPair.ToString();
     }
     public class MarkupRegularLine : MarkupLine
@@ -212,8 +207,8 @@ namespace NodeMarkup.Manager
         {
             var trajectory = new Bezier3
             {
-                a = PointPair.First.GetPosition(RawAlignment),
-                d = PointPair.Second.GetPosition(RawAlignment.Value.Invert()),
+                a = PointPair.First.GetAbsolutePosition(RawAlignment),
+                d = PointPair.Second.GetAbsolutePosition(RawAlignment.Value.Invert()),
             };
             NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
 
@@ -259,11 +254,11 @@ namespace NodeMarkup.Manager
         {
             var defaultStyle = Style.StyleType.LineDashed;
 
-            if((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0)
+            if ((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0 && (defaultStyle.GetLineType() & Type) != 0)
             {
                 foreach (var style in EnumExtension.GetEnumValues<RegularLineStyle.RegularLineType>(i => true).Select(i => i.ToEnum<Style.StyleType, RegularLineStyle.RegularLineType>()))
                 {
-                    if ((style.GetNetworkType() & PointPair.NetworkType) != 0)
+                    if ((style.GetNetworkType() & PointPair.NetworkType) != 0 && (style.GetLineType() & Type) != 0)
                     {
                         defaultStyle = style;
                         break;
@@ -344,7 +339,7 @@ namespace NodeMarkup.Manager
     public class MarkupNormalLine : MarkupRegularLine
     {
         public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre) : base(markup, pointPair, style, alignment) { }
-        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetPosition(RawAlignment), End.GetPosition(RawAlignment.Value.Invert()));
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetAbsolutePosition(RawAlignment), End.GetAbsolutePosition(RawAlignment.Value.Invert()));
     }
     public class MarkupFillerTempLine : MarkupRegularLine
     {
@@ -395,6 +390,105 @@ namespace NodeMarkup.Manager
             }
         }
     }
+    public class MarkupLaneLine : MarkupRegularLine
+    {
+        public override LineType Type => LineType.Lane;
+
+        public MarkupLaneLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null) : base(markup, pointPair, style) { }
+
+        public override void Render(OverlayData data)
+        {
+            var lanePointS = PointPair.First as MarkupLanePoint;
+            var lanePointE = PointPair.Second as MarkupLanePoint;
+
+            ITrajectory[] trajectories;
+            if (lanePointS != null && lanePointE != null)
+            {
+                lanePointS.Source.GetPoints(out var leftPointS, out var rightPointS);
+                lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
+                trajectories = new ITrajectory[]
+                {
+                    new BezierTrajectory(leftPointS.Position, leftPointS.Direction, rightPointE.Position, rightPointE.Direction),
+                    new StraightTrajectory(rightPointE.Position, leftPointE.Position),
+                    new BezierTrajectory(leftPointE.Position, leftPointE.Direction, rightPointS.Position, rightPointS.Direction),
+                    new StraightTrajectory(rightPointS.Position, leftPointS.Position),
+                };
+            }
+            else if (lanePointS != null)
+            {
+                lanePointS.Source.GetPoints(out var leftPointS, out var rightPointS);
+                trajectories = new ITrajectory[]
+                {
+                    new BezierTrajectory(leftPointS.Position, leftPointS.Direction, PointPair.Second.Position, PointPair.Second.Direction),
+                    new BezierTrajectory(PointPair.Second.Position, PointPair.Second.Direction, rightPointS.Position, rightPointS.Direction),
+                    new StraightTrajectory(rightPointS.Position, leftPointS.Position),
+                };
+            }
+            else if (lanePointE != null)
+            {
+                lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
+                trajectories = new ITrajectory[]
+                {
+                    new BezierTrajectory(PointPair.First.Position, PointPair.First.Direction, rightPointE.Position, rightPointE.Direction),
+                    new StraightTrajectory(rightPointE.Position, leftPointE.Position),
+                    new BezierTrajectory(leftPointE.Position, leftPointE.Direction, PointPair.First.Position, PointPair.First.Direction),
+                };
+            }
+            else
+                return;
+
+            data.AlphaBlend = false;
+            var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
+            points.RenderArea(triangles, data);
+        }
+        public override void RenderRule(MarkupLineRawRule rule, OverlayData data)
+        {
+            if (!rule.GetT(out var fromT, out var toT) || fromT == toT)
+                return;
+
+            var lanePointS = PointPair.First as MarkupLanePoint;
+            var lanePointE = PointPair.Second as MarkupLanePoint;
+
+            ITrajectory[] trajectories;
+            if (lanePointS != null && lanePointE != null)
+            {
+                lanePointS.Source.GetPoints(out var leftPointS, out var rightPointS);
+                lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
+
+                trajectories = new ITrajectory[4];
+                trajectories[0] = new BezierTrajectory(leftPointS.Position, leftPointS.Direction, rightPointE.Position, rightPointE.Direction).Cut(fromT, toT);
+                trajectories[2] = new BezierTrajectory(leftPointE.Position, leftPointE.Direction, rightPointS.Position, rightPointS.Direction).Cut(1f - toT, 1f - fromT);
+                trajectories[1] = new StraightTrajectory(trajectories[0].EndPosition, trajectories[2].StartPosition);
+                trajectories[3] = new StraightTrajectory(trajectories[2].EndPosition, trajectories[0].StartPosition);
+            }
+            //else if (lanePointA != null)
+            //{
+            //    lanePointA.Source.GetPoints(out var leftPointA, out var rightPointA);
+            //    trajectories = new List<ITrajectory>()
+            //    {
+            //        new BezierTrajectory(leftPointA.Position, leftPointA.Direction, PointPair.Second.Position, PointPair.Second.Direction),
+            //        new BezierTrajectory(PointPair.Second.Position, PointPair.Second.Direction, rightPointA.Position, rightPointA.Direction),
+            //        new StraightTrajectory(rightPointA.Position, leftPointA.Position),
+            //    };
+            //}
+            //else if (lanePointB != null)
+            //{
+            //    lanePointB.Source.GetPoints(out var leftPointB, out var rightPointB);
+            //    trajectories = new List<ITrajectory>()
+            //    {
+            //        new BezierTrajectory(PointPair.First.Position, PointPair.First.Direction, rightPointB.Position, rightPointB.Direction),
+            //        new StraightTrajectory(rightPointB.Position, leftPointB.Position),
+            //        new BezierTrajectory(leftPointB.Position, leftPointB.Direction, PointPair.First.Position, PointPair.First.Direction),
+            //    };
+            //}
+            else
+                return;
+
+            data.AlphaBlend = false;
+            var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
+            points.RenderArea(triangles, data);
+        }
+    }
 
     public class MarkupStopLine : MarkupLine
     {
@@ -421,7 +515,7 @@ namespace NodeMarkup.Manager
         }
 
         private void AlignmentChanged() => Markup.Update(this, true, true);
-        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.GetPosition(RawStartAlignment), PointPair.Second.GetPosition(RawEndAlignment));
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.GetAbsolutePosition(RawStartAlignment), PointPair.Second.GetAbsolutePosition(RawEndAlignment));
         protected void SetRule(MarkupLineRawRule<StopLineStyle> rule)
         {
             rule.OnRuleChanged = RuleChanged;
@@ -480,7 +574,7 @@ namespace NodeMarkup.Manager
             Update(onlySelfUpdate);
         }
 
-        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetPosition(StartAlignment), End.GetPosition(EndAlignment));
+        protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetAbsolutePosition(StartAlignment), End.GetAbsolutePosition(EndAlignment));
         public override bool ContainsRule(MarkupLineRawRule rule) => false;
         protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod) { yield break; }
 
@@ -596,6 +690,34 @@ namespace NodeMarkup.Manager
                 new StraightTrajectory(Center, dash.Position + dirX - dirY),
                 new StraightTrajectory(Center, dash.Position - dirX - dirY),
             };
+        }
+    }
+
+    public enum LineType
+    {
+        [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
+        Regular = Markup.Item.RegularLine,
+
+        [Description(nameof(Localize.LineStyle_StopLinesGroup))]
+        Stop = Markup.Item.StopLine,
+
+        [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
+        Crosswalk = Markup.Item.Crosswalk,
+
+        [Description(nameof(Localize.LineStyle_LaneGroup))]
+        Lane = Markup.Item.Lane,
+
+        [NotVisible]
+        All = Regular | Stop | Crosswalk | Lane,
+    }
+    [AttributeUsage(AttributeTargets.Field)]
+    public class LineTypeAttribute : Attribute
+    {
+        public LineType Type { get; }
+
+        public LineTypeAttribute(LineType type)
+        {
+            Type = type;
         }
     }
     public enum Alignment

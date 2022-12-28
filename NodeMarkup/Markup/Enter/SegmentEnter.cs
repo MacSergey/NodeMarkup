@@ -28,8 +28,8 @@ namespace NodeMarkup.Manager
         {
             base.Init();
 
-            CrosswalkPointsDic = EnterPointsDic.Values.ToDictionary(p => p.Num, p => new MarkupCrosswalkPoint(p));
-            NormalPointsDic = EnterPointsDic.Values.ToDictionary(p => p.Num, p => new MarkupNormalPoint(p));
+            CrosswalkPointsDic = EnterPointsDic.Values.ToDictionary(p => p.Index, p => new MarkupCrosswalkPoint(p));
+            NormalPointsDic = EnterPointsDic.Values.ToDictionary(p => p.Index, p => new MarkupNormalPoint(p));
         }
         public override void UpdatePoints()
         {
@@ -41,26 +41,26 @@ namespace NodeMarkup.Manager
                 point.Update();
         }
 
-        public override bool TryGetPoint(byte pointNum, MarkupPoint.PointType type, out MarkupPoint point)
+        public override bool TryGetPoint(byte pointIndex, MarkupPoint.PointType type, out MarkupPoint point)
         {
             switch (type)
             {
-                case MarkupPoint.PointType.Enter:
-                    return base.TryGetPoint(pointNum, type, out point);
                 case MarkupPoint.PointType.Crosswalk:
-                    if (CrosswalkPointsDic.TryGetValue(pointNum, out MarkupCrosswalkPoint crosswalkPoint))
+                    if (CrosswalkPointsDic.TryGetValue(pointIndex, out MarkupCrosswalkPoint crosswalkPoint))
                     {
                         point = crosswalkPoint;
                         return true;
                     }
                     break;
                 case MarkupPoint.PointType.Normal:
-                    if (NormalPointsDic.TryGetValue(pointNum, out MarkupNormalPoint normalPoint))
+                    if (NormalPointsDic.TryGetValue(pointIndex, out MarkupNormalPoint normalPoint))
                     {
                         point = normalPoint;
                         return true;
                     }
                     break;
+                default:
+                    return base.TryGetPoint(pointIndex, type, out point);
             }
             point = null;
             return false;

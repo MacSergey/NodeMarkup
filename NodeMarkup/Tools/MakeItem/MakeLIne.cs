@@ -27,18 +27,25 @@ namespace NodeMarkup.Tools
                 if ((Markup.Support & Markup.SupportType.Croswalks) != 0)
                     tips.Add(string.Format(Localize.Tool_InfoStartCreateCrosswalk, LocalizeExtension.Shift.AddInfoColor()));
             }
-            else if (IsHoverPoint)
-                tips.Add(base.GetToolInfo());
-            else
+            else if (!IsHoverPoint)
             {
-                if ((SelectPoint.Markup.SupportLines & MarkupLine.LineType.Stop) == 0)
-                    tips.Add(Localize.Tool_InfoSelectLineEndPoint);
+                if (SelectPoint.Type == MarkupPoint.PointType.Lane)
+                {
+                    tips.Add(Localize.Tool_InfoSelectLaneEndPoint);
+                }
                 else
-                    tips.Add(Localize.Tool_InfoSelectLineEndPointStop);
+                {
+                    if ((SelectPoint.Markup.SupportLines & LineType.Stop) == 0)
+                        tips.Add(Localize.Tool_InfoSelectLineEndPoint);
+                    else
+                        tips.Add(Localize.Tool_InfoSelectLineEndPointStop);
 
-                if ((SelectPoint.Enter.SupportPoints & MarkupPoint.PointType.Normal) != 0)
-                    tips.Add(Localize.Tool_InfoSelectLineEndPointNormal);
+                    if ((SelectPoint.Enter.SupportPoints & MarkupPoint.PointType.Normal) != 0)
+                        tips.Add(Localize.Tool_InfoSelectLineEndPointNormal);
+                }
             }
+            else
+                tips.Add(base.GetToolInfo());
 
             return string.Join("\n", tips.ToArray());
         }
@@ -62,9 +69,14 @@ namespace NodeMarkup.Tools
             }
         }
 
-        public override void OnMouseDown(Event e)
+        //public override void OnMouseDown(Event e)
+        //{
+        //    if (!IsSelectPoint && IsHoverPoint && Utility.CtrlIsPressed)
+        //        Tool.SetMode(ToolModeType.DragPoint);
+        //}
+        public override void OnMouseDrag(Event e)
         {
-            if (!IsSelectPoint && IsHoverPoint && Utility.CtrlIsPressed)
+            if (!IsSelectPoint && IsHoverPoint)
                 Tool.SetMode(ToolModeType.DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)
@@ -87,13 +99,39 @@ namespace NodeMarkup.Tools
                 }
                 else if (pointPair.IsStopLine)
                 {
-                    var style = Tool.GetStyleByModifier<StopLineStyle, StopLineStyle.StopLineType>(NetworkType.Road, StopLineStyle.StopLineType.Solid);
+                    var style = Tool.GetStyleByModifier<StopLineStyle, StopLineStyle.StopLineType>(NetworkType.Road, LineType.Stop, StopLineStyle.StopLineType.Solid);
                     var newLine = Tool.Markup.AddStopLine(pointPair, style);
                     Panel.SelectLine(newLine);
                 }
+                else if (pointPair.IsLane)
+                {
+                    var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(pointPair.NetworkType, LineType.Lane, RegularLineStyle.RegularLineType.Prop, true);
+                    var newLine = Tool.Markup.AddRegularLine(pointPair, style);
+                    Panel.SelectLine(newLine);
+
+                    if (Settings.CreateLaneEdgeLines && pointPair.First is MarkupLanePoint lanePointS && pointPair.Second is MarkupLanePoint lanePointE)
+                    {
+                        lanePointS.Source.GetPoints(out var leftPointS, out var rightPointS);
+                        lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
+
+                        var pairA = new MarkupPointPair(leftPointS, rightPointE);
+                        if (!Markup.TryGetLine(pairA, out MarkupLine lineA))
+                        {
+                            lineA = Markup.AddRegularLine(pairA, null);
+                            Panel.AddLine(lineA);
+                        }
+
+                        var pairB = new MarkupPointPair(leftPointE, rightPointS);
+                        if (!Markup.TryGetLine(pairB, out MarkupLine lineB))
+                        {
+                            lineB = Markup.AddRegularLine(pairB, null);
+                            Panel.AddLine(lineB);
+                        }
+                    }
+                }
                 else
                 {
-                    var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(pointPair.NetworkType, RegularLineStyle.RegularLineType.Dashed, true);
+                    var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(pointPair.NetworkType, LineType.Regular, RegularLineStyle.RegularLineType.Dashed, true);
                     var newLine = Tool.Markup.AddRegularLine(pointPair, style);
                     Panel.SelectLine(newLine);
                 }
@@ -118,47 +156,68 @@ namespace NodeMarkup.Tools
         {
             var allow = enter.Points.Select(i => 1).ToArray();
 
-            if (ignore != null && ignore.Enter == enter)
+            if (ignore == null)
             {
-                if ((Markup.SupportLines & MarkupLine.LineType.Stop) == 0)
-                    yield break;
-
-                var ignoreIdx = ignore.Num - 1;
-                var leftIdx = ignoreIdx;
-                var rightIdx = ignoreIdx;
-
-                foreach (var line in enter.Markup.Lines.Where(l => l.Type == MarkupLine.LineType.Stop && l.Start.Enter == enter))
+                foreach (var point in enter.Points)
+                    yield return point;
+                if (Markup.EntersCount > 1)
                 {
-                    var from = Math.Min(line.Start.Num, line.End.Num) - 1;
-                    var to = Math.Max(line.Start.Num, line.End.Num) - 1;
-                    if (from < ignore.Num - 1 && ignore.Num - 1 < to)
+                    foreach (var point in enter.LanePoints)
+                        yield return point;
+                }
+            }
+            else if (ignore.Type == MarkupPoint.PointType.Enter)
+            {
+                if (ignore != null && ignore.Enter == enter)
+                {
+                    if ((Markup.SupportLines & LineType.Stop) == 0)
                         yield break;
 
-                    allow[from] = 2;
-                    allow[to] = 2;
+                    var ignoreIdx = ignore.Index - 1;
+                    var leftIdx = ignoreIdx;
+                    var rightIdx = ignoreIdx;
 
-                    for (var i = from + 1; i <= to - 1; i += 1)
-                        allow[i] = 0;
-
-                    if (line.ContainsPoint(ignore))
+                    foreach (var line in enter.Markup.Lines.Where(l => l.Type == LineType.Stop && l.Start.Enter == enter))
                     {
-                        var otherIdx = line.PointPair.GetOther(ignore).Num - 1;
-                        if (otherIdx < ignoreIdx)
-                            leftIdx = otherIdx;
-                        else if (otherIdx > ignoreIdx)
-                            rightIdx = otherIdx;
+                        var from = Math.Min(line.Start.Index, line.End.Index) - 1;
+                        var to = Math.Max(line.Start.Index, line.End.Index) - 1;
+                        if (from < ignore.Index - 1 && ignore.Index - 1 < to)
+                            yield break;
+
+                        allow[from] = 2;
+                        allow[to] = 2;
+
+                        for (var i = from + 1; i <= to - 1; i += 1)
+                            allow[i] = 0;
+
+                        if (line.ContainsPoint(ignore))
+                        {
+                            var otherIdx = line.PointPair.GetOther(ignore).Index - 1;
+                            if (otherIdx < ignoreIdx)
+                                leftIdx = otherIdx;
+                            else if (otherIdx > ignoreIdx)
+                                rightIdx = otherIdx;
+                        }
                     }
+
+                    SetNotAllow(allow, leftIdx == ignoreIdx ? Find(allow, ignoreIdx, -1) : leftIdx, -1);
+                    SetNotAllow(allow, rightIdx == ignoreIdx ? Find(allow, ignoreIdx, 1) : rightIdx, 1);
+                    allow[ignoreIdx] = 0;
                 }
 
-                SetNotAllow(allow, leftIdx == ignoreIdx ? Find(allow, ignoreIdx, -1) : leftIdx, -1);
-                SetNotAllow(allow, rightIdx == ignoreIdx ? Find(allow, ignoreIdx, 1) : rightIdx, 1);
-                allow[ignoreIdx] = 0;
+                foreach (var point in enter.Points)
+                {
+                    if (allow[point.Index - 1] != 0)
+                        yield return point;
+                }
             }
-
-            foreach (var point in enter.Points)
+            else if (ignore.Type == MarkupPoint.PointType.Lane)
             {
-                if (allow[point.Num - 1] != 0)
-                    yield return point;
+                if (enter != ignore.Enter)
+                {
+                    foreach (var point in enter.LanePoints)
+                        yield return point;
+                }
             }
         }
 
@@ -176,23 +235,27 @@ namespace NodeMarkup.Tools
 
             if (IsSelectPoint)
             {
-                switch (IsHoverPoint)
+                if (IsHoverPoint)
                 {
-                    case true when HoverPoint.Type == MarkupPoint.PointType.Normal:
+                    if (SelectPoint.Type == MarkupPoint.PointType.Normal)
                         RenderNormalConnectLine(cameraInfo);
-                        break;
-                    case true:
+                    else if (SelectPoint.Type == MarkupPoint.PointType.Lane)
+                        RenderLaneConnectionLine(cameraInfo);
+                    else
                         RenderRegularConnectLine(cameraInfo);
-                        break;
-                    case false:
+                }
+                else
+                {
+                    if (SelectPoint.Type == MarkupPoint.PointType.Lane)
+                        RenderNotConnectedLane(cameraInfo);
+                    else
                         RenderNotConnectLine(cameraInfo);
-                        break;
                 }
             }
 
             Panel.Render(cameraInfo);
 #if DEBUG
-            if(Settings.ShowNodeContour && Tool.Markup is Manager.NodeMarkup markup)
+            if (Settings.ShowNodeContour && Tool.Markup is Manager.NodeMarkup markup)
             {
                 foreach (var line in markup.Contour)
                     line.Render(new OverlayData(cameraInfo));
@@ -204,10 +267,10 @@ namespace NodeMarkup.Tools
         {
             var bezier = new Bezier3()
             {
-                a = SelectPoint.Position,
-                b = HoverPoint.Enter == SelectPoint.Enter ? HoverPoint.Position - SelectPoint.Position : SelectPoint.Direction,
-                c = HoverPoint.Enter == SelectPoint.Enter ? SelectPoint.Position - HoverPoint.Position : HoverPoint.Direction,
-                d = HoverPoint.Position,
+                a = SelectPoint.MarkerPosition,
+                b = HoverPoint.Enter == SelectPoint.Enter ? HoverPoint.MarkerPosition - SelectPoint.MarkerPosition : SelectPoint.Direction,
+                c = HoverPoint.Enter == SelectPoint.Enter ? SelectPoint.MarkerPosition - HoverPoint.MarkerPosition : HoverPoint.Direction,
+                d = HoverPoint.MarkerPosition,
             };
 
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
@@ -223,10 +286,10 @@ namespace NodeMarkup.Tools
 
             var lineBezier = new Bezier3()
             {
-                a = SelectPoint.Position,
-                b = HoverPoint.Position,
-                c = SelectPoint.Position,
-                d = HoverPoint.Position,
+                a = SelectPoint.MarkerPosition,
+                b = HoverPoint.MarkerPosition,
+                c = SelectPoint.MarkerPosition,
+                d = HoverPoint.MarkerPosition,
             };
             lineBezier.RenderBezier(new OverlayData(cameraInfo) { Color = color });
 
@@ -234,17 +297,84 @@ namespace NodeMarkup.Tools
 
             var normalBezier = new Bezier3
             {
-                a = SelectPoint.Position + SelectPoint.Direction,
-                d = SelectPoint.Position + normal
+                a = SelectPoint.MarkerPosition + SelectPoint.Direction,
+                d = SelectPoint.MarkerPosition + normal
             };
             normalBezier.b = normalBezier.a + normal / 2;
             normalBezier.c = normalBezier.d + SelectPoint.Direction / 2;
             normalBezier.RenderBezier(new OverlayData(cameraInfo) { Color = color, Width = 2f, Cut = true });
         }
+        private void RenderLaneConnectionLine(RenderManager.CameraInfo cameraInfo)
+        {
+            if (SelectPoint is MarkupLanePoint pointA && HoverPoint is MarkupLanePoint pointB)
+            {
+                var trajectory = new BezierTrajectory(pointA.MarkerPosition, pointA.Direction, pointB.MarkerPosition, pointB.Direction);
+
+                var halfWidthA = pointA.Width * 0.5f;
+                var halfWidthB = pointB.Width * 0.5f;
+                var startNormal = trajectory.StartDirection.MakeFlatNormalized().Turn90(true);
+                var endNormal = trajectory.EndDirection.MakeFlatNormalized().Turn90(false);
+
+                var trajectories = new List<ITrajectory>()
+                {
+                    new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidthA, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidthB, trajectory.EndDirection),
+                    new StraightTrajectory(trajectory.EndPosition + endNormal * halfWidthB, trajectory.EndPosition - endNormal * halfWidthB),
+                    new BezierTrajectory(trajectory.EndPosition - endNormal * halfWidthB, trajectory.EndDirection, trajectory.StartPosition - startNormal * halfWidthA, trajectory.StartDirection),
+                    new StraightTrajectory(trajectory.StartPosition - startNormal * halfWidthA, trajectory.StartPosition + startNormal * halfWidthA),
+                };
+
+                var pointPair = new MarkupPointPair(pointA, pointB);
+                var color = Tool.Markup.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
+
+                var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
+                points.RenderArea(triangles, new OverlayData(cameraInfo) { Color = color, AlphaBlend = false });
+            }
+        }
+
         private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
-            new BezierTrajectory(SelectPoint.Position, SelectPoint.Direction, endPosition).Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+            new BezierTrajectory(SelectPoint.MarkerPosition, SelectPoint.Direction, endPosition).Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+        }
+        private void RenderNotConnectedLane(RenderManager.CameraInfo cameraInfo)
+        {
+            if (SelectPoint is MarkupLanePoint lanePoint)
+            {
+                var halfWidth = lanePoint.Width * 0.5f;
+
+                var endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+                if ((lanePoint.MarkerPosition - endPosition).sqrMagnitude < 4f * halfWidth * halfWidth)
+                {
+                    var normal = (lanePoint.MarkerPosition - endPosition).MakeFlatNormalized().Turn90(true);
+                    var area = new Quad3()
+                    {
+                        a = lanePoint.MarkerPosition + normal * halfWidth,
+                        b = lanePoint.MarkerPosition - normal * halfWidth,
+                        c = endPosition - normal * halfWidth,
+                        d = endPosition + normal * halfWidth,
+                    };
+
+                    area.RenderQuad(new OverlayData(cameraInfo) { Color = Colors.Hover, AlphaBlend = false });
+                }
+                else
+                {
+                    var trajectory = new BezierTrajectory(lanePoint.MarkerPosition, lanePoint.Direction, endPosition);
+
+                    var startNormal = trajectory.StartDirection.MakeFlatNormalized().Turn90(true);
+                    var endNormal = trajectory.EndDirection.MakeFlatNormalized().Turn90(false);
+
+                    var trajectories = new List<ITrajectory>()
+                    {
+                        new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidth, trajectory.EndDirection),
+                        new StraightTrajectory(trajectory.EndPosition + endNormal * halfWidth, trajectory.EndPosition - endNormal * halfWidth),
+                        new BezierTrajectory(trajectory.EndPosition - endNormal * halfWidth, trajectory.EndDirection, trajectory.StartPosition - startNormal * halfWidth, trajectory.StartDirection),
+                        new StraightTrajectory(trajectory.StartPosition - startNormal * halfWidth, trajectory.StartPosition + startNormal * halfWidth),
+                    };
+
+                    var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
+                    points.RenderArea(triangles, new OverlayData(cameraInfo) { Color = Colors.Hover, AlphaBlend = false });
+                }
+            }
         }
     }
 }

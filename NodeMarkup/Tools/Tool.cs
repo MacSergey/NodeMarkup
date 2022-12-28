@@ -726,7 +726,7 @@ namespace NodeMarkup.Tools
 
         #region UTILITIES
 
-        public TStyle GetStyleByModifier<TStyle, TStyleType>(NetworkType networkType, TStyleType ifNotFound, bool allowNull = false)
+        public TStyle GetStyleByModifier<TStyle, TStyleType>(NetworkType networkType, LineType lineType, TStyleType ifNotFound, bool allowNull = false)
             where TStyleType : Enum
             where TStyle : Style
         {
@@ -734,7 +734,7 @@ namespace NodeMarkup.Tools
 
             foreach (var style in EnumExtension.GetEnumValues<TStyleType>(i => true).Select(i => i.ToEnum<Style.StyleType, TStyleType>()))
             {
-                if ((style.GetNetworkType() & networkType) == 0)
+                if ((style.GetNetworkType() & networkType) == 0 || (style.GetLineType() & lineType) == 0)
                     continue;
 
                 if (StylesModifier.TryGetValue(style, out SavedInt saved) && (StyleModifier)saved.value == modifier)
@@ -755,11 +755,11 @@ namespace NodeMarkup.Tools
 
             {
                 var defaultStyle = ifNotFound.ToEnum<Style.StyleType, TStyleType>();
-                if ((defaultStyle.GetNetworkType() & networkType) == 0)
+                if ((defaultStyle.GetNetworkType() & networkType) == 0 && (defaultStyle.GetLineType() & lineType) == 0)
                 {
                     foreach (var style in EnumExtension.GetEnumValues<TStyleType>(i => true).Select(i => i.ToEnum<Style.StyleType, TStyleType>()))
                     {
-                        if ((style.GetNetworkType() & networkType) != 0)
+                        if ((style.GetNetworkType() & networkType) != 0 && (style.GetLineType() & lineType) != 0)
                         {
                             defaultStyle = style;
                             break;
@@ -794,18 +794,18 @@ namespace NodeMarkup.Tools
                 _ => StyleModifier.NotSet,
             };
         }
-        public string GetModifierToolTip<StyleType>(string text, NetworkType networkType)
+        public string GetModifierToolTip<StyleType>(string text, NetworkType networkType, LineType lineType)
             where StyleType : Enum
         {
-            var modifiers = GetStylesModifier<StyleType>(networkType).ToArray();
+            var modifiers = GetStylesModifier<StyleType>(networkType, lineType).ToArray();
             return modifiers.Any() ? $"{text}:\n{string.Join("\n", modifiers)}" : text;
         }
-        private IEnumerable<string> GetStylesModifier<StyleType>(NetworkType networkType)
+        private IEnumerable<string> GetStylesModifier<StyleType>(NetworkType networkType, LineType lineType)
             where StyleType : Enum
         {
             foreach (var style in EnumExtension.GetEnumValues<StyleType>(i => true))
             {
-                if ((style.GetNetworkType() & networkType) == 0)
+                if ((style.GetNetworkType() & networkType) == 0 && (style.GetLineType() & lineType) == 0)
                     continue;
 
                 var general = (Style.StyleType)(object)style;

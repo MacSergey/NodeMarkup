@@ -64,7 +64,7 @@ namespace NodeMarkup.Manager
         public abstract IFillerVertex ProcessedVertex { get; }
 
         public EnterFillerVertexBase(MarkupPoint point) : base(point) { }
-        public override void Update() => Init(Point.GetPosition(Alignment));
+        public override void Update() => Init(Point.GetAbsolutePosition(Alignment));
 
         bool IEquatable<IFillerVertex>.Equals(IFillerVertex other) => other is EnterFillerVertexBase otherEnter && Equals(otherEnter);
         public bool Equals(EnterFillerVertexBase other) => base.Equals(other) && (!Point.IsSplit || other.Alignment == Alignment);
@@ -120,7 +120,7 @@ namespace NodeMarkup.Manager
             {
                 foreach (var point in Enter.Points)
                 {
-                    if (minNum < point.Num && point.Num < maxNum)
+                    if (minNum < point.Index && point.Index < maxNum)
                     {
                         if (point != Point)
                         {
@@ -143,7 +143,7 @@ namespace NodeMarkup.Manager
                 }
             }
 
-            if (contour.PossibleComplite && contour.First is EnterFillerVertexBase first && first.Enter == Enter && (first.Point.Num == minNum || first.Point.Num == maxNum))
+            if (contour.PossibleComplite && contour.First is EnterFillerVertexBase first && first.Enter == Enter && (first.Point.Index == minNum || first.Point.Index == maxNum))
                 points.Add(first);
 
             return points;

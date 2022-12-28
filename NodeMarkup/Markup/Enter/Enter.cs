@@ -14,7 +14,8 @@ namespace NodeMarkup.Manager
 
     public abstract class Enter : IOverlay, IDeletable, ISupport, IComparable<Enter>
     {
-        private byte _pointNum;
+        public event Action OnPointOrderChanged;
+
         public static string XmlName { get; } = "E";
 
         public virtual MarkupPoint.PointType SupportPoints => MarkupPoint.PointType.Enter;
@@ -66,24 +67,24 @@ namespace NodeMarkup.Manager
                     {
                         if (IsVehicleLane(lane))
                         {
-                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Road);
+                            var driveLane = new DriveLane(this, index, lanes[index], lane, NetworkType.Road);
                             yield return driveLane;
                         }
                     }
-                    else if(isTaxiway)
+                    else if (isTaxiway)
                     {
                         if (IsTaxiwayLane(lane))
                         {
-                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Taxiway);
+                            var driveLane = new DriveLane(this, index, lanes[index], lane, NetworkType.Taxiway);
                             yield return driveLane;
                             yield return driveLane;
                         }
                     }
-                    else if(isTrack)
+                    else if (isTrack)
                     {
                         if (IsTrackLane(lane))
                         {
-                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Track);
+                            var driveLane = new DriveLane(this, index, lanes[index], lane, NetworkType.Track);
                             yield return driveLane;
                         }
                     }
@@ -91,7 +92,7 @@ namespace NodeMarkup.Manager
                     {
                         if (IsPathLane(lane))
                         {
-                            var driveLane = new DriveLane(this, lanes[index], lane, NetworkType.Path);
+                            var driveLane = new DriveLane(this, index, lanes[index], lane, NetworkType.Path);
                             yield return driveLane;
                         }
                     }
@@ -99,8 +100,8 @@ namespace NodeMarkup.Manager
             }
         }
         protected Dictionary<byte, MarkupEnterPoint> EnterPointsDic { get; private set; } = new Dictionary<byte, MarkupEnterPoint>();
-
-        public byte PointNum => ++_pointNum;
+        protected byte[] SortedIndexes { get; private set; }
+        protected Dictionary<byte, MarkupLanePoint> LanePointsDic { get; private set; } = new Dictionary<byte, MarkupLanePoint>();
 
         public Vector3 CornerDir { get; private set; }
         public Vector3 NormalDir { get; private set; }
@@ -118,6 +119,9 @@ namespace NodeMarkup.Manager
         public int PointCount => EnterPointsDic.Count;
         public IEnumerable<MarkupEnterPoint> Points => EnterPointsDic.Values;
 
+        public int LanePointCount => LanePointsDic.Count;
+        public IEnumerable<MarkupLanePoint> LanePoints => LanePointsDic.Values;
+
         public float T => IsStartSide ? 0f : 1f;
         public string XmlSection => XmlName;
 
@@ -134,13 +138,11 @@ namespace NodeMarkup.Manager
             if (!IsExist)
                 throw new NotExistEnterException(Type, Id);
 
-            Init();
             Update();
+            Init();
         }
         protected virtual void Init()
         {
-            _pointNum = 0;
-
             var segment = GetSegment();
             IsStartSide = GetIsStartSide();
             IsLaneInvert = IsStartSide ^ segment.IsInvert();
@@ -168,20 +170,54 @@ namespace NodeMarkup.Manager
                 }
             }
 
-            var points = sources.Select(s => new MarkupEnterPoint(this, s)).ToArray();
-            EnterPointsDic = points.ToDictionary(p => p.Num, p => p);
+            for (var i = 0; i < sources.Count; i += 1)
+            {
+                var point = new MarkupEnterPoint((byte)(i + 1), sources[i]);
+                EnterPointsDic[point.Index] = point;
+            }
+
             ResetPoints();
+
+            for (int i = 0; i < sources.Count - 1; i += 1)
+            {
+                //var index = SideSign > 0 ? i : sources.Count - 1 - i;
+                var laneSource = new NetLanePointSource(this, (byte)i);
+                var lanePoint = new MarkupLanePoint((byte)(i + 1), laneSource);
+                LanePointsDic[lanePoint.Index] = lanePoint;
+            }
         }
 
         public abstract ushort GetSegmentId();
         public abstract ref NetSegment GetSegment();
         public abstract bool GetIsStartSide();
-        public virtual bool TryGetPoint(byte pointNum, MarkupPoint.PointType type, out MarkupPoint point)
+        public virtual bool TryGetPoint(byte index, MarkupPoint.PointType type, out MarkupPoint point)
         {
-            if (type == MarkupPoint.PointType.Enter && EnterPointsDic.TryGetValue(pointNum, out MarkupEnterPoint enterPoint))
+            switch (type)
             {
-                point = enterPoint;
-                return true;
+                case MarkupPoint.PointType.Lane:
+                    if (LanePointsDic.TryGetValue(index, out var lanePoint))
+                    {
+                        point = lanePoint;
+                        return true;
+                    }
+                    break;
+                default:
+                    if (EnterPointsDic.TryGetValue(index, out var enterPoint))
+                    {
+                        point = enterPoint;
+                        return true;
+                    }
+                    break;
+            }
+            point = null;
+            return false;
+        }
+        public virtual bool TryGetSortedPoint(byte index, MarkupPoint.PointType type, out MarkupPoint point)
+        {
+            if (type == MarkupPoint.PointType.Enter && index < PointCount)
+            {
+                var sortedIndex = SortedIndexes[index];
+                return TryGetPoint(sortedIndex, type, out point);
             }
             else
             {
@@ -232,6 +268,9 @@ namespace NodeMarkup.Manager
         {
             foreach (var point in EnterPointsDic.Values)
                 point.Update();
+
+            foreach (var point in LanePointsDic.Values)
+                point.Update();
         }
 
         public void ResetPoints()
@@ -252,7 +291,35 @@ namespace NodeMarkup.Manager
                 foreach (var point in points)
                     point.Reset();
             }
+
+            SortPoints();
         }
+        public void SortPoints()
+        {
+            var sortedIndexes = Points.OrderBy(p => p.GetRelativePosition()).Select(p => p.Index).ToArray();
+
+            if (SortedIndexes == null || SortedIndexes.Length != sortedIndexes.Length)
+                SortedIndexes = sortedIndexes;
+            else
+            {
+                var changed = false;
+                for (var i = 0; i < sortedIndexes.Length; i += 1)
+                {
+                    if (sortedIndexes[i] != SortedIndexes[i])
+                    {
+                        changed = true;
+                        break;
+                    }
+                }
+
+                if (changed)
+                {
+                    SortedIndexes = sortedIndexes;
+                    OnPointOrderChanged?.Invoke();
+                }
+            }
+        }
+
         public Vector3 GetPosition(float offset) => Position + offset / TranformCoef * CornerDir;
         public void Render(OverlayData data)
         {

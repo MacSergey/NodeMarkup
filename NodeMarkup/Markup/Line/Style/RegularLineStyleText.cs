@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.UI;
@@ -6,6 +7,7 @@ using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
@@ -14,20 +16,23 @@ namespace NodeMarkup.Manager
 {
     public class RegularLineStyleText : RegularLineStyle, IColorStyle
     {
-        private static Dictionary<int, Texture2D> Textures { get; } = new Dictionary<int, Texture2D>();
+        private static Dictionary<TextureId, Texture2D> ACITextures { get; } = new Dictionary<TextureId, Texture2D>(TextureComparer.Instance);
+        private static Dictionary<TextureId, int> ACITextureCount { get; } = new Dictionary<TextureId, int>();
+        private static Dictionary<int, Texture2D> MainTextures { get; } = new Dictionary<int, Texture2D>();
 
         public override StyleType Type => StyleType.LineText;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0/* | MarkupLOD.LOD1*/;
+        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         public override bool CanOverlap => true;
 
         private PropertyStringValue Text { get; }
         private PropertyStringValue Font { get; }
-        private PropertyEnumValue<FontStyle> FontStyle { get; }
         private PropertyStructValue<float> Scale { get; }
         private PropertyStructValue<float> Shift { get; }
         private PropertyStructValue<float> Angle { get; }
         private PropertyEnumValue<TextDirection> Direction { get; }
         private PropertyVector2Value Spacing { get; }
+
+        private TextureId PrevTextureId { get; set; }
 
 #if DEBUG
         private PropertyStructValue<float> Ratio { get; }
@@ -42,7 +47,6 @@ namespace NodeMarkup.Manager
             {
                 yield return nameof(Text);
                 yield return nameof(Font);
-                yield return nameof(FontStyle);
                 yield return nameof(Color);
                 yield return nameof(Scale);
                 yield return nameof(Direction);
@@ -56,11 +60,10 @@ namespace NodeMarkup.Manager
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
-        public RegularLineStyleText(Color32 color, string font, FontStyle fontStyle, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing) : base(color, default)
+        public RegularLineStyleText(Color32 color, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing) : base(color, default)
         {
             Text = new PropertyStringValue("TX", StyleChanged, text);
             Font = new PropertyStringValue("F", StyleChanged, font);
-            FontStyle = new PropertyEnumValue<FontStyle>("FS", StyleChanged, fontStyle);
             Scale = new PropertyStructValue<float>("S", StyleChanged, scale);
             Angle = new PropertyStructValue<float>("A", StyleChanged, angle);
             Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
@@ -70,8 +73,59 @@ namespace NodeMarkup.Manager
             Ratio = new PropertyStructValue<float>(StyleChanged, 0.05f);
 #endif
         }
+        ~RegularLineStyleText()
+        {
+            RemoveTexture(PrevTextureId);
+        }
+        protected override void StyleChanged()
+        {
+            RemoveTexture(PrevTextureId);
+            PrevTextureId = default;
+            base.StyleChanged();
+        }
+        private static void RemoveTexture(TextureId textureId)
+        {
+            if (textureId.IsDefault)
+                return;
 
-        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, FontStyle, Text, Scale, Angle, Shift, Direction, Spacing);
+            lock (ACITextures)
+            {
+                if (ACITextureCount.TryGetValue(textureId, out var count))
+                {
+                    count -= 1;
+                    if (count <= 0)
+                    {
+                        ACITextureCount.Remove(textureId);
+                        ACITextures.Remove(textureId);
+                    }
+                    else
+                        ACITextureCount[textureId] = count;
+#if DEBUG
+                    SingletonMod<Mod>.Logger.Debug($"Removed ({count}) {textureId}");
+#endif
+                }
+            }
+        }
+        private static void AddTexture(TextureId textureId)
+        {
+            if (textureId.IsDefault)
+                return;
+
+            lock (ACITextures)
+            {
+                if (ACITextureCount.TryGetValue(textureId, out var count))
+                    count += 1;
+                else
+                    count = 1;
+
+                ACITextureCount[textureId] = count;
+#if DEBUG
+                SingletonMod<Mod>.Logger.Debug($"Added ({count}) {textureId}");
+#endif
+            }
+        }
+
+        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, Text, Scale, Angle, Shift, Direction, Spacing);
 
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
@@ -84,20 +138,25 @@ namespace NodeMarkup.Manager
             else if (Direction == TextDirection.BottomToTop)
                 text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
-            var fontName = FontStyle.Value switch
+            var aciTextureId = new TextureId(Font, text, lod == MarkupLOD.LOD0 ? Scale : Scale * 0.2f, Spacing);
+            if (!ACITextures.TryGetValue(aciTextureId, out var aciTexture))
             {
-                UnityEngine.FontStyle.Bold => $"{Font.Value} Bold",
-                UnityEngine.FontStyle.Italic => $"{Font.Value} Italic",
-                UnityEngine.FontStyle.BoldAndItalic => $"{Font.Value} Bold Italic",
-                _ => Font
-            };
-            var aciTexture = RenderHelper.CreateTextTexture(fontName, text, Scale, Spacing);
+                aciTexture = RenderHelper.CreateTextTexture(aciTextureId.font, aciTextureId.text, aciTextureId.scale, aciTextureId.spacing);
+                ACITextures[aciTextureId] = aciTexture;
+            }
 
-            var textureId = (aciTexture.height << 16) + aciTexture.width;
-            if (!Textures.TryGetValue(textureId, out var mainTexture))
+            if (!TextureComparer.Instance.Equals(aciTextureId, PrevTextureId))
+            {
+                RemoveTexture(PrevTextureId);
+                AddTexture(aciTextureId);
+                PrevTextureId = aciTextureId;
+            }
+
+            var mainTextureId = (aciTexture.height << 16) + aciTexture.width;
+            if (!MainTextures.TryGetValue(mainTextureId, out var mainTexture))
             {
                 mainTexture = TextureHelper.CreateTexture(aciTexture.width, aciTexture.height, UnityEngine.Color.white);
-                Textures[textureId] = mainTexture;
+                MainTextures[mainTextureId] = mainTexture;
             }
 
             Material material = RenderHelper.CreateDecalMaterial(mainTexture, aciTexture);
@@ -105,8 +164,9 @@ namespace NodeMarkup.Manager
             var direction = line.Trajectory.Tangent(0.5f);
             var position = line.Trajectory.Position(0.5f) + direction.MakeFlatNormalized().Turn90(true) * Shift;
             var angle = direction.AbsoluteAngle() + (Angle + 90) * Mathf.Deg2Rad;
-            var width = aciTexture.width * Ratio;
-            var height = aciTexture.height * Ratio;
+            var ratio = lod == MarkupLOD.LOD0 ? Ratio : Ratio * 5f;
+            var width = aciTexture.width * ratio;
+            var height = aciTexture.height * ratio;
             var data = new MarkupPartData(position, angle, width, height, Color, material);
 
             var groupData = new MarkupPartGroupData(lod, new MarkupPartData[] { data });
@@ -135,12 +195,7 @@ namespace NodeMarkup.Manager
             fontProperty.CanCollapse = canCollapse;
             fontProperty.Init();
             fontProperty.Font = string.IsNullOrEmpty(Font.Value) ? null : Font.Value;
-            fontProperty.FontStyle = FontStyle;
-            fontProperty.OnValueChanged += (string font, FontStyle style) =>
-                {
-                    Font.Value = font;
-                    FontStyle.Value = style;
-                };
+            fontProperty.OnValueChanged += (string value) => Font.Value = value;
             return fontProperty;
         }
         protected StringPropertyPanel AddTextProperty(UIComponent parent, bool canCollapse)
@@ -148,6 +203,8 @@ namespace NodeMarkup.Manager
             var textProperty = ComponentPool.Get<StringPropertyPanel>(parent, nameof(Text));
             textProperty.Text = Localize.StyleOption_Text;
             textProperty.FieldWidth = 230f;
+            //textProperty.Multyline = true;
+            //textProperty.TextScale = 1f;
             textProperty.CanCollapse = canCollapse;
             textProperty.Init();
             textProperty.Value = Text;
@@ -271,7 +328,6 @@ namespace NodeMarkup.Manager
         {
             var config = base.ToXml();
             Font.ToXml(config);
-            FontStyle.ToXml(config);
             Text.ToXml(config);
             Scale.ToXml(config);
             Angle.ToXml(config);
@@ -285,13 +341,17 @@ namespace NodeMarkup.Manager
         {
             base.FromXml(config, map, invert);
             Font.FromXml(config, string.Empty);
-            FontStyle.FromXml(config, UnityEngine.FontStyle.Normal);
             Text.FromXml(config, string.Empty);
             Scale.FromXml(config, DefaultTextScale);
             Angle.FromXml(config, DefaultObjectAngle);
             Shift.FromXml(config, DefaultObjectShift);
             Direction.FromXml(config, TextDirection.LeftToRight);
             Spacing.FromXml(config, Vector2.zero);
+            if (map.IsMirror ^ invert)
+            {
+                Angle.Value = Angle.Value >= 0 ? Angle.Value - 180f : Angle.Value + 180f;
+                Shift.Value = -Shift.Value;
+            }
         }
 
         public enum TextDirection
@@ -331,6 +391,49 @@ namespace NodeMarkup.Manager
             }
 
             public class TextDirectionSegmented : UIOnceSegmented<TextDirection> { }
+        }
+
+        public struct TextureId
+        {
+            public string font;
+            public string text;
+            public float scale;
+            public Vector2 spacing;
+
+            public TextureId(string font, string text, float scale, Vector2 spacing)
+            {
+                this.font = font;
+                this.text = text;
+                this.scale = scale;
+                this.spacing = spacing;
+            }
+
+            public bool IsDefault => string.IsNullOrEmpty(text) && string.IsNullOrEmpty(font) && scale == default && spacing == default;
+
+            public override string ToString()
+            {
+                return $"Text:\"{text?.Replace("\n", "\\n")}\" Font:\"{font}\" Scale:{scale} Spacing:{spacing}";
+            }
+        }
+        public class TextureComparer : IEqualityComparer<TextureId>
+        {
+            public static TextureComparer Instance { get; } = new TextureComparer();
+            public bool Equals(TextureId x, TextureId y)
+            {
+                return x.text == y.text && x.font == y.font && x.scale == y.scale && x.spacing == y.spacing;
+            }
+
+            public int GetHashCode(TextureId id)
+            {
+                int hash = 17;
+                if (id.text != null)
+                    hash = hash * 31 + id.text.GetHashCode();
+                if (id.font != null)
+                    hash = hash * 31 + id.font.GetHashCode();
+                hash = hash * 31 + id.scale.GetHashCode();
+                hash = hash * 31 + id.spacing.GetHashCode();
+                return hash;
+            }
         }
     }
 }

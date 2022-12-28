@@ -338,30 +338,37 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_Solid))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             LineSolid,
 
             [Description(nameof(Localize.LineStyle_Dashed))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             LineDashed,
 
             [Description(nameof(Localize.LineStyle_DoubleSolid))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             LineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_DoubleDashed))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             LineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             LineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             LineSharkTeeth,
 
             [Description(nameof(Localize.LineStyle_DoubleDashedAsym))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             LineDoubleDashedAsym,
 
             [NotItem]
@@ -369,6 +376,7 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk)]
             LinePavement,
 
             [NotItem]
@@ -376,14 +384,17 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_Prop))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             LineProp,
 
             [Description(nameof(Localize.LineStyle_Tree))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             LineTree,
 
             [Description(nameof(Localize.LineStyle_Text))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             LineText,
 
 
@@ -392,15 +403,18 @@ namespace NodeMarkup.Manager
 
             [Description(nameof(Localize.LineStyle_Network))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             [NotVisible]
             EmptyLine = LineBuffer - 1,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.All)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             [NotVisible]
             LineBuffer = Markup.Item.RegularLine + 0x100 - 1,
 

@@ -164,8 +164,9 @@ namespace NodeMarkup.UI.Editors
         }
         private bool StyleSelector(Style.StyleType styleType)
         {
-            var type = styleType.GetNetworkType();
-            return (Line.PointPair.NetworkType & type) != 0;
+            var networkType = styleType.GetNetworkType();
+            var lineType = styleType.GetLineType();
+            return (Line.PointPair.NetworkType & networkType) != 0 && (Line.PointPair.LineType & lineType) != 0;
         }
         private void AddMoreOptions()
         {

@@ -110,7 +110,7 @@ namespace NodeMarkup.UI.Editors
                 var clipSidewalk = AddClipSidewalkProperty(line);
                 LinePropertiesVisibleAction = () =>
                 {
-                    clipSidewalk.isVisible = line.PointPair.NetworkType == NetworkType.Road;
+                    clipSidewalk.isVisible = line.PointPair.NetworkType == NetworkType.Road && line.Type == LineType.Regular;
                     aligment.isVisible = IsSplit;
                     LineProperties.isVisible = clipSidewalk.isVisibleSelf || aligment.isVisibleSelf;
                 };
@@ -229,7 +229,7 @@ namespace NodeMarkup.UI.Editors
         private void SetupRule(RulePanel rulePanel) => SelectRuleEdge(rulePanel.From.Selector, (_) => SelectRuleEdge(rulePanel.To.Selector, (_) => SetStyle(rulePanel)));
         private bool SetStyle(RulePanel rulePanel)
         {
-            var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(EditObject.PointPair.NetworkType, RegularLineStyle.RegularLineType.Dashed);
+            var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(EditObject.PointPair.NetworkType, EditObject.Type, RegularLineStyle.RegularLineType.Dashed);
             rulePanel.ApplyStyle(style);
             ContentPanel.Content.ScrollToBottom();
             ContentPanel.Content.ScrollIntoViewRecursive(rulePanel);
@@ -302,7 +302,7 @@ namespace NodeMarkup.UI.Editors
         {
             {
                 ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 2f });
-                HoverRulePanel?.Rule.Render(new OverlayData(cameraInfo) { Color = HoverAlpha, Width = 2f });
+                HoverRulePanel?.Rule.Line.RenderRule(HoverRulePanel.Rule, new OverlayData(cameraInfo) { Color = HoverAlpha, Width = 2f });
                 HoverPartEdgeButton?.Value?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }
@@ -327,7 +327,7 @@ namespace NodeMarkup.UI.Editors
             var info = SelectButton?.Position switch
             {
                 EdgePosition.Start => Localize.LineEditor_InfoSelectFrom,
-                EdgePosition.End => Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.LineEditor_InfoSelectTo, Editor.EditObject.PointPair.NetworkType),
+                EdgePosition.End => Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.LineEditor_InfoSelectTo, Editor.EditObject.PointPair.NetworkType, Editor.EditObject.Type),
                 _ => string.Empty,
             };
 
@@ -336,7 +336,7 @@ namespace NodeMarkup.UI.Editors
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo) => PointsSelector.Render(cameraInfo);
     }
 
-    public class LineItemsPanel : ItemsGroupPanel<LineItem, MarkupLine, LineGroup, MarkupLine.LineType>
+    public class LineItemsPanel : ItemsGroupPanel<LineItem, MarkupLine, LineGroup, LineType>
     {
         public override bool GroupingEnable => Settings.GroupLines.value;
         public override int Compare(MarkupLine x, MarkupLine y)
@@ -344,16 +344,16 @@ namespace NodeMarkup.UI.Editors
             int result;
 
             if ((result = x.Start.Enter.CompareTo(y.Start.Enter)) == 0)
-                if ((result = x.Start.Num.CompareTo(y.Start.Num)) == 0)
+                if ((result = x.Start.Index.CompareTo(y.Start.Index)) == 0)
                     if ((result = x.End.Enter.CompareTo(y.End.Enter)) == 0)
-                        result = x.End.Num.CompareTo(y.End.Num);
+                        result = x.End.Index.CompareTo(y.End.Index);
 
             return result;
         }
-        public override int Compare(MarkupLine.LineType x, MarkupLine.LineType y) => x.CompareTo(y);
+        public override int Compare(LineType x, LineType y) => x.CompareTo(y);
 
-        protected override string GroupName(MarkupLine.LineType group) => group.Description();
-        protected override MarkupLine.LineType SelectGroup(MarkupLine editObject) => editObject.Type;
+        protected override string GroupName(LineType group) => group.Description();
+        protected override LineType SelectGroup(MarkupLine editObject) => editObject.Type;
     }
     public class LineItem : EditItem<MarkupLine, LineIcon>
     {
@@ -385,7 +385,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
     }
-    public class LineGroup : EditGroup<MarkupLine.LineType, LineItem, MarkupLine> { }
+    public class LineGroup : EditGroup<LineType, LineItem, MarkupLine> { }
     public class AddRuleButton : ButtonPanel
     {
         public AddRuleButton()

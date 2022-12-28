@@ -12,6 +12,8 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
+using static NodeMarkup.Manager.DistributionTypePanel;
+using static NodeMarkup.Manager.RegularLineStyleText;
 
 namespace NodeMarkup.Manager
 {
@@ -35,7 +37,9 @@ namespace NodeMarkup.Manager
         public PropertyStructValue<float> OffsetBefore { get; }
         public PropertyStructValue<float> OffsetAfter { get; }
 
-        public BaseObjectLineStyle(int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(new Color32(), 0f)
+        public PropertyEnumValue<DistributionType> Distribution { get; }
+
+        public BaseObjectLineStyle(int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(new Color32(), 0f)
         {
             Probability = new PropertyStructValue<int>("P", StyleChanged, probability);
             Step = new PropertyNullableStructValue<float, PropertyStructValue<float>>(new PropertyStructValue<float>("S", null), "S", StyleChanged, step);
@@ -47,6 +51,7 @@ namespace NodeMarkup.Manager
             Elevation = new PropertyVector2Value(StyleChanged, elevation, "EA", "EB");
             OffsetBefore = new PropertyStructValue<float>("OB", StyleChanged, offsetBefore);
             OffsetAfter = new PropertyStructValue<float>("OA", StyleChanged, offsetAfter);
+            Distribution = new PropertyEnumValue<DistributionType>("PT", StyleChanged, distribution);
         }
 
         public override void CopyTo(LineStyle target)
@@ -81,6 +86,7 @@ namespace NodeMarkup.Manager
             components.Add(AddSlopeRangeProperty(parent, true));
             components.Add(AddScaleRangeProperty(parent, true));
             components.Add(AddOffsetProperty(parent, true));
+            components.Add(AddDistributionProperty(parent, true));
         }
 
         protected abstract EditorItem AddPrefabProperty(UIComponent parent, bool canCollapse);
@@ -295,22 +301,19 @@ namespace NodeMarkup.Manager
 
             return offsetProperty;
         }
-        protected FloatPropertyPanel AddOffsetAfterProperty(UIComponent parent, bool canCollapse)
+        protected DistributionTypePanel AddDistributionProperty(UIComponent parent, bool canCollapse)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetAfter));
-            offsetProperty.Text = Localize.StyleOption_OffsetAfter;
-            offsetProperty.Format = Localize.NumberFormat_Meter;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0;
-            offsetProperty.CanCollapse = canCollapse;
-            offsetProperty.Init();
-            offsetProperty.Value = OffsetAfter;
-            offsetProperty.OnValueChanged += (float value) => OffsetAfter.Value = value;
+            var distributionProperty = ComponentPool.Get<DistributionTypePanel>(parent, nameof(Distribution));
+            distributionProperty.Text = Localize.StyleOption_Distribution;
+            distributionProperty.Selector.AutoButtonSize = false;
+            distributionProperty.Selector.ButtonWidth = 57f;
+            distributionProperty.Selector.atlas = NodeMarkupTextures.Atlas;
+            distributionProperty.CanCollapse = canCollapse;
+            distributionProperty.Init();
+            distributionProperty.SelectedObject = Distribution;
+            distributionProperty.OnSelectObjectChanged += (DistributionType value) => Distribution.Value = value;
 
-            return offsetProperty;
+            return distributionProperty;
         }
 
         public override XElement ToXml()
@@ -326,6 +329,7 @@ namespace NodeMarkup.Manager
             Elevation.ToXml(config);
             OffsetBefore.ToXml(config);
             OffsetAfter.ToXml(config);
+            Distribution.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert)
@@ -345,6 +349,12 @@ namespace NodeMarkup.Manager
                 Elevation.Value = new Vector2(elevation, elevation);
             OffsetBefore.FromXml(config, DefaultObjectOffsetBefore);
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
+            Distribution.FromXml(config, DistributionType.FixedSpaceFreeEnd);
+
+            if (map.IsMirror ^ invert)
+            {
+                Shift.Value = -Shift.Value;
+            }
         }
     }
     public abstract class BaseObjectLineStyle<PrefabType, SelectPrefabType> : BaseObjectLineStyle
@@ -354,7 +364,7 @@ namespace NodeMarkup.Manager
         public PropertyPrefabValue<PrefabType> Prefab { get; }
         protected override bool IsValid => IsValidPrefab(Prefab.Value);
 
-        public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
+        public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution)
         {
             Prefab = new PropertyPrefabValue<PrefabType>("PRF", StyleChanged, prefab);
         }
@@ -393,11 +403,58 @@ namespace NodeMarkup.Manager
 
             length = trajectory.Length;
             var stepValue = Step.HasValue ? Step.Value.Value : PrefabSize.x;
-            var count = Mathf.CeilToInt(length / stepValue);
 
-            var items = new MarkupPropItemData[count];
+            MarkupPropItemData[] items;
+            int startIndex;
+            int count;
+            float startOffset;
 
-            var startOffset = (length - (count - 1) * stepValue) * 0.5f;
+            switch (Distribution.Value)
+            {
+                case DistributionType.FixedSpaceFreeEnd:
+                    {
+                        startIndex = 0;
+                        count = Mathf.CeilToInt(length / stepValue);
+                        startOffset = (length - (count - 1) * stepValue) * 0.5f;
+                        items = new MarkupPropItemData[count];
+                        break;
+                    }
+                case DistributionType.FixedSpaceFixedEnd:
+                    {
+                        startIndex = 1;
+                        count = Math.Max(Mathf.RoundToInt(length / stepValue - 1.5f), 0);
+                        startOffset = (length - (count - 1) * stepValue) * 0.5f;
+                        items = new MarkupPropItemData[count + 2];
+
+                        CalculateItem(trajectory, 0f, prefab, ref items[0]);
+                        CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
+                        break;
+                    }
+                case DistributionType.DynamicSpaceFreeEnd:
+                    {
+                        startIndex = 0;
+                        count = Mathf.RoundToInt(length / stepValue);
+                        stepValue = length / count;
+                        startOffset = (length - (count - 1) * stepValue) * 0.5f;
+                        items = new MarkupPropItemData[count];
+                        break;
+                    }
+                case DistributionType.DynamicSpaceFixedEnd:
+                    {
+                        startIndex = 1;
+                        count = Math.Max(Mathf.RoundToInt(length / stepValue) - 1, 0);
+                        stepValue = length / (count + 1);
+                        startOffset = stepValue;
+                        items = new MarkupPropItemData[count + 2];
+
+                        CalculateItem(trajectory, 0f, prefab, ref items[0]);
+                        CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
+                        break;
+                    }
+                default:
+                    return new MarkupPartGroupData(lod);
+            }
+
             for (int i = 0; i < count; i += 1)
             {
                 if (SimulationManager.instance.m_randomizer.Int32(1, 100) > Probability)
@@ -412,42 +469,46 @@ namespace NodeMarkup.Manager
                     t = trajectory.Travel(distance);
                 }
 
-                items[i].Position = trajectory.Position(t);
-
-                var randomShift = SimulationManager.instance.m_randomizer.UInt32((uint)((Shift.Value.y - Shift.Value.x) * 1000f)) * 0.001f;
-                items[i].Position += trajectory.Tangent(t).Turn90(true).MakeFlatNormalized() * (randomShift - (Shift.Value.y - Shift.Value.x) * 0.5f);
-
-                var randomElevation = SimulationManager.instance.m_randomizer.UInt32((uint)((Elevation.Value.y - Elevation.Value.x) * 1000f)) * 0.001f;
-                items[i].Position.y += Elevation.Value.x + randomElevation;
-
-                var minAngle = Mathf.Min(Angle.Value.x, Angle.Value.y);
-                var maxAngle = Mathf.Max(Angle.Value.x, Angle.Value.y);
-                var randomAngle = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(maxAngle - minAngle));
-                items[i].Angle = trajectory.Tangent(t).AbsoluteAngle() + (minAngle + randomAngle) * Mathf.Deg2Rad;
-
-                var randomTilt = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Tilt.Value.y - Tilt.Value.x));
-                items[i].Tilt += (Tilt.Value.x + randomTilt) * Mathf.Deg2Rad;
-
-                if (Slope.HasValue)
-                {
-                    var slopeValue = Slope.Value.Value;
-                    var randomSlope = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(slopeValue.y - slopeValue.x));
-                    items[i].Slope += (slopeValue.x + randomSlope) * Mathf.Deg2Rad;
-                }
-                else
-                {
-                    var direction = trajectory.Tangent(t);
-                    var flatDirection = direction.MakeFlat();
-                    items[i].Slope = Vector3.Angle(flatDirection, direction) * Mathf.Deg2Rad;
-                }
-
-                var randomScale = SimulationManager.instance.m_randomizer.UInt32((uint)((Scale.Value.y - Scale.Value.x) * 1000f)) * 0.001f;
-                items[i].Scale = Scale.Value.x + randomScale;
-
-                CalculateItem(prefab, ref items[i]);
+                CalculateItem(trajectory, t, prefab, ref items[i + startIndex]);
             }
 
             return GetParts(prefab, items);
+        }
+        private void CalculateItem(ITrajectory trajectory, float t, PrefabType prefab, ref MarkupPropItemData item)
+        {
+            item.Position = trajectory.Position(t);
+
+            var randomShift = SimulationManager.instance.m_randomizer.UInt32((uint)((Shift.Value.y - Shift.Value.x) * 1000f)) * 0.001f;
+            item.Position += trajectory.Tangent(t).Turn90(true).MakeFlatNormalized() * (randomShift - (Shift.Value.y - Shift.Value.x) * 0.5f);
+
+            var randomElevation = SimulationManager.instance.m_randomizer.UInt32((uint)((Elevation.Value.y - Elevation.Value.x) * 1000f)) * 0.001f;
+            item.Position.y += Elevation.Value.x + randomElevation;
+
+            var minAngle = Mathf.Min(Angle.Value.x, Angle.Value.y);
+            var maxAngle = Mathf.Max(Angle.Value.x, Angle.Value.y);
+            var randomAngle = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(maxAngle - minAngle));
+            item.Angle = trajectory.Tangent(t).AbsoluteAngle() + (minAngle + randomAngle) * Mathf.Deg2Rad;
+
+            var randomTilt = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Tilt.Value.y - Tilt.Value.x));
+            item.Tilt += (Tilt.Value.x + randomTilt) * Mathf.Deg2Rad;
+
+            if (Slope.HasValue)
+            {
+                var slopeValue = Slope.Value.Value;
+                var randomSlope = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(slopeValue.y - slopeValue.x));
+                item.Slope += (slopeValue.x + randomSlope) * Mathf.Deg2Rad;
+            }
+            else
+            {
+                var direction = trajectory.Tangent(t);
+                var flatDirection = direction.MakeFlat();
+                item.Slope = Vector3.Angle(flatDirection, direction) * Mathf.Deg2Rad;
+            }
+
+            var randomScale = SimulationManager.instance.m_randomizer.UInt32((uint)((Scale.Value.y - Scale.Value.x) * 1000f)) * 0.001f;
+            item.Scale = Scale.Value.x + randomScale;
+
+            CalculateItem(prefab, ref item);
         }
         protected virtual void CalculateItem(PrefabType prefab, ref MarkupPropItemData item) { }
         protected abstract IStyleData GetParts(PrefabType prefab, MarkupPropItemData[] items);
@@ -510,6 +571,7 @@ namespace NodeMarkup.Manager
                 yield return nameof(Prefab);
                 yield return nameof(ColorOption);
                 yield return nameof(Color);
+                yield return nameof(Distribution);
                 yield return nameof(Probability);
                 yield return nameof(Step);
                 yield return nameof(Angle);
@@ -523,13 +585,13 @@ namespace NodeMarkup.Manager
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
-        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter)
+        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution)
         {
             Color.Value = color;
             ColorOption = new PropertyEnumValue<ColorOptionEnum>("CO", StyleChanged, colorOption);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
+        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution);
 
         protected override void CalculateItem(PropInfo prop, ref MarkupPropItemData item)
         {
@@ -651,6 +713,7 @@ namespace NodeMarkup.Manager
             get
             {
                 yield return nameof(Prefab);
+                yield return nameof(Distribution);
                 yield return nameof(Probability);
                 yield return nameof(Step);
                 yield return nameof(Angle);
@@ -664,9 +727,9 @@ namespace NodeMarkup.Manager
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
-        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter) { }
+        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution) { }
 
-        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter);
+        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution);
 
         protected override IStyleData GetParts(TreeInfo tree, MarkupPropItemData[] items)
         {
@@ -675,5 +738,48 @@ namespace NodeMarkup.Manager
 
         protected override bool IsValidPrefab(TreeInfo info) => info != null;
         protected override Func<TreeInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
+    }
+
+    public enum DistributionType
+    {
+        [Description(nameof(Localize.StyleOption_DistributionFixedFree))]
+        [Sprite(nameof(NodeMarkupTextures.FixedFreeButtonIcons))]
+        FixedSpaceFreeEnd,
+
+        [Description(nameof(Localize.StyleOption_DistributionFixedFixed))]
+        [Sprite(nameof(NodeMarkupTextures.FixedFixedButtonIcons))]
+        FixedSpaceFixedEnd,
+
+        [Description(nameof(Localize.StyleOption_DistributionDynamicFree))]
+        [Sprite(nameof(NodeMarkupTextures.DynamicFreeButtonIcons))]
+        DynamicSpaceFreeEnd,
+
+        [Description(nameof(Localize.StyleOption_DistributionDynamicFixed))]
+        [Sprite(nameof(NodeMarkupTextures.DynamicFixedButtonIcons))]
+        DynamicSpaceFixedEnd,
+    }
+    public class DistributionTypePanel : EnumOncePropertyPanel<DistributionType, DistributionTypeSegmented>
+    {
+        protected override string GetDescription(DistributionType value) => value.Description();
+        protected override bool IsEqual(DistributionType first, DistributionType second) => first == second;
+
+        protected override void FillItems(Func<DistributionType, bool> selector)
+        {
+            Selector.StopLayout();
+            foreach (var value in GetValues())
+            {
+                if (selector?.Invoke(value) != false)
+                {
+                    var sprite = value.Sprite();
+                    if (string.IsNullOrEmpty(sprite))
+                        Selector.AddItem(value, GetDescription(value));
+                    else
+                        Selector.AddItem(value, GetDescription(value), NodeMarkupTextures.Atlas, sprite);
+                }
+            }
+            Selector.StartLayout();
+        }
+
+        public class DistributionTypeSegmented : UIOnceSegmented<DistributionType> { }
     }
 }

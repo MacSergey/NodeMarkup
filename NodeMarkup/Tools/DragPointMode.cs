@@ -22,8 +22,8 @@ namespace NodeMarkup.Tools
         {
             var normal = DragPoint.Enter.CornerDir.Turn90(true);
             var position = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
-            Line2.Intersect(XZ(DragPoint.Position), XZ(DragPoint.Position + DragPoint.Enter.CornerDir), XZ(position), XZ(position + normal), out float offsetChange, out _);
-            DragPoint.Offset.Value = (DragPoint.Offset + offsetChange * Mathf.Sin(DragPoint.Enter.CornerAndNormalAngle)).RoundToNearest(0.01f);
+            Line2.Intersect(XZ(DragPoint.MarkerPosition), XZ(DragPoint.MarkerPosition + DragPoint.Enter.CornerDir), XZ(position), XZ(position + normal), out float offsetChange, out _);
+            DragPoint.Offset.Value = (DragPoint.Offset + offsetChange * Mathf.Sin(DragPoint.Enter.CornerAndNormalAngle)).RoundToNearest(Utility.OnlyShiftIsPressed ? 0.1f : 0.01f);
             Panel.SelectPoint(DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)

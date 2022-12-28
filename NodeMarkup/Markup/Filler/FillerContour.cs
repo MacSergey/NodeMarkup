@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static NodeMarkup.Manager.FillerContour;
 
 namespace NodeMarkup.Manager
 {
@@ -341,9 +342,9 @@ namespace NodeMarkup.Manager
                 }
                 else if (part.Line.IsEnterLine)
                 {
-                    if (line.Start.Enter == part.Line.Start.Enter && CheckEnter(line.Start.Num, part.Line.Start.Num, part.Line.End.Num))
+                    if (line.Start.Enter == part.Line.Start.Enter && CheckEnter(line.Start.Index, part.Line.Start.Index, part.Line.End.Index))
                         Set(0, true);
-                    if (line.End.Enter == part.Line.Start.Enter && CheckEnter(line.End.Num, part.Line.Start.Num, part.Line.End.Num))
+                    if (line.End.Enter == part.Line.Start.Enter && CheckEnter(line.End.Index, part.Line.Start.Index, part.Line.End.Index))
                         Set(1, true);
                 }
             }
@@ -367,8 +368,8 @@ namespace NodeMarkup.Manager
         {
             if (VertexCount > 2 && First is EnterFillerVertexBase firstVertex && firstVertex.Point == point)
             {
-                minNum = point.Num;
-                maxNum = point.Num;
+                minNum = point.Index;
+                maxNum = point.Index;
             }
             else
             {
@@ -379,12 +380,12 @@ namespace NodeMarkup.Manager
                 {
                     if (vertex is EnterFillerVertexBase enterVertex && enterVertex.Point.Enter == point.Enter)
                     {
-                        var n = enterVertex.Point.Num;
+                        var n = enterVertex.Point.Index;
 
-                        if (minNum < n && n < point.Num)
+                        if (minNum < n && n < point.Index)
                             minNum = n;
 
-                        if (maxNum > n && n > point.Num)
+                        if (maxNum > n && n > point.Index)
                             maxNum = n;
                     }
                 }
@@ -398,8 +399,8 @@ namespace NodeMarkup.Manager
                     SupportPoints[i + 1] is EnterFillerVertexBase enterVertex2 &&
                     enterVertex1.Enter == point.Enter &&
                     enterVertex2.Enter == point.Enter &&
-                    Math.Min(enterVertex1.Point.Num, enterVertex2.Point.Num) <= point.Num &&
-                    point.Num <= Math.Max(enterVertex1.Point.Num, enterVertex2.Point.Num))
+                    Math.Min(enterVertex1.Point.Index, enterVertex2.Point.Index) <= point.Index &&
+                    point.Index <= Math.Max(enterVertex1.Point.Index, enterVertex2.Point.Index))
                     return false;
             }
 
@@ -515,8 +516,17 @@ namespace NodeMarkup.Manager
 
         public void Render(OverlayData data)
         {
-            foreach (var part in Parts)
-                part.Trajectory.Render(data);
+            if (IsComplite)
+            {
+                data.AlphaBlend = false;
+                var triangles = Triangulator.TriangulateSimple(TrajectoriesRaw, out var points, minAngle: 5, maxLength: 10f);
+                points.RenderArea(triangles, data);
+            }
+            else
+            {
+                foreach (var part in Parts)
+                    part.Trajectory.Render(data);
+            }
         }
 
         private class Comparer : IEqualityComparer<IFillerVertex>
