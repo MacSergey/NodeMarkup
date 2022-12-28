@@ -69,6 +69,12 @@ namespace NodeMarkup.Utilities
         public static string TopToBottomButtonIcons { get; } = nameof(TopToBottomButtonIcons);
         public static string BottomToTopButtonIcons { get; } = nameof(BottomToTopButtonIcons);
 
+
+        public static string DynamicFixedButtonIcons { get; } = nameof(DynamicFixedButtonIcons);
+        public static string DynamicFreeButtonIcons { get; } = nameof(DynamicFreeButtonIcons);
+        public static string FixedFixedButtonIcons { get; } = nameof(FixedFixedButtonIcons);
+        public static string FixedFreeButtonIcons { get; } = nameof(FixedFreeButtonIcons);
+
         static NodeMarkupTextures()
         {
             var spriteParams = new Dictionary<string, RectOffset>();
@@ -125,6 +131,11 @@ namespace NodeMarkup.Utilities
             spriteParams[LeftToRightButtonIcons] = new RectOffset();
             spriteParams[TopToBottomButtonIcons] = new RectOffset();
             spriteParams[BottomToTopButtonIcons] = new RectOffset();
+
+            spriteParams[DynamicFixedButtonIcons] = new RectOffset();
+            spriteParams[DynamicFreeButtonIcons] = new RectOffset();
+            spriteParams[FixedFixedButtonIcons] = new RectOffset();
+            spriteParams[FixedFreeButtonIcons] = new RectOffset();
 
             //ListItem
             spriteParams[ListItemBackground] = new RectOffset(4, 4, 4, 4);

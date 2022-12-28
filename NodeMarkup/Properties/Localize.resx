@@ -1875,7 +1875,19 @@ underground mode</value>
   <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
     <value>Select endpoint to create a lane</value>
   </data>
-  <data name="StyleOption_FixedEnds" xml:space="preserve">
-    <value>Fixed ends</value>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>Distribution</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>Dynamic space and fixed ends</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>Dynamic space and free ends</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>Fixed space and fixed ends</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>Fixed space and free ends</value>
   </data>
 </root>

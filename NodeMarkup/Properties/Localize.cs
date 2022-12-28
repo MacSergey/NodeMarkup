@@ -2621,8 +2621,28 @@ namespace NodeMarkup
 		public static string Tool_InfoSelectLaneEndPoint => LocaleManager.GetString("Tool_InfoSelectLaneEndPoint", Culture);
 
 		/// <summary>
-		/// Fixed ends
+		/// Distribution
 		/// </summary>
-		public static string StyleOption_FixedEnds => LocaleManager.GetString("StyleOption_FixedEnds", Culture);
+		public static string StyleOption_Distribution => LocaleManager.GetString("StyleOption_Distribution", Culture);
+
+		/// <summary>
+		/// Dynamic space and fixed ends
+		/// </summary>
+		public static string StyleOption_DistributionDynamicFixed => LocaleManager.GetString("StyleOption_DistributionDynamicFixed", Culture);
+
+		/// <summary>
+		/// Dynamic space and free ends
+		/// </summary>
+		public static string StyleOption_DistributionDynamicFree => LocaleManager.GetString("StyleOption_DistributionDynamicFree", Culture);
+
+		/// <summary>
+		/// Fixed space and fixed ends
+		/// </summary>
+		public static string StyleOption_DistributionFixedFixed => LocaleManager.GetString("StyleOption_DistributionFixedFixed", Culture);
+
+		/// <summary>
+		/// Fixed space and free ends
+		/// </summary>
+		public static string StyleOption_DistributionFixedFree => LocaleManager.GetString("StyleOption_DistributionFixedFree", Culture);
 	}
 }
