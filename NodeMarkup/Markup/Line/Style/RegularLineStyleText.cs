@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.UI;
@@ -6,6 +7,7 @@ using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
@@ -14,7 +16,9 @@ namespace NodeMarkup.Manager
 {
     public class RegularLineStyleText : RegularLineStyle, IColorStyle
     {
-        private static Dictionary<int, Texture2D> Textures { get; } = new Dictionary<int, Texture2D>();
+        private static Dictionary<TextureId, Texture2D> ACITextures { get; } = new Dictionary<TextureId, Texture2D>(TextureComparer.Instance);
+        private static Dictionary<TextureId, int> ACITextureCount { get; } = new Dictionary<TextureId, int>();
+        private static Dictionary<int, Texture2D> MainTextures { get; } = new Dictionary<int, Texture2D>();
 
         public override StyleType Type => StyleType.LineText;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0/* | MarkupLOD.LOD1*/;
@@ -27,6 +31,8 @@ namespace NodeMarkup.Manager
         private PropertyStructValue<float> Angle { get; }
         private PropertyEnumValue<TextDirection> Direction { get; }
         private PropertyVector2Value Spacing { get; }
+
+        private TextureId PrevTextureId { get; set; }
 
 #if DEBUG
         private PropertyStructValue<float> Ratio { get; }
@@ -67,6 +73,57 @@ namespace NodeMarkup.Manager
             Ratio = new PropertyStructValue<float>(StyleChanged, 0.05f);
 #endif
         }
+        ~RegularLineStyleText()
+        {
+            RemoveTexture(PrevTextureId);
+        }
+        protected override void StyleChanged()
+        {
+            RemoveTexture(PrevTextureId);
+            PrevTextureId = default;
+            base.StyleChanged();
+        }
+        private static void RemoveTexture(TextureId textureId)
+        {
+            if (textureId.IsDefault)
+                return;
+
+            lock (ACITextures)
+            {
+                if (ACITextureCount.TryGetValue(textureId, out var count))
+                {
+                    count -= 1;
+                    if (count <= 0)
+                    {
+                        ACITextureCount.Remove(textureId);
+                        ACITextures.Remove(textureId);
+                    }
+                    else
+                        ACITextureCount[textureId] = count;
+#if DEBUG
+                    SingletonMod<Mod>.Logger.Debug($"Removed ({count}) {textureId}");
+#endif
+                }
+            }
+        }
+        private static void AddTexture(TextureId textureId)
+        {
+            if (textureId.IsDefault)
+                return;
+
+            lock (ACITextures)
+            {
+                if (ACITextureCount.TryGetValue(textureId, out var count))
+                    count += 1;
+                else
+                    count = 1;
+
+                ACITextureCount[textureId] = count;
+#if DEBUG
+                SingletonMod<Mod>.Logger.Debug($"Added ({count}) {textureId}");
+#endif
+            }
+        }
 
         public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, Text, Scale, Angle, Shift, Direction, Spacing);
 
@@ -81,13 +138,25 @@ namespace NodeMarkup.Manager
             else if (Direction == TextDirection.BottomToTop)
                 text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
-            var aciTexture = RenderHelper.CreateTextTexture(Font, text, Scale, Spacing);
+            var aciTextureId = new TextureId(Font, text, Scale, Spacing);
+            if (!ACITextures.TryGetValue(aciTextureId, out var aciTexture))
+            {
+                aciTexture = RenderHelper.CreateTextTexture(Font, text, Scale, Spacing);
+                ACITextures[aciTextureId] = aciTexture;
+            }
 
-            var textureId = (aciTexture.height << 16) + aciTexture.width;
-            if (!Textures.TryGetValue(textureId, out var mainTexture))
+            if (!TextureComparer.Instance.Equals(aciTextureId, PrevTextureId))
+            {
+                RemoveTexture(PrevTextureId);
+                AddTexture(aciTextureId);
+                PrevTextureId = aciTextureId;
+            }
+
+            var mainTextureId = (aciTexture.height << 16) + aciTexture.width;
+            if (!MainTextures.TryGetValue(mainTextureId, out var mainTexture))
             {
                 mainTexture = TextureHelper.CreateTexture(aciTexture.width, aciTexture.height, UnityEngine.Color.white);
-                Textures[textureId] = mainTexture;
+                MainTextures[mainTextureId] = mainTexture;
             }
 
             Material material = RenderHelper.CreateDecalMaterial(mainTexture, aciTexture);
@@ -101,6 +170,10 @@ namespace NodeMarkup.Manager
 
             var groupData = new MarkupPartGroupData(lod, new MarkupPartData[] { data });
             return groupData;
+        }
+        private void GetTextures()
+        {
+
         }
 
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
@@ -277,7 +350,7 @@ namespace NodeMarkup.Manager
             Shift.FromXml(config, DefaultObjectShift);
             Direction.FromXml(config, TextDirection.LeftToRight);
             Spacing.FromXml(config, Vector2.zero);
-            if(map.IsMirror ^ invert)
+            if (map.IsMirror ^ invert)
             {
                 Angle.Value = Angle.Value >= 0 ? Angle.Value - 180f : Angle.Value + 180f;
                 Shift.Value = -Shift.Value;
@@ -321,6 +394,49 @@ namespace NodeMarkup.Manager
             }
 
             public class TextDirectionSegmented : UIOnceSegmented<TextDirection> { }
+        }
+
+        public struct TextureId
+        {
+            public string font;
+            public string text;
+            public float scale;
+            public Vector2 spacing;
+
+            public TextureId(string font, string text, float scale, Vector2 spacing)
+            {
+                this.font = font;
+                this.text = text;
+                this.scale = scale;
+                this.spacing = spacing;
+            }
+
+            public bool IsDefault => string.IsNullOrEmpty(text) && string.IsNullOrEmpty(font) && scale == default && spacing == default;
+
+            public override string ToString()
+            {
+                return $"Text:\"{text?.Replace("\n", "\\n")}\" Font:\"{font}\" Scale:{scale} Spacing:{spacing}";
+            }
+        }
+        public class TextureComparer : IEqualityComparer<TextureId>
+        {
+            public static TextureComparer Instance { get; } = new TextureComparer();
+            public bool Equals(TextureId x, TextureId y)
+            {
+                return x.text == y.text && x.font == y.font && x.scale == y.scale && x.spacing == y.spacing;
+            }
+
+            public int GetHashCode(TextureId id)
+            {
+                int hash = 17;
+                if (id.text != null)
+                    hash = hash * 31 + id.text.GetHashCode();
+                if (id.font != null)
+                    hash = hash * 31 + id.font.GetHashCode();
+                hash = hash * 31 + id.scale.GetHashCode();
+                hash = hash * 31 + id.spacing.GetHashCode();
+                return hash;
+            }
         }
     }
 }
