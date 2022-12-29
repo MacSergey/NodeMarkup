@@ -881,7 +881,8 @@ namespace NodeMarkup.Tools
         PointsOrder = 256,
         DragPoint = 512,
 
-        MakeItem = MakeLine | MakeCrosswalk
+        MakeItem = MakeLine | MakeCrosswalk,
+        Order = PasteEntersOrder | EditEntersOrder | ApplyIntersectionTemplateOrder | PointsOrder,
     }
     public interface IShortcutMode
     {

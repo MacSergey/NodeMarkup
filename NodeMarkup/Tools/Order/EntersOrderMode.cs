@@ -1,4 +1,4 @@
-﻿using ColossalFramework.Math;
+﻿using ColossalFramework;
 using ColossalFramework.UI;
 using ModsCommon;
 using ModsCommon.UI;
@@ -7,14 +7,21 @@ using NodeMarkup.Manager;
 using NodeMarkup.UI;
 using NodeMarkup.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Tools
 {
-    public abstract class BaseEntersOrderToolMode : BaseOrderToolMode<SourceEnter>
+    public abstract class BaseEntersOrderToolMode : BaseOrderToolMode<SourceEnter>, IShortcutMode
     {
+        public static NodeMarkupShortcut TurnRightShortcut { get; } = new NodeMarkupShortcut(nameof(TurnRightShortcut), nameof(TurnRightShortcut), SavedInputKey.Encode(KeyCode.RightArrow, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.TurnRightClick(), ToolModeType.Order);
+        public static NodeMarkupShortcut TurnLeftShortcut { get; } = new NodeMarkupShortcut(nameof(TurnLeftShortcut), nameof(TurnLeftShortcut), SavedInputKey.Encode(KeyCode.LeftArrow, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.TurnLeftClick(), ToolModeType.Order);
+        public static NodeMarkupShortcut FlipUpShortcut { get; } = new NodeMarkupShortcut(nameof(FlipUpShortcut), nameof(FlipUpShortcut), SavedInputKey.Encode(KeyCode.UpArrow, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.FlipClick(), ToolModeType.Order);
+        public static NodeMarkupShortcut FlipDownShortcut { get; } = new NodeMarkupShortcut(nameof(FlipDownShortcut), nameof(FlipDownShortcut), SavedInputKey.Encode(KeyCode.DownArrow, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.FlipClick(), ToolModeType.Order);
+        public static NodeMarkupShortcut ApplyShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyShortcut), nameof(ApplyShortcut), SavedInputKey.Encode(KeyCode.Return, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.ApplyClick(), ToolModeType.Order);
+        public static NodeMarkupShortcut ResetShortcut { get; } = new NodeMarkupShortcut(nameof(ResetShortcut), nameof(ResetShortcut), SavedInputKey.Encode(KeyCode.Backspace, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.ResetClick(), ToolModeType.Order);
+
         private GUIButton TurnLeftButton { get; }
         private GUIButton FlipButton { get; }
         private GUIButton TurnRightButton { get; }
@@ -24,6 +31,20 @@ namespace NodeMarkup.Tools
 
         protected override string InfoDrag => Localize.Tool_InfoRoadsDrag;
         protected override string InfoDrop => Localize.Tool_InfoRoadsDrop;
+
+
+        public IEnumerable<Shortcut> Shortcuts
+        {
+            get
+            {
+                yield return TurnRightShortcut;
+                yield return TurnLeftShortcut;
+                yield return FlipUpShortcut;
+                yield return FlipDownShortcut;
+                yield return ApplyShortcut;
+                yield return ResetShortcut;
+            }
+        }
 
         public BaseEntersOrderToolMode()
         {
@@ -105,18 +126,18 @@ namespace NodeMarkup.Tools
                 var mouse = SingletonTool<NodeMarkupTool>.Instance.MousePositionScaled;
 
                 if (TurnLeftButton.CheckHover(mouse))
-                    return Localize.Tool_InfoTurnСounterClockwise;
+                    return $"{Localize.Tool_InfoTurnСounterClockwise} ({TurnLeftShortcut})";
                 else if (FlipButton.CheckHover(mouse))
-                    return Localize.Tool_InfoInverseOrder;
+                    return $"{Localize.Tool_InfoInverseOrder} ({FlipUpShortcut}/{FlipDownShortcut})";
                 else if (TurnRightButton.CheckHover(mouse))
-                    return Localize.Tool_InfoTurnClockwise;
+                    return $"{Localize.Tool_InfoTurnClockwise} ({TurnRightShortcut})";
 
                 else if (ApplyButton.CheckHover(mouse))
-                    return Localize.Tool_InfoPasteApply;
+                    return $"{Localize.Tool_InfoPasteApply} ({ApplyShortcut})";
                 else if (NotApplyButton.CheckHover(mouse))
                     return Localize.Tool_infoPasteNotApply;
                 else if (ResetButton.CheckHover(mouse))
-                    return Localize.Tool_InfoPasteReset;
+                    return $"{Localize.Tool_InfoPasteReset} ({ResetShortcut})";
             }
 
             return base.GetToolInfo();
@@ -141,6 +162,7 @@ namespace NodeMarkup.Tools
         }
         protected abstract string EndCaption { get; }
         protected abstract string EndMessage { get; }
+
         public override void OnSecondaryMouseClicked() => Exit();
         public override bool OnEscape()
         {
@@ -212,7 +234,7 @@ namespace NodeMarkup.Tools
             return baskets;
         }
 
-        
+
     }
 
     public class PasteEntersOrderToolMode : BaseEntersOrderToolMode
