@@ -25,8 +25,12 @@ namespace NodeMarkup.API
     {
         public ushort Id { get; }
         public int EntranceCount { get; }
-
         public IEnumerable<IEntranceData> Entrances { get; }
+
+        public bool AddRegularLine(IPointData startPoint, IPointData endPoint, out ILineData line);
+        public bool AddStopLine(IPointData startPoint, IPointData endPoint, out ILineData line);
+        public bool AddNormalLine(IPointData startPoint, IPointData endPoint, out ILineData line);
+        public bool AddLaneLine(IPointData startPoint, IPointData endPoint, out ILineData line);
     }
     public interface ISegmentMarkingData
     {
@@ -41,6 +45,22 @@ namespace NodeMarkup.API
         public IEnumerable<IPointData> Points { get; }
     }
     public interface IPointData
+    {
+
+    }
+    public interface ILineData
+    {
+
+    }
+    public interface IRuleData
+    {
+
+    }
+    public interface IFillerData
+    {
+
+    }
+    public interface ICrosswalkData
     {
 
     }
