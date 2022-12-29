@@ -358,9 +358,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Winkel</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Abstand der Linien</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Klicken um mit der Füllung zu beginnen</value>
   </data>

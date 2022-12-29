@@ -359,9 +359,6 @@ créer ou supprimer une ligne</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Angle</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Écart depuis la ligne</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Cliquez pour commencer un remplisseur</value>
   </data>

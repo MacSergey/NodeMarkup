@@ -348,9 +348,6 @@
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>角度</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>オフセット(ライン側)</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>このポイントから塗り潰しを開始</value>
   </data>

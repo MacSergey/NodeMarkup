@@ -358,9 +358,6 @@ Clicca per modificare la segnaletica orizzontale</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Angolo</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Spostamento dalle linee</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Clicca per iniziare la creazione di un riempimento</value>
   </data>

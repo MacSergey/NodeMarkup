@@ -363,6 +363,7 @@ namespace NodeMarkup.Manager
     {
         public PropertyPrefabValue<PrefabType> Prefab { get; }
         protected override bool IsValid => IsValidPrefab(Prefab.Value);
+        protected abstract string AssetPropertyName { get; }
 
         public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution)
         {
@@ -516,7 +517,7 @@ namespace NodeMarkup.Manager
         protected sealed override EditorItem AddPrefabProperty(UIComponent parent, bool canCollapse)
         {
             var prefabProperty = ComponentPool.Get<SelectPrefabType>(parent, nameof(Prefab));
-            prefabProperty.Text = Localize.StyleOption_AssetProp;
+            prefabProperty.Text = AssetPropertyName;
             prefabProperty.PrefabSelectPredicate = IsValidPrefab;
             prefabProperty.PrefabSortPredicate = GetSortPredicate();
             prefabProperty.CanCollapse = canCollapse;
@@ -560,6 +561,7 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.LineProp;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
+        protected override string AssetPropertyName => Localize.StyleOption_AssetProp;
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
@@ -706,6 +708,7 @@ namespace NodeMarkup.Manager
         public override StyleType Type => StyleType.LineTree;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
+        protected override string AssetPropertyName => Localize.StyleOption_AssetTree;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList

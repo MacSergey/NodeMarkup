@@ -348,9 +348,6 @@ Apăsați pentru a modifica marcajele</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Unghi</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Offset între linii</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Apăsați pentru a crea o umplutură</value>
   </data>

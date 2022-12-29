@@ -348,9 +348,6 @@
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>角度</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>从边线回缩</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>点击来开始创建填充</value>
   </data>

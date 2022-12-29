@@ -348,9 +348,6 @@
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>회전각</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>선으로부터 오프셋</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>클릭해 필러 생성을 시작하세요</value>
   </data>

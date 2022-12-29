@@ -349,9 +349,6 @@ een lijn te creëren of te verwijderen</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Hoek</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Afstand tot lijnen</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Klik om te beginnen met het maken van een opvulling</value>
   </data>

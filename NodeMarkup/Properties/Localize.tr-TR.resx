@@ -348,9 +348,6 @@ Yeni işaretler eskilerinin yerine geçecektir.</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Açı</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Şeritleri ayarla</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Şeridi silmek veya oluşturmak için nokta seçin</value>
   </data>

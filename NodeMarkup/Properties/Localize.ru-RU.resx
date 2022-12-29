@@ -360,9 +360,6 @@
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Угол</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Отступ от линий</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Нажмите для начала создания заполнителя</value>
   </data>

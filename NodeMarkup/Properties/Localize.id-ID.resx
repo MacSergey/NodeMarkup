@@ -358,9 +358,6 @@ Klik untuk mengedit markah</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Sudut</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Pergeseran dari garis</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Klik untuk membuat isian</value>
   </data>
