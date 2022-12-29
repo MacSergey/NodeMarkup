@@ -69,14 +69,9 @@ namespace NodeMarkup.Tools
             }
         }
 
-        //public override void OnMouseDown(Event e)
-        //{
-        //    if (!IsSelectPoint && IsHoverPoint && Utility.CtrlIsPressed)
-        //        Tool.SetMode(ToolModeType.DragPoint);
-        //}
         public override void OnMouseDrag(Event e)
         {
-            if (!IsSelectPoint && IsHoverPoint)
+            if (!IsSelectPoint && IsHoverPoint && HoverPoint.Type == MarkupPoint.PointType.Enter)
                 Tool.SetMode(ToolModeType.DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)
