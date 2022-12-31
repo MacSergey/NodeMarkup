@@ -846,10 +846,10 @@ namespace NodeMarkup.Manager
 
         public ZigZagLineStyle(Color32 color, float width, float step, float offset, bool side, bool startFrom) : base(color, width)
         {
-            Step = new PropertyStructValue<float>("A", StyleChanged, step);
-            Offset = new PropertyStructValue<float>("B", StyleChanged, offset);
-            Side = new PropertyBoolValue("S", StyleChanged, side);
-            StartFrom = new PropertyBoolValue("SA", StyleChanged, startFrom);
+            Step = new PropertyStructValue<float>("S", StyleChanged, step);
+            Offset = new PropertyStructValue<float>("O", StyleChanged, offset);
+            Side = new PropertyBoolValue("SD", StyleChanged, side);
+            StartFrom = new PropertyBoolValue("SF", StyleChanged, startFrom);
         }
 
         public override RegularLineStyle CopyLineStyle() => new ZigZagLineStyle(Color, Width, Step, Offset, Side, StartFrom);

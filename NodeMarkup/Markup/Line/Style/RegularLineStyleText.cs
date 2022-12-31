@@ -16,8 +16,8 @@ namespace NodeMarkup.Manager
 {
     public class RegularLineStyleText : RegularLineStyle, IColorStyle
     {
-        private static Dictionary<TextureId, Texture2D> ACITextures { get; } = new Dictionary<TextureId, Texture2D>(TextureComparer.Instance);
-        private static Dictionary<TextureId, int> ACITextureCount { get; } = new Dictionary<TextureId, int>();
+        private static Dictionary<TextureId, TextureData> TextTextures { get; } = new Dictionary<TextureId, TextureData>(TextureComparer.Instance);
+        private static Dictionary<TextureId, int> TextTextureCount { get; } = new Dictionary<TextureId, int>();
         private static Dictionary<int, Texture2D> MainTextures { get; } = new Dictionary<int, Texture2D>();
 
         public override StyleType Type => StyleType.LineText;
@@ -31,6 +31,7 @@ namespace NodeMarkup.Manager
         private PropertyStructValue<float> Angle { get; }
         private PropertyEnumValue<TextDirection> Direction { get; }
         private PropertyVector2Value Spacing { get; }
+        private PropertyEnumValue<TextAlignment> Alignment { get; }
 
         private TextureId PrevTextureId { get; set; }
 
@@ -51,6 +52,7 @@ namespace NodeMarkup.Manager
                 yield return nameof(Scale);
                 yield return nameof(Direction);
                 yield return nameof(Spacing);
+                yield return nameof(Alignment);
                 yield return nameof(Shift);
                 yield return nameof(Angle);
 #if DEBUG
@@ -60,7 +62,7 @@ namespace NodeMarkup.Manager
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
-        public RegularLineStyleText(Color32 color, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing) : base(color, default)
+        public RegularLineStyleText(Color32 color, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing, TextAlignment alignment, float offset) : base(color, default)
         {
             Text = new PropertyStringValue("TX", StyleChanged, text);
             Font = new PropertyStringValue("F", StyleChanged, font);
@@ -69,6 +71,7 @@ namespace NodeMarkup.Manager
             Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
             Direction = new PropertyEnumValue<TextDirection>("V", StyleChanged, direction);
             Spacing = new PropertyVector2Value(StyleChanged, spacing, "SPC", "SPL");
+            Alignment = new PropertyEnumValue<TextAlignment>("AL", StyleChanged, alignment);
 #if DEBUG
             Ratio = new PropertyStructValue<float>(StyleChanged, 0.05f);
 #endif
@@ -88,18 +91,18 @@ namespace NodeMarkup.Manager
             if (textureId.IsDefault)
                 return;
 
-            lock (ACITextures)
+            lock (TextTextures)
             {
-                if (ACITextureCount.TryGetValue(textureId, out var count))
+                if (TextTextureCount.TryGetValue(textureId, out var count))
                 {
                     count -= 1;
                     if (count <= 0)
                     {
-                        ACITextureCount.Remove(textureId);
-                        ACITextures.Remove(textureId);
+                        TextTextureCount.Remove(textureId);
+                        TextTextures.Remove(textureId);
                     }
                     else
-                        ACITextureCount[textureId] = count;
+                        TextTextureCount[textureId] = count;
 #if DEBUG
                     SingletonMod<Mod>.Logger.Debug($"Removed ({count}) {textureId}");
 #endif
@@ -111,21 +114,21 @@ namespace NodeMarkup.Manager
             if (textureId.IsDefault)
                 return;
 
-            lock (ACITextures)
+            lock (TextTextures)
             {
-                if (ACITextureCount.TryGetValue(textureId, out var count))
+                if (TextTextureCount.TryGetValue(textureId, out var count))
                     count += 1;
                 else
                     count = 1;
 
-                ACITextureCount[textureId] = count;
+                TextTextureCount[textureId] = count;
 #if DEBUG
                 SingletonMod<Mod>.Logger.Debug($"Added ({count}) {textureId}");
 #endif
             }
         }
 
-        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, Text, Scale, Angle, Shift, Direction, Spacing);
+        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, Text, Scale, Angle, Shift, Direction, Spacing, Alignment, Offset);
 
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
@@ -139,10 +142,11 @@ namespace NodeMarkup.Manager
                 text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
             var aciTextureId = new TextureId(Font, text, lod == MarkupLOD.LOD0 ? Scale : Scale * 0.2f, Spacing);
-            if (!ACITextures.TryGetValue(aciTextureId, out var aciTexture))
+            if (!TextTextures.TryGetValue(aciTextureId, out var textureData))
             {
-                aciTexture = RenderHelper.CreateTextTexture(aciTextureId.font, aciTextureId.text, aciTextureId.scale, aciTextureId.spacing);
-                ACITextures[aciTextureId] = aciTexture;
+                var textTexture = RenderHelper.CreateTextTexture(aciTextureId.font, aciTextureId.text, aciTextureId.scale, aciTextureId.spacing, out var textWidth, out var textHeight);
+                textureData = new TextureData(textTexture, textWidth, textHeight);
+                TextTextures[aciTextureId] = textureData;
             }
 
             if (!TextureComparer.Instance.Equals(aciTextureId, PrevTextureId))
@@ -152,21 +156,32 @@ namespace NodeMarkup.Manager
                 PrevTextureId = aciTextureId;
             }
 
-            var mainTextureId = (aciTexture.height << 16) + aciTexture.width;
+            var mainTextureId = (textureData.texture.height << 16) + textureData.texture.width;
             if (!MainTextures.TryGetValue(mainTextureId, out var mainTexture))
             {
-                mainTexture = TextureHelper.CreateTexture(aciTexture.width, aciTexture.height, UnityEngine.Color.white);
+                mainTexture = TextureHelper.CreateTexture(textureData.texture.width, textureData.texture.height, UnityEngine.Color.white);
                 MainTextures[mainTextureId] = mainTexture;
             }
 
-            Material material = RenderHelper.CreateDecalMaterial(mainTexture, aciTexture);
+            Material material = RenderHelper.CreateDecalMaterial(mainTexture, textureData.texture);
 
-            var direction = line.Trajectory.Tangent(0.5f);
-            var position = line.Trajectory.Position(0.5f) + direction.MakeFlatNormalized().Turn90(true) * Shift;
-            var angle = direction.AbsoluteAngle() + (Angle + 90) * Mathf.Deg2Rad;
             var ratio = lod == MarkupLOD.LOD0 ? Ratio : Ratio * 5f;
-            var width = aciTexture.width * ratio;
-            var height = aciTexture.height * ratio;
+            var offset = 0.5f * (textureData.width * ratio * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * Angle)) + textureData.height * ratio * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * Angle)));
+
+            var t = Alignment.Value switch
+            {
+                TextAlignment.Start when line.Markup.Type == MarkupType.Node => trajectory.Length >= offset ? offset / trajectory.Length : 0.5f,
+                TextAlignment.Start when line.Markup.Type == MarkupType.Segment => trajectory.Length >= offset ? 1f - offset / trajectory.Length : 0.5f,
+                TextAlignment.End when line.Markup.Type == MarkupType.Node => trajectory.Length >= offset ? 1f - offset / trajectory.Length : 0.5f,
+                TextAlignment.End when line.Markup.Type == MarkupType.Segment => trajectory.Length >= offset ? offset / trajectory.Length : 0.5f,
+                _ => 0.5f,
+            };
+
+            var direction = line.Trajectory.Tangent(t);
+            var position = line.Trajectory.Position(t) + direction.MakeFlatNormalized().Turn90(true) * Shift;
+            var angle = direction.AbsoluteAngle() + (Angle.Value + (line.Markup.Type == MarkupType.Node ? -90 : 90)) * Mathf.Deg2Rad;
+            var width = textureData.texture.width * ratio;
+            var height = textureData.texture.height * ratio;
             var data = new MarkupPartData(position, angle, width, height, Color, material);
 
             var groupData = new MarkupPartGroupData(lod, new MarkupPartData[] { data });
@@ -183,6 +198,7 @@ namespace NodeMarkup.Manager
             components.Add(AddShiftProperty(parent, true));
             components.Add(AddDirectionProperty(parent, true));
             components.Add(AddSpacingProperty(parent, true));
+            components.Add(AddAlignmentProperty(parent, true));
 #if DEBUG
             components.Add(AddRatioProperty(parent, true));
 #endif
@@ -203,8 +219,6 @@ namespace NodeMarkup.Manager
             var textProperty = ComponentPool.Get<StringPropertyPanel>(parent, nameof(Text));
             textProperty.Text = Localize.StyleOption_Text;
             textProperty.FieldWidth = 230f;
-            //textProperty.Multyline = true;
-            //textProperty.TextScale = 1f;
             textProperty.CanCollapse = canCollapse;
             textProperty.Init();
             textProperty.Value = Text;
@@ -283,6 +297,17 @@ namespace NodeMarkup.Manager
 
             return directionProperty;
         }
+        protected TextAlignmentPanel AddAlignmentProperty(UIComponent parent, bool canCollapse)
+        {
+            var directionProperty = ComponentPool.Get<TextAlignmentPanel>(parent, nameof(Alignment));
+            directionProperty.Text = Localize.StyleOption_TextAlignment;
+            directionProperty.CanCollapse = canCollapse;
+            directionProperty.Init();
+            directionProperty.SelectedObject = Alignment;
+            directionProperty.OnSelectObjectChanged += (value) => Alignment.Value = value;
+
+            return directionProperty;
+        }
         protected Vector2PropertyPanel AddSpacingProperty(UIComponent parent, bool canCollapse)
         {
             var spacingProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Spacing));
@@ -334,6 +359,8 @@ namespace NodeMarkup.Manager
             Shift.ToXml(config);
             Direction.ToXml(config);
             Spacing.ToXml(config);
+            Alignment.ToXml(config);
+            Offset.ToXml(config);
             return config;
         }
 
@@ -347,6 +374,8 @@ namespace NodeMarkup.Manager
             Shift.FromXml(config, DefaultObjectShift);
             Direction.FromXml(config, TextDirection.LeftToRight);
             Spacing.FromXml(config, Vector2.zero);
+            Alignment.FromXml(config, TextAlignment.Middle);
+            Offset.FromXml(config, 0f);
             if (map.IsMirror ^ invert)
             {
                 Angle.Value = Angle.Value >= 0 ? Angle.Value - 180f : Angle.Value + 180f;
@@ -368,6 +397,18 @@ namespace NodeMarkup.Manager
             [Sprite(nameof(NodeMarkupTextures.BottomToTopButtonIcons))]
             BottomToTop,
         }
+        public enum TextAlignment
+        {
+            [Description(nameof(Localize.StyleOption_TextAlignmentStart))]
+            Start,
+
+            [Description(nameof(Localize.StyleOption_TextAlignmentMiddle))]
+            Middle,
+
+            [Description(nameof(Localize.StyleOption_TextAlignmentEnd))]
+            End,
+        }
+
         public class TextDirectionPanel : EnumOncePropertyPanel<TextDirection, TextDirectionPanel.TextDirectionSegmented>
         {
             protected override bool IsEqual(TextDirection first, TextDirection second) => first == second;
@@ -392,6 +433,13 @@ namespace NodeMarkup.Manager
 
             public class TextDirectionSegmented : UIOnceSegmented<TextDirection> { }
         }
+        public class TextAlignmentPanel : EnumOncePropertyPanel<TextAlignment, TextAlignmentPanel.TextAlignmentSegmented>
+        {
+            protected override bool IsEqual(TextAlignment first, TextAlignment second) => first == second;
+            protected override string GetDescription(TextAlignment value) => value.Description();
+
+            public class TextAlignmentSegmented : UIOnceSegmented<TextAlignment> { }
+        }
 
         public struct TextureId
         {
@@ -413,6 +461,19 @@ namespace NodeMarkup.Manager
             public override string ToString()
             {
                 return $"Text:\"{text?.Replace("\n", "\\n")}\" Font:\"{font}\" Scale:{scale} Spacing:{spacing}";
+            }
+        }
+        public struct TextureData
+        {
+            public Texture2D texture;
+            public float width;
+            public float height;
+
+            public TextureData(Texture2D texture, float width, float height)
+            {
+                this.texture = texture;
+                this.width = width;
+                this.height = height;
             }
         }
         public class TextureComparer : IEqualityComparer<TextureId>

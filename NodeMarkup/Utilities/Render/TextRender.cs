@@ -75,7 +75,7 @@ namespace NodeMarkup.Utilities
                 Font = DefaultFont;
             }
 
-            public Texture2D Render(string text)
+            public Texture2D Render(string text, out float textWidth, out float textHeight)
             {
                 var tokens = Tokenize(text);
                 foreach (var token in tokens)
@@ -83,10 +83,10 @@ namespace NodeMarkup.Utilities
 
                 var lineTokens = CalculateLineBreaks(tokens);
 
-                var width = lineTokens.Count > 0 ? lineTokens.Max(l => l.Width) : 0;
-                var height = lineTokens.Sum(l => l.Height) + (lineTokens.Count - 1) * LineSpacing;
+                textWidth = lineTokens.Count > 0 ? lineTokens.Max(l => l.Width) : 0;
+                textHeight = lineTokens.Sum(l => l.Height) + (lineTokens.Count - 1) * LineSpacing;
 
-                var texture = new Texture2D(Get2Pow(Mathf.CeilToInt(width)), Get2Pow(Mathf.CeilToInt(height)))
+                var texture = new Texture2D(Get2Pow(Mathf.CeilToInt(textWidth)), Get2Pow(Mathf.CeilToInt(textHeight)))
                 {
                     name = "Text",
                 };
@@ -107,7 +107,7 @@ namespace NodeMarkup.Utilities
 //                }
 //#endif
                 var fontTexture = Font.texture.MakeReadable();
-                var position = new Vector2(0f, (texture.height - height) * 0.5f);
+                var position = new Vector2(0f, (texture.height - textHeight) * 0.5f);
                 for (int i = lineTokens.Count - 1; i >= 0; i -= 1)
                 {
                     var line = lineTokens[i];

@@ -1789,4 +1789,16 @@ underground mode</value>
   <data name="StyleOption_ZigzagStep" xml:space="preserve">
     <value>Step</value>
   </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Middle</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
 </root>

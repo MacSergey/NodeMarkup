@@ -2479,5 +2479,25 @@ namespace NodeMarkup
 		/// Step
 		/// </summary>
 		public static string StyleOption_ZigzagStep => LocaleManager.GetString("StyleOption_ZigzagStep", Culture);
+
+		/// <summary>
+		/// Alignment
+		/// </summary>
+		public static string StyleOption_TextAlignment => LocaleManager.GetString("StyleOption_TextAlignment", Culture);
+
+		/// <summary>
+		/// End
+		/// </summary>
+		public static string StyleOption_TextAlignmentEnd => LocaleManager.GetString("StyleOption_TextAlignmentEnd", Culture);
+
+		/// <summary>
+		/// Middle
+		/// </summary>
+		public static string StyleOption_TextAlignmentMiddle => LocaleManager.GetString("StyleOption_TextAlignmentMiddle", Culture);
+
+		/// <summary>
+		/// Start
+		/// </summary>
+		public static string StyleOption_TextAlignmentStart => LocaleManager.GetString("StyleOption_TextAlignmentStart", Culture);
 	}
 }
