@@ -371,6 +371,11 @@ namespace NodeMarkup.Manager
             [LineType(LineType.Regular | LineType.Crosswalk)]
             LineDoubleDashedAsym,
 
+            [Description(nameof(Localize.LineStyle_ZigZag))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular)]
+            LineZigZag,
+
             [NotItem]
             Regular3DLine = Markup.Item.RegularLine + 0x80,
 

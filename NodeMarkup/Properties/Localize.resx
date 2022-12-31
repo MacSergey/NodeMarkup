@@ -1762,4 +1762,31 @@ underground mode</value>
   <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
     <value>Fixed space and free ends</value>
   </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Zigzag</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Side</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Start from</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Outside</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Step</value>
+  </data>
 </root>

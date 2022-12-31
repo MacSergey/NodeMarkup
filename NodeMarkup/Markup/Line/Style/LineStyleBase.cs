@@ -264,6 +264,9 @@ namespace NodeMarkup.Manager
 
         public static float DefaultTextScale => 5f;
 
+        public static float ZigZagStep => 2f;
+        public static float ZigZagOffset => 1f;
+
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
         public override LineStyle CopyStyle() => CopyLineStyle();
@@ -281,6 +284,7 @@ namespace NodeMarkup.Manager
             {RegularLineType.DoubleDashedAsym, new DoubleDashedAsymLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultSpaceLength * 2f, DefaultDoubleOffset)},
             {RegularLineType.SolidAndDashed, new SolidAndDashedLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultDashLength, DefaultSpaceLength, DefaultDoubleOffset)},
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength, DefaultSharkAngle) },
+            {RegularLineType.ZigZag, new ZigZagLineStyle(DefaultColor, DefaultWidth, ZigZagStep, ZigZagOffset, true, true) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
             {RegularLineType.Prop, new PropLineStyle(null, DefaultObjectProbability, PropLineStyle.DefaultColorOption, PropLineStyle.DefaultColor, DefaultObjectStep, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectShift,DefaultObjectShift), new Vector2(DefaultObjectScale, DefaultObjectScale), new Vector2(DefaultObjectElevation,DefaultObjectElevation), DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DistributionType.FixedSpaceFreeEnd) },
             {RegularLineType.Tree, new TreeLineStyle(null, DefaultObjectProbability, DefaultObjectStep, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectShift,DefaultObjectShift), new Vector2(DefaultObjectScale, DefaultObjectScale), new Vector2(DefaultObjectElevation,DefaultObjectElevation), DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DistributionType.FixedSpaceFreeEnd) },
@@ -354,22 +358,28 @@ namespace NodeMarkup.Manager
             [Order(4)]
             DoubleDashedAsym = StyleType.LineDoubleDashedAsym,
 
+            [Description(nameof(Localize.LineStyle_ZigZag))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular)]
+            [Order(7)]
+            ZigZag = StyleType.LineZigZag,
+
             [Description(nameof(Localize.LineStyle_Pavement))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk)]
-            [Order(7)]
+            [Order(8)]
             Pavement = StyleType.LinePavement,
 
             [Description(nameof(Localize.LineStyle_Prop))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
-            [Order(8)]
+            [Order(9)]
             Prop = StyleType.LineProp,
 
             [Description(nameof(Localize.LineStyle_Tree))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
-            [Order(9)]
+            [Order(10)]
             Tree = StyleType.LineTree,
 
             [Description(nameof(Localize.LineStyle_Text))]
@@ -380,7 +390,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.LineStyle_Network))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
-            [Order(10)]
+            [Order(11)]
             Network = StyleType.LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]

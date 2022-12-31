@@ -2434,5 +2434,50 @@ namespace NodeMarkup
 		/// Fixed space and free ends
 		/// </summary>
 		public static string StyleOption_DistributionFixedFree => LocaleManager.GetString("StyleOption_DistributionFixedFree", Culture);
+
+		/// <summary>
+		/// Zigzag
+		/// </summary>
+		public static string LineStyle_ZigZag => LocaleManager.GetString("LineStyle_ZigZag", Culture);
+
+		/// <summary>
+		/// Left
+		/// </summary>
+		public static string StyleOption_SideLeft => LocaleManager.GetString("StyleOption_SideLeft", Culture);
+
+		/// <summary>
+		/// Right
+		/// </summary>
+		public static string StyleOption_SideRight => LocaleManager.GetString("StyleOption_SideRight", Culture);
+
+		/// <summary>
+		/// Offset
+		/// </summary>
+		public static string StyleOption_ZigzagOffset => LocaleManager.GetString("StyleOption_ZigzagOffset", Culture);
+
+		/// <summary>
+		/// Side
+		/// </summary>
+		public static string StyleOption_ZigzagSide => LocaleManager.GetString("StyleOption_ZigzagSide", Culture);
+
+		/// <summary>
+		/// Start from
+		/// </summary>
+		public static string StyleOption_ZigzagStartFrom => LocaleManager.GetString("StyleOption_ZigzagStartFrom", Culture);
+
+		/// <summary>
+		/// Line
+		/// </summary>
+		public static string StyleOption_ZigzagStartFromLine => LocaleManager.GetString("StyleOption_ZigzagStartFromLine", Culture);
+
+		/// <summary>
+		/// Outside
+		/// </summary>
+		public static string StyleOption_ZigzagStartFromOutside => LocaleManager.GetString("StyleOption_ZigzagStartFromOutside", Culture);
+
+		/// <summary>
+		/// Step
+		/// </summary>
+		public static string StyleOption_ZigzagStep => LocaleManager.GetString("StyleOption_ZigzagStep", Culture);
 	}
 }
