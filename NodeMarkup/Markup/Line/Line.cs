@@ -254,7 +254,7 @@ namespace NodeMarkup.Manager
         {
             var defaultStyle = Style.StyleType.LineDashed;
 
-            if ((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0 && (defaultStyle.GetLineType() & Type) != 0)
+            if ((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0 || (defaultStyle.GetLineType() & Type) == 0)
             {
                 foreach (var style in EnumExtension.GetEnumValues<RegularLineStyle.RegularLineType>(i => true).Select(i => i.ToEnum<Style.StyleType, RegularLineStyle.RegularLineType>()))
                 {

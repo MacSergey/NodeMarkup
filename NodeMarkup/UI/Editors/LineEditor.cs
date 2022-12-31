@@ -295,7 +295,7 @@ namespace NodeMarkup.UI.Editors
 
         public void AddRuleShortcut()
         {
-            if(AddRuleAvailable)
+            if (AddRuleAvailable)
                 AddRule();
         }
         public override void Render(RenderManager.CameraInfo cameraInfo)
@@ -345,8 +345,10 @@ namespace NodeMarkup.UI.Editors
 
             if ((result = x.Start.Enter.CompareTo(y.Start.Enter)) == 0)
                 if ((result = x.Start.Index.CompareTo(y.Start.Index)) == 0)
-                    if ((result = x.End.Enter.CompareTo(y.End.Enter)) == 0)
-                        result = x.End.Index.CompareTo(y.End.Index);
+                    if ((result = x.Type.CompareTo(y.Type)) == 0)
+                        if ((result = x.End.Enter.CompareTo(y.End.Enter)) == 0)
+                            if ((result = x.End.Index.CompareTo(y.End.Index)) == 0)
+                                result = x.Type.CompareTo(y.Type);
 
             return result;
         }

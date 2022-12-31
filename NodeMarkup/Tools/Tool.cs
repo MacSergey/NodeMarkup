@@ -544,7 +544,7 @@ namespace NodeMarkup.Tools
 
             if (nextSegmentId != null && nodeSegmentIds.Length == 2 && (node.m_flags & (NetNode.Flags.Bend | NetNode.Flags.Middle)) != 0)
             {
-                var map = new ObjectsMap();
+                var map = new ObjectsMap(true);
                 map.AddSegment(nearNodeId, beforeSegmentId);
                 map.AddSegment(farNodeId, nextSegmentId.Value);
                 var markup = SingletonManager<NodeMarkupManager>.Instance[nodeId];

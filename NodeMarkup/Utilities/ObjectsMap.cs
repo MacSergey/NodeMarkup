@@ -1,9 +1,11 @@
 ﻿using ModsCommon.Utilities;
 using NodeMarkup.Manager;
+using NodeMarkup.Tools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using static NodeMarkup.Manager.MarkupPoint;
 
 namespace NodeMarkup.Utilities
 {
@@ -21,12 +23,24 @@ namespace NodeMarkup.Utilities
             for (byte i = 1; i < count; i += 1)
                 AddPoint(enter.Id, i, (byte)(count - i));
         }
+
         public void AddPoint(ushort enter, byte source, byte target)
         {
-            foreach (var pointType in Enum.GetValues(typeof(MarkupPoint.PointType)).OfType<MarkupPoint.PointType>())
-                AddPoint(MarkupPoint.GetId(enter, source, pointType), MarkupPoint.GetId(enter, target, pointType));
+            foreach (var pointType in EnumExtension.GetEnumValues<PointType>(i => i.IsItem()))
+            {
+                if (pointType == PointType.Lane && IsMirror)
+                    target = (byte)(target - 1);
+
+                if (source > 0 && target > 0)
+                    AddPoint(GetId(enter, source, pointType), GetId(enter, target, pointType));
+            }
         }
-        public void AddPoint(int source, int target) => this[new ObjectId() { Point = source }] = new ObjectId() { Point = target };
+        public void AddPoint(int source, int target)
+        {
+            var sourceId = new ObjectId() { Point = source };
+            var targetId = new ObjectId() { Point = target };
+            this[sourceId] = targetId;
+        }
     }
     public class ObjectId : NetObjectId
     {
@@ -41,7 +55,7 @@ namespace NodeMarkup.Utilities
         public override string ToString()
         {
             if (Type == PointType)
-                return $"{nameof(Point)}: {MarkupPoint.GetEnter(Point)}-{MarkupPoint.GetIndex(Point)}{MarkupPoint.GetType(Point).ToString().FirstOrDefault()}";
+                return $"{nameof(Point)}: {GetEnter(Point)}-{GetIndex(Point)}{MarkupPoint.GetType(Point).ToString().FirstOrDefault()}";
             else
                 return base.ToString();
         }

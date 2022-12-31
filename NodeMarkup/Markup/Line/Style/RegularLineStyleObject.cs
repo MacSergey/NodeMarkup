@@ -351,9 +351,14 @@ namespace NodeMarkup.Manager
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
             Distribution.FromXml(config, DistributionType.FixedSpaceFreeEnd);
 
-            if (map.IsMirror ^ invert)
+            if (invert)
             {
                 Shift.Value = -Shift.Value;
+
+                var offsetBefore = OffsetBefore.Value;
+                var offsetAfter = OffsetAfter.Value;
+                OffsetBefore.Value = offsetAfter;
+                OffsetAfter.Value = offsetBefore;
             }
         }
     }

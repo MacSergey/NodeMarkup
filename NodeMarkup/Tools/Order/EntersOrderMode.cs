@@ -105,7 +105,7 @@ namespace NodeMarkup.Tools
             for (var i = 0; i < Sources.Length; i += 1)
             {
                 if (Sources[i].Target is Target<SourceEnter> target)
-                    Sources[i].Target = Targets[func(target.Num)];
+                    Sources[i].Target = Targets[func(target.Index)];
             }
         }
 

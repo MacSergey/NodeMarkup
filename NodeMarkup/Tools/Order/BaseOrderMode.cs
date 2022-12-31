@@ -68,7 +68,14 @@ namespace NodeMarkup.Tools
                 if (enterTarget != null)
                 {
                     for (var i = 0; i < source.Points.Length; i += 1)
-                        map.AddPoint(enterTarget.Enter.Id, (byte)(i + 1), (byte)((source.Points[i].Target as Target)?.Num + 1 ?? 0));
+                    {
+                        if (source.Points[i].Target is Target target)
+                        {
+                            var sourceI = (byte)(i + 1);
+                            var targetI = (byte)(target.Index + 1);
+                            map.AddPoint(enterTarget.Enter.Id, sourceI, targetI);
+                        }
+                    }
                 }
             }
 

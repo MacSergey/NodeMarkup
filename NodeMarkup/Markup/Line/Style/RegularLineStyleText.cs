@@ -62,7 +62,7 @@ namespace NodeMarkup.Manager
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
-        public RegularLineStyleText(Color32 color, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing, TextAlignment alignment, float offset) : base(color, default)
+        public RegularLineStyleText(Color32 color, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing, TextAlignment alignment) : base(color, default)
         {
             Text = new PropertyStringValue("TX", StyleChanged, text);
             Font = new PropertyStringValue("F", StyleChanged, font);
@@ -71,6 +71,7 @@ namespace NodeMarkup.Manager
             Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
             Direction = new PropertyEnumValue<TextDirection>("V", StyleChanged, direction);
             Spacing = new PropertyVector2Value(StyleChanged, spacing, "SPC", "SPL");
+
             Alignment = new PropertyEnumValue<TextAlignment>("AL", StyleChanged, alignment);
 #if DEBUG
             Ratio = new PropertyStructValue<float>(StyleChanged, 0.05f);
@@ -128,7 +129,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, Text, Scale, Angle, Shift, Direction, Spacing, Alignment, Offset);
+        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, Text, Scale, Angle, Shift, Direction, Spacing, Alignment);
 
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
@@ -360,7 +361,6 @@ namespace NodeMarkup.Manager
             Direction.ToXml(config);
             Spacing.ToXml(config);
             Alignment.ToXml(config);
-            Offset.ToXml(config);
             return config;
         }
 
@@ -375,11 +375,17 @@ namespace NodeMarkup.Manager
             Direction.FromXml(config, TextDirection.LeftToRight);
             Spacing.FromXml(config, Vector2.zero);
             Alignment.FromXml(config, TextAlignment.Middle);
-            Offset.FromXml(config, 0f);
-            if (map.IsMirror ^ invert)
+
+            if (invert)
             {
                 Angle.Value = Angle.Value >= 0 ? Angle.Value - 180f : Angle.Value + 180f;
                 Shift.Value = -Shift.Value;
+                Alignment.Value = Alignment.Value switch
+                {
+                    TextAlignment.Start => TextAlignment.End,
+                    TextAlignment.End => TextAlignment.Start,
+                    _ => TextAlignment.Middle,
+                };
             }
         }
 
