@@ -35,20 +35,6 @@ namespace NodeMarkup.Utilities
             var bezierL = new BezierTrajectory(trajectory.StartPosition - startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition - endNormal * halfWidth, trajectory.EndDirection, smooth: smooth).Trajectory;
             var bezierR = new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidth, trajectory.EndDirection, smooth: smooth).Trajectory;
 
-            //var bezierL = new Bezier3()
-            //{
-            //    a = trajectory.StartPosition - startNormal * halfWidth,
-            //    d = trajectory.EndPosition - endNormal * halfWidth,
-            //};
-            //var bezierR = new Bezier3()
-            //{
-            //    a = trajectory.StartPosition + startNormal * halfWidth,
-            //    d = trajectory.EndPosition + endNormal * halfWidth,
-            //};
-
-            //NetSegment.CalculateMiddlePoints(bezierL.a, trajectory.StartDirection, bezierL.d, trajectory.EndDirection, true, true, out bezierL.b, out bezierL.c);
-            //NetSegment.CalculateMiddlePoints(bezierR.a, trajectory.StartDirection, bezierR.d, trajectory.EndDirection, true, true, out bezierR.b, out bezierR.c);
-
             left = NetSegment.CalculateControlMatrix(bezierL.a, bezierL.b, bezierL.c, bezierL.d, bezierR.a, bezierR.b, bezierR.c, bezierR.d, position, 0.05f);
             right = NetSegment.CalculateControlMatrix(bezierR.a, bezierR.b, bezierR.c, bezierR.d, bezierL.a, bezierL.b, bezierL.c, bezierL.d, position, 0.05f);
         }

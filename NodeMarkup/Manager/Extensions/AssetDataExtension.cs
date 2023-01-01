@@ -32,7 +32,7 @@ namespace NodeMarkup
         protected override ObjectsMap CreateMap(bool isSimple) => new ObjectsMap(isSimple: isSimple);
         protected override XElement GetConfig(NetInfo prefab, out ushort segmentId, out ushort startNodeId, out ushort endNodeId)
         {
-            foreach(var markup in SingletonManager<SegmentMarkupManager>.Instance)
+            foreach (var markup in SingletonManager<SegmentMarkupManager>.Instance)
             {
                 segmentId = markup.Id;
                 ref var segment = ref segmentId.GetSegment();
@@ -51,6 +51,39 @@ namespace NodeMarkup
             startNodeId = 0;
             endNodeId = 0;
             return null;
+        }
+        public override void OnAssetLoaded(string name, object asset, Dictionary<string, byte[]> userData)
+        {
+            if (asset is NetInfo prefab && userData != null && Load(prefab, userData, out var data))
+            {
+                AssetDatas[prefab] = data;
+
+                if (prefab.m_netAI != null)
+                {
+                    if (GetNetInfo(prefab.m_netAI, nameof(RoadAI.m_elevatedInfo), out var elevatedInfo))
+                        AssetDatas[elevatedInfo] = data;
+                    if (GetNetInfo(prefab.m_netAI, nameof(RoadAI.m_bridgeInfo), out var bridgeInfo))
+                        AssetDatas[bridgeInfo] = data;
+                    if (GetNetInfo(prefab.m_netAI, nameof(RoadAI.m_slopeInfo), out var slopeInfo))
+                        AssetDatas[slopeInfo] = data;
+                    if (GetNetInfo(prefab.m_netAI, nameof(RoadAI.m_tunnelInfo), out var tunnelInfo))
+                        AssetDatas[tunnelInfo] = data;
+                }
+            }
+        }
+        private bool GetNetInfo(NetAI ai, string fieldName, out NetInfo info)
+        {
+            var field = ai.GetType().GetField(fieldName);
+            if (field != null)
+            {
+                info = field.GetValue(ai) as NetInfo;
+                return info != null;
+            }
+            else
+            {
+                info = null;
+                return false;
+            }
         }
         protected override void PlaceAsset(XElement config, ObjectsMap map)
         {
