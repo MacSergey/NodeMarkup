@@ -364,9 +364,9 @@ namespace NodeMarkup.Manager
             return config;
         }
 
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Font.FromXml(config, string.Empty);
             Text.FromXml(config, string.Empty);
             Scale.FromXml(config, DefaultTextScale);
@@ -376,7 +376,7 @@ namespace NodeMarkup.Manager
             Spacing.FromXml(config, Vector2.zero);
             Alignment.FromXml(config, TextAlignment.Middle);
 
-            if (invert)
+            if (invert ^ typeChanged)
             {
                 Angle.Value = Angle.Value >= 0 ? Angle.Value - 180f : Angle.Value + 180f;
                 Shift.Value = -Shift.Value;

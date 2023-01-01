@@ -32,7 +32,6 @@ namespace NodeMarkup.Tools
         protected override string InfoDrag => Localize.Tool_InfoRoadsDrag;
         protected override string InfoDrop => Localize.Tool_InfoRoadsDrop;
 
-
         public IEnumerable<Shortcut> Shortcuts
         {
             get
@@ -75,10 +74,10 @@ namespace NodeMarkup.Tools
         }
         private void FlipClick()
         {
-            IsMirror = !IsMirror;
+            Invert = !Invert;
 
             foreach (var source in Sources)
-                source.IsMirror = IsMirror;
+                source.Invert = Invert;
 
             Transform((t) => Targets.Length - t - 1);
             SetAvailableTargets();
@@ -179,6 +178,7 @@ namespace NodeMarkup.Tools
             messageBox.Button2Text = Localize.Tool_NotApply;
             messageBox.OnButton2Click = OnNotApply;
             messageBox.Button3Text = Localize.Tool_Continue;
+            messageBox.DefaultButton = 2;
 
             bool OnApply()
             {

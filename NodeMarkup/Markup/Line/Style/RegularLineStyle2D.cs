@@ -49,7 +49,7 @@ namespace NodeMarkup.Manager
 
         public PropertyBoolValue ColorCount { get; }
         public PropertyColorValue SecondColor { get; }
-        public PropertyValue<float> Offset { get; }
+        public new PropertyValue<float> Offset { get; }
         public PropertyEnumValue<Alignment> Alignment { get; }
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
@@ -134,13 +134,14 @@ namespace NodeMarkup.Manager
             Alignment.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             ColorCount.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             Alignment.FromXml(config, Manager.Alignment.Centre);
+
             if (invert)
                 Alignment.Value = Alignment.Value.Invert();
         }
@@ -213,9 +214,9 @@ namespace NodeMarkup.Manager
             SpaceLength.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
         }
@@ -227,7 +228,7 @@ namespace NodeMarkup.Manager
 
         public PropertyBoolValue ColorCount { get; }
         public PropertyColorValue SecondColor { get; }
-        public PropertyValue<float> Offset { get; }
+        public new PropertyValue<float> Offset { get; }
         public PropertyEnumValue<Alignment> Alignment { get; }
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
@@ -312,9 +313,9 @@ namespace NodeMarkup.Manager
             Alignment.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             ColorCount.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
@@ -344,7 +345,7 @@ namespace NodeMarkup.Manager
 
         public PropertyBoolValue ColorCount { get; }
         public PropertyColorValue SecondColor { get; }
-        public PropertyValue<float> Offset { get; }
+        public new PropertyValue<float> Offset { get; }
         public PropertyEnumValue<Alignment> Alignment { get; }
 
         public PropertyBoolValue Invert { get; }
@@ -507,9 +508,9 @@ namespace NodeMarkup.Manager
             Invert.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             DashLengthA.FromXml(config, DefaultDashLength);
             DashLengthB.FromXml(config, DefaultDashLength * 2f);
             SpaceLength.FromXml(config, DefaultSpaceLength);
@@ -518,7 +519,8 @@ namespace NodeMarkup.Manager
             Offset.FromXml(config, DefaultDoubleOffset);
             Alignment.FromXml(config, Manager.Alignment.Centre);
             Invert.FromXml(config, false);
-            Invert.Value ^= map.IsMirror ^ invert;
+            Invert.Value ^= map.Invert ^ invert ^ typeChanged;
+
             if (invert)
                 Alignment.Value = Alignment.Value.Invert();
         }
@@ -530,7 +532,7 @@ namespace NodeMarkup.Manager
 
         public PropertyBoolValue ColorCount { get; }
         public PropertyColorValue SecondColor { get; }
-        public PropertyValue<float> Offset { get; }
+        public new PropertyValue<float> Offset { get; }
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
         public PropertyBoolValue Invert { get; }
@@ -656,17 +658,17 @@ namespace NodeMarkup.Manager
             CenterSolid.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             ColorCount.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
-            Invert.FromXml(config, false);
-            Invert.Value ^= map.IsMirror ^ invert;
             CenterSolid.FromXml(config, false);
+            Invert.FromXml(config, false);
+            Invert.Value ^= map.Invert ^ invert ^ typeChanged;
         }
 
         private class FakeAligmentProperty : PropertyEnumValue<Alignment>
@@ -807,15 +809,15 @@ namespace NodeMarkup.Manager
             Angle.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Base.FromXml(config, DefaultSharkBaseLength);
             Height.FromXml(config, DefaultSharkHeight);
             Space.FromXml(config, DefaultSharkSpaceLength);
-            Invert.FromXml(config, false);
-            Invert.Value ^= map.IsMirror ^ invert;
             Angle.FromXml(config, DefaultSharkAngle);
+            Invert.FromXml(config, false);
+            Invert.Value ^= map.Invert ^ invert ^ typeChanged;
         }
     }
     public class ZigZagLineStyle : RegularLineStyle, IRegularLine
@@ -840,7 +842,7 @@ namespace NodeMarkup.Manager
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public PropertyStructValue<float> Step { get; }
-        public PropertyStructValue<float> Offset { get; }
+        public new PropertyStructValue<float> Offset { get; }
         public PropertyBoolValue Side { get; }
         public PropertyBoolValue StartFrom { get; }
 
@@ -869,16 +871,18 @@ namespace NodeMarkup.Manager
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             var count = Mathf.FloorToInt(trajectory.Length / Step.Value);
-            var beginT = (trajectory.Length - Step.Value * count) / (2 * trajectory.Length);
-            var deltaT = Step.Value / trajectory.Length;
+            var startOffset = (trajectory.Length - Step.Value * count) * 0.5f;
 
             var dashes = new MarkupPartData[StartFrom ? count * 2 : count * 2 + 2];
 
             for (int i = 0; i < count; i += 1)
             {
-                var startT = beginT + deltaT * i;
-                var middleT = startT + deltaT * 0.5f;
-                var endT = startT + deltaT;
+                var startDistance = startOffset + Step.Value * i;
+                var endDistance = startDistance + Step.Value;
+                var middleDistance = (startDistance + endDistance) * 0.5f;
+                var startT = trajectory.Travel(startDistance);
+                var endT = trajectory.Travel(endDistance);
+                var middleT = trajectory.Travel(middleDistance);
 
                 if (StartFrom)
                 {
@@ -902,10 +906,13 @@ namespace NodeMarkup.Manager
 
             if(!StartFrom)
             {
-                var startPos = trajectory.Position(beginT);
-                var startDir = trajectory.Tangent(beginT).MakeFlatNormalized().Turn90(!Side);
-                var endPos = trajectory.Position(beginT + deltaT * count);
-                var endDir = trajectory.Tangent(beginT + deltaT * count).MakeFlatNormalized().Turn90(!Side);
+                var startT = trajectory.Travel(startOffset);
+                var endT = trajectory.Travel(startOffset + Step.Value * count);
+
+                var startPos = trajectory.Position(startT);
+                var startDir = trajectory.Tangent(startT).MakeFlatNormalized().Turn90(!Side);
+                var endPos = trajectory.Position(endT);
+                var endDir = trajectory.Tangent(endT).MakeFlatNormalized().Turn90(!Side);
 
                 dashes[count * 2] = new MarkupPartData(startPos, startPos + startDir * Offset, Width, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
                 dashes[count * 2 + 1] = new MarkupPartData(endPos, endPos + endDir * Offset, Width, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
@@ -958,32 +965,35 @@ namespace NodeMarkup.Manager
         }
         protected BoolListPropertyPanel AddSideProperty(UIComponent parent, bool canCollapse)
         {
-            var centerSolidProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Side));
-            centerSolidProperty.Text = Localize.StyleOption_ZigzagSide;
-            centerSolidProperty.CanCollapse = canCollapse;
-            centerSolidProperty.Init(Localize.StyleOption_SideLeft, Localize.StyleOption_SideRight);
-            centerSolidProperty.SelectedObject = Side;
-            centerSolidProperty.OnSelectObjectChanged += (value) => Side.Value = value;
-            return centerSolidProperty;
+            var sideProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Side));
+            sideProperty.Text = Localize.StyleOption_ZigzagSide;
+            sideProperty.CanCollapse = canCollapse;
+            sideProperty.Init(Localize.StyleOption_SideLeft, Localize.StyleOption_SideRight);
+            sideProperty.SelectedObject = Side;
+            sideProperty.OnSelectObjectChanged += (value) => Side.Value = value;
+            return sideProperty;
         }
         protected BoolListPropertyPanel AddStartFromProperty(UIComponent parent, bool canCollapse)
         {
-            var centerSolidProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Side));
-            centerSolidProperty.Text = Localize.StyleOption_ZigzagStartFrom;
-            centerSolidProperty.CanCollapse = canCollapse;
-            centerSolidProperty.Init(Localize.StyleOption_ZigzagStartFromOutside, Localize.StyleOption_ZigzagStartFromLine);
-            centerSolidProperty.SelectedObject = StartFrom;
-            centerSolidProperty.OnSelectObjectChanged += (value) => StartFrom.Value = value;
-            return centerSolidProperty;
+            var startFromProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Side));
+            startFromProperty.Text = Localize.StyleOption_ZigzagStartFrom;
+            startFromProperty.CanCollapse = canCollapse;
+            startFromProperty.Init(Localize.StyleOption_ZigzagStartFromOutside, Localize.StyleOption_ZigzagStartFromLine);
+            startFromProperty.SelectedObject = StartFrom;
+            startFromProperty.OnSelectObjectChanged += (value) => StartFrom.Value = value;
+            return startFromProperty;
         }
 
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Step.FromXml(config, 1f);
             Offset.FromXml(config, 1f);
             Side.FromXml(config, true);
             StartFrom.FromXml(config, true);
+
+            if (typeChanged)
+                Side.Value = !Side.Value;
         }
         public override XElement ToXml()
         {

@@ -11,13 +11,13 @@ namespace NodeMarkup.Utilities
 {
     public class ObjectsMap : NetObjectsMap<ObjectId>
     {
-        public bool IsMirror { get; }
+        public bool Invert { get; }
 
-        public ObjectsMap(bool isMirror = false, bool isSimple = false) : base(isSimple)
+        public ObjectsMap(bool invert = false, bool isSimple = false) : base(isSimple)
         {
-            IsMirror = isMirror;
+            Invert = invert;
         }
-        public void AddMirrorEnter(Enter enter)
+        public void AddInvertEnter(Enter enter)
         {
             var count = enter.PointCount + 1;
             for (byte i = 1; i < count; i += 1)
@@ -28,7 +28,7 @@ namespace NodeMarkup.Utilities
         {
             foreach (var pointType in EnumExtension.GetEnumValues<PointType>(i => i.IsItem()))
             {
-                if (pointType == PointType.Lane && IsMirror)
+                if (pointType == PointType.Lane && Invert)
                     target = (byte)(target - 1);
 
                 if (source > 0 && target > 0)

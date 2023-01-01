@@ -152,7 +152,7 @@ namespace NodeMarkup.Manager
         public virtual void FromXml(XElement config, ObjectsMap map)
         {
             Offset.FromXml(config, 0);
-            Offset.Value *= (map.IsMirror ? -1 : 1);
+            Offset.Value *= (map.Invert ? -1 : 1);
         }
 
         public enum PointType

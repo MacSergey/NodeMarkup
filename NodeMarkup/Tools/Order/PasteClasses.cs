@@ -78,7 +78,7 @@ namespace NodeMarkup.Tools
         public static float Size => 2f;
         protected override float BoundsSize => Size;
 
-        public bool IsMirror { get; set; }
+        public bool Invert { get; set; }
         public EnterData Enter { get; }
 
         private ITarget<SourceEnter> _target;
@@ -91,7 +91,7 @@ namespace NodeMarkup.Tools
                 _target = value;
 
                 for (var i = 0; i < Points.Length; i += 1)
-                    Points[i].Target = _target is TargetEnter targetEnter && i < targetEnter.Enter.PointCount ? targetEnter.Points[!IsMirror ? i : targetEnter.Points.Length - i - 1] : null;
+                    Points[i].Target = _target is TargetEnter targetEnter && i < targetEnter.Enter.PointCount ? targetEnter.Points[!Invert ? i : targetEnter.Points.Length - i - 1] : null;
             }
         }
         public SourcePoint[] Points { get; }
@@ -209,8 +209,8 @@ namespace NodeMarkup.Tools
             var prev = GetAvailableBorder(toolMode.Sources, source, s => s.PrevIndex(sourcesLenght)) ?? GetDefaultPrev(toolMode);
             var next = GetAvailableBorder(toolMode.Sources, source, s => s.NextIndex(sourcesLenght)) ?? GetDefaultNext(toolMode);
 
-            From = !toolMode.IsMirror ? prev : next;
-            To = !toolMode.IsMirror ? next : prev;
+            From = !toolMode.Invert ? prev : next;
+            To = !toolMode.Invert ? next : prev;
         }
         protected virtual Target<SourceType> GetDefaultPrev(BaseOrderToolMode<SourceType> toolMode) => toolMode.Targets.First();
         protected virtual Target<SourceType> GetDefaultNext(BaseOrderToolMode<SourceType> toolMode) => toolMode.Targets.Last();
@@ -256,8 +256,8 @@ namespace NodeMarkup.Tools
             public bool Equals(PointsBorders x, PointsBorders y) => x.From == y.From && x.To == y.To;
             public int GetHashCode(PointsBorders obj) => obj.GetHashCode();
         }
-        protected override Target<SourcePoint> GetDefaultPrev(BaseOrderToolMode<SourcePoint> toolMode) => !toolMode.IsMirror ? toolMode.Targets.First() : toolMode.Targets.Last();
-        protected override Target<SourcePoint> GetDefaultNext(BaseOrderToolMode<SourcePoint> toolMode) => !toolMode.IsMirror ? toolMode.Targets.Last() : toolMode.Targets.First();
+        protected override Target<SourcePoint> GetDefaultPrev(BaseOrderToolMode<SourcePoint> toolMode) => !toolMode.Invert ? toolMode.Targets.First() : toolMode.Targets.Last();
+        protected override Target<SourcePoint> GetDefaultNext(BaseOrderToolMode<SourcePoint> toolMode) => !toolMode.Invert ? toolMode.Targets.Last() : toolMode.Targets.First();
         protected override Target<SourcePoint> GetAvailableBorder(SourcePoint[] sources, SourcePoint source, Func<int, int> func)
         {
             var i = source.Index;

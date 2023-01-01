@@ -332,9 +332,9 @@ namespace NodeMarkup.Manager
             Distribution.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Probability.FromXml(config, DefaultObjectProbability);
             Step.FromXml(config, DefaultObjectStep);
             Angle.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
@@ -552,9 +552,9 @@ namespace NodeMarkup.Manager
             Prefab.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Prefab.FromXml(config, null);
         }
     }
@@ -680,9 +680,9 @@ namespace NodeMarkup.Manager
             ColorOption.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             ColorOption.FromXml(config, DefaultColorOption);
         }
 

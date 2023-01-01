@@ -9,8 +9,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using static ColossalFramework.IO.EncodedArray;
-using static RenderManager;
 
 namespace NodeMarkup.Manager
 {
@@ -169,7 +167,7 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        public abstract void FromXml(XElement config, ObjectsMap map, bool invert);
+        public abstract void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged);
 
         public override string ToString() => PointPair.ToString();
     }
@@ -205,14 +203,12 @@ namespace NodeMarkup.Manager
 
         protected override ITrajectory CalculateTrajectory()
         {
-            var trajectory = new Bezier3
-            {
-                a = PointPair.First.GetAbsolutePosition(RawAlignment),
-                d = PointPair.Second.GetAbsolutePosition(RawAlignment.Value.Invert()),
-            };
-            NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
+            var startPos = PointPair.First.GetAbsolutePosition(RawAlignment);
+            var endPos = PointPair.Second.GetAbsolutePosition(RawAlignment.Value.Invert());
+            var startDir = PointPair.First.Direction;
+            var endDir = PointPair.Second.Direction;
 
-            return new BezierTrajectory(trajectory);
+            return new BezierTrajectory(startPos, startDir, endPos, endDir, smooth: true);
         }
         private void AlignmentChanged() => Markup.Update(this, true, true);
         private void ClipSidewalkChanged() => Markup.Update(this, true, false);
@@ -325,13 +321,13 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             RawAlignment.FromXml(config);
             ClipSidewalk.FromXml(config, DefaultClipSidewalk);
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule<RegularLineStyle>.XmlName))
             {
-                if (MarkupLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<RegularLineStyle> rule))
+                if (MarkupLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, invert, typeChanged, out MarkupLineRawRule<RegularLineStyle> rule))
                     AddRule(rule, false);
             }
         }
@@ -537,9 +533,9 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            if (config.Element(MarkupLineRawRule<StopLineStyle>.XmlName) is XElement ruleConfig && MarkupLineRawRule<StopLineStyle>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<StopLineStyle> rule))
+            if (config.Element(MarkupLineRawRule<StopLineStyle>.XmlName) is XElement ruleConfig && MarkupLineRawRule<StopLineStyle>.FromXml(ruleConfig, this, map, invert, typeChanged, out MarkupLineRawRule<StopLineStyle> rule))
                 SetRule(rule);
 
             RawStartAlignment.FromXml(config);
@@ -578,7 +574,7 @@ namespace NodeMarkup.Manager
         public override bool ContainsRule(MarkupLineRawRule rule) => false;
         protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod) { yield break; }
 
-        public override void FromXml(XElement config, ObjectsMap map, bool invert) { }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged) { }
     }
 
     public struct MarkupLinePair

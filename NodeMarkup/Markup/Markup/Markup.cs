@@ -711,7 +711,6 @@ namespace NodeMarkup.Manager
         public virtual void FromXml(Version version, XElement config, ObjectsMap map, bool needUpdate = true)
         {
             LoadInProgress = true;
-
 #if BETA
             if (version < new Version("1.8.0.761"))
                 map = VersionMigration.Befor1_9(this, map);
@@ -719,8 +718,6 @@ namespace NodeMarkup.Manager
             if (version < new Version("1.9"))
                 map = VersionMigration.Befor1_9(this, map);
 #endif
-
-
             foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
                 MarkupPoint.FromXml(pointConfig, this, map);
 
@@ -737,8 +734,9 @@ namespace NodeMarkup.Manager
                 }
             }
 
+            var typeChanged = config.Name.LocalName != XmlSection;
             foreach (var pair in toInitLines)
-                pair.Key.FromXml(pair.Value, map, invertLines.Contains(pair.Key));
+                pair.Key.FromXml(pair.Value, map, invertLines.Contains(pair.Key), typeChanged);
 
             if ((Support & SupportType.Fillers) != 0)
             {

@@ -441,9 +441,9 @@ namespace NodeMarkup.Manager
             MedianCornerRadius.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Elevation.FromXml(config, DefaultElevation);
             CornerRadius.FromXml(config, DefaultCornerRadius);
             MedianCornerRadius.FromXml(config, DefaultCornerRadius);
@@ -663,9 +663,9 @@ namespace NodeMarkup.Manager
             MedianCurbSize.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             CurbSize.FromXml(config, DefaultCurbSize);
             MedianCurbSize.FromXml(config, DefaultCurbSize);
         }

@@ -18,7 +18,7 @@ namespace NodeMarkup.Tools
 
         protected XElement Backup { get; set; }
 
-        public bool IsMirror { get; protected set; }
+        public bool Invert { get; protected set; }
         public SourceEnter[] SourceEnters { get; set; } = new SourceEnter[0];
         public TargetEnter[] TargetEnters { get; set; } = new TargetEnter[0];
 
@@ -27,14 +27,14 @@ namespace NodeMarkup.Tools
             if (prevMode is BaseOrderToolMode pasteMarkupTool)
             {
                 Backup = pasteMarkupTool.Backup;
-                IsMirror = pasteMarkupTool.IsMirror;
+                Invert = pasteMarkupTool.Invert;
                 SourceEnters = pasteMarkupTool.SourceEnters;
                 TargetEnters = pasteMarkupTool.TargetEnters;
             }
             else
             {
                 Backup = Markup.ToXml();
-                IsMirror = false;
+                Invert = false;
                 SourceEnters = IntersectionTemplate.Enters.Select((e, i) => new SourceEnter(e, i)).ToArray();
                 TargetEnters = Markup.Enters.Select((e, i) => new TargetEnter(e, i)).ToArray();
 
@@ -47,8 +47,7 @@ namespace NodeMarkup.Tools
         }
         protected void Paste()
         {
-            Markup.Clear();
-            var map = new ObjectsMap(IsMirror);
+            var map = new ObjectsMap(Invert);
 
             foreach (var source in SourceEnters)
             {
@@ -79,6 +78,7 @@ namespace NodeMarkup.Tools
                 }
             }
 
+            Markup.Clear();
             Markup.FromXml(SingletonMod<Mod>.Version, IntersectionTemplate.Data, map);
             Panel.UpdatePanel();
         }

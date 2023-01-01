@@ -31,14 +31,14 @@ namespace NodeMarkup.Manager
         protected static string Length => string.Empty;
         protected static string Offset => string.Empty;
 
-        public static bool FromXml<T>(XElement config, ObjectsMap map, bool invert, out T style) where T : Style
+        public static bool FromXml<T>(XElement config, ObjectsMap map, bool invert, bool typeChanged, out T style) where T : Style
         {
             var type = IntToType(config.GetAttrValue<int>("T"));
 
             if (SingletonManager<StyleTemplateManager>.Instance.GetDefault<T>(type) is T defaultStyle)
             {
                 style = defaultStyle;
-                style.FromXml(config, map, invert);
+                style.FromXml(config, map, invert, typeChanged);
                 return true;
             }
             else
@@ -123,7 +123,7 @@ namespace NodeMarkup.Manager
             Width.ToXml(config);
             return config;
         }
-        public virtual void FromXml(XElement config, ObjectsMap map, bool invert)
+        public virtual void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             Color.FromXml(config, DefaultColor);
             Width.FromXml(config, DefaultWidth);
