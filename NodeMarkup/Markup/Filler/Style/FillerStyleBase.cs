@@ -112,9 +112,9 @@ namespace NodeMarkup.Manager
             MedianOffset.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             LineOffset.FromXml(config, DefaultOffset);
             MedianOffset.FromXml(config, DefaultOffset);
         }

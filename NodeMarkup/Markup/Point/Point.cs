@@ -152,7 +152,7 @@ namespace NodeMarkup.Manager
         public virtual void FromXml(XElement config, ObjectsMap map)
         {
             Offset.FromXml(config, 0);
-            Offset.Value *= (map.IsMirror ? -1 : 1);
+            Offset.Value *= (map.Invert ? -1 : 1);
         }
 
         public enum PointType
@@ -162,6 +162,7 @@ namespace NodeMarkup.Manager
             Normal = 4,
             Lane = 8,
 
+            [NotItem]
             All = Enter | Crosswalk | Normal | Lane,
         }
         public enum LocationType
@@ -415,13 +416,13 @@ namespace NodeMarkup.Manager
         public static string XmlName2 { get; } = "L2";
         public static bool FromHash(ulong hash, Markup markup, ObjectsMap map, out MarkupPointPair pair, out bool invert)
         {
-            var secondId = (int)hash;
             var firstId = (int)(hash >> 32);
+            var secondId = (int)hash;
 
             if (MarkupPoint.FromId(firstId, markup, map, out MarkupPoint first) && MarkupPoint.FromId(secondId, markup, map, out MarkupPoint second))
             {
-                pair = new MarkupPointPair(second, first);
-                invert = second.Id <= first.Id;
+                pair = new MarkupPointPair(first, second);
+                invert = first.Id >= second.Id;
                 return true;
             }
             else
@@ -434,7 +435,7 @@ namespace NodeMarkup.Manager
         public static MarkupPointPair FromPoints(MarkupPoint first, MarkupPoint second, out bool invert)
         {
             var pair = new MarkupPointPair(first, second);
-            invert = second.Id <= first.Id;
+            invert = first.Id >= second.Id;
             return pair;
         }
 

@@ -69,14 +69,9 @@ namespace NodeMarkup.Tools
             }
         }
 
-        //public override void OnMouseDown(Event e)
-        //{
-        //    if (!IsSelectPoint && IsHoverPoint && Utility.CtrlIsPressed)
-        //        Tool.SetMode(ToolModeType.DragPoint);
-        //}
         public override void OnMouseDrag(Event e)
         {
-            if (!IsSelectPoint && IsHoverPoint)
+            if (!IsSelectPoint && IsHoverPoint && HoverPoint.Type == MarkupPoint.PointType.Enter)
                 Tool.SetMode(ToolModeType.DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)
@@ -265,19 +260,16 @@ namespace NodeMarkup.Tools
 
         private void RenderRegularConnectLine(RenderManager.CameraInfo cameraInfo)
         {
-            var bezier = new Bezier3()
-            {
-                a = SelectPoint.MarkerPosition,
-                b = HoverPoint.Enter == SelectPoint.Enter ? HoverPoint.MarkerPosition - SelectPoint.MarkerPosition : SelectPoint.Direction,
-                c = HoverPoint.Enter == SelectPoint.Enter ? SelectPoint.MarkerPosition - HoverPoint.MarkerPosition : HoverPoint.Direction,
-                d = HoverPoint.MarkerPosition,
-            };
+            var startPos = SelectPoint.MarkerPosition;
+            var endPos = HoverPoint.MarkerPosition;
+            var startDir = HoverPoint.Enter == SelectPoint.Enter ? HoverPoint.MarkerPosition - SelectPoint.MarkerPosition : SelectPoint.Direction;
+            var endDir = HoverPoint.Enter == SelectPoint.Enter ? SelectPoint.MarkerPosition - HoverPoint.MarkerPosition : HoverPoint.Direction;
+            var bezier = new BezierTrajectory(startPos, startDir, endPos, endDir, smooth: true);
 
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
             var color = Tool.Markup.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
 
-            NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            bezier.RenderBezier(new OverlayData(cameraInfo) { Color = color });
+            bezier.Render(new OverlayData(cameraInfo) { Color = color });
         }
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -317,9 +309,9 @@ namespace NodeMarkup.Tools
 
                 var trajectories = new List<ITrajectory>()
                 {
-                    new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidthA, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidthB, trajectory.EndDirection),
+                    new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidthA, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidthB, trajectory.EndDirection, smooth: true),
                     new StraightTrajectory(trajectory.EndPosition + endNormal * halfWidthB, trajectory.EndPosition - endNormal * halfWidthB),
-                    new BezierTrajectory(trajectory.EndPosition - endNormal * halfWidthB, trajectory.EndDirection, trajectory.StartPosition - startNormal * halfWidthA, trajectory.StartDirection),
+                    new BezierTrajectory(trajectory.EndPosition - endNormal * halfWidthB, trajectory.EndDirection, trajectory.StartPosition - startNormal * halfWidthA, trajectory.StartDirection, smooth: true),
                     new StraightTrajectory(trajectory.StartPosition - startNormal * halfWidthA, trajectory.StartPosition + startNormal * halfWidthA),
                 };
 

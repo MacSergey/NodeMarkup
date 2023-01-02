@@ -111,9 +111,9 @@ namespace NodeMarkup.Manager
             Offset.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             ColorCount.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
@@ -182,9 +182,9 @@ namespace NodeMarkup.Manager
             SpaceLength.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
         }
@@ -266,9 +266,9 @@ namespace NodeMarkup.Manager
             Offset.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             ColorCount.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
@@ -369,9 +369,9 @@ namespace NodeMarkup.Manager
             SpaceLength.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             ColorCount.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             Offset.FromXml(config, DefaultDoubleOffset);
@@ -450,9 +450,9 @@ namespace NodeMarkup.Manager
             Space.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Base.FromXml(config, DefaultSharkBaseLength);
             Height.FromXml(config, DefaultSharkHeight);
             Space.FromXml(config, DefaultSharkSpaceLength);
@@ -490,7 +490,7 @@ namespace NodeMarkup.Manager
             Elevation.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             Width.FromXml(config, Default3DWidth);
             Elevation.FromXml(config, Default3DHeigth);

@@ -65,7 +65,7 @@ namespace NodeMarkup.Manager
         {
             filler = default;
 
-            if (config.Element(Manager.Style.XmlName) is not XElement styleConfig || !Manager.Style.FromXml(styleConfig, map, false, out FillerStyle style))
+            if (config.Element(Manager.Style.XmlName) is not XElement styleConfig || !Manager.Style.FromXml(styleConfig, map, false, false, out FillerStyle style))
                 return false;
 
             var vertixes = config.Elements(FillerVertex.XmlName).Select(e => FillerVertex.FromXml(e, markup, map, out IFillerVertex vertex) ? vertex : null).ToArray();

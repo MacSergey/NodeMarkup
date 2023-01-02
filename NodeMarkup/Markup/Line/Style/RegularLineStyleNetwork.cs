@@ -82,13 +82,10 @@ namespace NodeMarkup.Manager
             if (!IsValid)
                 return new MarkupPartGroupData(lod);
 
-            if (Invert)
-                trajectory = trajectory.Invert();
-
             if (Shift != 0)
             {
-                var startNormal = trajectory.StartDirection.Turn90(!Invert);
-                var endNormal = trajectory.EndDirection.Turn90(Invert);
+                var startNormal = trajectory.StartDirection.Turn90(Invert);
+                var endNormal = trajectory.EndDirection.Turn90(!Invert);
 
                 trajectory = new BezierTrajectory(trajectory.StartPosition + startNormal * Shift, trajectory.StartDirection, trajectory.EndPosition + endNormal * Shift, trajectory.EndDirection);
             }
@@ -99,7 +96,11 @@ namespace NodeMarkup.Manager
 
             var startT = OffsetBefore == 0f ? 0f : trajectory.Travel(OffsetBefore);
             var endT = OffsetAfter == 0f ? 1f : 1f - trajectory.Invert().Travel(OffsetAfter);
-            trajectory = trajectory.Cut(startT, endT);
+            if (startT != 0 || endT != 1)
+                trajectory = trajectory.Cut(startT, endT);
+
+            if (Invert)
+                trajectory = trajectory.Invert();
 
             var count = Mathf.CeilToInt(trajectory.Length / RepeatDistance);
             var trajectories = new ITrajectory[count];
@@ -270,9 +271,9 @@ namespace NodeMarkup.Manager
             Invert.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Prefab.FromXml(config, null);
             Shift.FromXml(config, DefaultObjectShift);
             Elevation.FromXml(config, DefaultObjectElevation);
@@ -281,11 +282,16 @@ namespace NodeMarkup.Manager
             OffsetBefore.FromXml(config, DefaultObjectOffsetBefore);
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
             Invert.FromXml(config, false);
-            Invert.Value ^= map.IsMirror ^ invert;
+            Invert.Value = Invert.Value ^ map.Invert ^ invert ^  typeChanged;
 
-            if (map.IsMirror ^ invert)
+            if (invert)
             {
                 Shift.Value = -Shift.Value;
+
+                var offsetBefore = OffsetBefore.Value;
+                var offsetAfter = OffsetAfter.Value;
+                OffsetBefore.Value = offsetAfter;
+                OffsetAfter.Value = offsetBefore;
             }
         }
     }

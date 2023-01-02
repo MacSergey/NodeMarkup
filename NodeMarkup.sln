@@ -109,6 +109,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeManager", "ModsComm
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeShared.ro-RO", "ModsCommon\LocalizeShared\ro-RO\LocalizeShared.ro-RO.shproj", "{A7F303AF-C11E-4DD8-A195-6D0D459DEE53}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NodeMarkup.API", "NodeMarkup.API\NodeMarkup.API.csproj", "{16C76852-24D6-429F-96D0-DD8AC15E3512}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Beta Debug|Any CPU = Beta Debug|Any CPU
@@ -141,6 +143,14 @@ Global
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Stable Debug|Any CPU.Build.0 = Debug|Any CPU
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Stable Release|Any CPU.ActiveCfg = Release|Any CPU
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Stable Release|Any CPU.Build.0 = Release|Any CPU
+		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Beta Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Beta Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Beta Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Beta Release|Any CPU.Build.0 = Release|Any CPU
+		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Stable Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Stable Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Stable Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Stable Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,12 +209,12 @@ Global
 		{A7F303AF-C11E-4DD8-A195-6D0D459DEE53} = {78F18B58-7B26-46A8-B934-FFFE6DD7B29E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_RemoveEmptyEntries = False
-		RESX_ConfirmAddLanguageFile = True
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ExcelExportMode = MultipleSheets
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		RESX_ExcelExportMode = MultipleSheets
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ConfirmAddLanguageFile = True
+		RESX_RemoveEmptyEntries = False
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ModsCommon\HeaderShared\HeaderShared.projitems*{0bf47c3f-c968-4759-8d99-d088b0d58fba}*SharedItemsImports = 13

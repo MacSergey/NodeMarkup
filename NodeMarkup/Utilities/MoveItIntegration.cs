@@ -55,7 +55,7 @@ namespace NodeMarkup.Utilities
                     continue;
 
                 map.AddSegment(source.Key.NetSegment, source.Value.NetSegment);
-                map.AddMirrorEnter(enter);
+                map.AddInvertEnter(enter);
             }
             return map;
 
