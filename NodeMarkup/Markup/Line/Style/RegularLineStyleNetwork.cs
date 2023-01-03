@@ -29,7 +29,7 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Scale { get; }
         public PropertyValue<int> RepeatDistance { get; }
         public PropertyBoolValue Invert { get; }
-        private bool InvertShift { get; set; }
+        //private bool InvertShift { get; set; }
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -85,8 +85,8 @@ namespace NodeMarkup.Manager
 
             if (Shift != 0)
             {
-                var startNormal = trajectory.StartDirection.Turn90(!InvertShift);
-                var endNormal = trajectory.EndDirection.Turn90(InvertShift);
+                var startNormal = trajectory.StartDirection.Turn90(true);
+                var endNormal = trajectory.EndDirection.Turn90(false);
 
                 trajectory = new BezierTrajectory(trajectory.StartPosition + startNormal * Shift, trajectory.StartDirection, trajectory.EndPosition + endNormal * Shift, trajectory.EndDirection);
             }
@@ -173,8 +173,8 @@ namespace NodeMarkup.Manager
             shiftProperty.MaxValue = 50;
             shiftProperty.CanCollapse = canCollapse;
             shiftProperty.Init();
-            shiftProperty.Value = InvertShift ? -Shift : Shift;
-            shiftProperty.OnValueChanged += (float value) => Shift.Value = InvertShift ? -value : value;
+            shiftProperty.Value = Shift;
+            shiftProperty.OnValueChanged += (float value) => Shift.Value = value;
 
             return shiftProperty;
         }
@@ -296,8 +296,6 @@ namespace NodeMarkup.Manager
             OffsetBefore.FromXml(config, DefaultObjectOffsetBefore);
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
             Invert.FromXml(config, false);
-            InvertShift = Invert;
-            Invert.Value = Invert.Value ^ map.Invert ^ invert ^ typeChanged;
 
             if (invert)
             {
@@ -309,6 +307,7 @@ namespace NodeMarkup.Manager
 
             if (map.Invert ^ invert ^ typeChanged)
             {
+                Invert.Value = !Invert.Value;
                 Shift.Value = -Shift.Value;
             }
         }
