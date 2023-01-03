@@ -44,6 +44,8 @@ namespace NodeMarkup.Utilities
         public static string CutHeaderButton => nameof(CutHeaderButton);
         public static string BeetwenIntersectionsHeaderButton => nameof(BeetwenIntersectionsHeaderButton);
         public static string WholeStreetHeaderButton => nameof(WholeStreetHeaderButton);
+        public static string LinkHeaderButton => nameof(LinkHeaderButton);
+        public static string UnlinkHeaderButton => nameof(UnlinkHeaderButton);
 
         public static string TurnLeftOrderButton => nameof(TurnLeftOrderButton);
         public static string FlipOrderButton => nameof(FlipOrderButton);
@@ -111,6 +113,8 @@ namespace NodeMarkup.Utilities
             spriteParams[CutHeaderButton] = new RectOffset();
             spriteParams[BeetwenIntersectionsHeaderButton] = new RectOffset();
             spriteParams[WholeStreetHeaderButton] = new RectOffset();
+            spriteParams[LinkHeaderButton] = new RectOffset();
+            spriteParams[UnlinkHeaderButton] = new RectOffset();
 
             //OrderButtons
             spriteParams[TurnLeftOrderButton] = new RectOffset();

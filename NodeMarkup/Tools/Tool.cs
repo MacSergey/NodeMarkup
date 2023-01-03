@@ -395,6 +395,21 @@ namespace NodeMarkup.Tools
                 SetMode(ToolModeType.PasteEntersOrder);
             }
         }
+        public static void ApplyDefaultMarking(NetInfo info, ushort segmentId, ushort startNode, ushort endNode)
+        {
+            if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var presetId) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset))
+            {
+                var map = new ObjectsMap();
+                map.AddNode(preset.Enters[0].Id, startNode);
+                map.AddNode(preset.Enters[1].Id, endNode);
+
+                var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];
+                markup.FromXml(SingletonMod<Mod>.Version, preset.Data, map);
+            }
+            else
+                SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segmentId, startNode, endNode);
+        }
+
         private int[] MatchMarkings(int[] source, int[] target)
         {
             var matches = new List<int>();

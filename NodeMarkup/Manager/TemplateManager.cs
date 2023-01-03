@@ -72,6 +72,8 @@ namespace NodeMarkup.Manager
         protected Dictionary<Guid, TemplateType> TemplatesDictionary { get; } = new Dictionary<Guid, TemplateType>();
         public IEnumerable<TemplateType> Templates => TemplatesDictionary.Values;
 
+        public bool TryGetTemplate(Guid templateId, out TemplateType template) => TemplatesDictionary.TryGetValue(templateId, out template);
+
         #region SAVE&LOAD
 
         public void TemplateChanged(TemplateType template)
@@ -359,20 +361,79 @@ namespace NodeMarkup.Manager
     public class RoadTemplateManager : DataManager
     {
         public override SavedString Saved => Settings.Roads;
-        private Dictionary<string, float[]> Templates { get; set; } = new Dictionary<string, float[]>();
+        private Dictionary<string, Data> Templates { get; set; } = new Dictionary<string, Data>();
 
-        public bool TryGetOffsets(string name, out float[] offsets) => Templates.TryGetValue(name, out offsets);
+        public bool TryGetOffsets(string name, out float[] offsets)
+        {
+            if (Templates.TryGetValue(name, out var data))
+            {
+                offsets = data.offsets;
+                return offsets != null;
+            }
+            else
+            {
+                offsets = null;
+                return false;
+            }
+        }
         public void SaveOffsets(string name, float[] offsets)
         {
-            Templates[name] = offsets;
+            Templates.TryGetValue(name, out var data);
+            data.offsets = offsets;
+            Templates[name] = data;
             SaveData();
         }
         public void RevertOffsets(string name)
         {
-            Templates.Remove(name);
+            Templates.TryGetValue(name, out var data);
+
+            if (data.preset == Guid.Empty)
+                Templates.Remove(name);
+            else
+            {
+                data.offsets = null;
+                Templates[name] = data;
+            }
+
             SaveData();
         }
-        public bool Contains(string name) => Templates.ContainsKey(name);
+        public bool TryGetPreset(string name, out Guid preset) 
+        {
+            if (Templates.TryGetValue(name, out var data))
+            {
+                preset = data.preset;
+                return preset != Guid.Empty;
+            }
+            else
+            {
+                preset = Guid.Empty;
+                return false;
+            }
+        }
+        public void SavePreset(string name, Guid preset)
+        {
+            Templates.TryGetValue(name, out var data);
+            data.preset = preset;
+            Templates[name] = data;
+            SaveData();
+        }
+        public void RevertPreset(string name)
+        {
+            Templates.TryGetValue(name, out var data);
+
+            if (data.offsets == null)
+                Templates.Remove(name);
+            else
+            {
+                data.preset = Guid.Empty;
+                Templates[name] = data;
+            }
+
+            SaveData();
+        }
+
+        public bool ContainsOffset(string name) => Templates.TryGetValue(name, out var data) && data.offsets != null;
+        public bool ContainsPreset(string name) => Templates.TryGetValue(name, out var data) && data.preset != Guid.Empty;
 
         protected override void LoadData()
         {
@@ -423,7 +484,10 @@ namespace NodeMarkup.Manager
             {
                 var roadConfig = new XElement("R");
                 roadConfig.AddAttr("N", template.Key);
-                roadConfig.AddAttr("O", string.Join("|", template.Value.Select(v => v.ToString("0.###")).ToArray()));
+                if (template.Value.offsets != null)
+                    roadConfig.AddAttr("O", string.Join("|", template.Value.offsets.Select(v => v.ToString("0.###")).ToArray()));
+                if (template.Value.preset != Guid.Empty)
+                    roadConfig.AddAttr("P", template.Value.preset);
                 config.Add(roadConfig);
             }
 
@@ -438,19 +502,37 @@ namespace NodeMarkup.Manager
                 if (string.IsNullOrEmpty(name))
                     continue;
 
-                var values = new List<float>();
-                var valuesStr = templateConfig.GetAttrValue("O", string.Empty);
-                foreach (var str in valuesStr.Split('|'))
+                var offsets = default(float[]);
+                var offsetStr = templateConfig.GetAttrValue("O", string.Empty).Split('|');
+                if (offsetStr.Length > 0)
                 {
-                    if (float.TryParse(str, out var value))
-                        values.Add(value);
+                    offsets = new float[offsetStr.Length];
+                    for (int i = 0; i < offsetStr.Length; i += 1)
+                    {
+                        if (float.TryParse(offsetStr[i], out var value))
+                            offsets[i] = value;
+                    }
                 }
 
-                if (values.Count > 0)
-                    Templates[name] = values.ToArray();
+                var preset = new Guid(templateConfig.GetAttrValue("P", string.Empty));
+
+                if (offsets != null || preset != Guid.Empty)
+                {
+                    Templates[name] = new Data()
+                    {
+                        preset = preset,
+                        offsets = offsets,
+                    };
+                }
             }
         }
 
         #endregion
+
+        private struct Data
+        {
+            public float[] offsets;
+            public Guid preset;
+        }
     }
 }

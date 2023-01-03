@@ -1801,4 +1801,13 @@ underground mode</value>
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Link this preset to network asset</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Unink this preset from network asset</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Linked</value>
+  </data>
 </root>

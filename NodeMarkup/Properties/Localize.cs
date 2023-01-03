@@ -2499,5 +2499,20 @@ namespace NodeMarkup
 		/// Start
 		/// </summary>
 		public static string StyleOption_TextAlignmentStart => LocaleManager.GetString("StyleOption_TextAlignmentStart", Culture);
+
+		/// <summary>
+		/// Link this preset to network asset
+		/// </summary>
+		public static string PresetEditor_LinkPreset => LocaleManager.GetString("PresetEditor_LinkPreset", Culture);
+
+		/// <summary>
+		/// Unink this preset from network asset
+		/// </summary>
+		public static string PresetEditor_UnlinkPreset => LocaleManager.GetString("PresetEditor_UnlinkPreset", Culture);
+
+		/// <summary>
+		/// Linked
+		/// </summary>
+		public static string PresetEditor_PresetFit_Linked => LocaleManager.GetString("PresetEditor_PresetFit_Linked", Culture);
 	}
 }

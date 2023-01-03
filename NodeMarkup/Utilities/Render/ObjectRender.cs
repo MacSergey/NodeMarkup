@@ -118,7 +118,7 @@ namespace NodeMarkup.Utilities
                     info.m_material.SetVectorArray(instance.ID_RollParams, info.m_rollParams);
                 }
                 instance.m_drawCallData.m_defaultCalls++;
-                Graphics.DrawMesh(info.m_mesh, matrix, info.m_material, info.m_prefabDataLayer, null, 0, materialBlock);
+                Graphics.DrawMesh(info.m_mesh, matrix, info.m_material, RenderHelper.RoadLayer, null, 0, materialBlock);
             }
             else if (info.m_lodMaterialCombined == null)
             {
@@ -135,7 +135,7 @@ namespace NodeMarkup.Utilities
                     info.m_material.SetVectorArray(instance2.ID_RollParams, info.m_rollParams);
                 }
                 instance2.m_drawCallData.m_defaultCalls++;
-                Graphics.DrawMesh(info.m_lodMesh, matrix, info.m_lodMaterial, info.m_prefabDataLayer, null, 0, materialBlock2);
+                Graphics.DrawMesh(info.m_lodMesh, matrix, info.m_lodMaterial, RenderHelper.RoadLayer, null, 0, materialBlock2);
             }
             else
             {
@@ -179,7 +179,7 @@ namespace NodeMarkup.Utilities
                 materialBlock.SetColor(instance.ID_Color, value);
                 materialBlock.SetVector(instance.ID_ObjectIndex, objectIndex);
                 instance.m_drawCallData.m_defaultCalls++;
-                Graphics.DrawMesh(info.m_mesh, matrix, info.m_material, info.m_prefabDataLayer, null, 0, materialBlock);
+                Graphics.DrawMesh(info.m_mesh, matrix, info.m_material, RenderHelper.RoadLayer, null, 0, materialBlock);
             }
             else
             {

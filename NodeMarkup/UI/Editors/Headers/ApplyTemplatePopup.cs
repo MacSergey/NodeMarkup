@@ -62,7 +62,7 @@ namespace NodeMarkup.UI.Editors
             foreach (var template in templates)
             {
                 var item = ComponentPool.Get<TemplatePopupItem>(Content);
-                item.Init(template);
+                item.Init(null, template);
                 item.eventClick += ItemClick;
             }
         }

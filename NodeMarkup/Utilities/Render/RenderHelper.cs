@@ -46,6 +46,8 @@ namespace NodeMarkup.Utilities
 
 
         public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
+        public static int RoadLayer => 9;
+
         private static int[] VerticesIdxs { get; } = new int[]
 {
             1,3,2,0,// Bottom

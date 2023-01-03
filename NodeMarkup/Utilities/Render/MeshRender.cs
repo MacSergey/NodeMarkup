@@ -85,7 +85,7 @@ namespace NodeMarkup.Utilities
                 instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, RenderHelper.SurfaceALib[materialType]);
                 instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, RenderHelper.SurfaceBLib[materialType]);
 
-                Graphics.DrawMesh(Meshes[i], Position, Quaternion.identity, RenderHelper.MaterialLib[materialType], 0, null, 0, instance.m_materialBlock, CastShadow, ReceiveShadow);
+                Graphics.DrawMesh(Meshes[i], Position, Quaternion.identity, RenderHelper.MaterialLib[materialType], RenderHelper.RoadLayer, null, 0, instance.m_materialBlock, CastShadow, ReceiveShadow);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
 using System;
@@ -51,8 +52,22 @@ namespace NodeMarkup.UI.Editors
         {
             base.AddHeader();
             HeaderPanel.OnApply += Apply;
+            HeaderPanel.OnLink += Link;
         }
         private void Apply() => Tool.ApplyIntersectionTemplate(EditObject);
+        private void Link()
+        {
+            if (Markup.Type == MarkupType.Segment)
+            {
+                var roadName = Markup.Id.GetSegment().Info.name;
+                if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(roadName, out var preset) && preset == EditObject.Id)
+                    SingletonManager<RoadTemplateManager>.Instance.RevertPreset(roadName);
+                else
+                    SingletonManager<RoadTemplateManager>.Instance.SavePreset(roadName, EditObject.Id);
+            }
+            ItemsPanel.RefreshItems();
+            HeaderPanel.Refresh();
+        }
         protected override bool SaveAsset(IntersectionTemplate template) => SingletonManager<IntersectionTemplateManager>.Instance.MakeAsset(template);
     }
 
@@ -124,6 +139,8 @@ namespace NodeMarkup.UI.Editors
 
         protected override IntersectionTemplateFit SelectGroup(IntersectionTemplate editObject)
         {
+            if (Editor.Markup.Type == MarkupType.Segment && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Markup.Id.GetSegment().Info.name, out var preset) && preset == editObject.Id)
+                return IntersectionTemplateFit.Link;
             if (editObject.Enters.Length != Tool.Markup.EntersCount)
                 return IntersectionTemplateFit.Poor;
             else if (PointsMatch(editObject, Tool.Markup))
@@ -193,6 +210,9 @@ namespace NodeMarkup.UI.Editors
     }
     public enum IntersectionTemplateFit
     {
+        [Description(nameof(Localize.PresetEditor_PresetFit_Linked))]
+        Link,
+
         [Description(nameof(Localize.PresetEditor_PresetFit_Perfect))]
         Perfect,
 
@@ -208,6 +228,13 @@ namespace NodeMarkup.UI.Editors
 
     public class IntersectionTemplateItem : EditItem<IntersectionTemplate, IntersectionTemplateIcon>
     {
+        private bool IsLinked => Editor.Markup.Type == MarkupType.Segment && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Markup.Id.GetSegment().Info.name, out var preset) && preset == Object.Id;
+
+        public override Color32 NormalColor => IsLinked ? new Color32(255, 197, 0, 255) : base.NormalColor;
+        public override Color32 HoveredColor => IsLinked ? new Color32(255, 207, 51, 255) : base.HoveredColor;
+        public override Color32 PressedColor => IsLinked ? new Color32(255, 218, 72, 255) : base.PressedColor;
+        public override Color32 FocusColor => IsLinked ? new Color32(255, 228, 92, 255) : base.FocusColor;
+
         public override bool ShowDelete => !Object.IsAsset;
 
         public override void Refresh()
