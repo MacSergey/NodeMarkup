@@ -857,7 +857,7 @@ Do you want to apply the markings manually?</value>
     <value>Hold {0} to create a filler</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Drag with {0} to move the point</value>
+    <value>Hold {0} and drag a point to change offset</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>[WARNING] Default templates setting will be reset.
@@ -1809,5 +1809,8 @@ underground mode</value>
   </data>
   <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
     <value>Linked</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Drag a point to change offset</value>
   </data>
 </root>

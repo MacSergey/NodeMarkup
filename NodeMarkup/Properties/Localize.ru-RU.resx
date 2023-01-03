@@ -859,7 +859,7 @@
     <value>Зажмите {0} для создания заполнителя</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Зажмите {0} чтобы перетащить точку</value>
+    <value>Зажмите {0} и перетащите точку для изменения отступа</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>[WARNING] Настройки шаблонов по умолчанию будут сброшены.
@@ -1810,5 +1810,8 @@
   </data>
   <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
     <value>Связанный</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Перетащите точку для изменения отступа</value>
   </data>
 </root>

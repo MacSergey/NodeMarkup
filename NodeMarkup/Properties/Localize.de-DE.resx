@@ -1694,7 +1694,14 @@ zu verlassen</value>
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>Anfang</value>
   </data>
-  
-  
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Diese Vorlage mit dem Netzwerk verknüpfen</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Die Verknüpfung dieser Vorlage mit dem Netzwerk aufheben</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Verknüpft</value>
+  </data>
   
 </root>

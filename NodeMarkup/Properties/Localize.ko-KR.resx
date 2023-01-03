@@ -1633,7 +1633,14 @@
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>시작</value>
   </data>
-  
-  
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>이 프리셋을 네트워크 에셋에 연결</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>이 프리셋을 네트워크 에셋에서 연결 해제</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>연결됨</value>
+  </data>
   
 </root>

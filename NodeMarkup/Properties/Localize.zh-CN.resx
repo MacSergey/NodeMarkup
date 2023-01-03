@@ -1694,7 +1694,14 @@
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>起始点</value>
   </data>
-  
-  
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>将此预设应用到网络（道路）资产</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>将此预设从网络（道路）资产上解除应用</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>已关联</value>
+  </data>
   
 </root>

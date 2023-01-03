@@ -1001,10 +1001,10 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
     <value>Solo se puede eliminar del administrador de contenido del juego.</value>
   </data>
   <data name="PresetEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Este preajusto no se puede modificar. Solo se puede eliminar del administrador de contenido del juego o cancelar la suscripción en Steam Workshop.</value>
+    <value>Este preajuste no se puede modificar. Solo se puede eliminar desde el gestor de contenidos o cancelando la suscripción en Steam Workshop.</value>
   </data>
   <data name="PresetEditor_PresetIsAsset" xml:space="preserve">
-    <value>Este preajusto es un recurso.</value>
+    <value>Este preajuste es un recurso.</value>
   </data>
   <data name="TemplateEditor_IsAssetWarningMessage" xml:space="preserve">
     <value>Solo se puede eliminar del administrador de contenido del juego.</value>
@@ -1016,10 +1016,10 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
     <value>Esta plantilla es un recurso.</value>
   </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>preajusto</value>
+    <value>preajuste</value>
   </data>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>preajusto</value>
+    <value>preajuste</value>
   </data>
   
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
@@ -1639,5 +1639,8 @@ para modo subterráneo</value>
   </data>
   <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
     <value>Vinculado</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Arrastrar un punto para cambiar desplazamiento</value>
   </data>
 </root>

@@ -1635,7 +1635,14 @@
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>始点</value>
   </data>
-  
-  
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>ネットワークアセットにプリセットをリンク</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>ネットワークアセットからプリセットのリンクを解除</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>リンク済</value>
+  </data>
   
 </root>
