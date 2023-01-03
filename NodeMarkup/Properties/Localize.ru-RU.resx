@@ -1802,4 +1802,13 @@
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>Начало</value>
   </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Связать этот трафарек с дорожным ассетом</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Отвязать этот трафарет от дорожного ассета</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Связанный</value>
+  </data>
 </root>

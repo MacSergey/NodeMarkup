@@ -1682,7 +1682,18 @@ zu verlassen</value>
   <data name="StyleOption_ZigzagStep" xml:space="preserve">
     <value>Schritt</value>
   </data>
-  
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Ausrichtung</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>Ende</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Mitte</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Anfang</value>
+  </data>
   
   
   

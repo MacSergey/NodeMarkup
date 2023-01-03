@@ -297,7 +297,7 @@ Los datos restaurados reemplazarán todas las marcas existentes.</value>
 Haga clic para editar las marcas</value>
   </data>
   <data name="Tool_SelectInfo" xml:space="preserve">
-    <value>Seleccione un nodo o un segmento para editar las marcas</value>
+    <value>Seleccione un nodo o segmento para editar las marcas</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
     <value>Seleccione punto final para línea normal</value>
@@ -1630,5 +1630,14 @@ para modo subterráneo</value>
   </data>
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>Inicio</value>
+  </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Vincular preajuste a esta red</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Desvincular preajuste a esta red</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Vinculado</value>
   </data>
 </root>

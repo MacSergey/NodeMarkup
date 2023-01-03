@@ -437,7 +437,7 @@ Pour créer un remplisseur, maintenez {0} ou appuyez sur {1}.</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>La liste des modèles est vide.
-Pour créer un modèle, cliquez {0} sur une ligne, passage piéton ou remplisseur.</value>
+Pour créer un modèle, cliquez sur {0} sur une ligne, passage piéton ou remplisseur.</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alignement</value>
@@ -774,13 +774,13 @@ Cliquez le cercle pour modifier l'ordre des points</value>
     <value>Voulez-vous vraiment supprimer tous les modèles ?</value>
   </data>
   <data name="Settings_DumpTemplatesButton" xml:space="preserve">
-    <value>Sauvegarder les modèles dans le fichier</value>
+    <value>Sauvegarder les modèles un fichier</value>
   </data>
   <data name="Settings_DumpTemplatesCaption" xml:space="preserve">
     <value>Sauvegarder les modèles</value>
   </data>
   <data name="Settings_RestoreTemplatesButton" xml:space="preserve">
-    <value>Restaurer les modèles depuis le fichier</value>
+    <value>Restaurer les modèles depuis un fichier</value>
   </data>
   <data name="Settings_RestoreTemplatesCaption" xml:space="preserve">
     <value>Restaurer les modèles</value>
@@ -1032,13 +1032,13 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
     <value>Réécriture de la ressource du préréglage</value>
   </data>
   <data name="PresetEditor_RewriteMessage" xml:space="preserve">
-    <value>Pour la renommer, il faut refaire la ressource. Continuer ?</value>
+    <value>Pour changer son nom, il faut réécrire le fichier de la ressource. Continuer ?</value>
   </data>
   <data name="TemplateEditor_RewriteCaption" xml:space="preserve">
     <value>Réécriture de la ressource du modèle</value>
   </data>
   <data name="TemplateEditor_RewriteMessage" xml:space="preserve">
-    <value>Pour le renommer, il faut refaire l'asset. Continuer ?</value>
+    <value>Pour changer son nom et ses valeurs, il faut réécrire le fichier de la ressource. Continuer ?</value>
   </data>
   <data name="CrosswalkEditor_BordersWarning" xml:space="preserve">
     <value>Pour mettre les bordures du passage piéton, il faut une ligne qui commence au même points que le passage piéton</value>
@@ -1084,10 +1084,10 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
     <value>Vous pouvez le supprimer uniquement depuis le gestionnaire de contenu.</value>
   </data>
   <data name="TemplateEditor_IsWorkshopWarningMessage" xml:space="preserve">
-    <value>Vous ne pouvez pas modifier le modèle et vous pouvez le supprimer uniquement depuis le gestionnaire de contenu ou en se désinscrivant depuis le Steam Workshop.</value>
+    <value>Ce modèle ne peut pas être modifié. Il peut uniquement être supprimé depuis le gestionnaire de contenu du jeu ou en se désabonnant sur le Steam Workshop.</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
-    <value>Ce préréglage est une ressource.</value>
+    <value>Ce modèle est une ressource.</value>
   </data>
   <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>préréglage</value>
@@ -1342,13 +1342,13 @@ Cliquez pour modifier le marquage</value>
     <value>Par le nombre de routes, puis par nom</value>
   </data>
   <data name="Settings_SortTemplateByAuthor" xml:space="preserve">
-    <value>Par l'auteur, puis par le type et puis le nom</value>
+    <value>Par auteur, puis par type, puis par nom</value>
   </data>
   <data name="Settings_SortTemplateByNames" xml:space="preserve">
-    <value>Par le nom, puis par le type</value>
+    <value>Par nom, puis par type</value>
   </data>
   <data name="Settings_SortTemplateByType" xml:space="preserve">
-    <value>Par le type, puis par le nom</value>
+    <value>Par type, puis par nom</value>
   </data>
   <data name="Settings_SortTemplateType" xml:space="preserve">
     <value>Trier les modèles</value>
@@ -1799,5 +1799,14 @@ le mode souterrain</value>
   </data>
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>Début</value>
+  </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Lier ce préréglage à la ressource du réseau</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Dissocier ce préréglage de la ressource du réseau</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Lié</value>
   </data>
 </root>
