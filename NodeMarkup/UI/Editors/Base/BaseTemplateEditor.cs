@@ -85,7 +85,7 @@ namespace NodeMarkup.UI.Editors
         protected virtual void AddHeader()
         {
             HeaderPanel = ComponentPool.Get<HeaderPanelType>(PropertiesPanel, nameof(HeaderPanel));
-            HeaderPanel.Init(EditObject);
+            HeaderPanel.Init(this, EditObject);
             HeaderPanel.OnSaveAsset += SaveAsset;
             HeaderPanel.OnEdit += StartEditTemplate;
             HeaderPanel.OnSave += SaveChanges;

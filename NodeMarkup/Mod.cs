@@ -1,6 +1,5 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
-using Epic.OnlineServices.Presence;
 using HarmonyLib;
 using ICities;
 using ModsCommon;
@@ -15,9 +14,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Resources;
 using UnityEngine;
-using static NetInfo;
 
 namespace NodeMarkup
 {
@@ -525,9 +522,6 @@ namespace NodeMarkup
 
         public static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.BuildingDecorationLoadPathsTranspiler<BuildingAssetDataExtension>(instructions);
 
-        public static void NetManagerCreateSegmentPostfix(NetInfo info, ushort segment, ushort startNode, ushort endNode)
-        {
-            SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segment, startNode, endNode);
-        }
+        public static void NetManagerCreateSegmentPostfix(NetInfo info, ushort segment, ushort startNode, ushort endNode) => NodeMarkupTool.ApplyDefaultMarking(info, segment, startNode, endNode);
     }
 }

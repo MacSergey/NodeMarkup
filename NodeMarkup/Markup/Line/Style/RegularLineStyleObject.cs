@@ -353,12 +353,18 @@ namespace NodeMarkup.Manager
 
             if (invert)
             {
-                Shift.Value = -Shift.Value;
-
                 var offsetBefore = OffsetBefore.Value;
                 var offsetAfter = OffsetAfter.Value;
                 OffsetBefore.Value = offsetAfter;
                 OffsetAfter.Value = offsetBefore;
+            }
+
+            if (map.Invert ^ invert ^ typeChanged)
+            {
+                Shift.Value = -Shift.Value;
+                var angleX = Angle.Value.x > 0 ? Angle.Value.x - 180 : Angle.Value.x + 180;
+                var angleY = Angle.Value.y > 0 ? Angle.Value.y - 180 : Angle.Value.y + 180;
+                Angle.Value = new Vector2(angleX, angleY);
             }
         }
     }

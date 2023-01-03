@@ -217,7 +217,7 @@ namespace NodeMarkup.UI.Editors
             }
             void SetEnable()
             {
-                buttonsPanel[revertIndex].isEnabled = SingletonManager<RoadTemplateManager>.Instance.Contains(point.Enter.RoadName);
+                buttonsPanel[revertIndex].isEnabled = SingletonManager<RoadTemplateManager>.Instance.ContainsOffset(point.Enter.RoadName);
             }
         }
 
@@ -276,9 +276,9 @@ namespace NodeMarkup.UI.Editors
     public class PointItem : EditItem<MarkupEnterPoint, ColorIcon>
     {
         public override bool ShowDelete => false;
-        public override void Init(MarkupEnterPoint editObject)
+        public override void Init(Editor editor, MarkupEnterPoint editObject)
         {
-            base.Init(editObject);
+            base.Init(editor, editObject);
             Icon.InnerColor = Object.Color;
         }
     }

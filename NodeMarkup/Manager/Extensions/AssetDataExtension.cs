@@ -2,6 +2,7 @@
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -127,9 +128,29 @@ namespace NodeMarkup
                 return false;
             }
         }
+        public override void OnPlaceAsset(NetInfo networkInfo, ushort segmentId, ushort startNodeId, ushort endNodeId)
+        {
+            if (AssetDatas.TryGetValue(networkInfo, out var assetData))
+            {
+                SingletonMod<Mod>.Logger.Debug($"Place asset {networkInfo.name}");
+
+                var version = MarkupManager.GetVersion(assetData.Config);
+
+                if (assetData.Config.Element(SegmentMarkup.XmlName) is XElement config)
+                {
+                    var map = CreateMap(true);
+                    map.AddSegment(assetData.SegmentId, segmentId);
+                    map.AddNode(assetData.StartNodeId, startNodeId);
+                    map.AddNode(assetData.EndNodeId, endNodeId);
+
+                    var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];
+                    markup.FromXml(version, config, map);
+                }
+            }
+        }
         protected override void PlaceAsset(XElement config, ObjectsMap map)
         {
-            MarkupManager.FromXml(config, map, true);
+            throw new NotImplementedException();
         }
     }
 }

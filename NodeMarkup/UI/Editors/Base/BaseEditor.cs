@@ -23,6 +23,7 @@ namespace NodeMarkup.UI.Editors
     public abstract class Editor : CustomUIPanel, ISupport
     {
         public NodeMarkupPanel Panel { get; private set; }
+        public Markup Markup => Panel.Markup;
 
         public abstract string Name { get; }
         public abstract Markup.SupportType Support { get; }
@@ -62,7 +63,6 @@ namespace NodeMarkup.UI.Editors
         protected static float ContentRatio => 1f - ItemsRatio;
 
         public NodeMarkupTool Tool => SingletonTool<NodeMarkupTool>.Instance;
-        protected Markup Markup => Panel.Markup;
         protected bool NeedUpdate { get; set; }
         public ObjectType EditObject => ItemsPanel.SelectedObject;
 

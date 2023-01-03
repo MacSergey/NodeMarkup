@@ -100,7 +100,7 @@ namespace NodeMarkup.Utilities
                     }
 
                     instance.m_drawCallData.m_defaultCalls++;
-                    Graphics.DrawMesh(data.segment.m_segmentMesh, data.position, Quaternion.identity, data.segment.m_segmentMaterial, 0, null, 0, instance.m_materialBlock);
+                    Graphics.DrawMesh(data.segment.m_segmentMesh, data.position, Quaternion.identity, data.segment.m_segmentMaterial, RenderHelper.RoadLayer, null, 0, instance.m_materialBlock);
                 }
                 else if (data.segment.m_combinedLod is NetInfo.LodValue combinedLod)
                 {

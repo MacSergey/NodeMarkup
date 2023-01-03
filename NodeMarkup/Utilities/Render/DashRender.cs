@@ -152,7 +152,7 @@ namespace NodeMarkup.Utilities
             materialBlock.SetVectorArray(instance.ID_PropColor, Colors);
             materialBlock.SetVector(RenderHelper.ID_DecalSize, Size);
 
-            Graphics.DrawMesh(Mesh, Matrix4x4.identity, Material, 9, null, 0, materialBlock);
+            Graphics.DrawMesh(Mesh, Matrix4x4.identity, Material, RenderHelper.RoadLayer, null, 0, materialBlock);
         }
     }
 }
