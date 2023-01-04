@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.12.0.297</AssemblyVersion>
+    <AssemblyVersion>1.12.0.303</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -88,6 +88,7 @@
     <None Remove="Resources\ButtonIcons\FixedFreeButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\ItalicButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\LeftToRightButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\PlusMinusButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\RegularButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\TopToBottomButtonIcons.png" />
     <None Remove="Resources\HeaderButtons\LinkHeaderButton.png" />
@@ -112,6 +113,7 @@
     <EmbeddedResource Include="Resources\ButtonIcons\FixedFreeButtonIcons.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\ItalicButtonIcons.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\LeftToRightButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\PlusMinusButtonIcons.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\RegularButtonIcons.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\TopToBottomButtonIcons.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\LinkHeaderButton.png">

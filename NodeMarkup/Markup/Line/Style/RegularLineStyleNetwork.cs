@@ -159,10 +159,11 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected FloatPropertyPanel AddShiftProperty(UIComponent parent, bool canCollapse)
+        protected FloatInvertedPropertyPanel AddShiftProperty(UIComponent parent, bool canCollapse)
         {
-            var shiftProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Shift));
+            var shiftProperty = ComponentPool.Get<FloatInvertedPropertyPanel>(parent, nameof(Shift));
             shiftProperty.Text = Localize.StyleOption_ObjectShift;
+            shiftProperty.FieldWidth = 100f;
             shiftProperty.Format = Localize.NumberFormat_Meter;
             shiftProperty.UseWheel = true;
             shiftProperty.WheelStep = 0.1f;
