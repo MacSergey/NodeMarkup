@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using static NodeMarkup.Manager.DistributionTypePanel;
 using static NodeMarkup.Manager.RegularLineStyleText;
+using static PathUnit;
 
 namespace NodeMarkup.Manager
 {
@@ -402,7 +403,10 @@ namespace NodeMarkup.Manager
                 var startNormal = trajectory.StartDirection.Turn90(true);
                 var endNormal = trajectory.EndDirection.Turn90(false);
 
-                trajectory = new BezierTrajectory(trajectory.StartPosition + startNormal * shift, trajectory.StartDirection, trajectory.EndPosition + endNormal * shift, trajectory.EndDirection);
+                if(trajectory is BezierTrajectory bezier)
+                    trajectory = new BezierTrajectory(bezier.StartPosition + startNormal * shift, bezier.StartDirection, bezier.EndPosition + endNormal * shift, bezier.EndDirection, bezier.StartT, bezier.EndT, true);
+                else
+                    trajectory = new BezierTrajectory(trajectory.StartPosition + startNormal * shift, trajectory.StartDirection, trajectory.EndPosition + endNormal * shift, trajectory.EndDirection, true, true, true);
             }
 
             var length = trajectory.Length;
@@ -499,7 +503,8 @@ namespace NodeMarkup.Manager
             var minAngle = Mathf.Min(Angle.Value.x, Angle.Value.y);
             var maxAngle = Mathf.Max(Angle.Value.x, Angle.Value.y);
             var randomAngle = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(maxAngle - minAngle));
-            item.Angle = trajectory.Tangent(t).AbsoluteAngle() + (minAngle + randomAngle) * Mathf.Deg2Rad;
+            item.AbsoluteAngle = trajectory.Tangent(t).AbsoluteAngle(); 
+            item.Angle = (minAngle + randomAngle) * Mathf.Deg2Rad;
 
             var randomTilt = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Tilt.Value.y - Tilt.Value.x));
             item.Tilt += (Tilt.Value.x + randomTilt) * Mathf.Deg2Rad;
@@ -514,7 +519,7 @@ namespace NodeMarkup.Manager
             {
                 var direction = trajectory.Tangent(t);
                 var flatDirection = direction.MakeFlat();
-                item.Slope = Vector3.Angle(flatDirection, direction) * Mathf.Deg2Rad;
+                item.Slope = Mathf.Sign(direction.y) * Vector3.Angle(flatDirection, direction) * Mathf.Deg2Rad;
             }
 
             var randomScale = SimulationManager.instance.m_randomizer.UInt32((uint)((Scale.Value.y - Scale.Value.x) * 1000f)) * 0.001f;

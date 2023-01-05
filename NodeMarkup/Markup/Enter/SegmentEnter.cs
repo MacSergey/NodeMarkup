@@ -20,6 +20,7 @@ namespace NodeMarkup.Manager
 
         public override int SideSign => IsStartSide ? -1 : 1;
         public override int NormalSign => -1;
+        public override bool IsSmooth => true;
 
         protected override bool IsExist => Id.ExistSegment();
 

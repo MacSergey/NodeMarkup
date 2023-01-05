@@ -177,7 +177,10 @@ namespace NodeMarkup.Manager
         public override Alignment Alignment => RawAlignment;
         public PropertyEnumValue<Alignment> RawAlignment { get; private set; }
         public PropertyBoolValue ClipSidewalk { get; private set; }
-
+#if DEBUG
+        public PropertyVector3Value StartDelta { get; private set; }
+        public PropertyVector3Value EndDelta { get; private set; }
+#endif
         public override bool IsSupportRules => true;
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
@@ -190,7 +193,10 @@ namespace NodeMarkup.Manager
         {
             RawAlignment = new PropertyEnumValue<Alignment>("A", AlignmentChanged, alignment);
             ClipSidewalk = new PropertyBoolValue("CS", ClipSidewalkChanged, DefaultClipSidewalk);
-
+#if DEBUG
+            StartDelta = new PropertyVector3Value(AlignmentChanged, Vector3.zero);
+            EndDelta = new PropertyVector3Value(AlignmentChanged, Vector3.zero);
+#endif
             if (update)
                 Update(true);
 
@@ -208,7 +214,82 @@ namespace NodeMarkup.Manager
             var startDir = PointPair.First.Direction;
             var endDir = PointPair.Second.Direction;
 
-            return new BezierTrajectory(startPos, startDir, endPos, endDir, smooth: true);
+            float startT;
+            float endT;
+            var isStraight = Markup.Type == MarkupType.Segment && NetSegment.IsStraight(PointPair.First.Enter.Position, PointPair.First.Enter.NormalDir, PointPair.Second.Enter.Position, PointPair.Second.Enter.NormalDir);
+            if (isStraight)
+            {
+                startT = PointPair.First.Enter.IsSmooth ? BezierTrajectory.curveT : BezierTrajectory.straightT;
+                endT = PointPair.Second.Enter.IsSmooth ? BezierTrajectory.curveT : BezierTrajectory.straightT;
+            }
+            else
+            {
+                startT = BezierTrajectory.curveT;
+                endT = BezierTrajectory.curveT;
+            }
+
+            var trajectory = new BezierTrajectory(startPos, startDir, endPos, endDir, startT, endT);
+
+            if(isStraight)
+                return trajectory;
+
+            var deltaH = Mathf.Abs(trajectory.StartPosition.y - trajectory.EndPosition.y) / trajectory.Length;
+            var startRelPos = PointPair.First.GetRelativePosition(RawAlignment);
+            var endRelPos = PointPair.Second.GetRelativePosition(RawAlignment.Value.Invert());
+            var deltaX = Mathf.Abs(startRelPos + endRelPos);
+            if (deltaH < 0.1f && deltaX < 2f)
+                return trajectory;
+
+            var startPosF = PointPair.First.Enter.GetPosition(-endRelPos);
+            var endPosF = PointPair.Second.Enter.GetPosition(-startRelPos);
+
+            var bezier = new Bezier3()
+            {
+                a = startPos,
+                d = endPos,
+            };
+            var bezierL = new Bezier3()
+            {
+                a = startPos,
+                d = endPosF,
+            };
+            var bezierR = new Bezier3()
+            {
+                a = startPosF,
+                d = endPos,
+            };
+
+            BezierTrajectory.GetMiddlePoints(startPos, startDir, endPos, endDir, startT, endT, startT, endT, out bezier.b, out bezier.c, out _, out _);
+            BezierTrajectory.GetMiddlePoints(startPos, startDir, endPosF, endDir, startT, endT, startT, endT, out bezierL.b, out bezierL.c, out _, out _);
+            BezierTrajectory.GetMiddlePoints(startPosF, startDir, endPos, endDir, startT, endT, startT, endT, out bezierR.b, out bezierR.c, out _, out _);
+
+            var middlePos = (bezierL.Position(0.5f) + bezierR.Position(0.5f)) * 0.5f;
+            var middleDir = VectorUtils.NormalizeXZ(bezier.Tangent(0.5f));
+            var middleDirLR = VectorUtils.NormalizeXZ(bezierL.Tangent(0.5f) + bezierR.Tangent(0.5f));
+            middleDir.y = middleDirLR.y;
+            middleDir.Normalize();
+
+            BezierTrajectory.GetMiddleDistance(startPos, startDir, middlePos, -middleDir, startT, BezierTrajectory.curveT, startT, BezierTrajectory.curveT, out var startDis, out var middleDis1, out _, out _);
+            BezierTrajectory.GetMiddleDistance(middlePos, middleDir, endPos, endDir, BezierTrajectory.curveT, endT, BezierTrajectory.curveT, endT, out var middleDis2, out var endDis, out _, out _);
+
+            var middleDis = (middleDis1 + middleDis2) * 0.5f;
+
+            var bezier1 = new Bezier3()
+            {
+                a = startPos,
+                b = startPos + startDir * startDis,
+                c = middlePos - middleDir * middleDis,
+                d = middlePos,
+            };
+            var bezier2 = new Bezier3()
+            {
+                a = middlePos,
+                b = middlePos + middleDir * middleDis,
+                c = endPos + endDir * endDis,
+                d = endPos,
+            };
+
+            return new CombinedTrajectory(new BezierTrajectory(bezier1), new BezierTrajectory(bezier2));
         }
         private void AlignmentChanged() => Markup.Update(this, true, true);
         private void ClipSidewalkChanged() => Markup.Update(this, true, false);
@@ -485,7 +566,6 @@ namespace NodeMarkup.Manager
             points.RenderArea(triangles, data);
         }
     }
-
     public class MarkupStopLine : MarkupLine
     {
         public override LineType Type => LineType.Stop;

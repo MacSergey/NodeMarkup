@@ -114,6 +114,10 @@ namespace NodeMarkup.UI.Editors
                     aligment.isVisible = IsSplit;
                     LineProperties.isVisible = clipSidewalk.isVisibleSelf || aligment.isVisibleSelf;
                 };
+#if DEBUG
+                AddStartCoef(line);
+                AddEndCoef(line);
+#endif
             }
             else if (editObject is MarkupStopLine stopLine)
             {
@@ -151,7 +155,32 @@ namespace NodeMarkup.UI.Editors
 
             return clipSidewalk;
         }
-
+#if DEBUG
+        private Vector3PropertyPanel AddStartCoef(MarkupRegularLine line)
+        {
+            var startCoef = ComponentPool.Get<Vector3PropertyPanel>(LineProperties, nameof(line.StartDelta));
+            startCoef.Text = "Start coef";
+            startCoef.FieldsWidth = 50f;
+            startCoef.WheelStep = new Vector3(0.1f, 0.1f, 0.1f);
+            startCoef.UseWheel = true;
+            startCoef.Init(0, 1, 2);
+            startCoef.Value = line.StartDelta;
+            startCoef.OnValueChanged += (Vector3 value) => line.StartDelta.Value = value;
+            return startCoef;
+        }
+        private Vector3PropertyPanel AddEndCoef(MarkupRegularLine line)
+        {
+            var endCoef = ComponentPool.Get<Vector3PropertyPanel>(LineProperties, nameof(line.EndDelta));
+            endCoef.Text = "End coef";
+            endCoef.FieldsWidth = 50f;
+            endCoef.WheelStep = new Vector3(0.1f, 0.1f, 0.1f);
+            endCoef.UseWheel = true;
+            endCoef.Init(0, 1, 2);
+            endCoef.Value = line.EndDelta;
+            endCoef.OnValueChanged += (Vector3 value) => line.EndDelta.Value = value;
+            return endCoef;
+        }
+#endif
         private void AddRulePanels(MarkupLine editObject)
         {
             foreach (var rule in editObject.Rules)

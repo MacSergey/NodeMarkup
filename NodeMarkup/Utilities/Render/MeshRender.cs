@@ -31,9 +31,21 @@ namespace NodeMarkup.Utilities
             var startNormal = trajectory.StartDirection.Turn90(true).MakeFlatNormalized();
             var endNormal = trajectory.EndDirection.Turn90(false).MakeFlatNormalized();
 
-            bool smooth = (trajectory is BezierTrajectory bezier) ? bezier.Smooth == true : true;
-            var bezierL = new BezierTrajectory(trajectory.StartPosition - startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition - endNormal * halfWidth, trajectory.EndDirection, smooth: smooth).Trajectory;
-            var bezierR = new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidth, trajectory.EndDirection, smooth: smooth).Trajectory;
+            float? startT;
+            float? endT;
+            if (trajectory is BezierTrajectory bezier)
+            {
+                startT = bezier.StartT;
+                endT = bezier.EndT;
+            }
+            else
+            {
+                startT = null;
+                endT = null;
+            }
+
+            var bezierL = new BezierTrajectory(trajectory.StartPosition - startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition - endNormal * halfWidth, trajectory.EndDirection, startT, endT).Trajectory;
+            var bezierR = new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidth, trajectory.EndDirection, startT, endT).Trajectory;
 
             left = NetSegment.CalculateControlMatrix(bezierL.a, bezierL.b, bezierL.c, bezierL.d, bezierR.a, bezierR.b, bezierR.c, bezierR.d, position, 0.05f);
             right = NetSegment.CalculateControlMatrix(bezierR.a, bezierR.b, bezierR.c, bezierR.d, bezierL.a, bezierL.b, bezierL.c, bezierL.d, position, 0.05f);

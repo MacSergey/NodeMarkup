@@ -14,6 +14,7 @@ namespace NodeMarkup.Utilities
     public struct MarkupPropItemData
     {
         public Vector3 Position;
+        public float AbsoluteAngle;
         public float Angle;
         public float Tilt;
         public float Slope;
@@ -52,10 +53,10 @@ namespace NodeMarkup.Utilities
             var instance = new InstanceID() { };
 
             foreach (var item in Items)
-                RenderInstance(cameraInfo, Info, instance, item.Position, item.Scale, item.Angle, item.Tilt, item.Slope, item.Color, new Vector4(), true);
+                RenderInstance(cameraInfo, Info, instance, item.Position, item.Scale, item.AbsoluteAngle, item.Angle, item.Tilt, item.Slope, item.Color, new Vector4(), true);
         }
 
-        public static void RenderInstance(RenderManager.CameraInfo cameraInfo, PropInfo info, InstanceID id, Vector3 position, float scale, float angle, float tilt, float slope, Color color, Vector4 objectIndex, bool active)
+        public static void RenderInstance(RenderManager.CameraInfo cameraInfo, PropInfo info, InstanceID id, Vector3 position, float scale, float absoluteAngle, float angle, float tilt, float slope, Color color, Vector4 objectIndex, bool active)
         {
             if (!info.m_prefabInitialized)
                 return;
@@ -63,7 +64,7 @@ namespace NodeMarkup.Utilities
             if (info.m_hasEffects && (active || info.m_alwaysActive))
             {
                 var matrix = default(Matrix4x4);
-                matrix.SetTRS(position, Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down), new Vector3(scale, scale, scale));
+                matrix.SetTRS(position, Quaternion.AngleAxis((absoluteAngle + angle) * Mathf.Rad2Deg, Vector3.down), new Vector3(scale, scale, scale));
                 var simulationTimeDelta = Singleton<SimulationManager>.instance.m_simulationTimeDelta;
                 for (int i = 0; i < info.m_effects.Length; i++)
                 {
@@ -103,7 +104,11 @@ namespace NodeMarkup.Utilities
             if (cameraInfo == null || cameraInfo.CheckRenderDistance(position, Settings.PropLODDistance))
             {
                 var matrix = default(Matrix4x4);
-                matrix.SetTRS(position, Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down) * Quaternion.AngleAxis(tilt * Mathf.Rad2Deg, Vector3.right) * Quaternion.AngleAxis(slope * Mathf.Rad2Deg, Vector3.forward), new Vector3(scale, scale, scale));
+                var rotation = Quaternion.AngleAxis(absoluteAngle * Mathf.Rad2Deg, Vector3.down);
+                rotation *= Quaternion.AngleAxis(slope * Mathf.Rad2Deg, Vector3.forward);
+                rotation *= Quaternion.AngleAxis(tilt * Mathf.Rad2Deg, Vector3.right);
+                rotation *= Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down);
+                matrix.SetTRS(position, rotation, new Vector3(scale, scale, scale));
                 var instance = Singleton<PropManager>.instance;
                 var materialBlock = instance.m_materialBlock;
                 materialBlock.Clear();
@@ -120,7 +125,11 @@ namespace NodeMarkup.Utilities
             else if (info.m_lodMaterialCombined == null)
             {
                 var matrix = default(Matrix4x4);
-                matrix.SetTRS(position, Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down) * Quaternion.AngleAxis(tilt * Mathf.Rad2Deg, Vector3.right) * Quaternion.AngleAxis(slope * Mathf.Rad2Deg, Vector3.forward), new Vector3(scale, scale, scale));
+                var rotation = Quaternion.AngleAxis(absoluteAngle * Mathf.Rad2Deg, Vector3.down);
+                rotation *= Quaternion.AngleAxis(slope * Mathf.Rad2Deg, Vector3.forward);
+                rotation *= Quaternion.AngleAxis(tilt * Mathf.Rad2Deg, Vector3.right);
+                rotation *= Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down);
+                matrix.SetTRS(position, rotation, new Vector3(scale, scale, scale));
                 var instance = Singleton<PropManager>.instance;
                 var materialBlock = instance.m_materialBlock;
                 materialBlock.Clear();

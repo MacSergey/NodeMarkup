@@ -171,10 +171,10 @@ namespace NodeMarkup.Manager
 
             var t = Alignment.Value switch
             {
-                TextAlignment.Start when line.Markup.Type == MarkupType.Node => trajectory.Length >= offset ? offset / trajectory.Length : 0.5f,
-                TextAlignment.Start when line.Markup.Type == MarkupType.Segment => trajectory.Length >= offset ? 1f - offset / trajectory.Length : 0.5f,
-                TextAlignment.End when line.Markup.Type == MarkupType.Node => trajectory.Length >= offset ? 1f - offset / trajectory.Length : 0.5f,
-                TextAlignment.End when line.Markup.Type == MarkupType.Segment => trajectory.Length >= offset ? offset / trajectory.Length : 0.5f,
+                TextAlignment.Start when line.Markup.Type == MarkupType.Node => trajectory.Length >= offset ? trajectory.Travel(offset) : 0.5f,
+                TextAlignment.Start when line.Markup.Type == MarkupType.Segment => trajectory.Length >= offset ?  1f - trajectory.Invert().Travel(offset) : 0.5f,
+                TextAlignment.End when line.Markup.Type == MarkupType.Node => trajectory.Length >= offset ? 1f - trajectory.Invert().Travel(offset) : 0.5f,
+                TextAlignment.End when line.Markup.Type == MarkupType.Segment => trajectory.Length >= offset ? trajectory.Travel(offset) : 0.5f,
                 _ => 0.5f,
             };
 

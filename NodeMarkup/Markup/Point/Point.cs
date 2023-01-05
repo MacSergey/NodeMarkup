@@ -127,6 +127,13 @@ namespace NodeMarkup.Manager
         {
             return Source.GetRelativePosition(Offset);
         }
+        public virtual float GetRelativePosition(Alignment alignment)
+        {
+            if (IsSplit && alignment != Alignment.Centre)
+                return Source.GetRelativePosition(Offset + SplitOffsetValue * alignment.Sign());
+            else
+                return Source.GetRelativePosition(Offset);
+        }
 
         public Dependences GetDependences() => throw new NotSupportedException();
         public virtual void Render(OverlayData data)
