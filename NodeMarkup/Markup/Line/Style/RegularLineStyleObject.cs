@@ -400,13 +400,7 @@ namespace NodeMarkup.Manager
 
             if (shift != 0)
             {
-                var startNormal = trajectory.StartDirection.Turn90(true);
-                var endNormal = trajectory.EndDirection.Turn90(false);
-
-                if(trajectory is BezierTrajectory bezier)
-                    trajectory = new BezierTrajectory(bezier.StartPosition + startNormal * shift, bezier.StartDirection, bezier.EndPosition + endNormal * shift, bezier.EndDirection, bezier.StartT, bezier.EndT, true);
-                else
-                    trajectory = new BezierTrajectory(trajectory.StartPosition + startNormal * shift, trajectory.StartDirection, trajectory.EndPosition + endNormal * shift, trajectory.EndDirection, true, true, true);
+                trajectory = trajectory.Shift(shift, shift);
             }
 
             var length = trajectory.Length;
