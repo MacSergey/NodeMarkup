@@ -237,7 +237,7 @@ namespace NodeMarkup.Manager
             var startRelPos = PointPair.First.GetRelativePosition(RawAlignment);
             var endRelPos = PointPair.Second.GetRelativePosition(RawAlignment.Value.Invert());
             var deltaX = Mathf.Abs(startRelPos + endRelPos);
-            if (deltaH < 0.1f && deltaX < 2f)
+            if (deltaX < 0.5f || (deltaH < 0.1f && deltaX < 2f))
                 return trajectory;
 
             var startPosF = PointPair.First.Enter.GetPosition(-endRelPos);

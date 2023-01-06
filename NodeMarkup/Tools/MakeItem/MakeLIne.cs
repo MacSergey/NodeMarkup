@@ -218,6 +218,8 @@ namespace NodeMarkup.Tools
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
+            Panel.Render(cameraInfo);
+
             if (IsHoverPoint)
             {
                 if (Utility.CtrlIsPressed)
@@ -247,8 +249,6 @@ namespace NodeMarkup.Tools
                         RenderNotConnectLine(cameraInfo);
                 }
             }
-
-            Panel.Render(cameraInfo);
 #if DEBUG
             if (Settings.ShowNodeContour && Tool.Markup is Manager.NodeMarkup markup)
             {
@@ -327,7 +327,15 @@ namespace NodeMarkup.Tools
 
         private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
         {
-            var endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+            Vector3 endPosition;
+            if (Markup is SegmentMarkup segmentMarkup)
+            {
+                segmentMarkup.Trajectory.GetHitPosition(SingletonTool<NodeMarkupTool>.Instance.Ray, out _, out _, out endPosition);
+                endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(endPosition.y, out _);
+            }
+            else
+                endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+
             new BezierTrajectory(SelectPoint.MarkerPosition, SelectPoint.Direction, endPosition).Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
         }
         private void RenderNotConnectedLane(RenderManager.CameraInfo cameraInfo)
@@ -336,7 +344,15 @@ namespace NodeMarkup.Tools
             {
                 var halfWidth = lanePoint.Width * 0.5f;
 
-                var endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+                Vector3 endPosition;
+                if (Markup is SegmentMarkup segmentMarkup)
+                {
+                    segmentMarkup.Trajectory.GetHitPosition(SingletonTool<NodeMarkupTool>.Instance.Ray, out _, out _, out endPosition);
+                    endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(endPosition.y, out _);
+                }
+                else
+                    endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+
                 if ((lanePoint.MarkerPosition - endPosition).sqrMagnitude < 4f * halfWidth * halfWidth)
                 {
                     var normal = (lanePoint.MarkerPosition - endPosition).MakeFlatNormalized().Turn90(true);

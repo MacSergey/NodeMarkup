@@ -137,7 +137,7 @@ namespace NodeMarkup.Manager
 
             UpdateInProgress = false;
         }
-        protected void UpdateEnters()
+        protected virtual void UpdateEnters()
         {
             Position = GetPosition();
 
