@@ -26,7 +26,9 @@ namespace NodeMarkup.Tools
             DragPoint.Offset.Value = (DragPoint.Offset + offsetChange * Mathf.Sin(DragPoint.Enter.CornerAndNormalAngle)).RoundToNearest(Utility.OnlyShiftIsPressed ? 0.1f : 0.01f);
             Panel.SelectPoint(DragPoint);
         }
-        public override void OnPrimaryMouseClicked(Event e)
+        public override void OnPrimaryMouseClicked(Event e) => Exit();
+        public override void OnMouseUp(Event e) => Exit();
+        private void Exit()
         {
             Panel.SelectPoint(DragPoint);
             Tool.SetDefaultMode();
