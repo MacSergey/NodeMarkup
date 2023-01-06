@@ -336,8 +336,8 @@ namespace NodeMarkup.Manager
         public new NetLanePointSource Source => (NetLanePointSource)base.Source;
         public override Vector3 Position
         {
-            get => MarkerPosition + Direction * 1.5f;
-            protected set => MarkerPosition = value - Direction * 1.5f;
+            get => MarkerPosition + Direction * (1.5f / Enter.TranformCoef);
+            protected set => MarkerPosition = value - Direction * (1.5f / Enter.TranformCoef);
         }
         public override Vector3 MarkerPosition
         {
@@ -405,10 +405,10 @@ namespace NodeMarkup.Manager
                 var dy = 0.15f + (DefaultWidth - data.Width.Value) * 0.5f;
                 var area = new Quad3()
                 {
-                    a = SourcePointA.Position + dir * dy - SourcePointA.Direction * (1.5f - dx),
-                    b = SourcePointA.Position + dir * dy - SourcePointA.Direction * (1.5f + dx),
-                    c = SourcePointB.Position - dir * dy - SourcePointB.Direction * (1.5f + dx),
-                    d = SourcePointB.Position - dir * dy - SourcePointB.Direction * (1.5f - dx),
+                    a = SourcePointA.Position + dir * dy - SourcePointA.Direction * ((1.5f - dx) / Enter.TranformCoef),
+                    b = SourcePointA.Position + dir * dy - SourcePointA.Direction * ((1.5f + dx) / Enter.TranformCoef),
+                    c = SourcePointB.Position - dir * dy - SourcePointB.Direction * ((1.5f + dx) / Enter.TranformCoef),
+                    d = SourcePointB.Position - dir * dy - SourcePointB.Direction * ((1.5f - dx) / Enter.TranformCoef),
                 };
                 area.RenderQuad(data);
             }
