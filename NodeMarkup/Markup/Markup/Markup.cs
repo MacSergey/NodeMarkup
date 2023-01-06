@@ -877,8 +877,6 @@ namespace NodeMarkup.Manager
     public abstract class Markup<EnterType> : Markup
         where EnterType : Enter
     {
-        public new IEnumerable<EnterType> Enters => EntersList.Cast<EnterType>();
-
         public Markup(ushort id) : base(id)
         {
             Update();

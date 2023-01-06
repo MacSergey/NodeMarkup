@@ -18,6 +18,11 @@ namespace NodeMarkup.Tools
         {
             DragPoint = prevMode is MakeLineToolMode makeLineMode ? makeLineMode.HoverPoint as MarkupEnterPoint : null;
         }
+        public override void OnToolGUI(Event e)
+        {
+            if (!Input.GetMouseButton(0))
+                Exit();
+        }
         public override void OnMouseDrag(Event e)
         {
             var normal = DragPoint.Enter.CornerDir.Turn90(true);

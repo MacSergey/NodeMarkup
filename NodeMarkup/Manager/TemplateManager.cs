@@ -397,7 +397,7 @@ namespace NodeMarkup.Manager
 
             SaveData();
         }
-        public bool TryGetPreset(string name, out Guid preset) 
+        public bool TryGetPreset(string name, out Guid preset)
         {
             if (Templates.TryGetValue(name, out var data))
             {
@@ -410,10 +410,29 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public void SavePreset(string name, Guid preset)
+        public bool TryGetPreset(string name, out Guid preset, out bool flip, out bool invert) 
+        {
+            if (Templates.TryGetValue(name, out var data))
+            {
+                preset = data.preset;
+                invert = data.invert;
+                flip = data.flip;
+                return preset != Guid.Empty;
+            }
+            else
+            {
+                preset = Guid.Empty;
+                invert = false;
+                flip = false;
+                return false;
+            }
+        }
+        public void SavePreset(string name, Guid preset, bool flip, bool invert)
         {
             Templates.TryGetValue(name, out var data);
             data.preset = preset;
+            data.flip = flip;
+            data.invert = invert;
             Templates[name] = data;
             SaveData();
         }
@@ -487,7 +506,11 @@ namespace NodeMarkup.Manager
                 if (template.Value.offsets != null)
                     roadConfig.AddAttr("O", string.Join("|", template.Value.offsets.Select(v => v.ToString("0.###")).ToArray()));
                 if (template.Value.preset != Guid.Empty)
+                {
                     roadConfig.AddAttr("P", template.Value.preset);
+                    roadConfig.AddAttr("F", template.Value.flip ? 1 : 0);
+                    roadConfig.AddAttr("I", template.Value.invert ? 1 : 0);
+                }
                 config.Add(roadConfig);
             }
 
@@ -515,6 +538,8 @@ namespace NodeMarkup.Manager
                 }
 
                 var preset = new Guid(templateConfig.GetAttrValue("P", string.Empty));
+                var flip = templateConfig.GetAttrValue("F", 0) == 1;
+                var invert = templateConfig.GetAttrValue("I", 0) == 1;
 
                 if (offsets != null || preset != Guid.Empty)
                 {
@@ -522,6 +547,8 @@ namespace NodeMarkup.Manager
                     {
                         preset = preset,
                         offsets = offsets,
+                        flip = flip,
+                        invert = invert,
                     };
                 }
             }
@@ -533,6 +560,8 @@ namespace NodeMarkup.Manager
         {
             public float[] offsets;
             public Guid preset;
+            public bool flip;
+            public bool invert;
         }
     }
 }

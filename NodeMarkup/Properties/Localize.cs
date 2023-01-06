@@ -1166,7 +1166,7 @@ namespace NodeMarkup
 		public static string Tool_InfoStartCreateFiller => LocaleManager.GetString("Tool_InfoStartCreateFiller", Culture);
 
 		/// <summary>
-		/// Drag with {0} to move the point
+		/// Hold {0} and drag a point to change offset
 		/// </summary>
 		public static string Tool_InfoStartDragPointMode => LocaleManager.GetString("Tool_InfoStartDragPointMode", Culture);
 
@@ -2519,5 +2519,40 @@ namespace NodeMarkup
 		/// Drag a point to change offset
 		/// </summary>
 		public static string Tool_InfoDragPointMode => LocaleManager.GetString("Tool_InfoDragPointMode", Culture);
+
+		/// <summary>
+		/// Hold {0} to move a point
+		/// </summary>
+		public static string Setting_HoldToMovePoint => LocaleManager.GetString("Setting_HoldToMovePoint", Culture);
+
+		/// <summary>
+		/// Auto apply markings from network assets
+		/// </summary>
+		public static string Settings_ApplyMarkingsFromAssets => LocaleManager.GetString("Settings_ApplyMarkingsFromAssets", Culture);
+
+		/// <summary>
+		/// Exit linking preset mode
+		/// </summary>
+		public static string Tool_EndLinkPresetCaption => LocaleManager.GetString("Tool_EndLinkPresetCaption", Culture);
+
+		/// <summary>
+		/// Do you want to exit linking preset mode and link this preset to network asset?
+		/// </summary>
+		public static string Tool_EndLinkPresetMessage => LocaleManager.GetString("Tool_EndLinkPresetMessage", Culture);
+
+		/// <summary>
+		/// Link
+		/// </summary>
+		public static string Tool_Link => LocaleManager.GetString("Tool_Link", Culture);
+
+		/// <summary>
+		/// Don't link
+		/// </summary>
+		public static string Tool_NotLink => LocaleManager.GetString("Tool_NotLink", Culture);
+
+		/// <summary>
+		/// [NEW] - Added a new line style: Text. It allows to write custom text on road and set any font instal
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_12 => LocaleManager.GetString("Mod_WhatsNewMessage1_12", Culture);
 	}
 }

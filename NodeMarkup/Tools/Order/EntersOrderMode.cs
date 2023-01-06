@@ -91,8 +91,8 @@ namespace NodeMarkup.Tools
             SetBaskets();
             Paste();
         }
-        private void ApplyClick() => Tool.SetDefaultMode();
-        private void NotApplyClick()
+        protected virtual void ApplyClick() => Tool.SetDefaultMode();
+        protected virtual void NotApplyClick()
         {
             SetBackup();
             ApplyClick();
@@ -168,14 +168,17 @@ namespace NodeMarkup.Tools
             Exit();
             return true;
         }
+
+        protected virtual string ApplyButtonText => Localize.Tool_Apply;
+        protected virtual string NotApplyButtonText => Localize.Tool_NotApply;
         private void Exit()
         {
             var messageBox = MessageBox.Show<ThreeButtonMessageBox>();
             messageBox.CaptionText = EndCaption;
             messageBox.MessageText = EndMessage;
-            messageBox.Button1Text = Localize.Tool_Apply;
+            messageBox.Button1Text = ApplyButtonText;
             messageBox.OnButton1Click = OnApply;
-            messageBox.Button2Text = Localize.Tool_NotApply;
+            messageBox.Button2Text = NotApplyButtonText;
             messageBox.OnButton2Click = OnNotApply;
             messageBox.Button3Text = Localize.Tool_Continue;
             messageBox.DefaultButton = 2;
@@ -233,8 +236,6 @@ namespace NodeMarkup.Tools
             var baskets = sourcesBorders.GroupBy(b => b.Value, b => b.Key, EntersBorders.Comparer).Select(g => new EntersBasket(this, g.Key, g)).ToArray();
             return baskets;
         }
-
-
     }
 
     public class PasteEntersOrderToolMode : BaseEntersOrderToolMode
@@ -249,10 +250,41 @@ namespace NodeMarkup.Tools
         protected override string EndCaption => Localize.Tool_EndEditOrderCaption;
         protected override string EndMessage => Localize.Tool_EndEditOrderMessage;
     }
-    public class ApplyIntersectionTemplateOrderToolMode : BaseEntersOrderToolMode
+    public class LinkPresetToolMode : BaseEntersOrderToolMode
     {
-        public override ToolModeType Type => ToolModeType.ApplyIntersectionTemplateOrder;
-        protected override string EndCaption => Localize.Tool_EndApplyPresetOrderCaption;
-        protected override string EndMessage => Localize.Tool_EndApplyPresetOrderMessage;
+        public string RoadName { get; set; }
+        public override ToolModeType Type => ToolModeType.LinkPreset;
+        protected override string EndCaption => Localize.Tool_EndLinkPresetCaption;
+        protected override string EndMessage => Localize.Tool_EndLinkPresetMessage;
+        protected override string ApplyButtonText => base.ApplyButtonText;
+        protected override string NotApplyButtonText => base.NotApplyButtonText;
+
+        protected override void ApplyClick()
+        {
+            if (!string.IsNullOrEmpty(RoadName) && Markup.Type == MarkupType.Segment)
+            {
+                var firstId = TargetEnters[0].Enter.Id;
+                var secondId = TargetEnters[1].Enter.Id;
+
+                ref var segment = ref Markup.Id.GetSegment();
+
+                var firstIsStart = segment.m_startNode == firstId;
+                var secondIsEnd = segment.m_endNode == secondId;
+                var segmentInverted = (segment.m_flags & NetSegment.Flags.Invert) != 0;
+                var flip = Sources[0].Target != Targets[0];
+                flip ^= segmentInverted;
+                flip ^= (!firstIsStart || !secondIsEnd);
+
+                var invert = Invert;
+                SingletonManager<RoadTemplateManager>.Instance.SavePreset(RoadName, IntersectionTemplate.Id, flip, invert);
+                Panel.UpdatePanel();
+            }
+            base.ApplyClick();
+        }
+        public override void Deactivate()
+        {
+            RoadName = null;
+            base.Deactivate();
+        }
     }
 }
