@@ -21,7 +21,7 @@ namespace NodeMarkup.Tools
             if (!IsSelectPoint)
             {
                 tips.Add(Localize.Tool_InfoSelectLineStartPoint);
-                tips.Add(Localize.Tool_InfoDragPointMode);
+                tips.Add(Settings.CtrlToMovePoint ? string.Format(Localize.Tool_InfoStartDragPointMode, LocalizeExtension.Ctrl.AddInfoColor()) : Localize.Tool_InfoDragPointMode);
                 if ((Markup.Support & Markup.SupportType.Fillers) != 0)
                     tips.Add(string.Format(Localize.Tool_InfoStartCreateFiller, LocalizeExtension.Alt.AddInfoColor()));
                 if ((Markup.Support & Markup.SupportType.Croswalks) != 0)
@@ -71,7 +71,7 @@ namespace NodeMarkup.Tools
 
         public override void OnMouseDrag(Event e)
         {
-            if (!IsSelectPoint && IsHoverPoint && HoverPoint.Type == MarkupPoint.PointType.Enter)
+            if ((!Settings.CtrlToMovePoint || Utility.OnlyCtrlIsPressed) && !IsSelectPoint && IsHoverPoint && HoverPoint.Type == MarkupPoint.PointType.Enter)
                 Tool.SetMode(ToolModeType.DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)

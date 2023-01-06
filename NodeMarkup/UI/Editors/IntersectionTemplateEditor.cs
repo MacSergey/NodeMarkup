@@ -63,8 +63,9 @@ namespace NodeMarkup.UI.Editors
                 if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(roadName, out var preset) && preset == EditObject.Id)
                     SingletonManager<RoadTemplateManager>.Instance.RevertPreset(roadName);
                 else
-                    SingletonManager<RoadTemplateManager>.Instance.SavePreset(roadName, EditObject.Id);
+                    Tool.LinkPreset(EditObject, roadName);
             }
+
             ItemsPanel.RefreshItems();
             HeaderPanel.Refresh();
         }

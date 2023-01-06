@@ -1813,4 +1813,22 @@ underground mode</value>
   <data name="Tool_InfoDragPointMode" xml:space="preserve">
     <value>Drag a point to change offset</value>
   </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Hold {0} to move a point</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Auto apply markings from network assets</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Exit linking preset mode</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Do you want to exit linking preset mode and link this preset to network asset?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Don't link</value>
+  </data>
 </root>

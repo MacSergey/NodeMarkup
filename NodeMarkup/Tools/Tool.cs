@@ -127,7 +127,7 @@ namespace NodeMarkup.Tools
             yield return CreateToolMode<DragPointToolMode>();
             yield return CreateToolMode<PasteEntersOrderToolMode>();
             yield return CreateToolMode<EditEntersOrderToolMode>();
-            yield return CreateToolMode<ApplyIntersectionTemplateOrderToolMode>();
+            yield return CreateToolMode<LinkPresetToolMode>();
             yield return CreateToolMode<PointsOrderToolMode>();
         }
         protected override void OnEnable()
@@ -282,6 +282,18 @@ namespace NodeMarkup.Tools
             BaseOrderToolMode.IntersectionTemplate = new IntersectionTemplate(Markup);
             SetMode(ToolModeType.EditEntersOrder);
         }
+        public void LinkPreset(IntersectionTemplate template, string roadName)
+        {
+            SingletonMod<Mod>.Logger.Debug($"Link preset");
+
+            if(ToolModes[ToolModeType.LinkPreset] is LinkPresetToolMode linkMode)
+            {
+                BaseOrderToolMode.IntersectionTemplate = template;
+                linkMode.RoadName = roadName;
+            }
+            
+            SetMode(ToolModeType.LinkPreset);
+        }
         public void ApplyIntersectionTemplate(IntersectionTemplate template)
         {
             SingletonMod<Mod>.Logger.Debug($"Apply intersection template");
@@ -397,16 +409,22 @@ namespace NodeMarkup.Tools
         }
         public static void ApplyDefaultMarking(NetInfo info, ushort segmentId, ushort startNode, ushort endNode)
         {
-            if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var presetId) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset))
+            if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var presetId, out var flip, out var invert) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset))
             {
-                var map = new ObjectsMap();
-                map.AddNode(preset.Enters[0].Id, startNode);
-                map.AddNode(preset.Enters[1].Id, endNode);
-
                 var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];
+
+                var map = new ObjectsMap(invert);
+                map.AddNode(preset.Enters[0].Id, !flip ? startNode : endNode);
+                map.AddNode(preset.Enters[1].Id, !flip ? endNode : startNode);
+                if (invert)
+                {
+                    foreach (var enter in markup.Enters)
+                        map.AddInvertEnter(enter);
+                }
+
                 markup.FromXml(SingletonMod<Mod>.Version, preset.Data, map);
             }
-            else
+            else if (Settings.ApplyMarkingFromAssets)
                 SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segmentId, startNode, endNode);
         }
 
@@ -892,12 +910,12 @@ namespace NodeMarkup.Tools
         PanelAction = 16,
         PasteEntersOrder = 32,
         EditEntersOrder = 64,
-        ApplyIntersectionTemplateOrder = 128,
+        LinkPreset = 128,
         PointsOrder = 256,
         DragPoint = 512,
 
         MakeItem = MakeLine | MakeCrosswalk,
-        Order = PasteEntersOrder | EditEntersOrder | ApplyIntersectionTemplateOrder | PointsOrder,
+        Order = PasteEntersOrder | EditEntersOrder | LinkPreset | PointsOrder,
     }
     public interface IShortcutMode
     {
