@@ -1703,5 +1703,14 @@
   <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
     <value>已关联</value>
   </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>拖动点来改变偏移</value>
+  </data>
+  
+  
+  
+  
+  
+  
   
 </root>

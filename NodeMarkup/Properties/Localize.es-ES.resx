@@ -818,7 +818,7 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
     <value>Mantener presionada la tecla {0} para crear un relleno</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Arrastrar con la tecla {0} para mover el punto</value>
+    <value>Mantener presionada la tecla {0} y arrastre un punto para cambiar desplazamiento</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -1643,4 +1643,17 @@ para modo subterráneo</value>
   <data name="Tool_InfoDragPointMode" xml:space="preserve">
     <value>Arrastrar un punto para cambiar desplazamiento</value>
   </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Mantener presionada la tecla {0} para mover un punto</value>
+  </data>
+  
+  
+  
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Vincular</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>No vincular</value>
+  </data>
+  
 </root>

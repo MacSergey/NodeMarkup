@@ -818,7 +818,7 @@
     <value>{0} ＆ 押下で、塗り潰しを開始</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>{0} + ドラッグで、ポイントを移動</value>
+    <value>{0} + ドラッグで、ポイントのオフセットを移動</value>
   </data>
   
   <data name="MessageBox_CantUndone" xml:space="preserve">
@@ -876,7 +876,7 @@
     <value>名無しのプリセット</value>
   </data>
   <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>プリセットの編集モードを終了しますか？</value>
+    <value>プリセットの編集モードを終了</value>
   </data>
   <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
     <value>プリセットを適用しますか？</value>
@@ -1644,5 +1644,41 @@
   <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
     <value>リンク済</value>
   </data>
-  
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>ポイントをドラッグしてオフセットを変更</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>{0} でポイントを移動</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>ネットワークアセットからマーキングを自動適用</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>プリセットのリンクモードを終了</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>プリセットのリンクモードを終了して、 選択したプリセットをネットワークアセットにリンクしますか?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>リンクする</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>リンクしない</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NEW] - Added a new line style: Text. It allows to write custom text on road and set any font installed in the system.
+[NEW] - Added the ability to link preset to network asset. It will be auto applied when road is built.
+[NEW] - Added a new line type: Lane. It simplifies the placement props/trees/network/text that should be placed in the middle of lane.
+[New] - Added a new line style: Zigzag.
+[NEW] - Added the ability to save different markings for different types of road elevations (slope, tunnel) in asset editor.
+[NEW] - Auto creation of edge lines of lane. Can be disabled in the mod settings.
+[NEW] - Added distribution option to props/trees. it allows to make prop/tree fixed at the ends of the line and set dynamic space length.
+[NEW] - Added the ability to invert the value of network shift.
+[NEW] - Added shortcuts for the paste marking mode.
+[FIXED] - Lines and fillers follows sloped segment as much as possible. It may still not be perfect in some cases, but much better then before.
+[FIXED] - Pavement line follows filler properly.
+[FIXED] - Fixed when asym styles values were pasted with wrong invertation.
+[FIXED] - Networks/props/trees that were added by IMT are visible on preset screenshot.
+[FIXED] - Fixed that fillers were not updated after selecting filler guides.</value>
+  </data>
 </root>
