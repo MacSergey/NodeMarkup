@@ -21,7 +21,7 @@ namespace NodeMarkup.Tools
             if (!IsSelectPoint)
             {
                 tips.Add(Localize.Tool_InfoSelectLineStartPoint);
-                tips.Add(string.Format(Localize.Tool_InfoStartDragPointMode, LocalizeExtension.Ctrl.AddInfoColor()));
+                tips.Add(Localize.Tool_InfoDragPointMode);
                 if ((Markup.Support & Markup.SupportType.Fillers) != 0)
                     tips.Add(string.Format(Localize.Tool_InfoStartCreateFiller, LocalizeExtension.Alt.AddInfoColor()));
                 if ((Markup.Support & Markup.SupportType.Croswalks) != 0)
