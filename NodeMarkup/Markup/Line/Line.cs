@@ -230,7 +230,7 @@ namespace NodeMarkup.Manager
 
             var trajectory = new BezierTrajectory(startPos, startDir, endPos, endDir, startT, endT);
 
-            if(isStraight)
+            if(Markup.Type == MarkupType.Node || isStraight)
                 return trajectory;
 
             var deltaH = Mathf.Abs(trajectory.StartPosition.y - trajectory.EndPosition.y) / trajectory.Length;
