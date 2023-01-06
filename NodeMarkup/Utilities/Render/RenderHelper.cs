@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -311,4 +312,27 @@ namespace NodeMarkup.Utilities
     {
         public override float LODDistance => Settings.TreeLODDistance;
     }
+    public class RenderGroupData : IStyleData
+    {
+        private IStyleData[] Datas { get; }
+        public MarkupLOD LOD { get; }
+        public MarkupLODType LODType { get; }
+
+        public RenderGroupData(MarkupLOD lod, MarkupLODType lodType, IStyleData[] datas)
+        {
+            LOD = lod;
+            LODType = lodType;
+            Datas = datas;
+        }
+
+        public IEnumerable<IDrawData> GetDrawData()
+        {
+            foreach (var data in Datas)
+            {
+                foreach(var drawData in data.GetDrawData())
+                    yield return drawData;
+            }
+        }
+    }
+
 }

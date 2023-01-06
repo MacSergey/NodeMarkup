@@ -83,12 +83,10 @@ namespace NodeMarkup.Manager
             if (!IsValid)
                 return new MarkupPartGroupData(lod);
 
-            if (Shift != 0)
+            var shift = Shift.Value;
+            if (shift != 0)
             {
-                var startNormal = trajectory.StartDirection.Turn90(true);
-                var endNormal = trajectory.EndDirection.Turn90(false);
-
-                trajectory = new BezierTrajectory(trajectory.StartPosition + startNormal * Shift, trajectory.StartDirection, trajectory.EndPosition + endNormal * Shift, trajectory.EndDirection);
+                trajectory = trajectory.Shift(shift, shift);
             }
 
             var length = trajectory.Length;
@@ -159,10 +157,11 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected FloatPropertyPanel AddShiftProperty(UIComponent parent, bool canCollapse)
+        protected FloatInvertedPropertyPanel AddShiftProperty(UIComponent parent, bool canCollapse)
         {
-            var shiftProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Shift));
+            var shiftProperty = ComponentPool.Get<FloatInvertedPropertyPanel>(parent, nameof(Shift));
             shiftProperty.Text = Localize.StyleOption_ObjectShift;
+            shiftProperty.FieldWidth = 100f;
             shiftProperty.Format = Localize.NumberFormat_Meter;
             shiftProperty.UseWheel = true;
             shiftProperty.WheelStep = 0.1f;

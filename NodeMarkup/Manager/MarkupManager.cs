@@ -156,19 +156,26 @@ namespace NodeMarkup.Manager
 
         public void Render(RenderManager.CameraInfo cameraInfo, ushort id, ref RenderManager.Instance data)
         {
-            if (data.m_nextInstance != ushort.MaxValue)
-                return;
+            try
+            {
+                if (data.m_nextInstance != ushort.MaxValue)
+                    return;
 
-            if (!TryGetMarkup(id, out TypeMarkup markup))
-                return;
+                if (!TryGetMarkup(id, out TypeMarkup markup))
+                    return;
 
-            if (markup.NeedRecalculateDrawData)
-                markup.RecalculateDrawData();
+                if (markup.NeedRecalculateDrawData)
+                    markup.RecalculateDrawData();
 
-            bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
+                bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
 
-            foreach(var drawData in markup.DrawData.Values)
-                drawData.Render(cameraInfo, data, infoView);
+                foreach (var drawData in markup.DrawData.Values)
+                    drawData.Render(cameraInfo, data, infoView);
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error($"Error while rendering {Type} #{id} marking", error);
+            }
         }
 
         public void Remove(ushort id) => Markups.Remove(id);

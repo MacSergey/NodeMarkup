@@ -27,7 +27,16 @@ namespace NodeMarkup.Manager
 
         protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
-            return new MarkupLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
+            if (trajectory is CombinedTrajectory combined)
+            {
+                var data = new IStyleData[combined.Count];
+                for(var i = 0; i < data.Length; i += 1)
+                    data[i] = new MarkupLineMeshData(lod, combined[i], Width, Elevation, MaterialType.Pavement);
+
+                return new RenderGroupData(lod, MarkupLODType.Mesh, data);
+            }
+            else
+                return new MarkupLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
         }
 
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)

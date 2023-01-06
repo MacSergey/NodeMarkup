@@ -342,18 +342,18 @@ namespace NodeMarkup.Manager
 
             return result;
         }
-        public static List<List<FillerContour.Part>> SetOffset(List<FillerContour.Part> originalParts, float offset, float medianOffset)
+        public static List<List<FillerContour.Part>> SetOffset(List<FillerContour.Part> originalParts, float lineOffset, float medianOffset)
         {
             var result = new List<List<FillerContour.Part>>();
 
-            if (offset <= 0f && medianOffset <= 0f)
+            if (lineOffset <= 0f && medianOffset <= 0f)
                 result.Add(new List<FillerContour.Part>(originalParts));
             else
             {
                 var direction = originalParts.Select(i => i.Trajectory).GetDirection();
 
-                var movedParts = Move(originalParts, direction, offset, medianOffset);
-                Connect(movedParts, originalParts, offset, medianOffset);
+                var movedParts = Move(originalParts, direction, lineOffset, medianOffset);
+                Connect(movedParts, originalParts, lineOffset, medianOffset);
                 var intersections = GetIntersections(movedParts);
                 var partOfPart = GetParts(movedParts, intersections);
                 var contours = GetContours(partOfPart);
@@ -366,23 +366,19 @@ namespace NodeMarkup.Manager
             }
             return result;
         }
-        private static List<FillerContour.Part> Move(List<FillerContour.Part> originalParts, TrajectoryHelper.Direction direction, float offset, float medianOffset)
+        private static List<FillerContour.Part> Move(List<FillerContour.Part> originalParts, TrajectoryHelper.Direction direction, float lineOffset, float medianOffset)
         {
             var result = new List<FillerContour.Part>(originalParts.Count);
 
             foreach (var part in originalParts)
             {
-                var move = part.IsEnter ? medianOffset : offset;
+                var offset = (direction == TrajectoryHelper.Direction.ClockWise ? 1f : -1f) * (part.IsEnter ? medianOffset : lineOffset);
 
-                if (move == 0f)
+                if (offset == 0f)
                     result.Add(part);
                 else
                 {
-                    var trajectory = part.Trajectory;
-                    var startNormal = trajectory.StartDirection.MakeFlatNormalized().Turn90(direction == TrajectoryHelper.Direction.ClockWise) * move;
-                    var endNormal = trajectory.EndDirection.MakeFlatNormalized().Turn90(direction == TrajectoryHelper.Direction.CounterClockWise) * move;
-
-                    var movedTrajectory = part.IsEnter ? (ITrajectory)new StraightTrajectory(trajectory.StartPosition + startNormal, trajectory.EndPosition + endNormal) : (ITrajectory)new BezierTrajectory(trajectory.StartPosition + startNormal, trajectory.StartDirection, trajectory.EndPosition + endNormal, trajectory.EndDirection);
+                    var movedTrajectory = part.Trajectory.Shift(offset, offset);
                     var newPart = new FillerContour.Part(movedTrajectory, part.IsEnter);
                     result.Add(newPart);
                 }
@@ -390,7 +386,7 @@ namespace NodeMarkup.Manager
 
             return result;
         }
-        private static void Connect(List<FillerContour.Part> parts, List<FillerContour.Part> originalParts, float offset, float medianOffset)
+        private static void Connect(List<FillerContour.Part> parts, List<FillerContour.Part> originalParts, float lineOffset, float medianOffset)
         {
             var count = 0;
             for (var i = 0; i < parts.Count; i += 1)
@@ -399,9 +395,9 @@ namespace NodeMarkup.Manager
                 var first = parts[i];
                 var second = parts[j];
 
-                if ((first.IsEnter ? medianOffset : offset) != 0)
+                if ((first.IsEnter ? medianOffset : lineOffset) != 0)
                 {
-                    if ((second.IsEnter ? medianOffset : offset) != 0)
+                    if ((second.IsEnter ? medianOffset : lineOffset) != 0)
                     {
                         if ((first.Trajectory.EndPosition - second.Trajectory.StartPosition).sqrMagnitude > 0.0001f)
                         {
@@ -436,7 +432,7 @@ namespace NodeMarkup.Manager
                     else
                         Add(parts, ref i, first.Trajectory.EndPosition, second.Trajectory.StartPosition);
                 }
-                else if ((second.IsEnter ? medianOffset : offset) != 0)
+                else if ((second.IsEnter ? medianOffset : lineOffset) != 0)
                 {
                     if (Intersection.CalculateSingle(first.Trajectory, second.Trajectory, out var firstT, out var secondT))
                     {
@@ -501,9 +497,6 @@ namespace NodeMarkup.Manager
                     var intersections = Intersection.Calculate(parts[i].Trajectory, parts[j].Trajectory);
                     foreach (var intersection in intersections)
                     {
-                        //if (intersection.FirstT > 1f - (0.01f / parts[i].Trajectory.Length) && intersection.SecondT < (0.01f / parts[j].Trajectory.Length))
-                        //    continue;
-
                         TrajectoryIntersect.Create(i, j, intersection.FirstT, intersection.SecondT, out iIntersect, out jIntersect);
                         partsIntersections[i].Add(iIntersect);
                         partsIntersections[j].Add(jIntersect);
