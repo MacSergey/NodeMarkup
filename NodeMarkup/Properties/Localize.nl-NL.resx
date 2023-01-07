@@ -1629,15 +1629,51 @@ Klik om de markering te wijzigen</value>
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>Begin</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Koppel dit sjabloon aan het netwerk</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Ontkoppel dit sjabloon van het netwerk</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Gekoppeld</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Versleep een punt om de offset te wijzigen</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Houd {0} ingedrukt om een punt te verplaatsen</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Automatisch aanbrengen van netwerkmarkeringen</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Verlaat de koppelingsmodus</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Wil je de koppelingsmodus verlaten en dit sjabloon aan het netwerk koppelen?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Koppelen</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Niet koppelen</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NEW] Een nieuwe lijnstijl toegevoegd: Tekst. Hiermee kun je aangepaste tekst op de weg schrijven en een willekeurig lettertype in het systeem instellen.
+[NEW] De mogelijkheid toegevoegd om sjablonen te koppelen aan een netwerk asset. Het zal automatisch worden toegepast wanneer de weg wordt gebouwd.
+[NEW] Nieuw lijntype toegevoegd: Rijstrook. Het vereenvoudigt de plaatsing van props/bomen/netwerk/tekst die in het midden van een rijstrook geplaatst moeten worden.
+[NEW] Nieuwe lijnstijl toegevoegd: Zigzag.
+[NEW] Mogelijkheid toegevoegd om verschillende markeringen op te slaan voor verschillende soorten wegverhogingen (helling, tunnel) in de asset editor.
+[NEW] Automatische creatie van lijnen van een rijstrook. Kan worden uitgeschakeld in de mod-instellingen.
+[NEW] De mogelijkheid toegevoegd om props/bomen te verdelen. Hiermee kunnen props/bomen aan de uiteinden van lijnen worden vastgezet en een dynamische afstand worden ingesteld.
+[NEW] De mogelijkheid toegevoegd om de verplaatsing van het netwerk om te keren.
+[NEW] Sneltoets voor invoegmodus.
+[UPDATED] Het is niet meer nodig om Ctrl ingedrukt te houden om een punt te verslepen. De oude manier (door Ctrl in te drukken) kan worden ingeschakeld in de mod-instellingen.
+[FIXED] Lijnen en vullingen volgen zoveel mogelijk het schuine segment. Het is in sommige gevallen nog steeds niet perfect, maar veel beter dan voorheen.
+[FIXED] Lijnen die de stoeprand volgen, volgen nu de vullingen correct.
+[FIXED] Asymmetrische markeringen worden nu met de juiste rotatie ingevoegd.
+[FIXED] Netwerken/props/bomen die zijn toegevoegd door IMT zijn zichtbaar op de afbeelding van het sjabloon.
+[FIXED] Vullingen worden bijgewerkt na het selecteren van hulplijnen.</value>
+  </data>
 </root>

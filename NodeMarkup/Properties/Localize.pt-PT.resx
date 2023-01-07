@@ -1236,12 +1236,20 @@ Clique para editar marcações</value>
   
   
   
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Ajuste pobre</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Ajuste possível</value>
+  </data>
   
   
-  
-  
-  
-  
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Guardar deslocamentos</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Nome da rua</value>
+  </data>
   
   
   

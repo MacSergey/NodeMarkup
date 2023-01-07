@@ -1724,5 +1724,21 @@ zu verlassen</value>
   <data name="Tool_NotLink" xml:space="preserve">
     <value>Nicht verknüpfen</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NEW] Linien-Style: Text. Es ist jetzt möglich benutzerdefinierten Text, in jeder Schriftart, die auf dem System installiert ist, auf Straßen zu schreiben.
+[NEW] Die Möglichkeit, Vorlagen mit Netzwerk-Assets zu verknüpfen. Diese werden automatisch übernommen, wenn Straßen gebaut werden.
+[NEW] Linien-Typ: Spur. Spuren vereinfachen das Platzieren von Requisiten/ Bäumen/Netzwerken/Text, welcher in der Mitte der Spur platziert sein soll.
+[NEW] Linien-Style: Zickzack. 
+[NEW] Die Möglichkeit verschieden Markierungsvorlagen für verschiedene Arten von Straßenhöhen (Brücken, Tunnel) im Asset-Editor zu speichern.
+[NEW] Automatische Erstellung von Linien an der Kante einer Spur. Diese Option kann in den Einstellungen deaktiviert werden.
+[NEW] Die Option für die Verteilung von Requisiten / Bäumen. Diese Option erlaubt es, Requisiten / Bäume an den Enden von Linien zu fixieren und den dynamischen Abstand festzulegen.
+[NEW] Die Möglichkeit, die Verschiebung des Netzwerks zu invertieren.
+[NEW] Tastenkürzel für den Einfügemodus.
+[UPDATED] Es ist nicht mehr nötig, Ctrl zu drücken, um Punkte zu verschieben. Die alte Art (mit drücken von Ctrl) kann in den Mod-Einstellungen wieder aktiviert werden.
+[FIXED] Linien und Füllungen folgen geneigten Segmenten so gut wie möglich. Es ist noch nicht in jeder Situation perfekt, aber deutlich besser als zuvor.
+[FIXED] Linien, die dem Bürgersteig folgen, folgen auch Füllungen richtig.
+[FIXED] Asymmetrische Markierungen werden nun mit der richtigen Rotation eingefügt.
+[FIXED] Netzwerke / Requisiten / Bäume, die mit IMT hinzugefügt wurden, sind auf dem Vorlage-Screenshot sichtbar.
+[FIXED] Füllungen werden aktualisiert nach der Auswahl der Hilfslinien.</value>
+  </data>
 </root>
