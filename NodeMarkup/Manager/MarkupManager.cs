@@ -178,7 +178,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public void Remove(ushort id) => Markups.Remove(id);
+        public virtual void Remove(ushort id) => Markups.Remove(id);
         public void Clear()
         {
             SingletonMod<Mod>.Logger.Debug($"{typeof(TypeMarkup).Name} {nameof(Clear)}");
@@ -256,6 +256,7 @@ namespace NodeMarkup.Manager
     }
     public class SegmentMarkupManager : MarkupManager<SegmentMarkup>
     {
+        public static IntersectionTemplate RemovedMarkup { get; private set; }
         public SegmentMarkupManager()
         {
             SingletonMod<Mod>.Logger.Debug("Create segment markup manager");
@@ -265,5 +266,15 @@ namespace NodeMarkup.Manager
         protected override MarkupType Type => MarkupType.Segment;
         protected override string XmlName => SegmentMarkup.XmlName;
         protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetSegment;
+
+        public override void Remove(ushort id)
+        {
+            if (TryGetMarkup(id, out var markup))
+                RemovedMarkup = new IntersectionTemplate(markup);
+            else
+                RemovedMarkup = null;
+
+            base.Remove(id);
+        }
     }
 }

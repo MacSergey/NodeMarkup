@@ -409,9 +409,27 @@ namespace NodeMarkup.Tools
         }
         public static void ApplyDefaultMarking(NetInfo info, ushort segmentId, ushort startNode, ushort endNode)
         {
+            if(SegmentMarkupManager.RemovedMarkup is IntersectionTemplate removed)
+            {
+                var firstNode = removed.Enters[0].Id;
+                var secondNode = removed.Enters[1].Id;
+
+                if(startNode == firstNode && endNode == secondNode || startNode == secondNode && endNode == firstNode)
+                {
+                    var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];
+                    var map = new ObjectsMap();
+                    map.AddNode(startNode, endNode);
+                    map.AddNode(endNode, startNode);
+                    markup.FromXml(SingletonMod<Mod>.Version, removed.Data, map);
+                    return;
+                }
+            }
+
             if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var presetId, out var flip, out var invert) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset))
             {
                 var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];
+                ref var segment = ref segmentId.GetSegment();
+                flip ^= (segment.m_flags & NetSegment.Flags.Invert) != 0;
 
                 var map = new ObjectsMap(invert);
                 map.AddNode(preset.Enters[0].Id, !flip ? startNode : endNode);
@@ -423,8 +441,10 @@ namespace NodeMarkup.Tools
                 }
 
                 markup.FromXml(SingletonMod<Mod>.Version, preset.Data, map);
+                return;
             }
-            else if (Settings.ApplyMarkingFromAssets)
+            
+            if (Settings.ApplyMarkingFromAssets)
                 SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segmentId, startNode, endNode);
         }
 

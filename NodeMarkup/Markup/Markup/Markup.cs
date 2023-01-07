@@ -295,8 +295,6 @@ namespace NodeMarkup.Manager
 
             if (recalculate && !UpdateInProgress)
                 RecalculateAllStyleData();
-
-
         }
         public void Update(MarkupLine line, bool recalculate = false, bool recalcDependences = false)
         {
@@ -392,55 +390,63 @@ namespace NodeMarkup.Manager
         }
         public void RecalculateStyleData(IStyleItem toRecalculate = null)
         {
-            NeedRecalculateDrawData = true;
-            if (toRecalculate != null)
-                RecalculateList.Add(toRecalculate);
+            lock (RecalculateList)
+            {
+                if (toRecalculate != null)
+                    RecalculateList.Add(toRecalculate);
+
+                NeedRecalculateDrawData = true;
+            }
         }
         public void RecalculateStyleData(HashSet<IStyleItem> toRecalculate)
         {
-            NeedRecalculateDrawData = true;
-            RecalculateList.AddRange(toRecalculate);
+            lock (RecalculateList)
+            {
+                RecalculateList.AddRange(toRecalculate);
+                NeedRecalculateDrawData = true;
+            }
         }
 
         public void RecalculateDrawData()
         {
-            DrawData.Clear();
-
-            var recalculateList = RecalculateList;
-            RecalculateList = new HashSet<IStyleItem>();
-
-            foreach(var item in recalculateList)
-                item.RecalculateStyleData();
-
-            var dashesLOD0 = new List<MarkupPartData>();
-            var dashesLOD1 = new List<MarkupPartData>();
-
-            Seporate(Lines.SelectMany(l => l.StyleData));
-            Seporate(Fillers.SelectMany(f => f.StyleData));
-            Seporate(Crosswalks.SelectMany(c => c.StyleData));
-
-            DrawData[MarkupLODType.Dash][MarkupLOD.LOD0].AddRange(MarkupPartsBatchData.FromDashes(dashesLOD0));
-            DrawData[MarkupLODType.Dash][MarkupLOD.LOD1].AddRange(MarkupPartsBatchData.FromDashes(dashesLOD1));
-
-            void Seporate(IEnumerable<IStyleData> stylesData)
+            lock (RecalculateList)
             {
-                foreach (var styleData in stylesData)
+                DrawData.Clear();
+
+                foreach (var item in RecalculateList)
+                    item.RecalculateStyleData();
+
+                var dashesLOD0 = new List<MarkupPartData>();
+                var dashesLOD1 = new List<MarkupPartData>();
+
+                Seporate(Lines.SelectMany(l => l.StyleData));
+                Seporate(Fillers.SelectMany(f => f.StyleData));
+                Seporate(Crosswalks.SelectMany(c => c.StyleData));
+
+                DrawData[MarkupLODType.Dash][MarkupLOD.LOD0].AddRange(MarkupPartsBatchData.FromDashes(dashesLOD0));
+                DrawData[MarkupLODType.Dash][MarkupLOD.LOD1].AddRange(MarkupPartsBatchData.FromDashes(dashesLOD1));
+
+                void Seporate(IEnumerable<IStyleData> stylesData)
                 {
-                    if (styleData is IEnumerable<MarkupPartData> styleDashes)
+                    foreach (var styleData in stylesData)
                     {
-                        if(styleData.LOD == MarkupLOD.LOD0)
-                            dashesLOD0.AddRange(styleDashes);
-                        else if (styleData.LOD == MarkupLOD.LOD1)
-                            dashesLOD1.AddRange(styleDashes);
-                    }
-                    else if (styleData != null)
-                    {
-                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
+                        if (styleData is IEnumerable<MarkupPartData> styleDashes)
+                        {
+                            if (styleData.LOD == MarkupLOD.LOD0)
+                                dashesLOD0.AddRange(styleDashes);
+                            else if (styleData.LOD == MarkupLOD.LOD1)
+                                dashesLOD1.AddRange(styleDashes);
+                        }
+                        else if (styleData != null)
+                        {
+                            DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
+                        }
                     }
                 }
-            }
 
-            NeedRecalculateDrawData = false;
+                RecalculateList.Clear();
+                NeedRecalculateDrawData = false;
+            }
         }
 
         #endregion

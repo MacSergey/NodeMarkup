@@ -146,7 +146,7 @@ namespace NodeMarkup.Utilities
             else
             {
                 objectIndex.w = scale;
-                info.m_lodLocations[info.m_lodCount] = new Vector4(position.x, position.y, position.z, angle);
+                info.m_lodLocations[info.m_lodCount] = new Vector4(position.x, position.y, position.z, absoluteAngle + angle);
                 info.m_lodObjectIndices[info.m_lodCount] = objectIndex;
                 info.m_lodColors[info.m_lodCount] = color.linear;
                 info.m_lodMin = Vector3.Min(info.m_lodMin, position);

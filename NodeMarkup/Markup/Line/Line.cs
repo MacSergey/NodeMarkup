@@ -177,10 +177,6 @@ namespace NodeMarkup.Manager
         public override Alignment Alignment => RawAlignment;
         public PropertyEnumValue<Alignment> RawAlignment { get; private set; }
         public PropertyBoolValue ClipSidewalk { get; private set; }
-#if DEBUG
-        public PropertyVector3Value StartDelta { get; private set; }
-        public PropertyVector3Value EndDelta { get; private set; }
-#endif
         public override bool IsSupportRules => true;
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
@@ -193,10 +189,7 @@ namespace NodeMarkup.Manager
         {
             RawAlignment = new PropertyEnumValue<Alignment>("A", AlignmentChanged, alignment);
             ClipSidewalk = new PropertyBoolValue("CS", ClipSidewalkChanged, DefaultClipSidewalk);
-#if DEBUG
-            StartDelta = new PropertyVector3Value(AlignmentChanged, Vector3.zero);
-            EndDelta = new PropertyVector3Value(AlignmentChanged, Vector3.zero);
-#endif
+
             if (update)
                 Update(true);
 

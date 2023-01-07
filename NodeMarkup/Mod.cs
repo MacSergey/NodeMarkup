@@ -142,19 +142,19 @@ namespace NodeMarkup
 
         private void PatchNetManager(ref bool success)
         {
-            success &= Patch_NetManagerRelease_NodeImplementation();
-            success &= Patch_NetManagerReleas_SegmentImplementation();
+            success &= Patch_NetManager_ReleaseNodeImplementation();
+            success &= Patch_NetManager_ReleaseSegmentImplementation();
             success &= Patch_NetManager_SimulationStepImpl_Prefix();
             success &= Patch_NetManager_SimulationStepImpl_Postfix();
             success &= Patch_NetManager_EndOverlay_Prefix();
         }
 
-        private bool Patch_NetManagerRelease_NodeImplementation()
+        private bool Patch_NetManager_ReleaseNodeImplementation()
         {
             var parameters = new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() };
             return AddPrefix(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseNodeImplementationPrefix), typeof(NetManager), "ReleaseNodeImplementation", parameters);
         }
-        private bool Patch_NetManagerReleas_SegmentImplementation()
+        private bool Patch_NetManager_ReleaseSegmentImplementation()
         {
             var parameters = new Type[] { typeof(ushort), typeof(NetSegment).MakeByRefType(), typeof(bool) };
             return AddPrefix(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseSegmentImplementationPrefix), typeof(NetManager), "ReleaseSegmentImplementation", parameters);
