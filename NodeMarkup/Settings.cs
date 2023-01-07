@@ -128,8 +128,8 @@ namespace NodeMarkup
             var displayAndUsageGroup = helper.AddGroup(Localize.Settings_DisplayAndUsage);
 
             AddCheckBox(displayAndUsageGroup, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_ApplyMarkingsFromAssets, ApplyMarkingFromAssets);
             AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
+            AddCheckBox(displayAndUsageGroup, Localize.Settings_ApplyMarkingsFromAssets, ApplyMarkingFromAssets);
             AddCheckBox(displayAndUsageGroup, Localize.Settings_RailUnderMarking, RailUnderMarking);
             AddLabel(displayAndUsageGroup, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
             AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);

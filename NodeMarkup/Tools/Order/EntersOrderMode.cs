@@ -256,8 +256,8 @@ namespace NodeMarkup.Tools
         public override ToolModeType Type => ToolModeType.LinkPreset;
         protected override string EndCaption => Localize.Tool_EndLinkPresetCaption;
         protected override string EndMessage => Localize.Tool_EndLinkPresetMessage;
-        protected override string ApplyButtonText => base.ApplyButtonText;
-        protected override string NotApplyButtonText => base.NotApplyButtonText;
+        protected override string ApplyButtonText => Localize.Tool_Link;
+        protected override string NotApplyButtonText => Localize.Tool_NotLink;
 
         protected override void ApplyClick()
         {
