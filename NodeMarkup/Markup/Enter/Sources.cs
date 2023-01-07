@@ -95,7 +95,7 @@ namespace NodeMarkup.Manager
                 if(Enter.IsLaneInvert)
                     return (RightLane.Position + LeftLane.Position) * 0.5f + offset;
                 else
-                    return -(RightLane.Position + LeftLane.Position) * 0.5f - offset;
+                    return -(RightLane.Position + LeftLane.Position) * 0.5f + offset;
             }            
             else if ((Location & MarkupPoint.LocationType.LeftEdge) == MarkupPoint.LocationType.LeftEdge)
             {
