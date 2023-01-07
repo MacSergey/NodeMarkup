@@ -859,7 +859,8 @@
     <value>Зажмите {0} для создания заполнителя</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Зажмите {0} и перетащите точку для изменения отступа</value>
+    <value>Зажмите {0} и перетащите точку 
+для изменения сдвига</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>[WARNING] Настройки шаблонов по умолчанию будут сброшены.
@@ -1812,7 +1813,7 @@
     <value>Связанный</value>
   </data>
   <data name="Tool_InfoDragPointMode" xml:space="preserve">
-    <value>Перетащите точку для изменения отступа</value>
+    <value>Перетащите точку для изменения сдвига</value>
   </data>
   <data name="Setting_HoldToMovePoint" xml:space="preserve">
     <value>Удерживать {0} для перемещения точки</value>

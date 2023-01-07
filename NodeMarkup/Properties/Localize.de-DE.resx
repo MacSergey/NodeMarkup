@@ -1703,12 +1703,26 @@ zu verlassen</value>
   <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
     <value>Verknüpft</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Einen Punkt ziehen, um den Versatz zu ändern</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Halte {0} gedrückt, um einen Punkt zu bewegen</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Markierungen von Netzwerken automatisch anwenden</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Modus zum Verknüpfen von Kreuzungsvorlagen verlassen</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Möchtest du den Verlinkungsmodus verlassen und diese Vorlage an das Netzwerk anbinden?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Verknüpfen</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Nicht verknüpfen</value>
+  </data>
   
 </root>

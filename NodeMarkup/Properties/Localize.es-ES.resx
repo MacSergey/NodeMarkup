@@ -1646,14 +1646,36 @@ para modo subterráneo</value>
   <data name="Setting_HoldToMovePoint" xml:space="preserve">
     <value>Mantener presionada la tecla {0} para mover un punto</value>
   </data>
-  
-  
-  
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Aplicar marcas automáticamente para recursos de red</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Salir del modo de vinculación de preajustes</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>¿Desea salir del modo de vinculación de preajuste y vincular este preajuste a un recurso de red?</value>
+  </data>
   <data name="Tool_Link" xml:space="preserve">
     <value>Vincular</value>
   </data>
   <data name="Tool_NotLink" xml:space="preserve">
     <value>No vincular</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NEW] Agregado nuevo estilo de linea: Texto. Permite escribir texto personalizado en el camino y configurar cualquier fuente instalada en el sistema.
+[NEW] Agregada la capacidad de vincular preajustes a las redes. Se auto aplicará cuando se construya el camino.
+[NEW] Agregado nuevo tipo de línea: Carril. Simplifica la colocación de adornos/arboles/arboles/redes/texto que deben colocarse en el centro del carril.
+[New] Agregado nuevo estilo de línea: Zigzag.
+[NEW] Agregada la habilidad de guardar diferentes marcas para diferentes tipos de caminos elevados (cuesta, túnel) en el editor de recursos.
+[NEW] Creación automática de líneas de borde de carril. Puede ser desactivado en la configuración del mod.
+[NEW] Agregada la opción de distribución de adornos/árboles. Permite fijar adornos/árboles al final de cada línea y establecer una longitud de espacio dinámica.
+[NEW] Agregada la capacidad de invertir el valor de cambio de red.
+[NEW] Agregados atajos de teclado para el modo de pegar marcas.
+[UPDATED] Ya no se necesita mantener Ctrl para arrastrar puntos. El comportamiento (de mantener Ctrl) puede ser habilitado en la configuración del mod.
+[FIXED] Las líneas y rellenos siguen las pendientes tanto como sea posible. Igualmente es posible que no sean perfectas en algunos casos, pero serán mucho mejor que antes.
+[FIXED] Líneas del pavimento siguen apropiadamente al relleno.
+[FIXED] Se corrigió cuando los valores de estilos asimétricos se pegaban con una inversión incorrecta.
+[FIXED] Redes/adornos/árboles que eran agregado por IMT son visibles en la captura de pantalla del preajuste.
+[FIXED] Se corrigió que los rellenos no se actualizaran después de seleccionar las guías de relleno.</value>
+  </data>
 </root>

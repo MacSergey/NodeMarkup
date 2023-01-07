@@ -1454,7 +1454,9 @@ mode bawah tanah</value>
   <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
     <value>Median</value>
   </data>
-  
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Putus</value>
+  </data>
   <data name="StyleOption_Length" xml:space="preserve">
     <value>Panjang</value>
   </data>
@@ -1603,15 +1605,35 @@ mode bawah tanah</value>
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>Awal</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Hubungkan prasetelan dengan aset jaringan</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Putuskan prasetelan ini dengan aset jaringan</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Terhubung</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Seretkan untuk mengubah pergeseran</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Tekan dan tahan {0} untuk memindahkan titik</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Terapkan markah dari aset jaringan secara otomatis</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Keluar mode penerapan prasetelan</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Apakah Anda ingin keluar dari mode penerapan prasetelan dan menghubungkan prasetelan ini dengan aset jaringan?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Hubungkan</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Jangan hubungkan</value>
+  </data>
   
 </root>

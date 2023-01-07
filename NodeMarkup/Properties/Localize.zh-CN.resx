@@ -1401,8 +1401,8 @@
     <value>单一</value>
   </data>
   <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
-    <value>[NEW] 添加了摆件和树木的线条样式。它允许沿线放置任何摆件或树木。这些物品不计入游戏摆件和树木的上限。
-[NEW] 添加了装饰性网络线条样式。它允许沿线放置任何装饰性网络，如围栏。这些网络不计入游戏节点和分段上限。
+    <value>[NEW] 添加了摆件和树木的线段样式。它允许沿线放置任何摆件或树木。这些物品不计入游戏摆件和树木的上限。
+[NEW] 添加了装饰性网络线段样式。它允许沿线放置任何装饰性网络，如围栏。这些网络不计入游戏节点和分段上限。
 [NEW] 增加了在火车轨道、地铁轨道和人行道上添加标线的功能。
 [NEW] 添加了当从缓存粘贴标线时自动应用标线，或者如果目标与源匹配，则自动应用标线。可以在模组设置中禁用。
 [NEW] 添加了关闭人行道剪切的功能。
@@ -1695,22 +1695,50 @@
     <value>起始点</value>
   </data>
   <data name="PresetEditor_LinkPreset" xml:space="preserve">
-    <value>将此预设应用到网络（道路）资产</value>
+    <value>将此预设关联到道路资产</value>
   </data>
   <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
-    <value>将此预设从网络（道路）资产上解除应用</value>
+    <value>取消此预设与道路资产的关联</value>
   </data>
   <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
     <value>已关联</value>
   </data>
   <data name="Tool_InfoDragPointMode" xml:space="preserve">
-    <value>拖动点来改变偏移</value>
+    <value>拖动端点来改变偏移</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>按住 {0} 来移动端点</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>自动应用与道路资产关联的标线</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>退出关联预设模式</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>你确定要退出关联预设模式，并将此预设关联到道路资产吗？</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>关联</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>不关联</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NEW] 添加了一种新的线段样式：文本。允许在道路上书写自定义文本，并设置为任意一个已在系统中安装的字体。
+[NEW] 添加了将预设关联到道路资产的功能。建设道路时会自动应用关联的预设。
+[NEW] 添加了一种新的线段样式：车道。它简化了摆件/树木/网络/文本在车道中间的放置。
+[New] 添加了一种新的线段样式：之字形折线。
+[NEW] 添加了在资产编辑器中，为不同类型的的道路高程（斜坡、隧道）保存不同标线的功能。
+[NEW] 自动创建车道边缘线。可以在模组设置选项中关闭。
+[NEW] 添加了摆件/树木的平均分布选项。这允许您使摆件/树木固定在线段两端，并设置动态间隔长度。
+[NEW] 添加反转网络的偏移值的功能。
+[NEW] 添加粘贴标线模式的快捷键。
+[UPDATED] 不再需要按住 Ctrl 来拖动点。旧的模式（按住 Ctrl 键拖动）可以在模组设置选项中启用。
+[FIXED] 线段和填充图案尽可能跟随路段的倾斜。在某些情况下，标线倾斜仍然可能不完美，但会比之前好很多。
+[FIXED] 人行道的线现在能正确地跟随填充图案。
+[FIXED] 修复不对称的样式值粘贴时的反转错误。
+[FIXED] 被 IMT 添加的装饰性网络/摆件/树木，会显示在预设的预览图中。
+[FIXED] 修复设定填充图案边界后，填充图案没有更新的问题。</value>
+  </data>
 </root>

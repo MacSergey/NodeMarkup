@@ -860,7 +860,7 @@ Voulez-vous appliquer le marquage manuellement ?</value>
     <value>Maintenir {0} pour créer un remplisseur</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Glissez avec {0} pour bouger le point</value>
+    <value>Glissez avec {0} pour déplacer le point</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>[WARNING] Les paramètres par défaut des modèles seront réinitialisés.
@@ -1810,12 +1810,42 @@ le mode souterrain</value>
   <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
     <value>Lié</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Faites glisser un point pour modifier le décalage</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Maintenez {0} pour déplacer un point</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Appliquer automatiquement les marquages à partir des ressources de réseau</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Quitter le mode de liaison des préréglages</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Voulez-vous quitter le mode de liaison des préréglages et lier ce préréglage à la ressource de réseau ?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Lier</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Ne pas lier</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NEW] Ajout d'un nouveau style de ligne : Texte. Il permet d'écrire un texte personnalisé sur la route et de définir n'importe quelle police installée sur le système.
+[NEW] Ajout de la possibilité de lier un préréglage à une ressource de réseau. Il sera appliqué automatiquement lorsque la route sera créée.
+[NEW] Ajout d'un nouveau type de ligne : Voie. Il simplifie le placement des accessoires/arbres/réseaux/textes qui doivent être placés au milieu de la voie.
+[New] Ajout d'un nouveau style de ligne : Zigzag.
+[NEW] Ajout de la possibilité d'enregistrer des marquages différents pour différents types d'élévation de routes (pente, tunnel) dans l'éditeur de ressources.
+[NEW] Ajout de la création automatique des lignes de bord des voies. Peut être désactivé dans les paramètres du mod.
+[NEW] Ajout d'une option de distribution pour les accessoires/arbres. Elle permet de rendre les accessoires/arbres fixes aux extrémités de la ligne et de définir un emplacement dynamique.
+[NEW] Ajout de la possibilité d'inverser la valeur du décalage du réseau.
+[NEW] Ajout de raccourcis pour le mode "Coller le marquage".
+[UPDATED] Il n'est plus nécessaire de maintenir la touche Ctrl enfoncée pour faire glisser un point. L'ancien comportement (avec Ctrl maintenu) peut être activé dans les paramètres du mod.
+[FIXED] Les lignes et les remplissages suivent les segments inclinés autant que possible. Ce n'est peut-être pas encore parfait dans certains cas, mais c'est beaucoup mieux qu'avant.
+[FIXED] Les lignes en béton suivent correctement le remplissage.
+[FIXED] Correction d'un problème où les valeurs des styles asymétriques étaient collées avec une mauvaise inversion.
+[FIXED] Les réseaux/props/arbres qui ont été ajoutés par IMT sont visibles sur la capture d'écran du préréglage.
+[FIXED] Correction du fait que les remplisseurs n'étaient pas mis à jour après avoir sélectionné les guides de remplissage.</value>
+  </data>
 </root>
