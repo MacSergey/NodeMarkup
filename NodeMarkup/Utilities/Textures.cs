@@ -77,8 +77,6 @@ namespace NodeMarkup.Utilities
         public static string FixedFixedButtonIcons { get; } = nameof(FixedFixedButtonIcons);
         public static string FixedFreeButtonIcons { get; } = nameof(FixedFreeButtonIcons);
 
-        public static string PlusMinusButtonIcons { get; } = nameof(PlusMinusButtonIcons);
-
         static NodeMarkupTextures()
         {
             var spriteParams = new Dictionary<string, RectOffset>();
@@ -142,8 +140,6 @@ namespace NodeMarkup.Utilities
             spriteParams[DynamicFreeButtonIcons] = new RectOffset();
             spriteParams[FixedFixedButtonIcons] = new RectOffset();
             spriteParams[FixedFreeButtonIcons] = new RectOffset();
-
-            spriteParams[PlusMinusButtonIcons] = new RectOffset();
 
             //ListItem
             spriteParams[ListItemBackground] = new RectOffset(4, 4, 4, 4);
