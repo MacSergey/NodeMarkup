@@ -161,6 +161,9 @@ namespace NodeMarkup.Manager
                 if (data.m_nextInstance != ushort.MaxValue)
                     return;
 
+                if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
+                    return;
+
                 if (!TryGetMarkup(id, out TypeMarkup markup))
                     return;
 
