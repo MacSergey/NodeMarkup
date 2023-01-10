@@ -569,7 +569,7 @@ namespace NodeMarkup.Manager
         public static ColorOptionEnum DefaultColorOption => ColorOptionEnum.Random;
 
         public override StyleType Type => StyleType.LineProp;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
         protected override string AssetPropertyName => Localize.StyleOption_AssetProp;
 
@@ -716,7 +716,7 @@ namespace NodeMarkup.Manager
     public class TreeLineStyle : BaseObjectLineStyle<TreeInfo, SelectTreeProperty>
     {
         public override StyleType Type => StyleType.LineTree;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
         protected override string AssetPropertyName => Localize.StyleOption_AssetTree;
 
