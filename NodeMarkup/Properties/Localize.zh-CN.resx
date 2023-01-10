@@ -1602,10 +1602,10 @@
     <value>间距</value>
   </data>
   <data name="StyleOption_SpacingChar" xml:space="preserve">
-    <value>字符</value>
+    <value>横排</value>
   </data>
   <data name="StyleOption_SpacingLine" xml:space="preserve">
-    <value>线段</value>
+    <value>竖排</value>
   </data>
   <data name="StyleOption_Text" xml:space="preserve">
     <value>文本</value>

@@ -1445,7 +1445,7 @@
     <value>非対称2重破線</value>
   </data>
   <data name="NumberFormat_Period" xml:space="preserve">
-    <value>個々 {0}</value>
+    <value>ステップ: {0}</value>
   </data>
   <data name="StyleOption_CrosswalkGap" xml:space="preserve">
     <value>ギャップ</value>
