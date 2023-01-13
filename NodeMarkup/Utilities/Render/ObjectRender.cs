@@ -165,10 +165,10 @@ namespace NodeMarkup.Utilities
         public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
             foreach (var item in Items)
-                RenderInstance(cameraInfo, Info, item.Position, item.Scale, item.Angle, item.Tilt, item.Slope, 1f, new Vector4());
+                RenderInstance(cameraInfo, Info, item.Position, item.Scale, item.AbsoluteAngle, item.Angle, item.Tilt, item.Slope, 1f, new Vector4());
         }
 
-        public static void RenderInstance(RenderManager.CameraInfo cameraInfo, TreeInfo info, Vector3 position, float scale, float angle, float tilt, float slope, float brightness, Vector4 objectIndex)
+        public static void RenderInstance(RenderManager.CameraInfo cameraInfo, TreeInfo info, Vector3 position, float scale, float absoluteAngle, float angle, float tilt, float slope, float brightness, Vector4 objectIndex)
         {
             if (!info.m_prefabInitialized)
                 return;
@@ -178,7 +178,11 @@ namespace NodeMarkup.Utilities
                 var instance = Singleton<TreeManager>.instance;
                 var materialBlock = instance.m_materialBlock;
                 var matrix = default(Matrix4x4);
-                matrix.SetTRS(position, Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down) * Quaternion.AngleAxis(tilt * Mathf.Rad2Deg, Vector3.right) * Quaternion.AngleAxis(slope * Mathf.Rad2Deg, Vector3.forward), new Vector3(scale, scale, scale));
+                var rotation = Quaternion.AngleAxis(absoluteAngle * Mathf.Rad2Deg, Vector3.down);
+                rotation *= Quaternion.AngleAxis(slope * Mathf.Rad2Deg, Vector3.forward);
+                rotation *= Quaternion.AngleAxis(tilt * Mathf.Rad2Deg, Vector3.right);
+                rotation *= Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down);
+                matrix.SetTRS(position, rotation, new Vector3(scale, scale, scale));
                 var color = info.m_defaultColor * brightness;
                 color.a = Singleton<WeatherManager>.instance.GetWindSpeed(position);
                 materialBlock.Clear();

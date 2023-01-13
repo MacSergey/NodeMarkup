@@ -208,7 +208,6 @@ namespace NodeMarkup.Manager
         {
             var fontProperty = ComponentPool.Get<FontPtopertyPanel>(parent, nameof(Font));
             fontProperty.Text = Localize.StyleOption_Font;
-            fontProperty.UseWheel = true;
             fontProperty.CanCollapse = canCollapse;
             fontProperty.Init();
             fontProperty.Font = string.IsNullOrEmpty(Font.Value) ? null : Font.Value;

@@ -219,103 +219,7 @@ namespace NodeMarkup.UI
     public class SelectTreeProperty : SelectPrefabProperty<TreeInfo, TreePanel, TreeEntity, SelectTreePopup> { }
     public class SelectNetworkProperty : SelectPrefabProperty<NetInfo, NetPanel, NetEntity, SelectNetPopup> { }
 
-    public abstract class SelectPrefabPopup<PrefabType, EntityPanel> : Popup<PrefabType, EntityPanel>
-        where PrefabType : PrefabInfo
-        where EntityPanel : PopupEntity<PrefabType>
-    {
-        private bool CanSubmit { get; set; } = true;
-        protected CustomUITextField Search { get; private set; }
-        private CustomUILabel NothingFound { get; set; }
-        private CustomUIButton ResetButton { get; set; }
-
-        public SelectPrefabPopup()
-        {
-            Search = AddUIComponent<CustomUITextField>();
-            Search.atlas = TextureHelper.InGameAtlas;
-            Search.selectionSprite = "EmptySprite";
-            Search.normalBgSprite = "TextFieldPanel";
-            Search.color = new Color32(10, 10, 10, 255);
-            Search.relativePosition = new Vector2(5f, 5f);
-            Search.height = 20f;
-            Search.builtinKeyNavigation = true;
-            Search.cursorWidth = 1;
-            Search.cursorBlinkTime = 0.45f;
-            Search.selectOnFocus = true;
-            Search.textScale = 0.7f;
-            Search.padding = new RectOffset(20, 30, 6, 0);
-            Search.horizontalAlignment = UIHorizontalAlignment.Left;
-            Search.eventTextChanged += SearchTextChanged;
-
-            var loop = Search.AddUIComponent<UISprite>();
-            loop.atlas = TextureHelper.InGameAtlas;
-            loop.spriteName = "ContentManagerSearch";
-            loop.size = new Vector2(10f, 10f);
-            loop.relativePosition = new Vector2(5f, 5f);
-
-            ResetButton = Search.AddUIComponent<CustomUIButton>();
-            ResetButton.atlas = TextureHelper.InGameAtlas;
-            ResetButton.normalFgSprite = "ContentManagerSearchReset";
-            ResetButton.size = new Vector2(10f, 10f);
-            ResetButton.hoveredColor = new Color32(127, 127, 127, 255);
-            ResetButton.isVisible = false;
-            ResetButton.eventClick += ResetClick;
-
-            NothingFound = AddUIComponent<CustomUILabel>();
-            NothingFound.text = NodeMarkup.Localize.AssetPopup_NothingFound;
-            NothingFound.autoSize = false;
-            NothingFound.autoHeight = false;
-            NothingFound.height = EntityHeight;
-            NothingFound.relativePosition = new Vector2(0, 30f);
-            NothingFound.verticalAlignment = UIVerticalAlignment.Middle;
-            NothingFound.textAlignment = UIHorizontalAlignment.Center;
-            NothingFound.isVisible = false;
-        }
-
-
-        public override void DeInit()
-        {
-            base.DeInit();
-            CanSubmit = false;
-            Search.text = string.Empty;
-        }
-        protected override bool Filter(PrefabType prefab)
-        {
-            if (base.Filter(prefab))
-            {
-                name = GetPrebName(prefab);
-                if (name.ToUpper().Contains(Search.text.ToUpper()))
-                    return true;
-            }
-
-            return false;
-        }
-        protected abstract string GetPrebName(PrefabType prefab);
-
-        private void SearchTextChanged(UIComponent component, string value)
-        {
-            if (CanSubmit)
-                Refresh();
-
-            ResetButton.isVisible = !string.IsNullOrEmpty(value);
-        }
-        private void ResetClick(UIComponent component, UIMouseEventParameter eventParam)
-        {
-            Search.text = string.Empty;
-        }
-
-        protected override void RefreshItems()
-        {
-            base.RefreshItems();
-            Search.width = width - 10f;
-            NothingFound.size = new Vector2(width, EntityHeight);
-            NothingFound.isVisible = VisibleCount == 0;
-            ResetButton.relativePosition = new Vector2(Search.width - 15f, 5f);
-        }
-        protected override float GetHeight() => Math.Max(base.GetHeight(), EntityHeight) + 30f;
-        protected override Vector2 GetEntityPosition(int index) => base.GetEntityPosition(index) + new Vector2(0f, 30f);
-        protected override Vector2 GetScrollPosition() => base.GetScrollPosition() + new Vector2(0f, 30f);
-    }
-    public class SelectPropPopup : SelectPrefabPopup<PropInfo, PropEntity>
+    public class SelectPropPopup : SearchPopup<PropInfo, PropEntity>
     {
         private static string SearchText { get; set; } = string.Empty;
         public override void Init(IEnumerable<PropInfo> values, Func<PropInfo, bool> selector = null)
@@ -328,9 +232,9 @@ namespace NodeMarkup.UI
             SearchText = Search.text;
             base.DeInit();
         }
-        protected override string GetPrebName(PropInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
+        protected override string GetName(PropInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
     }
-    public class SelectTreePopup : SelectPrefabPopup<TreeInfo, TreeEntity>
+    public class SelectTreePopup : SearchPopup<TreeInfo, TreeEntity>
     {
         private static string SearchText { get; set; } = string.Empty;
         public override void Init(IEnumerable<TreeInfo> values, Func<TreeInfo, bool> selector = null)
@@ -343,9 +247,9 @@ namespace NodeMarkup.UI
             SearchText = Search.text;
             base.DeInit();
         }
-        protected override string GetPrebName(TreeInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
+        protected override string GetName(TreeInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
     }
-    public class SelectNetPopup : SelectPrefabPopup<NetInfo, NetEntity>
+    public class SelectNetPopup : SearchPopup<NetInfo, NetEntity>
     {
         private static string SearchText { get; set; } = string.Empty;
         public override void Init(IEnumerable<NetInfo> values, Func<NetInfo, bool> selector = null)
@@ -358,7 +262,7 @@ namespace NodeMarkup.UI
             SearchText = Search.text;
             base.DeInit();
         }
-        protected override string GetPrebName(NetInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
+        protected override string GetName(NetInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
     }
 
     public abstract class PrefabEntity<PrefabType, PanelType> : PopupEntity<PrefabType>
