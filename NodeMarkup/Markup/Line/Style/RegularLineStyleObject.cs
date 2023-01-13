@@ -6,14 +6,8 @@ using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
-using static NodeMarkup.Manager.DistributionTypePanel;
-using static NodeMarkup.Manager.RegularLineStyleText;
 
 namespace NodeMarkup.Manager
 {
@@ -38,6 +32,9 @@ namespace NodeMarkup.Manager
         public PropertyStructValue<float> OffsetAfter { get; }
 
         public PropertyEnumValue<DistributionType> Distribution { get; }
+
+        public abstract bool CanElevate { get; }
+        public abstract bool CanSlope { get; }
 
         public BaseObjectLineStyle(int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(new Color32(), 0f)
         {
@@ -80,13 +77,13 @@ namespace NodeMarkup.Manager
             components.Add(AddProbabilityProperty(parent, true));
             components.Add(AddStepProperty(parent, false));
             components.Add(AddShiftProperty(parent, false));
-            components.Add(AddElevationProperty(parent, false));
             components.Add(AddAngleRangeProperty(parent, false));
-            components.Add(AddTiltRangeProperty(parent, true));
-            components.Add(AddSlopeRangeProperty(parent, true));
             components.Add(AddScaleRangeProperty(parent, true));
             components.Add(AddOffsetProperty(parent, true));
             components.Add(AddDistributionProperty(parent, true));
+            components.Add(AddElevationProperty(parent, false));
+            components.Add(AddTiltRangeProperty(parent, true));
+            components.Add(AddSlopeRangeProperty(parent, true));
         }
 
         protected abstract EditorItem AddPrefabProperty(UIComponent parent, bool canCollapse);
@@ -332,9 +329,9 @@ namespace NodeMarkup.Manager
             Distribution.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Probability.FromXml(config, DefaultObjectProbability);
             Step.FromXml(config, DefaultObjectStep);
             Angle.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
@@ -351,9 +348,20 @@ namespace NodeMarkup.Manager
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
             Distribution.FromXml(config, DistributionType.FixedSpaceFreeEnd);
 
-            if (map.IsMirror ^ invert)
+            if (invert)
+            {
+                var offsetBefore = OffsetBefore.Value;
+                var offsetAfter = OffsetAfter.Value;
+                OffsetBefore.Value = offsetAfter;
+                OffsetAfter.Value = offsetBefore;
+            }
+
+            if (map.Invert ^ invert ^ typeChanged)
             {
                 Shift.Value = -Shift.Value;
+                var angleX = Angle.Value.x > 0 ? Angle.Value.x - 180 : Angle.Value.x + 180;
+                var angleY = Angle.Value.y > 0 ? Angle.Value.y - 180 : Angle.Value.y + 180;
+                Angle.Value = new Vector2(angleX, angleY);
             }
         }
     }
@@ -363,6 +371,7 @@ namespace NodeMarkup.Manager
     {
         public PropertyPrefabValue<PrefabType> Prefab { get; }
         protected override bool IsValid => IsValidPrefab(Prefab.Value);
+        protected abstract string AssetPropertyName { get; }
 
         public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution)
         {
@@ -387,10 +396,7 @@ namespace NodeMarkup.Manager
 
             if (shift != 0)
             {
-                var startNormal = trajectory.StartDirection.Turn90(true);
-                var endNormal = trajectory.EndDirection.Turn90(false);
-
-                trajectory = new BezierTrajectory(trajectory.StartPosition + startNormal * shift, trajectory.StartDirection, trajectory.EndPosition + endNormal * shift, trajectory.EndDirection);
+                trajectory = trajectory.Shift(shift, shift);
             }
 
             var length = trajectory.Length;
@@ -481,28 +487,35 @@ namespace NodeMarkup.Manager
             var randomShift = SimulationManager.instance.m_randomizer.UInt32((uint)((Shift.Value.y - Shift.Value.x) * 1000f)) * 0.001f;
             item.Position += trajectory.Tangent(t).Turn90(true).MakeFlatNormalized() * (randomShift - (Shift.Value.y - Shift.Value.x) * 0.5f);
 
-            var randomElevation = SimulationManager.instance.m_randomizer.UInt32((uint)((Elevation.Value.y - Elevation.Value.x) * 1000f)) * 0.001f;
-            item.Position.y += Elevation.Value.x + randomElevation;
+            if (CanElevate)
+            {
+                var randomElevation = SimulationManager.instance.m_randomizer.UInt32((uint)((Elevation.Value.y - Elevation.Value.x) * 1000f)) * 0.001f;
+                item.Position.y += Elevation.Value.x + randomElevation;
+            }
 
             var minAngle = Mathf.Min(Angle.Value.x, Angle.Value.y);
             var maxAngle = Mathf.Max(Angle.Value.x, Angle.Value.y);
             var randomAngle = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(maxAngle - minAngle));
-            item.Angle = trajectory.Tangent(t).AbsoluteAngle() + (minAngle + randomAngle) * Mathf.Deg2Rad;
+            item.AbsoluteAngle = trajectory.Tangent(t).AbsoluteAngle();
+            item.Angle = (minAngle + randomAngle) * Mathf.Deg2Rad;
 
-            var randomTilt = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Tilt.Value.y - Tilt.Value.x));
-            item.Tilt += (Tilt.Value.x + randomTilt) * Mathf.Deg2Rad;
+            if (CanSlope)
+            {
+                var randomTilt = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Tilt.Value.y - Tilt.Value.x));
+                item.Tilt += (Tilt.Value.x + randomTilt) * Mathf.Deg2Rad;
 
-            if (Slope.HasValue)
-            {
-                var slopeValue = Slope.Value.Value;
-                var randomSlope = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(slopeValue.y - slopeValue.x));
-                item.Slope += (slopeValue.x + randomSlope) * Mathf.Deg2Rad;
-            }
-            else
-            {
-                var direction = trajectory.Tangent(t);
-                var flatDirection = direction.MakeFlat();
-                item.Slope = Vector3.Angle(flatDirection, direction) * Mathf.Deg2Rad;
+                if (Slope.HasValue)
+                {
+                    var slopeValue = Slope.Value.Value;
+                    var randomSlope = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(slopeValue.y - slopeValue.x));
+                    item.Slope += (slopeValue.x + randomSlope) * Mathf.Deg2Rad;
+                }
+                else
+                {
+                    var direction = trajectory.Tangent(t);
+                    var flatDirection = direction.MakeFlat();
+                    item.Slope = Mathf.Sign(direction.y) * Vector3.Angle(flatDirection, direction) * Mathf.Deg2Rad;
+                }
             }
 
             var randomScale = SimulationManager.instance.m_randomizer.UInt32((uint)((Scale.Value.y - Scale.Value.x) * 1000f)) * 0.001f;
@@ -513,10 +526,15 @@ namespace NodeMarkup.Manager
         protected virtual void CalculateItem(PrefabType prefab, ref MarkupPropItemData item) { }
         protected abstract IStyleData GetParts(PrefabType prefab, MarkupPropItemData[] items);
 
+        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        {
+            base.GetUIComponents(line, components, parent, isTemplate);
+            PrefabChanged(parent, IsValid);
+        }
         protected sealed override EditorItem AddPrefabProperty(UIComponent parent, bool canCollapse)
         {
             var prefabProperty = ComponentPool.Get<SelectPrefabType>(parent, nameof(Prefab));
-            prefabProperty.Text = Localize.StyleOption_AssetProp;
+            prefabProperty.Text = AssetPropertyName;
             prefabProperty.PrefabSelectPredicate = IsValidPrefab;
             prefabProperty.PrefabSortPredicate = GetSortPredicate();
             prefabProperty.CanCollapse = canCollapse;
@@ -525,16 +543,48 @@ namespace NodeMarkup.Manager
             prefabProperty.OnValueChanged += (PrefabType value) =>
             {
                 Prefab.Value = value;
+                PrefabChanged(parent, IsValid);
+
                 if (!Step.HasValue)
                 {
                     if (parent.Find(nameof(Step)) is FloatStaticAutoProperty stepProperty)
-                        stepProperty.Value = IsValid ? PrefabSize.x : DefaultObjectStep;
-
-                    StyleChanged();
+                        stepProperty.SimulateEnterValue(IsValid ? PrefabSize.x : DefaultObjectStep);
                 }
             };
 
             return prefabProperty;
+        }
+        protected virtual void PrefabChanged(UIComponent parent, bool valid)
+        {
+            if (parent.Find(nameof(Probability)) is EditorPropertyPanel probability)
+                probability.IsHidden = !valid;
+
+            if (parent.Find(nameof(Step)) is EditorPropertyPanel step)
+                step.IsHidden = !valid;
+
+            if (parent.Find(nameof(Shift)) is EditorPropertyPanel shift)
+                shift.IsHidden = !valid;
+
+            if (parent.Find(nameof(Angle)) is EditorPropertyPanel angle)
+                angle.IsHidden = !valid;
+
+            if (parent.Find(nameof(Scale)) is EditorPropertyPanel scale)
+                scale.IsHidden = !valid;
+
+            if (parent.Find(nameof(Offset)) is EditorPropertyPanel offset)
+                offset.IsHidden = !valid;
+
+            if (parent.Find(nameof(Distribution)) is EditorPropertyPanel distribution)
+                distribution.IsHidden = !valid;
+
+            if (parent.Find(nameof(Elevation)) is EditorPropertyPanel elevation)
+                elevation.IsHidden = !valid || !CanElevate;
+
+            if (parent.Find(nameof(Tilt)) is EditorPropertyPanel tilt)
+                tilt.IsHidden = !valid || !CanSlope;
+
+            if (parent.Find(nameof(Slope)) is EditorPropertyPanel slope)
+                slope.IsHidden = !valid || !CanSlope;
         }
 
         protected abstract bool IsValidPrefab(PrefabType info);
@@ -546,9 +596,9 @@ namespace NodeMarkup.Manager
             Prefab.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Prefab.FromXml(config, null);
         }
     }
@@ -558,8 +608,12 @@ namespace NodeMarkup.Manager
         public static ColorOptionEnum DefaultColorOption => ColorOptionEnum.Random;
 
         public override StyleType Type => StyleType.LineProp;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
+        protected override string AssetPropertyName => Localize.StyleOption_AssetProp;
+
+        public override bool CanElevate => Prefab.Value is PropInfo prop && !prop.m_isDecal;
+        public override bool CanSlope => Prefab.Value is PropInfo prop && !prop.m_isDecal;
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
@@ -623,13 +677,25 @@ namespace NodeMarkup.Manager
         }
         public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
-
             components.Add(AddColorOptionProperty(parent, true));
             components.Add(AddColorProperty(parent, true));
-            ColorOptionChanged(parent, ColorOption);
-
+            base.GetUIComponents(line, components, parent, isTemplate);
         }
+        protected override void PrefabChanged(UIComponent parent, bool valid)
+        {
+            base.PrefabChanged(parent, valid);
+
+            if (parent.Find(nameof(ColorOption)) is EditorPropertyPanel colorOption)
+                colorOption.IsHidden = !valid;
+
+            ColorOptionChanged(parent, valid, ColorOption);
+        }
+        protected void ColorOptionChanged(UIComponent parent, bool valid, ColorOptionEnum value)
+        {
+            if (parent.Find(nameof(Color)) is EditorPropertyPanel color)
+                color.IsHidden = !valid || !(value == ColorOptionEnum.Custom);
+        }
+
         protected PropColorPropertyPanel AddColorOptionProperty(UIComponent parent, bool canCollapse)
         {
             var colorOptionProperty = ComponentPool.Get<PropColorPropertyPanel>(parent, nameof(ColorOption));
@@ -641,16 +707,10 @@ namespace NodeMarkup.Manager
             colorOptionProperty.OnSelectObjectChanged += (value) =>
             {
                 ColorOption.Value = value;
-                ColorOptionChanged(parent, value);
+                ColorOptionChanged(parent, IsValid, value);
             };
             return colorOptionProperty;
         }
-        protected void ColorOptionChanged(UIComponent parent, ColorOptionEnum value)
-        {
-            if (parent.Find<ColorAdvancedPropertyPanel>(nameof(Color)) is ColorAdvancedPropertyPanel colorProperty)
-                colorProperty.IsHidden = !(value == ColorOptionEnum.Custom);
-        }
-
         protected ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent, bool canCollapse)
         {
             var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(Color));
@@ -673,9 +733,9 @@ namespace NodeMarkup.Manager
             ColorOption.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             ColorOption.FromXml(config, DefaultColorOption);
         }
 
@@ -704,8 +764,11 @@ namespace NodeMarkup.Manager
     public class TreeLineStyle : BaseObjectLineStyle<TreeInfo, SelectTreeProperty>
     {
         public override StyleType Type => StyleType.LineTree;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
+        protected override string AssetPropertyName => Localize.StyleOption_AssetTree;
+        public override bool CanSlope => true;
+        public override bool CanElevate => true;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -758,7 +821,7 @@ namespace NodeMarkup.Manager
         [Sprite(nameof(NodeMarkupTextures.DynamicFixedButtonIcons))]
         DynamicSpaceFixedEnd,
     }
-    public class DistributionTypePanel : EnumOncePropertyPanel<DistributionType, DistributionTypeSegmented>
+    public class DistributionTypePanel : EnumOncePropertyPanel<DistributionType, DistributionTypePanel.DistributionTypeSegmented>
     {
         protected override string GetDescription(DistributionType value) => value.Description();
         protected override bool IsEqual(DistributionType first, DistributionType second) => first == second;

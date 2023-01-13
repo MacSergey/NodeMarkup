@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"></xsd:import>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="name" type="xsd:string"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"></xsd:attribute>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"></xsd:attribute>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"></xsd:attribute>
+              <xsd:attribute ref="xml:space"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -358,9 +358,6 @@ Click to edit markings</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Angle</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Offset from lines</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Click to start creating a filler</value>
   </data>
@@ -375,9 +372,6 @@ Click to edit markings</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Select the next point in the contour</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Offset from median</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Copy</value>
@@ -444,86 +438,6 @@ To create a filler hold {0} or press {1}.</value>
     <value>The list of templates is empty.
 To create a template, click «{0}» at the line or crosswalk or filler style.</value>
   </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Activate with key</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Activation failed</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Activation success</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>This function is unavailable</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>Function «{0}» is currently only available for Patreons early access.
-It will be available to everyone later.
-By registering early access, you will support the ability to develop this mod at the same speed.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Get early access</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Your access ID</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Access key</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Activate</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Early access activation</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>To activate early access you need to enter a key</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>The key you entered is not valid</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Link in process...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Link Patreon account</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Link Patreon account</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>The Patreon account can't be linked because you denied access request.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>An error occurred when linking the account, try again.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Your account is linked, but you don't have early access.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>You can close this page and return to the game.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Status: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Activated</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Not activated</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Thank you for your support, now you can enjoy all the features.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Early access</value>
-  </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alignment</value>
   </data>
@@ -587,12 +501,6 @@ To create a crosswalk hold {0}.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Line width</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Offset after</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Offset before</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Parallel to lanes</value>
@@ -794,9 +702,6 @@ Failed to load markings for {0} intersections.</value>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Edge</value>
   </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Starting from</value>
-  </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Vertex</value>
   </data>
@@ -952,7 +857,7 @@ Do you want to apply the markings manually?</value>
     <value>Hold {0} to create a filler</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Drag with {0} to move the point</value>
+    <value>Hold {0} and drag a point to change offset</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>[WARNING] Default templates setting will be reset.
@@ -1232,9 +1137,6 @@ Failed to load markings for all intersections.</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Elevation</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Grass</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Pavement</value>
   </data>
@@ -1244,15 +1146,6 @@ Failed to load markings for all intersections.</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Segment #{0}
 Click to edit markings</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Follow guide</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Left guide</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Right guide</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Select a guide's first point or line as guide</value>
@@ -1399,20 +1292,11 @@ Click to edit markings</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Ruined</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Offset from lines</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Corner radius</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Corner radius on medians</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Curb size</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Curb size on medians</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
     <value>[NEW] Added selection step over like in MoveIt. Press Ctrl+Space to step over (you can rebind in mod options).
@@ -1540,12 +1424,6 @@ Click to edit markings</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Angle</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Elevation</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Name</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Scale</value>
@@ -1693,9 +1571,6 @@ underground mode</value>
     <value>Hold {0} to
 underground mode</value>
   </data>
-  <data name="Settings_AutoPropStep" xml:space="preserve">
-    <value>Auto prop step depends on its size</value>
-  </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
     <value>2D Marking LOD distance</value>
   </data>
@@ -1818,9 +1693,6 @@ underground mode</value>
   <data name="StyleOption_Font" xml:space="preserve">
     <value>Font</value>
   </data>
-  <data name="StyleOption_FontStyle" xml:space="preserve">
-    <value>Font style</value>
-  </data>
   <data name="StyleOption_FontStyleBold" xml:space="preserve">
     <value>Bold</value>
   </data>
@@ -1889,5 +1761,91 @@ underground mode</value>
   </data>
   <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
     <value>Fixed space and free ends</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Zigzag</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Side</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Start from</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Outside</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Step</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Middle</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Link this preset to network asset</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Unlink this preset from network asset</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Linked</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Drag a point to change offset</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Hold {0} to move a point</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Auto apply markings from network assets</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Exit linking preset mode</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Do you want to exit linking preset mode and link this preset to network asset?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Don't link</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NEW] Added a new line style: Text. It allows to write custom text on road and set any font installed in the system.
+[NEW] Added the ability to link preset to network asset. It will be auto applied when road is built.
+[NEW] Added a new line type: Lane. It simplifies the placement props/trees/network/text that should be placed in the middle of lane.
+[New] Added a new line style: Zigzag.
+[NEW] Added the ability to save different markings for different types of road elevations (slope, tunnel) in asset editor.
+[NEW] Auto creation of edge lines of lane. Can be disabled in the mod settings.
+[NEW] Added distribution option to props/trees. it allows to make prop/tree fixed at the ends of the line and set dynamic space length.
+[NEW] Added the ability to invert the value of network shift.
+[NEW] Added shortcuts for the paste marking mode.
+[UPDATED] It is not needed to hold Ctrl to drag point anymore. Old behavior (with holding Ctrl) can be enabled in the mod settings.
+[FIXED] Lines and fillers follows sloped segment as much as possible. It may still not be perfect in some cases, but much better then before.
+[FIXED] Pavement line follows filler properly.
+[FIXED] Fixed when asym styles values were pasted with wrong invertation.
+[FIXED] Networks/props/trees that were added by IMT are visible on preset screenshot.
+[FIXED] Fixed that fillers were not updated after selecting filler guides.</value>
   </data>
 </root>

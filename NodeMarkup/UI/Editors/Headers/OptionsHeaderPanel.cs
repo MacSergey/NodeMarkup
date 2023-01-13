@@ -101,6 +101,7 @@ namespace NodeMarkup.UI.Editors
         private HeaderButtonInfo<HeaderButton> Discard { get; set; }
 
         protected TemplateType Template { get; private set; }
+        protected Editor Editor { get; private set; }
         private bool IsAsset => Template.IsAsset;
         private bool CanEdit => !IsAsset || Template.Asset.CanEdit;
 
@@ -137,14 +138,17 @@ namespace NodeMarkup.UI.Editors
             Content.AddButton(Discard);
         }
 
-        public virtual void Init(TemplateType template)
+        public virtual void Init(Editor editor, TemplateType template)
         {
+            Editor = editor;
             Template = template;
             base.Init(isDeletable: false);
         }
         public override void DeInit()
         {
             base.DeInit();
+            Editor = null;
+            Template = null;
             _editMode = EditMode.Default;
             OnSaveAsset = null;
             OnEdit = null;
@@ -217,13 +221,22 @@ namespace NodeMarkup.UI.Editors
     public class IntersectionTemplateHeaderPanel : TemplateHeaderPanel<IntersectionTemplate>
     {
         public event Action OnApply;
+        public event Action OnLink;
 
         private HeaderButtonInfo<HeaderButton> Apply { get; set; }
+        private HeaderButtonInfo<HeaderButton> Link { get; set; }
+        private HeaderButtonInfo<HeaderButton> Unlink { get; set; }
 
         protected override void AddButtons()
         {
             Apply = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.ApplyHeaderButton, NodeMarkup.Localize.PresetEditor_ApplyPreset, ApplyClick);
             Content.AddButton(Apply);
+
+            Link = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.LinkHeaderButton, NodeMarkup.Localize.PresetEditor_LinkPreset, LinkClick);
+            Content.AddButton(Link);
+
+            Unlink = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.UnlinkHeaderButton, NodeMarkup.Localize.PresetEditor_UnlinkPreset, LinkClick);
+            Content.AddButton(Unlink);
 
             base.AddButtons();
         }
@@ -231,14 +244,29 @@ namespace NodeMarkup.UI.Editors
         {
             base.DeInit();
             OnApply = null;
+            OnLink = null;
         }
 
         public override void Refresh()
         {
             Apply.Visible = EditMode == EditMode.Default;
+            var canLink = false;
+            var canUnlink = false;
+            if(EditMode == EditMode.Default && Template.Enters.Length == 2 && Editor.Markup.Type == MarkupType.Segment)
+            {
+                SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Markup.Id.GetSegment().Info.name, out var presetId);
+
+                if (presetId == Template.Id)
+                    canUnlink = true;
+                else
+                    canLink = true;
+            }
+            Link.Visible = canLink;
+            Unlink.Visible = canUnlink;
             base.Refresh();
         }
 
         private void ApplyClick() => OnApply?.Invoke();
+        private void LinkClick() => OnLink?.Invoke();
     }
 }

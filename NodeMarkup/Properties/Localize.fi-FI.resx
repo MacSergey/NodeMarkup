@@ -348,9 +348,6 @@ Napauta muokataksesi merkintöjä</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Kulma</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Etäisyys viivoista</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Napauta luodaksesi sulkualue</value>
   </data>
@@ -365,9 +362,6 @@ Napauta muokataksesi merkintöjä</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Valitse ääriviivan seuraava piste</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Etäisyys keskikaistaleesta</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Kopioi</value>
@@ -418,86 +412,6 @@ Luodaksesi sulkualue, pidä {0}-näppäintä pohjassa tai paina {1}.</value>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Malleja ei ole.
 Napauta {0} viivan, suojatien tai sulkualueen tyylissä luodaksesi malli.</value>
-  </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Aktivoi avaimella</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Aktivointi epäonnistui</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Aktivointi onnistui</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Tämä toiminto ei ole käytettävissä</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>Toiminto {0} on tällä hetkellä saatavilla ennakkoon Patreon-tukijoille.
-Toiminto on saatavilla kaikille myöhemmin.
-Rekisteröitymällä Patreon-tukijaksi, tuet kykyä kehittää modia samalla nopeudella kuin aiemminkin.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Hanki ennakkopääsy</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Käyttöoikeustunnuksesi</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Käyttöoikeusavain</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Aktivoi</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Ennakkopääsyn aktivointi</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Aktivoidaksesi ennakkopääsyn sinun on annettava avain</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Peruuta</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>Antamasi avain ei ole kelvollinen</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Yhdistetään...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Yhdistä Patreon-tili</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Yhdistä Patreon-tili</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Patreon-tiliä ei voitu yhdistää, koska hylkäsit pääsypyynnön.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Tiliä yhdistäessä tapahtui virhe. Yritä uudestaan.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Tilisi on yhdistetty, mutta sinulla ei ole ennakkopääsyä.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Voit sulkea tämän sivun ja palata peliin.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Peruuta</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Tila: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Aktivoitu</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Ei aktivoitu</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Kiitos tuestasi! Nyt voit nauttia kaikista ominaisuuksista.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Ennakkopääsy</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Sijoittelu</value>
@@ -562,12 +476,6 @@ Pidä {0}-näppäintä pohjassa luodaksesi suojatie.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Viivan leveys</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Välimatka jälkeen</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Välimatka ennen</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Kaistaviivojen suuntainen</value>
@@ -755,9 +663,6 @@ poistaaksesi suojatien</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Reunasta</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Alkaa</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Kulmasta</value>
@@ -1147,9 +1052,6 @@ Kaikkien risteyksien merkintöjen lataus epäonnistui.</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Korkeus</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Ruoho</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Päällyste</value>
   </data>
@@ -1159,15 +1061,6 @@ Kaikkien risteyksien merkintöjen lataus epäonnistui.</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Jaoke #{0}
 Napauta muokataksesi merkintöjä</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Seuraa ohjeviivoja</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Vasen ohjausviiva</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Oikea ohjausviiva</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Valitse viiva ohjausviivaksi tai ohjausviivan ensimmäinen piste</value>
@@ -1277,20 +1170,11 @@ Napauta muokataksesi merkintöjä</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Tärveltynyt</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Etäisyys viivoista</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Kulmasäde</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Kulmasäde keskikaistaleesta</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Reunakiven koko</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Reunakiven koko keskikaistaleesta</value>
   </data>
   
   
@@ -1373,6 +1257,26 @@ Napauta muokataksesi merkintöjä</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Tien nimi</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

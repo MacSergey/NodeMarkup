@@ -348,9 +348,6 @@ Apăsați pentru a modifica marcajele</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Unghi</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Offset între linii</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Apăsați pentru a crea o umplutură</value>
   </data>
@@ -365,9 +362,6 @@ Apăsați pentru a modifica marcajele</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Selectați următorul punct în schiță</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Offset de la mediană</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Copiere</value>
@@ -419,32 +413,6 @@ Pentru a crea o umplutură mențineți apăsat {0} sau apăsați {1}.</value>
     <value>Lista șabloanelor este goală.
 Pentru a crea un șablon, apăsați «{0}» pe linie sau trecere de pietoni sau pe stilul umplerii.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Aliniere</value>
   </data>
@@ -508,12 +476,6 @@ Pentru a crea o trecere de pietoni, apăsați {0}.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Lățimea liniei</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Offset după</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Offset înainte</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Paralel cu liniile</value>
@@ -701,9 +663,6 @@ crea ori șterge o trecere de pietoni</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Margine</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Pornire de la</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Vârf</value>
@@ -1093,9 +1052,6 @@ Sigur doriți să aveți mai multe preseturi cu același nume?</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Înălțime</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Iarbă</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Trotuar</value>
   </data>
@@ -1105,15 +1061,6 @@ Sigur doriți să aveți mai multe preseturi cu același nume?</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Segmentul #{0}
 Apăsați pentru a modifica marcajele</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Urmărește linia</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Linia stângă</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Linia dreaptă</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Selectați primul punct al ghidului sau linia ca ghid</value>
@@ -1213,20 +1160,11 @@ Apăsați pentru a modifica marcajele</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Ruinat</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Offset între linii</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Raza colțurilor</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Raza colțurilor în mediane</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Dimensiunea curbei</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Dimensiunea curbei în mediane</value>
   </data>
   
   
@@ -1318,12 +1256,6 @@ Apăsați pentru a modifica marcajele</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Unghi</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Înălțime</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Nume</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Scală</value>
@@ -1470,9 +1402,6 @@ modul Underground</value>
     <value>Țineți apăsat {0} pentru
 modul Underground</value>
   </data>
-  <data name="Settings_AutoPropStep" xml:space="preserve">
-    <value>Distanța automata între obiecte depinde de dimensiunea acestuia</value>
-  </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
     <value>Distanța LOD pentru marcajele 2D</value>
   </data>
@@ -1509,6 +1438,29 @@ modul Underground</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Culoare secundară</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

@@ -21,7 +21,7 @@ namespace NodeMarkup.Tools
             if (!IsSelectPoint)
             {
                 tips.Add(Localize.Tool_InfoSelectLineStartPoint);
-                tips.Add(string.Format(Localize.Tool_InfoStartDragPointMode, LocalizeExtension.Ctrl.AddInfoColor()));
+                tips.Add(Settings.HoldCtrlToMovePoint ? string.Format(Localize.Tool_InfoStartDragPointMode, LocalizeExtension.Ctrl.AddInfoColor()) : Localize.Tool_InfoDragPointMode);
                 if ((Markup.Support & Markup.SupportType.Fillers) != 0)
                     tips.Add(string.Format(Localize.Tool_InfoStartCreateFiller, LocalizeExtension.Alt.AddInfoColor()));
                 if ((Markup.Support & Markup.SupportType.Croswalks) != 0)
@@ -71,7 +71,7 @@ namespace NodeMarkup.Tools
 
         public override void OnMouseDrag(Event e)
         {
-            if (!IsSelectPoint && IsHoverPoint && HoverPoint.Type == MarkupPoint.PointType.Enter)
+            if ((!Settings.HoldCtrlToMovePoint || Utility.OnlyCtrlIsPressed) && !IsSelectPoint && IsHoverPoint && HoverPoint.Type == MarkupPoint.PointType.Enter)
                 Tool.SetMode(ToolModeType.DragPoint);
         }
         public override void OnPrimaryMouseClicked(Event e)
@@ -218,6 +218,8 @@ namespace NodeMarkup.Tools
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
+            Panel.Render(cameraInfo);
+
             if (IsHoverPoint)
             {
                 if (Utility.CtrlIsPressed)
@@ -247,8 +249,6 @@ namespace NodeMarkup.Tools
                         RenderNotConnectLine(cameraInfo);
                 }
             }
-
-            Panel.Render(cameraInfo);
 #if DEBUG
             if (Settings.ShowNodeContour && Tool.Markup is Manager.NodeMarkup markup)
             {
@@ -260,19 +260,18 @@ namespace NodeMarkup.Tools
 
         private void RenderRegularConnectLine(RenderManager.CameraInfo cameraInfo)
         {
-            var bezier = new Bezier3()
-            {
-                a = SelectPoint.MarkerPosition,
-                b = HoverPoint.Enter == SelectPoint.Enter ? HoverPoint.MarkerPosition - SelectPoint.MarkerPosition : SelectPoint.Direction,
-                c = HoverPoint.Enter == SelectPoint.Enter ? SelectPoint.MarkerPosition - HoverPoint.MarkerPosition : HoverPoint.Direction,
-                d = HoverPoint.MarkerPosition,
-            };
+            var startPos = SelectPoint.MarkerPosition;
+            var endPos = HoverPoint.MarkerPosition;
+            var startDir = HoverPoint.Enter == SelectPoint.Enter ? HoverPoint.MarkerPosition - SelectPoint.MarkerPosition : SelectPoint.Direction;
+            var endDir = HoverPoint.Enter == SelectPoint.Enter ? SelectPoint.MarkerPosition - HoverPoint.MarkerPosition : HoverPoint.Direction;
+            var smoothStart = SelectPoint.Enter.IsSmooth;
+            var smoothEnd = HoverPoint.Enter.IsSmooth;
+            var bezier = new BezierTrajectory(startPos, startDir, endPos, endDir, true, smoothStart, smoothEnd);
 
             var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
             var color = Tool.Markup.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
 
-            NetSegment.CalculateMiddlePoints(bezier.a, bezier.b, bezier.d, bezier.c, true, true, out bezier.b, out bezier.c);
-            bezier.RenderBezier(new OverlayData(cameraInfo) { Color = color });
+            bezier.Render(new OverlayData(cameraInfo) { Color = color });
         }
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -303,19 +302,12 @@ namespace NodeMarkup.Tools
         {
             if (SelectPoint is MarkupLanePoint pointA && HoverPoint is MarkupLanePoint pointB)
             {
-                var trajectory = new BezierTrajectory(pointA.MarkerPosition, pointA.Direction, pointB.MarkerPosition, pointB.Direction);
-
-                var halfWidthA = pointA.Width * 0.5f;
-                var halfWidthB = pointB.Width * 0.5f;
-                var startNormal = trajectory.StartDirection.MakeFlatNormalized().Turn90(true);
-                var endNormal = trajectory.EndDirection.MakeFlatNormalized().Turn90(false);
-
                 var trajectories = new List<ITrajectory>()
                 {
-                    new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidthA, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidthB, trajectory.EndDirection),
-                    new StraightTrajectory(trajectory.EndPosition + endNormal * halfWidthB, trajectory.EndPosition - endNormal * halfWidthB),
-                    new BezierTrajectory(trajectory.EndPosition - endNormal * halfWidthB, trajectory.EndDirection, trajectory.StartPosition - startNormal * halfWidthA, trajectory.StartDirection),
-                    new StraightTrajectory(trajectory.StartPosition - startNormal * halfWidthA, trajectory.StartPosition + startNormal * halfWidthA),
+                    new StraightTrajectory(pointA.SourcePointA.Position, pointA.SourcePointB.Position),
+                    new BezierTrajectory(pointA.SourcePointB.Position, pointA.SourcePointB.Direction, pointB.SourcePointA.Position, pointB.SourcePointA.Direction, false, pointA.Enter.IsSmooth, pointB.Enter.IsSmooth),
+                    new StraightTrajectory(pointB.SourcePointA.Position, pointB.SourcePointB.Position),
+                    new BezierTrajectory(pointB.SourcePointB.Position, pointB.SourcePointB.Direction, pointA.SourcePointA.Position, pointA.SourcePointA.Direction, false, pointB.Enter.IsSmooth, pointA.Enter.IsSmooth),
                 };
 
                 var pointPair = new MarkupPointPair(pointA, pointB);
@@ -328,23 +320,39 @@ namespace NodeMarkup.Tools
 
         private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
         {
-            var endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+            Vector3 endPosition;
+            if (Markup is SegmentMarkup segmentMarkup)
+            {
+                segmentMarkup.Trajectory.GetHitPosition(SingletonTool<NodeMarkupTool>.Instance.Ray, out _, out _, out endPosition);
+                endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(endPosition.y, out _);
+            }
+            else
+                endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+
             new BezierTrajectory(SelectPoint.MarkerPosition, SelectPoint.Direction, endPosition).Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
         }
         private void RenderNotConnectedLane(RenderManager.CameraInfo cameraInfo)
         {
             if (SelectPoint is MarkupLanePoint lanePoint)
             {
-                var halfWidth = lanePoint.Width * 0.5f;
+                var halfWidth = lanePoint.Width * lanePoint.Enter.TranformCoef * 0.5f;
 
-                var endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
-                if ((lanePoint.MarkerPosition - endPosition).sqrMagnitude < 4f * halfWidth * halfWidth)
+                Vector3 endPosition;
+                if (Markup is SegmentMarkup segmentMarkup)
                 {
-                    var normal = (lanePoint.MarkerPosition - endPosition).MakeFlatNormalized().Turn90(true);
+                    segmentMarkup.Trajectory.GetHitPosition(SingletonTool<NodeMarkupTool>.Instance.Ray, out _, out _, out endPosition);
+                    endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(endPosition.y, out _);
+                }
+                else
+                    endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+
+                if ((lanePoint.Position - endPosition).sqrMagnitude < 4f * halfWidth * halfWidth)
+                {
+                    var normal = (lanePoint.Position - endPosition).MakeFlatNormalized().Turn90(true);
                     var area = new Quad3()
                     {
-                        a = lanePoint.MarkerPosition + normal * halfWidth,
-                        b = lanePoint.MarkerPosition - normal * halfWidth,
+                        a = lanePoint.Position + normal * halfWidth,
+                        b = lanePoint.Position - normal * halfWidth,
                         c = endPosition - normal * halfWidth,
                         d = endPosition + normal * halfWidth,
                     };
@@ -355,15 +363,16 @@ namespace NodeMarkup.Tools
                 {
                     var trajectory = new BezierTrajectory(lanePoint.MarkerPosition, lanePoint.Direction, endPosition);
 
-                    var startNormal = trajectory.StartDirection.MakeFlatNormalized().Turn90(true);
-                    var endNormal = trajectory.EndDirection.MakeFlatNormalized().Turn90(false);
+                    var normal = trajectory.EndDirection.MakeFlatNormalized().Turn90(false);
+                    var pointA = lanePoint.Markup.Type == MarkupType.Node ? lanePoint.SourcePointA : lanePoint.SourcePointB;
+                    var pointB = lanePoint.Markup.Type == MarkupType.Node ? lanePoint.SourcePointB : lanePoint.SourcePointA;
 
                     var trajectories = new List<ITrajectory>()
-                    {
-                        new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidth, trajectory.EndDirection),
-                        new StraightTrajectory(trajectory.EndPosition + endNormal * halfWidth, trajectory.EndPosition - endNormal * halfWidth),
-                        new BezierTrajectory(trajectory.EndPosition - endNormal * halfWidth, trajectory.EndDirection, trajectory.StartPosition - startNormal * halfWidth, trajectory.StartDirection),
-                        new StraightTrajectory(trajectory.StartPosition - startNormal * halfWidth, trajectory.StartPosition + startNormal * halfWidth),
+                    { 
+                        new BezierTrajectory(pointA.Position, pointA.Direction, trajectory.EndPosition + normal * halfWidth, trajectory.EndDirection, false, true, true),
+                        new StraightTrajectory(trajectory.EndPosition + normal * halfWidth, trajectory.EndPosition - normal * halfWidth),
+                        new BezierTrajectory(trajectory.EndPosition - normal * halfWidth, trajectory.EndDirection, pointB.Position, pointB.Direction, false, true, true),
+                        new StraightTrajectory(pointB.Position, pointA.Position),
                     };
 
                     var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);

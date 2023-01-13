@@ -183,7 +183,7 @@ namespace NodeMarkup.Manager
         }
         public override bool FromXml(XElement config)
         {
-            if (base.FromXml(config) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, new ObjectsMap(), false, out Style style))
+            if (base.FromXml(config) && config.Element(Style.XmlName) is XElement styleConfig && Style.FromXml(styleConfig, new ObjectsMap(), false, false, out Style style))
             {
                 Style = style;
                 return true;

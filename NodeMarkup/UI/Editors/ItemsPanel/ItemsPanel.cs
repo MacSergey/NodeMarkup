@@ -108,7 +108,7 @@ namespace NodeMarkup.UI.Editors
 
         protected void InitItem(ItemType item, ObjectType editObject)
         {
-            item.Init(editObject);
+            item.Init(Editor, editObject);
             item.eventClick += ItemClick;
             item.OnDelete += ItemDelete;
             item.eventMouseEnter += ItemHover;

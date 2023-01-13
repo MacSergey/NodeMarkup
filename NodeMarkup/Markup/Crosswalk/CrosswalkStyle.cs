@@ -42,7 +42,7 @@ namespace NodeMarkup.Manager
             Width.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             Width.FromXml(config, DefaultCrosswalkWidth);
         }
@@ -165,9 +165,9 @@ namespace NodeMarkup.Manager
             OffsetAfter.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             OffsetBefore.FromXml(config, DefaultCrosswalkOffset);
             OffsetAfter.FromXml(config, DefaultCrosswalkOffset);
         }
@@ -213,9 +213,9 @@ namespace NodeMarkup.Manager
             LineWidth.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             LineWidth.FromXml(config, DefaultCrosswalkOffset);
         }
     }
@@ -441,9 +441,9 @@ namespace NodeMarkup.Manager
             GapPeriod.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
             Parallel.FromXml(config, true);
@@ -589,9 +589,9 @@ namespace NodeMarkup.Manager
             OffsetBetween.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             OffsetBetween.FromXml(config, DefaultCrosswalkOffset);
         }
     }
@@ -707,9 +707,9 @@ namespace NodeMarkup.Manager
             SpaceLength.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
         }
@@ -787,9 +787,9 @@ namespace NodeMarkup.Manager
             SpaceLength.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
         }
@@ -948,13 +948,13 @@ namespace NodeMarkup.Manager
             Invert.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             SquareSide.FromXml(config, DefaultCrosswalkSquareSide);
             LineCount.FromXml(config, DefaultCrosswalkLineCount);
             Invert.FromXml(config, false);
-            Invert.Value ^= map.IsMirror ^ invert;
+            Invert.Value ^= map.Invert ^ invert;
         }
     }
 }

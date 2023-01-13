@@ -203,9 +203,9 @@ namespace NodeMarkup.Manager
         }
         public void FromXml(XElement config, ObjectsMap map)
         {
-            RightBorder.Value = GetBorder(map.IsMirror ? "LB" : "RB");
-            LeftBorder.Value = GetBorder(map.IsMirror ? "RB" : "LB");
-            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, false, out CrosswalkStyle style))
+            RightBorder.Value = GetBorder(map.Invert ? "LB" : "RB");
+            LeftBorder.Value = GetBorder(map.Invert ? "RB" : "LB");
+            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, false, false, out CrosswalkStyle style))
                 Style.Value = style;
 
             MarkupRegularLine GetBorder(string key)

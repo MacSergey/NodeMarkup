@@ -83,6 +83,7 @@ namespace NodeMarkup.UI.Editors
 
         bool IReusable.InCache { get; set; }
 
+        protected Editor Editor { get; private set; }
         private ObjectType _object;
         public ObjectType Object
         {
@@ -103,8 +104,9 @@ namespace NodeMarkup.UI.Editors
             AddDeleteButton();
         }
 
-        public virtual void Init(ObjectType editObject)
+        public virtual void Init(Editor editor, ObjectType editObject)
         {
+            Editor = editor;
             Object = editObject;
 
             Refresh();
@@ -115,6 +117,7 @@ namespace NodeMarkup.UI.Editors
             base.DeInit();
 
             Text = string.Empty;
+            Editor = null;
             Object = null;
             OnDelete = null;
         }
@@ -150,10 +153,10 @@ namespace NodeMarkup.UI.Editors
         {
             Icon = AddUIComponent<IconType>();
         }
-        public override void Init(ObjectType editObject)
+        public override void Init(Editor editor, ObjectType editObject)
         {
             Icon.isVisible = ShowIcon;
-            base.Init(editObject);
+            base.Init(editor, editObject);
         }
         protected override void OnSizeChanged()
         {

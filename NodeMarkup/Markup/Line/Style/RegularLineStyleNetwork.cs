@@ -29,6 +29,7 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> Scale { get; }
         public PropertyValue<int> RepeatDistance { get; }
         public PropertyBoolValue Invert { get; }
+        //private bool InvertShift { get; set; }
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -82,15 +83,10 @@ namespace NodeMarkup.Manager
             if (!IsValid)
                 return new MarkupPartGroupData(lod);
 
-            if (Invert)
-                trajectory = trajectory.Invert();
-
-            if (Shift != 0)
+            var shift = Shift.Value;
+            if (shift != 0)
             {
-                var startNormal = trajectory.StartDirection.Turn90(!Invert);
-                var endNormal = trajectory.EndDirection.Turn90(Invert);
-
-                trajectory = new BezierTrajectory(trajectory.StartPosition + startNormal * Shift, trajectory.StartDirection, trajectory.EndPosition + endNormal * Shift, trajectory.EndDirection);
+                trajectory = trajectory.Shift(shift, shift);
             }
 
             var length = trajectory.Length;
@@ -99,7 +95,11 @@ namespace NodeMarkup.Manager
 
             var startT = OffsetBefore == 0f ? 0f : trajectory.Travel(OffsetBefore);
             var endT = OffsetAfter == 0f ? 1f : 1f - trajectory.Invert().Travel(OffsetAfter);
-            trajectory = trajectory.Cut(startT, endT);
+            if (startT != 0 || endT != 1)
+                trajectory = trajectory.Cut(startT, endT);
+
+            if (Invert)
+                trajectory = trajectory.Invert();
 
             var count = Mathf.CeilToInt(trajectory.Length / RepeatDistance);
             var trajectories = new ITrajectory[count];
@@ -124,7 +124,7 @@ namespace NodeMarkup.Manager
             components.Add(AddScaleProperty(parent, true));
             components.Add(AddRepeatDistanceProperty(parent, true));
             components.Add(AddOffsetProperty(parent, true));
-            components.Add(AddInvertProperty(this, parent, false));
+            components.Add(AddInvertProperty(parent, false));
 
             PrefabChanged(parent, Prefab);
         }
@@ -157,10 +157,11 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected FloatPropertyPanel AddShiftProperty(UIComponent parent, bool canCollapse)
+        protected FloatInvertedPropertyPanel AddShiftProperty(UIComponent parent, bool canCollapse)
         {
-            var shiftProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Shift));
+            var shiftProperty = ComponentPool.Get<FloatInvertedPropertyPanel>(parent, nameof(Shift));
             shiftProperty.Text = Localize.StyleOption_ObjectShift;
+            shiftProperty.FieldWidth = 100f;
             shiftProperty.Format = Localize.NumberFormat_Meter;
             shiftProperty.UseWheel = true;
             shiftProperty.WheelStep = 0.1f;
@@ -256,6 +257,19 @@ namespace NodeMarkup.Manager
 
             return offsetProperty;
         }
+        protected ButtonPanel AddInvertProperty(UIComponent parent, bool canCollapse)
+        {
+            var buttonsPanel = ComponentPool.Get<ButtonPanel>(parent, nameof(Invert));
+            buttonsPanel.Text = Localize.StyleOption_Invert;
+            buttonsPanel.CanCollapse = canCollapse;
+            buttonsPanel.Init();
+            buttonsPanel.OnButtonClick += () =>
+            {
+                Invert.Value = !Invert;
+            };
+
+            return buttonsPanel;
+        }
 
         public override XElement ToXml()
         {
@@ -270,9 +284,9 @@ namespace NodeMarkup.Manager
             Invert.ToXml(config);
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            base.FromXml(config, map, invert);
+            base.FromXml(config, map, invert, typeChanged);
             Prefab.FromXml(config, null);
             Shift.FromXml(config, DefaultObjectShift);
             Elevation.FromXml(config, DefaultObjectElevation);
@@ -281,10 +295,18 @@ namespace NodeMarkup.Manager
             OffsetBefore.FromXml(config, DefaultObjectOffsetBefore);
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
             Invert.FromXml(config, false);
-            Invert.Value ^= map.IsMirror ^ invert;
 
-            if (map.IsMirror ^ invert)
+            if (invert)
             {
+                var offsetBefore = OffsetBefore.Value;
+                var offsetAfter = OffsetAfter.Value;
+                OffsetBefore.Value = offsetAfter;
+                OffsetAfter.Value = offsetBefore;
+            }
+
+            if (map.Invert ^ invert ^ typeChanged)
+            {
+                Invert.Value = !Invert.Value;
                 Shift.Value = -Shift.Value;
             }
         }

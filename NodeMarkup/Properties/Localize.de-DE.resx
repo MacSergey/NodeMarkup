@@ -358,9 +358,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Winkel</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Abstand der Linien</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Klicken um mit der Füllung zu beginnen</value>
   </data>
@@ -375,9 +372,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Wähle den nächsten Punkt des Umrisses</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Abstand vom Median</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Kopieren</value>
@@ -444,86 +438,6 @@ Zum Erstellen einer Füllung halte {0} oder drücke {1}.</value>
     <value>Die Liste mit Stilvorlagen ist leer.
 Um eine Stilvorlage zu erstellen klicke «{0}» beim Linien-, Fußgängerüberweg- oder Füllungs-Stil.</value>
   </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Aktivierungscode eingeben</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Aktivierung fehlgeschlagen</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Aktivierung erfolgreich</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Die Funktion ist nicht verfügbar</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>Die Funktion «{0}» ist im Moment für Unterstützer vorab verfügbar.
-Sie wird zu einem späteren Zeitpunkt für alle freigeschaltet werden. 
-Wenn du dich für den Vorabzugriff registrieren lässt, unterstützt du die Möglichkeit den Mod in dieser Geschwindigkeit weiter zu entwickeln.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Vorabzugriff erhalten</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Deine Zugangs-ID</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Zugriffsschlüssel</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Aktivieren</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Vorabzugriff-Aktivierung</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Um den Vorabzugriff zu aktivieren, musst du einen Zugriffsschlüssel eingeben</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Abbrechen</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>Der eingegeben Schlüssel ist nicht gültig</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Verlinkung in Bearbeitung...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Patreon-Account verlinken</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Patreon-Account verlinken</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Der Patreon-Account kann nicht verlinkt werden, da du die Anfrage abgelehnt hast.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Beim Verlinken des Accounts trat ein Fehler auf. Bitte versuche es erneut.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Dein Account wurde verlinkt, aber du hast keinen Vorabzugriff.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Du kannst diese Seite nun schließen und zum Spiel zurückkehren.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Abbrechen</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Status: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Aktiviert</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Nicht aktiviert</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Danke dir für deine Unterstützung, du kannst nun alle Funktionen genießen.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Vorabzugriff</value>
-  </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Ausrichtung</value>
   </data>
@@ -587,12 +501,6 @@ Zum Erstellen einer Fußgängerüberweg-Markierung {0} gedrückt halten.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Linienstärke</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Abstand dahinter</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Abstand davor</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Parallel zu Fahrspuren</value>
@@ -780,9 +688,6 @@ Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Rand</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Beginnend von</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Scheitel</value>
@@ -1196,9 +1101,6 @@ Nicht alle Markierungen der Kreuzungen konnten geladen werden.</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Höhe</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Gras</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Randstein</value>
   </data>
@@ -1208,15 +1110,6 @@ Nicht alle Markierungen der Kreuzungen konnten geladen werden.</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Segment #{0}
 Klicken um die Markierungen zu bearbeiten</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Folge den Leitlinien</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Linke Leitlinie</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Rechte Leitlinie</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Wählen den Startpunkt oder eine Linie als Leitlinie aus</value>
@@ -1330,20 +1223,11 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Abgenutzte Oberfläche</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Abstand von den Linien</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Eckenradius</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Eckenradius an Mittelstreifen</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Größe der Bordsteine</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Größe der Bordsteine an Mittelstreifen</value>
   </data>
   
   
@@ -1435,12 +1319,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Winkel</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Höhe</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Name</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Skalierung</value>
@@ -1586,9 +1464,6 @@ zu verlassen</value>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Halte {0} gedrückt für den unterirdischen Modus</value>
   </data>
-  <data name="Settings_AutoPropStep" xml:space="preserve">
-    <value>Automatische Dekorations-Abstände basierend auf der Größe</value>
-  </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
     <value>LOD Distanz für 2D Markierungen</value>
   </data>
@@ -1711,9 +1586,6 @@ zu verlassen</value>
   <data name="StyleOption_Font" xml:space="preserve">
     <value>Schriftart</value>
   </data>
-  <data name="StyleOption_FontStyle" xml:space="preserve">
-    <value>Schriftstil</value>
-  </data>
   <data name="StyleOption_FontStyleBold" xml:space="preserve">
     <value>Fett</value>
   </data>
@@ -1765,7 +1637,9 @@ zu verlassen</value>
   <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
     <value>Fahrbahnrandlinien automatisch erstellen</value>
   </data>
-  
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Wähle einen Endpunkt aus, um eine Spur zu erstellen</value>
+  </data>
   <data name="StyleOption_Distribution" xml:space="preserve">
     <value>Verteilung</value>
   </data>
@@ -1780,5 +1654,91 @@ zu verlassen</value>
   </data>
   <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
     <value>Fester Platz und freie Enden</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Zickzack</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Rechts</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Versatz</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Seite</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Beginnend von</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Linie</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Außerhalb</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Schritt</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Ausrichtung</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>Ende</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Mitte</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Anfang</value>
+  </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Diese Vorlage mit dem Netzwerk verknüpfen</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Die Verknüpfung dieser Vorlage mit dem Netzwerk aufheben</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Verknüpft</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Einen Punkt ziehen, um den Versatz zu ändern</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Halte {0} gedrückt, um einen Punkt zu bewegen</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Markierungen von Netzwerken automatisch anwenden</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Modus zum Verknüpfen von Kreuzungsvorlagen verlassen</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Möchtest du den Verlinkungsmodus verlassen und diese Vorlage an das Netzwerk anbinden?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Verknüpfen</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Nicht verknüpfen</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NEW] Linien-Style: Text. Es ist jetzt möglich benutzerdefinierten Text, in jeder Schriftart, die auf dem System installiert ist, auf Straßen zu schreiben.
+[NEW] Die Möglichkeit, Vorlagen mit Netzwerk-Assets zu verknüpfen. Diese werden automatisch übernommen, wenn Straßen gebaut werden.
+[NEW] Linien-Typ: Spur. Spuren vereinfachen das Platzieren von Requisiten/ Bäumen/Netzwerken/Text, welcher in der Mitte der Spur platziert sein soll.
+[NEW] Linien-Style: Zickzack. 
+[NEW] Die Möglichkeit verschieden Markierungsvorlagen für verschiedene Arten von Straßenhöhen (Brücken, Tunnel) im Asset-Editor zu speichern.
+[NEW] Automatische Erstellung von Linien an der Kante einer Spur. Diese Option kann in den Einstellungen deaktiviert werden.
+[NEW] Die Option für die Verteilung von Requisiten / Bäumen. Diese Option erlaubt es, Requisiten / Bäume an den Enden von Linien zu fixieren und den dynamischen Abstand festzulegen.
+[NEW] Die Möglichkeit, die Verschiebung des Netzwerks zu invertieren.
+[NEW] Tastenkürzel für den Einfügemodus.
+[UPDATED] Es ist nicht mehr nötig, Ctrl zu drücken, um Punkte zu verschieben. Die alte Art (mit drücken von Ctrl) kann in den Mod-Einstellungen wieder aktiviert werden.
+[FIXED] Linien und Füllungen folgen geneigten Segmenten so gut wie möglich. Es ist noch nicht in jeder Situation perfekt, aber deutlich besser als zuvor.
+[FIXED] Linien, die dem Bürgersteig folgen, folgen auch Füllungen richtig.
+[FIXED] Asymmetrische Markierungen werden nun mit der richtigen Rotation eingefügt.
+[FIXED] Netzwerke / Requisiten / Bäume, die mit IMT hinzugefügt wurden, sind auf dem Vorlage-Screenshot sichtbar.
+[FIXED] Füllungen werden aktualisiert nach der Auswahl der Hilfslinien.</value>
   </data>
 </root>

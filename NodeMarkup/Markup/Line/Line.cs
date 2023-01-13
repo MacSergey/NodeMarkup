@@ -9,8 +9,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using static ColossalFramework.IO.EncodedArray;
-using static RenderManager;
 
 namespace NodeMarkup.Manager
 {
@@ -169,7 +167,7 @@ namespace NodeMarkup.Manager
 
             return true;
         }
-        public abstract void FromXml(XElement config, ObjectsMap map, bool invert);
+        public abstract void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged);
 
         public override string ToString() => PointPair.ToString();
     }
@@ -179,7 +177,6 @@ namespace NodeMarkup.Manager
         public override Alignment Alignment => RawAlignment;
         public PropertyEnumValue<Alignment> RawAlignment { get; private set; }
         public PropertyBoolValue ClipSidewalk { get; private set; }
-
         public override bool IsSupportRules => true;
         private List<MarkupLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkupLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
@@ -205,14 +202,87 @@ namespace NodeMarkup.Manager
 
         protected override ITrajectory CalculateTrajectory()
         {
-            var trajectory = new Bezier3
-            {
-                a = PointPair.First.GetAbsolutePosition(RawAlignment),
-                d = PointPair.Second.GetAbsolutePosition(RawAlignment.Value.Invert()),
-            };
-            NetSegment.CalculateMiddlePoints(trajectory.a, PointPair.First.Direction, trajectory.d, PointPair.Second.Direction, true, true, out trajectory.b, out trajectory.c);
+            var startPos = PointPair.First.GetAbsolutePosition(RawAlignment);
+            var endPos = PointPair.Second.GetAbsolutePosition(RawAlignment.Value.Invert());
+            var startDir = PointPair.First.Direction;
+            var endDir = PointPair.Second.Direction;
 
-            return new BezierTrajectory(trajectory);
+            float startT;
+            float endT;
+            var isStraight = Markup.Type == MarkupType.Segment && NetSegment.IsStraight(PointPair.First.Enter.Position, PointPair.First.Enter.NormalDir, PointPair.Second.Enter.Position, PointPair.Second.Enter.NormalDir);
+            if (isStraight)
+            {
+                startT = PointPair.First.Enter.IsSmooth ? BezierTrajectory.curveT : BezierTrajectory.straightT;
+                endT = PointPair.Second.Enter.IsSmooth ? BezierTrajectory.curveT : BezierTrajectory.straightT;
+            }
+            else
+            {
+                startT = BezierTrajectory.curveT;
+                endT = BezierTrajectory.curveT;
+            }
+
+            var trajectory = new BezierTrajectory(startPos, startDir, endPos, endDir, startT, endT);
+
+            if(Markup.Type == MarkupType.Node || isStraight)
+                return trajectory;
+
+            var deltaH = Mathf.Abs(trajectory.StartPosition.y - trajectory.EndPosition.y) / trajectory.Length;
+            var startRelPos = PointPair.First.GetRelativePosition(RawAlignment);
+            var endRelPos = PointPair.Second.GetRelativePosition(RawAlignment.Value.Invert());
+            var deltaX = Mathf.Abs(startRelPos + endRelPos);
+            if (deltaX < 0.5f || (deltaH < 0.1f && deltaX < 2f))
+                return trajectory;
+
+            var startPosF = PointPair.First.Enter.GetPosition(-endRelPos);
+            var endPosF = PointPair.Second.Enter.GetPosition(-startRelPos);
+
+            var bezier = new Bezier3()
+            {
+                a = startPos,
+                d = endPos,
+            };
+            var bezierL = new Bezier3()
+            {
+                a = startPos,
+                d = endPosF,
+            };
+            var bezierR = new Bezier3()
+            {
+                a = startPosF,
+                d = endPos,
+            };
+
+            BezierTrajectory.GetMiddlePoints(startPos, startDir, endPos, endDir, startT, endT, startT, endT, out bezier.b, out bezier.c, out _, out _);
+            BezierTrajectory.GetMiddlePoints(startPos, startDir, endPosF, endDir, startT, endT, startT, endT, out bezierL.b, out bezierL.c, out _, out _);
+            BezierTrajectory.GetMiddlePoints(startPosF, startDir, endPos, endDir, startT, endT, startT, endT, out bezierR.b, out bezierR.c, out _, out _);
+
+            var middlePos = (bezierL.Position(0.5f) + bezierR.Position(0.5f)) * 0.5f;
+            var middleDir = VectorUtils.NormalizeXZ(bezier.Tangent(0.5f));
+            var middleDirLR = VectorUtils.NormalizeXZ(bezierL.Tangent(0.5f) + bezierR.Tangent(0.5f));
+            middleDir.y = middleDirLR.y;
+            middleDir.Normalize();
+
+            BezierTrajectory.GetMiddleDistance(startPos, startDir, middlePos, -middleDir, startT, BezierTrajectory.curveT, startT, BezierTrajectory.curveT, out var startDis, out var middleDis1, out _, out _);
+            BezierTrajectory.GetMiddleDistance(middlePos, middleDir, endPos, endDir, BezierTrajectory.curveT, endT, BezierTrajectory.curveT, endT, out var middleDis2, out var endDis, out _, out _);
+
+            var middleDis = (middleDis1 + middleDis2) * 0.5f;
+
+            var bezier1 = new Bezier3()
+            {
+                a = startPos,
+                b = startPos + startDir * startDis,
+                c = middlePos - middleDir * middleDis,
+                d = middlePos,
+            };
+            var bezier2 = new Bezier3()
+            {
+                a = middlePos,
+                b = middlePos + middleDir * middleDis,
+                c = endPos + endDir * endDis,
+                d = endPos,
+            };
+
+            return new CombinedTrajectory(new BezierTrajectory(bezier1), new BezierTrajectory(bezier2));
         }
         private void AlignmentChanged() => Markup.Update(this, true, true);
         private void ClipSidewalkChanged() => Markup.Update(this, true, false);
@@ -254,7 +324,7 @@ namespace NodeMarkup.Manager
         {
             var defaultStyle = Style.StyleType.LineDashed;
 
-            if ((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0 && (defaultStyle.GetLineType() & Type) != 0)
+            if ((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0 || (defaultStyle.GetLineType() & Type) == 0)
             {
                 foreach (var style in EnumExtension.GetEnumValues<RegularLineStyle.RegularLineType>(i => true).Select(i => i.ToEnum<Style.StyleType, RegularLineStyle.RegularLineType>()))
                 {
@@ -325,13 +395,13 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             RawAlignment.FromXml(config);
             ClipSidewalk.FromXml(config, DefaultClipSidewalk);
             foreach (var ruleConfig in config.Elements(MarkupLineRawRule<RegularLineStyle>.XmlName))
             {
-                if (MarkupLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<RegularLineStyle> rule))
+                if (MarkupLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, invert, typeChanged, out MarkupLineRawRule<RegularLineStyle> rule))
                     AddRule(rule, false);
             }
         }
@@ -489,7 +559,6 @@ namespace NodeMarkup.Manager
             points.RenderArea(triangles, data);
         }
     }
-
     public class MarkupStopLine : MarkupLine
     {
         public override LineType Type => LineType.Stop;
@@ -537,9 +606,9 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert)
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            if (config.Element(MarkupLineRawRule<StopLineStyle>.XmlName) is XElement ruleConfig && MarkupLineRawRule<StopLineStyle>.FromXml(ruleConfig, this, map, invert, out MarkupLineRawRule<StopLineStyle> rule))
+            if (config.Element(MarkupLineRawRule<StopLineStyle>.XmlName) is XElement ruleConfig && MarkupLineRawRule<StopLineStyle>.FromXml(ruleConfig, this, map, invert, typeChanged, out MarkupLineRawRule<StopLineStyle> rule))
                 SetRule(rule);
 
             RawStartAlignment.FromXml(config);
@@ -578,7 +647,7 @@ namespace NodeMarkup.Manager
         public override bool ContainsRule(MarkupLineRawRule rule) => false;
         protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod) { yield break; }
 
-        public override void FromXml(XElement config, ObjectsMap map, bool invert) { }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged) { }
     }
 
     public struct MarkupLinePair

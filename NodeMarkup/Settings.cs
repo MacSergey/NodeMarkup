@@ -33,6 +33,7 @@ namespace NodeMarkup
         public static SavedFloat NetworkLODDistance { get; } = new SavedFloat(nameof(NetworkLODDistance), SettingsFile, 500f, true);
 
         public static SavedBool LoadMarkingAssets { get; } = new SavedBool(nameof(LoadMarkingAssets), SettingsFile, true, true);
+        public static SavedBool ApplyMarkingFromAssets { get; } = new SavedBool(nameof(ApplyMarkingFromAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool LevelCrossingUnderMarking { get; } = new SavedBool(nameof(LevelCrossingUnderMarking), SettingsFile, true, true);
         public static SavedBool CollapseOptions { get; } = new SavedBool(nameof(CollapseOptions), SettingsFile, true, true);
@@ -43,7 +44,7 @@ namespace NodeMarkup
         public static SavedBool QuickRuleSetup { get; } = new SavedBool(nameof(QuickRuleSetup), SettingsFile, true, true);
         public static SavedBool QuickBorderSetup { get; } = new SavedBool(nameof(QuickBorderSetup), SettingsFile, true, true);
         public static SavedBool CutLineByCrosswalk { get; } = new SavedBool(nameof(CutLineByCrosswalk), SettingsFile, true, true);
-        public static SavedBool CreateLaneEdgeLines { get; } = new SavedBool(nameof(CreateLaneEdgeLines), SettingsFile, true, true);
+        public static SavedBool CreateLaneEdgeLines { get; } = new SavedBool(nameof(CreateLaneEdgeLines), SettingsFile, false, true);
         public static SavedBool NotCutBordersByCrosswalk { get; } = new SavedBool(nameof(NotCutBordersByCrosswalk), SettingsFile, true, true);
         public static SavedBool HideStreetName { get; } = new SavedBool(nameof(HideStreetName), SettingsFile, true, true);
         public static SavedBool AutoApplyPasting { get; } = new SavedBool(nameof(AutoApplyPasting) + "V2", SettingsFile, false, true);
@@ -67,6 +68,7 @@ namespace NodeMarkup
         public static SavedInt IlluminationIntensity { get; } = new SavedInt(nameof(IlluminationIntensity), SettingsFile, 10, true);
 
         public static SavedInt ToggleUndergroundMode { get; } = new SavedInt(nameof(ToggleUndergroundMode), SettingsFile, 0, true);
+        public static SavedBool HoldCtrlToMovePoint { get; } = new SavedBool(nameof(HoldCtrlToMovePoint), SettingsFile, true, true);
 
         protected UIAdvancedHelper ShortcutsTab => GetTab(nameof(ShortcutsTab));
         protected UIAdvancedHelper BackupTab => GetTab(nameof(BackupTab));
@@ -127,6 +129,7 @@ namespace NodeMarkup
 
             AddCheckBox(displayAndUsageGroup, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
             AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
+            AddCheckBox(displayAndUsageGroup, Localize.Settings_ApplyMarkingsFromAssets, ApplyMarkingFromAssets);
             AddCheckBox(displayAndUsageGroup, Localize.Settings_RailUnderMarking, RailUnderMarking);
             AddLabel(displayAndUsageGroup, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
             AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
@@ -135,6 +138,7 @@ namespace NodeMarkup
             AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
             AddToolButton<NodeMarkupTool, NodeMarkupButton>(displayAndUsageGroup);
             undergroundOptions = AddCheckboxPanel(displayAndUsageGroup, Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, NodeMarkupTool.EnterUndergroundShortcut, NodeMarkupTool.ExitUndergroundShortcut) });
+            AddCheckBox(displayAndUsageGroup, string.Format(Localize.Setting_HoldToMovePoint, LocalizeExtension.Ctrl), HoldCtrlToMovePoint);
             AddCheckBox(displayAndUsageGroup, Localize.Settings_CollapseOptions, CollapseOptions);
             AddCheckBox(displayAndUsageGroup, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
             AddCheckBox(displayAndUsageGroup, Localize.Settings_ShowPaneltips, ShowPanelTip);

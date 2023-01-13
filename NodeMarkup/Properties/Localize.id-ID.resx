@@ -358,9 +358,6 @@ Klik untuk mengedit markah</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Sudut</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Pergeseran dari garis</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Klik untuk membuat isian</value>
   </data>
@@ -375,9 +372,6 @@ Klik untuk mengedit markah</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Pilih titik berikutnya untuk sisi isian</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Pergeseran dari tengah</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Salin</value>
@@ -433,32 +427,6 @@ Untuk membuat isian, tekan dan tahan {0} atau tekan {1}.</value>
     <value>Tidak ada templat.
 Untuk membuat templat, klik {0} pada garis atau penyebrangan atau gaya isian.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Penjajaran</value>
   </data>
@@ -522,12 +490,6 @@ Untuk membuat penyeberangan, tekan dan tahan {0}.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Lebar garis</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Pergeseran setelahnya</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Pergeseran sebelumnya</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Paralel ke lajur</value>
@@ -714,9 +676,6 @@ Pemuatan markah untuk {0} persimpangan gagal.</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Tepi</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Mulai dari</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Puncak</value>
@@ -1105,9 +1064,6 @@ Pemuatan markah untuk semua persimpangan gagal.</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Ketinggian</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Rumput</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Trotoar</value>
   </data>
@@ -1117,15 +1073,6 @@ Pemuatan markah untuk semua persimpangan gagal.</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Ruas #{0}
 Klik untuk mengedit markah</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Ikuti pemandu</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Pemandu kiri</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Pemandu kanan</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Pilih titik pertama pemandu atau garis sebagai pemandu</value>
@@ -1225,20 +1172,11 @@ Klik untuk mengedit markah</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Rusak</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Pergeseran dari garis</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Radius sudut</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Radius sudut pada median</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Besar trotoar</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Besar trotoar pada median</value>
   </data>
   
   
@@ -1330,12 +1268,6 @@ Klik untuk mengedit markah</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Sudut</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Ketinggian</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Nama</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Skala</value>
@@ -1465,63 +1397,243 @@ mode bawah tanah</value>
     <value>Tekan dan tahan {0} untuk
 mode bawah tanah</value>
   </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>Jarak tingkat detil markah 2D</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Jarak tingkat detil jaringan</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Jarak tingkat detil benda</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Jarak tingkat detil pepohonan</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Otomatis</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>Jarak tingkat detil markah 3D</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Render</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Kurang pilihan</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Pilihan lainnya</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Tutup pilihan gaya tambahan</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Warna utama</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Warna kedua</value>
+  </data>
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Putus-putus ganda asimetris</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Tiap {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Celah</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>Reguler</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Median</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>Reguler</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Median</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Putus</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Panjang</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>Garis</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Median</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>Setelah</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>Sebelum</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Jarak</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Panduan</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Basis</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Tinggi</value>
+  </data>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Segitiga</value>
+  </data>
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Teks</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>Font game bawaan</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>Huruf</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>Tebal</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>Tebal Miring</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>Miring</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>Reguler</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>Jarak</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>Karakter</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>Garis</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Teks</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>Arah</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>Bawah ke Atas</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>Kiri ke Kanan</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>Atas ke Bawah</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>Lajur</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>Klik untuk membuat lajur</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>Klik untuk menghapus lajur</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>Klik dengan menahan {0} untuk memilih lajur</value>
+  </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>Buat garis tepi lajur secara otomatis</value>
+  </data>
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Pilih titik akhir untuk membuat lajur</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>Distribusi</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>Jarak dinamis dan akhiran tetap</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>Jarak dinamis dan akhiran bebas</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>Jarak tetap dan akhiran tetap</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>Jarak tetap dan akhiran bebas</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Zigzag</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Kiri</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Kanan</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Pergeseran</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Sisi</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Mulai dari</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Garis</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Di luar</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Langkah</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Penjajaran</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>Akhir</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Tengah</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Awal</value>
+  </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Hubungkan prasetelan dengan aset jaringan</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Putuskan prasetelan ini dengan aset jaringan</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Terhubung</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Seretkan untuk mengubah pergeseran</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Tekan dan tahan {0} untuk memindahkan titik</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Terapkan markah dari aset jaringan secara otomatis</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Keluar mode penerapan prasetelan</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Apakah Anda ingin keluar dari mode penerapan prasetelan dan menghubungkan prasetelan ini dengan aset jaringan?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Hubungkan</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Jangan hubungkan</value>
+  </data>
   
 </root>

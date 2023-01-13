@@ -156,22 +156,32 @@ namespace NodeMarkup.Manager
 
         public void Render(RenderManager.CameraInfo cameraInfo, ushort id, ref RenderManager.Instance data)
         {
-            if (data.m_nextInstance != ushort.MaxValue)
-                return;
+            try
+            {
+                if (data.m_nextInstance != ushort.MaxValue)
+                    return;
 
-            if (!TryGetMarkup(id, out TypeMarkup markup))
-                return;
+                if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
+                    return;
 
-            if (markup.NeedRecalculateDrawData)
-                markup.RecalculateDrawData();
+                if (!TryGetMarkup(id, out TypeMarkup markup))
+                    return;
 
-            bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
+                if (markup.NeedRecalculateDrawData)
+                    markup.RecalculateDrawData();
 
-            foreach(var drawData in markup.DrawData.Values)
-                drawData.Render(cameraInfo, data, infoView);
+                bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
+
+                foreach (var drawData in markup.DrawData.Values)
+                    drawData.Render(cameraInfo, data, infoView);
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error($"Error while rendering {Type} #{id} marking", error);
+            }
         }
 
-        public void Remove(ushort id) => Markups.Remove(id);
+        public virtual void Remove(ushort id) => Markups.Remove(id);
         public void Clear()
         {
             SingletonMod<Mod>.Logger.Debug($"{typeof(TypeMarkup).Name} {nameof(Clear)}");
@@ -249,6 +259,7 @@ namespace NodeMarkup.Manager
     }
     public class SegmentMarkupManager : MarkupManager<SegmentMarkup>
     {
+        public static IntersectionTemplate RemovedMarkup { get; private set; }
         public SegmentMarkupManager()
         {
             SingletonMod<Mod>.Logger.Debug("Create segment markup manager");
@@ -258,5 +269,15 @@ namespace NodeMarkup.Manager
         protected override MarkupType Type => MarkupType.Segment;
         protected override string XmlName => SegmentMarkup.XmlName;
         protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetSegment;
+
+        public override void Remove(ushort id)
+        {
+            if (TryGetMarkup(id, out var markup))
+                RemovedMarkup = new IntersectionTemplate(markup);
+            else
+                RemovedMarkup = null;
+
+            base.Remove(id);
+        }
     }
 }

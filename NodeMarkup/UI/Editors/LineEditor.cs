@@ -151,7 +151,6 @@ namespace NodeMarkup.UI.Editors
 
             return clipSidewalk;
         }
-
         private void AddRulePanels(MarkupLine editObject)
         {
             foreach (var rule in editObject.Rules)
@@ -295,14 +294,14 @@ namespace NodeMarkup.UI.Editors
 
         public void AddRuleShortcut()
         {
-            if(AddRuleAvailable)
+            if (AddRuleAvailable)
                 AddRule();
         }
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             {
-                ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 2f });
-                HoverRulePanel?.Rule.Line.RenderRule(HoverRulePanel.Rule, new OverlayData(cameraInfo) { Color = HoverAlpha, Width = 2f });
+                ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 2f, AlphaBlend = false });
+                HoverRulePanel?.Rule.Line.RenderRule(HoverRulePanel.Rule, new OverlayData(cameraInfo) { Color = HoverAlpha, Width = 2f, AlphaBlend = false });
                 HoverPartEdgeButton?.Value?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }
@@ -345,8 +344,10 @@ namespace NodeMarkup.UI.Editors
 
             if ((result = x.Start.Enter.CompareTo(y.Start.Enter)) == 0)
                 if ((result = x.Start.Index.CompareTo(y.Start.Index)) == 0)
-                    if ((result = x.End.Enter.CompareTo(y.End.Enter)) == 0)
-                        result = x.End.Index.CompareTo(y.End.Index);
+                    if ((result = x.Type.CompareTo(y.Type)) == 0)
+                        if ((result = x.End.Enter.CompareTo(y.End.Enter)) == 0)
+                            if ((result = x.End.Index.CompareTo(y.End.Index)) == 0)
+                                result = x.Type.CompareTo(y.Type);
 
             return result;
         }

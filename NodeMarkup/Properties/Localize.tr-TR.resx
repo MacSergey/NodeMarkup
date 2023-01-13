@@ -348,9 +348,6 @@ Yeni işaretler eskilerinin yerine geçecektir.</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Açı</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Şeritleri ayarla</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Şeridi silmek veya oluşturmak için nokta seçin</value>
   </data>
@@ -365,9 +362,6 @@ Yeni işaretler eskilerinin yerine geçecektir.</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Yol ayrımındaki yeni notayı seç</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Medyandan uzantı</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Kopyala</value>
@@ -419,32 +413,6 @@ Oluşturmak için {0} tuşuna basılı tutun veya {1} tuşunu kullanın.</value>
     <value>Şablonların listesi boş.
 Yeni şablon oluşturmak için bir şerit, yaya geçidi veya dolguya {0} tuşuyla tıklayın.</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Hizalanma</value>
   </data>
@@ -508,12 +476,6 @@ Oluşturmak için {0} tuşuna basılı tutun.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Şerit kalınlığı</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Sonraki uzantı</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Önceki uzantı</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Yola paralel</value>
@@ -700,9 +662,6 @@ Tüm {0} kesişiminin işaretleri yüklenemedi.</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Kenar</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Başlangıç noktası</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Köşe</value>
@@ -1091,9 +1050,6 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Yükseklik</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Çimen</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Kaldırım</value>
   </data>
@@ -1103,15 +1059,6 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>#{0} Sektörü
 İşaretleri düzenlemek için tıklayın</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Rehberi takip edin</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Sol rehber</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Sağ rehber</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>İlk rehber noktasını veya bir şeriti rehber olarak seçmek için tıkla</value>
@@ -1211,20 +1158,11 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Harabe olmuş</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Şeritleri ayarla</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Köşe yarıçapı</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Medyanın kenar çapı</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Kaldırım Genişliği</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Medyanlardaki kaldırım genişliği</value>
   </data>
   
   
@@ -1308,18 +1246,14 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
     <value>Yol ismi</value>
   </data>
   
-  
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Prop</value>
+  </data>
   <data name="LineStyle_Tree" xml:space="preserve">
     <value>Ağaç</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Açı</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Yükseklik</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>İsim</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Ölçek</value>
@@ -1330,13 +1264,27 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>Adım</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Çeşit #1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Çeşit #2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Çeşit #3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Çeşit #4</value>
+  </data>
   <data name="StyleOption_ColorCustom" xml:space="preserve">
     <value>Özel</value>
   </data>
@@ -1361,14 +1309,22 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
     <value>Tekrarlama Mesafesi</value>
   </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>Ağ varlığı</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Ayarlanmamış</value>
+  </data>
   
-  
-  
-  
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>Ağaç varlığı</value>
+  </data>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>Hiçbir şey bulunamadı</value>
   </data>
-  
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Kaynak hedefle eşleşirse işaretlemeleri otomatik uygula</value>
+  </data>
   <data name="StyleOption_ObjectProbability" xml:space="preserve">
     <value>İhtimal</value>
   </data>
@@ -1378,60 +1334,233 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
     <value>Tek</value>
   </data>
-  
-  
-  
-  
-  
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NEW] Prop ve ağaç şerit stilleri eklendi. Şeritlere prop ve ağaç eklemeyi mümkün kılar. Bu nesneler oyunun prop ve ağaç limitleri dahilinde sayılmaz.
+[NEW] Dekoratif ağ şeridi stili eklendi. Şeritlere çit gibi herhangi bir dekoratif ağ eklemeyi mümkün kılar. Bu ağlar oyunun bağlantı noktası ve segment limitleri dahilinde sayılmaz.
+[NEW] İşaretlemeleri tren, metro ve yaya yollarında kullanabilirsiniz.
+[NEW] Ön ayar olarak kaydedilmiş işaretlemeler için hedef kavşak ile kaynak kavşak eşleştiğinde otomatik uygulama eklendi. Mod ayarları menüsünden kapatılabilir.
+[NEW] Kaldırım kesişmesini kapatma eklendi.
+[NEW] Segmentler için kaldırım kesişmesi eklendi.
+[UPDATED] 3D dolgu ağı, eğimli bağlantı noktalarında boşlukları önlemek için yol yüzeyinin altına uzanıyor.
+[UPDATED] Yol Ver işaretlemesini ters çevirme eklendi.
+[FIXED] Büyük bağlantı noktalarını seçerken kaplamada oluşan boşluk çözüldü.
+[FIXED] Kaldırım şeridinde gölgeler düzeltildi.
+[UPDATED] Tüm özelliklere (m, %, °) sayı formatları eklendi.
+[FIXED] Kavşakta normal şeritler arasında eksik doldurma noktaları düzeltildi.
+[TRANSLATION] Rumence dili eklendi.</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Sırayı ters çevir ve uygula</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Sırayı direkt uygula</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[UPDATED] Otomatik uygulama ayarı yalnızca bir tane yapıştırma seçeneği varken aktif.
+[NEW] Otomatik yapıştırma ayarlarına "sırayı direkt uygula" ve "sırayı ters çevir ve uygula" seçenekleri eklendi.
+[FIXED] Doldurma hesaplamaları ve ışıklandırma düzeltildi.
+[UPDATED] Renk seçicideki "Varsayılan renk" tuşu, modun varsayılan rengini değil, şerit stilinin varsayılan rengini ayarlıyor.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[UPDATED] Plazas &amp; Promenades DLC desteği eklendi.
+[NEW] Loading Screen Mod Revisited desteği eklendi.
+[FIXED] Prop/ağaç/ağ araması yaparken oluşan göz kırpma efekti çözüldü.</value>
+  </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Eğim</value>
+  </data>
+  <data name="StyleOption_Tilt" xml:space="preserve">
+    <value>Eğim</value>
+  </data>
+  <data name="Settings_ShortcutEnterUnderground" xml:space="preserve">
+    <value>Yeraltı moduna geç</value>
+  </data>
+  <data name="Settings_ShortcutExitUnderground" xml:space="preserve">
+    <value>Yeraltı modundan çık</value>
+  </data>
+  <data name="Settings_ToggleUnderground" xml:space="preserve">
+    <value>Yeraltını aç/kapa</value>
+  </data>
+  <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
+    <value>Girmek için {0}'a, çıkmak için {1}'e bas</value>
+  </data>
+  <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
+    <value>{0}'a basılı tut</value>
+  </data>
+  <data name="Tool_EnterUnderground" xml:space="preserve">
+    <value>Yeraltı moduna girmek için {0}'a bas</value>
+  </data>
+  <data name="Tool_ExitUnderground" xml:space="preserve">
+    <value>Yeraltı modundan çıkmak için {0}'a bas</value>
+  </data>
+  <data name="Tool_InfoUnderground" xml:space="preserve">
+    <value>Yeraltı modu için {0}'a basılı tut</value>
+  </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>2D İşaretleme LOD mesafesi</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Ağ LOD mesafesi</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Prop LOD mesafesi</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Ağaç LOD mesafesi</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Oto.</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>3D İşaretleme LOD mesafesi</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>İşle</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Daha az seçenek</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Daha fazla seçenek</value>
+  </data>
+  <data name="Settings_CollapseOptions" xml:space="preserve">
+    <value>Ek stil seçeneklerini kapat</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Ana renk</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>İkinci renk</value>
+  </data>
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Çift kesikli asimetrik</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Her biri {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Boşluk</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Refüj</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Refüj</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Çizgi</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Uzunluk</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>Şerit</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Refüj</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>Arkası</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>Önü</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Boşluk</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Kılavuz Çizgiler</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Taban</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Yükseklik</value>
+  </data>
+  
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Üçgen</value>
+  </data>
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Metin</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>Varsayılan oyun yazı tipi</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>Yazı tipi</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>Kalın</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>Kalın italik</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>İtalik</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>Aralık</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>Karakter</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>Şerit</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Metin</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>Yön</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>Aşağıdan Yukarıya</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>Soldan Sağa</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>Yukarıdan Aşağıya</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>Şerit</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>Bir şerit oluşturmak için tıklayın</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>Şeridi silmek için tıklayın</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>Şeritleri seçmek için {0} tuşuyla beraber tıklayın</value>
+  </data>
+  
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Şerit oluşturmak için bitiş noktası seçin</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>Dağıtım</value>
   </data>
   
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Zikzak</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Sol</value>
+  </data>
   
   
   

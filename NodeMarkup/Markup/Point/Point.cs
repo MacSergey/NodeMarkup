@@ -127,6 +127,13 @@ namespace NodeMarkup.Manager
         {
             return Source.GetRelativePosition(Offset);
         }
+        public virtual float GetRelativePosition(Alignment alignment)
+        {
+            if (IsSplit && alignment != Alignment.Centre)
+                return Source.GetRelativePosition(Offset + SplitOffsetValue * alignment.Sign());
+            else
+                return Source.GetRelativePosition(Offset);
+        }
 
         public Dependences GetDependences() => throw new NotSupportedException();
         public virtual void Render(OverlayData data)
@@ -152,7 +159,7 @@ namespace NodeMarkup.Manager
         public virtual void FromXml(XElement config, ObjectsMap map)
         {
             Offset.FromXml(config, 0);
-            Offset.Value *= (map.IsMirror ? -1 : 1);
+            Offset.Value *= (map.Invert ? -1 : 1);
         }
 
         public enum PointType
@@ -162,6 +169,7 @@ namespace NodeMarkup.Manager
             Normal = 4,
             Lane = 8,
 
+            [NotItem]
             All = Enter | Crosswalk | Normal | Lane,
         }
         public enum LocationType
@@ -328,8 +336,8 @@ namespace NodeMarkup.Manager
         public new NetLanePointSource Source => (NetLanePointSource)base.Source;
         public override Vector3 Position
         {
-            get => MarkerPosition + Direction * 1.5f;
-            protected set => MarkerPosition = value - Direction * 1.5f;
+            get => MarkerPosition + Direction * (1.5f / Enter.TranformCoef);
+            protected set => MarkerPosition = value - Direction * (1.5f / Enter.TranformCoef);
         }
         public override Vector3 MarkerPosition
         {
@@ -397,10 +405,10 @@ namespace NodeMarkup.Manager
                 var dy = 0.15f + (DefaultWidth - data.Width.Value) * 0.5f;
                 var area = new Quad3()
                 {
-                    a = SourcePointA.Position + dir * dy - SourcePointA.Direction * (1.5f - dx),
-                    b = SourcePointA.Position + dir * dy - SourcePointA.Direction * (1.5f + dx),
-                    c = SourcePointB.Position - dir * dy - SourcePointB.Direction * (1.5f + dx),
-                    d = SourcePointB.Position - dir * dy - SourcePointB.Direction * (1.5f - dx),
+                    a = SourcePointA.Position + dir * dy - SourcePointA.Direction * ((1.5f - dx) / Enter.TranformCoef),
+                    b = SourcePointA.Position + dir * dy - SourcePointA.Direction * ((1.5f + dx) / Enter.TranformCoef),
+                    c = SourcePointB.Position - dir * dy - SourcePointB.Direction * ((1.5f + dx) / Enter.TranformCoef),
+                    d = SourcePointB.Position - dir * dy - SourcePointB.Direction * ((1.5f - dx) / Enter.TranformCoef),
                 };
                 area.RenderQuad(data);
             }
@@ -415,13 +423,13 @@ namespace NodeMarkup.Manager
         public static string XmlName2 { get; } = "L2";
         public static bool FromHash(ulong hash, Markup markup, ObjectsMap map, out MarkupPointPair pair, out bool invert)
         {
-            var secondId = (int)hash;
             var firstId = (int)(hash >> 32);
+            var secondId = (int)hash;
 
             if (MarkupPoint.FromId(firstId, markup, map, out MarkupPoint first) && MarkupPoint.FromId(secondId, markup, map, out MarkupPoint second))
             {
-                pair = new MarkupPointPair(second, first);
-                invert = second.Id <= first.Id;
+                pair = new MarkupPointPair(first, second);
+                invert = first.Id >= second.Id;
                 return true;
             }
             else
@@ -434,7 +442,7 @@ namespace NodeMarkup.Manager
         public static MarkupPointPair FromPoints(MarkupPoint first, MarkupPoint second, out bool invert)
         {
             var pair = new MarkupPointPair(first, second);
-            invert = second.Id <= first.Id;
+            invert = first.Id >= second.Id;
             return pair;
         }
 

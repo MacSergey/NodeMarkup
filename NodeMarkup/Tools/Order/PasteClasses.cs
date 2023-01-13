@@ -27,12 +27,12 @@ namespace NodeMarkup.Tools
             get => _bounds.center;
             protected set => _bounds.center = value;
         }
-        public int Num { get; }
+        public int Index { get; }
 
-        public PasteItem(int num, Vector3? position = null)
+        public PasteItem(int index, Vector3? position = null)
         {
             _bounds = new Bounds(position ?? Vector3.zero, Vector3.one * BoundsSize);
-            Num = num;
+            Index = index;
         }
 
         public virtual void Update(BaseOrderToolMode toolMode)
@@ -46,7 +46,7 @@ namespace NodeMarkup.Tools
 
         public bool IsHover(Ray ray) => _bounds.IntersectRay(ray);
 
-        public override string ToString() => Num.ToString();
+        public override string ToString() => Index.ToString();
     }
 
     #region SOURCE
@@ -57,14 +57,14 @@ namespace NodeMarkup.Tools
         public virtual ITarget<SourceType> Target { get; set; }
         public bool HasTarget => Target != null;
 
-        public Source(int num, Vector3? position = null) : base(num, position) { }
+        public Source(int index, Vector3? position = null) : base(index, position) { }
 
         public void Render(RenderManager.CameraInfo cameraInfo, BaseOrderToolMode<SourceType> toolMode)
         {
             var hue = (byte)(toolMode.SelectedSource == this || toolMode.HoverSource == this ? 255 : 192);
             var position = toolMode.SelectedSource == this ? (toolMode.IsHoverTarget ? toolMode.HoverTarget.Position : SingletonTool<NodeMarkupTool>.Instance.MouseWorldPosition) : Position;
             var size = BoundsSize;
-            var color = Colors.GetOverlayColor(Num, 255, hue);
+            var color = Colors.GetOverlayColor(Index, 255, hue);
             while (size > 0)
             {
                 position.RenderCircle(new OverlayData(cameraInfo) { Color = color, Width = size });
@@ -78,7 +78,7 @@ namespace NodeMarkup.Tools
         public static float Size => 2f;
         protected override float BoundsSize => Size;
 
-        public bool IsMirror { get; set; }
+        public bool Invert { get; set; }
         public EnterData Enter { get; }
 
         private ITarget<SourceEnter> _target;
@@ -91,12 +91,12 @@ namespace NodeMarkup.Tools
                 _target = value;
 
                 for (var i = 0; i < Points.Length; i += 1)
-                    Points[i].Target = _target is TargetEnter targetEnter && i < targetEnter.Enter.PointCount ? targetEnter.Points[!IsMirror ? i : targetEnter.Points.Length - i - 1] : null;
+                    Points[i].Target = _target is TargetEnter targetEnter && i < targetEnter.Enter.PointCount ? targetEnter.Points[!Invert ? i : targetEnter.Points.Length - i - 1] : null;
             }
         }
         public SourcePoint[] Points { get; }
 
-        public SourceEnter(EnterData enter, int num) : base(num)
+        public SourceEnter(EnterData enter, int index) : base(index)
         {
             Enter = enter;
             Points = Enumerable.Range(0, Enter.PointCount).Select(i => new SourcePoint(i)).ToArray();
@@ -107,7 +107,7 @@ namespace NodeMarkup.Tools
     {
         protected override float BoundsSize => 0.5f;
 
-        public SourcePoint(int num) : base(num) { }
+        public SourcePoint(int index) : base(index) { }
         protected override Vector3 GetPosition(BaseOrderToolMode toolMode) => Target?.GetSourcePosition(this) ?? Vector3.zero;
     }
 
@@ -117,13 +117,13 @@ namespace NodeMarkup.Tools
 
     public abstract class Target : PasteItem
     {
-        public Target(int num, Vector3? position = null) : base(num, position) { }
+        public Target(int index, Vector3? position = null) : base(index, position) { }
     }
     public abstract class Target<SourceType> : Target, ITarget<SourceType>
         where SourceType : Source<SourceType>
     {
         protected Vector3 ZeroPosition { get; }
-        public Target(int num, Vector3 zeroPosition) : base(num)
+        public Target(int index, Vector3 zeroPosition) : base(index)
         {
             ZeroPosition = zeroPosition;
         }
@@ -156,7 +156,7 @@ namespace NodeMarkup.Tools
 
         public TargetPoint[] Points { get; }
 
-        public TargetEnter(Enter enter, int num) : base(num, enter.Position)
+        public TargetEnter(Enter enter, int index) : base(index, enter.Position)
         {
             Enter = enter.Data;
             Points = enter.Points.Select((p, i) => new TargetPoint(p, i)).ToArray();
@@ -187,7 +187,7 @@ namespace NodeMarkup.Tools
     {
         public static float Size => 1.2f;
         protected override float BoundsSize => Size;
-        public TargetPoint(MarkupEnterPoint point, int num) : base(num, point.ZeroPosition) { }
+        public TargetPoint(MarkupEnterPoint point, int index) : base(index, point.ZeroPosition) { }
         protected override Vector3 GetPosition(BaseOrderToolMode toolMode) => ZeroPosition;
 
         public override Vector3 GetSourcePosition(SourcePoint source) => Position;
@@ -209,8 +209,8 @@ namespace NodeMarkup.Tools
             var prev = GetAvailableBorder(toolMode.Sources, source, s => s.PrevIndex(sourcesLenght)) ?? GetDefaultPrev(toolMode);
             var next = GetAvailableBorder(toolMode.Sources, source, s => s.NextIndex(sourcesLenght)) ?? GetDefaultNext(toolMode);
 
-            From = !toolMode.IsMirror ? prev : next;
-            To = !toolMode.IsMirror ? next : prev;
+            From = !toolMode.Invert ? prev : next;
+            To = !toolMode.Invert ? next : prev;
         }
         protected virtual Target<SourceType> GetDefaultPrev(BaseOrderToolMode<SourceType> toolMode) => toolMode.Targets.First();
         protected virtual Target<SourceType> GetDefaultNext(BaseOrderToolMode<SourceType> toolMode) => toolMode.Targets.Last();
@@ -229,8 +229,8 @@ namespace NodeMarkup.Tools
         }
         protected override Target<SourceEnter> GetAvailableBorder(SourceEnter[] sources, SourceEnter source, Func<int, int> func)
         {
-            var i = func(source.Num);
-            while (i != source.Num && !(sources[i].Target is Target<SourceEnter>))
+            var i = func(source.Index);
+            while (i != source.Index && !(sources[i].Target is Target<SourceEnter>))
                 i = func(i);
             return sources[i].Target as Target<SourceEnter>;
         }
@@ -244,7 +244,7 @@ namespace NodeMarkup.Tools
             if (To != From)
                 yield return To;
 
-            Target<SourceEnter> Next(Target<SourceEnter> target) => targets[target.Num.NextIndex(targets.Length)];
+            Target<SourceEnter> Next(Target<SourceEnter> target) => targets[target.Index.NextIndex(targets.Length)];
         }
     }
     public class PointsBorders : AvalibleBorders<SourcePoint>
@@ -256,11 +256,11 @@ namespace NodeMarkup.Tools
             public bool Equals(PointsBorders x, PointsBorders y) => x.From == y.From && x.To == y.To;
             public int GetHashCode(PointsBorders obj) => obj.GetHashCode();
         }
-        protected override Target<SourcePoint> GetDefaultPrev(BaseOrderToolMode<SourcePoint> toolMode) => !toolMode.IsMirror ? toolMode.Targets.First() : toolMode.Targets.Last();
-        protected override Target<SourcePoint> GetDefaultNext(BaseOrderToolMode<SourcePoint> toolMode) => !toolMode.IsMirror ? toolMode.Targets.Last() : toolMode.Targets.First();
+        protected override Target<SourcePoint> GetDefaultPrev(BaseOrderToolMode<SourcePoint> toolMode) => !toolMode.Invert ? toolMode.Targets.First() : toolMode.Targets.Last();
+        protected override Target<SourcePoint> GetDefaultNext(BaseOrderToolMode<SourcePoint> toolMode) => !toolMode.Invert ? toolMode.Targets.Last() : toolMode.Targets.First();
         protected override Target<SourcePoint> GetAvailableBorder(SourcePoint[] sources, SourcePoint source, Func<int, int> func)
         {
-            var i = source.Num;
+            var i = source.Index;
             var j = func(i);
             while (true)
             {
@@ -275,7 +275,7 @@ namespace NodeMarkup.Tools
         }
         public override IEnumerable<Target<SourcePoint>> GetTargets(BaseOrderToolMode<SourcePoint> toolMode, Target<SourcePoint>[] targets)
         {
-            for (var target = From; target != To; target = targets[target.Num.NextIndex(targets.Length)])
+            for (var target = From; target != To; target = targets[target.Index.NextIndex(targets.Length)])
                 yield return target;
 
             yield return To;

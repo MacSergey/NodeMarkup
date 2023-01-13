@@ -358,9 +358,6 @@ Clique para editar marcações</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Ângulo</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Deslocar das linhas</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Clique para começar a criar um preenchimento</value>
   </data>
@@ -375,9 +372,6 @@ Clique para editar marcações</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Seleccione o próximo ponto do perímetro</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Deslocar do ponto médio</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Copiar</value>
@@ -428,86 +422,6 @@ Para criar um preenchimento mantenha {0} premido ou pressione {1}.</value>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>A lista de modelos está vazia.
 Para criar um modelo, clique «{0}» no estilo da linha, da passadeira ou do preenchimento.</value>
-  </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Activar com chave</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Activação falhada</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Ativação bem-sucedida</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Esta funcionalidade está indisponível</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>Funcionalidade {0} está disponível para acesso antecipado dos Patreons.
-Ir ficar disponível para todos mais tarde.
-Registando-se para o acesso antecipado está a ajudar no desenvolvimento deste mod.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Obtenha acesso antecipado</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>O seu ID de acesso</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Chave de acesso</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Activar</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Activação de acesso antecipado</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Para activar acesso antecipado necessita de preencher com uma chave</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Cancelar</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>A chave que usou não é válida</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Conexão em curso...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Conectar Patreon</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Conectar Patreon</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>A conta do Patreon não pode ser conectada porque você recusou o acesso.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Ocorreu um erro ao conectar a conta, tente novamente.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>A sua conta está conectada mas você não tem acesso antecipado.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Pode fechar esta página e voltar ao jogo.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Cancelar</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Estado: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Activado</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Não activado</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Obrigado pelo seu apoio, agora pode usufruir de todas as funcionalidades.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Acesso antecipado</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Alinhamento</value>
@@ -574,12 +488,6 @@ Para criar uma passadeira pressione {0}.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Largura da linha</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Deslocamento depois</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Deslocamento antes</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Paralelo as vias</value>
@@ -766,9 +674,6 @@ O carregamento de {0} marcações falhou.</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Borda</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>A partir de</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Vértice</value>
@@ -1160,9 +1065,6 @@ O carregamento de todas marcações falhou.</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Elevação</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Relva</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Pavimento</value>
   </data>
@@ -1172,15 +1074,6 @@ O carregamento de todas marcações falhou.</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Segmento #{0}
 Clique para editar marcações</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Seguir as linhas</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Carril esquerdo</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Carril direito</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Selecione o primeiro ponto do carril ou uma linha como um carril</value>
@@ -1280,20 +1173,11 @@ Clique para editar marcações</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Em ruínas</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Deslocamento das linhas</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Raio de canto</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Raio de canto em medianas</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Tamanho do lancil</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Tamanho do lancil no separador central</value>
   </data>
   
   
@@ -1352,14 +1236,20 @@ Clique para editar marcações</value>
   
   
   
+  <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
+    <value>Ajuste pobre</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
+    <value>Ajuste possível</value>
+  </data>
   
   
-  
-  
-  
-  
-  
-  
+  <data name="PointEditor_SaveOffsets" xml:space="preserve">
+    <value>Guardar deslocamentos</value>
+  </data>
+  <data name="PointEditor_RoadName" xml:space="preserve">
+    <value>Nome da rua</value>
+  </data>
   
   
   
@@ -1430,7 +1320,6 @@ Clique para editar marcações</value>
   
   
   
-  
   <data name="StyleOption_ObjectAuto" xml:space="preserve">
     <value>Auto</value>
   </data>
@@ -1451,6 +1340,29 @@ Clique para editar marcações</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Cor secundaria</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

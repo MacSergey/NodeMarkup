@@ -360,9 +360,6 @@
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Угол</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Отступ от линий</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Нажмите для начала создания заполнителя</value>
   </data>
@@ -377,9 +374,6 @@
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Выберите следующую точку контура</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Отступ от разделительной полосы</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Копировать</value>
@@ -446,86 +440,6 @@
     <value>Список шаблонов пуст.
 Для создания шаблона нажмите «{0}» у стиля линии или перехода или заполнителя.</value>
   </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Активировать ключом</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Ошибка активации</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Активация выполнена</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Эта функция недоступна</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>Функция «{0}» сейчас доступна только оформившим ранней доступ на Patreon.
-Она будет доступна позже для всех.
-Оформив ранний доступ, вы поддержите возможность развивать мод с той же скоростью.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Получить ранний доступ</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Ваш ID раннего доступа</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Ключ</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Активировать</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Активация раннего доступа</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Для активации раннего доступа вам нужно ввести ключ</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Отмена</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>Введенный ключ не действителен</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Привязывание в процессе...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Привязать аккаунт Patreon</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Привязывание аккаунта Patreon</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Аккаунт Patreon не может быть привязан так как вы отказали в доступе.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Во время привязывания аккаунта произошла ошибка, попробуйте снова.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Ваш аккаунт привязан, но вы не оформили ранней доступ.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Вы можете закрыть эту страницу и вернуться в игру.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Отмена</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Статус: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Активирован</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Не активирован</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Спасибо за вашу поддержку, теперь вы можете пользоваться всеми функциями.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Ранний доступ</value>
-  </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Выравнивание</value>
   </data>
@@ -589,12 +503,6 @@
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Ширина линии</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Отступ после</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Отступ до</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Параллельно линиям</value>
@@ -796,9 +704,6 @@
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Грань</value>
   </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Начало из</value>
-  </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Вершина</value>
   </data>
@@ -954,7 +859,8 @@
     <value>Зажмите {0} для создания заполнителя</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Зажмите {0} чтобы перетащить точку</value>
+    <value>Зажмите {0} и перетащите точку 
+для изменения сдвига</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>[WARNING] Настройки шаблонов по умолчанию будут сброшены.
@@ -1233,9 +1139,6 @@
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Подъем</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Трава</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Тротуар</value>
   </data>
@@ -1245,15 +1148,6 @@
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Сегмент #{0}
 Нажмите для редактирования разметки</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Следовать за направляющими</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Левая направляющая</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Правая направляющая</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Выберете первую точку направляющей
@@ -1400,20 +1294,11 @@
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Руины</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Отступ от линий</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Радиус углов</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Радиус скругления углов у разделительной полосы</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Размер бордюра</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Размер бордюра у разделительной полосы</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
     <value>[NEW] Добавлен шаг через выделения, для выбора перекрестков находящихся друг под другом, как в MoveIt. Нажмите Ctrl+Space для выбора следующего (может быть изменено в настройках мода).
@@ -1541,12 +1426,6 @@
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Угол</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Подъем</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Название</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Масштаб</value>
@@ -1694,9 +1573,6 @@
     <value>Удерживайте {0}
 для подземного режима</value>
   </data>
-  <data name="Settings_AutoPropStep" xml:space="preserve">
-    <value>Авто шаг реквизита в зависимости от его размера</value>
-  </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
     <value>Дистанция отрисовки LOD 2D разметки</value>
   </data>
@@ -1819,9 +1695,6 @@
   <data name="StyleOption_Font" xml:space="preserve">
     <value>Шрифт</value>
   </data>
-  <data name="StyleOption_FontStyle" xml:space="preserve">
-    <value>Начертание</value>
-  </data>
   <data name="StyleOption_FontStyleBold" xml:space="preserve">
     <value>Жирный</value>
   </data>
@@ -1873,7 +1746,9 @@
   <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
     <value>Создавать боковые линии для полосы автоматически</value>
   </data>
-  
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Выберите конечную точку для создания полосы</value>
+  </data>
   <data name="StyleOption_Distribution" xml:space="preserve">
     <value>Распределение</value>
   </data>
@@ -1888,5 +1763,91 @@
   </data>
   <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
     <value>Фиксированный промежуток и свободные окончания</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Зигзаг</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Слева</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Справа</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Вылет</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Сторона</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Начать от</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Линии</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Снаружи</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Шаг</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Выравнивание</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>Конец</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Середина</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Начало</value>
+  </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Связать этот трафарек с дорожным ассетом</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Отвязать этот трафарет от дорожного ассета</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Связанный</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Перетащите точку для изменения сдвига</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Удерживать {0} для перемещения точки</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Применять разметку которая сохранена в сетевом ассете</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Выход из режима привязки</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Вы хотите выйти из режима привязки и связать этот трафарет с сетевым ассетом?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Связать</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Не связывать</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NEW] Добавлен новый стиль линии: Текст. Он позваляет написать любой произвольный текст на дороге и задать любой установленный в системе шрифт.
+[NEW] Добавлена возможность связать трафарет с сетевым объектом. Трафарет будет автоматически применяться при постройке дороги.
+[NEW] Добавлен новый тип линий: Полоса. Она упращает размещение реквизита/деревьев/декоративных сетей/текста в середине полосы движение на дороге.
+[New] Добавлен новый стиль линии: Зигзаг.
+[NEW] Добавлена возможность сохранаять различную разметку для различных вариаций дороги (мост, туннель) в игровом редакторе.
+[NEW] Авто создание боковых линий для полосы. Можно отключить в настройках мода.
+[NEW] Добавлена опция размещения реквизита/деревьев. Это позволяет закрепить реквизит/деревья на концах линии и задать динамическую длину промежутка.
+[NEW] Добавлена возможность инвертировать значения смещения декоративной сети.
+[NEW] Добавлены горячие кноки для режима вставки разметки.
+[UPDATED] Больше не нужно удерживать Ctrl для перемещения точки. Старое поведение (с удерживанием Ctrl) можно вернуть в настройках мода.
+[FIXED] Линии и заполнители следуют за наклоном сегмента как можно точно. Это все еще может быть не идеально в некоторых случаях но намного лучше чем раньше.
+[FIXED] 3D линия идеально следует за формой заполнителя.
+[FIXED] Исправлены ошибки когда значения ассиметричных стилей вставлялись инвертированными.
+[FIXED] Декоративные сети/реквизит/деревья добавленые с помощью IMT видимы на скриншоте трафарета.
+[FIXED] Исправлено что заполнитель не обнавлялся при выборе направляющих.</value>
   </data>
 </root>

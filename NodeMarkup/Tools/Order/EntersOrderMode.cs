@@ -32,7 +32,6 @@ namespace NodeMarkup.Tools
         protected override string InfoDrag => Localize.Tool_InfoRoadsDrag;
         protected override string InfoDrop => Localize.Tool_InfoRoadsDrop;
 
-
         public IEnumerable<Shortcut> Shortcuts
         {
             get
@@ -75,10 +74,10 @@ namespace NodeMarkup.Tools
         }
         private void FlipClick()
         {
-            IsMirror = !IsMirror;
+            Invert = !Invert;
 
             foreach (var source in Sources)
-                source.IsMirror = IsMirror;
+                source.Invert = Invert;
 
             Transform((t) => Targets.Length - t - 1);
             SetAvailableTargets();
@@ -92,8 +91,8 @@ namespace NodeMarkup.Tools
             SetBaskets();
             Paste();
         }
-        private void ApplyClick() => Tool.SetDefaultMode();
-        private void NotApplyClick()
+        protected virtual void ApplyClick() => Tool.SetDefaultMode();
+        protected virtual void NotApplyClick()
         {
             SetBackup();
             ApplyClick();
@@ -105,7 +104,7 @@ namespace NodeMarkup.Tools
             for (var i = 0; i < Sources.Length; i += 1)
             {
                 if (Sources[i].Target is Target<SourceEnter> target)
-                    Sources[i].Target = Targets[func(target.Num)];
+                    Sources[i].Target = Targets[func(target.Index)];
             }
         }
 
@@ -169,16 +168,20 @@ namespace NodeMarkup.Tools
             Exit();
             return true;
         }
+
+        protected virtual string ApplyButtonText => Localize.Tool_Apply;
+        protected virtual string NotApplyButtonText => Localize.Tool_NotApply;
         private void Exit()
         {
             var messageBox = MessageBox.Show<ThreeButtonMessageBox>();
             messageBox.CaptionText = EndCaption;
             messageBox.MessageText = EndMessage;
-            messageBox.Button1Text = Localize.Tool_Apply;
+            messageBox.Button1Text = ApplyButtonText;
             messageBox.OnButton1Click = OnApply;
-            messageBox.Button2Text = Localize.Tool_NotApply;
+            messageBox.Button2Text = NotApplyButtonText;
             messageBox.OnButton2Click = OnNotApply;
             messageBox.Button3Text = Localize.Tool_Continue;
+            messageBox.DefaultButton = 2;
 
             bool OnApply()
             {
@@ -233,8 +236,6 @@ namespace NodeMarkup.Tools
             var baskets = sourcesBorders.GroupBy(b => b.Value, b => b.Key, EntersBorders.Comparer).Select(g => new EntersBasket(this, g.Key, g)).ToArray();
             return baskets;
         }
-
-
     }
 
     public class PasteEntersOrderToolMode : BaseEntersOrderToolMode
@@ -249,10 +250,41 @@ namespace NodeMarkup.Tools
         protected override string EndCaption => Localize.Tool_EndEditOrderCaption;
         protected override string EndMessage => Localize.Tool_EndEditOrderMessage;
     }
-    public class ApplyIntersectionTemplateOrderToolMode : BaseEntersOrderToolMode
+    public class LinkPresetToolMode : BaseEntersOrderToolMode
     {
-        public override ToolModeType Type => ToolModeType.ApplyIntersectionTemplateOrder;
-        protected override string EndCaption => Localize.Tool_EndApplyPresetOrderCaption;
-        protected override string EndMessage => Localize.Tool_EndApplyPresetOrderMessage;
+        public string RoadName { get; set; }
+        public override ToolModeType Type => ToolModeType.LinkPreset;
+        protected override string EndCaption => Localize.Tool_EndLinkPresetCaption;
+        protected override string EndMessage => Localize.Tool_EndLinkPresetMessage;
+        protected override string ApplyButtonText => Localize.Tool_Link;
+        protected override string NotApplyButtonText => Localize.Tool_NotLink;
+
+        protected override void ApplyClick()
+        {
+            if (!string.IsNullOrEmpty(RoadName) && Markup.Type == MarkupType.Segment)
+            {
+                var firstId = TargetEnters[0].Enter.Id;
+                var secondId = TargetEnters[1].Enter.Id;
+
+                ref var segment = ref Markup.Id.GetSegment();
+
+                var firstIsStart = segment.m_startNode == firstId;
+                var secondIsEnd = segment.m_endNode == secondId;
+                var segmentInverted = (segment.m_flags & NetSegment.Flags.Invert) != 0;
+                var flip = Sources[0].Target != Targets[0];
+                flip ^= segmentInverted;
+                flip ^= (!firstIsStart || !secondIsEnd);
+
+                var invert = Invert;
+                SingletonManager<RoadTemplateManager>.Instance.SavePreset(RoadName, IntersectionTemplate.Id, flip, invert);
+                Panel.UpdatePanel();
+            }
+            base.ApplyClick();
+        }
+        public override void Deactivate()
+        {
+            RoadName = null;
+            base.Deactivate();
+        }
     }
 }

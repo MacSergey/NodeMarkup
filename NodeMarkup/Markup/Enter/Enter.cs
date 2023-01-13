@@ -37,6 +37,7 @@ namespace NodeMarkup.Manager
         public StraightTrajectory Line { get; private set; }
         public bool LanesChanged => GetSegment().m_lanes != FirstLane;
         public string RoadName => GetSegment().Info.name;
+        public abstract bool IsSmooth { get; }
 
         private static VehicleInfo.VehicleType RoadType { get; } =
             VehicleInfo.VehicleType.Car |
@@ -228,7 +229,7 @@ namespace NodeMarkup.Manager
 
         public void Update()
         {
-            var segment = GetSegment();
+            ref var segment = ref GetSegment();
             var segmentId = GetSegmentId();
 
             Vector3 leftPos;

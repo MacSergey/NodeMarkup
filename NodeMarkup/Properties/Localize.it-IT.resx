@@ -358,9 +358,6 @@ Clicca per modificare la segnaletica orizzontale</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Angolo</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Spostamento dalle linee</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Clicca per iniziare la creazione di un riempimento</value>
   </data>
@@ -375,9 +372,6 @@ Clicca per modificare la segnaletica orizzontale</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Seleziona il punto successivo del contorno</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Spostamento dalla mediana</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Copia</value>
@@ -444,86 +438,6 @@ Per creare un riempimento, tieni premuto {0} o premi {1}.</value>
     <value>La lista dei modelli è vuota.
 Per creare un modello, clicca «{0}» sulla linea, sull'attraversamento pedonale o sullo stile del riempimento.</value>
   </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Attiva con codice</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Attivazione fallita</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Attivazione riuscita</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Questa funzione non è disponibile</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>La funzione «{0}» è attualmente utilizzabile tramite accesso anticipato al Patreon.
-Successivamente sarà disponibile per tutti.
-Registrandoti anticipatamente, supporti lo sviluppo di questa Mod.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Ottieni l'accesso anticipato</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Il tuo codice d'accesso</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Chiave d'accesso</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Attiva</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Attivazione dell'accesso anticipato</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Per attivare l'accesso anticipato devi inserire il codice</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Annulla</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>Il codice che hai inserito non è valido</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Collegamento in corso...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Collega account Patreon</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Collega account Patreon</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>L'account Patreon non può esser collegato perché non hai i permessi d'accesso.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Si è verificato un errore durante il collegamento dell'account, riprova.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Il tuo account è collegato, però non hai l'accesso anticipato.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Puoi chiudere questa pagina e tornare al gioco.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Annulla</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Stato: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Attivato</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Non attivato</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Grazie per il tuo supporto, ora puoi goderti tutte le funzionalità.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Accesso anticipato</value>
-  </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Allineamento</value>
   </data>
@@ -587,12 +501,6 @@ Per crearli tieni premuto {0}.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Spessore linea</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Compensa dopo</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Compensa prima</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Parallelo alle corsie</value>
@@ -793,9 +701,6 @@ Impossibile caricare i contrassegni per {0} intersezioni.</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Bordo</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Inizia da</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Vertice</value>
@@ -1231,9 +1136,6 @@ Impossibile caricare la segnaletica orizzontale delle intersezioni.</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Altezza</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Erba</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Pavimentazione</value>
   </data>
@@ -1243,15 +1145,6 @@ Impossibile caricare la segnaletica orizzontale delle intersezioni.</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Segmento #{0}
 Seleziona per modificare la segnaletica orizzontale</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Segui la linea guida</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Linea guida sinistra</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Linea guida destra</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Selezionare il primo punto o linea della linea guida</value>
@@ -1398,20 +1291,11 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Rovine</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Spostamento dalle linee</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Raggio dell'angolo</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Raggio dell'angolo sulle mediane</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Dimensione cordolo</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Dimensone cordolo sulle mediane</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
     <value>[NEW] Aggiunto passaggio di selezione come in MoveIt. Premi Ctrl + Spazio per scavalcare (puoi ricollegarti nelle opzioni mod).
@@ -1528,12 +1412,6 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Angolo</value>
   </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Altezza</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Nome</value>
-  </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Dimensione</value>
   </data>
@@ -1627,6 +1505,28 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Tieni premuto {0} per
 modalità sotterranea</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

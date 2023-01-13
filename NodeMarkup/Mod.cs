@@ -1,6 +1,5 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
-using Epic.OnlineServices.Presence;
 using HarmonyLib;
 using ICities;
 using ModsCommon;
@@ -15,9 +14,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Resources;
 using UnityEngine;
-using static NetInfo;
 
 namespace NodeMarkup
 {
@@ -32,6 +29,7 @@ namespace NodeMarkup
         protected override string IdRaw => nameof(NodeMarkup);
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version("1.12"), new DateTime(2023, 1, 7)),
             new ModVersion(new Version("1.11"), new DateTime(2022, 12, 23)),
             new ModVersion(new Version("1.10.2"), new DateTime(2022, 9, 14)),
             new ModVersion(new Version("1.10.1"), new DateTime(2022, 7, 9)),
@@ -144,19 +142,19 @@ namespace NodeMarkup
 
         private void PatchNetManager(ref bool success)
         {
-            success &= Patch_NetManagerRelease_NodeImplementation();
-            success &= Patch_NetManagerReleas_SegmentImplementation();
+            success &= Patch_NetManager_ReleaseNodeImplementation();
+            success &= Patch_NetManager_ReleaseSegmentImplementation();
             success &= Patch_NetManager_SimulationStepImpl_Prefix();
             success &= Patch_NetManager_SimulationStepImpl_Postfix();
             success &= Patch_NetManager_EndOverlay_Prefix();
         }
 
-        private bool Patch_NetManagerRelease_NodeImplementation()
+        private bool Patch_NetManager_ReleaseNodeImplementation()
         {
             var parameters = new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() };
             return AddPrefix(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseNodeImplementationPrefix), typeof(NetManager), "ReleaseNodeImplementation", parameters);
         }
-        private bool Patch_NetManagerReleas_SegmentImplementation()
+        private bool Patch_NetManager_ReleaseSegmentImplementation()
         {
             var parameters = new Type[] { typeof(ushort), typeof(NetSegment).MakeByRefType(), typeof(bool) };
             return AddPrefix(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseSegmentImplementationPrefix), typeof(NetManager), "ReleaseSegmentImplementation", parameters);
@@ -525,9 +523,6 @@ namespace NodeMarkup
 
         public static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.BuildingDecorationLoadPathsTranspiler<BuildingAssetDataExtension>(instructions);
 
-        public static void NetManagerCreateSegmentPostfix(NetInfo info, ushort segment, ushort startNode, ushort endNode)
-        {
-            SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segment, startNode, endNode);
-        }
+        public static void NetManagerCreateSegmentPostfix(NetInfo info, ushort segment, ushort startNode, ushort endNode) => NodeMarkupTool.ApplyDefaultMarking(info, segment, startNode, endNode);
     }
 }

@@ -77,7 +77,7 @@ namespace NodeMarkup.UI.Panel
             CreateEditors();
             CreateSizeChanger();
 
-            minimumSize = GetSize(400);
+            minimumSize = GetSize(600);
 
             base.Awake();
         }

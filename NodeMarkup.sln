@@ -109,14 +109,12 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeManager", "ModsComm
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeShared.ro-RO", "ModsCommon\LocalizeShared\ro-RO\LocalizeShared.ro-RO.shproj", "{A7F303AF-C11E-4DD8-A195-6D0D459DEE53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeMarkup.API", "NodeMarkup.API\NodeMarkup.API.csproj", "{16C76852-24D6-429F-96D0-DD8AC15E3512}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NodeMarkup.API", "NodeMarkup.API\NodeMarkup.API.csproj", "{16C76852-24D6-429F-96D0-DD8AC15E3512}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Beta Debug|Any CPU = Beta Debug|Any CPU
 		Beta Release|Any CPU = Beta Release|Any CPU
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
 		Stable Debug|Any CPU = Stable Debug|Any CPU
 		Stable Release|Any CPU = Stable Release|Any CPU
 	EndGlobalSection
@@ -125,10 +123,6 @@ Global
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Beta Debug|Any CPU.Build.0 = Beta Debug|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Beta Release|Any CPU.ActiveCfg = Beta Release|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Beta Release|Any CPU.Build.0 = Beta Release|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Debug|Any CPU.ActiveCfg = Stable Debug|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Debug|Any CPU.Build.0 = Stable Debug|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release|Any CPU.ActiveCfg = Stable Release|Any CPU
-		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Release|Any CPU.Build.0 = Stable Release|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Stable Debug|Any CPU.ActiveCfg = Stable Debug|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Stable Debug|Any CPU.Build.0 = Stable Debug|Any CPU
 		{94B9B12B-0D2B-4685-BF64-4F0488470569}.Stable Release|Any CPU.ActiveCfg = Stable Release|Any CPU
@@ -137,10 +131,6 @@ Global
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Beta Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Beta Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Beta Release|Any CPU.Build.0 = Release|Any CPU
-		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CC1B2FA-1A1B-4B74-92D8-D20B185C892A}.Stable Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -149,10 +139,6 @@ Global
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Beta Debug|Any CPU.Build.0 = Debug|Any CPU
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Beta Release|Any CPU.ActiveCfg = Release|Any CPU
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Beta Release|Any CPU.Build.0 = Release|Any CPU
-		{965F863B-1394-41ED-85EC-B35DC09003EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{965F863B-1394-41ED-85EC-B35DC09003EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{965F863B-1394-41ED-85EC-B35DC09003EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{965F863B-1394-41ED-85EC-B35DC09003EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Stable Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Stable Debug|Any CPU.Build.0 = Debug|Any CPU
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Stable Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -161,10 +147,6 @@ Global
 		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Beta Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Beta Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Beta Release|Any CPU.Build.0 = Release|Any CPU
-		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Stable Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Stable Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16C76852-24D6-429F-96D0-DD8AC15E3512}.Stable Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -327,5 +309,14 @@ Global
 		ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.projitems*{fc5e6f74-8408-4fd8-a46a-a7f549e30454}*SharedItemsImports = 13
 		ModsCommon\LoggerShared\LoggerShared.projitems*{fe0af823-f63f-4441-b28d-c0890bc0bf6a}*SharedItemsImports = 13
 		ModsCommon\TrajectoryShared\TrajectoryShared.projitems*{ffba673c-7990-421a-8dd3-87149c1f751b}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(AutomaticVersions) = postSolution
+		UpdateAssemblyVersion.Beta Debug|Any CPU = True
+		UpdateAssemblyFileVersion.Beta Debug|Any CPU = False
+		UpdateAssemblyInfoVersion.Beta Debug|Any CPU = False
+		AssemblyVersionSettings.Beta Debug|Any CPU = None.None.None.Increment
+		UpdatePackageVersion.Beta Debug|Any CPU = False
+		AssemblyInfoVersionType.Beta Debug|Any CPU = SettingsVersion
+		InheritWinAppVersionFrom.Beta Debug|Any CPU = None
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,6 +47,8 @@ namespace NodeMarkup.Utilities
 
 
         public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
+        public static int RoadLayer => 9;
+
         private static int[] VerticesIdxs { get; } = new int[]
 {
             1,3,2,0,// Bottom
@@ -197,7 +200,7 @@ namespace NodeMarkup.Utilities
             texture.Apply();
             return texture;
         }
-        public static Texture2D CreateTextTexture(string font, string text, float scale, Vector2 spacing)
+        public static Texture2D CreateTextTexture(string font, string text, float scale, Vector2 spacing, out float textWidth, out float textHeight)
         {
             var renderer = new TextRenderHelper.TextRenderer(font)
             {
@@ -205,7 +208,7 @@ namespace NodeMarkup.Utilities
                 Spacing = spacing,
             };
 
-            var texture = renderer.Render(text);
+            var texture = renderer.Render(text, out textWidth, out textHeight);
             return texture;
         }
     }
@@ -309,4 +312,27 @@ namespace NodeMarkup.Utilities
     {
         public override float LODDistance => Settings.TreeLODDistance;
     }
+    public class RenderGroupData : IStyleData
+    {
+        private IStyleData[] Datas { get; }
+        public MarkupLOD LOD { get; }
+        public MarkupLODType LODType { get; }
+
+        public RenderGroupData(MarkupLOD lod, MarkupLODType lodType, IStyleData[] datas)
+        {
+            LOD = lod;
+            LODType = lodType;
+            Datas = datas;
+        }
+
+        public IEnumerable<IDrawData> GetDrawData()
+        {
+            foreach (var data in Datas)
+            {
+                foreach(var drawData in data.GetDrawData())
+                    yield return drawData;
+            }
+        }
+    }
+
 }

@@ -391,11 +391,6 @@ namespace NodeMarkup
 		public static string StyleOption_Angle => LocaleManager.GetString("StyleOption_Angle", Culture);
 
 		/// <summary>
-		/// Offset from lines
-		/// </summary>
-		public static string StyleOption_LinesOffset => LocaleManager.GetString("StyleOption_LinesOffset", Culture);
-
-		/// <summary>
 		/// Click to start creating a filler
 		/// </summary>
 		public static string Tool_InfoFillerClickStart => LocaleManager.GetString("Tool_InfoFillerClickStart", Culture);
@@ -419,11 +414,6 @@ namespace NodeMarkup
 		/// Select the next point in the contour
 		/// </summary>
 		public static string Tool_InfoFillerSelectNext => LocaleManager.GetString("Tool_InfoFillerSelectNext", Culture);
-
-		/// <summary>
-		/// Offset from median
-		/// </summary>
-		public static string StyleOption_MedianOffset => LocaleManager.GetString("StyleOption_MedianOffset", Culture);
 
 		/// <summary>
 		/// Copy
@@ -509,136 +499,6 @@ namespace NodeMarkup
 		/// The list of templates is empty.
 		/// </summary>
 		public static string TemplateEditor_EmptyMessage => LocaleManager.GetString("TemplateEditor_EmptyMessage", Culture);
-
-		/// <summary>
-		/// Activate with key
-		/// </summary>
-		public static string EarlyAccess_ActivateButton => LocaleManager.GetString("EarlyAccess_ActivateButton", Culture);
-
-		/// <summary>
-		/// Activation failed
-		/// </summary>
-		public static string EarlyAccess_ActivationFailed => LocaleManager.GetString("EarlyAccess_ActivationFailed", Culture);
-
-		/// <summary>
-		/// Activation success
-		/// </summary>
-		public static string EarlyAccess_ActivationSuccess => LocaleManager.GetString("EarlyAccess_ActivationSuccess", Culture);
-
-		/// <summary>
-		/// This function is unavailable
-		/// </summary>
-		public static string EarlyAccess_FunctionUnavailableCaption => LocaleManager.GetString("EarlyAccess_FunctionUnavailableCaption", Culture);
-
-		/// <summary>
-		/// Function «{0}» is currently only available for Patreons early access.
-		/// </summary>
-		public static string EarlyAccess_FunctionUnavailableMessage => LocaleManager.GetString("EarlyAccess_FunctionUnavailableMessage", Culture);
-
-		/// <summary>
-		/// Get early access
-		/// </summary>
-		public static string EarlyAccess_GetButton => LocaleManager.GetString("EarlyAccess_GetButton", Culture);
-
-		/// <summary>
-		/// Your access ID
-		/// </summary>
-		public static string EarlyAccess_ID => LocaleManager.GetString("EarlyAccess_ID", Culture);
-
-		/// <summary>
-		/// Access key
-		/// </summary>
-		public static string EarlyAccess_Key => LocaleManager.GetString("EarlyAccess_Key", Culture);
-
-		/// <summary>
-		/// Activate
-		/// </summary>
-		public static string EarlyAccess_KeyActivateButton => LocaleManager.GetString("EarlyAccess_KeyActivateButton", Culture);
-
-		/// <summary>
-		/// Early access activation
-		/// </summary>
-		public static string EarlyAccess_KeyActivationCaption => LocaleManager.GetString("EarlyAccess_KeyActivationCaption", Culture);
-
-		/// <summary>
-		/// To activate early access you need to enter a key
-		/// </summary>
-		public static string EarlyAccess_KeyActivationMessage => LocaleManager.GetString("EarlyAccess_KeyActivationMessage", Culture);
-
-		/// <summary>
-		/// Cancel
-		/// </summary>
-		public static string EarlyAccess_KeyCancelButton => LocaleManager.GetString("EarlyAccess_KeyCancelButton", Culture);
-
-		/// <summary>
-		/// The key you entered is not valid
-		/// </summary>
-		public static string EarlyAccess_KeyNotValid => LocaleManager.GetString("EarlyAccess_KeyNotValid", Culture);
-
-		/// <summary>
-		/// Link in process...
-		/// </summary>
-		public static string EarlyAccess_LinkInProcess => LocaleManager.GetString("EarlyAccess_LinkInProcess", Culture);
-
-		/// <summary>
-		/// Link Patreon account
-		/// </summary>
-		public static string EarlyAccess_LinkPatreonButton => LocaleManager.GetString("EarlyAccess_LinkPatreonButton", Culture);
-
-		/// <summary>
-		/// Link Patreon account
-		/// </summary>
-		public static string EarlyAccess_LinkPatreonCaption => LocaleManager.GetString("EarlyAccess_LinkPatreonCaption", Culture);
-
-		/// <summary>
-		/// The Patreon account can't be linked because you denied access request.
-		/// </summary>
-		public static string EarlyAccess_PatreonCantLinked => LocaleManager.GetString("EarlyAccess_PatreonCantLinked", Culture);
-
-		/// <summary>
-		/// An error occurred when linking the account, try again.
-		/// </summary>
-		public static string EarlyAccess_PatreonLinkedError => LocaleManager.GetString("EarlyAccess_PatreonLinkedError", Culture);
-
-		/// <summary>
-		/// Your account is linked, but you don't have early access.
-		/// </summary>
-		public static string EarlyAccess_PatreonLinkedNotMember => LocaleManager.GetString("EarlyAccess_PatreonLinkedNotMember", Culture);
-
-		/// <summary>
-		/// You can close this page and return to the game.
-		/// </summary>
-		public static string EarlyAccess_PatreonRedirect => LocaleManager.GetString("EarlyAccess_PatreonRedirect", Culture);
-
-		/// <summary>
-		/// Cancel
-		/// </summary>
-		public static string EarlyAccess_ProcessCancel => LocaleManager.GetString("EarlyAccess_ProcessCancel", Culture);
-
-		/// <summary>
-		/// Status: {0}
-		/// </summary>
-		public static string EarlyAccess_Status => LocaleManager.GetString("EarlyAccess_Status", Culture);
-
-		/// <summary>
-		/// Activated
-		/// </summary>
-		public static string EarlyAccess_StatusActivated => LocaleManager.GetString("EarlyAccess_StatusActivated", Culture);
-
-		/// <summary>
-		/// Not activated
-		/// </summary>
-		public static string EarlyAccess_StatusNotActivated => LocaleManager.GetString("EarlyAccess_StatusNotActivated", Culture);
-
-		/// <summary>
-		/// Thank you for your support, now you can enjoy all the features.
-		/// </summary>
-		public static string EarlyAccess_ThanksMessage => LocaleManager.GetString("EarlyAccess_ThanksMessage", Culture);
-
-		/// <summary>
-		/// Early access
-		/// </summary>
-		public static string Settings_EarlyAccess => LocaleManager.GetString("Settings_EarlyAccess", Culture);
 
 		/// <summary>
 		/// Alignment
@@ -744,16 +604,6 @@ namespace NodeMarkup
 		/// Line width
 		/// </summary>
 		public static string StyleOption_LineWidth => LocaleManager.GetString("StyleOption_LineWidth", Culture);
-
-		/// <summary>
-		/// Offset after
-		/// </summary>
-		public static string StyleOption_OffsetAfter => LocaleManager.GetString("StyleOption_OffsetAfter", Culture);
-
-		/// <summary>
-		/// Offset before
-		/// </summary>
-		public static string StyleOption_OffsetBefore => LocaleManager.GetString("StyleOption_OffsetBefore", Culture);
 
 		/// <summary>
 		/// Parallel to lanes
@@ -1066,11 +916,6 @@ namespace NodeMarkup
 		public static string StyleOption_Edge => LocaleManager.GetString("StyleOption_Edge", Culture);
 
 		/// <summary>
-		/// Starting from
-		/// </summary>
-		public static string StyleOption_StartingFrom => LocaleManager.GetString("StyleOption_StartingFrom", Culture);
-
-		/// <summary>
 		/// Vertex
 		/// </summary>
 		public static string StyleOption_Vertex => LocaleManager.GetString("StyleOption_Vertex", Culture);
@@ -1321,7 +1166,7 @@ namespace NodeMarkup
 		public static string Tool_InfoStartCreateFiller => LocaleManager.GetString("Tool_InfoStartCreateFiller", Culture);
 
 		/// <summary>
-		/// Drag with {0} to move the point
+		/// Hold {0} and drag a point to change offset
 		/// </summary>
 		public static string Tool_InfoStartDragPointMode => LocaleManager.GetString("Tool_InfoStartDragPointMode", Culture);
 
@@ -1716,11 +1561,6 @@ namespace NodeMarkup
 		public static string LineStyle_Elevation => LocaleManager.GetString("LineStyle_Elevation", Culture);
 
 		/// <summary>
-		/// Grass
-		/// </summary>
-		public static string LineStyle_Grass => LocaleManager.GetString("LineStyle_Grass", Culture);
-
-		/// <summary>
 		/// Pavement
 		/// </summary>
 		public static string LineStyle_Pavement => LocaleManager.GetString("LineStyle_Pavement", Culture);
@@ -1734,21 +1574,6 @@ namespace NodeMarkup
 		/// Segment #{0}
 		/// </summary>
 		public static string Tool_InfoHoverSegment => LocaleManager.GetString("Tool_InfoHoverSegment", Culture);
-
-		/// <summary>
-		/// Follow guide
-		/// </summary>
-		public static string StyleOption_FollowRails => LocaleManager.GetString("StyleOption_FollowRails", Culture);
-
-		/// <summary>
-		/// Left guide
-		/// </summary>
-		public static string StyleOption_LeftRail => LocaleManager.GetString("StyleOption_LeftRail", Culture);
-
-		/// <summary>
-		/// Right guide
-		/// </summary>
-		public static string StyleOption_RightRail => LocaleManager.GetString("StyleOption_RightRail", Culture);
 
 		/// <summary>
 		/// Select a guide's first point or line as guide
@@ -1941,29 +1766,14 @@ namespace NodeMarkup
 		public static string FillerStyle_Ruined => LocaleManager.GetString("FillerStyle_Ruined", Culture);
 
 		/// <summary>
-		/// Offset from lines
-		/// </summary>
-		public static string StyleOption_LineOffset => LocaleManager.GetString("StyleOption_LineOffset", Culture);
-
-		/// <summary>
 		/// Corner radius
 		/// </summary>
 		public static string FillerStyle_CornerRadius => LocaleManager.GetString("FillerStyle_CornerRadius", Culture);
 
 		/// <summary>
-		/// Corner radius on medians
-		/// </summary>
-		public static string FillerStyle_MedianCornerRadius => LocaleManager.GetString("FillerStyle_MedianCornerRadius", Culture);
-
-		/// <summary>
 		/// Curb size
 		/// </summary>
 		public static string FillerStyle_CurbSize => LocaleManager.GetString("FillerStyle_CurbSize", Culture);
-
-		/// <summary>
-		/// Curb size on medians
-		/// </summary>
-		public static string FillerStyle_MedianCurbSize => LocaleManager.GetString("FillerStyle_MedianCurbSize", Culture);
 
 		/// <summary>
 		/// [NEW] Added selection step over like in MoveIt. Press Ctrl+Space to step over (you can rebind in mod
@@ -2129,16 +1939,6 @@ namespace NodeMarkup
 		/// Angle
 		/// </summary>
 		public static string StyleOption_ObjectAngle => LocaleManager.GetString("StyleOption_ObjectAngle", Culture);
-
-		/// <summary>
-		/// Elevation
-		/// </summary>
-		public static string StyleOption_ObjectElevation => LocaleManager.GetString("StyleOption_ObjectElevation", Culture);
-
-		/// <summary>
-		/// Name
-		/// </summary>
-		public static string StyleOption_ObjectName => LocaleManager.GetString("StyleOption_ObjectName", Culture);
 
 		/// <summary>
 		/// Scale
@@ -2351,11 +2151,6 @@ namespace NodeMarkup
 		public static string Tool_InfoUnderground => LocaleManager.GetString("Tool_InfoUnderground", Culture);
 
 		/// <summary>
-		/// Auto prop step depends on its size
-		/// </summary>
-		public static string Settings_AutoPropStep => LocaleManager.GetString("Settings_AutoPropStep", Culture);
-
-		/// <summary>
 		/// 2D Marking LOD distance
 		/// </summary>
 		public static string Settings_LODDistanceMarking => LocaleManager.GetString("Settings_LODDistanceMarking", Culture);
@@ -2526,11 +2321,6 @@ namespace NodeMarkup
 		public static string StyleOption_Font => LocaleManager.GetString("StyleOption_Font", Culture);
 
 		/// <summary>
-		/// Font style
-		/// </summary>
-		public static string StyleOption_FontStyle => LocaleManager.GetString("StyleOption_FontStyle", Culture);
-
-		/// <summary>
 		/// Bold
 		/// </summary>
 		public static string StyleOption_FontStyleBold => LocaleManager.GetString("StyleOption_FontStyleBold", Culture);
@@ -2644,5 +2434,125 @@ namespace NodeMarkup
 		/// Fixed space and free ends
 		/// </summary>
 		public static string StyleOption_DistributionFixedFree => LocaleManager.GetString("StyleOption_DistributionFixedFree", Culture);
+
+		/// <summary>
+		/// Zigzag
+		/// </summary>
+		public static string LineStyle_ZigZag => LocaleManager.GetString("LineStyle_ZigZag", Culture);
+
+		/// <summary>
+		/// Left
+		/// </summary>
+		public static string StyleOption_SideLeft => LocaleManager.GetString("StyleOption_SideLeft", Culture);
+
+		/// <summary>
+		/// Right
+		/// </summary>
+		public static string StyleOption_SideRight => LocaleManager.GetString("StyleOption_SideRight", Culture);
+
+		/// <summary>
+		/// Offset
+		/// </summary>
+		public static string StyleOption_ZigzagOffset => LocaleManager.GetString("StyleOption_ZigzagOffset", Culture);
+
+		/// <summary>
+		/// Side
+		/// </summary>
+		public static string StyleOption_ZigzagSide => LocaleManager.GetString("StyleOption_ZigzagSide", Culture);
+
+		/// <summary>
+		/// Start from
+		/// </summary>
+		public static string StyleOption_ZigzagStartFrom => LocaleManager.GetString("StyleOption_ZigzagStartFrom", Culture);
+
+		/// <summary>
+		/// Line
+		/// </summary>
+		public static string StyleOption_ZigzagStartFromLine => LocaleManager.GetString("StyleOption_ZigzagStartFromLine", Culture);
+
+		/// <summary>
+		/// Outside
+		/// </summary>
+		public static string StyleOption_ZigzagStartFromOutside => LocaleManager.GetString("StyleOption_ZigzagStartFromOutside", Culture);
+
+		/// <summary>
+		/// Step
+		/// </summary>
+		public static string StyleOption_ZigzagStep => LocaleManager.GetString("StyleOption_ZigzagStep", Culture);
+
+		/// <summary>
+		/// Alignment
+		/// </summary>
+		public static string StyleOption_TextAlignment => LocaleManager.GetString("StyleOption_TextAlignment", Culture);
+
+		/// <summary>
+		/// End
+		/// </summary>
+		public static string StyleOption_TextAlignmentEnd => LocaleManager.GetString("StyleOption_TextAlignmentEnd", Culture);
+
+		/// <summary>
+		/// Middle
+		/// </summary>
+		public static string StyleOption_TextAlignmentMiddle => LocaleManager.GetString("StyleOption_TextAlignmentMiddle", Culture);
+
+		/// <summary>
+		/// Start
+		/// </summary>
+		public static string StyleOption_TextAlignmentStart => LocaleManager.GetString("StyleOption_TextAlignmentStart", Culture);
+
+		/// <summary>
+		/// Link this preset to network asset
+		/// </summary>
+		public static string PresetEditor_LinkPreset => LocaleManager.GetString("PresetEditor_LinkPreset", Culture);
+
+		/// <summary>
+		/// Unlink this preset from network asset
+		/// </summary>
+		public static string PresetEditor_UnlinkPreset => LocaleManager.GetString("PresetEditor_UnlinkPreset", Culture);
+
+		/// <summary>
+		/// Linked
+		/// </summary>
+		public static string PresetEditor_PresetFit_Linked => LocaleManager.GetString("PresetEditor_PresetFit_Linked", Culture);
+
+		/// <summary>
+		/// Drag a point to change offset
+		/// </summary>
+		public static string Tool_InfoDragPointMode => LocaleManager.GetString("Tool_InfoDragPointMode", Culture);
+
+		/// <summary>
+		/// Hold {0} to move a point
+		/// </summary>
+		public static string Setting_HoldToMovePoint => LocaleManager.GetString("Setting_HoldToMovePoint", Culture);
+
+		/// <summary>
+		/// Auto apply markings from network assets
+		/// </summary>
+		public static string Settings_ApplyMarkingsFromAssets => LocaleManager.GetString("Settings_ApplyMarkingsFromAssets", Culture);
+
+		/// <summary>
+		/// Exit linking preset mode
+		/// </summary>
+		public static string Tool_EndLinkPresetCaption => LocaleManager.GetString("Tool_EndLinkPresetCaption", Culture);
+
+		/// <summary>
+		/// Do you want to exit linking preset mode and link this preset to network asset?
+		/// </summary>
+		public static string Tool_EndLinkPresetMessage => LocaleManager.GetString("Tool_EndLinkPresetMessage", Culture);
+
+		/// <summary>
+		/// Link
+		/// </summary>
+		public static string Tool_Link => LocaleManager.GetString("Tool_Link", Culture);
+
+		/// <summary>
+		/// Don't link
+		/// </summary>
+		public static string Tool_NotLink => LocaleManager.GetString("Tool_NotLink", Culture);
+
+		/// <summary>
+		/// [NEW] - Added a new line style: Text. It allows to write custom text on road and set any font instal
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_12 => LocaleManager.GetString("Mod_WhatsNewMessage1_12", Culture);
 	}
 }

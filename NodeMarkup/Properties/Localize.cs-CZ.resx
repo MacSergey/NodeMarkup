@@ -348,9 +348,6 @@ Klikněte pro změnu značení</value>
   <data name="StyleOption_Angle" xml:space="preserve">
     <value>Úhel</value>
   </data>
-  <data name="StyleOption_LinesOffset" xml:space="preserve">
-    <value>Odsazení od čar</value>
-  </data>
   <data name="Tool_InfoFillerClickStart" xml:space="preserve">
     <value>Klikněte pro vytvoření výplně</value>
   </data>
@@ -365,9 +362,6 @@ Klikněte pro změnu značení</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Vyberte další bod obvodu výplně</value>
-  </data>
-  <data name="StyleOption_MedianOffset" xml:space="preserve">
-    <value>Odsazení od mediánu</value>
   </data>
   <data name="Editor_ColorCopy" xml:space="preserve">
     <value>Kopírovat</value>
@@ -418,86 +412,6 @@ Pro vytvoření výplně držte {0}, nebo stiskněte {1}.</value>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>Nejsou vytvořeny žádné šablony.
 Pro vytvoření šablony, vyberte «{0}» při úpravě stylu čáry, přechodu nebo výplně.</value>
-  </data>
-  <data name="EarlyAccess_ActivateButton" xml:space="preserve">
-    <value>Aktivujte klávesou</value>
-  </data>
-  <data name="EarlyAccess_ActivationFailed" xml:space="preserve">
-    <value>Aktivace selhala</value>
-  </data>
-  <data name="EarlyAccess_ActivationSuccess" xml:space="preserve">
-    <value>Aktivace úspěšná</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableCaption" xml:space="preserve">
-    <value>Tato funkce není dostupná</value>
-  </data>
-  <data name="EarlyAccess_FunctionUnavailableMessage" xml:space="preserve">
-    <value>Funkce «{0}» je dostupná pouze pro Patreony balíčku early access.
-Funkce bude později přístupna všem.
-Zakoupením balíčku early access podporujete vývoj toho modu a umožňujete vývojářům pokračovat stejnou rychlostí.</value>
-  </data>
-  <data name="EarlyAccess_GetButton" xml:space="preserve">
-    <value>Získat early access</value>
-  </data>
-  <data name="EarlyAccess_ID" xml:space="preserve">
-    <value>Získat přístupové ID (Access ID)</value>
-  </data>
-  <data name="EarlyAccess_Key" xml:space="preserve">
-    <value>Přístupový klíč (Access key)</value>
-  </data>
-  <data name="EarlyAccess_KeyActivateButton" xml:space="preserve">
-    <value>Aktivovat</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationCaption" xml:space="preserve">
-    <value>Aktivace early access</value>
-  </data>
-  <data name="EarlyAccess_KeyActivationMessage" xml:space="preserve">
-    <value>Pro aktivaci early access musíte vložit klíč</value>
-  </data>
-  <data name="EarlyAccess_KeyCancelButton" xml:space="preserve">
-    <value>Zrušit</value>
-  </data>
-  <data name="EarlyAccess_KeyNotValid" xml:space="preserve">
-    <value>Zadaný klíč není platný</value>
-  </data>
-  <data name="EarlyAccess_LinkInProcess" xml:space="preserve">
-    <value>Příprava odkazu...</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonButton" xml:space="preserve">
-    <value>Propojení účtu Patreon</value>
-  </data>
-  <data name="EarlyAccess_LinkPatreonCaption" xml:space="preserve">
-    <value>Propojení účtu Patreon</value>
-  </data>
-  <data name="EarlyAccess_PatreonCantLinked" xml:space="preserve">
-    <value>Účet Patreon nemohl být propojen, protože nebyl povolen přístup.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedError" xml:space="preserve">
-    <value>Při propojování účtu nastala chyba, zkuste to znovu.</value>
-  </data>
-  <data name="EarlyAccess_PatreonLinkedNotMember" xml:space="preserve">
-    <value>Váš účet byl propojen, ale nemáte early access.</value>
-  </data>
-  <data name="EarlyAccess_PatreonRedirect" xml:space="preserve">
-    <value>Můžete zavřít tuto stránku a vrátit se do hry.</value>
-  </data>
-  <data name="EarlyAccess_ProcessCancel" xml:space="preserve">
-    <value>Zrušit</value>
-  </data>
-  <data name="EarlyAccess_Status" xml:space="preserve">
-    <value>Status: {0}</value>
-  </data>
-  <data name="EarlyAccess_StatusActivated" xml:space="preserve">
-    <value>Aktivní</value>
-  </data>
-  <data name="EarlyAccess_StatusNotActivated" xml:space="preserve">
-    <value>Neaktivní</value>
-  </data>
-  <data name="EarlyAccess_ThanksMessage" xml:space="preserve">
-    <value>Děkujeme za podporu, nyní můžete využívat všechny funkce modu.</value>
-  </data>
-  <data name="Settings_EarlyAccess" xml:space="preserve">
-    <value>Early access</value>
   </data>
   <data name="StyleOption_Alignment" xml:space="preserve">
     <value>Zarovnání</value>
@@ -562,12 +476,6 @@ Pro vytvoření přechodu podržte {0}.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Tloušťka čáry</value>
-  </data>
-  <data name="StyleOption_OffsetAfter" xml:space="preserve">
-    <value>Odsazení za</value>
-  </data>
-  <data name="StyleOption_OffsetBefore" xml:space="preserve">
-    <value>Odsazení před</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Souběžná s pruhy</value>
@@ -755,9 +663,6 @@ Nepodařilo se načíst značení pro {0} křižovatek.</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
     <value>Strana</value>
-  </data>
-  <data name="StyleOption_StartingFrom" xml:space="preserve">
-    <value>Začínat od</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Vrchol</value>
@@ -1150,9 +1055,6 @@ Nepodařilo se načíst značení pro všechny křižovatky.</value>
   <data name="LineStyle_Elevation" xml:space="preserve">
     <value>Vyvýšení</value>
   </data>
-  <data name="LineStyle_Grass" xml:space="preserve">
-    <value>Tráva</value>
-  </data>
   <data name="LineStyle_Pavement" xml:space="preserve">
     <value>Chodník</value>
   </data>
@@ -1162,15 +1064,6 @@ Nepodařilo se načíst značení pro všechny křižovatky.</value>
   <data name="Tool_InfoHoverSegment" xml:space="preserve">
     <value>Silnice #{0}
 Klikněte pro změnu značení</value>
-  </data>
-  <data name="StyleOption_FollowRails" xml:space="preserve">
-    <value>Následovat koleje</value>
-  </data>
-  <data name="StyleOption_LeftRail" xml:space="preserve">
-    <value>Levá kolej</value>
-  </data>
-  <data name="StyleOption_RightRail" xml:space="preserve">
-    <value>Pravá kolej</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
     <value>Vyberte počáteční bod koleje nebo čáru jako kolej</value>
@@ -1280,20 +1173,11 @@ Klikněte pro změnu značení</value>
   <data name="FillerStyle_Ruined" xml:space="preserve">
     <value>Rozbořený</value>
   </data>
-  <data name="StyleOption_LineOffset" xml:space="preserve">
-    <value>Odsazení od čar</value>
-  </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Poloměr rohu</value>
   </data>
-  <data name="FillerStyle_MedianCornerRadius" xml:space="preserve">
-    <value>Poloměry rohů u mediánů</value>
-  </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Velikost obrubníku</value>
-  </data>
-  <data name="FillerStyle_MedianCurbSize" xml:space="preserve">
-    <value>Velikost obrubníku u mediánů</value>
   </data>
   
   
@@ -1385,12 +1269,6 @@ Klikněte pro změnu značení</value>
   </data>
   <data name="StyleOption_ObjectAngle" xml:space="preserve">
     <value>Úhel</value>
-  </data>
-  <data name="StyleOption_ObjectElevation" xml:space="preserve">
-    <value>Vyvýšení</value>
-  </data>
-  <data name="StyleOption_ObjectName" xml:space="preserve">
-    <value>Název</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Měřítko</value>
@@ -1535,9 +1413,6 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Podržte {0} pro podzemní režim</value>
   </data>
-  <data name="Settings_AutoPropStep" xml:space="preserve">
-    <value>Auto krok objektu závisí na jeho velikosti</value>
-  </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
     <value>2D značení vykreslovací vzdálenost</value>
   </data>
@@ -1574,6 +1449,29 @@ Klikněte pro změnu značení</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Druhá barva</value>
   </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

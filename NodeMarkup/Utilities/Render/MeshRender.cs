@@ -31,19 +31,21 @@ namespace NodeMarkup.Utilities
             var startNormal = trajectory.StartDirection.Turn90(true).MakeFlatNormalized();
             var endNormal = trajectory.EndDirection.Turn90(false).MakeFlatNormalized();
 
-            var bezierL = new Bezier3()
+            float? startT;
+            float? endT;
+            if (trajectory is BezierTrajectory bezier)
             {
-                a = trajectory.StartPosition - startNormal * halfWidth,
-                d = trajectory.EndPosition - endNormal * halfWidth,
-            };
-            var bezierR = new Bezier3()
+                startT = bezier.StartT;
+                endT = bezier.EndT;
+            }
+            else
             {
-                a = trajectory.StartPosition + startNormal * halfWidth,
-                d = trajectory.EndPosition + endNormal * halfWidth,
-            };
+                startT = null;
+                endT = null;
+            }
 
-            NetSegment.CalculateMiddlePoints(bezierL.a, trajectory.StartDirection, bezierL.d, trajectory.EndDirection, true, true, out bezierL.b, out bezierL.c);
-            NetSegment.CalculateMiddlePoints(bezierR.a, trajectory.StartDirection, bezierR.d, trajectory.EndDirection, true, true, out bezierR.b, out bezierR.c);
+            var bezierL = new BezierTrajectory(trajectory.StartPosition - startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition - endNormal * halfWidth, trajectory.EndDirection, startT, endT).Trajectory;
+            var bezierR = new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidth, trajectory.EndDirection, startT, endT).Trajectory;
 
             left = NetSegment.CalculateControlMatrix(bezierL.a, bezierL.b, bezierL.c, bezierL.d, bezierR.a, bezierR.b, bezierR.c, bezierR.d, position, 0.05f);
             right = NetSegment.CalculateControlMatrix(bezierR.a, bezierR.b, bezierR.c, bezierR.d, bezierL.a, bezierL.b, bezierL.c, bezierL.d, position, 0.05f);
@@ -95,7 +97,7 @@ namespace NodeMarkup.Utilities
                 instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexA, RenderHelper.SurfaceALib[materialType]);
                 instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, RenderHelper.SurfaceBLib[materialType]);
 
-                Graphics.DrawMesh(Meshes[i], Position, Quaternion.identity, RenderHelper.MaterialLib[materialType], 0, null, 0, instance.m_materialBlock, CastShadow, ReceiveShadow);
+                Graphics.DrawMesh(Meshes[i], Position, Quaternion.identity, RenderHelper.MaterialLib[materialType], RenderHelper.RoadLayer, null, 0, instance.m_materialBlock, CastShadow, ReceiveShadow);
             }
         }
 
