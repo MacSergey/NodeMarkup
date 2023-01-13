@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class SegmentMarkup : Markup<SegmentEnter>
+    public class SegmentMarkup : Markup<NodeEnter>
     {
         public static string XmlName { get; } = "S";
 

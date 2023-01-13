@@ -20,7 +20,7 @@ namespace NodeMarkup.Manager
 
             foreach (var enter in markup.Enters)
             {
-                foreach (var point in enter.Points)
+                foreach (var point in enter.EnterPoints)
                 {
                     points.Add(new EnterFillerVertex(point, Alignment.Centre));
                     if (point.IsSplit)

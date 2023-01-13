@@ -118,7 +118,7 @@ namespace NodeMarkup.Manager
 
             if (prev is not EnterFillerVertexBase prevE || Enter != prevE.Point.Enter)
             {
-                foreach (var point in Enter.Points)
+                foreach (var point in Enter.EnterPoints)
                 {
                     if (minNum < point.Index && point.Index < maxNum)
                     {
@@ -156,12 +156,12 @@ namespace NodeMarkup.Manager
             {
                 if (enter != Point.Enter)
                 {
-                    foreach (var point in enter.Points)
+                    foreach (var point in enter.EnterPoints)
                         GetPointLinesPoints(contour, ref points, point);
                 }
                 else if(enter is SegmentEnter segmentEnter)
                 {
-                    foreach (var point in segmentEnter.Normals)
+                    foreach (var point in segmentEnter.NormalPoints)
                         GetPointLinesPoints(contour, ref points, point);
                 }
             }

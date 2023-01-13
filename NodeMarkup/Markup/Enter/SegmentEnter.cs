@@ -15,8 +15,8 @@ namespace NodeMarkup.Manager
         public int CrosswalkCount => CrosswalkPointsDic.Count;
         public int NormalCount => NormalPointsDic.Count;
 
-        public IEnumerable<MarkupCrosswalkPoint> Crosswalks => CrosswalkPointsDic.Values;
-        public IEnumerable<MarkupNormalPoint> Normals => NormalPointsDic.Values;
+        public IEnumerable<MarkupCrosswalkPoint> CrosswalkPoints => CrosswalkPointsDic.Values;
+        public IEnumerable<MarkupNormalPoint> NormalPoints => NormalPointsDic.Values;
 
         public override int SideSign => IsStartSide ? -1 : 1;
         public override int NormalSign => -1;

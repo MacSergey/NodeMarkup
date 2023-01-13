@@ -62,7 +62,7 @@ namespace NodeMarkup.Tools
                     {
                         if(part.Line is MarkupFillerTempLine line)
                         {
-                            var newLine = Markup.AddRegularLine(part.Line.PointPair, null, line.Alignment);
+                            var newLine = Markup.AddLine(part.Line.PointPair, null, line.Alignment);
                             Panel.AddLine(newLine);
                         }    
                     }

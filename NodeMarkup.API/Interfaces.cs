@@ -1,42 +1,63 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NodeMarkup.API
 {
-    public interface IIMTAPIFactory
+    public static class Helper
     {
-        public IDataProviderV1 GetInstance();
+        public static IDataProviderV1 GetInstance()
+        {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                try
+                {
+                    foreach (Type type in assembly.GetExportedTypes())
+                    {
+                        if (type.IsClass && typeof(IDataProviderV1).IsAssignableFrom(type))
+                        {
+                            var instance = (IDataProviderV1)Activator.CreateInstance(type);
+                            return instance;
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            return null;
+        }
     }
     public interface IDataProviderV1
     {
-        public IEnumerable<INodeMarkingData> NodeMarkings { get; }
-        public IEnumerable<ISegmentMarkingData> SegmentMarkings { get; }
+        public Version ModVersion { get; }
+        public bool IsBeta { get; }
 
-        public bool IsNodeMarkingExist { get; }
-        public bool IsSegmentMarkingExist { get;}
+        public bool GetNodeMarking(ushort id, out INodeMarkingData nodeMarking);
+        public bool GetSegmentMarking(ushort id, out ISegmentMarkingData segmentMarking);
 
-        public INodeMarkingData GetNodeMarking(ushort id);
-        public ISegmentMarkingData GetSegmentMarking(ushort id);
-
-        public bool CreateNodeMarking(ushort id, out INodeMarkingData nodeMarking);
-        public bool CreateSegmentMarking(ushort id, out ISegmentMarkingData segmentMarking);
+        public bool NodeMarkingExist(ushort id);
+        public bool SegmentMarkingExist(ushort id);
     }
 
     public interface INodeMarkingData
     {
         public ushort Id { get; }
         public int EntranceCount { get; }
-        public IEnumerable<IEntranceData> Entrances { get; }
+        public IEnumerable<ISegmentEntranceData> Entrances { get; }
 
-        public bool AddRegularLine(IPointData startPoint, IPointData endPoint, out ILineData line);
-        public bool AddStopLine(IPointData startPoint, IPointData endPoint, out ILineData line);
-        public bool AddNormalLine(IPointData startPoint, IPointData endPoint, out ILineData line);
-        public bool AddLaneLine(IPointData startPoint, IPointData endPoint, out ILineData line);
+        public bool AddRegularLine(IEntrancePointData startPoint, IEntrancePointData endPoint, out IRegularLineData line);
+        public bool AddStopLine(IEntrancePointData startPoint, IEntrancePointData endPoint, out IStopLineData line);
+        public bool AddNormalLine(IEntrancePointData startPoint, INormalPointData endPoint, out INormalLineData line);
+        public bool AddLaneLine(ILanePointData startPoint, ILanePointData endPoint, out ILaneLineData line);
+        public bool AddCrosswalk(ICrosswalkPointData startPoint, ICrosswalkPointData endPoint, out ICrosswalkData crosswalk);
     }
     public interface ISegmentMarkingData
     {
         public ushort Id { get; }
         public int EntranceCount { get; }
-        public IEnumerable<IEntranceData> Entrances { get; }
+        public IEnumerable<INodeEntranceData> Entrances { get; }
+
+        public bool AddRegularLine(IEntrancePointData startPoint, IEntrancePointData endPoint, out IRegularLineData line);
+        public bool AddLaneLine(ILanePointData startPoint, ILanePointData endPoint, out ILaneLineData line);
     }
     public interface IEntranceData
     {
@@ -44,14 +65,68 @@ namespace NodeMarkup.API
         public int PointCount { get; }
         public IEnumerable<IPointData> Points { get; }
     }
+    public interface ISegmentEntranceData : IEntranceData
+    {
+        public IEnumerable<IEntrancePointData> EntrancePoints { get; }
+        public IEnumerable<INormalPointData> NormalPoints { get; }
+        public IEnumerable<ICrosswalkPointData> CrosswalkPoints { get; }
+        public IEnumerable<ILanePointData> LanePoints { get; }
+    }
+    public interface INodeEntranceData : IEntranceData
+    {
+        public IEnumerable<IEntrancePointData> EntrancePoints { get; }
+        public IEnumerable<ILanePointData> LanePoints { get; }
+    }
+
     public interface IPointData
+    {
+        public byte Index { get; }
+        public ushort EntranceId { get; }
+        public ushort MarkingId { get; }
+    }
+    public interface IEntrancePointData : IPointData
     {
 
     }
+    public interface INormalPointData : IPointData
+    {
+
+    }
+    public interface ICrosswalkPointData : IPointData
+    {
+
+    }
+    public interface ILanePointData : IPointData
+    {
+
+    }
+
     public interface ILineData
     {
 
     }
+    public interface IRegularLineData : ILineData
+    {
+
+    }
+    public interface IStopLineData : ILineData
+    {
+
+    }
+    public interface INormalLineData : ILineData
+    {
+
+    }
+    public interface ICrosswalkLineData : ILineData
+    {
+
+    }
+    public interface ILaneLineData : ILineData
+    {
+
+    }
+
+
     public interface IRuleData
     {
 

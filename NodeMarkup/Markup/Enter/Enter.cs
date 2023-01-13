@@ -118,7 +118,7 @@ namespace NodeMarkup.Manager
         public MarkupPoint LastPoint => EnterPointsDic[(byte)PointCount];
 
         public int PointCount => EnterPointsDic.Count;
-        public IEnumerable<MarkupEnterPoint> Points => EnterPointsDic.Values;
+        public IEnumerable<MarkupEnterPoint> EnterPoints => EnterPointsDic.Values;
 
         public int LanePointCount => LanePointsDic.Count;
         public IEnumerable<MarkupLanePoint> LanePoints => LanePointsDic.Values;
@@ -276,7 +276,7 @@ namespace NodeMarkup.Manager
 
         public void ResetPoints()
         {
-            var points = Points.ToArray();
+            var points = EnterPoints.ToArray();
             if (SingletonManager<RoadTemplateManager>.Instance.TryGetOffsets(RoadName, out var offsets))
             {
                 for (var i = 0; i < Math.Min(offsets.Length, points.Length); i += 1)
@@ -297,7 +297,7 @@ namespace NodeMarkup.Manager
         }
         public void SortPoints()
         {
-            var sortedIndexes = Points.OrderBy(p => p.GetRelativePosition()).Select(p => p.Index).ToArray();
+            var sortedIndexes = EnterPoints.OrderBy(p => p.GetRelativePosition()).Select(p => p.Index).ToArray();
 
             if (SortedIndexes == null || SortedIndexes.Length != sortedIndexes.Length)
                 SortedIndexes = sortedIndexes;

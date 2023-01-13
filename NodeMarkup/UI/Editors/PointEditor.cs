@@ -25,7 +25,7 @@ namespace NodeMarkup.UI.Editors
         private BoolListPropertyPanel Split { get; set; }
         private FloatPropertyPanel Shift { get; set; }
 
-        protected override IEnumerable<MarkupEnterPoint> GetObjects() => Markup.Enters.SelectMany(e => e.Points);
+        protected override IEnumerable<MarkupEnterPoint> GetObjects() => Markup.Enters.SelectMany(e => e.EnterPoints);
         protected override void OnObjectSelect(MarkupEnterPoint point)
         {
             base.OnObjectSelect(point);
@@ -202,7 +202,7 @@ namespace NodeMarkup.UI.Editors
                 if (index == saveIndex)
                 {
                     var invert = point.Enter.IsLaneInvert;
-                    var offsets = point.Enter.Points.Select(p => invert ? -p.Offset : p.Offset);
+                    var offsets = point.Enter.EnterPoints.Select(p => invert ? -p.Offset : p.Offset);
                     if (invert)
                         offsets = offsets.Reverse();
 

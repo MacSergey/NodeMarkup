@@ -159,7 +159,7 @@ namespace NodeMarkup.Tools
         public TargetEnter(Enter enter, int index) : base(index, enter.Position)
         {
             Enter = enter.Data;
-            Points = enter.Points.Select((p, i) => new TargetPoint(p, i)).ToArray();
+            Points = enter.EnterPoints.Select((p, i) => new TargetPoint(p, i)).ToArray();
         }
         public override void Update(BaseOrderToolMode toolMode)
         {

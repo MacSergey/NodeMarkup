@@ -71,9 +71,9 @@ namespace NodeMarkup.Tools
                 yield break;
 
             var nodeEnter = (SegmentEnter)enter;
-            var allow = nodeEnter.Crosswalks.Select(i => 1).ToArray();
+            var allow = nodeEnter.CrosswalkPoints.Select(i => 1).ToArray();
             var bridge = new Dictionary<MarkupPoint, int>();
-            foreach (var crosswalk in nodeEnter.Crosswalks)
+            foreach (var crosswalk in nodeEnter.CrosswalkPoints)
                 bridge.Add(crosswalk, bridge.Count);
 
             var isIgnore = ignore?.Enter == enter;

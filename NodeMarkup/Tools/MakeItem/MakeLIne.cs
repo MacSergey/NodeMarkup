@@ -101,7 +101,7 @@ namespace NodeMarkup.Tools
                 else if (pointPair.IsLane)
                 {
                     var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(pointPair.NetworkType, LineType.Lane, RegularLineStyle.RegularLineType.Prop, true);
-                    var newLine = Tool.Markup.AddRegularLine(pointPair, style);
+                    var newLine = Tool.Markup.AddLaneLine(pointPair, style);
                     Panel.SelectLine(newLine);
 
                     if (Settings.CreateLaneEdgeLines && pointPair.First is MarkupLanePoint lanePointS && pointPair.Second is MarkupLanePoint lanePointE)
@@ -149,11 +149,11 @@ namespace NodeMarkup.Tools
         }
         protected override IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore)
         {
-            var allow = enter.Points.Select(i => 1).ToArray();
+            var allow = enter.EnterPoints.Select(i => 1).ToArray();
 
             if (ignore == null)
             {
-                foreach (var point in enter.Points)
+                foreach (var point in enter.EnterPoints)
                     yield return point;
                 if (Markup.EntersCount > 1)
                 {
@@ -200,7 +200,7 @@ namespace NodeMarkup.Tools
                     allow[ignoreIdx] = 0;
                 }
 
-                foreach (var point in enter.Points)
+                foreach (var point in enter.EnterPoints)
                 {
                     if (allow[point.Index - 1] != 0)
                         yield return point;

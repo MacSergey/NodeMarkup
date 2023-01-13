@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.13.0.14</AssemblyVersion>
+    <AssemblyVersion>1.13.0.16</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -308,6 +308,7 @@
     <PackageReference Include="CitiesHarmony.API" Version="2.1.0" />
     <PackageReference Include="MoveItIntegration" Version="1.0.0" />
     <PackageReference Include="UnifiedUILib" Version="2.2.12" />
+    <ProjectReference Include="..\NodeMarkup.API\NodeMarkup.API.csproj" />
     <Reference Include="Assembly-CSharp">
       <Private>false</Private>
     </Reference>

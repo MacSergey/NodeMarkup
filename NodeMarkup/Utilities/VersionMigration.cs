@@ -15,7 +15,7 @@ namespace NodeMarkup.Utilities
 
             foreach (var enter in markup.Enters)
             {
-                foreach (var point in enter.Points.Skip(1).Take(enter.PointCount - 2))
+                foreach (var point in enter.EnterPoints.Skip(1).Take(enter.PointCount - 2))
                 {
                     switch (point.Source.Location)
                     {

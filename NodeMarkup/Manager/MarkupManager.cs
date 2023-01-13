@@ -118,20 +118,19 @@ namespace NodeMarkup.Manager
 
         private static PropManager PropManager => Singleton<PropManager>.instance;
 
+        public bool Exist(ushort id) => Markups.ContainsKey(id);
         public bool TryGetMarkup(ushort id, out TypeMarkup markup) => Markups.TryGetValue(id, out markup);
-        public TypeMarkup this[ushort id]
+        public TypeMarkup GetOrCreateMarkup(ushort id)
         {
-            get
+            if (!Markups.TryGetValue(id, out TypeMarkup markup))
             {
-                if (!Markups.TryGetValue(id, out TypeMarkup markup))
-                {
-                    markup = NewMarkup(id);
-                    Markups[id] = markup;
-                }
-
-                return markup;
+                markup = NewMarkup(id);
+                Markups[id] = markup;
             }
+
+            return markup;
         }
+        public TypeMarkup this[ushort id] => GetOrCreateMarkup(id);
         protected abstract TypeMarkup NewMarkup(ushort id);
 
         public void Update(params ushort[] ids)

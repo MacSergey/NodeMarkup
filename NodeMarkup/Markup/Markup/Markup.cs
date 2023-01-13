@@ -467,14 +467,26 @@ namespace NodeMarkup.Manager
 
             return line;
         }
-        public MarkupRegularLine AddRegularLine(MarkupPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
+        public MarkupRegularLine AddLine(MarkupPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
         {
             if(pointPair.IsNormal)
-               return AddLine(pointPair, () => new MarkupNormalLine(this, pointPair, style, alignment));
+               return AddNormalLine(pointPair, style, alignment);
             else if(pointPair.IsLane)
-                return AddLine(pointPair, () => new MarkupLaneLine(this, pointPair, style));
+                return AddLaneLine(pointPair, style);
             else
-                return AddLine(pointPair, () => new MarkupRegularLine(this, pointPair, style, alignment));
+                return AddRegularLine(pointPair, style, alignment);
+        }
+        public MarkupRegularLine AddRegularLine(MarkupPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
+        {
+            return AddLine(pointPair, () => new MarkupRegularLine(this, pointPair, style, alignment));
+        }
+        public MarkupNormalLine AddNormalLine(MarkupPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
+        {
+            return AddLine(pointPair, () => new MarkupNormalLine(this, pointPair, style, alignment));
+        }
+        public MarkupLaneLine AddLaneLine(MarkupPointPair pointPair, RegularLineStyle style)
+        {
+            return AddLine(pointPair, () => new MarkupLaneLine(this, pointPair, style));
         }
         public MarkupStopLine AddStopLine(MarkupPointPair pointPair, StopLineStyle style)
         {
@@ -699,7 +711,7 @@ namespace NodeMarkup.Manager
 
             foreach (var enter in Enters)
             {
-                foreach (var point in enter.Points)
+                foreach (var point in enter.EnterPoints)
                     config.Add(point.ToXml());
             }
             foreach (var line in Lines)
@@ -883,6 +895,7 @@ namespace NodeMarkup.Manager
     public abstract class Markup<EnterType> : Markup
         where EnterType : Enter
     {
+        public new IEnumerable<EnterType> Enters => EntersList.Cast<EnterType>();
         public Markup(ushort id) : base(id)
         {
             Update();
