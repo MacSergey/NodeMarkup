@@ -416,6 +416,8 @@ namespace NodeMarkup
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var style = provider.GetRegularLineStyle(LineStyle.value);
+                            var color = style.GetValue("Color");
+                            style.SetValue("Color", new Color32(255, 0, 0, 255));
                             var line = nodeMarking.AddRegularLine(startPoint, endPoint, style);
                             AddingLineResult.text = $"Line {line} was added";
                         }
@@ -443,6 +445,8 @@ namespace NodeMarkup
                             startEnter.GetLanePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetLanePoint((byte)EndPointIndex.value, out var endPoint);
                             var style = provider.GetLaneLineStyle(LineStyle.value);
+                            var direction = style.GetValue("Direction");
+                            style.SetValue("Direction", 2);
                             var line = nodeMarking.AddLaneLine(startPoint, endPoint, style);
                             AddingLineResult.text = $"Line {line} was added";
                         }

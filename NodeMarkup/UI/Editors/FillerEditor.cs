@@ -24,9 +24,9 @@ namespace NodeMarkup.UI.Editors
         private MoreOptionsPanel MoreOptionsButton { get; set; }
         private bool ShowMoreOptions { get; set; }
 
-        private FillerRailToolMode FillerRailToolMode { get; }
+        private FillerGuideToolMode FillerGuideToolMode { get; }
 
-        public FillerRailPropertyPanel.SelectRailButton HoverRailSelectButton { get; private set; }
+        public FillerGuidePropertyPanel.SelectGuideButton HoverGuideSelectButton { get; private set; }
 
         #endregion
 
@@ -34,8 +34,8 @@ namespace NodeMarkup.UI.Editors
 
         public FillerEditor()
         {
-            FillerRailToolMode = Tool.CreateToolMode<FillerRailToolMode>();
-            FillerRailToolMode.Init(this);
+            FillerGuideToolMode = Tool.CreateToolMode<FillerGuideToolMode>();
+            FillerGuideToolMode.Init(this);
         }
         protected override IEnumerable<MarkupFiller> GetObjects() => Markup.Fillers;
 
@@ -110,11 +110,11 @@ namespace NodeMarkup.UI.Editors
             {
                 if (property is ColorPropertyPanel colorProperty)
                     colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
-                else if (property is FillerRailPropertyPanel railProperty)
+                else if (property is FillerGuidePropertyPanel guideProperty)
                 {
-                    railProperty.OnSelect += (panel) => SelectRail(panel);
-                    railProperty.OnEnter += HoverRail;
-                    railProperty.OnLeave += LeaveRail;
+                    guideProperty.OnSelect += (panel) => SelectGuide(panel);
+                    guideProperty.OnEnter += HoverGuide;
+                    guideProperty.OnLeave += LeaveGuide;
                 }
             }
 
@@ -188,22 +188,22 @@ namespace NodeMarkup.UI.Editors
                 ApplyStyle(style);
         }
 
-        public void HoverRail(FillerRailPropertyPanel.SelectRailButton selectButton) => HoverRailSelectButton = selectButton;
-        public void LeaveRail(FillerRailPropertyPanel.SelectRailButton selectButton) => HoverRailSelectButton = null;
-        public bool SelectRail(FillerRailPropertyPanel.SelectRailButton selectButton) => SelectRail(selectButton, null);
-        public bool SelectRail(FillerRailPropertyPanel.SelectRailButton selectButton, Func<Event, bool> afterAction)
+        public void HoverGuide(FillerGuidePropertyPanel.SelectGuideButton selectButton) => HoverGuideSelectButton = selectButton;
+        public void LeaveGuide(FillerGuidePropertyPanel.SelectGuideButton selectButton) => HoverGuideSelectButton = null;
+        public bool SelectGuide(FillerGuidePropertyPanel.SelectGuideButton selectButton) => SelectGuide(selectButton, null);
+        public bool SelectGuide(FillerGuidePropertyPanel.SelectGuideButton selectButton, Func<Event, bool> afterAction)
         {
-            if (Tool.Mode == FillerRailToolMode && selectButton == FillerRailToolMode.SelectButton)
+            if (Tool.Mode == FillerGuideToolMode && selectButton == FillerGuideToolMode.SelectButton)
             {
                 Tool.SetDefaultMode();
                 return true;
             }
             else
             {
-                Tool.SetMode(FillerRailToolMode);
-                FillerRailToolMode.Contour = EditObject.Contour;
-                FillerRailToolMode.SelectButton = selectButton;
-                FillerRailToolMode.AfterSelectButton = afterAction;
+                Tool.SetMode(FillerGuideToolMode);
+                FillerGuideToolMode.Contour = EditObject.Contour;
+                FillerGuideToolMode.SelectButton = selectButton;
+                FillerGuideToolMode.AfterSelectButton = afterAction;
                 selectButton.Focus();
                 return false;
             }
@@ -213,10 +213,10 @@ namespace NodeMarkup.UI.Editors
         {
             ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
 
-            if (HoverRailSelectButton != null)
+            if (HoverGuideSelectButton != null)
             {
-                var rail = EditObject.Contour.GetRail(HoverRailSelectButton.Value.A, HoverRailSelectButton.Value.B, HoverRailSelectButton.Other.A, HoverRailSelectButton.Other.B);
-                rail.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+                var guide = EditObject.Contour.GetGuide(HoverGuideSelectButton.Value.A, HoverGuideSelectButton.Value.B, HoverGuideSelectButton.Other.A, HoverGuideSelectButton.Other.B);
+                guide.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }
 
@@ -237,9 +237,9 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class FillerRailToolMode : BasePanelMode<FillerEditor, FillerRailPropertyPanel.SelectRailButton, FillerRail>
+    public class FillerGuideToolMode : BasePanelMode<FillerEditor, FillerGuidePropertyPanel.SelectGuideButton, FillerGuide>
     {
-        protected override FillerRail Hover => throw new NotImplementedException();
+        protected override FillerGuide Hover => throw new NotImplementedException();
         protected override bool IsHover => throw new NotImplementedException();
 
         private IFillerVertex FirstPoint { get; set; }
@@ -247,13 +247,13 @@ namespace NodeMarkup.UI.Editors
 
         public FillerContour Contour { get; set; }
         private PointsSelector<IFillerVertex> PointsSelector { get; set; }
-        private LinesSelector<RailBound> LineSelector { get; set; }
+        private LinesSelector<GuideBound> LineSelector { get; set; }
 
         protected override void OnSetButton()
         {
             FirstPoint = null;
             PointsSelector = GetPointsSelector();
-            LineSelector = new LinesSelector<RailBound>(Contour.TrajectoriesProcessed.Select((t, i) => new RailBound(t, 0.5f, i)), Colors.Orange);
+            LineSelector = new LinesSelector<GuideBound>(Contour.TrajectoriesProcessed.Select((t, i) => new GuideBound(t, 0.5f, i)), Colors.Orange);
         }
         public override void OnToolUpdate()
         {
@@ -289,7 +289,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void SetValue(Event e, int a, int b)
         {
-            SelectButton.Value = new FillerRail(a % Contour.ProcessedCount, b % Contour.ProcessedCount);
+            SelectButton.Value = new FillerGuide(a % Contour.ProcessedCount, b % Contour.ProcessedCount);
             if (AfterSelectButton?.Invoke(e) ?? true)
                 Tool.SetDefaultMode();
         }
@@ -318,10 +318,10 @@ namespace NodeMarkup.UI.Editors
             PointsSelector.Render(cameraInfo);
         }
 
-        private class RailBound : TrajectoryBound
+        private class GuideBound : TrajectoryBound
         {
             public int Index { get; }
-            public RailBound(ITrajectory trajectory, float size, int index) : base(trajectory, size)
+            public GuideBound(ITrajectory trajectory, float size, int index) : base(trajectory, size)
             {
                 Index = index;
             }

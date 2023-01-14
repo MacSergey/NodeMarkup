@@ -1,10 +1,5 @@
 ﻿using NodeMarkup.API;
 using NodeMarkup.Manager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using IPointSource = NodeMarkup.API.IPointSource;
 
 namespace NodeMarkup.Utilities.API
 {
@@ -15,7 +10,13 @@ namespace NodeMarkup.Utilities.API
         public byte Index => Point.Index;
         public ushort EntranceId => Point.Enter.Id;
         public ushort MarkingId => Point.Markup.Id;
-        public IPointSource Source => throw new NotImplementedException();
+
+        public IPointSourceData Source => new PointSourceDataProvider(Point.Source);
+        public float Offset
+        {
+            get => Point.Offset;
+            set => Point.Offset.Value = value;
+        }
 
         public EntrancePointDataProvider(MarkupEnterPoint point)
         {
@@ -31,7 +32,7 @@ namespace NodeMarkup.Utilities.API
         public byte Index => Point.Index;
         public ushort EntranceId => Point.Enter.Id;
         public ushort MarkingId => Point.Markup.Id;
-        public IPointSource Source => throw new NotImplementedException();
+        public IEntrancePointData SourcePoint => new EntrancePointDataProvider(Point.SourcePoint);
 
         public NormalPointDataProvider(MarkupNormalPoint point)
         {
@@ -47,7 +48,7 @@ namespace NodeMarkup.Utilities.API
         public byte Index => Point.Index;
         public ushort EntranceId => Point.Enter.Id;
         public ushort MarkingId => Point.Markup.Id;
-        public IPointSource Source => throw new NotImplementedException();
+        public IEntrancePointData SourcePoint => new EntrancePointDataProvider(Point.SourcePoint);
 
         public CrosswalkPointDataProvider(MarkupCrosswalkPoint point)
         {
@@ -62,7 +63,8 @@ namespace NodeMarkup.Utilities.API
         public byte Index => Point.Index;
         public ushort EntranceId => Point.Enter.Id;
         public ushort MarkingId => Point.Markup.Id;
-        public IPointSource Source => throw new NotImplementedException();
+        public IEntrancePointData SourcePointA => new EntrancePointDataProvider(Point.SourcePointA);
+        public IEntrancePointData SourcePointB => new EntrancePointDataProvider(Point.SourcePointB);
 
         public LanePointDataProvider(MarkupLanePoint point)
         {
@@ -70,5 +72,55 @@ namespace NodeMarkup.Utilities.API
         }
 
         public override string ToString() => Point.ToString();
+    }
+
+    public struct PointSourceDataProvider : IPointSourceData
+    {
+        public PointLocation Location { get; }
+        public uint LeftLaneId { get; }
+        public int LeftIndex { get; }
+        public uint RightLaneId { get; }
+        public int RightIndex { get; }
+
+        public PointSourceDataProvider(PointLocation location, uint leftLaneId, int leftIndex, uint rightLaneId, int rightIndex)
+        {
+            Location = location;
+            LeftLaneId = leftLaneId;
+            LeftIndex = leftIndex;
+            RightLaneId = rightLaneId;
+            RightIndex = rightIndex;
+        }
+        public PointSourceDataProvider(NetInfoPointSource source)
+        {
+            Location = source.Location switch
+            {
+                MarkupPoint.LocationType.LeftEdge => PointLocation.Left,
+                MarkupPoint.LocationType.RightEdge => PointLocation.Rigth,
+                MarkupPoint.LocationType.Between => PointLocation.Between,
+                _ => PointLocation.None,
+            };
+
+            if (source.LeftLane != null)
+            {
+                LeftLaneId = source.LeftLane.LaneId;
+                LeftIndex = source.LeftLane.Index;
+            }
+            else
+            {
+                LeftLaneId = default;
+                LeftIndex = default;
+            }
+
+            if (source.RightLane != null)
+            {
+                RightLaneId = source.RightLane.LaneId;
+                RightIndex = source.RightLane.Index;
+            }
+            else
+            {
+                RightLaneId = default;
+                RightIndex = default;
+            }
+        }
     }
 }

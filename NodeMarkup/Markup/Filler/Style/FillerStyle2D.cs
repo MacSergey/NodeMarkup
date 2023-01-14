@@ -3,9 +3,11 @@ using ColossalFramework.UI;
 using ICities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.API;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
+using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,16 +30,16 @@ namespace NodeMarkup.Manager
     {
         PropertyValue<float> Angle { get; }
     }
-    public interface IRailFiller : IFillerStyle
+    public interface IGuideFiller : IFillerStyle
     {
-        PropertyValue<int> LeftRailA { get; }
-        PropertyValue<int> LeftRailB { get; }
-        PropertyValue<int> RightRailA { get; }
-        PropertyValue<int> RightRailB { get; }
+        PropertyValue<int> LeftGuideA { get; }
+        PropertyValue<int> LeftGuideB { get; }
+        PropertyValue<int> RightGuideA { get; }
+        PropertyValue<int> RightGuideB { get; }
     }
-    public interface IFollowRailFiller : IRailFiller
+    public interface IFollowGuideFiller : IGuideFiller
     {
-        PropertyValue<bool> FollowRails { get; }
+        PropertyValue<bool> FollowGuides { get; }
     }
 
     public abstract class Filler2DStyle : FillerStyle
@@ -52,11 +54,11 @@ namespace NodeMarkup.Manager
         protected virtual IEnumerable<MarkupPartData> CalculateProcess(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
             var originalContour = filler.Contour.TrajectoriesProcessed.ToArray();
-            var rails = GetRails(filler, originalContour).ToArray();
+            var guides = GetGuides(filler, originalContour).ToArray();
 
-            foreach (var rail in rails)
+            foreach (var guide in guides)
             {
-                var partItems = GetItems(rail, lod).ToArray();
+                var partItems = GetItems(guide, lod).ToArray();
 
                 foreach (var partItem in partItems)
                 {
@@ -66,7 +68,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected abstract IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour);
+        protected abstract IEnumerable<GuideLine> GetGuides(MarkupFiller filler, ITrajectory[] contour);
         protected Rect GetRect(ITrajectory[] contour)
         {
             var firstPos = contour.FirstOrDefault(t => t != null)?.StartPosition ?? default;
@@ -104,7 +106,7 @@ namespace NodeMarkup.Manager
                     rect.yMax = pos.z;
             }
         }
-        protected StraightTrajectory GetRail(Rect rect, float height, float angle)
+        protected StraightTrajectory GetGuide(Rect rect, float height, float angle)
         {
             if (angle > 90)
                 angle -= 180;
@@ -112,9 +114,9 @@ namespace NodeMarkup.Manager
                 angle += 180;
 
             var absAngle = Mathf.Abs(angle) * Mathf.Deg2Rad;
-            var railLength = rect.width * Mathf.Sin(absAngle) + rect.height * Mathf.Cos(absAngle);
-            var dx = railLength * Mathf.Sin(absAngle);
-            var dy = railLength * Mathf.Cos(absAngle);
+            var guideLength = rect.width * Mathf.Sin(absAngle) + rect.height * Mathf.Cos(absAngle);
+            var dx = guideLength * Mathf.Sin(absAngle);
+            var dy = guideLength * Mathf.Cos(absAngle);
 
             if (angle == -90 || angle == 90)
                 return new StraightTrajectory(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMax, height, rect.yMax));
@@ -128,14 +130,14 @@ namespace NodeMarkup.Manager
                 return default;
         }
 
-        protected abstract IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod);
-        protected IEnumerable<StraightTrajectory> GetParts(RailLine rail, float dash, float space)
+        protected abstract IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod);
+        protected IEnumerable<StraightTrajectory> GetParts(GuideLine guide, float dash, float space)
         {
-            foreach (var part in StyleHelper.CalculateDashesBezierT(rail, dash, space, 1))
+            foreach (var part in StyleHelper.CalculateDashesBezierT(guide, dash, space, 1))
             {
-                var startI = Math.Min((int)part.Start, rail.Count - 1);
-                var endI = Math.Min((int)part.End, rail.Count - 1);
-                yield return new StraightTrajectory(rail[startI].Position(part.Start - startI), rail[endI].Position(part.End - endI));
+                var startI = Math.Min((int)part.Start, guide.Count - 1);
+                var endI = Math.Min((int)part.End, guide.Count - 1);
+                yield return new StraightTrajectory(guide[startI].Position(part.Start - startI), guide[endI].Position(part.End - endI));
             }
         }
         protected void GetItemParams(ref float width, float angle, MarkupLOD lod, out int itemsCount, out float itemWidth, out float itemStep)
@@ -249,7 +251,7 @@ namespace NodeMarkup.Manager
             static bool Skip(float t, bool isPriority, float input, float output) => isPriority && ((t < 0f && input < t) || (t > 0f && output > t));
         }
 
-        protected class RailLine : List<ITrajectory> { }
+        protected class GuideLine : List<ITrajectory> { }
         protected class PartItem
         {
             public Vector3 Position { get; }
@@ -290,26 +292,26 @@ namespace NodeMarkup.Manager
             components.Add(AddStepProperty(this, parent, false));
         }
 
-        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
+        protected override IEnumerable<GuideLine> GetGuides(MarkupFiller filler, ITrajectory[] contour)
         {
             var rect = GetRect(contour);
-            var rail = new RailLine();
+            var guide = new GuideLine();
             var halfAngelRad = GetAngle() * Mathf.Deg2Rad;
             if (GetMiddleLine(filler.Contour) is ITrajectory middleLine)
             {
                 if (GetBeforeMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineBefore))
-                    rail.Add(lineBefore.Invert());
-                rail.Add(middleLine);
+                    guide.Add(lineBefore.Invert());
+                guide.Add(middleLine);
                 if (GetAfterMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineAfter))
-                    rail.Add(lineAfter);
+                    guide.Add(lineAfter);
             }
 
-            yield return rail;
+            yield return guide;
         }
         protected abstract float GetAngle();
         private ITrajectory GetMiddleLine(FillerContour contour)
         {
-            GetRails(contour, out ITrajectory left, out ITrajectory right);
+            GetGuides(contour, out ITrajectory left, out ITrajectory right);
             if (left == null || right == null)
                 return null;
 
@@ -340,7 +342,7 @@ namespace NodeMarkup.Manager
             }
 
         }
-        protected abstract void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right);
+        protected abstract void GetGuides(FillerContour contour, out ITrajectory left, out ITrajectory right);
         private bool GetBeforeMiddleLine(ITrajectory middleLine, float height, float halfAngelRad, Rect rect, out ITrajectory line) => GetAdditionalLine(middleLine.StartPosition, -middleLine.StartDirection, height, halfAngelRad, rect, out line);
         private bool GetAfterMiddleLine(ITrajectory middleLine, float height, float halfAngelRad, Rect rect, out ITrajectory line) => GetAdditionalLine(middleLine.EndPosition, -middleLine.EndDirection, height, halfAngelRad, rect, out line);
         private bool GetAdditionalLine(Vector3 pos, Vector3 dir, float height, float halfAngelRad, Rect rect, out ITrajectory line)
@@ -348,10 +350,10 @@ namespace NodeMarkup.Manager
             var dirRight = dir.TurnRad(halfAngelRad, true);
             var dirLeft = dir.TurnRad(halfAngelRad, false);
 
-            var rightRail = GetRail(rect, height, dirRight.AbsoluteAngle() * Mathf.Rad2Deg);
-            var leftRail = GetRail(rect, height, dirLeft.AbsoluteAngle() * Mathf.Rad2Deg);
+            var rightGuide = GetGuide(rect, height, dirRight.AbsoluteAngle() * Mathf.Rad2Deg);
+            var leftGuide = GetGuide(rect, height, dirLeft.AbsoluteAngle() * Mathf.Rad2Deg);
 
-            var t = Mathf.Max(0f, GetT(rightRail.StartPosition, dirRight), GetT(rightRail.EndPosition, dirRight), GetT(leftRail.StartPosition, dirLeft), GetT(leftRail.EndPosition, dirLeft));
+            var t = Mathf.Max(0f, GetT(rightGuide.StartPosition, dirRight), GetT(rightGuide.EndPosition, dirRight), GetT(leftGuide.StartPosition, dirLeft), GetT(leftGuide.EndPosition, dirLeft));
 
             if (t > 0.1)
             {
@@ -364,9 +366,9 @@ namespace NodeMarkup.Manager
                 return false;
             }
 
-            float GetT(Vector3 railPos, Vector3 railDir)
+            float GetT(Vector3 guidePos, Vector3 guideDir)
             {
-                Line2.Intersect(XZ(pos), XZ(pos + dir), XZ(railPos), XZ(railPos + railDir), out float p, out _);
+                Line2.Intersect(XZ(pos), XZ(pos + dir), XZ(guidePos), XZ(guidePos + guideDir), out float p, out _);
                 return p;
             }
         }
@@ -401,7 +403,7 @@ namespace NodeMarkup.Manager
 
         public override void Render(MarkupFiller filler, OverlayData data)
         {
-            GetRails(filler.Contour, out ITrajectory left, out ITrajectory right);
+            GetGuides(filler.Contour, out ITrajectory left, out ITrajectory right);
 
             data.Color = Colors.Green;
             left?.Render(data);
@@ -422,61 +424,61 @@ namespace NodeMarkup.Manager
             Step.FromXml(config, DefaultStepGrid);
         }
     }
-    public abstract class RailFillerStyle : PeriodicFillerStyle, IRailFiller
+    public abstract class GuideFillerStyle : PeriodicFillerStyle, IGuideFiller
     {
-        public PropertyValue<int> LeftRailA { get; }
-        public PropertyValue<int> RightRailA { get; }
-        public PropertyValue<int> LeftRailB { get; }
-        public PropertyValue<int> RightRailB { get; }
+        public PropertyValue<int> LeftGuideA { get; }
+        public PropertyValue<int> RightGuideA { get; }
+        public PropertyValue<int> LeftGuideB { get; }
+        public PropertyValue<int> RightGuideB { get; }
 
-        public RailFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset) : base(color, width, step, lineOffset, medianOffset)
+        public GuideFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset) : base(color, width, step, lineOffset, medianOffset)
         {
-            LeftRailA = GetLeftRailAProperty(0);
-            LeftRailB = GetLeftRailBProperty(1);
-            RightRailA = GetRightRailAProperty(1);
-            RightRailB = GetRightRailBProperty(2);
+            LeftGuideA = GetLeftGuideAProperty(0);
+            LeftGuideB = GetLeftGuideBProperty(1);
+            RightGuideA = GetRightGuideAProperty(1);
+            RightGuideB = GetRightGuideBProperty(2);
         }
 
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
 
-            if (target is IRailFiller railTarget)
+            if (target is IGuideFiller guideTarget)
             {
-                railTarget.LeftRailA.Value = LeftRailA;
-                railTarget.LeftRailB.Value = LeftRailB;
-                railTarget.RightRailA.Value = RightRailA;
-                railTarget.RightRailB.Value = RightRailB;
+                guideTarget.LeftGuideA.Value = LeftGuideA;
+                guideTarget.LeftGuideB.Value = LeftGuideB;
+                guideTarget.RightGuideA.Value = RightGuideA;
+                guideTarget.RightGuideB.Value = RightGuideB;
             }
         }
 
         protected override IEnumerable<MarkupPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithOrder(item, contours);
-        protected override void GetRails(FillerContour contour, out ITrajectory left, out ITrajectory right)
+        protected override void GetGuides(FillerContour contour, out ITrajectory left, out ITrajectory right)
         {
-            left = contour.GetRail(LeftRailA, LeftRailB, RightRailA, RightRailB);
-            right = contour.GetRail(RightRailA, RightRailB, LeftRailA, LeftRailB);
+            left = contour.GetGuide(LeftGuideA, LeftGuideB, RightGuideA, RightGuideB);
+            right = contour.GetGuide(RightGuideA, RightGuideB, LeftGuideA, LeftGuideB);
         }
 
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            LeftRailA.ToXml(config);
-            LeftRailB.ToXml(config);
-            RightRailA.ToXml(config);
-            RightRailB.ToXml(config);
+            LeftGuideA.ToXml(config);
+            LeftGuideB.ToXml(config);
+            RightGuideA.ToXml(config);
+            RightGuideB.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
-            LeftRailA.FromXml(config);
-            LeftRailB.FromXml(config);
-            RightRailA.FromXml(config);
-            RightRailB.FromXml(config);
+            LeftGuideA.FromXml(config);
+            LeftGuideB.FromXml(config);
+            RightGuideA.FromXml(config);
+            RightGuideB.FromXml(config);
         }
     }
 
-    public class StripeFillerStyle : RailFillerStyle, IFollowRailFiller, IRotateFiller, IWidthStyle, IColorStyle
+    public class StripeFillerStyle : GuideFillerStyle, IFollowGuideFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerStripe;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
@@ -484,7 +486,7 @@ namespace NodeMarkup.Manager
         protected static string Turn => string.Empty;
 
         public PropertyValue<float> Angle { get; }
-        public PropertyValue<bool> FollowRails { get; }
+        public PropertyValue<bool> FollowGuides { get; }
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -496,18 +498,34 @@ namespace NodeMarkup.Manager
                 yield return nameof(Step);
                 yield return nameof(Angle);
                 yield return nameof(Offset);
-                yield return nameof(Rail);
+                yield return nameof(Guide);
                 yield return nameof(Turn);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+        public override IEnumerable<IStylePropertyData> Properties
+        {
+            get
+            {
+                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
+                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
+                yield return new StylePropertyDataProvider<float>(nameof(Step), Step);
+                yield return new StylePropertyDataProvider<float>(nameof(Angle), Angle);
+                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+            }
+        }
 
-        public StripeFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angle, float step, bool followRails = false) : base(color, width, step, lineOffset, medianOffset)
+        public StripeFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angle, float step, bool followGuides = false) : base(color, width, step, lineOffset, medianOffset)
         {
             Angle = GetAngleProperty(angle);
-            FollowRails = GetFollowRailsProperty(followRails);
+            FollowGuides = GetFollowGuidesProperty(followGuides);
         }
-        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, LineOffset, DefaultOffset, DefaultAngle, Step, FollowRails);
+        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, LineOffset, DefaultOffset, DefaultAngle, Step, FollowGuides);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
@@ -515,8 +533,8 @@ namespace NodeMarkup.Manager
             if (target is IRotateFiller rotateTarget)
                 rotateTarget.Angle.Value = Angle;
 
-            if (target is IFollowRailFiller followRailTarget)
-                followRailTarget.FollowRails.Value = FollowRails;
+            if (target is IFollowGuideFiller followGuideTarget)
+                followGuideTarget.FollowGuides.Value = FollowGuides;
         }
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -527,7 +545,7 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddRailProperty(this, filler.Contour, parent, true));
+                components.Add(AddGuideProperty(this, filler.Contour, parent, true));
                 components.Add(AddTurnProperty(filler, parent, false));
             }
         }
@@ -543,36 +561,36 @@ namespace NodeMarkup.Manager
             {
                 var vertexCount = filler.Contour.ProcessedCount;
 
-                if (parent.Find<FillerRailPropertyPanel>(Rail) is FillerRailPropertyPanel railProperty)
+                if (parent.Find<FillerGuidePropertyPanel>(Guide) is FillerGuidePropertyPanel guideProperty)
                 {
-                    railProperty.LeftRail = (railProperty.LeftRail + 1) % vertexCount;
-                    railProperty.RightRail = (railProperty.RightRail + 1) % vertexCount;
+                    guideProperty.LeftGuide = (guideProperty.LeftGuide + 1) % vertexCount;
+                    guideProperty.RightGuide = (guideProperty.RightGuide + 1) % vertexCount;
                 }
             };
 
             return turnButton;
         }
 
-        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
+        protected override IEnumerable<GuideLine> GetGuides(MarkupFiller filler, ITrajectory[] contour)
         {
-            if (FollowRails)
+            if (FollowGuides)
             {
-                foreach (var rail in base.GetRails(filler, contour))
-                    yield return rail;
+                foreach (var guide in base.GetGuides(filler, contour))
+                    yield return guide;
             }
             else
             {
                 var rect = GetRect(contour);
-                yield return new RailLine() { GetRail(rect, filler.Markup.Height, Angle) };
+                yield return new GuideLine() { GetGuide(rect, filler.Markup.Height, Angle) };
             }
         }
-        protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
+        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
         {
-            var angle = FollowRails ? 90f - Angle : 90f;
+            var angle = FollowGuides ? 90f - Angle : 90f;
             var width = Width.Value;
             GetItemParams(ref width, angle, lod, out int itemsCount, out float itemWidth, out float itemStep);
 
-            var parts = GetParts(rail, width, width * (Step - 1)).ToArray();
+            var parts = GetParts(guide, width, width * (Step - 1)).ToArray();
             GetPartBorders(parts, angle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders);
 
             for (var i = 0; i < parts.Length; i += 1)
@@ -592,7 +610,7 @@ namespace NodeMarkup.Manager
 
         public override void Render(MarkupFiller filler, OverlayData data)
         {
-            if (FollowRails)
+            if (FollowGuides)
                 base.Render(filler, data);
         }
 
@@ -600,17 +618,17 @@ namespace NodeMarkup.Manager
         {
             var config = base.ToXml();
             Angle.ToXml(config);
-            FollowRails.ToXml(config);
+            FollowGuides.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
             Angle.FromXml(config, DefaultAngle);
-            FollowRails.FromXml(config, DefaultFollowRails);
+            FollowGuides.FromXml(config, DefaultFollowGuides);
         }
     }
-    public class ChevronFillerStyle : RailFillerStyle, IWidthStyle, IColorStyle
+    public class ChevronFillerStyle : GuideFillerStyle, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerChevron;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
@@ -630,11 +648,28 @@ namespace NodeMarkup.Manager
                 yield return nameof(Step);
                 yield return nameof(AngleBetween);
                 yield return nameof(Offset);
-                yield return nameof(Rail);
+                yield return nameof(Guide);
                 yield return nameof(Invert);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+        public override IEnumerable<IStylePropertyData> Properties
+        {
+            get
+            {
+                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
+                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
+                yield return new StylePropertyDataProvider<float>(nameof(Step), Step);
+                yield return new StylePropertyDataProvider<float>(nameof(AngleBetween), AngleBetween);
+                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<bool>(nameof(Invert), Invert);
+            }
+        }
 
         public ChevronFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angleBetween, float step) : base(color, width, step, lineOffset, medianOffset)
         {
@@ -656,8 +691,8 @@ namespace NodeMarkup.Manager
                 chevronTarget.Step.Value = Step;
                 chevronTarget.Invert.Value = Invert;
             }
-            if (target is IFollowRailFiller followRailTarget)
-                followRailTarget.FollowRails.Value = true;
+            if (target is IFollowGuideFiller followGuideTarget)
+                followGuideTarget.FollowGuides.Value = true;
         }
         public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -665,7 +700,7 @@ namespace NodeMarkup.Manager
             components.Add(AddAngleBetweenProperty(parent, false));
             if (!isTemplate)
             {
-                components.Add(AddRailProperty(this, filler.Contour, parent, true));
+                components.Add(AddGuideProperty(this, filler.Contour, parent, true));
                 components.Add(AddInvertAndTurnProperty(filler, parent, false));
             }
         }
@@ -706,10 +741,10 @@ namespace NodeMarkup.Manager
                 else if (buttonIndex == turnIndex)
                 {
                     var vertexCount = filler.Contour.ProcessedCount;
-                    if (parent.Find<FillerRailPropertyPanel>(Rail) is FillerRailPropertyPanel railProperty)
+                    if (parent.Find<FillerGuidePropertyPanel>(Guide) is FillerGuidePropertyPanel guideProperty)
                     {
-                        railProperty.LeftRail = (railProperty.LeftRail + 1) % vertexCount;
-                        railProperty.RightRail = (railProperty.RightRail + 1) % vertexCount;
+                        guideProperty.LeftGuide = (guideProperty.LeftGuide + 1) % vertexCount;
+                        guideProperty.RightGuide = (guideProperty.RightGuide + 1) % vertexCount;
                     }
                 }
             };
@@ -717,13 +752,13 @@ namespace NodeMarkup.Manager
             return turnAndInvert;
         }
 
-        protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
+        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
         {
             var width = Width.Value;
             var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) / 2;
             GetItemParams(ref width, halfAngle, lod, out int itemsCount, out float itemWidth, out float itemStep);
 
-            var parts = GetParts(rail, width, width * (Step - 1)).ToArray();
+            var parts = GetParts(guide, width, width * (Step - 1)).ToArray();
             GetPartBorders(parts, halfAngle, out StraightTrajectory[] leftStartBorders, out StraightTrajectory[] leftEndBorders);
             GetPartBorders(parts, -halfAngle, out StraightTrajectory[] rightStartBorders, out StraightTrajectory[] rightEndBorders);
 
@@ -761,18 +796,18 @@ namespace NodeMarkup.Manager
             Output.FromXml(config, 0);
             StartingFrom.FromXml(config, From.Vertex);
 
-            LeftRailA.Value = Output;
-            LeftRailB.Value = Output + 1;
+            LeftGuideA.Value = Output;
+            LeftGuideB.Value = Output + 1;
 
             if (StartingFrom == From.Vertex)
             {
-                RightRailA.Value = Output;
-                RightRailB.Value = Output - 1;
+                RightGuideA.Value = Output;
+                RightGuideB.Value = Output - 1;
             }
             else if (StartingFrom == From.Edge)
             {
-                RightRailA.Value = Output - 1;
-                RightRailB.Value = Output - 2;
+                RightGuideA.Value = Output - 1;
+                RightGuideB.Value = Output - 2;
             }
 
             base.FromXml(config, map, invert, typeChanged);
@@ -810,6 +845,18 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+        public override IEnumerable<IStylePropertyData> Properties
+        {
+            get
+            {
+                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
+                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
+                yield return new StylePropertyDataProvider<float>(nameof(Step), Step);
+                yield return new StylePropertyDataProvider<float>(nameof(Angle), Angle);
+                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+            }
+        }
 
         public GridFillerStyle(Color32 color, float width, float angle, float step, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
         {
@@ -836,17 +883,17 @@ namespace NodeMarkup.Manager
                 components.Add(AddAngleProperty(this, parent, false));
         }
 
-        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
+        protected override IEnumerable<GuideLine> GetGuides(MarkupFiller filler, ITrajectory[] contour)
         {
             var rect = GetRect(contour);
-            yield return new RailLine() { GetRail(rect, filler.Markup.Height, Angle) };
-            yield return new RailLine() { GetRail(rect, filler.Markup.Height, Angle < 0 ? Angle + 90 : Angle - 90) };
+            yield return new GuideLine() { GetGuide(rect, filler.Markup.Height, Angle) };
+            yield return new GuideLine() { GetGuide(rect, filler.Markup.Height, Angle < 0 ? Angle + 90 : Angle - 90) };
         }
-        protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
+        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
         {
             var width = Width.Value;
             GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
-            foreach (var part in GetParts(rail, width, width * (Step - 1)))
+            foreach (var part in GetParts(guide, width, width * (Step - 1)))
             {
                 foreach (var item in GetPartItems(part, 90f, itemsCount, itemWidth, itemStep))
                     yield return item;
@@ -867,18 +914,18 @@ namespace NodeMarkup.Manager
             Step.FromXml(config, DefaultStepGrid);
         }
     }
-    public class SolidFillerStyle : Filler2DStyle, IRailFiller, IFollowRailFiller, IColorStyle
+    public class SolidFillerStyle : Filler2DStyle, IGuideFiller, IFollowGuideFiller, IColorStyle
     {
         public static float DefaultSolidWidth { get; } = 0.2f;
 
         public override StyleType Type => StyleType.FillerSolid;
         public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
 
-        public PropertyValue<int> LeftRailA { get; }
-        public PropertyValue<int> RightRailA { get; }
-        public PropertyValue<int> LeftRailB { get; }
-        public PropertyValue<int> RightRailB { get; }
-        public PropertyValue<bool> FollowRails { get; }
+        public PropertyValue<int> LeftGuideA { get; }
+        public PropertyValue<int> RightGuideA { get; }
+        public PropertyValue<int> LeftGuideB { get; }
+        public PropertyValue<int> RightGuideB { get; }
+        public PropertyValue<bool> FollowGuides { get; }
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -886,20 +933,33 @@ namespace NodeMarkup.Manager
             get
             {
                 yield return nameof(Color);
-                yield return nameof(Width);
                 yield return nameof(Offset);
-                yield return nameof(Rail);
+                yield return nameof(Guide);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-
-        public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset, bool followRails = false) : base(color, DefaultSolidWidth, lineOffset, medianOffset)
+        public override IEnumerable<IStylePropertyData> Properties
         {
-            LeftRailA = GetLeftRailAProperty(0);
-            LeftRailB = GetLeftRailBProperty(1);
-            RightRailA = GetRightRailAProperty(1);
-            RightRailB = GetRightRailBProperty(2);
-            FollowRails = GetFollowRailsProperty(followRails);
+            get
+            {
+                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
+                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<bool>(nameof(FollowGuides), FollowGuides);
+            }
+        }
+
+        public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset, bool followGuides = false) : base(color, DefaultSolidWidth, lineOffset, medianOffset)
+        {
+            LeftGuideA = GetLeftGuideAProperty(0);
+            LeftGuideB = GetLeftGuideBProperty(1);
+            RightGuideA = GetRightGuideAProperty(1);
+            RightGuideB = GetRightGuideBProperty(2);
+            FollowGuides = GetFollowGuidesProperty(followGuides);
         }
 
         public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, LineOffset, DefaultOffset);
@@ -907,36 +967,36 @@ namespace NodeMarkup.Manager
         {
             base.CopyTo(target);
 
-            if (target is IRailFiller railTarget)
+            if (target is IGuideFiller guideTarget)
             {
-                railTarget.LeftRailA.Value = LeftRailA;
-                railTarget.LeftRailB.Value = LeftRailB;
-                railTarget.RightRailA.Value = RightRailA;
-                railTarget.RightRailB.Value = RightRailB;
+                guideTarget.LeftGuideA.Value = LeftGuideA;
+                guideTarget.LeftGuideB.Value = LeftGuideB;
+                guideTarget.RightGuideA.Value = RightGuideA;
+                guideTarget.RightGuideB.Value = RightGuideB;
             }
-            if (target is IFollowRailFiller followRailTarget)
-                followRailTarget.FollowRails.Value = FollowRails;
+            if (target is IFollowGuideFiller followGuideTarget)
+                followGuideTarget.FollowGuides.Value = FollowGuides;
         }
 
-        protected override IEnumerable<RailLine> GetRails(MarkupFiller filler, ITrajectory[] contour)
+        protected override IEnumerable<GuideLine> GetGuides(MarkupFiller filler, ITrajectory[] contour)
         {
             var rect = GetRect(contour);
 
-            if (FollowRails)
+            if (FollowGuides)
             {
-                var left = filler.Contour.GetRail(LeftRailA, LeftRailB, RightRailA, RightRailB);
-                var right = filler.Contour.GetRail(RightRailA, RightRailB, LeftRailA, LeftRailB);
+                var left = filler.Contour.GetGuide(LeftGuideA, LeftGuideB, RightGuideA, RightGuideB);
+                var right = filler.Contour.GetGuide(RightGuideA, RightGuideB, LeftGuideA, LeftGuideB);
                 var startPos = (right.EndPosition + left.StartPosition) / 2;
                 var endPos = (right.StartPosition + left.EndPosition) / 2;
                 var angle = (endPos - startPos).Turn90(true).AbsoluteAngle() * Mathf.Rad2Deg;
-                yield return new RailLine() { GetRail(rect, filler.Markup.Height, angle) };
+                yield return new GuideLine() { GetGuide(rect, filler.Markup.Height, angle) };
             }
             else
-                yield return new RailLine() { GetRail(rect, filler.Markup.Height, 0) };
+                yield return new GuideLine() { GetGuide(rect, filler.Markup.Height, 0) };
         }
-        protected override IEnumerable<PartItem> GetItems(RailLine rail, MarkupLOD lod)
+        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
         {
-            foreach (var part in rail.OfType<StraightTrajectory>())
+            foreach (var part in guide.OfType<StraightTrajectory>())
             {
                 var width = part.Length;
                 GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
@@ -951,28 +1011,28 @@ namespace NodeMarkup.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddRailProperty(this, filler.Contour, parent, true));
+                components.Add(AddGuideProperty(this, filler.Contour, parent, true));
             }
         }
 
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            LeftRailA.ToXml(config);
-            LeftRailB.ToXml(config);
-            RightRailA.ToXml(config);
-            RightRailB.ToXml(config);
-            FollowRails.ToXml(config);
+            LeftGuideA.ToXml(config);
+            LeftGuideB.ToXml(config);
+            RightGuideA.ToXml(config);
+            RightGuideB.ToXml(config);
+            FollowGuides.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
-            LeftRailA.FromXml(config);
-            LeftRailB.FromXml(config);
-            RightRailA.FromXml(config);
-            RightRailB.FromXml(config);
-            FollowRails.FromXml(config, DefaultFollowRails);
+            LeftGuideA.FromXml(config);
+            LeftGuideB.FromXml(config);
+            RightGuideA.FromXml(config);
+            RightGuideB.FromXml(config);
+            FollowGuides.FromXml(config, DefaultFollowGuides);
         }
     }
 }

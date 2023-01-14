@@ -189,6 +189,8 @@ namespace NodeMarkup.Manager
         public static float DefaultSplitOffse => 0.5f;
 
         public override PointType Type => PointType.Enter;
+        public new NetInfoPointSource Source => (NetInfoPointSource)base.Source;
+
         public override bool IsSplit => Split;
         public override float SplitOffsetValue => SplitOffset;
         public Color32 SplitColor => Colors.GetOverlayColor(Index - 1, byte.MaxValue, 128);

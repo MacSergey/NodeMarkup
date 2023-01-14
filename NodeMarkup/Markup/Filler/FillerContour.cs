@@ -448,7 +448,7 @@ namespace NodeMarkup.Manager
             }
             return trajectories;
         }
-        public ITrajectory GetRail(int a1, int b1, int a2, int b2)
+        public ITrajectory GetGuide(int a1, int b1, int a2, int b2)
         {
             var min1 = GetCorrectIndex(Math.Min(a1, b1));
             var max1 = GetCorrectIndex(Math.Max(a1, b1));
@@ -456,11 +456,11 @@ namespace NodeMarkup.Manager
             var max2 = GetCorrectIndex(Math.Max(a2, b2));
 
             if (max1 <= min2 || max2 <= min1 || (min2 <= min1 && max1 <= max2))
-                return GetRail(min1, max1);
+                return GetGuide(min1, max1);
             else
-                return GetRail(max1, min1);
+                return GetGuide(max1, min1);
         }
-        private ITrajectory GetRail(int a, int b)
+        private ITrajectory GetGuide(int a, int b)
         {
             var trajectories = TrajectoriesProcessed.ToArray();
 
@@ -549,18 +549,18 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class FillerRail
+    public class FillerGuide
     {
         public int A { get; }
         public int B { get; }
 
-        public FillerRail(int a, int b)
+        public FillerGuide(int a, int b)
         {
             A = Math.Max(a, 0);
             B = Math.Max(b, 0);
         }
-        public static FillerRail operator +(FillerRail rail, int delta) => new FillerRail(rail.A + delta, rail.B + delta);
-        public static FillerRail operator %(FillerRail rail, int max) => new FillerRail(rail.A % max, rail.B % max);
+        public static FillerGuide operator +(FillerGuide guide, int delta) => new FillerGuide(guide.A + delta, guide.B + delta);
+        public static FillerGuide operator %(FillerGuide guide, int max) => new FillerGuide(guide.A % max, guide.B % max);
 
         public override string ToString() => $"{A + 1}-{B + 1}";
     }

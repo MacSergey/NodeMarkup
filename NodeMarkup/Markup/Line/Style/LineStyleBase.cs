@@ -24,7 +24,7 @@ namespace NodeMarkup.Manager
     public interface IDoubleLine
     {
         PropertyValue<float> Offset { get; }
-        public PropertyBoolValue ColorCount { get; }
+        public PropertyBoolValue TwoColors { get; }
         public PropertyColorValue SecondColor { get; }
     }
     public interface IDoubleAlignmentLine : IDoubleLine
@@ -199,14 +199,14 @@ namespace NodeMarkup.Manager
 
         protected BoolListPropertyPanel AddUseSecondColorProperty(IDoubleLine doubleLine, UIComponent parent, bool canCollapse)
         {
-            var useSecondColorProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(doubleLine.ColorCount));
+            var useSecondColorProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(doubleLine.TwoColors));
             useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
             useSecondColorProperty.CanCollapse = canCollapse;
             useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
-            useSecondColorProperty.SelectedObject = doubleLine.ColorCount;
+            useSecondColorProperty.SelectedObject = doubleLine.TwoColors;
             useSecondColorProperty.OnSelectObjectChanged += (value) =>
                 {
-                    doubleLine.ColorCount.Value = value;
+                    doubleLine.TwoColors.Value = value;
                     UseSecondColorChanged(doubleLine, parent, value);
                 };
 

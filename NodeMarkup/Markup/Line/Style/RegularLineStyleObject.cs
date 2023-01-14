@@ -1,13 +1,16 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.API;
 using NodeMarkup.UI;
 using NodeMarkup.Utilities;
+using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Linq;
 using UnityEngine;
+using static NodeMarkup.Manager.PropLineStyle;
 
 namespace NodeMarkup.Manager
 {
@@ -638,6 +641,26 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+        public override IEnumerable<IStylePropertyData> Properties
+        {
+            get
+            {
+                yield return new StylePropertyDataProvider<PropInfo>(nameof(Prefab), Prefab);
+                yield return new StylePropertyDataProvider<ColorOptionEnum>(nameof(ColorOption), ColorOption);
+                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
+                yield return new StylePropertyDataProvider<DistributionType>(nameof(Distribution), Distribution);
+                yield return new StylePropertyDataProvider<int>(nameof(Probability), Probability);
+                yield return new StylePropertyDataProvider<float?>(nameof(Step), Step);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Angle), Angle);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Tilt), Tilt);
+                yield return new StylePropertyDataProvider<Vector2?>(nameof(Slope), Slope);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Shift), Shift);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Elevation), Elevation);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Scale), Scale);
+                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
+                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
+            }
+        }
 
         public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution)
         {
@@ -789,6 +812,25 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+        public override IEnumerable<IStylePropertyData> Properties
+        {
+            get
+            {
+                yield return new StylePropertyDataProvider<TreeInfo>(nameof(Prefab), Prefab);
+                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
+                yield return new StylePropertyDataProvider<DistributionType>(nameof(Distribution), Distribution);
+                yield return new StylePropertyDataProvider<int>(nameof(Probability), Probability);
+                yield return new StylePropertyDataProvider<float?>(nameof(Step), Step);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Angle), Angle);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Tilt), Tilt);
+                yield return new StylePropertyDataProvider<Vector2?>(nameof(Slope), Slope);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Shift), Shift);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Elevation), Elevation);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Scale), Scale);
+                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
+                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
+            }
+        }
 
         public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution) { }
 

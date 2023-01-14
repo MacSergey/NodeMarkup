@@ -30,13 +30,13 @@ namespace NodeMarkup.Manager
         public static float DefaultElevation => 0.3f;
         public static float DefaultCornerRadius => 0f;
         public static float DefaultCurbSize => 0f;
-        public static bool DefaultFollowRails => false;
+        public static bool DefaultFollowGuides => false;
 
-        protected static string Rail => nameof(Rail);
+        protected static string Guide => nameof(Guide);
 
         private static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
-            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset,  DefaultFollowRails)},
+            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset,  DefaultFollowGuides)},
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
@@ -201,26 +201,26 @@ namespace NodeMarkup.Manager
             return stepProperty;
         }
 
-        protected FillerRailPropertyPanel AddRailProperty(IRailFiller railStyle, FillerContour contour, UIComponent parent, bool canCollapse)
+        protected FillerGuidePropertyPanel AddGuideProperty(IGuideFiller guideStyle, FillerContour contour, UIComponent parent, bool canCollapse)
         {
-            var railProperty = ComponentPool.Get<FillerRailPropertyPanel>(parent, Rail);
-            railProperty.Text = Localize.StyleOption_Rails;
-            railProperty.CanCollapse = canCollapse;
-            railProperty.Init();
-            railProperty.LeftRail = new FillerRail(contour.GetCorrectIndex(railStyle.LeftRailA), contour.GetCorrectIndex(railStyle.LeftRailB));
-            railProperty.RightRail = new FillerRail(contour.GetCorrectIndex(railStyle.RightRailA), contour.GetCorrectIndex(railStyle.RightRailB));
-            railProperty.Follow = (railStyle as IFollowRailFiller)?.FollowRails.Value;
-            railProperty.OnValueChanged += (bool follow, FillerRail left, FillerRail right) =>
+            var guideProperty = ComponentPool.Get<FillerGuidePropertyPanel>(parent, Guide);
+            guideProperty.Text = Localize.StyleOption_Rails;
+            guideProperty.CanCollapse = canCollapse;
+            guideProperty.Init();
+            guideProperty.LeftGuide = new FillerGuide(contour.GetCorrectIndex(guideStyle.LeftGuideA), contour.GetCorrectIndex(guideStyle.LeftGuideB));
+            guideProperty.RightGuide = new FillerGuide(contour.GetCorrectIndex(guideStyle.RightGuideA), contour.GetCorrectIndex(guideStyle.RightGuideB));
+            guideProperty.Follow = (guideStyle as IFollowGuideFiller)?.FollowGuides.Value;
+            guideProperty.OnValueChanged += (bool follow, FillerGuide left, FillerGuide right) =>
             {
-                if(railStyle is IFollowRailFiller followRailStyle)
-                    followRailStyle.FollowRails.Value = follow;
+                if(guideStyle is IFollowGuideFiller followGuideStyle)
+                    followGuideStyle.FollowGuides.Value = follow;
 
-                railStyle.LeftRailA.Value = left.A;
-                railStyle.LeftRailB.Value = left.B;
-                railStyle.RightRailA.Value = right.A;
-                railStyle.RightRailB.Value = right.B;
+                guideStyle.LeftGuideA.Value = left.A;
+                guideStyle.LeftGuideB.Value = left.B;
+                guideStyle.RightGuideA.Value = right.A;
+                guideStyle.RightGuideB.Value = right.B;
             };
-            return railProperty;
+            return guideProperty;
         }
 
         public enum FillerType
@@ -256,7 +256,7 @@ namespace NodeMarkup.Manager
             [NotVisible]
             Buffer = StyleType.FillerBuffer,
         }
-        public enum RailType
+        public enum GuideType
         {
             Left,
             Right

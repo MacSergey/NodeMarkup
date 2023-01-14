@@ -6,6 +6,31 @@
     <Product>Intersection Marking Tool API</Product>
     <PackageProjectUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2472062376</PackageProjectUrl>
     <LangVersion>9.0</LangVersion>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>IMT.API</PackageId>
+    <Title>Intersection Marking Tool API</Title>
+    <Description>API for Intersection Marking Tool</Description>
+    <PackageIcon>IMTLogo.png</PackageIcon>
+    <RepositoryType>https://github.com/MacSergey/NodeMarkup</RepositoryType>
+    <PackageTags>CSL;IMT;API;Marking;Mod</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\Workshop\IMTLogo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ColossalManaged">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\ColossalManaged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
 
 </Project>

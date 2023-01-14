@@ -2,6 +2,7 @@
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.API;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
@@ -99,6 +100,7 @@ namespace NodeMarkup.Manager
         public PropertyColorValue Color { get; }
         public PropertyStructValue<float> Width { get; }
 
+        public abstract IEnumerable<IStylePropertyData> Properties { get; }
         public abstract Dictionary<string, int> PropertyIndices { get; }
         protected static Dictionary<string, int> CreatePropertyIndices(IEnumerable<string> names)
         {
@@ -301,7 +303,7 @@ namespace NodeMarkup.Manager
         protected PropertyStructValue<float> GetOffsetAfterProperty(float defaultValue) => new PropertyStructValue<float>("OA", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetLineWidthProperty(float defaultValue) => new PropertyStructValue<float>("LW", StyleChanged, defaultValue);
         protected PropertyBoolValue GetParallelProperty(bool defaultValue) => new PropertyBoolValue("P", StyleChanged, defaultValue);
-        protected PropertyBoolValue GetUseSecondColorProperty(bool defaultValue) => new PropertyBoolValue("USC", StyleChanged, defaultValue);
+        protected PropertyBoolValue GetTwoColorsProperty(bool defaultValue) => new PropertyBoolValue("USC", StyleChanged, defaultValue);
         protected PropertyBoolValue GetUseGapProperty(bool defaultValue) => new PropertyBoolValue("UG", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetGapLengthProperty(float defaultValue) => new PropertyStructValue<float>("GL", StyleChanged, defaultValue);
         protected PropertyStructValue<int> GetGapPeriodProperty(int defaultValue) => new PropertyStructValue<int>("GP", StyleChanged, defaultValue);
@@ -317,11 +319,11 @@ namespace NodeMarkup.Manager
         protected PropertyStructValue<float> GetMedianCornerRadiusProperty(float defaultValue) => new PropertyStructValue<float>("MCR", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetCurbSizeProperty(float defaultValue) => new PropertyStructValue<float>("CS", StyleChanged, defaultValue);
         protected PropertyStructValue<float> GetMedianCurbSizeProperty(float defaultValue) => new PropertyStructValue<float>("MCS", StyleChanged, defaultValue);
-        protected PropertyStructValue<int> GetLeftRailAProperty(int defaultValue) => new PropertyStructValue<int>("LRA", StyleChanged, defaultValue);
-        protected PropertyStructValue<int> GetLeftRailBProperty(int defaultValue) => new PropertyStructValue<int>("LRB", StyleChanged, defaultValue);
-        protected PropertyStructValue<int> GetRightRailAProperty(int defaultValue) => new PropertyStructValue<int>("RRA", StyleChanged, defaultValue);
-        protected PropertyStructValue<int> GetRightRailBProperty(int defaultValue) => new PropertyStructValue<int>("RRB", StyleChanged, defaultValue);
-        protected PropertyBoolValue GetFollowRailsProperty(bool defaultValue) => new PropertyBoolValue("FR", StyleChanged, defaultValue);
+        protected PropertyStructValue<int> GetLeftGuideAProperty(int defaultValue) => new PropertyStructValue<int>("LRA", StyleChanged, defaultValue);
+        protected PropertyStructValue<int> GetLeftGuideBProperty(int defaultValue) => new PropertyStructValue<int>("LRB", StyleChanged, defaultValue);
+        protected PropertyStructValue<int> GetRightGuideAProperty(int defaultValue) => new PropertyStructValue<int>("RRA", StyleChanged, defaultValue);
+        protected PropertyStructValue<int> GetRightGuideBProperty(int defaultValue) => new PropertyStructValue<int>("RRB", StyleChanged, defaultValue);
+        protected PropertyBoolValue GetFollowGuidesProperty(bool defaultValue) => new PropertyBoolValue("FR", StyleChanged, defaultValue);
 
         public enum StyleType
         {
