@@ -663,6 +663,11 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
+        public bool TryGetFiller(int id, out MarkupFiller filler)
+        {
+            filler = FillersList.Find(f => f.Id == id);
+            return filler != null;
+        }
 
         public bool TryGetEnter(ushort enterId, out Enter enter)
         {

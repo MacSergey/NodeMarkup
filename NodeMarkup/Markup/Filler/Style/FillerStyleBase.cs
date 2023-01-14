@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Xml.Linq;
 using UnityEngine;
+using static NodeMarkup.Manager.StopLineStyle;
 
 namespace NodeMarkup.Manager
 {
@@ -33,7 +34,7 @@ namespace NodeMarkup.Manager
 
         protected static string Rail => nameof(Rail);
 
-        public static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
+        private static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
             {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset,  DefaultFollowRails)},
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
@@ -45,6 +46,10 @@ namespace NodeMarkup.Manager
             {FillerType.Ruined, new RuinedFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
             {FillerType.Cliff, new CliffFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
         };
+        public static FillerStyle GetDefault(FillerType type)
+        {
+            return Defaults.TryGetValue(type, out var style) ? style.CopyStyle() : null;
+        }
 
         public PropertyValue<float> MedianOffset { get; }
         public PropertyValue<float> LineOffset { get; }

@@ -73,10 +73,10 @@ namespace NodeMarkup.Manager
         {
             return type.GetGroup() switch
             {
-                StyleType.RegularLine => GetDefault(RegularLineStyle.Defaults, type.ToEnum<RegularLineStyle.RegularLineType, StyleType>()) as T,
-                StyleType.StopLine => GetDefault(StopLineStyle.Defaults, type.ToEnum<StopLineStyle.StopLineType, StyleType>()) as T,
-                StyleType.Filler => GetDefault(FillerStyle.Defaults, type.ToEnum<FillerStyle.FillerType, StyleType>()) as T,
-                StyleType.Crosswalk => GetDefault(CrosswalkStyle.Defaults, type.ToEnum<CrosswalkStyle.CrosswalkType, StyleType>()) as T,
+                StyleType.RegularLine => RegularLineStyle.GetDefault(type.ToEnum<RegularLineStyle.RegularLineType, StyleType>()) as T,
+                StyleType.StopLine => StopLineStyle.GetDefault(type.ToEnum<StopLineStyle.StopLineType, StyleType>()) as T,
+                StyleType.Filler => FillerStyle.GetDefault(type.ToEnum<FillerStyle.FillerType, StyleType>()) as T,
+                StyleType.Crosswalk => CrosswalkStyle.GetDefault(type.ToEnum<CrosswalkStyle.CrosswalkType, StyleType>()) as T,
                 _ => null,
             };
         }

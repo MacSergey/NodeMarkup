@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using static NodeMarkup.Manager.FillerStyle;
 
 namespace NodeMarkup.Manager
 {
@@ -24,7 +25,7 @@ namespace NodeMarkup.Manager
 
         protected static string Gap => string.Empty;
 
-        public static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
+        private static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
         {
             {CrosswalkType.Existent, new ExistCrosswalkStyle(DefaultCrosswalkWidth) },
             {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultColor, false, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, false, DefaultCrosswalkSpaceLength, DefaulCrosswalkGapPeriod, true) },
@@ -35,6 +36,10 @@ namespace NodeMarkup.Manager
             {CrosswalkType.Solid, new SolidCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset) },
             {CrosswalkType.ChessBoard, new ChessBoardCrosswalkStyle(DefaultColor, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkSquareSide, DefaultCrosswalkLineCount, false) },
         };
+        public static CrosswalkStyle GetDefault(CrosswalkType type)
+        {
+            return Defaults.TryGetValue(type, out var style) ? style.CopyStyle() : null;
+        }
 
         protected override float WidthWheelStep => 0.1f;
         protected override float WidthMinValue => 0.1f;

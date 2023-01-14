@@ -16,6 +16,7 @@ namespace NodeMarkup.Manager
         public Markup.SupportType Support => Markup.SupportType.Fillers;
 
         public Markup Markup { get; }
+        public int Id { get; }
         public FillerContour Contour { get; }
 
         public PropertyValue<FillerStyle> Style { get; }
@@ -26,6 +27,7 @@ namespace NodeMarkup.Manager
 
         public MarkupFiller(FillerContour contour, FillerStyle style)
         {
+            Id = Math.Abs(GetHashCode());
             Contour = contour;
             Markup = Contour.Markup;
             style.OnStyleChanged = FillerChanged;
@@ -88,7 +90,7 @@ namespace NodeMarkup.Manager
             Style.Value.Render(this, data);
         }
 
-        public override string ToString() => Math.Abs(GetHashCode()).ToString();
+        public override string ToString() => Id.ToString();
     }
     public class FillerLinePart : MarkupLinePart
     {

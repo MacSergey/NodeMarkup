@@ -1,42 +1,179 @@
 ﻿using ModsCommon;
+using ModsCommon.Utilities;
 using NodeMarkup.API;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using IStyleData = NodeMarkup.API.IStyleData;
+using System.Xml.Linq;
+using static NodeMarkup.Manager.CrosswalkStyle;
+using static NodeMarkup.Manager.FillerStyle;
+using static NodeMarkup.Manager.RegularLineStyle;
+using static NodeMarkup.Manager.StopLineStyle;
+using static NodeMarkup.Manager.Style;
 
 namespace NodeMarkup.Utilities.API
 {
+    public class DataProviderFactory : IDataProviderFactory
+    {
+        public IDataProviderV1 GetProvider(string id) => new DataProvider(id);
+    }
     public class DataProvider : IDataProviderV1
     {
+        public string Id { get; }
         public Version ModVersion => SingletonMod<Mod>.Instance.Version;
         public bool IsBeta => SingletonMod<Mod>.Instance.IsBeta;
 
-        public DataProvider()
+        public IEnumerable<string> RegularLineStyles => GetStyles<RegularLineType>(LineType.Regular);
+        public IEnumerable<string> NormalLineStyles => GetStyles<RegularLineType>(LineType.Regular);
+        public IEnumerable<string> StopLineStyles => GetStyles<StopLineType>(LineType.Stop);
+        public IEnumerable<string> LaneLineStyles => GetStyles<RegularLineType>(LineType.Lane);
+        public IEnumerable<string> CrosswalkStyles
         {
+            get
+            {
+                foreach (var type in EnumExtension.GetEnumValues<CrosswalkType>())
+                {
+                    if (type.IsVisible())
+                        yield return type.ToString();
+                }
+            }
+        }
+        public IEnumerable<string> FillerStyles
+        {
+            get
+            {
+                foreach (var type in EnumExtension.GetEnumValues<FillerType>())
+                {
+                    if (type.IsVisible())
+                        yield return type.ToString();
+                }
+            }
+        }
 
+        private IEnumerable<string> GetStyles<StyleType>(LineType lineType)
+            where StyleType : Enum
+        {
+            foreach (var type in EnumExtension.GetEnumValues<StyleType>())
+            {
+                if (type.IsVisible() && (type.GetLineType() & lineType) != 0)
+                    yield return type.ToString();
+            }
+        }
+
+        public DataProvider(string id)
+        {
+            Id = id;
+            Log("Created");
         }
 
         public bool GetNodeMarking(ushort id, out INodeMarkingData nodeMarkingData)
         {
             var nodeMarking = SingletonManager<NodeMarkupManager>.Instance.GetOrCreateMarkup(id);
-            nodeMarkingData = new NodeDataProvider(nodeMarking);
+            nodeMarkingData = new NodeDataProvider(this, nodeMarking);
             return true;
         }
 
         public bool GetSegmentMarking(ushort id, out ISegmentMarkingData segmentMarkingData)
         {
             var segmentMarking = SingletonManager<SegmentMarkupManager>.Instance.GetOrCreateMarkup(id);
-            segmentMarkingData = new SegmentDataProvider(segmentMarking);
+            segmentMarkingData = new SegmentDataProvider(this, segmentMarking);
             return true;
         }
 
         public bool NodeMarkingExist(ushort id) => SingletonManager<NodeMarkupManager>.Instance.Exist(id);
         public bool SegmentMarkingExist(ushort id) => SingletonManager<SegmentMarkupManager>.Instance.Exist(id);
 
-        internal static void CheckPoints(ushort markingId, IPointData startPointData, IPointData endPointData, bool same)
+        public IRegularLineStyleData GetRegularLineStyle(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+
+            var type = GetStyleType<RegularLineType>(name);
+
+            if (!type.IsVisible() || (type.GetLineType() & LineType.Regular) == 0)
+                throw new IntersectionMarkingToolException($"No style with name {name}");
+
+            var style = RegularLineStyle.GetDefault(type);
+            var styleData = new StyleDataProvider(style, name);
+            return styleData;
+        }
+
+        public INormalLineStyleData GetNormalLineStyle(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+
+            var type = GetStyleType<RegularLineType>(name);
+
+            if (!type.IsVisible() || (type.GetLineType() & LineType.Regular) == 0)
+                throw new IntersectionMarkingToolException($"No style with name {name}");
+
+            var style = RegularLineStyle.GetDefault(type);
+            var styleData = new StyleDataProvider(style, name);
+            return styleData;
+        }
+
+        public IStopLineStyleData GetStopLineStyle(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+
+            var type = GetStyleType<StopLineType>(name);
+
+            if (!type.IsVisible())
+                throw new IntersectionMarkingToolException($"No style with name {name}");
+
+            var style = StopLineStyle.GetDefault(type);
+            var styleData = new StyleDataProvider(style, name);
+            return styleData;
+        }
+
+        public ILaneLineStyleData GetLaneLineStyle(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+
+            var type = GetStyleType<RegularLineType>(name);
+
+            if (!type.IsVisible() || (type.GetLineType() & LineType.Lane) == 0)
+                throw new IntersectionMarkingToolException($"No style with name {name}");
+
+            var style = RegularLineStyle.GetDefault(type);
+            var styleData = new StyleDataProvider(style, name);
+            return styleData;
+        }
+
+        public ICrosswalkStyleData GetCrosswalkStyle(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+
+            var type = GetStyleType<CrosswalkType>(name);
+
+            if (!type.IsVisible())
+                throw new IntersectionMarkingToolException($"No style with name {name}");
+
+            var style = CrosswalkStyle.GetDefault(type);
+            var styleData = new StyleDataProvider(style, name);
+            return styleData;
+        }
+
+        public IFillerStyleData GetFillerStyle(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+
+            var type = GetStyleType<FillerType>(name);
+
+            if (!type.IsVisible())
+                throw new IntersectionMarkingToolException($"No style with name {name}");
+
+            var style = FillerStyle.GetDefault(type);
+            var styleData = new StyleDataProvider(style, name);
+            return styleData;
+        }
+
+        internal static void CheckPoints(ushort markingId, IPointData startPointData, IPointData endPointData, bool? same)
         {
             if (startPointData == null)
                 throw new ArgumentNullException(nameof(startPointData));
@@ -50,12 +187,12 @@ namespace NodeMarkup.Utilities.API
             if (endPointData.MarkingId != markingId)
                 throw new MarkingIdNotMatchException(markingId, endPointData.MarkingId);
 
-            if (same)
+            if (same == true)
             {
                 if (startPointData.EntranceId != endPointData.EntranceId)
                     throw new CreateLineException(startPointData, endPointData, "Start point and end point must be from the same entrance");
             }
-            else
+            else if (same == false)
             {
                 if (startPointData.EntranceId == endPointData.EntranceId)
                     throw new CreateLineException(startPointData, endPointData, "Start point and end point must be from different entrances");
@@ -122,9 +259,18 @@ namespace NodeMarkup.Utilities.API
 
             return contour;
         }
+        internal static StyleType GetStyleType<StyleType>(string name)
+            where StyleType : Enum
+        {
+            try { return (StyleType)Enum.Parse(typeof(StyleType), name); }
+            catch { throw new IntersectionMarkingToolException($"No style with name {name}"); }
+        }
+
+        internal void Log(string message) => SingletonMod<Mod>.Logger.Debug($"[{Id} Provider] {message}");
     }
     public struct NodeDataProvider : INodeMarkingData
     {
+        private DataProvider Provider { get; }
         private Manager.NodeMarkup Markup { get; }
         public ushort Id => Markup.Id;
         public int EntranceCount => Markup.EntersCount;
@@ -140,8 +286,9 @@ namespace NodeMarkup.Utilities.API
             }
         }
 
-        public NodeDataProvider(Manager.NodeMarkup markup)
+        public NodeDataProvider(DataProvider provider, Manager.NodeMarkup markup)
         {
+            Provider = provider;
             Markup = markup;
         }
 
@@ -159,31 +306,45 @@ namespace NodeMarkup.Utilities.API
             }
         }
 
-        public bool AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IStyleData styleData, out IRegularLineData lineData)
+        public IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineStyleData styleData)
         {
             DataProvider.CheckPoints(Id, startPointData, endPointData, false);
             var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
             var endPoint = DataProvider.GetEntrancePoint(Markup, endPointData);
 
-            var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<RegularLineStyle>(Style.StyleType.LineSolid);
-            var line = Markup.AddRegularLine(new MarkupPointPair(startPoint, endPoint), style);
-            lineData = new RegularLineDataProvider(line);
-            return true;
+            var pair = new MarkupPointPair(startPoint, endPoint);
+            if (Markup.ExistLine(pair))
+                throw new IntersectionMarkingToolException($"Line {pair} already exist");
+
+            var type = DataProvider.GetStyleType<RegularLineType>(styleData.Name);
+            var style = RegularLineStyle.GetDefault(type);
+            var line = Markup.AddRegularLine(pair, style);
+            Provider.Log($"Line {line} added");
+            var lineData = new RegularLineDataProvider(line);
+            return lineData;
         }
 
-        public bool AddStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IStyleData styleData, out IStopLineData lineData)
+        public IStopLineData AddStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IStopLineStyleData styleData)
         {
             DataProvider.CheckPoints(Id, startPointData, endPointData, true);
+            if (startPointData.Index == endPointData.Index)
+                throw new CreateLineException(startPointData, endPointData, "Start and end of stop line must have differen index");
             var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
             var endPoint = DataProvider.GetEntrancePoint(Markup, endPointData);
 
-            var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<StopLineStyle>(Style.StyleType.StopLineSolid);
-            var line = Markup.AddStopLine(new MarkupPointPair(startPoint, endPoint), style);
-            lineData = new StopLineDataProvider(line);
-            return true;
+            var pair = new MarkupPointPair(startPoint, endPoint);
+            if (Markup.ExistLine(pair))
+                throw new IntersectionMarkingToolException($"Line {pair} already exist");
+
+            var type = DataProvider.GetStyleType<StopLineType>(styleData.Name);
+            var style = StopLineStyle.GetDefault(type);
+            var line = Markup.AddStopLine(pair, style);
+            Provider.Log($"Line {line} added");
+            var lineData = new StopLineDataProvider(line);
+            return lineData;
         }
 
-        public bool AddNormalLine(IEntrancePointData startPointData, INormalPointData endPointData, IStyleData styleData, out INormalLineData lineData)
+        public INormalLineData AddNormalLine(IEntrancePointData startPointData, INormalPointData endPointData, INormalLineStyleData styleData)
         {
             DataProvider.CheckPoints(Id, startPointData, endPointData, true);
             if (startPointData.Index != endPointData.Index)
@@ -191,50 +352,171 @@ namespace NodeMarkup.Utilities.API
             var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
             var endPoint = DataProvider.GetNormalPoint(Markup, endPointData);
 
-            var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<RegularLineStyle>(Style.StyleType.LineSolid);
-            var line = Markup.AddNormalLine(new MarkupPointPair(startPoint, endPoint), style);
-            lineData = new NormalLineDataProvider(line);
-            return true;
+            var pair = new MarkupPointPair(startPoint, endPoint);
+            if (Markup.ExistLine(pair))
+                throw new IntersectionMarkingToolException($"Line {pair} already exist");
+
+            var type = DataProvider.GetStyleType<RegularLineType>(styleData.Name);
+            var style = RegularLineStyle.GetDefault(type);
+            var line = Markup.AddNormalLine(pair, style);
+            Provider.Log($"Line {line} added");
+            var lineData = new NormalLineDataProvider(line);
+            return lineData;
         }
 
-        public bool AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, IStyleData styleData, out ILaneLineData lineData)
+        public ILaneLineData AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, ILaneLineStyleData styleData)
         {
             DataProvider.CheckPoints(Id, startPointData, endPointData, false);
             var startPoint = DataProvider.GetLanePoint(Markup, startPointData);
             var endPoint = DataProvider.GetLanePoint(Markup, endPointData);
 
-            var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<RegularLineStyle>(Style.StyleType.LineSolid);
-            var line = Markup.AddLaneLine(new MarkupPointPair(startPoint, endPoint), style);
-            lineData = new LaneLineDataProvider(line);
-            return true;
+            var pair = new MarkupPointPair(startPoint, endPoint);
+            if (Markup.ExistLine(pair))
+                throw new IntersectionMarkingToolException($"Line {pair} already exist");
+
+            var type = DataProvider.GetStyleType<RegularLineType>(styleData.Name);
+            var style = RegularLineStyle.GetDefault(type);
+            var line = Markup.AddLaneLine(pair, style);
+            Provider.Log($"Line {line} added");
+            var lineData = new LaneLineDataProvider(line);
+            return lineData;
         }
 
-        public bool AddCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, IStyleData styleData, out ICrosswalkData crosswalkData)
+        public ICrosswalkData AddCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, ICrosswalkStyleData styleData)
         {
             DataProvider.CheckPoints(Id, startPointData, endPointData, true);
+            if (startPointData.Index == endPointData.Index)
+                throw new CreateLineException(startPointData, endPointData, "Start and end of crosswalk must have differen index");
             var startPoint = DataProvider.GetCrosswalkPoint(Markup, startPointData);
             var endPoint = DataProvider.GetCrosswalkPoint(Markup, endPointData);
 
-            var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<CrosswalkStyle>(Style.StyleType.CrosswalkZebra);
-            var line = Markup.AddCrosswalkLine(new MarkupPointPair(startPoint, endPoint), style);
-            crosswalkData = new CrosswalkDataProvider(line.Crosswalk);
-            return true;
+            var pair = new MarkupPointPair(startPoint, endPoint);
+            if (Markup.ExistLine(pair))
+                throw new IntersectionMarkingToolException($"Crosswalk {pair} already exist");
+
+            var type = DataProvider.GetStyleType<CrosswalkType>(styleData.Name);
+            var style = CrosswalkStyle.GetDefault(type);
+            var line = Markup.AddCrosswalkLine(pair, style);
+            Provider.Log($"Added crosswalk {line.Crosswalk}");
+            var crosswalkData = new CrosswalkDataProvider(line.Crosswalk);
+            return crosswalkData;
         }
 
-        public bool AddFiller(IEnumerable<IEntrancePointData> pointDatas, out IFillerData fillerData)
+        public IFillerData AddFiller(IEnumerable<IEntrancePointData> pointDatas, IFillerStyleData styleData)
         {
             var contour = DataProvider.GetFillerContour(Markup, pointDatas);
-            var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<FillerStyle>(Style.StyleType.FillerStripe);
+            var type = DataProvider.GetStyleType<FillerType>(styleData.Name);
+            var style = FillerStyle.GetDefault(type);
 
             var filler = Markup.AddFiller(contour, style, out var lines);
-            fillerData = new FillerDataProvider(filler);
-            return true;
+            Provider.Log($"Filler {filler} added");
+            var fillerData = new FillerDataProvider(filler);
+            return fillerData;
+        }
+
+
+        private bool RemoveLine(MarkupPoint startPoint, MarkupPoint endPoint)
+        {
+            if (Markup.TryGetLine(new MarkupPointPair(startPoint, endPoint), out var line))
+            {
+                Markup.RemoveLine(line);
+                Provider.Log($"Line {line} removed");
+                return true;
+            }
+            else
+                return false;
+        }
+        public bool RemoveRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetEntrancePoint(Markup, endPointData);
+            return RemoveLine(startPoint, endPoint);
+        }
+        public bool RemoveNormalLine(IEntrancePointData startPointData, INormalPointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetNormalPoint(Markup, endPointData);
+            return RemoveLine(startPoint, endPoint);
+        }
+        public bool RemoveStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetEntrancePoint(Markup, endPointData);
+            return RemoveLine(startPoint, endPoint);
+        }
+        public bool RemoveLaneLine(ILanePointData startPointData, ILanePointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetLanePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetLanePoint(Markup, endPointData);
+            return RemoveLine(startPoint, endPoint);
+        }
+        public bool RemoveCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetCrosswalkPoint(Markup, startPointData);
+            var endPoint = DataProvider.GetCrosswalkPoint(Markup, endPointData);
+            return RemoveLine(startPoint, endPoint);
+        }
+        public bool RemoveFiller(IFillerData fillerData)
+        {
+            if (fillerData.MarkingId != Markup.Id)
+                throw new MarkingIdNotMatchException(Markup.Id, fillerData.MarkingId);
+
+            if (Markup.TryGetFiller(fillerData.Id, out var filler))
+            {
+                Markup.RemoveFiller(filler);
+                Provider.Log($"Filler {filler} removed");
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool RegularLineExist(IEntrancePointData startPointData, IEntrancePointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetEntrancePoint(Markup, endPointData);
+            return Markup.ExistLine(new MarkupPointPair(startPoint, endPoint));
+        }
+        public bool NormalLineExist(IEntrancePointData startPointData, INormalPointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetNormalPoint(Markup, endPointData);
+            return Markup.ExistLine(new MarkupPointPair(startPoint, endPoint));
+        }
+        public bool StopLineExist(IEntrancePointData startPointData, IEntrancePointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetEntrancePoint(Markup, endPointData);
+            return Markup.ExistLine(new MarkupPointPair(startPoint, endPoint));
+        }
+        public bool LaneLineExist(ILanePointData startPointData, ILanePointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetLanePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetLanePoint(Markup, endPointData);
+            return Markup.ExistLine(new MarkupPointPair(startPoint, endPoint));
+        }
+        public bool CrosswalkExist(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetCrosswalkPoint(Markup, startPointData);
+            var endPoint = DataProvider.GetCrosswalkPoint(Markup, endPointData);
+            return Markup.ExistLine(new MarkupPointPair(startPoint, endPoint));
         }
 
         public override string ToString() => Markup.ToString();
     }
     public struct SegmentDataProvider : ISegmentMarkingData
     {
+        private DataProvider Provider { get; }
         private SegmentMarkup Markup { get; }
         public ushort Id => Markup.Id;
         public int EntranceCount => Markup.EntersCount;
@@ -249,12 +531,13 @@ namespace NodeMarkup.Utilities.API
             }
         }
 
-        public SegmentDataProvider(SegmentMarkup markup)
+        public SegmentDataProvider(DataProvider provider, SegmentMarkup markup)
         {
+            Provider = provider;
             Markup = markup;
         }
 
-        public bool GetEntrance(ushort id, out INodeEntranceData entrance)
+    public bool GetEntrance(ushort id, out INodeEntranceData entrance)
         {
             if (Markup.TryGetEnter(id, out var enter))
             {
@@ -268,37 +551,112 @@ namespace NodeMarkup.Utilities.API
             }
         }
 
-        public bool AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IStyleData styleData, out IRegularLineData lineData)
+        public IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineStyleData styleData)
         {
             DataProvider.CheckPoints(Id, startPointData, endPointData, true);
             var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
             var endPoint = DataProvider.GetEntrancePoint(Markup, endPointData);
 
-            var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<RegularLineStyle>(Style.StyleType.LineSolid);
-            var line = Markup.AddRegularLine(new MarkupPointPair(startPoint, endPoint), style);
-            lineData = new RegularLineDataProvider(line);
-            return true;
+            var pair = new MarkupPointPair(startPoint, endPoint);
+            if (Markup.ExistLine(pair))
+                throw new IntersectionMarkingToolException($"Line {pair} already exist");
+
+            var type = DataProvider.GetStyleType<RegularLineType>(styleData.Name);
+            var style = RegularLineStyle.GetDefault(type);
+            var line = Markup.AddRegularLine(pair, style);
+            Provider.Log($"Line {line} added");
+            var lineData = new RegularLineDataProvider(line);
+            return lineData;
         }
 
-        public bool AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, IStyleData styleData, out ILaneLineData lineData)
+        public ILaneLineData AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, ILaneLineStyleData styleData)
         {
             DataProvider.CheckPoints(Id, startPointData, endPointData, false);
             var startPoint = DataProvider.GetLanePoint(Markup, startPointData);
             var endPoint = DataProvider.GetLanePoint(Markup, endPointData);
 
-            var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<RegularLineStyle>(Style.StyleType.LineSolid);
-            var line = Markup.AddLaneLine(new MarkupPointPair(startPoint, endPoint), style);
-            lineData = new LaneLineDataProvider(line);
-            return true;
+            var pair = new MarkupPointPair(startPoint, endPoint);
+            if (Markup.ExistLine(pair))
+                throw new IntersectionMarkingToolException($"Line {pair} already exist");
+
+            var type = DataProvider.GetStyleType<RegularLineType>(styleData.Name);
+            var style = RegularLineStyle.GetDefault(type);
+            var line = Markup.AddLaneLine(pair, style);
+            Provider.Log($"Line {line} added");
+            var lineData = new LaneLineDataProvider(line);
+            return lineData;
         }
-        public bool AddFiller(IEnumerable<IEntrancePointData> pointDatas, out IFillerData fillerData)
+        public IFillerData AddFiller(IEnumerable<IEntrancePointData> pointDatas, IFillerStyleData styleData)
         {
             var contour = DataProvider.GetFillerContour(Markup, pointDatas);
             var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<FillerStyle>(Style.StyleType.FillerStripe);
 
             var filler = Markup.AddFiller(contour, style, out var lines);
-            fillerData = new FillerDataProvider(filler);
-            return true;
+            Provider.Log($"Filler {filler} added");
+            var fillerData = new FillerDataProvider(filler);
+            return fillerData;
+        }
+
+        private bool RemoveLine(MarkupPoint startPoint, MarkupPoint endPoint)
+        {
+            if (Markup.TryGetLine(new MarkupPointPair(startPoint, endPoint), out var line))
+            {
+                Markup.RemoveLine(line);
+                Provider.Log($"Line {line} removed");
+                return true;
+            }
+            else
+                return false;
+        }
+        public bool RemoveRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetEntrancePoint(Markup, endPointData);
+            return RemoveLine(startPoint, endPoint);
+        }
+        public bool RemoveLaneLine(ILanePointData startPointData, ILanePointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetLanePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetLanePoint(Markup, endPointData);
+            return RemoveLine(startPoint, endPoint);
+        }
+        public bool RemoveFiller(IFillerData fillerData)
+        {
+            if (fillerData.MarkingId != Markup.Id)
+                throw new MarkingIdNotMatchException(Markup.Id, fillerData.MarkingId);
+
+            if (Markup.TryGetFiller(fillerData.Id, out var filler))
+            {
+                Markup.RemoveFiller(filler);
+                Provider.Log($"Filler {filler} removed");
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool RegularLineExist(IEntrancePointData startPointData, IEntrancePointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetEntrancePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetEntrancePoint(Markup, endPointData);
+            return Markup.ExistLine(new MarkupPointPair(startPoint, endPoint));
+        }
+        public bool LaneLineExist(ILanePointData startPointData, ILanePointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetLanePoint(Markup, startPointData);
+            var endPoint = DataProvider.GetLanePoint(Markup, endPointData);
+            return Markup.ExistLine(new MarkupPointPair(startPoint, endPoint));
+        }
+        public bool CrosswalkExist(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData)
+        {
+            DataProvider.CheckPoints(Id, startPointData, endPointData, null);
+            var startPoint = DataProvider.GetCrosswalkPoint(Markup, startPointData);
+            var endPoint = DataProvider.GetCrosswalkPoint(Markup, endPointData);
+            return Markup.ExistLine(new MarkupPointPair(startPoint, endPoint));
         }
 
         public override string ToString() => Markup.ToString();

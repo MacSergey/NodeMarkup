@@ -4,9 +4,11 @@ using ModsCommon.Utilities;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using static NodeMarkup.Manager.RegularLineStyle;
 
 namespace NodeMarkup.Manager
 {
@@ -275,7 +277,7 @@ namespace NodeMarkup.Manager
 
     public abstract class RegularLineStyle : LineStyle<RegularLineStyle>
     {
-        public static Dictionary<RegularLineType, RegularLineStyle> Defaults { get; } = new Dictionary<RegularLineType, RegularLineStyle>()
+        private static Dictionary<RegularLineType, RegularLineStyle> Defaults { get; } = new Dictionary<RegularLineType, RegularLineStyle>()
         {
             {RegularLineType.Solid, new SolidLineStyle(DefaultColor, DefaultWidth)},
             {RegularLineType.Dashed, new DashedLineStyle(DefaultColor, DefaultWidth, DefaultDashLength, DefaultSpaceLength)},
@@ -291,6 +293,10 @@ namespace NodeMarkup.Manager
             {RegularLineType.Text, new RegularLineStyleText(DefaultColor, string.Empty, string.Empty, DefaultTextScale, DefaultObjectAngle, DefaultObjectShift, RegularLineStyleText.TextDirection.LeftToRight, Vector2.zero, RegularLineStyleText.TextAlignment.Middle)},
             {RegularLineType.Network, new NetworkLineStyle(null, DefaultObjectShift, DefaultObjectElevation, DefaultNetworkScale, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DefaultRepeatDistance, false) },
         };
+        public static RegularLineStyle GetDefault(RegularLineType type)
+        {
+            return Defaults.TryGetValue(type, out var style) ? style.CopyLineStyle() : null;
+        }
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
 
@@ -411,7 +417,7 @@ namespace NodeMarkup.Manager
         public static float DefaultStopWidth { get; } = 0.3f;
         public static float DefaultStopOffset { get; } = 0.3f;
 
-        public static Dictionary<StopLineType, StopLineStyle> Defaults { get; } = new Dictionary<StopLineType, StopLineStyle>()
+        private static Dictionary<StopLineType, StopLineStyle> Defaults { get; } = new Dictionary<StopLineType, StopLineStyle>()
         {
             {StopLineType.Solid, new SolidStopLineStyle(DefaultColor, DefaultStopWidth)},
             {StopLineType.Dashed, new DashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultDashLength, DefaultSpaceLength)},
@@ -421,6 +427,10 @@ namespace NodeMarkup.Manager
             {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
             {StopLineType.Pavement, new PavementStopLineStyle(Default3DWidth, Default3DHeigth) },
         };
+        public static StopLineStyle GetDefault(StopLineType type)
+        {
+            return Defaults.TryGetValue(type, out var style) ? style.CopyLineStyle() : null;
+        }
 
         public StopLineStyle(Color32 color, float width) : base(color, width) { }
 
@@ -447,24 +457,38 @@ namespace NodeMarkup.Manager
         public enum StopLineType
         {
             [Description(nameof(Localize.LineStyle_StopSolid))]
+            [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             Solid = StyleType.StopLineSolid,
 
             [Description(nameof(Localize.LineStyle_StopDashed))]
+            [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             Dashed = StyleType.StopLineDashed,
 
             [Description(nameof(Localize.LineStyle_StopDouble))]
+            [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             DoubleSolid = StyleType.StopLineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
+            [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             DoubleDashed = StyleType.StopLineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_StopSolidAndDashed))]
+            [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             SolidAndDashed = StyleType.StopLineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
+            [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             SharkTeeth = StyleType.StopLineSharkTeeth,
 
             [Description(nameof(Localize.LineStyle_StopPavement))]
+            [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             Pavement = StyleType.StopLinePavement,
 
             [Description(nameof(Localize.Style_FromClipboard))]
