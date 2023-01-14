@@ -5,11 +5,13 @@ using ICities;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using NodeMarkup.API;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Panel;
 using NodeMarkup.Utilities;
+using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -72,6 +74,9 @@ namespace NodeMarkup
 
         protected UIAdvancedHelper ShortcutsTab => GetTab(nameof(ShortcutsTab));
         protected UIAdvancedHelper BackupTab => GetTab(nameof(BackupTab));
+#if DEBUG
+        protected UIAdvancedHelper APITab => GetTab(nameof(APITab));
+#endif
 
         public static bool IsUndergroundWithModifier => ToggleUndergroundMode == 0;
         public static string UndergroundModifier => LocalizeExtension.Shift;
@@ -86,6 +91,9 @@ namespace NodeMarkup
             {
                 yield return new KeyValuePair<string, string>(nameof(ShortcutsTab), Localize.Settings_ShortcutsAndModifiersTab);
                 yield return new KeyValuePair<string, string>(nameof(BackupTab), Localize.Settings_BackupTab);
+#if DEBUG
+                yield return new KeyValuePair<string, string>(nameof(APITab), "API");
+#endif
             }
         }
         protected override void FillSettings()
@@ -105,6 +113,7 @@ namespace NodeMarkup
             AddBackupIntersectionTemplates(BackupTab);
 #if DEBUG
             AddDebug(DebugTab);
+            AddAPI(APITab);
 #endif
         }
 
@@ -158,7 +167,7 @@ namespace NodeMarkup
             AddCheckBox(gameplayGroup, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
             AddCheckBox(gameplayGroup, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
             AddCheckBox(gameplayGroup, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
-            AddCheckboxPanel(gameplayGroup, Localize.Settings_AutoApplyPasting, AutoApplyPasting, AutoApplyPastingType, new string[] { Localize.Settings_AutoApplyPastingDirectOnly, Localize.Settings_AutoApplyPastingDirectAndInvert});
+            AddCheckboxPanel(gameplayGroup, Localize.Settings_AutoApplyPasting, AutoApplyPasting, AutoApplyPastingType, new string[] { Localize.Settings_AutoApplyPastingDirectOnly, Localize.Settings_AutoApplyPastingDirectAndInvert });
 
             void OnIlluminationChanged()
             {
@@ -347,6 +356,131 @@ namespace NodeMarkup
             AddFloatField(groupOther, "Delta", IlluminationDelta, 1f);
 
             AddCheckboxPanel(groupOther, "Show filler triangulation", ShowFillerTriangulation, new string[] { "Dont show", "Original", "Splitted", "Both" });
+        }
+
+        private static IDataProviderV1 DataProvider => API.Helper.GetInstance();
+        public static SavedInt NodeId { get; } = new SavedInt(nameof(NodeId), SettingsFile, 1, true);
+        public static SavedInt StartSegmentEnterId { get; } = new SavedInt(nameof(StartSegmentEnterId), SettingsFile, 1, true);
+        public static SavedInt EndSegmentEnterId { get; } = new SavedInt(nameof(EndSegmentEnterId), SettingsFile, 1, true);
+        public static SavedInt StartPointIndex { get; } = new SavedInt(nameof(StartPointIndex), SettingsFile, 1, true);
+        public static SavedInt EndPointIndex { get; } = new SavedInt(nameof(EndPointIndex), SettingsFile, 1, true);
+        public static SavedInt LineType { get; } = new SavedInt(nameof(LineType), SettingsFile, 0, true);
+        public static SavedString FillerPoints { get; } = new SavedString(nameof(FillerPoints), SettingsFile, string.Empty, true);
+
+        private UILabel AddingLineResult { get; set; }
+        private UILabel AddingFillerResult { get; set; }
+
+        private void AddAPI(UIAdvancedHelper helper)
+        {
+            var lineGroup = helper.AddGroup("Add line to node");
+
+            AddIntField(lineGroup, "Node id", NodeId, 1, 1, NetManager.MAX_NODE_COUNT);
+            AddIntField(lineGroup, "Start segment id", StartSegmentEnterId, 1, 1, NetManager.MAX_SEGMENT_COUNT);
+            AddIntField(lineGroup, "End segment id", EndSegmentEnterId, 1, 1, NetManager.MAX_SEGMENT_COUNT);
+            AddIntField(lineGroup, "Start point index", StartPointIndex, 1, 1, 255);
+            AddIntField(lineGroup, "End point index", EndPointIndex, 1, 1, 255);
+            AddCheckboxPanel(lineGroup, "Lane type", LineType, new string[] { "Regular", "Stop", "Normal", "Lane", "Crosswalk" });
+
+            AddButton(lineGroup, "Create line", CreateLine);
+            AddingLineResult = AddLabel(lineGroup, string.Empty);
+
+
+            var fillerGroup = helper.AddGroup("Add filler to node");
+            AddIntField(fillerGroup, "Node id", NodeId, 1, 1, NetManager.MAX_NODE_COUNT);
+            AddStringField(fillerGroup, "Points", FillerPoints);
+
+            AddButton(fillerGroup, "Create filler", CreateFiller);
+            AddingFillerResult = AddLabel(fillerGroup, string.Empty);
+        }
+
+        private void CreateLine()
+        {
+            try
+            {
+                var provider = DataProvider;
+                provider.GetNodeMarking((ushort)NodeId.value, out var nodeMarking);
+                nodeMarking.GetEntrance((ushort)StartSegmentEnterId.value, out var startEnter);
+                nodeMarking.GetEntrance((ushort)EndSegmentEnterId.value, out var endEnter);
+
+                switch (LineType.value)
+                {
+                    case 0:
+                        {
+                            startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
+                            endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
+                            nodeMarking.AddRegularLine(startPoint, endPoint, null, out var line);
+                            AddingLineResult.text = $"Line {line} was added";
+                        }
+                        break;
+                    case 1:
+                        {
+                            startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
+                            endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
+                            nodeMarking.AddStopLine(startPoint, endPoint, null, out var line);
+                            AddingLineResult.text = $"Line {line} was added";
+                        }
+                        break;
+                    case 2:
+                        {
+                            startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
+                            endEnter.GetNormalPoint((byte)EndPointIndex.value, out var endPoint);
+                            nodeMarking.AddNormalLine(startPoint, endPoint, null, out var line);
+                            AddingLineResult.text = $"Line {line} was added";
+                        }
+                        break;
+                    case 3:
+                        {
+                            startEnter.GetLanePoint((byte)StartPointIndex.value, out var startPoint);
+                            endEnter.GetLanePoint((byte)EndPointIndex.value, out var endPoint);
+                            nodeMarking.AddLaneLine(startPoint, endPoint, null, out var line);
+                            AddingLineResult.text = $"Line {line} was added";
+                        }
+                        break;
+                    case 4:
+                        {
+                            startEnter.GetCrosswalkPoint((byte)StartPointIndex.value, out var startPoint);
+                            endEnter.GetCrosswalkPoint((byte)EndPointIndex.value, out var endPoint);
+                            nodeMarking.AddCrosswalk(startPoint, endPoint, null, out var crosswalk);
+                            AddingLineResult.text = $"Crosswalk {crosswalk} was added";
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                AddingLineResult.text = ex.Message;
+            }
+        }
+        private void CreateFiller()
+        {
+            try
+            {
+                var provider = DataProvider;
+                provider.GetNodeMarking((ushort)NodeId.value, out var nodeMarking);
+
+                var points = new List<IEntrancePointData>();
+                var raw = FillerPoints.value.Split(';');
+                foreach(var str in raw)
+                {
+                    var pd = str.Split(':');
+                    if(pd.Length == 2) 
+                    {
+                        var enterId = ushort.Parse(pd[0]);
+                        var index = byte.Parse(pd[1]);
+
+                        nodeMarking.GetEntrance(enterId, out var enter);
+                        enter.GetEntrancePoint(index, out var point);
+                        points.Add(point);
+                    }
+                }
+                points.Add(points[0]);
+                nodeMarking.AddFiller(points, out var filler);
+                AddingFillerResult.text = $"Filler {filler} was added";
+            }
+            catch (Exception ex)
+            {
+                AddingFillerResult.text = ex.Message;
+            }
         }
 #endif
         #endregion

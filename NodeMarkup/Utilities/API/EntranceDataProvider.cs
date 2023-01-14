@@ -71,6 +71,61 @@ namespace NodeMarkup.Utilities.API
         {
             Enter = enter;
         }
+
+        public bool GetEntrancePoint(byte index, out IEntrancePointData pointData)
+        {
+            if(Enter.TryGetPoint(index, MarkupPoint.PointType.Enter, out var point))
+            {
+                pointData = new EntrancePointDataProvider(point as MarkupEnterPoint);
+                return true;
+            }
+            else
+            {
+                pointData = null;
+                return false;
+            }
+        }
+        public bool GetNormalPoint(byte index, out INormalPointData pointData)
+        {
+            if (Enter.TryGetPoint(index, MarkupPoint.PointType.Normal, out var point))
+            {
+                pointData = new NormalPointDataProvider(point as MarkupNormalPoint);
+                return true;
+            }
+            else
+            {
+                pointData = null;
+                return false;
+            }
+        }
+        public bool GetCrosswalkPoint(byte index, out ICrosswalkPointData pointData)
+        {
+            if (Enter.TryGetPoint(index, MarkupPoint.PointType.Crosswalk, out var point))
+            {
+                pointData = new CrosswalkPointDataProvider(point as MarkupCrosswalkPoint);
+                return true;
+            }
+            else
+            {
+                pointData = null;
+                return false;
+            }
+        }
+        public bool GetLanePoint(byte index, out ILanePointData pointData)
+        {
+            if (Enter.TryGetPoint(index, MarkupPoint.PointType.Lane, out var point))
+            {
+                pointData = new LanePointDataProvider(point as MarkupLanePoint);
+                return true;
+            }
+            else
+            {
+                pointData = null;
+                return false;
+            }
+        }
+
+        public override string ToString() => Enter.ToString();
     }
     public struct NodeEntranceDataProvider : INodeEntranceData
     {
@@ -114,5 +169,34 @@ namespace NodeMarkup.Utilities.API
         {
             Enter = enter;
         }
+
+        public bool GetEntrancePoint(byte index, out IEntrancePointData pointData)
+        {
+            if (Enter.TryGetPoint(index, MarkupPoint.PointType.Enter, out var point))
+            {
+                pointData = new EntrancePointDataProvider(point as MarkupEnterPoint);
+                return true;
+            }
+            else
+            {
+                pointData = null;
+                return false;
+            }
+        }
+        public bool GetLanePoint(byte index, out ILanePointData pointData)
+        {
+            if (Enter.TryGetPoint(index, MarkupPoint.PointType.Lane, out var point))
+            {
+                pointData = new LanePointDataProvider(point as MarkupLanePoint);
+                return true;
+            }
+            else
+            {
+                pointData = null;
+                return false;
+            }
+        }
+
+        public override string ToString() => Enter.ToString();
     }
 }

@@ -44,11 +44,14 @@ namespace NodeMarkup.API
         public int EntranceCount { get; }
         public IEnumerable<ISegmentEntranceData> Entrances { get; }
 
-        public bool AddRegularLine(IEntrancePointData startPoint, IEntrancePointData endPoint, out IRegularLineData line);
-        public bool AddStopLine(IEntrancePointData startPoint, IEntrancePointData endPoint, out IStopLineData line);
-        public bool AddNormalLine(IEntrancePointData startPoint, INormalPointData endPoint, out INormalLineData line);
-        public bool AddLaneLine(ILanePointData startPoint, ILanePointData endPoint, out ILaneLineData line);
-        public bool AddCrosswalk(ICrosswalkPointData startPoint, ICrosswalkPointData endPoint, out ICrosswalkData crosswalk);
+        public bool GetEntrance(ushort id, out ISegmentEntranceData entrance);
+
+        public bool AddRegularLine(IEntrancePointData startPoint, IEntrancePointData endPoint, IStyleData style, out IRegularLineData line);
+        public bool AddStopLine(IEntrancePointData startPoint, IEntrancePointData endPoint, IStyleData style, out IStopLineData line);
+        public bool AddNormalLine(IEntrancePointData startPoint, INormalPointData endPoint, IStyleData style, out INormalLineData line);
+        public bool AddLaneLine(ILanePointData startPoint, ILanePointData endPoint, IStyleData style, out ILaneLineData line);
+        public bool AddCrosswalk(ICrosswalkPointData startPoint, ICrosswalkPointData endPoint, IStyleData style, out ICrosswalkData crosswalk);
+        public bool AddFiller(IEnumerable<IEntrancePointData> pointDatas, out IFillerData filler);
     }
     public interface ISegmentMarkingData
     {
@@ -56,8 +59,11 @@ namespace NodeMarkup.API
         public int EntranceCount { get; }
         public IEnumerable<INodeEntranceData> Entrances { get; }
 
-        public bool AddRegularLine(IEntrancePointData startPoint, IEntrancePointData endPoint, out IRegularLineData line);
-        public bool AddLaneLine(ILanePointData startPoint, ILanePointData endPoint, out ILaneLineData line);
+        public bool GetEntrance(ushort id, out INodeEntranceData entrance);
+
+        public bool AddRegularLine(IEntrancePointData startPoint, IEntrancePointData endPoint, IStyleData style, out IRegularLineData line);
+        public bool AddLaneLine(ILanePointData startPoint, ILanePointData endPoint, IStyleData style, out ILaneLineData line);
+        public bool AddFiller(IEnumerable<IEntrancePointData> pointDatas, out IFillerData filler);
     }
     public interface IEntranceData
     {
@@ -71,9 +77,17 @@ namespace NodeMarkup.API
         public IEnumerable<INormalPointData> NormalPoints { get; }
         public IEnumerable<ICrosswalkPointData> CrosswalkPoints { get; }
         public IEnumerable<ILanePointData> LanePoints { get; }
+
+        public bool GetEntrancePoint(byte index, out IEntrancePointData point);
+        public bool GetNormalPoint(byte index, out INormalPointData point);
+        public bool GetCrosswalkPoint(byte index, out ICrosswalkPointData point);
+        public bool GetLanePoint(byte index, out ILanePointData point);
     }
     public interface INodeEntranceData : IEntranceData
     {
+        public bool GetEntrancePoint(byte index, out IEntrancePointData point);
+        public bool GetLanePoint(byte index, out ILanePointData point);
+
         public IEnumerable<IEntrancePointData> EntrancePoints { get; }
         public IEnumerable<ILanePointData> LanePoints { get; }
     }
@@ -83,6 +97,7 @@ namespace NodeMarkup.API
         public byte Index { get; }
         public ushort EntranceId { get; }
         public ushort MarkingId { get; }
+        public IPointSource Source { get; }
     }
     public interface IEntrancePointData : IPointData
     {
@@ -97,6 +112,10 @@ namespace NodeMarkup.API
 
     }
     public interface ILanePointData : IPointData
+    {
+
+    }
+    public interface IPointSource
     {
 
     }
@@ -119,13 +138,17 @@ namespace NodeMarkup.API
     }
     public interface ICrosswalkLineData : ILineData
     {
-
+        ICrosswalkData Crosswalk { get; }
     }
     public interface ILaneLineData : ILineData
     {
 
     }
 
+    public interface IStyleData
+    {
+
+    }
 
     public interface IRuleData
     {
@@ -137,6 +160,6 @@ namespace NodeMarkup.API
     }
     public interface ICrosswalkData
     {
-
+        public ICrosswalkLineData Line { get; }
     }
 }

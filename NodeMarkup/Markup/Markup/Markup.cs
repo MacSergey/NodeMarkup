@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using ObjectId = NodeMarkup.Utilities.ObjectId;
 using static ColossalFramework.Math.VectorUtils;
+using static ColossalFramework.IO.EncodedArray;
 
 namespace NodeMarkup.Manager
 {
@@ -559,6 +560,25 @@ namespace NodeMarkup.Manager
             FillersList.Add(filler);
             RecalculateStyleData(filler);
         }
+        public MarkupFiller AddFiller(FillerContour contour, FillerStyle style, out List<MarkupRegularLine> lines)
+        {
+            lines = new List<MarkupRegularLine>();
+            foreach (var part in contour.RawParts)
+            {
+                if (part.Line is MarkupFillerTempLine line)
+                {
+                    var newLine = AddLine(part.Line.PointPair, null, line.Alignment);
+                    lines.Add(newLine);
+                }
+            }
+            contour.Update();
+
+            var filler = new MarkupFiller(contour, style);
+            FillersList.Add(filler);
+            RecalculateStyleData(filler);
+
+            return filler;
+        }
         public void RemoveFiller(MarkupFiller filler)
         {
             FillersList.Remove(filler);
@@ -896,6 +916,19 @@ namespace NodeMarkup.Manager
         where EnterType : Enter
     {
         public new IEnumerable<EnterType> Enters => EntersList.Cast<EnterType>();
+        public bool TryGetEnter(ushort enterId, out EnterType enter)
+        {
+            if (base.TryGetEnter(enterId, out var e))
+            {
+                enter = e as EnterType;
+                return enter != null;
+            }
+            else
+            {
+                enter = null;
+                return false;
+            }
+        }
         public Markup(ushort id) : base(id)
         {
             Update();

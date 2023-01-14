@@ -19,6 +19,13 @@ namespace NodeMarkup.API
             EndPoint = endPoint;
         }
     }
+    public class CreateFillerException : IntersectionMarkingToolException
+    {
+        public CreateFillerException(string message) : base(message)
+        {
+
+        }
+    }
 
     public class MarkingIdNotMatchException : IntersectionMarkingToolException
     {
@@ -32,11 +39,11 @@ namespace NodeMarkup.API
         }
     }
 
-    public class EnteranceNotExist : IntersectionMarkingToolException
+    public class EntranceNotExist : IntersectionMarkingToolException
     {
         public ushort Id { get; }
         public ushort MarkingId { get; }
-        public EnteranceNotExist(ushort id, ushort markingId) : base($"Enterance #{id} does not exist in marking #{markingId}")
+        public EntranceNotExist(ushort id, ushort markingId) : base($"Entrance #{id} does not exist in marking #{markingId}")
         {
             Id = id;
             MarkingId = markingId;
@@ -45,11 +52,11 @@ namespace NodeMarkup.API
     public class PointNotExist : IntersectionMarkingToolException
     {
         public byte Id { get; }
-        public ushort EnteranceId { get; }
-        public PointNotExist(byte id, ushort enteranceId) : base($"Point #{id} does not exist in enter #{enteranceId}")
+        public ushort EntranceId { get; }
+        public PointNotExist(byte id, ushort entranceId) : base($"Point #{id} does not exist in enter #{entranceId}")
         {
             Id = id;
-            EnteranceId = enteranceId;
+            EntranceId = entranceId;
         }
     }
 }
