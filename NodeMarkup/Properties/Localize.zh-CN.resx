@@ -1268,7 +1268,7 @@
     <value>按类别，再按名称</value>
   </data>
   <data name="Settings_SortApplyDefaultFirst" xml:space="preserve">
-    <value>默认模版总是显示在列表顶上</value>
+    <value>在应用列表顶部显示默认面板</value>
   </data>
   <data name="Settings_SortApplyType" xml:space="preserve">
     <value>将应用列表中的模版排序</value>
@@ -1392,7 +1392,7 @@
     <value>如果目标能匹配源，粘贴的标记将会自动应用</value>
   </data>
   <data name="StyleOption_ObjectProbability" xml:space="preserve">
-    <value>可见性</value>
+    <value>出现概率</value>
   </data>
   <data name="StyleOption_ObjectRange" xml:space="preserve">
     <value>范围</value>

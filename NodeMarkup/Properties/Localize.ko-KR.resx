@@ -1642,12 +1642,26 @@
   <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
     <value>연결됨</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>점을 드래그해 오프셋 변경</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>{0} 키를 누른 채로 점을 옮기세요</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>네트워크 에셋의 마킹을 자동 적용</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>프리셋 연결 모드 나가기</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>프리셋 연결 모드를 나가고 이 프리셋을 네트워크 에셋에 연결하시겠습니까?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>연결</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>연결 안 함</value>
+  </data>
   
 </root>

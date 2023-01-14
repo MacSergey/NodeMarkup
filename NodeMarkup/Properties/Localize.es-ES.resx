@@ -1647,13 +1647,13 @@ para modo subterráneo</value>
     <value>Mantener presionada la tecla {0} para mover un punto</value>
   </data>
   <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
-    <value>Aplicar marcas automáticamente para recursos de red</value>
+    <value>Aplicar marcas automáticamente de redes</value>
   </data>
   <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
     <value>Salir del modo de vinculación de preajustes</value>
   </data>
   <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
-    <value>¿Desea salir del modo de vinculación de preajuste y vincular este preajuste a un recurso de red?</value>
+    <value>¿Desea salir del modo de vinculación de preajuste y vincular este preajuste a una red?</value>
   </data>
   <data name="Tool_Link" xml:space="preserve">
     <value>Vincular</value>
