@@ -160,7 +160,8 @@ namespace NodeMarkup.API
         uint RightLaneId { get; }
         int RightIndex { get; }
         PointLocation Location { get; }
-    }
+		float Position { get; }
+	}
     public enum PointLocation
     {
         None,
