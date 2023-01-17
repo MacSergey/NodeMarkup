@@ -4,12 +4,10 @@ using NodeMarkup.API;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
 using static NodeMarkup.Manager.CrosswalkStyle;
 using static NodeMarkup.Manager.FillerStyle;
 using static NodeMarkup.Manager.RegularLineStyle;
 using static NodeMarkup.Manager.StopLineStyle;
-using static NodeMarkup.Manager.Style;
 
 namespace NodeMarkup.Utilities.API
 {
@@ -172,6 +170,12 @@ namespace NodeMarkup.Utilities.API
             var styleData = new StyleDataProvider(style, name);
             return styleData;
         }
+        public IRegularLineStyleData GetRegularLineStyle(RegularLineStyleType style) => GetRegularLineStyle(style.ToString());
+        public INormalLineStyleData GetNormalLineStyle(NormalLineStyleType style) => GetNormalLineStyle(style.ToString());
+        public IStopLineStyleData GetStopLineStyle(StopLineStyleType style) => GetStopLineStyle(style.ToString());
+        public ILaneLineStyleData GetLaneLineStyle(LaneLineStyleType style) => GetLaneLineStyle(style.ToString());
+        public ICrosswalkStyleData GetCrosswalkStyle(CrosswalkStyleType style) => GetCrosswalkStyle(style.ToString());
+        public IFillerStyleData GetFillerStyle(FillerStyleType style) => GetFillerStyle(style.ToString());
 
         internal static void CheckPoints(ushort markingId, IPointData startPointData, IPointData endPointData, bool? same)
         {

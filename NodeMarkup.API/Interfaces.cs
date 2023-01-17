@@ -60,6 +60,13 @@ namespace NodeMarkup.API
         ILaneLineStyleData GetLaneLineStyle(string name);
         ICrosswalkStyleData GetCrosswalkStyle(string name);
         IFillerStyleData GetFillerStyle(string name);
+
+        IRegularLineStyleData GetRegularLineStyle(RegularLineStyleType style);
+        INormalLineStyleData GetNormalLineStyle(NormalLineStyleType style);
+        IStopLineStyleData GetStopLineStyle(StopLineStyleType style);
+        ILaneLineStyleData GetLaneLineStyle(LaneLineStyleType style);
+        ICrosswalkStyleData GetCrosswalkStyle(CrosswalkStyleType style);
+        IFillerStyleData GetFillerStyle(FillerStyleType style);
     }
 
     public interface IMarkingData
@@ -251,5 +258,78 @@ namespace NodeMarkup.API
     {
         public ushort MarkingId { get; }
         public ICrosswalkLineData Line { get; }
+    }
+
+    public enum RegularLineStyleType
+    {
+        Solid,
+        Dashed,
+        DoubleSolid,
+        DoubleDashed,
+        SolidAndDashed,
+        SharkTeeth,
+        DoubleDashedAsym,
+        ZigZag,
+        Pavement,
+        Prop,
+        Tree,
+        Text,
+        Network,
+    }
+    public enum NormalLineStyleType
+    {
+        Solid,
+        Dashed,
+        DoubleSolid,
+        DoubleDashed,
+        SolidAndDashed,
+        SharkTeeth,
+        DoubleDashedAsym,
+        ZigZag,
+        Pavement,
+        Prop,
+        Tree,
+        Text,
+        Network,
+    }
+    public enum LaneLineStyleType
+    {
+        Prop,
+        Tree,
+        Text,
+        Network,
+    }
+    public enum StopLineStyleType
+    {
+        Solid,
+        Dashed,
+        DoubleSolid,
+        DoubleDashed,
+        SolidAndDashed,
+        SharkTeeth,
+        Pavement,
+    }
+    public enum CrosswalkStyleType
+    {
+        Existent,
+        Zebra,
+        DoubleZebra,
+        ParallelSolidLines,
+        ParallelDashedLines,
+        Ladder,
+        Solid,
+        ChessBoard,
+    }
+    public enum FillerStyleType
+    {
+        Stripe,
+        Grid,
+        Solid,
+        Chevron,
+        Pavement,
+        Grass,
+        Gravel,
+        Ruined,
+        Cliff,
     }
 }
