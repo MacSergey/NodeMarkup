@@ -1,10 +1,8 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
 using NodeMarkup.UI;
 using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,20 +46,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<NetInfo>(nameof(Prefab), Prefab);
-                yield return new StylePropertyDataProvider<float>(nameof(Shift), Shift);
-                yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
-                yield return new StylePropertyDataProvider<float>(nameof(Scale), Scale);
-                yield return new StylePropertyDataProvider<int>(nameof(RepeatDistance), RepeatDistance);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-                yield return new StylePropertyDataProvider<bool>(nameof(Invert), Invert);
-            }
-        }
 
         public NetworkLineStyle(NetInfo prefab, float shift, float elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(new Color32(), 0f)
         {

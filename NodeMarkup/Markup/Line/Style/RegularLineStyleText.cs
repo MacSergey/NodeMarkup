@@ -2,10 +2,8 @@
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
 using NodeMarkup.UI;
 using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -63,21 +61,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<string>(nameof(Text), Text);
-                yield return new StylePropertyDataProvider<string>(nameof(Font), Font);
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Scale), Scale);
-                yield return new StylePropertyDataProvider<TextDirection>(nameof(Direction), Direction);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Spacing), Spacing);
-                yield return new StylePropertyDataProvider<TextAlignment>(nameof(Alignment), Alignment);
-                yield return new StylePropertyDataProvider<float>(nameof(Shift), Shift);
-                yield return new StylePropertyDataProvider<float>(nameof(Angle), Angle);
-            }
-        }
 
         public RegularLineStyleText(Color32 color, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing, TextAlignment alignment) : base(color, default)
         {

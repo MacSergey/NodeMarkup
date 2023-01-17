@@ -1,9 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
 using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
@@ -79,16 +77,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
-            }
-        }
-
         public PavementLineStyle(float width, float elevation) : base(width, elevation) { }
 
         public override RegularLineStyle CopyLineStyle() => new PavementLineStyle(Width, Elevation);

@@ -1,11 +1,9 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -27,13 +25,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-            }
-        }
 
         public override float GetTotalWidth(MarkupCrosswalk crosswalk) => Width;
 
@@ -73,16 +64,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-            }
-        }
 
         public override float GetTotalWidth(MarkupCrosswalk crosswalk) => OffsetBefore + GetVisibleWidth(crosswalk) + OffsetAfter;
         protected abstract float GetVisibleWidth(MarkupCrosswalk crosswalk);
@@ -206,17 +187,6 @@ namespace NodeMarkup.Manager
                 yield return nameof(Offset);
             }
         }
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(LineWidth), LineWidth);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-            }
-        }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public LinedCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float lineWidth) :
@@ -281,24 +251,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<bool>(nameof(TwoColors), TwoColors);
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<Color32>(nameof(SecondColor), SecondColor);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(DashLength), DashLength);
-                yield return new StylePropertyDataProvider<float>(nameof(SpaceLength), SpaceLength);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-                yield return new StylePropertyDataProvider<bool>(nameof(Parallel), Parallel);
-                yield return new StylePropertyDataProvider<bool>(nameof(UseGap), UseGap);
-                yield return new StylePropertyDataProvider<float>(nameof(GapLength), GapLength);
-                yield return new StylePropertyDataProvider<int>(nameof(GapPeriod), GapPeriod);
-            }
-        }
 
         protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width, crosswalk);
         protected float GetLengthCoef(float length, MarkupCrosswalk crosswalk) => length / (Parallel ? 1 : Mathf.Sin(crosswalk.CornerAndNormalAngle));
@@ -526,25 +478,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<bool>(nameof(TwoColors), TwoColors);
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<Color32>(nameof(SecondColor), SecondColor);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(DashLength), DashLength);
-                yield return new StylePropertyDataProvider<float>(nameof(SpaceLength), SpaceLength);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBetween), OffsetBetween);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-                yield return new StylePropertyDataProvider<bool>(nameof(Parallel), Parallel);
-                yield return new StylePropertyDataProvider<bool>(nameof(UseGap), UseGap);
-                yield return new StylePropertyDataProvider<float>(nameof(GapLength), GapLength);
-                yield return new StylePropertyDataProvider<int>(nameof(GapPeriod), GapPeriod);
-            }
-        }
 
         public DoubleZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel, float offset) :
             base(color, secondColor, useSecondColor, width, offsetBefore, offsetAfter, dashLength, spaceLength, useGap, gapLength, gapPeriod, parallel)
@@ -679,17 +612,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(LineWidth), LineWidth);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-            }
-        }
 
         public ParallelSolidLinesCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float lineWidth) :
             base(color, width, offsetBefore, offsetAfter, lineWidth)
@@ -734,19 +656,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(LineWidth), LineWidth);
-                yield return new StylePropertyDataProvider<float>(nameof(DashLength), DashLength);
-                yield return new StylePropertyDataProvider<float>(nameof(SpaceLength), SpaceLength);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-            }
-        }
 
         public ParallelDashedLinesCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float lineWidth, float dashLength, float spaceLength) :
             base(color, width, offsetBefore, offsetAfter, lineWidth)
@@ -826,19 +735,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(LineWidth), LineWidth);
-                yield return new StylePropertyDataProvider<float>(nameof(DashLength), DashLength);
-                yield return new StylePropertyDataProvider<float>(nameof(SpaceLength), SpaceLength);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-            }
-        }
 
         public LadderCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, float lineWidth) : base(color, width, offsetBefore, offsetAfter, lineWidth)
         {
@@ -914,16 +810,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-            }
-        }
 
         public SolidCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter) : base(color, width, offsetBefore, offsetAfter) { }
 
@@ -965,19 +851,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(SquareSide), SquareSide);
-                yield return new StylePropertyDataProvider<int>(nameof(LineCount), LineCount);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-                yield return new StylePropertyDataProvider<bool>(nameof(Invert), Invert);
-            }
-        }
 
         public ChessBoardCrosswalkStyle(Color32 color, float offsetBefore, float offsetAfter, float squareSide, int lineCount, bool invert) : base(color, 0, offsetBefore, offsetAfter)
         {

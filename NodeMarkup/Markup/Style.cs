@@ -2,7 +2,6 @@
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
 using NodeMarkup.UI;
 using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
@@ -100,7 +99,6 @@ namespace NodeMarkup.Manager
         public PropertyColorValue Color { get; }
         public PropertyStructValue<float> Width { get; }
 
-        public abstract IEnumerable<IStylePropertyData> Properties { get; }
         public abstract Dictionary<string, int> PropertyIndices { get; }
         protected static Dictionary<string, int> CreatePropertyIndices(IEnumerable<string> names)
         {

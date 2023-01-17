@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using NodeMarkup.API;
-using NodeMarkup.Utilities.API;
 
 namespace NodeMarkup.Manager
 {
@@ -686,19 +684,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
-                yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
-            }
-        }
 
         public PavementFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
 
@@ -724,21 +709,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
-                yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(CurbSize), CurbSize);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCurbSize), MedianCurbSize);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
-            }
-        }
 
         public GrassFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
@@ -764,21 +734,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
-                yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(CurbSize), CurbSize);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCurbSize), MedianCurbSize);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
-            }
-        }
 
         public GravelFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
@@ -804,21 +759,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
-                yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(CurbSize), CurbSize);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCurbSize), MedianCurbSize);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
-            }
-        }
 
         public RuinedFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 
@@ -844,21 +784,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
-                yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(CurbSize), CurbSize);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCurbSize), MedianCurbSize);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
-            }
-        }
 
         public CliffFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
 

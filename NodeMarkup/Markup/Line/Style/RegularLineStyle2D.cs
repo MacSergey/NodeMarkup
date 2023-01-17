@@ -1,9 +1,7 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
 using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -26,14 +24,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-            }
-        }
 
         public SolidLineStyle(Color32 color, float width) : base(color, width) { }
 
@@ -76,18 +66,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<bool>(nameof(TwoColors), TwoColors);
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<Color32>(nameof(SecondColor), SecondColor);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(Offset), Offset);
-                yield return new StylePropertyDataProvider<Alignment>(nameof(Alignment), Alignment);
-            }
-        }
 
         public DoubleSolidLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offset) : base(color, width)
         {
@@ -187,16 +165,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(DashLength), DashLength);
-                yield return new StylePropertyDataProvider<float>(nameof(SpaceLength), SpaceLength);
-            }
-        }
 
         public DashedLineStyle(Color32 color, float width, float dashLength, float spaceLength) : base(color, width)
         {
@@ -278,20 +246,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<bool>(nameof(TwoColors), TwoColors);
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<Color32>(nameof(SecondColor), SecondColor);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(DashLength), DashLength);
-                yield return new StylePropertyDataProvider<float>(nameof(SpaceLength), SpaceLength);
-                yield return new StylePropertyDataProvider<float>(nameof(Offset), Offset);
-                yield return new StylePropertyDataProvider<Alignment>(nameof(Alignment), Alignment);
-            }
-        }
 
         public DoubleDashedLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
         {
@@ -423,21 +377,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<bool>(nameof(TwoColors), TwoColors);
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<Color32>(nameof(SecondColor), SecondColor);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(DashLength), DashLength);
-                yield return new StylePropertyDataProvider<float>(nameof(SpaceLength), SpaceLength);
-                yield return new StylePropertyDataProvider<float>(nameof(Offset), Offset);
-                yield return new StylePropertyDataProvider<Alignment>(nameof(Alignment), Alignment);
-                yield return new StylePropertyDataProvider<bool>(nameof(Invert), Invert);
-            }
-        }
 
         public DoubleDashedAsymLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLengthA, float dashLengthB, float spaceLength, float offset) : base(color, width)
         {
@@ -618,22 +557,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<bool>(nameof(TwoColors), TwoColors);
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<Color32>(nameof(SecondColor), SecondColor);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(DashLength), DashLength);
-                yield return new StylePropertyDataProvider<float>(nameof(SpaceLength), SpaceLength);
-                yield return new StylePropertyDataProvider<float>(nameof(Offset), Offset);
-                yield return new StylePropertyDataProvider<bool>(nameof(CenterSolid), CenterSolid);
-                yield return new StylePropertyDataProvider<Alignment>(nameof(Alignment), Alignment);
-                yield return new StylePropertyDataProvider<bool>(nameof(Invert), Invert);
-            }
-        }
 
         public SolidAndDashedLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLength, float spaceLength, float offset) : base(color, width)
         {
@@ -789,19 +712,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(Base), Base);
-                yield return new StylePropertyDataProvider<float>(nameof(Height), Height);
-                yield return new StylePropertyDataProvider<float>(nameof(Space), Space);
-                yield return new StylePropertyDataProvider<float>(nameof(Angle), Angle);
-                yield return new StylePropertyDataProvider<bool>(nameof(Invert), Invert);
-            }
-        }
 
         public SharkTeethLineStyle(Color32 color, float baseValue, float height, float space, float angle) : base(color, 0)
         {
@@ -930,18 +840,6 @@ namespace NodeMarkup.Manager
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(Step), Step);
-                yield return new StylePropertyDataProvider<float>(nameof(Offset), Offset);
-                yield return new StylePropertyDataProvider<bool>(nameof(Side), Side);
-                yield return new StylePropertyDataProvider<bool>(nameof(StartFrom), StartFrom);
-            }
-        }
 
         public PropertyStructValue<float> Step { get; }
         public new PropertyStructValue<float> Offset { get; }
