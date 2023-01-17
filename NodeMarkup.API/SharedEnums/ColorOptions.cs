@@ -1,11 +1,6 @@
-﻿using ModsCommon.Utilities;
-
-using NodeMarkup.Utilities;
-
-using System.ComponentModel;
-
-namespace NodeMarkup.API
+﻿namespace NodeMarkup.API
 {
+	// Copy of PropLineStyle.ColorOptionEnum
 	public enum ColorOptions
 	{
 		Color1,

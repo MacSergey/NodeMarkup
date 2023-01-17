@@ -1,3 +1,0 @@
-﻿namespace NodeMarkup.API.Styles
-{
-}

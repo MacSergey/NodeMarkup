@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NodeMarkup.API.Styles
 {
-	public enum RegularLineStyle
+	public enum StopLineStyle
 	{
 		Solid,
 		Dashed,
@@ -21,21 +21,21 @@ namespace NodeMarkup.API.Styles
 		Network
 	}
 
-	public class RegularLine : IRegularLine
+	public class StopLine : IStopLine
 	{
-		private readonly MarkupRegularLine _generatedLine;
+		private readonly MarkupStopLine _generatedLine;
 
-		public RegularLine(MarkupRegularLine generatedLine)
+		public StopLine(MarkupStopLine generatedLine)
 		{
 			_generatedLine = generatedLine;
 		}
 
-		public RegularLine(RegularLineStyle style)
+		public StopLine(StopLineStyle style)
 		{
 			Style = style;
 		}
 
-		public RegularLineStyle Style { get; }
+		public StopLineStyle Style { get; }
 		public Color32 Color { get; set; }
 		public float Width { get; set; } = 0.15F;
 		public Alignment Alignment { get; set; }
@@ -58,9 +58,9 @@ namespace NodeMarkup.API.Styles
 		public ZigZagLineInfo ZigZagInfo { get; internal set; }
 	}
 
-	public interface IRegularLine
+	public interface IStopLine
 	{
-		public RegularLineStyle Style { get; }
+		public StopLineStyle Style { get; }
 		public Color32 Color { get; }
 		public float Width { get; }
 		public Alignment Alignment { get; }
@@ -111,16 +111,16 @@ namespace NodeMarkup.API.Styles
 		public Vector2 Spacing { get; set; }
 		public TextAlignment Alignment { get; set; }
 
-		internal RegularLineStyleText LineStyle(Color32 color) => new RegularLineStyleText(
+		internal StopLineStyleText LineStyle(Color32 color) => new StopLineStyleText(
 			color: color,
 			font: Font,
 			text: Text,
 			scale: Scale,
 			angle: Angle,
 			shift: Shift,
-			direction: (RegularLineStyleText.TextDirection)(int)Direction,
+			direction: (StopLineStyleText.TextDirection)(int)Direction,
 			spacing: Spacing,
-			alignment: (RegularLineStyleText.TextAlignment)(int)Alignment);
+			alignment: (StopLineStyleText.TextAlignment)(int)Alignment);
 	}
 
 	public class NetworkLineInfo

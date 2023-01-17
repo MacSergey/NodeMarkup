@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NodeMarkup.API.Styles
 {
-	public enum RegularLineStyle
+	public enum CrosswalkStyle
 	{
 		Solid,
 		Dashed,
@@ -21,21 +21,21 @@ namespace NodeMarkup.API.Styles
 		Network
 	}
 
-	public class RegularLine : IRegularLine
+	public class Crosswalk : ICrosswalk
 	{
-		private readonly MarkupRegularLine _generatedLine;
+		private readonly MarkupCrosswalk _generatedLine;
 
-		public RegularLine(MarkupRegularLine generatedLine)
+		public Crosswalk(MarkupCrosswalk generatedLine)
 		{
 			_generatedLine = generatedLine;
 		}
 
-		public RegularLine(RegularLineStyle style)
+		public Crosswalk(CrosswalkStyle style)
 		{
 			Style = style;
 		}
 
-		public RegularLineStyle Style { get; }
+		public CrosswalkStyle Style { get; }
 		public Color32 Color { get; set; }
 		public float Width { get; set; } = 0.15F;
 		public Alignment Alignment { get; set; }
@@ -58,9 +58,9 @@ namespace NodeMarkup.API.Styles
 		public ZigZagLineInfo ZigZagInfo { get; internal set; }
 	}
 
-	public interface IRegularLine
+	public interface ICrosswalk
 	{
-		public RegularLineStyle Style { get; }
+		public CrosswalkStyle Style { get; }
 		public Color32 Color { get; }
 		public float Width { get; }
 		public Alignment Alignment { get; }
@@ -111,16 +111,16 @@ namespace NodeMarkup.API.Styles
 		public Vector2 Spacing { get; set; }
 		public TextAlignment Alignment { get; set; }
 
-		internal RegularLineStyleText LineStyle(Color32 color) => new RegularLineStyleText(
+		internal CrosswalkStyleText LineStyle(Color32 color) => new CrosswalkStyleText(
 			color: color,
 			font: Font,
 			text: Text,
 			scale: Scale,
 			angle: Angle,
 			shift: Shift,
-			direction: (RegularLineStyleText.TextDirection)(int)Direction,
+			direction: (CrosswalkStyleText.TextDirection)(int)Direction,
 			spacing: Spacing,
-			alignment: (RegularLineStyleText.TextAlignment)(int)Alignment);
+			alignment: (CrosswalkStyleText.TextAlignment)(int)Alignment);
 	}
 
 	public class NetworkLineInfo
