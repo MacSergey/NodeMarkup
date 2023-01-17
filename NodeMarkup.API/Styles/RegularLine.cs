@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
+using UnityEngine;
+
 using static NodeMarkup.Manager.Style;
 
 namespace NodeMarkup.API.Styles
@@ -142,7 +144,7 @@ namespace NodeMarkup.API.Styles
 		public float OffsetBefore { get; set; }
 		public float OffsetAfter { get; set; }
 
-		internal PropLineStyle LineStyle() => new NetworkLineStyle(
+		internal NetworkLineStyle LineStyle() => new NetworkLineStyle(
 			prefab: Network,
 			shift: Shift,
 			elevation: Elevation,
@@ -180,7 +182,7 @@ namespace NodeMarkup.API.Styles
 	{
 		public TreeInfo Tree { get; set; }
 
-		internal PropLineStyle LineStyle() => new TreeLineStyle(
+		internal TreeLineStyle LineStyle() => new TreeLineStyle(
 			tree: Tree,
 			probability: Probability,
 			step: Step,

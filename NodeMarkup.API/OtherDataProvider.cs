@@ -47,8 +47,8 @@ namespace NodeMarkup.API
         {
             get
             {
-                if (_properties == null)
-                    _properties = Style.Properties.ToDictionary(i => i.Name, i => i);
+                //if (_properties == null)
+                //    _properties = Style.Properties.ToDictionary(i => i.Name, i => i);
 
                 return _properties;
             }

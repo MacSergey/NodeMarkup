@@ -13,6 +13,13 @@
     <PackageIcon>IMTLogo.png</PackageIcon>
     <RepositoryType>https://github.com/MacSergey/NodeMarkup</RepositoryType>
     <PackageTags>CSL;IMT;API;Marking;Mod</PackageTags>
+    <ManagedDLLPath>$(MSBuildProgramFiles32)/Steam/steamapps/common/Cities_Skylines/Cities_Data/Managed</ManagedDLLPath>
+    <ExternalDLLPath>$(SolutionDir)/libs</ExternalDLLPath>
+    <AssemblySearchPaths>
+      $(AssemblySearchPaths);
+      $(ManagedDLLPath);
+      $(ExternalDLLPath)
+    </AssemblySearchPaths>
   </PropertyGroup>
 
   <ItemGroup>
