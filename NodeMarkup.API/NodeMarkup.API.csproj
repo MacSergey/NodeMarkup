@@ -23,27 +23,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DataProvider.cs" />
-    <Compile Remove="EntranceDataProvider.cs" />
-    <Compile Remove="LineDataProvider.cs" />
-    <Compile Remove="OtherDataProvider.cs" />
-    <Compile Remove="PointDataProvider.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\Workshop\IMTLogo.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="DataProvider.cs" />
-    <None Include="EntranceDataProvider.cs" />
-    <None Include="LineDataProvider.cs" />
-    <None Include="OtherDataProvider.cs" />
-    <None Include="PointDataProvider.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\NodeMarkup\NodeMarkup.csproj" />
   </ItemGroup>
 
   <ItemGroup>
