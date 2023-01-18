@@ -1,6 +1,4 @@
-﻿using ICities;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NodeMarkup.API
 {
@@ -76,7 +74,7 @@ namespace NodeMarkup.API
 	public interface IPropLineTemplate : IPrefabLineTemplate
 	{
 		public PropInfo Prop { get; }
-		public int ColorOption { get; }
+		public ColorOptions ColorOption { get; }
 		public Color32 Color { get; }
 	}
 

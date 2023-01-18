@@ -2,9 +2,9 @@
 
 namespace NodeMarkup.API
 {
-	public interface ISegmentMarkingData : IMarkingData
+	public interface ISegmentMarkingApi : IMarkingApi
 	{
-        ushort SegmentId { get; }
+		ushort SegmentId { get; }
 		IEnumerable<ISegmentEntranceData> Entrances { get; }
 	}
 }

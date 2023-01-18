@@ -2,7 +2,7 @@
 
 namespace NodeMarkup.API
 {
-	public interface INodeMarkingData : IMarkingData
+	public interface INodeMarkingApi : IMarkingApi
 	{
 		IEnumerable<INodeEntranceData> Entrances { get; }
 		ushort NodeId { get; }

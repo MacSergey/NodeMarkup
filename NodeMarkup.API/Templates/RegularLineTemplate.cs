@@ -1,6 +1,4 @@
-﻿using ICities;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NodeMarkup.API.Templates
 {

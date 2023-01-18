@@ -2,6 +2,7 @@
 {
 	public enum RegularLineStyle
 	{
+		Empty,
 		Solid,
 		Dashed,
 		DoubleSolid,

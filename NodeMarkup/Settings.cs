@@ -358,7 +358,7 @@ namespace NodeMarkup
             AddCheckboxPanel(groupOther, "Show filler triangulation", ShowFillerTriangulation, new string[] { "Dont show", "Original", "Splitted", "Both" });
         }
 
-        private static IDataProviderV1 DataProvider { get; } = API.Helper.GetProviderV1("Test");
+        private static IDataProviderV1 DataProvider { get; } = API.Helper.GetProviderV1();
         public static SavedInt NodeId { get; } = new SavedInt(nameof(NodeId), SettingsFile, 1, true);
         public static SavedInt StartSegmentEnterId { get; } = new SavedInt(nameof(StartSegmentEnterId), SettingsFile, 1, true);
         public static SavedInt EndSegmentEnterId { get; } = new SavedInt(nameof(EndSegmentEnterId), SettingsFile, 1, true);

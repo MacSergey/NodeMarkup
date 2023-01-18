@@ -11,8 +11,8 @@ namespace NodeMarkup.API
 		private static IDataProviderFactory GetFactory()
 		{
 			if (factory != null)
-			{ 
-				return factory; 
+			{
+				return factory;
 			}
 
 			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -40,6 +40,9 @@ namespace NodeMarkup.API
 			return null;
 		}
 
-		public static IDataProviderV1 GetProviderV1() => GetFactory()?.GetProviderV1();
+		public static IDataProviderV1 GetProviderV1()
+		{
+			return GetFactory()?.GetProviderV1();
+		}
 	}
 }

@@ -7,5 +7,9 @@ namespace NodeMarkup.API
 		ushort Id { get; }
 		int PointCount { get; }
 		IEnumerable<IPointData> Points { get; }
+
+		bool GetEntrancePoint(byte index, out IEntrancePointData point);
+		bool GetNormalPoint(byte index, out INormalPointData point);
+		bool GetLanePoint(byte index, out ILanePointData point);
 	}
 }

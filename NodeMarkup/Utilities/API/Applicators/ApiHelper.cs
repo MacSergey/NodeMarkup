@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NodeMarkup.API.Applicators
 {
-	public static class MarkupHelper
+	public static class ApiHelper
 	{
 		public static void CheckPoints(ushort markingId, IPointData startPointData, IPointData endPointData, bool? same)
 		{

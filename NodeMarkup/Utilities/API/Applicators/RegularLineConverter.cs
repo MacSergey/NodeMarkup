@@ -10,6 +10,9 @@ namespace NodeMarkup.API.Applicators
 		{
 			switch (info.Style)
 			{
+				case RegularLineStyle.Empty:
+					return null;
+
 				case RegularLineStyle.Solid:
 					return new SolidLineStyle(info.Color, info.Width);
 
@@ -67,7 +70,7 @@ namespace NodeMarkup.API.Applicators
 					return new PropLineStyle(
 						info.PropTemplate.Prop,
 						info.PropTemplate.Probability,
-						(PropLineStyle.ColorOptionEnum)info.PropTemplate.ColorOption,
+						(PropLineStyle.ColorOptionEnum)(int)info.PropTemplate.ColorOption,
 						info.PropTemplate.Color,
 						info.PropTemplate.Step,
 						info.PropTemplate.Angle,
