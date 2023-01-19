@@ -14,6 +14,8 @@ namespace NodeMarkup.API
 		IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineTemplate line);
 		IStopLineData AddStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IStopLineTemplate line);
 		void ClearMarkings();
+		void RecalculateDrawData();
+		void ResetPointOffsets();
 		bool CrosswalkExist(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData);
 		bool LaneLineExist(ILanePointData startPointData, ILanePointData endPointData);
 		bool NormalLineExist(IEntrancePointData startPointData);
@@ -24,7 +26,6 @@ namespace NodeMarkup.API
 		bool RemoveNormalLine(IEntrancePointData startPointData);
 		bool RemoveRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData);
 		bool RemoveStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData);
-		void ResetPointOffsets();
 		bool StopLineExist(IEntrancePointData startPointData, IEntrancePointData endPointData);
 		bool TryGetCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, out ICrosswalkLineData crosswalk);
 		bool TryGetLaneLine(ILanePointData startPointData, ILanePointData endPointData, out ILaneLineData laneLine);

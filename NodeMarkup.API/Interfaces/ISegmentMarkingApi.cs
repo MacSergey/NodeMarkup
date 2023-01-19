@@ -5,6 +5,9 @@ namespace NodeMarkup.API
 	public interface ISegmentMarkingApi : IMarkingApi
 	{
 		ushort SegmentId { get; }
-		IEnumerable<ISegmentEntranceData> Entrances { get; }
+		ISegmentEntranceData StartEntrance { get; }
+		ISegmentEntranceData EndEntrance { get; }
+
+		bool TryGetEntrance(ushort nodeId, out ISegmentEntranceData entrance);
 	}
 }

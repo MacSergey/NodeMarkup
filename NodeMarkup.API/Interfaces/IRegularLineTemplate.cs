@@ -13,10 +13,6 @@ namespace NodeMarkup.API
 		public float Offset { get; }
 		public bool UseSecondColor { get; }
 		public Color32 SecondColor { get; }
-		public float Angle { get; }
-		public float SharkTeethSpace { get; }
-		public float SharkTeethHeight { get; }
-		public float BaseSharkTeethWidth { get; }
 		public float AsymDashLength { get; }
 		public float Elevation { get; }
 		public IPropLineTemplate PropTemplate { get; }
@@ -25,6 +21,7 @@ namespace NodeMarkup.API
 		public INetworkLineTemplate NetworkTemplate { get; }
 		public ISharkTeethLineTemplate SharkTeethTemplate { get; }
 		public IZigZagLineTemplate ZigZagTemplate { get; }
+		bool Invert { get; }
 	}
 
 	public interface ISharkTeethLineTemplate

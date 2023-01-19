@@ -6,5 +6,7 @@ namespace NodeMarkup.API
 	{
 		IEnumerable<INodeEntranceData> Entrances { get; }
 		ushort NodeId { get; }
+
+		bool TryGetEntrance(ushort segmentId, out INodeEntranceData entrance);
 	}
 }

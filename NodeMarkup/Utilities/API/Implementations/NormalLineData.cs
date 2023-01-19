@@ -10,18 +10,19 @@ namespace NodeMarkup.API.Implementations
 	{
 		private readonly MarkupRegularLine _generatedLine;
 
-		public NormalLineData(MarkupRegularLine generatedLine, IEntrancePointData startPointData, IPointData endPointData)
+		public NormalLineData(MarkupRegularLine generatedLine, IEntrancePointData startPointData, IPointData endPointData, IMarkingApi marking)
 		{
 			_generatedLine = generatedLine;
-
 			StartPoint = startPointData;
 			EndPoint = endPointData;
+			Marking = marking;
 		}
 
 		public ulong Id => _generatedLine.Id;
 		public IEntrancePointData StartPoint { get; }
 		public IPointData EndPoint { get; }
 		public IEnumerable<ILineRuleData> Rules => _generatedLine.Rules.Select(x => (ILineRuleData)new LineRuleData(x));
+		public IMarkingApi Marking { get; }
 
 		public ILineRuleData AddRule(IRegularLineTemplate line)
 		{

@@ -2,8 +2,9 @@
 {
 	public interface ILineData
 	{
-		public ulong Id { get; }
+		IMarkingApi Marking { get; }
+		ulong Id { get; }
 
-		public void Remove();
+		void Remove();
 	}
 }

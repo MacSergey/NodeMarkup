@@ -8,15 +8,17 @@ namespace NodeMarkup.API.Implementations
 	{
 		private readonly MarkupFiller _generatedFiller;
 
-		public FillerData(MarkupFiller generatedFiller, IEnumerable<IEntrancePointData> pointDatas)
+		public FillerData(MarkupFiller generatedFiller, IEnumerable<IEntrancePointData> pointDatas, IMarkingApi marking)
 		{
 			_generatedFiller = generatedFiller;
 
 			PointDatas = pointDatas;
+			Marking = marking;
 		}
 
 		public int Id => _generatedFiller.Id;
 		public IEnumerable<IEntrancePointData> PointDatas { get; }
+		public IMarkingApi Marking { get; }
 
 		public void Remove()
 		{

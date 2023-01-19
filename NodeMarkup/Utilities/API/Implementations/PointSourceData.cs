@@ -9,16 +9,14 @@ namespace NodeMarkup.API.Implementations
 		public int LeftIndex { get; }
 		public uint RightLaneId { get; }
 		public int RightIndex { get; }
-		public float Position { get; }
 
-		public PointSourceData(PointLocation location, uint leftLaneId, int leftIndex, uint rightLaneId, int rightIndex, float position)
+		public PointSourceData(PointLocation location, uint leftLaneId, int leftIndex, uint rightLaneId, int rightIndex)
 		{
 			Location = location;
 			LeftLaneId = leftLaneId;
 			LeftIndex = leftIndex;
 			RightLaneId = rightLaneId;
 			RightIndex = rightIndex;
-			Position = position;
 		}
 
 		public PointSourceData(NetInfoPointSource source)
@@ -52,26 +50,6 @@ namespace NodeMarkup.API.Implementations
 				RightLaneId = default;
 				RightIndex = default;
 			}
-
-			if ((source.Location & MarkupPoint.LocationType.Between) != MarkupPoint.LocationType.None)
-			{
-				Position = (source.Enter.IsLaneInvert ? -source.RightLane.HalfWidth : source.RightLane.HalfWidth) + source.RightLane.Position;
-			}
-			else if ((source.Location & MarkupPoint.LocationType.Edge) != MarkupPoint.LocationType.None)
-			{
-				switch (source.Location)
-				{
-					case MarkupPoint.LocationType.LeftEdge:
-						Position = (source.Enter.IsLaneInvert ? -source.RightLane.HalfWidth : source.RightLane.HalfWidth) + source.RightLane.Position;
-						break;
-
-					case MarkupPoint.LocationType.RightEdge:
-						Position = (source.Enter.IsLaneInvert ? source.LeftLane.HalfWidth : -source.LeftLane.HalfWidth) + source.LeftLane.Position;
-						break;
-				}
-			}
-
-			Position = 0F;
 		}
 	}
 }

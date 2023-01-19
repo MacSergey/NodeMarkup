@@ -12,15 +12,17 @@ namespace NodeMarkup.API.Implementations
 	{
 		private readonly MarkupRegularLine _generatedLine;
 
-		public RegularLineData(MarkupRegularLine generatedLine, IEntrancePointData startPointData, IEntrancePointData endPointData)
+		public RegularLineData(MarkupRegularLine generatedLine, IEntrancePointData startPointData, IEntrancePointData endPointData, IMarkingApi marking)
 		{
 			_generatedLine = generatedLine;
 
 			StartPoint = startPointData;
 			EndPoint = endPointData;
+			Marking = marking;
 		}
 
 		public ulong Id => _generatedLine.Id;
+		public IMarkingApi Marking { get; }
 		public IEntrancePointData StartPoint { get; }
 		public IEntrancePointData EndPoint { get; }
 		public IEnumerable<ILineRuleData> Rules => _generatedLine.Rules.Select(x => (ILineRuleData)new LineRuleData(x));

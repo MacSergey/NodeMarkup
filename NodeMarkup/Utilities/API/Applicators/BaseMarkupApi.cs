@@ -22,6 +22,7 @@ namespace NodeMarkup.API.Applicators
 
 		public void ClearMarkings() => Markup.Clear();
 		public void ResetPointOffsets() => Markup.ResetOffsets();
+		public void RecalculateDrawData() => Markup.RecalculateDrawData();
 
 		#region Add
 		public IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineTemplate line)
@@ -42,7 +43,7 @@ namespace NodeMarkup.API.Applicators
 
 			var generatedLine = Markup.AddRegularLine(pair, style, (Manager.Alignment)(int)line.Alignment);
 			
-			return new RegularLineData(generatedLine, startPointData, endPointData);
+			return new RegularLineData(generatedLine, startPointData, endPointData, this);
 		}
 
 		public INormalLineData AddNormalLine(IEntrancePointData startPointData, IRegularLineTemplate line)
@@ -64,7 +65,7 @@ namespace NodeMarkup.API.Applicators
 
 			var generatedLine = Markup.AddRegularLine(pair, style, (Manager.Alignment)(int)line.Alignment);
 
-			return new NormalLineData(generatedLine, startPointData, new NormalPointData(endPoint as MarkupNormalPoint, startPointData.Entrance));
+			return new NormalLineData(generatedLine, startPointData, new NormalPointData(endPoint as MarkupNormalPoint, startPointData.Entrance), this);
 		}
 
 		public ILaneLineData AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, IRegularLineTemplate line)
@@ -83,7 +84,7 @@ namespace NodeMarkup.API.Applicators
 
 			var generatedLine = Markup.AddLaneLine(pair, style);
 
-			return new LaneLineData(generatedLine, startPointData, endPointData);
+			return new LaneLineData(generatedLine, startPointData, endPointData, this);
 		}
 
 		public IStopLineData AddStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IStopLineTemplate line)
@@ -105,7 +106,7 @@ namespace NodeMarkup.API.Applicators
 
 			var generatedLine = Markup.AddStopLine(pair, style);
 
-			return new StopLineData(generatedLine, startPointData, endPointData);
+			return new StopLineData(generatedLine, startPointData, endPointData, this);
 		}
 
 		public ICrosswalkLineData AddCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, ICrosswalkTemplate crosswalk)
@@ -127,7 +128,7 @@ namespace NodeMarkup.API.Applicators
 
 			var generatedCrosswalk = Markup.AddCrosswalkLine(pair, style);
 
-			return new CrosswalkLineData(generatedCrosswalk, startPointData, endPointData);
+			return new CrosswalkLineData(generatedCrosswalk, startPointData, endPointData, this);
 		}
 
 		public IFillerData AddFiller(IEnumerable<IEntrancePointData> pointDatas, IFillerTemplate filler)
@@ -146,7 +147,7 @@ namespace NodeMarkup.API.Applicators
 
 			var fillerData = Markup.AddFiller(contour, style, out var lines);
 
-			return new FillerData(fillerData, pointDatas);
+			return new FillerData(fillerData, pointDatas, this);
 		}
 		#endregion
 
@@ -216,8 +217,8 @@ namespace NodeMarkup.API.Applicators
 
 		public bool RemoveFiller(IFillerData fillerData)
 		{
-			if (fillerData.MarkingId != Markup.Id)
-				throw new MarkingIdNotMatchException(Markup.Id, fillerData.MarkingId);
+			if (fillerData.Marking.Id != Markup.Id)
+				throw new MarkingIdNotMatchException(Markup.Id, fillerData.Marking.Id);
 
 			if (Markup.TryGetFiller(fillerData.Id, out var filler))
 			{
@@ -298,7 +299,7 @@ namespace NodeMarkup.API.Applicators
 				var startEnterData = startEnter is SegmentEnter segmentEnter1 ? (IEntranceData)new NodeEntranceData(segmentEnter1) : startEnter is NodeEnter nodeEnter1 ? new SegmentEntranceData(nodeEnter1) : null;
 				var endEnterData = endEnter is SegmentEnter segmentEnter2 ? (IEntranceData)new NodeEntranceData(segmentEnter2) : endEnter is NodeEnter nodeEnter2 ? new SegmentEntranceData(nodeEnter2) : null;
 
-				regularLine = new RegularLineData(line, new EntrancePointData(startPoint, startEnterData), new EntrancePointData(endPoint, endEnterData));
+				regularLine = new RegularLineData(line, new EntrancePointData(startPoint, startEnterData), new EntrancePointData(endPoint, endEnterData), this);
 
 				return true;
 			}
@@ -322,7 +323,7 @@ namespace NodeMarkup.API.Applicators
 			{
 				var startEnterData = startEnter is SegmentEnter segmentEnter1 ? (IEntranceData)new NodeEntranceData(segmentEnter1) : startEnter is NodeEnter nodeEnter1 ? new SegmentEntranceData(nodeEnter1) : null;
 			
-				regularLine = new NormalLineData(line, new EntrancePointData(startPoint, startEnterData), new LanePointData(endPoint as MarkupLanePoint, startEnterData));
+				regularLine = new NormalLineData(line, new EntrancePointData(startPoint, startEnterData), new LanePointData(endPoint as MarkupLanePoint, startEnterData), this);
 
 				return true;
 			}
@@ -341,7 +342,7 @@ namespace NodeMarkup.API.Applicators
 
 			if (Markup.TryGetLine<MarkupStopLine>(startPoint, endPoint, out var line))
 			{
-				stopLine = new StopLineData(line, startPointData, endPointData);
+				stopLine = new StopLineData(line, startPointData, endPointData, this);
 
 				return true;
 			}
@@ -360,7 +361,7 @@ namespace NodeMarkup.API.Applicators
 
 			if (Markup.TryGetLine<MarkupLaneLine>(startPoint, endPoint, out var line))
 			{
-				laneLine = new LaneLineData(line, startPointData, endPointData);
+				laneLine = new LaneLineData(line, startPointData, endPointData, this);
 
 				return true;
 			}
@@ -379,7 +380,7 @@ namespace NodeMarkup.API.Applicators
 
 			if (Markup.TryGetLine<MarkupCrosswalkLine>(startPoint, endPoint, out var line))
 			{
-				crosswalk = new CrosswalkLineData(line, startPointData, endPointData);
+				crosswalk = new CrosswalkLineData(line, startPointData, endPointData, this);
 
 				return true;
 			}

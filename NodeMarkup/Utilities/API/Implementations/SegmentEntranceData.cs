@@ -13,7 +13,12 @@ namespace NodeMarkup.API.Implementations
 		public ushort Id => Enter.Id;
 		public int PointCount => Enter.PointCount;
 
-		public IEnumerable<IPointData> Points
+		public NodeEntranceData(SegmentEnter enter)
+		{
+			Enter = enter;
+		}
+
+		public IEnumerable<IEntrancePointData> Points
 		{
 			get
 			{
@@ -57,11 +62,6 @@ namespace NodeMarkup.API.Implementations
 			}
 		}
 
-		public NodeEntranceData(SegmentEnter enter)
-		{
-			Enter = enter;
-		}
-
 		public bool GetEntrancePoint(byte index, out IEntrancePointData pointData)
 		{
 			if (Enter.TryGetPoint(index, MarkupPoint.PointType.Enter, out var point))
@@ -75,6 +75,7 @@ namespace NodeMarkup.API.Implementations
 				return false;
 			}
 		}
+
 		public bool GetNormalPoint(byte index, out INormalPointData pointData)
 		{
 			if (Enter.TryGetPoint(index, MarkupPoint.PointType.Normal, out var point))
@@ -88,6 +89,7 @@ namespace NodeMarkup.API.Implementations
 				return false;
 			}
 		}
+
 		public bool GetCrosswalkPoint(byte index, out ICrosswalkPointData pointData)
 		{
 			if (Enter.TryGetPoint(index, MarkupPoint.PointType.Crosswalk, out var point))
@@ -101,6 +103,7 @@ namespace NodeMarkup.API.Implementations
 				return false;
 			}
 		}
+
 		public bool GetLanePoint(byte index, out ILanePointData pointData)
 		{
 			if (Enter.TryGetPoint(index, MarkupPoint.PointType.Lane, out var point))

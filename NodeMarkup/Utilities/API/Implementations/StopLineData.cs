@@ -6,17 +6,19 @@ namespace NodeMarkup.API.Implementations
 	{
 		private readonly MarkupStopLine _generatedLine;
 
-		public StopLineData(MarkupStopLine generatedLine, IEntrancePointData startPointData, IEntrancePointData endPointData)
+		public StopLineData(MarkupStopLine generatedLine, IEntrancePointData startPointData, IEntrancePointData endPointData, IMarkingApi marking)
 		{
 			_generatedLine = generatedLine;
 
 			StartPoint = startPointData;
 			EndPoint = endPointData;
+			Marking = marking;
 		}
 
 		public ulong Id => _generatedLine.Id;
 		public IEntrancePointData StartPoint { get; }
 		public IEntrancePointData EndPoint { get; }
+		public IMarkingApi Marking { get; }
 
 		public void Remove()
 		{

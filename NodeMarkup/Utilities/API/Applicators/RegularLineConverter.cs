@@ -26,7 +26,9 @@ namespace NodeMarkup.API.Applicators
 					return new DoubleDashedLineStyle(info.Color, info.SecondColor, info.UseSecondColor, info.Width, info.DashLength, info.SpaceLength, info.Offset);
 
 				case RegularLineStyle.SolidAndDashed:
-					return new SolidAndDashedLineStyle(info.Color, info.SecondColor, info.UseSecondColor, info.Width, info.DashLength, info.SpaceLength, info.Offset);
+					var style = new SolidAndDashedLineStyle(info.Color, info.SecondColor, info.UseSecondColor, info.Width, info.DashLength, info.SpaceLength, info.Offset);
+					style.Invert.Value = info.Invert;
+					return style;
 
 				case RegularLineStyle.DoubleDashedAsym:
 					return new DoubleDashedAsymLineStyle(info.Color, info.SecondColor, info.UseSecondColor, info.Width, info.DashLength, info.AsymDashLength, info.SpaceLength, info.Offset);

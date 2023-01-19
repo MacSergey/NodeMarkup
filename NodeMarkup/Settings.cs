@@ -20,6 +20,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static ModsCommon.SettingsHelper;
+using NodeMarkup.API.Templates;
 
 namespace NodeMarkup
 {
@@ -405,9 +406,9 @@ namespace NodeMarkup
             try
             {
                 var provider = DataProvider;
-                provider.GetNodeMarking((ushort)NodeId.value, out var nodeMarking);
-                nodeMarking.GetEntrance((ushort)StartSegmentEnterId.value, out var startEnter);
-                nodeMarking.GetEntrance((ushort)EndSegmentEnterId.value, out var endEnter);
+                var nodeMarking = provider.GetNodeMarking((ushort)NodeId.value);
+                nodeMarking.TryGetEntrance((ushort)StartSegmentEnterId.value, out var startEnter);
+                nodeMarking.TryGetEntrance((ushort)EndSegmentEnterId.value, out var endEnter);
 
                 switch (LineType.value)
                 {
@@ -415,10 +416,11 @@ namespace NodeMarkup
                         {
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
-                            var style = provider.GetRegularLineStyle(LineStyle.value);
-                            var color = style.GetValue("Color");
-                            style.SetValue("Color", new Color32(255, 0, 0, 255));
-                            var line = nodeMarking.AddRegularLine(startPoint, endPoint, style);
+                            var line = nodeMarking.AddRegularLine(startPoint, endPoint, new RegularLineTemplate
+                            {
+                                Style = API.RegularLineStyle.Solid,
+                                Color = new Color32(255, 0, 0, 255)
+							});
                             AddingLineResult.text = $"Line {line} was added";
                         }
                         break;
@@ -426,28 +428,36 @@ namespace NodeMarkup
                         {
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
-                            var style = provider.GetStopLineStyle(LineStyle.value);
-                            var line = nodeMarking.AddStopLine(startPoint, endPoint, style);
+                            var line = nodeMarking.AddStopLine(startPoint, endPoint, new StopLineTemplate
+                            {
+                                Style = API.StopLineStyle.Solid,
+								Color = new Color32(255, 0, 255, 0)
+							});
                             AddingLineResult.text = $"Line {line} was added";
                         }
                         break;
                     case 2:
                         {
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
-                            endEnter.GetNormalPoint((byte)EndPointIndex.value, out var endPoint);
-                            var style = provider.GetNormalLineStyle(LineStyle.value);
-                            var line = nodeMarking.AddNormalLine(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Line {line} was added";
+                            var line = nodeMarking.AddNormalLine(startPoint, new RegularLineTemplate
+                            {
+                                Style = API.RegularLineStyle.Dashed,
+								Color = new Color32(255, 255, 255, 0)
+                            });
+						AddingLineResult.text = $"Line {line} was added";
                         }
                         break;
                     case 3:
                         {
                             startEnter.GetLanePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetLanePoint((byte)EndPointIndex.value, out var endPoint);
-                            var style = provider.GetLaneLineStyle(LineStyle.value);
-                            var direction = style.GetValue("Direction");
-                            style.SetValue("Direction", 2);
-                            var line = nodeMarking.AddLaneLine(startPoint, endPoint, style);
+                            var line = nodeMarking.AddLaneLine(startPoint, endPoint, new RegularLineTemplate
+                            {
+                                PropTemplate = new PropLineTemplate
+                                {
+                                    Prop = PrefabCollection<PropInfo>.FindLoaded("Flowerpot 04"),                                    
+								}
+                            });
                             AddingLineResult.text = $"Line {line} was added";
                         }
                         break;
@@ -455,8 +465,11 @@ namespace NodeMarkup
                         {
                             startEnter.GetCrosswalkPoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetCrosswalkPoint((byte)EndPointIndex.value, out var endPoint);
-                            var style = provider.GetCrosswalkStyle(LineStyle.value);
-                            var crosswalk = nodeMarking.AddCrosswalk(startPoint, endPoint, style);
+                            var crosswalk = nodeMarking.AddCrosswalk(startPoint, endPoint, new CrosswalkTemplate
+                            {
+                                Style = API.CrosswalkStyle.Zebra,
+                                Width = 2,
+                            });
                             AddingLineResult.text = $"Crosswalk {crosswalk} was added";
                         }
                         break;
@@ -472,9 +485,9 @@ namespace NodeMarkup
             try
             {
                 var provider = DataProvider;
-                provider.GetNodeMarking((ushort)NodeId.value, out var nodeMarking);
-                nodeMarking.GetEntrance((ushort)StartSegmentEnterId.value, out var startEnter);
-                nodeMarking.GetEntrance((ushort)EndSegmentEnterId.value, out var endEnter);
+                var nodeMarking = provider.GetNodeMarking((ushort)NodeId.value);
+                nodeMarking.TryGetEntrance((ushort)StartSegmentEnterId.value, out var startEnter);
+                nodeMarking.TryGetEntrance((ushort)EndSegmentEnterId.value, out var endEnter);
 
                 switch (LineType.value)
                 {
@@ -497,8 +510,7 @@ namespace NodeMarkup
                     case 2:
                         {
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
-                            endEnter.GetNormalPoint((byte)EndPointIndex.value, out var endPoint);
-                            var removed = nodeMarking.RemoveNormalLine(startPoint, endPoint);
+                            var removed = nodeMarking.RemoveNormalLine(startPoint);
                             AddingLineResult.text = removed ? "Line was removed" : "Line does not exist";
                         }
                         break;
@@ -530,9 +542,9 @@ namespace NodeMarkup
             try
             {
                 var provider = DataProvider;
-                provider.GetNodeMarking((ushort)NodeId.value, out var nodeMarking);
-                nodeMarking.GetEntrance((ushort)StartSegmentEnterId.value, out var startEnter);
-                nodeMarking.GetEntrance((ushort)EndSegmentEnterId.value, out var endEnter);
+                var nodeMarking = provider.GetNodeMarking((ushort)NodeId.value);
+                nodeMarking.TryGetEntrance((ushort)StartSegmentEnterId.value, out var startEnter);
+                nodeMarking.TryGetEntrance((ushort)EndSegmentEnterId.value, out var endEnter);
 
                 switch (LineType.value)
                 {
@@ -555,8 +567,7 @@ namespace NodeMarkup
                     case 2:
                         {
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
-                            endEnter.GetNormalPoint((byte)EndPointIndex.value, out var endPoint);
-                            var exist = nodeMarking.NormalLineExist(startPoint, endPoint);
+                            var exist = nodeMarking.NormalLineExist(startPoint);
                             AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
@@ -588,7 +599,7 @@ namespace NodeMarkup
             try
             {
                 var provider = DataProvider;
-                provider.GetNodeMarking((ushort)NodeId.value, out var nodeMarking);
+                var nodeMarking = provider.GetNodeMarking((ushort)NodeId.value);
 
                 var points = new List<IEntrancePointData>();
                 var raw = FillerPoints.value.Split(';');
@@ -600,14 +611,19 @@ namespace NodeMarkup
                         var enterId = ushort.Parse(pd[0]);
                         var index = byte.Parse(pd[1]);
 
-                        nodeMarking.GetEntrance(enterId, out var enter);
+                        nodeMarking.TryGetEntrance(enterId, out var enter);
                         enter.GetEntrancePoint(index, out var point);
                         points.Add(point);
                     }
                 }
                 points.Add(points[0]);
-                var style = provider.GetFillerStyle(FillerStyle.value);
-                var filler = nodeMarking.AddFiller(points, style);
+                var filler = nodeMarking.AddFiller(points, new FillerTemplate
+                {
+                    Style = API.FillerStyle.Stripe,
+                    Color = new Color(180, 180, 180, 180),
+                    Width = 0.2F,
+                    Step = 0.5F
+                });
                 AddingFillerResult.text = $"Filler {filler} was added";
             }
             catch (Exception ex)

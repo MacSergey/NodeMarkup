@@ -13,7 +13,9 @@ namespace NodeMarkup.API.Implementations
 
 		public NodeMarkupApi(ushort id, IDataProvider provider) 
 			: base(provider, SingletonManager<NodeMarkupManager>.Instance.GetOrCreateMarkup(id))
-		{ NodeId = id; }
+		{ 
+			NodeId = id; 
+		}
 
 		public IEnumerable<INodeEntranceData> Entrances
 		{
@@ -25,25 +27,20 @@ namespace NodeMarkup.API.Implementations
 				}
 			}
 		}
-	}
 
-	public sealed class SegmentMarkupApi : BaseMarkupApi, ISegmentMarkingApi
-	{
-		public ushort SegmentId { get; }
-
-		public SegmentMarkupApi(ushort id, IDataProvider provider)
-			: base(provider, SingletonManager<SegmentMarkupManager>.Instance.GetOrCreateMarkup(id))
-		{ SegmentId = id; }
-
-		public IEnumerable<ISegmentEntranceData> Entrances
+		public bool TryGetEntrance(ushort segmentId, out INodeEntranceData entrance)
 		{
-			get
+			foreach (var item in (Markup as Manager.NodeMarkup).Enters)
 			{
-				foreach (var item in (Markup as SegmentMarkup).Enters)
+				if (segmentId == item.Id)
 				{
-					yield return new SegmentEntranceData(item);
+					entrance = new NodeEntranceData(item);
+					return true;
 				}
 			}
+
+			entrance = null;
+			return false;
 		}
 	}
 }

@@ -18,4 +18,12 @@ namespace NodeMarkup.API.Templates
 		public FillerStyle Style { get; set; }
 		public float Width { get; set; }
 	}
+
+	public class FillerGuidesTemplate : IFillerGuides
+	{
+		public int LeftGuideA { get; set; }
+		public int LeftGuideB { get; set; }
+		public int RightGuideA { get; set; }
+		public int RightGuideB { get; set; }
+	}
 }

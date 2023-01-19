@@ -6,17 +6,19 @@ namespace NodeMarkup.API.Implementations
 	{
 		private readonly MarkupCrosswalkLine _generatedLine;
 
-		public CrosswalkLineData(MarkupCrosswalkLine generatedLine, ICrosswalkPointData startPointData, ICrosswalkPointData endPointData)
+		public CrosswalkLineData(MarkupCrosswalkLine generatedLine, ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, IMarkingApi marking)
 		{
 			_generatedLine = generatedLine;
 
 			StartPoint = startPointData;
 			EndPoint = endPointData;
+			Marking = marking;
 		}
 
 		public ulong Id => _generatedLine.Id;
 		public ICrosswalkPointData StartPoint { get; }
 		public ICrosswalkPointData EndPoint { get; }
+		public IMarkingApi Marking { get; }
 
 		public void Remove()
 		{

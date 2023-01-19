@@ -13,12 +13,9 @@ namespace NodeMarkup.API.Templates
 		public float Offset { get; set; }
 		public bool UseSecondColor { get; set; }
 		public Color32 SecondColor { get; set; }
-		public float Angle { get; set; }
-		public float SharkTeethSpace { get; set; }
-		public float SharkTeethHeight { get; set; }
-		public float BaseSharkTeethWidth { get; set; }
 		public float AsymDashLength { get; set; }
 		public float Elevation { get; set; }
+		public bool Invert { get; set; }
 		public IPropLineTemplate PropTemplate { get; set; }
 		public ITreeLineTemplate TreeTemplate { get; set; }
 		public ITextLineTemplate TextTemplate { get; set; }
@@ -74,7 +71,7 @@ namespace NodeMarkup.API.Templates
 	public class PropLineTemplate : PrefabLineTemplate, IPropLineTemplate
 	{
 		public PropInfo Prop { get; set; }
-		public int ColorOption { get; set; }
+		public ColorOptions ColorOption { get; set; }
 		public Color32 Color { get; set; }
 	}
 

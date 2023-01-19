@@ -4,5 +4,6 @@
 	{
 		IPointSourceData Source { get; }
 		float Offset { get; set; }
+		float Position { get; }
 	}
 }

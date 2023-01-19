@@ -10,7 +10,7 @@ namespace NodeMarkup.API.Implementations
 		public ushort Id => Enter.Id;
 		public int PointCount => Enter.PointCount;
 
-		public IEnumerable<IPointData> Points
+		public IEnumerable<IEntrancePointData> Points
 		{
 			get
 			{
