@@ -3,5 +3,7 @@
 	public interface ILineData
 	{
 		public ulong Id { get; }
+
+		public void Remove();
 	}
 }

@@ -1,8 +1,12 @@
-﻿namespace NodeMarkup.API
+﻿using System.Collections.Generic;
+
+namespace NodeMarkup.API
 {
 	public interface IFillerData
 	{
-		ushort MarkingId { get; }
 		int Id { get; }
+		IEnumerable<IEntrancePointData> PointDatas { get; }
+
+		void Remove();
 	}
 }

@@ -33,15 +33,17 @@ namespace NodeMarkup.API.Applicators
 			}
 		}
 
-		public static MarkupPoint GetEntrancePoint(Markup markup, IEntrancePointData pointData)
+		public static MarkupEnterPoint GetEntrancePoint(Markup markup, IEntrancePointData pointData) => GetEntrancePoint(markup, pointData, out _);
+
+		public static MarkupEnterPoint GetEntrancePoint(Markup markup, IEntrancePointData pointData, out Enter enter)
 		{
-			if (!markup.TryGetEnter(pointData.EntranceId, out var enter))
+			if (!markup.TryGetEnter(pointData.EntranceId, out enter))
 				throw new EntranceNotExist(pointData.EntranceId, markup.Id);
 
 			if (!enter.TryGetPoint(pointData.Index, MarkupPoint.PointType.Enter, out var point))
 				throw new PointNotExist(pointData.Index, enter.Id);
 
-			return point;
+			return point as MarkupEnterPoint;
 		}
 
 		public static MarkupPoint GetCrosswalkPoint(Markup markup, ICrosswalkPointData pointData)

@@ -1,18 +1,16 @@
 ﻿using NodeMarkup.API.Applicators;
 using NodeMarkup.Manager;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NodeMarkup.API.Implementations
 {
-	public class RegularLineData : IRegularLineData
+	public class NormalLineData : INormalLineData
 	{
 		private readonly MarkupRegularLine _generatedLine;
 
-		public RegularLineData(MarkupRegularLine generatedLine, IEntrancePointData startPointData, IEntrancePointData endPointData)
+		public NormalLineData(MarkupRegularLine generatedLine, IEntrancePointData startPointData, IPointData endPointData)
 		{
 			_generatedLine = generatedLine;
 
@@ -22,7 +20,7 @@ namespace NodeMarkup.API.Implementations
 
 		public ulong Id => _generatedLine.Id;
 		public IEntrancePointData StartPoint { get; }
-		public IEntrancePointData EndPoint { get; }
+		public IPointData EndPoint { get; }
 		public IEnumerable<ILineRuleData> Rules => _generatedLine.Rules.Select(x => (ILineRuleData)new LineRuleData(x));
 
 		public ILineRuleData AddRule(IRegularLineTemplate line)

@@ -9,7 +9,6 @@ namespace NodeMarkup.API
 		IEnumerable<IPointData> Points { get; }
 
 		bool GetEntrancePoint(byte index, out IEntrancePointData point);
-		bool GetNormalPoint(byte index, out INormalPointData point);
 		bool GetLanePoint(byte index, out ILanePointData point);
 	}
 }

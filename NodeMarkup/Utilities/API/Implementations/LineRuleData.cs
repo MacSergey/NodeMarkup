@@ -2,7 +2,7 @@
 
 namespace NodeMarkup.API.Implementations
 {
-	public class LineRuleData
+	public class LineRuleData : ILineRuleData
 	{
 		private MarkupLineRawRule _markupLineRawRule;
 

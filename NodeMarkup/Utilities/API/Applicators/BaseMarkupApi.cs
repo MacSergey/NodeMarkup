@@ -42,10 +42,10 @@ namespace NodeMarkup.API.Applicators
 
 			var generatedLine = Markup.AddRegularLine(pair, style, (Manager.Alignment)(int)line.Alignment);
 			
-			return new RegularLineData(generatedLine, startPointData, endPointData, this);
+			return new RegularLineData(generatedLine, startPointData, endPointData);
 		}
 
-		public IRegularLineData AddNormalLine(IEntrancePointData startPointData, IRegularLineTemplate line)
+		public INormalLineData AddNormalLine(IEntrancePointData startPointData, IRegularLineTemplate line)
 		{
 			if (!Markup.TryGetEnter(startPointData.EntranceId, out var enter)
 				|| !enter.TryGetPoint(startPointData.Index, MarkupPoint.PointType.Normal, out var endPoint))
@@ -64,7 +64,7 @@ namespace NodeMarkup.API.Applicators
 
 			var generatedLine = Markup.AddRegularLine(pair, style, (Manager.Alignment)(int)line.Alignment);
 
-			return new RegularLineData(generatedLine);
+			return new NormalLineData(generatedLine, startPointData, new NormalPointData(endPoint as MarkupNormalPoint, startPointData.Entrance));
 		}
 
 		public ILaneLineData AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, IRegularLineTemplate line)
@@ -83,7 +83,7 @@ namespace NodeMarkup.API.Applicators
 
 			var generatedLine = Markup.AddLaneLine(pair, style);
 
-			return new LaneLineData(generatedLine);
+			return new LaneLineData(generatedLine, startPointData, endPointData);
 		}
 
 		public IStopLineData AddStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IStopLineTemplate line)
@@ -105,10 +105,10 @@ namespace NodeMarkup.API.Applicators
 
 			var generatedLine = Markup.AddStopLine(pair, style);
 
-			return new StopLineData(generatedLine);
+			return new StopLineData(generatedLine, startPointData, endPointData);
 		}
 
-		public ICrosswalkData AddCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, ICrosswalkTemplate crosswalk)
+		public ICrosswalkLineData AddCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, ICrosswalkTemplate crosswalk)
 		{
 			ApiHelper.CheckPoints(Id, startPointData, endPointData, true);
 
@@ -127,7 +127,7 @@ namespace NodeMarkup.API.Applicators
 
 			var generatedCrosswalk = Markup.AddCrosswalkLine(pair, style);
 
-			return new CrosswalkData(generatedCrosswalk);
+			return new CrosswalkLineData(generatedCrosswalk, startPointData, endPointData);
 		}
 
 		public IFillerData AddFiller(IEnumerable<IEntrancePointData> pointDatas, IFillerTemplate filler)
@@ -146,7 +146,7 @@ namespace NodeMarkup.API.Applicators
 
 			var fillerData = Markup.AddFiller(contour, style, out var lines);
 
-			return new Filler(fillerData);
+			return new FillerData(fillerData, pointDatas);
 		}
 		#endregion
 
@@ -290,12 +290,15 @@ namespace NodeMarkup.API.Applicators
 		{
 			ApiHelper.CheckPoints(Id, startPointData, endPointData, null);
 
-			var startPoint = ApiHelper.GetEntrancePoint(Markup, startPointData);
-			var endPoint = ApiHelper.GetEntrancePoint(Markup, endPointData);
+			var startPoint = ApiHelper.GetEntrancePoint(Markup, startPointData, out var startEnter);
+			var endPoint = ApiHelper.GetEntrancePoint(Markup, endPointData, out var endEnter);
 
 			if (Markup.TryGetLine<MarkupRegularLine>(startPoint, endPoint, out var line))
 			{
-				regularLine = new RegularLineData(line);
+				var startEnterData = startEnter is SegmentEnter segmentEnter1 ? (IEntranceData)new NodeEntranceData(segmentEnter1) : startEnter is NodeEnter nodeEnter1 ? new SegmentEntranceData(nodeEnter1) : null;
+				var endEnterData = endEnter is SegmentEnter segmentEnter2 ? (IEntranceData)new NodeEntranceData(segmentEnter2) : endEnter is NodeEnter nodeEnter2 ? new SegmentEntranceData(nodeEnter2) : null;
+
+				regularLine = new RegularLineData(line, new EntrancePointData(startPoint, startEnterData), new EntrancePointData(endPoint, endEnterData));
 
 				return true;
 			}
@@ -305,7 +308,7 @@ namespace NodeMarkup.API.Applicators
 			return false;
 		}
 
-		public bool TryGetNormalLine(IEntrancePointData startPointData, out IRegularLineData regularLine)
+		public bool TryGetNormalLine(IEntrancePointData startPointData, out INormalLineData regularLine)
 		{
 			if (!Markup.TryGetEnter(startPointData.EntranceId, out var enter)
 				|| !enter.TryGetPoint(startPointData.Index, MarkupPoint.PointType.Normal, out var endPoint))
@@ -313,11 +316,13 @@ namespace NodeMarkup.API.Applicators
 				throw new IntersectionMarkingToolException($"Could not get the Normal point from the start point {startPointData}");
 			}
 
-			var startPoint = ApiHelper.GetEntrancePoint(Markup, startPointData);
+			var startPoint = ApiHelper.GetEntrancePoint(Markup, startPointData, out var startEnter);
 
 			if (Markup.TryGetLine<MarkupRegularLine>(startPoint, endPoint, out var line))
 			{
-				regularLine = new RegularLineData(line);
+				var startEnterData = startEnter is SegmentEnter segmentEnter1 ? (IEntranceData)new NodeEntranceData(segmentEnter1) : startEnter is NodeEnter nodeEnter1 ? new SegmentEntranceData(nodeEnter1) : null;
+			
+				regularLine = new NormalLineData(line, new EntrancePointData(startPoint, startEnterData), new LanePointData(endPoint as MarkupLanePoint, startEnterData));
 
 				return true;
 			}
@@ -336,7 +341,7 @@ namespace NodeMarkup.API.Applicators
 
 			if (Markup.TryGetLine<MarkupStopLine>(startPoint, endPoint, out var line))
 			{
-				stopLine = new StopLineData(line);
+				stopLine = new StopLineData(line, startPointData, endPointData);
 
 				return true;
 			}
@@ -355,7 +360,7 @@ namespace NodeMarkup.API.Applicators
 
 			if (Markup.TryGetLine<MarkupLaneLine>(startPoint, endPoint, out var line))
 			{
-				laneLine = new LaneLineData(line);
+				laneLine = new LaneLineData(line, startPointData, endPointData);
 
 				return true;
 			}
@@ -365,7 +370,7 @@ namespace NodeMarkup.API.Applicators
 			return false;
 		}
 
-		public bool TryGetCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, out ICrosswalkData crosswalk)
+		public bool TryGetCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, out ICrosswalkLineData crosswalk)
 		{
 			ApiHelper.CheckPoints(Id, startPointData, endPointData, null);
 
@@ -374,7 +379,7 @@ namespace NodeMarkup.API.Applicators
 
 			if (Markup.TryGetLine<MarkupCrosswalkLine>(startPoint, endPoint, out var line))
 			{
-				crosswalk = new CrosswalkData(line);
+				crosswalk = new CrosswalkLineData(line, startPointData, endPointData);
 
 				return true;
 			}

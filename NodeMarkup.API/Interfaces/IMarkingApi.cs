@@ -7,10 +7,10 @@ namespace NodeMarkup.API
 		int EntranceCount { get; }
 		ushort Id { get; }
 
-		ICrosswalkData AddCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, ICrosswalkTemplate crosswalk);
+		ICrosswalkLineData AddCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, ICrosswalkTemplate crosswalk);
 		IFillerData AddFiller(IEnumerable<IEntrancePointData> pointDatas, IFillerTemplate filler);
 		ILaneLineData AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, IRegularLineTemplate line);
-		IRegularLineData AddNormalLine(IEntrancePointData startPointData, IRegularLineTemplate line);
+		INormalLineData AddNormalLine(IEntrancePointData startPointData, IRegularLineTemplate line);
 		IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineTemplate line);
 		IStopLineData AddStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IStopLineTemplate line);
 		void ClearMarkings();
@@ -26,5 +26,10 @@ namespace NodeMarkup.API
 		bool RemoveStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData);
 		void ResetPointOffsets();
 		bool StopLineExist(IEntrancePointData startPointData, IEntrancePointData endPointData);
+		bool TryGetCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, out ICrosswalkLineData crosswalk);
+		bool TryGetLaneLine(ILanePointData startPointData, ILanePointData endPointData, out ILaneLineData laneLine);
+		bool TryGetNormalLine(IEntrancePointData startPointData, out INormalLineData regularLine);
+		bool TryGetRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, out IRegularLineData regularLine);
+		bool TryGetStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData, out IStopLineData stopLine);
 	}
 }
