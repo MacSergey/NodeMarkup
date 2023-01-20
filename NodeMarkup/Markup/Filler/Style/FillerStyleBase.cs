@@ -73,13 +73,13 @@ namespace NodeMarkup.Manager
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, isTemplate);
-            if (editObject is MarkupFiller filler)
+            if (editObject is MarkingFiller filler)
                 GetUIComponents(filler, components, parent, isTemplate);
             else if (isTemplate)
                 GetUIComponents(null, components, parent, isTemplate);
             return components;
         }
-        public virtual void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public virtual void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             if (!isTemplate)
             {
@@ -90,7 +90,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public virtual IEnumerable<IStyleData> Calculate(MarkupFiller filler)
+        public virtual IEnumerable<IStyleData> Calculate(MarkingFiller filler)
         {
             var contours = GetContours(filler);
 
@@ -100,15 +100,15 @@ namespace NodeMarkup.Manager
                     yield return data;
             }
         }
-        protected virtual List<List<FillerContour.Part>> GetContours(MarkupFiller filler)
+        protected virtual List<List<FillerContour.Part>> GetContours(MarkingFiller filler)
         {
             var originalContour = filler.Contour.Parts.ToList();
             var contours = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
             return contours;
         }
-        protected abstract IEnumerable<IStyleData> CalculateImpl(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod);
+        protected abstract IEnumerable<IStyleData> CalculateImpl(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod);
 
-        public virtual void Render(MarkupFiller filler, OverlayData data) { }
+        public virtual void Render(MarkingFiller filler, OverlayData data) { }
 
         public override XElement ToXml()
         {

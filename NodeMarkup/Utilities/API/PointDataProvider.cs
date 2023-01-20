@@ -5,11 +5,11 @@ namespace NodeMarkup.Utilities.API
 {
     public struct EntrancePointDataProvider : IEntrancePointData
     {
-        private MarkupEnterPoint Point { get; }
+        private MarkingEnterPoint Point { get; }
 
         public byte Index => Point.Index;
         public ushort EntranceId => Point.Enter.Id;
-        public ushort MarkingId => Point.Markup.Id;
+        public ushort MarkingId => Point.Marking.Id;
 
         public IPointSourceData Source => new PointSourceDataProvider(Point.Source);
         public float Offset
@@ -18,7 +18,10 @@ namespace NodeMarkup.Utilities.API
             set => Point.Offset.Value = value;
         }
 
-        public EntrancePointDataProvider(MarkupEnterPoint point)
+        public float Position => throw new System.NotImplementedException();
+        public IEntranceData Entrance => throw new System.NotImplementedException();
+
+        public EntrancePointDataProvider(MarkingEnterPoint point)
         {
             Point = point;
         }
@@ -27,14 +30,16 @@ namespace NodeMarkup.Utilities.API
     }
     public struct NormalPointDataProvider : INormalPointData
     {
-        private MarkupNormalPoint Point { get; }
+        private MarkingNormalPoint Point { get; }
 
         public byte Index => Point.Index;
         public ushort EntranceId => Point.Enter.Id;
-        public ushort MarkingId => Point.Markup.Id;
+        public ushort MarkingId => Point.Marking.Id;
         public IEntrancePointData SourcePoint => new EntrancePointDataProvider(Point.SourcePoint);
 
-        public NormalPointDataProvider(MarkupNormalPoint point)
+        public IEntranceData Entrance => throw new System.NotImplementedException();
+
+        public NormalPointDataProvider(MarkingNormalPoint point)
         {
             Point = point;
         }
@@ -43,14 +48,16 @@ namespace NodeMarkup.Utilities.API
     }
     public struct CrosswalkPointDataProvider : ICrosswalkPointData
     {
-        private MarkupCrosswalkPoint Point { get; }
+        private MarkingCrosswalkPoint Point { get; }
 
         public byte Index => Point.Index;
         public ushort EntranceId => Point.Enter.Id;
-        public ushort MarkingId => Point.Markup.Id;
+        public ushort MarkingId => Point.Marking.Id;
         public IEntrancePointData SourcePoint => new EntrancePointDataProvider(Point.SourcePoint);
 
-        public CrosswalkPointDataProvider(MarkupCrosswalkPoint point)
+        public IEntranceData Entrance => throw new System.NotImplementedException();
+
+        public CrosswalkPointDataProvider(MarkingCrosswalkPoint point)
         {
             Point = point;
         }
@@ -59,14 +66,16 @@ namespace NodeMarkup.Utilities.API
     }
     public struct LanePointDataProvider : ILanePointData
     {
-        private MarkupLanePoint Point { get; }
+        private MarkingLanePoint Point { get; }
         public byte Index => Point.Index;
         public ushort EntranceId => Point.Enter.Id;
-        public ushort MarkingId => Point.Markup.Id;
+        public ushort MarkingId => Point.Marking.Id;
         public IEntrancePointData SourcePointA => new EntrancePointDataProvider(Point.SourcePointA);
         public IEntrancePointData SourcePointB => new EntrancePointDataProvider(Point.SourcePointB);
 
-        public LanePointDataProvider(MarkupLanePoint point)
+        public IEntranceData Entrance => throw new System.NotImplementedException();
+
+        public LanePointDataProvider(MarkingLanePoint point)
         {
             Point = point;
         }
@@ -94,9 +103,9 @@ namespace NodeMarkup.Utilities.API
         {
             Location = source.Location switch
             {
-                MarkupPoint.LocationType.LeftEdge => PointLocation.Left,
-                MarkupPoint.LocationType.RightEdge => PointLocation.Rigth,
-                MarkupPoint.LocationType.Between => PointLocation.Between,
+                MarkingPoint.LocationType.LeftEdge => PointLocation.Left,
+                MarkingPoint.LocationType.RightEdge => PointLocation.Rigth,
+                MarkingPoint.LocationType.Between => PointLocation.Between,
                 _ => PointLocation.None,
             };
 

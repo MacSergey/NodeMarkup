@@ -16,7 +16,7 @@ namespace NodeMarkup.UI.Editors
     {
         public override string Name => NodeMarkup.Localize.PresetEditor_Presets;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.PresetEditor_EmptyMessage, NodeMarkup.Localize.Panel_SaveAsPreset);
-        public override Markup.SupportType Support { get; } = Markup.SupportType.IntersectionTemplates;
+        public override Marking.SupportType Support { get; } = Marking.SupportType.IntersectionTemplates;
         protected override string IsAssetMessage => NodeMarkup.Localize.PresetEditor_PresetIsAsset;
         protected override string RewriteCaption => NodeMarkup.Localize.PresetEditor_RewriteCaption;
         protected override string RewriteMessage => NodeMarkup.Localize.PresetEditor_RewriteMessage;
@@ -57,7 +57,7 @@ namespace NodeMarkup.UI.Editors
         private void Apply() => Tool.ApplyIntersectionTemplate(EditObject);
         private void Link()
         {
-            if (Markup.Type == MarkupType.Segment)
+            if (Markup.Type == MarkingType.Segment)
             {
                 var roadName = Markup.Id.GetSegment().Info.name;
                 if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(roadName, out var preset) && preset == EditObject.Id)
@@ -140,7 +140,7 @@ namespace NodeMarkup.UI.Editors
 
         protected override IntersectionTemplateFit SelectGroup(IntersectionTemplate editObject)
         {
-            if (Editor.Markup.Type == MarkupType.Segment && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Markup.Id.GetSegment().Info.name, out var preset) && preset == editObject.Id)
+            if (Editor.Markup.Type == MarkingType.Segment && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Markup.Id.GetSegment().Info.name, out var preset) && preset == editObject.Id)
                 return IntersectionTemplateFit.Link;
             if (editObject.Enters.Length != Tool.Markup.EntersCount)
                 return IntersectionTemplateFit.Poor;
@@ -151,7 +151,7 @@ namespace NodeMarkup.UI.Editors
             else
                 return IntersectionTemplateFit.Poor;
         }
-        private bool PointsMatch(IntersectionTemplate template, Markup markup)
+        private bool PointsMatch(IntersectionTemplate template, Marking markup)
         {
             var templatePoints = template.Enters.Select(e => e.PointCount).ToArray();
             var markupPoints = markup.Enters.Select(e => e.PointCount).ToArray();
@@ -170,7 +170,7 @@ namespace NodeMarkup.UI.Editors
             return false;
         }
 
-        private bool SimilarWidth(IntersectionTemplate template, Markup markup)
+        private bool SimilarWidth(IntersectionTemplate template, Marking markup)
         {
             var templatePoints = template.Enters.Select(e => e.PointCount).ToArray();
             var markupPoints = markup.Enters.Select(e => e.PointCount).ToArray();
@@ -229,7 +229,7 @@ namespace NodeMarkup.UI.Editors
 
     public class IntersectionTemplateItem : EditItem<IntersectionTemplate, IntersectionTemplateIcon>
     {
-        private bool IsLinked => Editor.Markup.Type == MarkupType.Segment && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Markup.Id.GetSegment().Info.name, out var preset) && preset == Object.Id;
+        private bool IsLinked => Editor.Markup.Type == MarkingType.Segment && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Markup.Id.GetSegment().Info.name, out var preset) && preset == Object.Id;
 
         public override Color32 NormalColor => IsLinked ? new Color32(255, 197, 0, 255) : base.NormalColor;
         public override Color32 HoveredColor => IsLinked ? new Color32(255, 207, 51, 255) : base.HoveredColor;

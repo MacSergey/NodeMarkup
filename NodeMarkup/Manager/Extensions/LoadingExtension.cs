@@ -12,14 +12,14 @@ namespace NodeMarkup
     {
         protected override void OnLoad()
         {
-            MarkupManager.UpdateAll();
+            MarkingManager.UpdateAll();
             DataManager.Reload();
 
-            if (MarkupManager.HasErrors)
+            if (MarkingManager.HasErrors)
             {
                 var messageBox = MessageBox.Show<ErrorSupportMessageBox>();
                 messageBox.Init<Mod>();
-                messageBox.MessageText = MarkupManager.Errors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkupManager.Errors) : Localize.Mod_LoadFailedAll;
+                messageBox.MessageText = MarkingManager.Errors > 0 ? string.Format(Localize.Mod_LoadFailed, MarkingManager.Errors) : Localize.Mod_LoadFailedAll;
             }
 
             base.OnLoad();
@@ -27,7 +27,7 @@ namespace NodeMarkup
         protected override void OnUnload()
         {
             base.OnUnload();
-            MarkupManager.Destroy();
+            MarkingManager.Destroy();
         }
     }
 }

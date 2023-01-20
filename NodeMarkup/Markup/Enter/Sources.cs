@@ -7,25 +7,25 @@ namespace NodeMarkup.Manager
 {
     public interface IPointSource
     {
-        public Enter Enter { get; }
-        public MarkupPoint.LocationType Location { get; }
+        public Entrance Enter { get; }
+        public MarkingPoint.LocationType Location { get; }
         public NetworkType NetworkType { get; }
         public void GetAbsolutePositionAndDirection(float offset, out Vector3 position, out Vector3 direction);
         public float GetRelativePosition(float offset);
     }
     public struct NetInfoPointSource : IPointSource
     {
-        public Enter Enter { get; }
+        public Entrance Enter { get; }
         public DriveLane LeftLane { get; }
         public DriveLane RightLane { get; }
-        public MarkupPoint.LocationType Location { get; private set; }
+        public MarkingPoint.LocationType Location { get; private set; }
         public NetworkType NetworkType { get; private set; }
 
         public bool IsEdge => GetIsEdge(LeftLane, RightLane);
         public float CenterDelte => GetCenterDelte(LeftLane, RightLane);
         public float SideDelta => GetSideDelta(LeftLane, RightLane);
 
-        public NetInfoPointSource(Enter enter, DriveLane leftLane, DriveLane rightLane, MarkupPoint.LocationType location)
+        public NetInfoPointSource(Entrance enter, DriveLane leftLane, DriveLane rightLane, MarkingPoint.LocationType location)
         {
             Enter = enter;
             LeftLane = leftLane;
@@ -36,10 +36,10 @@ namespace NodeMarkup.Manager
 
         public void GetAbsolutePositionAndDirection(float offset, out Vector3 position, out Vector3 direction)
         {
-            if ((Location & MarkupPoint.LocationType.Between) != MarkupPoint.LocationType.None)
+            if ((Location & MarkingPoint.LocationType.Between) != MarkingPoint.LocationType.None)
                 GetMiddlePositionAndDirection(offset, out position, out direction);
 
-            else if ((Location & MarkupPoint.LocationType.Edge) != MarkupPoint.LocationType.None)
+            else if ((Location & MarkingPoint.LocationType.Edge) != MarkingPoint.LocationType.None)
                 GetEdgePositionAndDirection(Location, offset, out position, out direction);
 
             else
@@ -66,16 +66,16 @@ namespace NodeMarkup.Manager
 
             position += Enter.CornerDir * (offset / Enter.TranformCoef);
         }
-        private void GetEdgePositionAndDirection(MarkupPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
+        private void GetEdgePositionAndDirection(MarkingPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
         {
             float lineShift;
             switch (location)
             {
-                case MarkupPoint.LocationType.LeftEdge:
+                case MarkingPoint.LocationType.LeftEdge:
                     RightLane.LaneId.GetLane().CalculatePositionAndDirection(Enter.T, out position, out direction);
                     lineShift = -RightLane.HalfWidth;
                     break;
-                case MarkupPoint.LocationType.RightEdge:
+                case MarkingPoint.LocationType.RightEdge:
                     LeftLane.LaneId.GetLane().CalculatePositionAndDirection(Enter.T, out position, out direction);
                     lineShift = LeftLane.HalfWidth;
                     break;
@@ -90,21 +90,21 @@ namespace NodeMarkup.Manager
         }
         public float GetRelativePosition(float offset)
         {
-            if ((Location & MarkupPoint.LocationType.Between) == MarkupPoint.LocationType.Between)
+            if ((Location & MarkingPoint.LocationType.Between) == MarkingPoint.LocationType.Between)
             {
                 if(Enter.IsLaneInvert)
                     return (RightLane.Position + LeftLane.Position) * 0.5f + offset;
                 else
                     return -(RightLane.Position + LeftLane.Position) * 0.5f + offset;
             }            
-            else if ((Location & MarkupPoint.LocationType.LeftEdge) == MarkupPoint.LocationType.LeftEdge)
+            else if ((Location & MarkingPoint.LocationType.LeftEdge) == MarkingPoint.LocationType.LeftEdge)
             {
                 if (Enter.IsLaneInvert)
                     return RightLane.Position - RightLane.HalfWidth + offset;
                 else
                     return -RightLane.Position - RightLane.HalfWidth + offset;
             }
-            else if ((Location & MarkupPoint.LocationType.RightEdge) == MarkupPoint.LocationType.RightEdge)
+            else if ((Location & MarkingPoint.LocationType.RightEdge) == MarkingPoint.LocationType.RightEdge)
             {
                 if (Enter.IsLaneInvert)
                     return LeftLane.Position + LeftLane.HalfWidth + offset;
@@ -115,24 +115,24 @@ namespace NodeMarkup.Manager
                 throw new Exception();
         }
 
-        public static IEnumerable<NetInfoPointSource> GetSource(Enter enter, DriveLane leftLane, DriveLane rightLane)
+        public static IEnumerable<NetInfoPointSource> GetSource(Entrance enter, DriveLane leftLane, DriveLane rightLane)
         {
             if (GetIsEdge(leftLane, rightLane))
             {
-                yield return new NetInfoPointSource(enter, leftLane, rightLane, rightLane == null ? MarkupPoint.LocationType.RightEdge : MarkupPoint.LocationType.LeftEdge);
+                yield return new NetInfoPointSource(enter, leftLane, rightLane, rightLane == null ? MarkingPoint.LocationType.RightEdge : MarkingPoint.LocationType.LeftEdge);
             }
             else if (leftLane == rightLane)
             {
-                yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkupPoint.LocationType.Between);
+                yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkingPoint.LocationType.Between);
             }
             else if (GetSideDelta(leftLane, rightLane) >= (leftLane.HalfWidth + rightLane.HalfWidth) / 2)
             {
-                yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkupPoint.LocationType.RightEdge);
-                yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkupPoint.LocationType.LeftEdge);
+                yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkingPoint.LocationType.RightEdge);
+                yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkingPoint.LocationType.LeftEdge);
             }
             else
             {
-                yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkupPoint.LocationType.Between);
+                yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkingPoint.LocationType.Between);
             }
         }
         public static bool GetIsEdge(DriveLane leftLane, DriveLane rightLane) => rightLane == null ^ leftLane == null;
@@ -147,9 +147,9 @@ namespace NodeMarkup.Manager
             remove => Enter.OnPointOrderChanged -= value;
         }
 
-        public Enter Enter { get; }
+        public Entrance Enter { get; }
         public byte Index { get; }
-        public MarkupPoint.LocationType Location => MarkupPoint.LocationType.Between;
+        public MarkingPoint.LocationType Location => MarkingPoint.LocationType.Between;
 
         public NetworkType NetworkType
         {
@@ -160,7 +160,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public NetLanePointSource(Enter enter, byte index)
+        public NetLanePointSource(Entrance enter, byte index)
         {
             Enter = enter;
             Index = index;
@@ -177,13 +177,13 @@ namespace NodeMarkup.Manager
             GetPoints(out var pointA, out var pointB);
             return (pointA.GetRelativePosition() + pointB.GetRelativePosition()) * 0.5f;
         }
-        public void GetPoints(out MarkupEnterPoint enterPointA, out MarkupEnterPoint enterPointB)
+        public void GetPoints(out MarkingEnterPoint enterPointA, out MarkingEnterPoint enterPointB)
         {
-            Enter.TryGetSortedPoint(Index, MarkupPoint.PointType.Enter, out var pointA);
-            Enter.TryGetSortedPoint((byte)(Index + 1), MarkupPoint.PointType.Enter, out var pointB);
+            Enter.TryGetSortedPoint(Index, MarkingPoint.PointType.Enter, out var pointA);
+            Enter.TryGetSortedPoint((byte)(Index + 1), MarkingPoint.PointType.Enter, out var pointB);
 
-            enterPointA = pointA as MarkupEnterPoint;
-            enterPointB = pointB as MarkupEnterPoint;
+            enterPointA = pointA as MarkingEnterPoint;
+            enterPointB = pointB as MarkingEnterPoint;
         }
     }
 
@@ -211,7 +211,7 @@ namespace NodeMarkup.Manager
 
     public class DriveLane
     {
-        private Enter Enter { get; }
+        private Entrance Enter { get; }
 
         public uint LaneId { get; }
         public int Index { get; }
@@ -222,7 +222,7 @@ namespace NodeMarkup.Manager
         public float LeftSidePos => Position + (Enter.IsLaneInvert ? -HalfWidth : HalfWidth);
         public float RightSidePos => Position + (Enter.IsLaneInvert ? HalfWidth : -HalfWidth);
 
-        public DriveLane(Enter enter, int index, uint laneId, NetInfo.Lane info, NetworkType type)
+        public DriveLane(Entrance enter, int index, uint laneId, NetInfo.Lane info, NetworkType type)
         {
             Enter = enter;
             Index = index;

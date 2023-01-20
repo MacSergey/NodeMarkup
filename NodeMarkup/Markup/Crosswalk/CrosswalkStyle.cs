@@ -62,28 +62,6 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> OffsetBefore { get; }
         public PropertyValue<float> OffsetAfter { get; }
 
-        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
-        private static IEnumerable<string> PropertyIndicesList
-        {
-            get
-            {
-                yield return nameof(Color);
-                yield return nameof(Width);
-                yield return nameof(Offset);
-            }
-        }
-        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-            }
-        }
-
         public override float GetTotalWidth(MarkupCrosswalk crosswalk) => OffsetBefore + GetVisibleWidth(crosswalk) + OffsetAfter;
         protected abstract float GetVisibleWidth(MarkupCrosswalk crosswalk);
 
@@ -194,30 +172,6 @@ namespace NodeMarkup.Manager
     public abstract class LinedCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, ILinedCrosswalk
     {
         public PropertyValue<float> LineWidth { get; }
-
-        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
-        private static IEnumerable<string> PropertyIndicesList
-        {
-            get
-            {
-                yield return nameof(Color);
-                yield return nameof(Width);
-                yield return nameof(LineWidth);
-                yield return nameof(Offset);
-            }
-        }
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
-                yield return new StylePropertyDataProvider<float>(nameof(LineWidth), LineWidth);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-            }
-        }
-        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
 
         public LinedCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter, float lineWidth) :
             base(color, width, offsetBefore, offsetAfter)

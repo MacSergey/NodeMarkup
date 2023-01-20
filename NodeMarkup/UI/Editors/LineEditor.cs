@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class LinesEditor : Editor<LineItemsPanel, MarkupLine>
+    public class LinesEditor : Editor<LineItemsPanel, MarkingLine>
     {
         #region PROPERTIES
 
@@ -26,13 +26,13 @@ namespace NodeMarkup.UI.Editors
         }
         public override string Name => NodeMarkup.Localize.LineEditor_Lines;
         public override string EmptyMessage => NodeMarkup.Localize.LineEditor_EmptyMessage;
-        public override Markup.SupportType Support { get; } = Markup.SupportType.Lines;
+        public override Marking.SupportType Support { get; } = Marking.SupportType.Lines;
 
         private PropertyGroupPanel LineProperties { get; set; }
         private AddRuleButton AddButton { get; set; }
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
-        public bool SupportRules => EditObject is MarkupRegularLine;
+        public bool SupportRules => EditObject is MarkingRegularLine;
         public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
         private bool AddRuleAvailable => EditObject.IsSupportRules/*CanDivide || EditObject?.Rules.Any() == false*/;
         public bool IsSplit => EditObject.PointPair.IsSplit;
@@ -53,8 +53,8 @@ namespace NodeMarkup.UI.Editors
             PartEdgeToolMode.Init(this);
         }
 
-        protected override IEnumerable<MarkupLine> GetObjects() => Markup.Lines;
-        protected override void OnObjectSelect(MarkupLine editObject)
+        protected override IEnumerable<MarkingLine> GetObjects() => Markup.Lines;
+        protected override void OnObjectSelect(MarkingLine editObject)
         {
             ContentPanel.StopLayout();
             GetRuleEdges(editObject);
@@ -64,7 +64,7 @@ namespace NodeMarkup.UI.Editors
             AddAddButton();
             ContentPanel.StartLayout();
         }
-        protected override void OnObjectUpdate(MarkupLine editObject)
+        protected override void OnObjectUpdate(MarkingLine editObject)
         {
             RefreshSelectedItem();
             GetRuleEdges(editObject);
@@ -72,11 +72,11 @@ namespace NodeMarkup.UI.Editors
             RefreshRulePanels();
             SetAddButtonVisible();
         }
-        protected override void OnObjectDelete(MarkupLine line)
+        protected override void OnObjectDelete(MarkingLine line)
         {
             var fillers = Markup.GetLineFillers(line).ToArray();
 
-            if (line is MarkupCrosswalkLine crosswalkLine)
+            if (line is MarkingCrosswalkLine crosswalkLine)
                 Panel.DeleteCrosswalk(crosswalkLine.Crosswalk);
             foreach (var filler in fillers)
                 Panel.DeleteFiller(filler);
@@ -93,18 +93,18 @@ namespace NodeMarkup.UI.Editors
             LinePropertiesVisibleAction = null;
             AddButton = null;
         }
-        private void GetRuleEdges(MarkupLine editObject)
+        private void GetRuleEdges(MarkingLine editObject)
         {
             SupportPoints.Clear();
             SupportPoints.AddRange(editObject.RulesEdges);
         }
         Action LinePropertiesVisibleAction { get; set; }
-        private void AddLineProperties(MarkupLine editObject)
+        private void AddLineProperties(MarkingLine editObject)
         {
             LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
             LineProperties.Init();
 
-            if (editObject is MarkupRegularLine line)
+            if (editObject is MarkingRegularLine line)
             {
                 var aligment = AddAlignmentProperty(line.RawAlignment, NodeMarkup.Localize.LineEditor_LineAlignment);
                 var clipSidewalk = AddClipSidewalkProperty(line);
@@ -115,7 +115,7 @@ namespace NodeMarkup.UI.Editors
                     LineProperties.isVisible = clipSidewalk.isVisibleSelf || aligment.isVisibleSelf;
                 };
             }
-            else if (editObject is MarkupStopLine stopLine)
+            else if (editObject is MarkingStopLine stopLine)
             {
                 var start = AddAlignmentProperty(stopLine.RawStartAlignment, NodeMarkup.Localize.LineEditor_LineStartAlignment);
                 var end = AddAlignmentProperty(stopLine.RawEndAlignment, NodeMarkup.Localize.LineEditor_LineEndAlignment);
@@ -140,7 +140,7 @@ namespace NodeMarkup.UI.Editors
 
             return alignment;
         }
-        private BoolListPropertyPanel AddClipSidewalkProperty(MarkupRegularLine line)
+        private BoolListPropertyPanel AddClipSidewalkProperty(MarkingRegularLine line)
         {
             var clipSidewalk = ComponentPool.Get<BoolListPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
 
@@ -151,7 +151,7 @@ namespace NodeMarkup.UI.Editors
 
             return clipSidewalk;
         }
-        private void AddRulePanels(MarkupLine editObject)
+        private void AddRulePanels(MarkingLine editObject)
         {
             foreach (var rule in editObject.Rules)
                 AddRulePanel(rule);
@@ -189,7 +189,7 @@ namespace NodeMarkup.UI.Editors
 
         private void AddRule()
         {
-            if (EditObject is not MarkupRegularLine regularLine)
+            if (EditObject is not MarkingRegularLine regularLine)
                 return;
 
             var newRule = regularLine.AddRule(CanDivide);
@@ -236,7 +236,7 @@ namespace NodeMarkup.UI.Editors
         }
         public void DeleteRule(RulePanel rulePanel)
         {
-            if (EditObject is not MarkupRegularLine regularLine)
+            if (EditObject is not MarkingRegularLine regularLine)
                 return;
 
             if (Settings.DeleteWarnings && Settings.DeleteWarningsType == 0)
@@ -335,10 +335,10 @@ namespace NodeMarkup.UI.Editors
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo) => PointsSelector.Render(cameraInfo);
     }
 
-    public class LineItemsPanel : ItemsGroupPanel<LineItem, MarkupLine, LineGroup, LineType>
+    public class LineItemsPanel : ItemsGroupPanel<LineItem, MarkingLine, LineGroup, LineType>
     {
         public override bool GroupingEnable => Settings.GroupLines.value;
-        public override int Compare(MarkupLine x, MarkupLine y)
+        public override int Compare(MarkingLine x, MarkingLine y)
         {
             int result;
 
@@ -354,9 +354,9 @@ namespace NodeMarkup.UI.Editors
         public override int Compare(LineType x, LineType y) => x.CompareTo(y);
 
         protected override string GroupName(LineType group) => group.Description();
-        protected override LineType SelectGroup(MarkupLine editObject) => editObject.Type;
+        protected override LineType SelectGroup(MarkingLine editObject) => editObject.Type;
     }
-    public class LineItem : EditItem<MarkupLine, LineIcon>
+    public class LineItem : EditItem<MarkingLine, LineIcon>
     {
         private bool HasOverlapped { get; set; }
         public override Color32 NormalColor => HasOverlapped ? new Color32(246, 85, 85, 255) : base.NormalColor;
@@ -386,7 +386,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
     }
-    public class LineGroup : EditGroup<LineType, LineItem, MarkupLine> { }
+    public class LineGroup : EditGroup<LineType, LineItem, MarkingLine> { }
     public class AddRuleButton : ButtonPanel
     {
         public AddRuleButton()

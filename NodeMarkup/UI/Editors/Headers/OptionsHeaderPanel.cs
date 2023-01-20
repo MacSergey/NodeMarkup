@@ -252,7 +252,7 @@ namespace NodeMarkup.UI.Editors
             Apply.Visible = EditMode == EditMode.Default;
             var canLink = false;
             var canUnlink = false;
-            if(EditMode == EditMode.Default && Template.Enters.Length == 2 && Editor.Markup.Type == MarkupType.Segment)
+            if(EditMode == EditMode.Default && Template.Enters.Length == 2 && Editor.Markup.Type == MarkingType.Segment)
             {
                 SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Markup.Id.GetSegment().Info.name, out var presetId);
 

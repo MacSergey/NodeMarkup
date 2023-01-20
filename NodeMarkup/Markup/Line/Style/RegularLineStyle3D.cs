@@ -28,7 +28,7 @@ namespace NodeMarkup.Manager
                 line3DTarget.Elevation.Value = Elevation;
         }
 
-        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (trajectory is CombinedTrajectory combined)
             {
@@ -42,7 +42,7 @@ namespace NodeMarkup.Manager
                 return new MarkupLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
         }
 
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddElevationProperty(this, parent, false));

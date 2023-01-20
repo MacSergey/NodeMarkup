@@ -14,7 +14,7 @@ namespace NodeMarkup.UI.Panel
 {
     public class PanelHeader : HeaderMoveablePanel<PanelHeaderContent>
     {
-        private MarkupType Type { get; set; }
+        private MarkingType Type { get; set; }
         public bool Available { set => Content.SetAvailable(value); }
 
         private HeaderButtonInfo<HeaderButton> PasteButton { get; }
@@ -52,7 +52,7 @@ namespace NodeMarkup.UI.Panel
         }
 
         public void Init(float height) => base.Init(height);
-        public void Init(MarkupType type)
+        public void Init(MarkingType type)
         {
             Type = type;
             base.Init(null);
@@ -62,11 +62,11 @@ namespace NodeMarkup.UI.Panel
         {
             PasteButton.Enable = !SingletonTool<NodeMarkupTool>.Instance.IsMarkupBufferEmpty;
 
-            EdgeLinesButton.Visible = Type == MarkupType.Node;
-            CutButton.Visible = Type == MarkupType.Node;
+            EdgeLinesButton.Visible = Type == MarkingType.Node;
+            CutButton.Visible = Type == MarkingType.Node;
 
-            BeetwenIntersectionsButton.Visible = Type == MarkupType.Segment;
-            WholeStreetButton.Visible = Type == MarkupType.Segment;
+            BeetwenIntersectionsButton.Visible = Type == MarkingType.Segment;
+            WholeStreetButton.Visible = Type == MarkingType.Segment;
 
             base.Refresh();
         }

@@ -10,7 +10,7 @@ namespace NodeMarkup.Manager
     public interface ISupportPoint : IToXml, IEquatable<ISupportPoint>, IOverlay
     {
         Vector3 Position { get; }
-        bool GetT(MarkupLine line, out float t);
+        bool GetT(MarkingLine line, out float t);
         bool IsIntersect(Ray ray);
         void Update();
     }
@@ -32,7 +32,7 @@ namespace NodeMarkup.Manager
         public abstract SupportType Type { get; }
 
         bool IEquatable<ISupportPoint>.Equals(ISupportPoint other) => true;
-        public abstract bool GetT(MarkupLine line, out float t);
+        public abstract bool GetT(MarkingLine line, out float t);
 
         public void Render(OverlayData data)
         {
@@ -55,15 +55,15 @@ namespace NodeMarkup.Manager
     public abstract class EnterSupportPoint : SupportPoint, ISupportPoint, IEquatable<EnterSupportPoint>
     {
         public override SupportType Type { get; } = SupportType.EnterPoint;
-        public MarkupPoint Point { get; }
-        public Enter Enter => Point.Enter;
+        public MarkingPoint Point { get; }
+        public Entrance Enter => Point.Enter;
 
-        public EnterSupportPoint(MarkupPoint point)
+        public EnterSupportPoint(MarkingPoint point)
         {
             Point = point;
             Update();
         }
-        public override bool GetT(MarkupLine line, out float t)
+        public override bool GetT(MarkingLine line, out float t)
         {
             if (line.IsStart(Point))
             {
@@ -90,7 +90,7 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.AddAttr(MarkupPoint.XmlName, Point.Id);
+            config.AddAttr(MarkingPoint.XmlName, Point.Id);
             return config;
         }
         public override string ToString() => Point.ToString();
@@ -98,19 +98,19 @@ namespace NodeMarkup.Manager
     public abstract class IntersectSupportPoint : SupportPoint, ISupportPoint, IEquatable<IntersectSupportPoint>
     {
         public override SupportType Type { get; } = SupportType.LinesIntersect;
-        public MarkupLinePair LinePair { get; set; }
-        public MarkupLine First => LinePair.First;
-        public MarkupLine Second => LinePair.Second;
+        public MarkingLinePair LinePair { get; set; }
+        public MarkingLine First => LinePair.First;
+        public MarkingLine Second => LinePair.Second;
 
-        public IntersectSupportPoint(MarkupLinePair linePair)
+        public IntersectSupportPoint(MarkingLinePair linePair)
         {
             LinePair = linePair;
             Update();
         }
-        public IntersectSupportPoint(MarkupLine first, MarkupLine second) : this(new MarkupLinePair(first, second)) { }
-        public override bool GetT(MarkupLine line, out float t)
+        public IntersectSupportPoint(MarkingLine first, MarkingLine second) : this(new MarkingLinePair(first, second)) { }
+        public override bool GetT(MarkingLine line, out float t)
         {
-            var intersect = line.Markup.GetIntersect(LinePair);
+            var intersect = line.Marking.GetIntersect(LinePair);
             if (intersect.IsIntersect)
             {
                 t = Mathf.Clamp01(intersect[line]);

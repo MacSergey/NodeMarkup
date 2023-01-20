@@ -12,22 +12,22 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLine : IStyleItem, IToXml, ISupport
+    public abstract class MarkingLine : IStyleItem, IToXml, ISupport
     {
         public static string XmlName { get; } = "L";
 
         public string DeleteCaptionDescription => Localize.LineEditor_DeleteCaptionDescription;
         public string DeleteMessageDescription => Localize.LineEditor_DeleteMessageDescription;
-        public Markup.SupportType Support => Markup.SupportType.Lines;
+        public Marking.SupportType Support => Marking.SupportType.Lines;
 
         public abstract LineType Type { get; }
 
-        public Markup Markup { get; private set; }
+        public Marking Marking { get; private set; }
         public ulong Id => PointPair.Hash;
 
-        public MarkupPointPair PointPair { get; }
-        public MarkupPoint Start => PointPair.First;
-        public MarkupPoint End => PointPair.Second;
+        public MarkingPointPair PointPair { get; }
+        public MarkingPoint Start => PointPair.First;
+        public MarkingPoint End => PointPair.Second;
         public virtual bool IsSupportRules => false;
         public bool IsEnterLine => PointPair.IsSameEnter;
         public bool IsSame => PointPair.IsSame;
@@ -46,21 +46,21 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
 
-        protected MarkupLine(Markup markup, MarkupPointPair pointPair, bool update = true)
+        protected MarkingLine(Marking markup, MarkingPointPair pointPair, bool update = true)
         {
-            Markup = markup;
+            Marking = markup;
             PointPair = pointPair;
 
             if (update)
                 Update(true);
         }
-        protected virtual void RuleChanged() => Markup.Update(this, true);
+        protected virtual void RuleChanged() => Marking.Update(this, true);
 
         public void Update(bool onlySelfUpdate = false)
         {
             Trajectory = CalculateTrajectory();
             if (!onlySelfUpdate)
-                Markup.Update(this);
+                Marking.Update(this);
         }
         protected abstract ITrajectory CalculateTrajectory();
 
@@ -78,7 +78,7 @@ namespace NodeMarkup.Manager
 
         protected abstract IEnumerable<IStyleData> GetStyleData(MarkupLOD lod);
 
-        public bool ContainsPoint(MarkupPoint point) => PointPair.ContainsPoint(point);
+        public bool ContainsPoint(MarkingPoint point) => PointPair.ContainsPoint(point);
 
         protected IEnumerable<ILinePartEdge> RulesEnterPointEdge
         {
@@ -97,11 +97,11 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public IEnumerable<MarkupLine> IntersectLines
+        public IEnumerable<MarkingLine> IntersectLines
         {
             get
             {
-                foreach (var intersect in Markup.GetIntersects(this))
+                foreach (var intersect in Marking.GetIntersects(this))
                 {
                     if (intersect.IsIntersect)
                         yield return intersect.Pair.GetOther(this);
@@ -115,12 +115,12 @@ namespace NodeMarkup.Manager
                 trajectory.Render(data);
         }
         public abstract bool ContainsRule(MarkupLineRawRule rule);
-        public bool ContainsEnter(Enter enter) => PointPair.ContainsEnter(enter);
+        public bool ContainsEnter(Entrance enter) => PointPair.ContainsEnter(enter);
 
-        public Dependences GetDependences() => Markup.GetLineDependences(this);
-        public bool IsStart(MarkupPoint point) => Start == point;
-        public bool IsEnd(MarkupPoint point) => End == point;
-        public Alignment GetAlignment(MarkupPoint point) => PointPair.ContainsPoint(point) && point.IsSplit ? (IsStart(point) ? Alignment : Alignment.Invert()) : Alignment.Centre;
+        public Dependences GetDependences() => Marking.GetLineDependences(this);
+        public bool IsStart(MarkingPoint point) => Start == point;
+        public bool IsEnd(MarkingPoint point) => End == point;
+        public Alignment GetAlignment(MarkingPoint point) => PointPair.ContainsPoint(point) && point.IsSplit ? (IsStart(point) ? Alignment : Alignment.Invert()) : Alignment.Centre;
 
 
         public virtual XElement ToXml()
@@ -131,10 +131,10 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupLine line, out bool invert)
+        public static bool FromXml(XElement config, Marking markup, ObjectsMap map, out MarkingLine line, out bool invert)
         {
             var lineId = config.GetAttrValue<ulong>(nameof(Id));
-            if (!MarkupPointPair.FromHash(lineId, markup, map, out MarkupPointPair pointPair, out invert))
+            if (!MarkingPointPair.FromHash(lineId, markup, map, out MarkingPointPair pointPair, out invert))
             {
                 line = null;
                 return false;
@@ -149,16 +149,16 @@ namespace NodeMarkup.Manager
                 switch (type)
                 {
                     case LineType.Regular:
-                        line = pointPair.IsNormal ? new MarkupNormalLine(markup, pointPair) : new MarkupRegularLine(markup, pointPair);
+                        line = pointPair.IsNormal ? new MarkingNormalLine(markup, pointPair) : new MarkingRegularLine(markup, pointPair);
                         break;
                     case LineType.Stop:
-                        line = new MarkupStopLine(markup, pointPair);
+                        line = new MarkingStopLine(markup, pointPair);
                         break;
                     case LineType.Crosswalk:
-                        line = new MarkupCrosswalkLine(markup, pointPair);
+                        line = new MarkingCrosswalkLine(markup, pointPair);
                         break;
                     case LineType.Lane:
-                        line = new MarkupLaneLine(markup, pointPair);
+                        line = new MarkingLaneLine(markup, pointPair);
                         break;
                     default:
                         return false;
@@ -171,7 +171,7 @@ namespace NodeMarkup.Manager
 
         public override string ToString() => PointPair.ToString();
     }
-    public class MarkupRegularLine : MarkupLine
+    public class MarkingRegularLine : MarkingLine
     {
         public override LineType Type => LineType.Regular;
         public override Alignment Alignment => RawAlignment;
@@ -182,10 +182,10 @@ namespace NodeMarkup.Manager
         public override IEnumerable<MarkupLineRawRule> Rules => RawRules.Cast<MarkupLineRawRule>();
 
         public LineBorders Borders => new LineBorders(this);
-        private bool DefaultClipSidewalk => Markup.Type == MarkupType.Node && PointPair.IsSideLine && PointPair.NetworkType == NetworkType.Road;
+        private bool DefaultClipSidewalk => Marking.Type == MarkingType.Node && PointPair.IsSideLine && PointPair.NetworkType == NetworkType.Road;
 
-        public MarkupRegularLine(Markup markup, MarkupPoint first, MarkupPoint second, RegularLineStyle style = null, Alignment alignment = Alignment.Centre, bool update = true) : this(markup, MarkupPointPair.FromPoints(first, second, out bool invert), style, !invert ? alignment : alignment.Invert(), update) { }
-        public MarkupRegularLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre, bool update = true) : base(markup, pointPair, false)
+        public MarkingRegularLine(Marking markup, MarkingPoint first, MarkingPoint second, RegularLineStyle style = null, Alignment alignment = Alignment.Centre, bool update = true) : this(markup, MarkingPointPair.FromPoints(first, second, out bool invert), style, !invert ? alignment : alignment.Invert(), update) { }
+        public MarkingRegularLine(Marking markup, MarkingPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre, bool update = true) : base(markup, pointPair, false)
         {
             RawAlignment = new PropertyEnumValue<Alignment>("A", AlignmentChanged, alignment);
             ClipSidewalk = new PropertyBoolValue("CS", ClipSidewalkChanged, DefaultClipSidewalk);
@@ -196,7 +196,7 @@ namespace NodeMarkup.Manager
             if (style != null)
             {
                 AddRule(style, false, false);
-                Markup.RecalculateStyleData(this);
+                Marking.RecalculateStyleData(this);
             }
         }
 
@@ -209,7 +209,7 @@ namespace NodeMarkup.Manager
 
             float startT;
             float endT;
-            var isStraight = Markup.Type == MarkupType.Segment && NetSegment.IsStraight(PointPair.First.Enter.Position, PointPair.First.Enter.NormalDir, PointPair.Second.Enter.Position, PointPair.Second.Enter.NormalDir);
+            var isStraight = Marking.Type == MarkingType.Segment && NetSegment.IsStraight(PointPair.First.Enter.Position, PointPair.First.Enter.NormalDir, PointPair.Second.Enter.Position, PointPair.Second.Enter.NormalDir);
             if (isStraight)
             {
                 startT = PointPair.First.Enter.IsSmooth ? BezierTrajectory.curveT : BezierTrajectory.straightT;
@@ -223,7 +223,7 @@ namespace NodeMarkup.Manager
 
             var trajectory = new BezierTrajectory(startPos, startDir, endPos, endDir, startT, endT);
 
-            if(Markup.Type == MarkupType.Node || isStraight)
+            if(Marking.Type == MarkingType.Node || isStraight)
                 return trajectory;
 
             var deltaH = Mathf.Abs(trajectory.StartPosition.y - trajectory.EndPosition.y) / trajectory.Length;
@@ -284,8 +284,8 @@ namespace NodeMarkup.Manager
 
             return new CombinedTrajectory(new BezierTrajectory(bezier1), new BezierTrajectory(bezier2));
         }
-        private void AlignmentChanged() => Markup.Update(this, true, true);
-        private void ClipSidewalkChanged() => Markup.Update(this, true, false);
+        private void AlignmentChanged() => Marking.Update(this, true, true);
+        private void ClipSidewalkChanged() => Marking.Update(this, true, false);
 
         private void AddRule(MarkupLineRawRule<RegularLineStyle> rule, bool update = true)
         {
@@ -307,12 +307,12 @@ namespace NodeMarkup.Manager
             var to = empty ? null : GetDefaultEdge(End);
             return new MarkupLineRawRule<RegularLineStyle>(this, lineStyle, from, to);
         }
-        private ILinePartEdge GetDefaultEdge(MarkupPoint point)
+        private ILinePartEdge GetDefaultEdge(MarkingPoint point)
         {
-            if (!Settings.CutLineByCrosswalk || point.Type == MarkupPoint.PointType.Normal)
+            if (!Settings.CutLineByCrosswalk || point.Type == MarkingPoint.PointType.Normal)
                 return new EnterPointEdge(point);
 
-            var intersects = Markup.GetIntersects(this).Where(i => i.IsIntersect && i.Pair.GetOther(this) is MarkupCrosswalkLine line && line.PointPair.ContainsEnter(point.Enter)).ToArray();
+            var intersects = Marking.GetIntersects(this).Where(i => i.IsIntersect && i.Pair.GetOther(this) is MarkingCrosswalkLine line && line.PointPair.ContainsEnter(point.Enter)).ToArray();
             if (!intersects.Any())
                 return new EnterPointEdge(point);
 
@@ -343,7 +343,7 @@ namespace NodeMarkup.Manager
             RawRules.Remove(rule);
             RuleChanged();
         }
-        public bool RemoveRules(MarkupLine intersectLine)
+        public bool RemoveRules(MarkingLine intersectLine)
         {
             if (!RawRules.Any())
                 return false;
@@ -355,8 +355,8 @@ namespace NodeMarkup.Manager
 
             return removed != 0;
         }
-        private bool Match(MarkupLine intersectLine, ISupportPoint supportPoint) => supportPoint is IntersectSupportPoint lineRuleEdge && lineRuleEdge.LinePair.ContainLine(intersectLine);
-        public int GetLineDependences(MarkupLine intersectLine) => RawRules.Count(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
+        private bool Match(MarkingLine intersectLine, ISupportPoint supportPoint) => supportPoint is IntersectSupportPoint lineRuleEdge && lineRuleEdge.LinePair.ContainLine(intersectLine);
+        public int GetLineDependences(MarkingLine intersectLine) => RawRules.Count(r => Match(intersectLine, r.From) || Match(intersectLine, r.To));
         public override bool ContainsRule(MarkupLineRawRule rule) => rule != null && RawRules.Any(r => r == rule);
 
         protected override IEnumerable<IStyleData> GetStyleData(MarkupLOD lod)
@@ -406,30 +406,30 @@ namespace NodeMarkup.Manager
             }
         }
     }
-    public class MarkupNormalLine : MarkupRegularLine
+    public class MarkingNormalLine : MarkingRegularLine
     {
-        public MarkupNormalLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre) : base(markup, pointPair, style, alignment) { }
+        public MarkingNormalLine(Marking markup, MarkingPointPair pointPair, RegularLineStyle style = null, Alignment alignment = Alignment.Centre) : base(markup, pointPair, style, alignment) { }
         protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(Start.GetAbsolutePosition(RawAlignment), End.GetAbsolutePosition(RawAlignment.Value.Invert()));
     }
-    public class MarkupFillerTempLine : MarkupRegularLine
+    public class MarkingFillerTempLine : MarkingRegularLine
     {
-        public MarkupFillerTempLine(Markup markup, MarkupPoint first, MarkupPoint second, Alignment alignment) : base(markup, first, second, null, alignment) { }
-        public MarkupFillerTempLine(Markup markup, MarkupPointPair pair, Alignment alignment) : base(markup, pair, null, alignment) { }
+        public MarkingFillerTempLine(Marking marking, MarkingPoint first, MarkingPoint second, Alignment alignment) : base(marking, first, second, null, alignment) { }
+        public MarkingFillerTempLine(Marking marking, MarkingPointPair pair, Alignment alignment) : base(marking, pair, null, alignment) { }
     }
-    public class MarkupCrosswalkLine : MarkupRegularLine
+    public class MarkingCrosswalkLine : MarkingRegularLine
     {
         public override LineType Type => LineType.Crosswalk;
         public MarkupCrosswalk Crosswalk { get; set; }
         public Func<StraightTrajectory> TrajectoryGetter { get; set; }
 
-        public MarkupCrosswalkLine(Markup markup, MarkupPointPair pointPair, CrosswalkStyle style = null) : base(markup, pointPair, update: false)
+        public MarkingCrosswalkLine(Marking markup, MarkingPointPair pointPair, CrosswalkStyle style = null) : base(markup, pointPair, update: false)
         {
             if (style == null)
                 style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<CrosswalkStyle>(Style.StyleType.CrosswalkExistent);
 
-            Crosswalk = new MarkupCrosswalk(Markup, this, style);
+            Crosswalk = new MarkupCrosswalk(Marking, this, style);
             Update(true);
-            Markup.AddCrosswalk(Crosswalk);
+            Marking.AddCrosswalk(Crosswalk);
         }
         protected override MarkupLineRawRule<RegularLineStyle> GetDefaultRule(RegularLineStyle lineStyle, bool empty = true)
         {
@@ -449,10 +449,10 @@ namespace NodeMarkup.Manager
 
                 var lines = IntersectLines.ToDictionary(i => i.PointPair, i => i);
 
-                if (Crosswalk.LeftBorder.Value is MarkupRegularLine leftBorder)
+                if (Crosswalk.LeftBorder.Value is MarkingRegularLine leftBorder)
                     lines[leftBorder.PointPair] = leftBorder;
 
-                if (Crosswalk.RightBorder.Value is MarkupRegularLine rightBorder)
+                if (Crosswalk.RightBorder.Value is MarkingRegularLine rightBorder)
                     lines[rightBorder.PointPair] = rightBorder;
 
                 foreach (var line in lines.Values)
@@ -460,16 +460,16 @@ namespace NodeMarkup.Manager
             }
         }
     }
-    public class MarkupLaneLine : MarkupRegularLine
+    public class MarkingLaneLine : MarkingRegularLine
     {
         public override LineType Type => LineType.Lane;
 
-        public MarkupLaneLine(Markup markup, MarkupPointPair pointPair, RegularLineStyle style = null) : base(markup, pointPair, style) { }
+        public MarkingLaneLine(Marking markup, MarkingPointPair pointPair, RegularLineStyle style = null) : base(markup, pointPair, style) { }
 
         public override void Render(OverlayData data)
         {
-            var lanePointS = PointPair.First as MarkupLanePoint;
-            var lanePointE = PointPair.Second as MarkupLanePoint;
+            var lanePointS = PointPair.First as MarkingLanePoint;
+            var lanePointE = PointPair.Second as MarkingLanePoint;
 
             ITrajectory[] trajectories;
             if (lanePointS != null && lanePointE != null)
@@ -516,8 +516,8 @@ namespace NodeMarkup.Manager
             if (!rule.GetT(out var fromT, out var toT) || fromT == toT)
                 return;
 
-            var lanePointS = PointPair.First as MarkupLanePoint;
-            var lanePointE = PointPair.Second as MarkupLanePoint;
+            var lanePointS = PointPair.First as MarkingLanePoint;
+            var lanePointE = PointPair.Second as MarkingLanePoint;
 
             ITrajectory[] trajectories;
             if (lanePointS != null && lanePointE != null)
@@ -559,7 +559,7 @@ namespace NodeMarkup.Manager
             points.RenderArea(triangles, data);
         }
     }
-    public class MarkupStopLine : MarkupLine
+    public class MarkingStopLine : MarkingLine
     {
         public override LineType Type => LineType.Stop;
 
@@ -570,7 +570,7 @@ namespace NodeMarkup.Manager
         public PropertyEnumValue<Alignment> RawStartAlignment { get; private set; }
         public PropertyEnumValue<Alignment> RawEndAlignment { get; private set; }
 
-        public MarkupStopLine(Markup markup, MarkupPointPair pointPair, StopLineStyle style = null, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, pointPair, false)
+        public MarkingStopLine(Marking markup, MarkingPointPair pointPair, StopLineStyle style = null, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, pointPair, false)
         {
             RawStartAlignment = new PropertyEnumValue<Alignment>("AL", AlignmentChanged, firstAlignment);
             RawEndAlignment = new PropertyEnumValue<Alignment>("AR", AlignmentChanged, secondAlignment);
@@ -580,10 +580,10 @@ namespace NodeMarkup.Manager
             SetRule(rule);
 
             Update(true);
-            Markup.RecalculateStyleData(this);
+            Marking.RecalculateStyleData(this);
         }
 
-        private void AlignmentChanged() => Markup.Update(this, true, true);
+        private void AlignmentChanged() => Marking.Update(this, true, true);
         protected override ITrajectory CalculateTrajectory() => new StraightTrajectory(PointPair.First.GetAbsolutePosition(RawStartAlignment), PointPair.Second.GetAbsolutePosition(RawEndAlignment));
         protected void SetRule(MarkupLineRawRule<StopLineStyle> rule)
         {
@@ -615,7 +615,7 @@ namespace NodeMarkup.Manager
             RawEndAlignment.FromXml(config);
         }
     }
-    public class MarkupEnterLine : MarkupLine
+    public class MarkingEnterLine : MarkingLine
     {
         public override LineType Type => throw new NotImplementedException();
         public override IEnumerable<ILinePartEdge> RulesEdges => throw new NotImplementedException();
@@ -627,7 +627,7 @@ namespace NodeMarkup.Manager
         public bool IsDot => IsSame && StartAlignment == EndAlignment;
 
 
-        public MarkupEnterLine(Markup markup, MarkupPoint first, MarkupPoint second, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, MarkupPointPair.FromPoints(first, second, out bool invert), false)
+        public MarkingEnterLine(Marking markup, MarkingPoint first, MarkingPoint second, Alignment firstAlignment = Alignment.Centre, Alignment secondAlignment = Alignment.Centre) : base(markup, MarkingPointPair.FromPoints(first, second, out bool invert), false)
         {
             StartAlignment = !invert ? firstAlignment : secondAlignment;
             EndAlignment = !invert ? secondAlignment : firstAlignment;
@@ -650,16 +650,16 @@ namespace NodeMarkup.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged) { }
     }
 
-    public struct MarkupLinePair
+    public struct MarkingLinePair
     {
         public static MarkupLinePairComparer Comparer { get; } = new MarkupLinePairComparer();
-        public static bool operator ==(MarkupLinePair a, MarkupLinePair b) => Comparer.Equals(a, b);
-        public static bool operator !=(MarkupLinePair a, MarkupLinePair b) => !Comparer.Equals(a, b);
+        public static bool operator ==(MarkingLinePair a, MarkingLinePair b) => Comparer.Equals(a, b);
+        public static bool operator !=(MarkingLinePair a, MarkingLinePair b) => !Comparer.Equals(a, b);
 
-        public MarkupLine First;
-        public MarkupLine Second;
+        public MarkingLine First;
+        public MarkingLine Second;
 
-        public Markup Markup => First.Markup == Second.Markup ? First.Markup : null;
+        public Marking Markup => First.Marking == Second.Marking ? First.Marking : null;
         public bool IsSelf => First == Second;
         public bool? MustIntersect
         {
@@ -688,24 +688,24 @@ namespace NodeMarkup.Manager
 
                 return null;
 
-                static bool IsBorder(MarkupLine line1, MarkupLine line2) => line1 is MarkupCrosswalkLine crosswalkLine && crosswalkLine.Crosswalk.IsBorder(line2);
+                static bool IsBorder(MarkingLine line1, MarkingLine line2) => line1 is MarkingCrosswalkLine crosswalkLine && crosswalkLine.Crosswalk.IsBorder(line2);
             }
         }
 
-        public MarkupLinePair(MarkupLine first, MarkupLine second)
+        public MarkingLinePair(MarkingLine first, MarkingLine second)
         {
             First = first;
             Second = second;
         }
-        public bool ContainLine(MarkupLine line) => First == line || Second == line;
-        public MarkupLine GetOther(MarkupLine line)
+        public bool ContainLine(MarkingLine line) => First == line || Second == line;
+        public MarkingLine GetOther(MarkingLine line)
         {
             if (ContainLine(line))
                 return line == First ? Second : First;
             else
                 return null;
         }
-        public MarkupLine GetLine(MarkupPoint point)
+        public MarkingLine GetLine(MarkingPoint point)
         {
             if (First.ContainsPoint(point))
                 return First;
@@ -717,10 +717,10 @@ namespace NodeMarkup.Manager
 
         public override string ToString() => $"{First} × {Second}";
 
-        public class MarkupLinePairComparer : IEqualityComparer<MarkupLinePair>
+        public class MarkupLinePairComparer : IEqualityComparer<MarkingLinePair>
         {
-            public bool Equals(MarkupLinePair x, MarkupLinePair y) => (x.First == y.First && x.Second == y.Second) || (x.First == y.Second && x.Second == y.First);
-            public int GetHashCode(MarkupLinePair pair) => pair.GetHashCode();
+            public bool Equals(MarkingLinePair x, MarkingLinePair y) => (x.First == y.First && x.Second == y.Second) || (x.First == y.Second && x.Second == y.First);
+            public int GetHashCode(MarkingLinePair pair) => pair.GetHashCode();
         }
     }
     public class LineBorders : IEnumerable<ITrajectory>
@@ -728,15 +728,15 @@ namespace NodeMarkup.Manager
         public Vector3 Center { get; }
         public List<ITrajectory> Borders { get; }
         public bool IsEmpty => !Borders.Any();
-        public LineBorders(MarkupRegularLine line)
+        public LineBorders(MarkingRegularLine line)
         {
-            Center = line.Markup.Position;
+            Center = line.Marking.Position;
             Borders = GetBorders(line).ToList();
         }
-        public IEnumerable<ITrajectory> GetBorders(MarkupRegularLine line)
+        public IEnumerable<ITrajectory> GetBorders(MarkingRegularLine line)
         {
             if (line.ClipSidewalk)
-                return line.Markup.Contour;
+                return line.Marking.Contour;
             else
                 return Enumerable.Empty<ITrajectory>();
         }
@@ -765,20 +765,21 @@ namespace NodeMarkup.Manager
     public enum LineType
     {
         [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
-        Regular = Markup.Item.RegularLine,
+        Regular = Marking.Item.RegularLine,
 
         [Description(nameof(Localize.LineStyle_StopLinesGroup))]
-        Stop = Markup.Item.StopLine,
+        Stop = Marking.Item.StopLine,
 
         [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
-        Crosswalk = Markup.Item.Crosswalk,
+        Crosswalk = Marking.Item.Crosswalk,
 
         [Description(nameof(Localize.LineStyle_LaneGroup))]
-        Lane = Markup.Item.Lane,
+        Lane = Marking.Item.Lane,
 
         [NotVisible]
         All = Regular | Stop | Crosswalk | Lane,
     }
+
     [AttributeUsage(AttributeTargets.Field)]
     public class LineTypeAttribute : Attribute
     {
@@ -789,6 +790,7 @@ namespace NodeMarkup.Manager
             Type = type;
         }
     }
+
     public enum Alignment
     {
         [Description(nameof(Localize.StyleOption_AlignmentLeft))]

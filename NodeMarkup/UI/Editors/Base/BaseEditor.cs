@@ -23,10 +23,10 @@ namespace NodeMarkup.UI.Editors
     public abstract class Editor : CustomUIPanel, ISupport
     {
         public NodeMarkupPanel Panel { get; private set; }
-        public Markup Markup => Panel.Markup;
+        public Marking Markup => Panel.Markup;
 
         public abstract string Name { get; }
-        public abstract Markup.SupportType Support { get; }
+        public abstract Marking.SupportType Support { get; }
         public abstract string EmptyMessage { get; }
 
         public abstract bool AvailableItems { get; set; }

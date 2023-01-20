@@ -10,10 +10,10 @@ namespace NodeMarkup.Tools
 {
     public abstract class BaseMakeItemToolMode : NodeMarkupToolMode
     {
-        protected List<MarkupPoint> TargetPoints { get; set; } = new List<MarkupPoint>();
+        protected List<MarkingPoint> TargetPoints { get; set; } = new List<MarkingPoint>();
 
-        public MarkupPoint HoverPoint { get; protected set; } = null;
-        public MarkupPoint SelectPoint { get; protected set; } = null;
+        public MarkingPoint HoverPoint { get; protected set; } = null;
+        public MarkingPoint SelectPoint { get; protected set; } = null;
 
         protected bool IsHoverPoint => HoverPoint != null;
         protected bool IsSelectPoint => SelectPoint != null;
@@ -39,10 +39,10 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            if (IsSelectPoint && SelectPoint.Type == MarkupPoint.PointType.Enter && (SelectPoint.Enter.SupportPoints & MarkupPoint.PointType.Normal) != 0)
+            if (IsSelectPoint && SelectPoint.Type == MarkingPoint.PointType.Enter && (SelectPoint.Enter.SupportPoints & MarkingPoint.PointType.Normal) != 0)
             {
                 var connectLine = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _) - SelectPoint.MarkerPosition;
-                if (connectLine.magnitude >= 2 && 135 <= Vector3.Angle(XZ(SelectPoint.Direction), XZ(connectLine)) && SelectPoint.Enter.TryGetPoint(SelectPoint.Index, MarkupPoint.PointType.Normal, out MarkupPoint normalPoint))
+                if (connectLine.magnitude >= 2 && 135 <= Vector3.Angle(XZ(SelectPoint.Direction), XZ(connectLine)) && SelectPoint.Enter.TryGetPoint(SelectPoint.Index, MarkingPoint.PointType.Normal, out MarkingPoint normalPoint))
                 {
                     HoverPoint = normalPoint;
                     return;
@@ -53,7 +53,7 @@ namespace NodeMarkup.Tools
         }
         public override string GetToolInfo()
         {
-            var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
+            var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
             var exist = Tool.Markup.ExistLine(pointPair);
 
             if (pointPair.IsStopLine)
@@ -100,13 +100,13 @@ namespace NodeMarkup.Tools
 
         #region SET TARGET
 
-        protected void SetTarget(MarkupPoint ignore = null)
+        protected void SetTarget(MarkingPoint ignore = null)
         {
             TargetPoints.Clear();
             foreach (var enter in Tool.Markup.Enters)
                 TargetPoints.AddRange(GetTarget(enter, ignore));
         }
-        protected abstract IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore);
+        protected abstract IEnumerable<MarkingPoint> GetTarget(Entrance enter, MarkingPoint ignore);
         protected int Find(int[] allow, int idx, int sign)
         {
             do

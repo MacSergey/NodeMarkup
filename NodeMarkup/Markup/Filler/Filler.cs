@@ -7,15 +7,15 @@ using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupFiller : IStyleItem, IToXml, ISupport
+    public class MarkingFiller : IStyleItem, IToXml, ISupport
     {
         public static string XmlName { get; } = "F";
 
         public string DeleteCaptionDescription => Localize.FillerEditor_DeleteCaptionDescription;
         public string DeleteMessageDescription => Localize.FillerEditor_DeleteMessageDescription;
-        public Markup.SupportType Support => Markup.SupportType.Fillers;
+        public Marking.SupportType Support => Marking.SupportType.Fillers;
 
-        public Markup Markup { get; }
+        public Marking Marking { get; }
         public int Id { get; }
         public FillerContour Contour { get; }
 
@@ -25,11 +25,11 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
 
-        public MarkupFiller(FillerContour contour, FillerStyle style)
+        public MarkingFiller(FillerContour contour, FillerStyle style)
         {
             Id = Math.Abs(GetHashCode());
             Contour = contour;
-            Markup = Contour.Markup;
+            Marking = Contour.Markup;
             style.OnStyleChanged = FillerChanged;
             Style = new PropertyClassValue<FillerStyle>(StyleChanged, style);
         }
@@ -39,9 +39,9 @@ namespace NodeMarkup.Manager
             Style.Value.OnStyleChanged = FillerChanged;
             FillerChanged();
         }
-        private void FillerChanged() => Markup?.Update(this, true);
-        public bool ContainsLine(MarkupLine line) => Contour.RawParts.Any(p => p.Line is not MarkupEnterLine && p.Line.PointPair == line.PointPair);
-        public bool ContainsPoint(MarkupPoint point) => Contour.RawVertices.Any(s => s is EnterFillerVertexBase vertex && vertex.Point == point);
+        private void FillerChanged() => Marking?.Update(this, true);
+        public bool ContainsLine(MarkingLine line) => Contour.RawParts.Any(p => p.Line is not MarkingEnterLine && p.Line.PointPair == line.PointPair);
+        public bool ContainsPoint(MarkingPoint point) => Contour.RawVertices.Any(s => s is EnterFillerVertexBase vertex && vertex.Point == point);
 
         public void Update(bool onlySelfUpdate = false) => Contour.Update();
         public void RecalculateStyleData()
@@ -63,7 +63,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out MarkupFiller filler)
+        public static bool FromXml(XElement config, Marking markup, ObjectsMap map, out MarkingFiller filler)
         {
             filler = default;
 
@@ -79,7 +79,7 @@ namespace NodeMarkup.Manager
             if (contour.IsEmpty)
                 return false;
 
-            filler = new MarkupFiller(contour, style);
+            filler = new MarkingFiller(contour, style);
             return true;
 
         }
@@ -92,7 +92,7 @@ namespace NodeMarkup.Manager
 
         public override string ToString() => Id.ToString();
     }
-    public class FillerLinePart : MarkupLinePart
+    public class FillerLinePart : MarkingLinePart
     {
         public override string XmlSection => throw new NotImplementedException();
         public new IFillerVertex From
@@ -107,7 +107,7 @@ namespace NodeMarkup.Manager
         }
         public bool IsPoint { get; } = false;
         public bool IsMedian { get; } = false;
-        public FillerLinePart(MarkupLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to)
+        public FillerLinePart(MarkingLine line, IFillerVertex from, IFillerVertex to) : base(line, from, to)
         {
             if (from is EnterFillerVertexBase first && to is EnterFillerVertexBase second)
             {

@@ -11,9 +11,9 @@ namespace NodeMarkup.Utilities
     public class SerializableDataExtension : BaseSerializableDataExtension<SerializableDataExtension, Mod>
     {
         protected override string Id => Loader.Id;
-        protected override XElement GetSaveData() => MarkupManager.ToXml();
-        protected override void SetLoadData(XElement config) => MarkupManager.FromXml(config, new ObjectsMap(), false);
-        protected override void OnLoadFailed() => MarkupManager.SetFailed();
+        protected override XElement GetSaveData() => MarkingManager.ToXml();
+        protected override void SetLoadData(XElement config) => MarkingManager.FromXml(config, new ObjectsMap(), false);
+        protected override void OnLoadFailed() => MarkingManager.SetFailed();
         protected override void OnSaveFailed(string config) => Loader.SaveToFile(Loader.MarkingName, config, out _);
     }
 }

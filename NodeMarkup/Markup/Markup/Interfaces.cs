@@ -13,7 +13,7 @@ namespace NodeMarkup.Manager
 
     public interface ISupport
     {
-        Markup.SupportType Support { get; }
+        Marking.SupportType Support { get; }
     }
     public interface IUpdate
     {
@@ -24,9 +24,9 @@ namespace NodeMarkup.Manager
     {
         void Update(Type item, bool recalculate = false, bool recalcDependences = false);
     }
-    public interface IUpdatePoints : IUpdate<MarkupPoint> { }
-    public interface IUpdateLines : IUpdate<MarkupLine> { }
-    public interface IUpdateFillers : IUpdate<MarkupFiller> { }
+    public interface IUpdatePoints : IUpdate<MarkingPoint> { }
+    public interface IUpdateLines : IUpdate<MarkingLine> { }
+    public interface IUpdateFillers : IUpdate<MarkingFiller> { }
     public interface IUpdateCrosswalks : IUpdate<MarkupCrosswalk> { }
 
     public interface IItem : IUpdate, IDeletable, IOverlay { }

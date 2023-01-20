@@ -17,7 +17,7 @@ namespace NodeMarkup.UI.Editors
         public event Action<RulePanel, UIMouseEventParameter> OnLeave;
 
         private LinesEditor Editor { get; set; }
-        private MarkupLine Line => Editor.EditObject;
+        private MarkingLine Line => Editor.EditObject;
         public MarkupLineRawRule Rule { get; private set; }
 
         private StyleHeaderPanel Header { get; set; }
@@ -145,10 +145,10 @@ namespace NodeMarkup.UI.Editors
         {
             switch (Line)
             {
-                case MarkupRegularLine regularLine:
+                case MarkingRegularLine regularLine:
                     Style = ComponentPool.Get<RegularStylePropertyPanel>(this, nameof(Style));
                     break;
-                case MarkupStopLine stopLine:
+                case MarkingStopLine stopLine:
                     Style = ComponentPool.Get<StopStylePropertyPanel>(this, nameof(Style));
                     break;
                 default:

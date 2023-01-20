@@ -10,19 +10,19 @@ namespace NodeMarkup.Utilities
 {
     public class MarkupLinesIntersect : Intersection
     {
-        public MarkupLinePair Pair { get; private set; }
+        public MarkingLinePair Pair { get; private set; }
         public Vector3 Position => (Pair.First.Trajectory.Position(FirstT) + Pair.Second.Trajectory.Position(SecondT)) / 2;
-        protected MarkupLinesIntersect(MarkupLinePair pair, float firstT, float secondT) : base(firstT, secondT)
+        protected MarkupLinesIntersect(MarkingLinePair pair, float firstT, float secondT) : base(firstT, secondT)
         {
             Pair = pair;
         }
-        protected MarkupLinesIntersect(MarkupLinePair pair) : base()
+        protected MarkupLinesIntersect(MarkingLinePair pair) : base()
         {
             Pair = pair;
         }
 
-        public static MarkupLinesIntersect Calculate(MarkupLine first, MarkupLine second) => Calculate(new MarkupLinePair(first, second));
-        public static MarkupLinesIntersect Calculate(MarkupLinePair pair)
+        public static MarkupLinesIntersect Calculate(MarkingLine first, MarkingLine second) => Calculate(new MarkingLinePair(first, second));
+        public static MarkupLinesIntersect Calculate(MarkingLinePair pair)
         {
             var mustIntersect = pair.MustIntersect;
 
@@ -38,11 +38,11 @@ namespace NodeMarkup.Utilities
 
             return new MarkupLinesIntersect(pair);
 
-            static ITrajectory GetTrajectory(MarkupLine line, bool? mustIntersect)
+            static ITrajectory GetTrajectory(MarkingLine line, bool? mustIntersect)
                     => mustIntersect == true && line.Trajectory is StraightTrajectory straight ? new StraightTrajectory(straight.Trajectory, false) : line.Trajectory;
         }
 
-        public float this[MarkupLine line] => Pair.First == line ? FirstT : (Pair.Second == line ? SecondT : -1);
+        public float this[MarkingLine line] => Pair.First == line ? FirstT : (Pair.Second == line ? SecondT : -1);
     }
 
     public class MarkupIntersectComparer : IComparer<Intersection>

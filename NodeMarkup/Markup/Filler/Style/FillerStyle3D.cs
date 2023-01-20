@@ -44,7 +44,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override List<List<FillerContour.Part>> GetContours(MarkupFiller filler)
+        protected override List<List<FillerContour.Part>> GetContours(MarkingFiller filler)
         {
             var contours = base.GetContours(filler);
 
@@ -53,7 +53,7 @@ namespace NodeMarkup.Manager
 
             return contours;
         }
-        protected override IEnumerable<IStyleData> CalculateImpl(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
+        protected override IEnumerable<IStyleData> CalculateImpl(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
             if ((SupportLOD & lod) == 0)
                 yield break;
@@ -314,7 +314,7 @@ namespace NodeMarkup.Manager
             return false;
         }
 
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
             components.Add(AddElevationProperty(this, parent, false));
@@ -473,7 +473,7 @@ namespace NodeMarkup.Manager
                 curbTarget.MedianCurbSize.Value = MedianCurbSize;
             }
         }
-        public override IEnumerable<IStyleData> Calculate(MarkupFiller filler)
+        public override IEnumerable<IStyleData> Calculate(MarkingFiller filler)
         {
             if (CurbSize == 0f && MedianCurbSize == 0f)
             {
@@ -500,7 +500,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        private IEnumerable<IStyleData> Calculate(MarkupFiller filler, CounterData[] contours, MarkupLOD lod)
+        private IEnumerable<IStyleData> Calculate(MarkingFiller filler, CounterData[] contours, MarkupLOD lod)
         {
             if ((SupportLOD & lod) == 0)
                 yield break;
@@ -595,7 +595,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
 
@@ -678,8 +678,6 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return nameof(Color);
-                yield return nameof(Width);
                 yield return nameof(Elevation);
                 yield return nameof(CornerRadius);
                 yield return nameof(Offset);
@@ -690,8 +688,6 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
                 yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
                 yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
                 yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
@@ -715,8 +711,6 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return nameof(Color);
-                yield return nameof(Width);
                 yield return nameof(Elevation);
                 yield return nameof(CornerRadius);
                 yield return nameof(CurbSize);
@@ -728,8 +722,6 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
                 yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
                 yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
                 yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
@@ -755,8 +747,6 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return nameof(Color);
-                yield return nameof(Width);
                 yield return nameof(Elevation);
                 yield return nameof(CornerRadius);
                 yield return nameof(CurbSize);
@@ -768,8 +758,6 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
                 yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
                 yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
                 yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
@@ -795,8 +783,6 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return nameof(Color);
-                yield return nameof(Width);
                 yield return nameof(Elevation);
                 yield return nameof(CornerRadius);
                 yield return nameof(CurbSize);
@@ -808,8 +794,6 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
                 yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
                 yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
                 yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
@@ -835,8 +819,6 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return nameof(Color);
-                yield return nameof(Width);
                 yield return nameof(Elevation);
                 yield return nameof(CornerRadius);
                 yield return nameof(CurbSize);
@@ -848,8 +830,6 @@ namespace NodeMarkup.Manager
         {
             get
             {
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
                 yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
                 yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
                 yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);

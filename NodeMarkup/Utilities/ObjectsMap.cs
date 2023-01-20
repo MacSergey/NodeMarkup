@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using static NodeMarkup.Manager.MarkupPoint;
+using static NodeMarkup.Manager.MarkingPoint;
 
 namespace NodeMarkup.Utilities
 {
@@ -17,7 +17,7 @@ namespace NodeMarkup.Utilities
         {
             Invert = invert;
         }
-        public void AddInvertEnter(Enter enter)
+        public void AddInvertEnter(Entrance enter)
         {
             var count = enter.PointCount + 1;
             for (byte i = 1; i < count; i += 1)
@@ -55,7 +55,7 @@ namespace NodeMarkup.Utilities
         public override string ToString()
         {
             if (Type == PointType)
-                return $"{nameof(Point)}: {GetEnter(Point)}-{GetIndex(Point)}{MarkupPoint.GetType(Point).ToString().FirstOrDefault()}";
+                return $"{nameof(Point)}: {GetEnter(Point)}-{GetIndex(Point)}{MarkingPoint.GetType(Point).ToString().FirstOrDefault()}";
             else
                 return base.ToString();
         }

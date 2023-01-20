@@ -1,6 +1,5 @@
 ﻿using ColossalFramework.Math;
 using ModsCommon.Utilities;
-using NodeMarkup.Tools;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
@@ -11,9 +10,9 @@ using ObjectId = NodeMarkup.Utilities.ObjectId;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupPoint : IItem, IToXml, ISupport
+    public abstract class MarkingPoint : IItem, IToXml, ISupport
     {
-        public event Action<MarkupPoint> OnUpdate;
+        public event Action<MarkingPoint> OnUpdate;
         public static int GetId(ushort enter, byte index, PointType type) => enter + (index << 16) + ((int)type >> 1 << 24);
         public static ushort GetEnter(int id) => (ushort)id;
         public static byte GetIndex(int id) => (byte)(id >> 16);
@@ -22,7 +21,7 @@ namespace NodeMarkup.Manager
         private static Vector3 MarkerSize => Vector3.one;
         protected static float DefaultWidth => 1f;
 
-        public static bool FromId(int id, Markup markup, ObjectsMap map, out MarkupPoint point)
+        public static bool FromId(int id, Marking marking, ObjectsMap map, out MarkingPoint point)
         {
             point = null;
 
@@ -30,12 +29,12 @@ namespace NodeMarkup.Manager
             var index = GetIndex(id);
             var type = GetType(id);
 
-            switch (markup.Type)
+            switch (marking.Type)
             {
-                case MarkupType.Node when map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment):
+                case MarkingType.Node when map.TryGetValue(new ObjectId() { Segment = enterId }, out ObjectId targetSegment):
                     enterId = targetSegment.Segment;
                     break;
-                case MarkupType.Segment when map.TryGetValue(new ObjectId() { Node = enterId }, out ObjectId targetNode):
+                case MarkingType.Segment when map.TryGetValue(new ObjectId() { Node = enterId }, out ObjectId targetNode):
                     enterId = targetNode.Node;
                     break;
             }
@@ -43,12 +42,12 @@ namespace NodeMarkup.Manager
             if (map.TryGetValue(new ObjectId() { Point = GetId(enterId, index, type) }, out ObjectId targetPoint))
                 index = GetIndex(targetPoint.Point);
 
-            return markup.TryGetEnter(enterId, out Enter enter) && enter.TryGetPoint(index, type, out point);
+            return marking.TryGetEnter(enterId, out Entrance enter) && enter.TryGetPoint(index, type, out point);
         }
 
         public string DeleteCaptionDescription => Localize.PointEditor_DeleteCaptionDescription;
         public string DeleteMessageDescription => Localize.PointEditor_DeleteMessageDescription;
-        public Markup.SupportType Support => Markup.SupportType.Points;
+        public Marking.SupportType Support => Marking.SupportType.Points;
 
         public PropertyValue<float> Offset { get; }
 
@@ -71,9 +70,9 @@ namespace NodeMarkup.Manager
         protected Bounds Bounds { get; set; }
 
         public IPointSource Source { get; }
-        public Enter Enter => Source.Enter;
-        public IEnumerable<MarkupLine> Lines => Markup.GetPointLines(this);
-        public Markup Markup => Enter.Markup;
+        public Entrance Enter => Source.Enter;
+        public IEnumerable<MarkingLine> Lines => Marking.GetPointLines(this);
+        public Marking Marking => Enter.Marking;
 
         public bool IsFirst => Index == 1;
         public bool IsLast => Index == Enter.PointCount;
@@ -84,7 +83,7 @@ namespace NodeMarkup.Manager
         public string XmlSection => XmlName;
 
 
-        protected MarkupPoint(byte index, IPointSource source, bool update)
+        protected MarkingPoint(byte index, IPointSource source, bool update)
         {
             Offset = new PropertyStructValue<float>("O", PointChanged, 0);
             Source = source;
@@ -110,7 +109,7 @@ namespace NodeMarkup.Manager
         public virtual bool IsHover(Ray ray) => Bounds.IntersectRay(ray);
         public override string ToString() => $"{Enter}:{Index}";
         public override int GetHashCode() => Id;
-        protected void PointChanged() => Markup.Update(this, true, true);
+        protected void PointChanged() => Marking.Update(this, true, true);
 
         public virtual Vector3 GetAbsolutePosition(Alignment alignment)
         {
@@ -150,10 +149,10 @@ namespace NodeMarkup.Manager
             Offset.ToXml(config);
             return config;
         }
-        public static void FromXml(XElement config, Markup markup, ObjectsMap map)
+        public static void FromXml(XElement config, Marking markup, ObjectsMap map)
         {
             var id = config.GetAttrValue<int>(nameof(Id));
-            if (FromId(id, markup, map, out MarkupPoint point))
+            if (FromId(id, markup, map, out MarkingPoint point))
                 point.FromXml(config, map);
         }
         public virtual void FromXml(XElement config, ObjectsMap map)
@@ -184,7 +183,7 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class MarkupEnterPoint : MarkupPoint
+    public class MarkingEnterPoint : MarkingPoint
     {
         public static float DefaultSplitOffse => 0.5f;
 
@@ -198,7 +197,7 @@ namespace NodeMarkup.Manager
         public PropertyBoolValue Split { get; }
         public PropertyValue<float> SplitOffset { get; }
 
-        public MarkupEnterPoint(byte index, IPointSource source) : base(index, source, true)
+        public MarkingEnterPoint(byte index, IPointSource source) : base(index, source, true)
         {
             Split = new PropertyBoolValue("S", PointChanged, false);
             SplitOffset = new PropertyStructValue<float>("SO", PointChanged, DefaultSplitOffse);
@@ -261,24 +260,24 @@ namespace NodeMarkup.Manager
             return config;
         }
     }
-    public class MarkupCrosswalkPoint : MarkupPoint
+    public class MarkingCrosswalkPoint : MarkingPoint
     {
         private static Vector3 MarkerSize { get; } = Vector3.one * 2f;
         public static float Shift => 1f;
         public override PointType Type => PointType.Crosswalk;
-        public MarkupEnterPoint SourcePoint { get; }
+        public MarkingEnterPoint SourcePoint { get; }
         public override Vector3 Position
         {
             get => base.Position;
             protected set => Bounds = new Bounds(value, MarkerSize);
         }
 
-        public MarkupCrosswalkPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Index, sourcePoint.Source, false)
+        public MarkingCrosswalkPoint(MarkingEnterPoint sourcePoint) : base(sourcePoint.Index, sourcePoint.Source, false)
         {
             SourcePoint = sourcePoint;
             SourcePoint.OnUpdate += SourcePointUpdate;
         }
-        private void SourcePointUpdate(MarkupPoint point) => UpdateProcess();
+        private void SourcePointUpdate(MarkingPoint point) => UpdateProcess();
         public override void UpdateProcess()
         {
             Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Enter.TranformCoef);
@@ -295,28 +294,28 @@ namespace NodeMarkup.Manager
         }
         public override string ToString() => $"{base.ToString()}C";
     }
-    public class MarkupNormalPoint : MarkupPoint
+    public class MarkingNormalPoint : MarkingPoint
     {
         public override PointType Type => PointType.Normal;
-        public new NodeMarkup Markup => (NodeMarkup)base.Markup;
-        public MarkupEnterPoint SourcePoint { get; }
+        public new NodeMarking Marking => (NodeMarking)base.Marking;
+        public MarkingEnterPoint SourcePoint { get; }
         public override bool IsSplit => SourcePoint.IsSplit;
         public override float SplitOffsetValue => SourcePoint.SplitOffsetValue;
 
-        public MarkupNormalPoint(MarkupEnterPoint sourcePoint) : base(sourcePoint.Index, sourcePoint.Source, false)
+        public MarkingNormalPoint(MarkingEnterPoint sourcePoint) : base(sourcePoint.Index, sourcePoint.Source, false)
         {
             SourcePoint = sourcePoint;
             SourcePoint.OnUpdate += SourcePointUpdate;
         }
 
-        private void SourcePointUpdate(MarkupPoint point) => UpdateProcess();
+        private void SourcePointUpdate(MarkingPoint point) => UpdateProcess();
 
         public override void UpdateProcess()
         {
             var tSet = new HashSet<float>();
 
             var line = new StraightTrajectory(SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction, false);
-            foreach (var contour in Markup.Contour)
+            foreach (var contour in Marking.Contour)
                 tSet.AddRange(Intersection.Calculate(line, contour).Where(i => i.IsIntersect).Select(i => i.FirstT));
 
             var tSetSort = tSet.OrderBy(i => i).ToArray();
@@ -329,12 +328,12 @@ namespace NodeMarkup.Manager
         public override Vector3 GetAbsolutePosition(Alignment alignment) => base.GetAbsolutePosition(alignment.Invert());
         public override string ToString() => $"{base.ToString()}N";
     }
-    public class MarkupLanePoint : MarkupPoint
+    public class MarkingLanePoint : MarkingPoint
     {
         public override PointType Type => PointType.Lane;
 
-        public MarkupEnterPoint SourcePointA { get; private set; }
-        public MarkupEnterPoint SourcePointB { get; private set; }
+        public MarkingEnterPoint SourcePointA { get; private set; }
+        public MarkingEnterPoint SourcePointB { get; private set; }
         public new NetLanePointSource Source => (NetLanePointSource)base.Source;
         public override Vector3 Position
         {
@@ -349,7 +348,7 @@ namespace NodeMarkup.Manager
         public float Width => (SourcePointB.Position - SourcePointA.Position).MakeFlat().magnitude;
         public override Color32 Color => Colors.GetOverlayColor(Index + Colors.OverlayColors.Length / 2, byte.MaxValue);
 
-        public MarkupLanePoint(byte index, NetLanePointSource source) : base(index, source, false)
+        public MarkingLanePoint(byte index, NetLanePointSource source) : base(index, source, false)
         {
             source.OnPointOrderChanged += PointOrderChanged;
             PointOrderChanged();
@@ -372,7 +371,7 @@ namespace NodeMarkup.Manager
             UpdateProcess();
         }
 
-        private void SourcePointUpdate(MarkupPoint point)
+        private void SourcePointUpdate(MarkingPoint point)
         {
             UpdateProcess();
             PointChanged();
@@ -418,19 +417,19 @@ namespace NodeMarkup.Manager
         public override string ToString() => $"{base.ToString()}L";
     }
 
-    public struct MarkupPointPair
+    public struct MarkingPointPair
     {
         public static string XmlName { get; } = "PP";
         public static string XmlName1 { get; } = "L1";
         public static string XmlName2 { get; } = "L2";
-        public static bool FromHash(ulong hash, Markup markup, ObjectsMap map, out MarkupPointPair pair, out bool invert)
+        public static bool FromHash(ulong hash, Marking markup, ObjectsMap map, out MarkingPointPair pair, out bool invert)
         {
             var firstId = (int)(hash >> 32);
             var secondId = (int)hash;
 
-            if (MarkupPoint.FromId(firstId, markup, map, out MarkupPoint first) && MarkupPoint.FromId(secondId, markup, map, out MarkupPoint second))
+            if (MarkingPoint.FromId(firstId, markup, map, out MarkingPoint first) && MarkingPoint.FromId(secondId, markup, map, out MarkingPoint second))
             {
-                pair = new MarkupPointPair(first, second);
+                pair = new MarkingPointPair(first, second);
                 invert = first.Id >= second.Id;
                 return true;
             }
@@ -441,22 +440,22 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public static MarkupPointPair FromPoints(MarkupPoint first, MarkupPoint second, out bool invert)
+        public static MarkingPointPair FromPoints(MarkingPoint first, MarkingPoint second, out bool invert)
         {
-            var pair = new MarkupPointPair(first, second);
+            var pair = new MarkingPointPair(first, second);
             invert = first.Id >= second.Id;
             return pair;
         }
 
         public ulong Hash { get; }
-        public MarkupPoint First { get; }
-        public MarkupPoint Second { get; }
+        public MarkingPoint First { get; }
+        public MarkingPoint Second { get; }
         public bool IsSameEnter => First.Enter == Second.Enter;
         public bool IsSame => First == Second;
-        public bool IsStopLine => IsSameEnter && First.Type == MarkupPoint.PointType.Enter && Second.Type == MarkupPoint.PointType.Enter;
-        public bool IsNormal => First.Type == MarkupPoint.PointType.Normal || Second.Type == MarkupPoint.PointType.Normal;
-        public bool IsLane => First.Type == MarkupPoint.PointType.Lane || Second.Type == MarkupPoint.PointType.Lane;
-        public bool IsCrosswalk => First.Type == MarkupPoint.PointType.Crosswalk && Second.Type == MarkupPoint.PointType.Crosswalk;
+        public bool IsStopLine => IsSameEnter && First.Type == MarkingPoint.PointType.Enter && Second.Type == MarkingPoint.PointType.Enter;
+        public bool IsNormal => First.Type == MarkingPoint.PointType.Normal || Second.Type == MarkingPoint.PointType.Normal;
+        public bool IsLane => First.Type == MarkingPoint.PointType.Lane || Second.Type == MarkingPoint.PointType.Lane;
+        public bool IsCrosswalk => First.Type == MarkingPoint.PointType.Crosswalk && Second.Type == MarkingPoint.PointType.Crosswalk;
         public bool IsSplit => First.IsSplit || Second.IsSplit;
         public bool IsSideLine => !IsSameEnter && ((First.IsFirst && Second.IsLast) || (First.IsLast && Second.IsFirst));
         public NetworkType NetworkType => First.NetworkType & Second.NetworkType;
@@ -475,7 +474,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public MarkupPointPair(MarkupPoint first, MarkupPoint second)
+        public MarkingPointPair(MarkingPoint first, MarkingPoint second)
         {
             First = first.Id > second.Id ? second : first;
             Second = first.Id > second.Id ? first : second;
@@ -485,22 +484,22 @@ namespace NodeMarkup.Manager
 
         public string XmlSection => XmlName;
 
-        public bool ContainsPoint(MarkupPoint point) => First == point || Second == point;
-        public bool ContainsEnter(Enter enter) => First.Enter == enter || Second.Enter == enter;
-        public MarkupPoint GetOther(MarkupPoint point) => ContainsPoint(point) ? (point == First ? Second : First) : null;
+        public bool ContainsPoint(MarkingPoint point) => First == point || Second == point;
+        public bool ContainsEnter(Entrance enter) => First.Enter == enter || Second.Enter == enter;
+        public MarkingPoint GetOther(MarkingPoint point) => ContainsPoint(point) ? (point == First ? Second : First) : null;
         public LineType DefaultType => IsSameEnter ? LineType.Stop : LineType.Regular;
 
         public override string ToString() => $"{First}—{Second}";
 
-        public override bool Equals(object obj) => obj is MarkupPointPair other && other == this;
+        public override bool Equals(object obj) => obj is MarkingPointPair other && other == this;
 
         public override int GetHashCode() => Hash.GetHashCode();
-        public static bool operator ==(MarkupPointPair x, MarkupPointPair y) => x.Hash == y.Hash;
-        public static bool operator !=(MarkupPointPair x, MarkupPointPair y) => x.Hash != y.Hash;
+        public static bool operator ==(MarkingPointPair x, MarkingPointPair y) => x.Hash == y.Hash;
+        public static bool operator !=(MarkingPointPair x, MarkingPointPair y) => x.Hash != y.Hash;
     }
-    public class MarkupPointPairComparer : IEqualityComparer<MarkupPointPair>
+    public class MarkingPointPairComparer : IEqualityComparer<MarkingPointPair>
     {
-        public bool Equals(MarkupPointPair x, MarkupPointPair y) => x.Hash == y.Hash;
-        public int GetHashCode(MarkupPointPair pair) => pair.GetHashCode();
+        public bool Equals(MarkingPointPair x, MarkingPointPair y) => x.Hash == y.Hash;
+        public int GetHashCode(MarkingPointPair pair) => pair.GetHashCode();
     }
 }

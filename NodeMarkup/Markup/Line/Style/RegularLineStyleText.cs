@@ -148,7 +148,7 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, Text, Scale, Angle, Shift, Direction, Spacing, Alignment);
 
-        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (string.IsNullOrEmpty(Text))
                 return new MarkupPartGroupData(lod);
@@ -188,16 +188,16 @@ namespace NodeMarkup.Manager
 
             var t = Alignment.Value switch
             {
-                TextAlignment.Start when line.Markup.Type == MarkupType.Node => trajectory.Length >= offset ? trajectory.Travel(offset) : 0.5f,
-                TextAlignment.Start when line.Markup.Type == MarkupType.Segment => trajectory.Length >= offset ?  1f - trajectory.Invert().Travel(offset) : 0.5f,
-                TextAlignment.End when line.Markup.Type == MarkupType.Node => trajectory.Length >= offset ? 1f - trajectory.Invert().Travel(offset) : 0.5f,
-                TextAlignment.End when line.Markup.Type == MarkupType.Segment => trajectory.Length >= offset ? trajectory.Travel(offset) : 0.5f,
+                TextAlignment.Start when line.Marking.Type == MarkingType.Node => trajectory.Length >= offset ? trajectory.Travel(offset) : 0.5f,
+                TextAlignment.Start when line.Marking.Type == MarkingType.Segment => trajectory.Length >= offset ?  1f - trajectory.Invert().Travel(offset) : 0.5f,
+                TextAlignment.End when line.Marking.Type == MarkingType.Node => trajectory.Length >= offset ? 1f - trajectory.Invert().Travel(offset) : 0.5f,
+                TextAlignment.End when line.Marking.Type == MarkingType.Segment => trajectory.Length >= offset ? trajectory.Travel(offset) : 0.5f,
                 _ => 0.5f,
             };
 
             var direction = line.Trajectory.Tangent(t);
             var position = line.Trajectory.Position(t) + direction.MakeFlatNormalized().Turn90(true) * Shift;
-            var angle = direction.AbsoluteAngle() + (Angle.Value + (line.Markup.Type == MarkupType.Node ? -90 : 90)) * Mathf.Deg2Rad;
+            var angle = direction.AbsoluteAngle() + (Angle.Value + (line.Marking.Type == MarkingType.Node ? -90 : 90)) * Mathf.Deg2Rad;
             var width = textureData.texture.width * ratio;
             var height = textureData.texture.height * ratio;
             var data = new MarkupPartData(position, angle, width, height, Color, material);
@@ -206,7 +206,7 @@ namespace NodeMarkup.Manager
             return groupData;
         }
 
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddFontProperty(parent, false));

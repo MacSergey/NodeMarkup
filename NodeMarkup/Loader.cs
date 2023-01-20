@@ -1,16 +1,12 @@
-﻿using ColossalFramework.Globalization;
-using ColossalFramework.Importers;
+﻿using ColossalFramework.Importers;
 using ColossalFramework.IO;
 using ColossalFramework.Packaging;
-using HarmonyLib;
 using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using UnityEngine;
@@ -74,7 +70,7 @@ namespace NodeMarkup
         public static bool ImportMarkingData(string file)
         {
             SingletonMod<Mod>.Logger.Debug($"Import marking data");
-            return ImportData(file, (config) => MarkupManager.Import(config));
+            return ImportData(file, (config) => MarkingManager.Import(config));
         }
         public static bool ImportStylesData(string file)
         {
@@ -121,7 +117,7 @@ namespace NodeMarkup
         public static bool DumpMarkingData(out string path)
         {
             SingletonMod<Mod>.Logger.Debug($"Dump marking data");
-            return DumpData(GetString(MarkupManager.ToXml()), MarkingName, out path);
+            return DumpData(GetString(MarkingManager.ToXml()), MarkingName, out path);
         }
         public static bool DumpStyleTemplatesData(out string path)
         {

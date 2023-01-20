@@ -11,13 +11,13 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class FillerEditor : SimpleEditor<FillerItemsPanel, MarkupFiller>
+    public class FillerEditor : SimpleEditor<FillerItemsPanel, MarkingFiller>
     {
         #region PROPERTIES
 
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, LocalizeExtension.Alt, NodeMarkupTool.AddFillerShortcut);
-        public override Markup.SupportType Support { get; } = Markup.SupportType.Fillers;
+        public override Marking.SupportType Support { get; } = Marking.SupportType.Fillers;
 
         public StylePropertyPanel Style { get; private set; }
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
@@ -37,16 +37,16 @@ namespace NodeMarkup.UI.Editors
             FillerGuideToolMode = Tool.CreateToolMode<FillerGuideToolMode>();
             FillerGuideToolMode.Init(this);
         }
-        protected override IEnumerable<MarkupFiller> GetObjects() => Markup.Fillers;
+        protected override IEnumerable<MarkingFiller> GetObjects() => Markup.Fillers;
 
-        protected override void OnFillPropertiesPanel(MarkupFiller filler)
+        protected override void OnFillPropertiesPanel(MarkingFiller filler)
         {
             AddHeader();
             AddStyleTypeProperty();
             AddMoreOptions();
             AddStyleProperties();
         }
-        protected override void OnObjectDelete(MarkupFiller filler)
+        protected override void OnObjectDelete(MarkingFiller filler)
         {
             Markup.RemoveFiller(filler);
             base.OnObjectDelete(filler);
@@ -222,11 +222,11 @@ namespace NodeMarkup.UI.Editors
 
         #endregion
     }
-    public class FillerItemsPanel : ItemsPanel<FillerItem, MarkupFiller>
+    public class FillerItemsPanel : ItemsPanel<FillerItem, MarkingFiller>
     {
-        public override int Compare(MarkupFiller x, MarkupFiller y) => 0;
+        public override int Compare(MarkingFiller x, MarkingFiller y) => 0;
     }
-    public class FillerItem : EditItem<MarkupFiller, StyleIcon>
+    public class FillerItem : EditItem<MarkingFiller, StyleIcon>
     {
         public override void Refresh()
         {

@@ -15,16 +15,16 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class CrosswalkBorderSelectPropertyPanel : ResetableSelectPropertyPanel<MarkupRegularLine, CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton>
+    public class CrosswalkBorderSelectPropertyPanel : ResetableSelectPropertyPanel<MarkingRegularLine, CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton>
     {
         protected override string ResetToolTip => NodeMarkup.Localize.CrosswalkStyle_ResetBorder;
         protected override float Width => 150f;
 
-        public class CrosswalkBorderSelectButton : SelectListPropertyButton<MarkupRegularLine>
+        public class CrosswalkBorderSelectButton : SelectListPropertyButton<MarkingRegularLine>
         {
             public BorderPosition Position { get; set; }
             protected override string NotSet => NodeMarkup.Localize.SelectPanel_NotSet;
-            protected override bool IsEqual(MarkupRegularLine first, MarkupRegularLine second) => ReferenceEquals(first, second);
+            protected override bool IsEqual(MarkingRegularLine first, MarkingRegularLine second) => ReferenceEquals(first, second);
         }
     }
 }

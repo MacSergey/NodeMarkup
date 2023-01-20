@@ -8,7 +8,7 @@ namespace NodeMarkup.Utilities
 {
     public static class VersionMigration
     {
-        public static ObjectsMap Befor1_2(Manager.NodeMarkup markup, ObjectsMap map)
+        public static ObjectsMap Befor1_2(Manager.NodeMarking markup, ObjectsMap map)
         {
             if (map == null)
                 map = new ObjectsMap();
@@ -19,10 +19,10 @@ namespace NodeMarkup.Utilities
                 {
                     switch (point.Source.Location)
                     {
-                        case MarkupPoint.LocationType.LeftEdge:
+                        case MarkingPoint.LocationType.LeftEdge:
                             map.AddPoint(point.Id, point.Id - (1 << 16));
                             break;
-                        case MarkupPoint.LocationType.RightEdge:
+                        case MarkingPoint.LocationType.RightEdge:
                             map.AddPoint(point.Id, point.Id + (1 << 16));
                             break;
                     }
@@ -31,7 +31,7 @@ namespace NodeMarkup.Utilities
 
             return map;
         }
-        public static ObjectsMap Befor1_9(Markup markup, ObjectsMap map)
+        public static ObjectsMap Befor1_9(Marking markup, ObjectsMap map)
         {
             if (map == null)
                 map = new ObjectsMap();
@@ -41,16 +41,16 @@ namespace NodeMarkup.Utilities
                 ref var segment = ref enter.GetSegment();
                 if (segment.Info.m_vehicleTypes.IsFlagSet(VehicleInfo.VehicleType.Plane))
                 {
-                    var sourceId = MarkupPoint.GetId(enter.Id, 2, MarkupPoint.PointType.Enter);
-                    var targetId = MarkupPoint.GetId(enter.Id, 3, MarkupPoint.PointType.Enter);
+                    var sourceId = MarkingPoint.GetId(enter.Id, 2, MarkingPoint.PointType.Enter);
+                    var targetId = MarkingPoint.GetId(enter.Id, 3, MarkingPoint.PointType.Enter);
                     map.AddPoint(sourceId, targetId);
 
-                    sourceId = MarkupPoint.GetId(enter.Id, 2, MarkupPoint.PointType.Crosswalk);
-                    targetId = MarkupPoint.GetId(enter.Id, 3, MarkupPoint.PointType.Crosswalk);
+                    sourceId = MarkingPoint.GetId(enter.Id, 2, MarkingPoint.PointType.Crosswalk);
+                    targetId = MarkingPoint.GetId(enter.Id, 3, MarkingPoint.PointType.Crosswalk);
                     map.AddPoint(sourceId, targetId);
 
-                    sourceId = MarkupPoint.GetId(enter.Id, 2, MarkupPoint.PointType.Normal);
-                    targetId = MarkupPoint.GetId(enter.Id, 3, MarkupPoint.PointType.Normal);
+                    sourceId = MarkingPoint.GetId(enter.Id, 2, MarkingPoint.PointType.Normal);
+                    targetId = MarkingPoint.GetId(enter.Id, 3, MarkingPoint.PointType.Normal);
                     map.AddPoint(sourceId, targetId);
                 }
             }

@@ -10,11 +10,11 @@ using System.Linq;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class PointsEditor : SimpleEditor<PointsItemsPanel, MarkupEnterPoint>
+    public class PointsEditor : SimpleEditor<PointsItemsPanel, MarkingEnterPoint>
     {
         public override string Name => NodeMarkup.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
-        public override Markup.SupportType Support { get; } = Markup.SupportType.Points;
+        public override Marking.SupportType Support { get; } = Marking.SupportType.Points;
 
         protected PropertyGroupPanel TemplatePanel { get; private set; }
 #if DEBUG
@@ -25,8 +25,8 @@ namespace NodeMarkup.UI.Editors
         private BoolListPropertyPanel Split { get; set; }
         private FloatPropertyPanel Shift { get; set; }
 
-        protected override IEnumerable<MarkupEnterPoint> GetObjects() => Markup.Enters.SelectMany(e => e.EnterPoints);
-        protected override void OnObjectSelect(MarkupEnterPoint point)
+        protected override IEnumerable<MarkingEnterPoint> GetObjects() => Markup.Enters.SelectMany(e => e.EnterPoints);
+        protected override void OnObjectSelect(MarkingEnterPoint point)
         {
             base.OnObjectSelect(point);
 
@@ -45,19 +45,19 @@ namespace NodeMarkup.UI.Editors
         }
 
 
-        protected override void OnFillPropertiesPanel(MarkupEnterPoint point)
+        protected override void OnFillPropertiesPanel(MarkingEnterPoint point)
         {
             AddOffset(point);
             AddSplit(point);
             AddShift(point);
         }
-        private void FillTemplatePanel(MarkupEnterPoint point)
+        private void FillTemplatePanel(MarkingEnterPoint point)
         {
             AddRoad(point);
             AddTemplate(point);
         }
 #if DEBUG
-        private void FillDebugPanel(MarkupEnterPoint point)
+        private void FillDebugPanel(MarkingEnterPoint point)
         {
             var position = ComponentPool.Get<FloatPropertyPanel>(DebugPanel, "Position");
             position.Text = "Position";
@@ -142,7 +142,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
 #endif
-        private void AddOffset(MarkupEnterPoint point)
+        private void AddOffset(MarkingEnterPoint point)
         {
             Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Offset));
             Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
@@ -154,7 +154,7 @@ namespace NodeMarkup.UI.Editors
             Offset.Value = point.Offset;
             Offset.OnValueChanged += OffsetChanged;
         }
-        private void AddSplit(MarkupEnterPoint point)
+        private void AddSplit(MarkingEnterPoint point)
         {
             Split = ComponentPool.Get<BoolListPropertyPanel>(PropertiesPanel, nameof(Split));
             Split.Text = NodeMarkup.Localize.PointEditor_SplitIntoTwo;
@@ -162,7 +162,7 @@ namespace NodeMarkup.UI.Editors
             Split.SelectedObject = point.Split;
             Split.OnSelectObjectChanged += SplitChanged;
         }
-        private void AddShift(MarkupEnterPoint point)
+        private void AddShift(MarkingEnterPoint point)
         {
             Shift = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Shift));
             Shift.Text = NodeMarkup.Localize.PointEditor_SplitOffset;
@@ -177,7 +177,7 @@ namespace NodeMarkup.UI.Editors
             Shift.OnValueChanged += (value) => point.SplitOffset.Value = value;
             Shift.isVisible = point.Split;
         }
-        private void AddRoad(MarkupEnterPoint point)
+        private void AddRoad(MarkingEnterPoint point)
         {
             var roadNameProperty = ComponentPool.Get<StringPropertyPanel>(TemplatePanel, "Road");
             roadNameProperty.Text = NodeMarkup.Localize.PointEditor_RoadName;
@@ -186,7 +186,7 @@ namespace NodeMarkup.UI.Editors
             roadNameProperty.Init();
             roadNameProperty.Value = point.Enter.GetSegment().Info.name;
         }
-        private void AddTemplate(MarkupEnterPoint point)
+        private void AddTemplate(MarkingEnterPoint point)
         {
             var buttonsPanel = ComponentPool.Get<ButtonsPanel>(TemplatePanel, "Buttons");
             var saveIndex = buttonsPanel.AddButton(NodeMarkup.Localize.PointEditor_SaveOffsets);
@@ -233,7 +233,7 @@ namespace NodeMarkup.UI.Editors
             DebugPanel = null;
 #endif
         }
-        protected override void OnObjectUpdate(MarkupEnterPoint editObject)
+        protected override void OnObjectUpdate(MarkingEnterPoint editObject)
         {
             Offset.OnValueChanged -= OffsetChanged;
             Offset.Value = EditObject.Offset;
@@ -261,26 +261,26 @@ namespace NodeMarkup.UI.Editors
             ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = 2f });
         }
     }
-    public class PointsItemsPanel : ItemsGroupPanel<PointItem, MarkupEnterPoint, PointGroup, Enter>
+    public class PointsItemsPanel : ItemsGroupPanel<PointItem, MarkingEnterPoint, PointGroup, Entrance>
     {
         public override bool GroupingEnable => Settings.GroupPoints.value;
 
-        public override int Compare(MarkupEnterPoint x, MarkupEnterPoint y) => 0;
+        public override int Compare(MarkingEnterPoint x, MarkingEnterPoint y) => 0;
 
-        public override int Compare(Enter x, Enter y) => 0;
+        public override int Compare(Entrance x, Entrance y) => 0;
 
-        protected override string GroupName(Enter group) => group.ToString();
+        protected override string GroupName(Entrance group) => group.ToString();
 
-        protected override Enter SelectGroup(MarkupEnterPoint point) => point.Enter;
+        protected override Entrance SelectGroup(MarkingEnterPoint point) => point.Enter;
     }
-    public class PointItem : EditItem<MarkupEnterPoint, ColorIcon>
+    public class PointItem : EditItem<MarkingEnterPoint, ColorIcon>
     {
         public override bool ShowDelete => false;
-        public override void Init(Editor editor, MarkupEnterPoint editObject)
+        public override void Init(Editor editor, MarkingEnterPoint editObject)
         {
             base.Init(editor, editObject);
             Icon.InnerColor = Object.Color;
         }
     }
-    public class PointGroup : EditGroup<Enter, PointItem, MarkupEnterPoint> { }
+    public class PointGroup : EditGroup<Entrance, PointItem, MarkingEnterPoint> { }
 }

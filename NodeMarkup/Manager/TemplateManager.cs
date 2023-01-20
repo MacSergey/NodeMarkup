@@ -338,14 +338,14 @@ namespace NodeMarkup.Manager
             }
         }
     }
-    public class IntersectionTemplateManager : TemplateManager<IntersectionTemplate, Markup>
+    public class IntersectionTemplateManager : TemplateManager<IntersectionTemplate, Marking>
     {
         protected override string DefaultName => Localize.Preset_NewPreset;
         public override SavedString Saved => Settings.Intersections;
 
-        protected override IntersectionTemplate CreateInstance(string name, Markup markup) => new IntersectionTemplate(name, markup);
+        protected override IntersectionTemplate CreateInstance(string name, Marking markup) => new IntersectionTemplate(name, markup);
 
-        public bool AddTemplate(Markup markup, Image image, out IntersectionTemplate template)
+        public bool AddTemplate(Marking markup, Image image, out IntersectionTemplate template)
         {
             if (AddTemplate(GetNewName(), markup, out template))
             {

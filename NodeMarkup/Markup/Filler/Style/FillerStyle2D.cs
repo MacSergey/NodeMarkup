@@ -46,12 +46,12 @@ namespace NodeMarkup.Manager
     {
         public Filler2DStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset) { }
 
-        protected sealed override IEnumerable<IStyleData> CalculateImpl(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
+        protected sealed override IEnumerable<IStyleData> CalculateImpl(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
             if ((SupportLOD & lod) != 0)
                 yield return new MarkupPartGroupData(lod, CalculateProcess(filler, contours, lod));
         }
-        protected virtual IEnumerable<MarkupPartData> CalculateProcess(MarkupFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
+        protected virtual IEnumerable<MarkupPartData> CalculateProcess(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
         {
             var originalContour = filler.Contour.TrajectoriesProcessed.ToArray();
             var guides = GetGuides(filler, originalContour).ToArray();
@@ -68,7 +68,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected abstract IEnumerable<GuideLine> GetGuides(MarkupFiller filler, ITrajectory[] contour);
+        protected abstract IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour);
         protected Rect GetRect(ITrajectory[] contour)
         {
             var firstPos = contour.FirstOrDefault(t => t != null)?.StartPosition ?? default;
@@ -286,23 +286,23 @@ namespace NodeMarkup.Manager
             if (target is IPeriodicFiller periodicTarget)
                 periodicTarget.Step.Value = Step;
         }
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
             components.Add(AddStepProperty(this, parent, false));
         }
 
-        protected override IEnumerable<GuideLine> GetGuides(MarkupFiller filler, ITrajectory[] contour)
+        protected override IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour)
         {
             var rect = GetRect(contour);
             var guide = new GuideLine();
             var halfAngelRad = GetAngle() * Mathf.Deg2Rad;
             if (GetMiddleLine(filler.Contour) is ITrajectory middleLine)
             {
-                if (GetBeforeMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineBefore))
+                if (GetBeforeMiddleLine(middleLine, filler.Marking.Height, halfAngelRad, rect, out ITrajectory lineBefore))
                     guide.Add(lineBefore.Invert());
                 guide.Add(middleLine);
-                if (GetAfterMiddleLine(middleLine, filler.Markup.Height, halfAngelRad, rect, out ITrajectory lineAfter))
+                if (GetAfterMiddleLine(middleLine, filler.Marking.Height, halfAngelRad, rect, out ITrajectory lineAfter))
                     guide.Add(lineAfter);
             }
 
@@ -401,7 +401,7 @@ namespace NodeMarkup.Manager
             return border;
         }
 
-        public override void Render(MarkupFiller filler, OverlayData data)
+        public override void Render(MarkingFiller filler, OverlayData data)
         {
             GetGuides(filler.Contour, out ITrajectory left, out ITrajectory right);
 
@@ -514,9 +514,10 @@ namespace NodeMarkup.Manager
                 yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
                 yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
                 yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideB), LeftGuideB);
+                yield return new StylePropertyDataProvider<int>(nameof(RightGuideA), RightGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(RightGuideB), RightGuideB);
+                yield return new StylePropertyDataProvider<bool>(nameof(FollowGuides), FollowGuides);
             }
         }
 
@@ -536,7 +537,7 @@ namespace NodeMarkup.Manager
             if (target is IFollowGuideFiller followGuideTarget)
                 followGuideTarget.FollowGuides.Value = FollowGuides;
         }
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
 
@@ -550,7 +551,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        private ButtonPanel AddTurnProperty(MarkupFiller filler, UIComponent parent, bool canCollapse)
+        private ButtonPanel AddTurnProperty(MarkingFiller filler, UIComponent parent, bool canCollapse)
         {
             var turnButton = ComponentPool.Get<ButtonPanel>(parent, nameof(Turn));
             turnButton.Text = Localize.StyleOption_Turn;
@@ -571,7 +572,7 @@ namespace NodeMarkup.Manager
             return turnButton;
         }
 
-        protected override IEnumerable<GuideLine> GetGuides(MarkupFiller filler, ITrajectory[] contour)
+        protected override IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour)
         {
             if (FollowGuides)
             {
@@ -581,7 +582,7 @@ namespace NodeMarkup.Manager
             else
             {
                 var rect = GetRect(contour);
-                yield return new GuideLine() { GetGuide(rect, filler.Markup.Height, Angle) };
+                yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, Angle) };
             }
         }
         protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
@@ -608,7 +609,7 @@ namespace NodeMarkup.Manager
 
         protected override float GetAngle() => 90f - Angle;
 
-        public override void Render(MarkupFiller filler, OverlayData data)
+        public override void Render(MarkingFiller filler, OverlayData data)
         {
             if (FollowGuides)
                 base.Render(filler, data);
@@ -694,7 +695,7 @@ namespace NodeMarkup.Manager
             if (target is IFollowGuideFiller followGuideTarget)
                 followGuideTarget.FollowGuides.Value = true;
         }
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
             components.Add(AddAngleBetweenProperty(parent, false));
@@ -724,7 +725,7 @@ namespace NodeMarkup.Manager
 
             return angleProperty;
         }
-        protected ButtonsPanel AddInvertAndTurnProperty(MarkupFiller filler, UIComponent parent, bool canCollapse)
+        protected ButtonsPanel AddInvertAndTurnProperty(MarkingFiller filler, UIComponent parent, bool canCollapse)
         {
             var turnAndInvert = ComponentPool.Get<ButtonsPanel>(parent, "TurnAndInvert");
             var invertIndex = turnAndInvert.AddButton(Localize.StyleOption_Invert);
@@ -875,7 +876,7 @@ namespace NodeMarkup.Manager
             if (target is IPeriodicFiller periodicTarget)
                 periodicTarget.Step.Value = Step;
         }
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
             components.Add(AddStepProperty(this, parent, false));
@@ -883,11 +884,11 @@ namespace NodeMarkup.Manager
                 components.Add(AddAngleProperty(this, parent, false));
         }
 
-        protected override IEnumerable<GuideLine> GetGuides(MarkupFiller filler, ITrajectory[] contour)
+        protected override IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour)
         {
             var rect = GetRect(contour);
-            yield return new GuideLine() { GetGuide(rect, filler.Markup.Height, Angle) };
-            yield return new GuideLine() { GetGuide(rect, filler.Markup.Height, Angle < 0 ? Angle + 90 : Angle - 90) };
+            yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, Angle) };
+            yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, Angle < 0 ? Angle + 90 : Angle - 90) };
         }
         protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
         {
@@ -978,7 +979,7 @@ namespace NodeMarkup.Manager
                 followGuideTarget.FollowGuides.Value = FollowGuides;
         }
 
-        protected override IEnumerable<GuideLine> GetGuides(MarkupFiller filler, ITrajectory[] contour)
+        protected override IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour)
         {
             var rect = GetRect(contour);
 
@@ -989,10 +990,10 @@ namespace NodeMarkup.Manager
                 var startPos = (right.EndPosition + left.StartPosition) / 2;
                 var endPos = (right.StartPosition + left.EndPosition) / 2;
                 var angle = (endPos - startPos).Turn90(true).AbsoluteAngle() * Mathf.Rad2Deg;
-                yield return new GuideLine() { GetGuide(rect, filler.Markup.Height, angle) };
+                yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, angle) };
             }
             else
-                yield return new GuideLine() { GetGuide(rect, filler.Markup.Height, 0) };
+                yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, 0) };
         }
         protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
         {
@@ -1005,7 +1006,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override void GetUIComponents(MarkupFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
 

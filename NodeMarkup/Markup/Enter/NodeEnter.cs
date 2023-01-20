@@ -2,9 +2,9 @@
 
 namespace NodeMarkup.Manager
 {
-    public class NodeEnter : Enter<SegmentMarkup>
+    public class NodeEntrance : Entrance<SegmentMarking>
     {
-        public override EnterType Type => EnterType.Node;
+        public override EntranceType Type => EntranceType.Node;
 
         public override int SideSign => IsStartSide ? 1 : -1;
         public override int NormalSign => 1;
@@ -12,10 +12,10 @@ namespace NodeMarkup.Manager
 
         protected override bool IsExist => Id.ExistNode();
 
-        public NodeEnter(SegmentMarkup markup, ushort nodeId) : base(markup, nodeId) { }
+        public NodeEntrance(SegmentMarking marking, ushort nodeId) : base(marking, nodeId) { }
 
-        public override ushort GetSegmentId() => Markup.Id;
-        public override ref NetSegment GetSegment() => ref Markup.Id.GetSegment();
+        public override ushort GetSegmentId() => Marking.Id;
+        public override ref NetSegment GetSegment() => ref Marking.Id.GetSegment();
         public override bool GetIsStartSide() => GetSegment().m_startNode == Id;
 
     }

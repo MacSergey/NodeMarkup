@@ -37,7 +37,7 @@ namespace NodeMarkup.UI.Panel
             tabButton.pressedColor = PressedColor;
             tabButton.focusedColor = FocusColor;
         }
-        public void SetVisible(Markup markup)
+        public void SetVisible(Marking markup)
         {
             foreach (var tab in Tabs)
                 tab.isVisible = (markup.Support & tab.Editor.Support) != 0;

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Linq;
 using UnityEngine;
-using static NodeMarkup.Manager.PropLineStyle;
 
 namespace NodeMarkup.Manager
 {
@@ -72,7 +71,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddPrefabProperty(parent, false));
@@ -390,7 +389,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (Prefab.Value is not PrefabType prefab)
                 return new MarkupPartGroupData(lod);
@@ -529,7 +528,7 @@ namespace NodeMarkup.Manager
         protected virtual void CalculateItem(PrefabType prefab, ref MarkupPropItemData item) { }
         protected abstract IStyleData GetParts(PrefabType prefab, MarkupPropItemData[] items);
 
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             PrefabChanged(parent, IsValid);
@@ -698,7 +697,7 @@ namespace NodeMarkup.Manager
         {
             return new MarkupPropData(prop, items);
         }
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             components.Add(AddColorOptionProperty(parent, true));
             components.Add(AddColorProperty(parent, true));

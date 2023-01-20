@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLineRawRule : MarkupLinePart
+    public abstract class MarkupLineRawRule : MarkingLinePart
     {
         public PropertyValue<LineStyle> Style { get; }
         public new ILinePartEdge From
@@ -39,7 +39,7 @@ namespace NodeMarkup.Manager
         }
 
 
-        public MarkupLineRawRule(MarkupLine line, LineStyle style, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to)
+        public MarkupLineRawRule(MarkingLine line, LineStyle style, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to)
         {
             style.OnStyleChanged = RuleChanged;
             Style = new PropertyClassValue<LineStyle>(StyleChanged, style);
@@ -64,7 +64,7 @@ namespace NodeMarkup.Manager
 
         public override string XmlSection => XmlName;
 
-        public MarkupLineRawRule(MarkupLine line, StyleType style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, style, from, to) { }
+        public MarkupLineRawRule(MarkingLine line, StyleType style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, style, from, to) { }
         public static MarkupLineRule[] GetRules(List<MarkupLineRawRule<StyleType>> rawRules)
         {
             var rules = new List<MarkupLineRule>();
@@ -156,7 +156,7 @@ namespace NodeMarkup.Manager
             config.Add(Style.ToXml());
             return config;
         }
-        public static bool FromXml(XElement config, MarkupLine line, ObjectsMap map, bool invertLine, bool typeChanged, out MarkupLineRawRule<StyleType> rule)
+        public static bool FromXml(XElement config, MarkingLine line, ObjectsMap map, bool invertLine, bool typeChanged, out MarkupLineRawRule<StyleType> rule)
         {
             if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, invertLine, typeChanged, out StyleType style))
             {

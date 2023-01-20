@@ -2,14 +2,12 @@
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NodeMarkup.Utilities.API
 {
     public struct SegmentEntranceDataProvider : ISegmentEntranceData
     {
-        public SegmentEnter Enter { get; }
+        public SegmentEntrance Enter { get; }
         public ushort Id => Enter.Id;
         public int PointCount => Enter.PointCount;
 
@@ -67,16 +65,16 @@ namespace NodeMarkup.Utilities.API
             }
         }
 
-        public SegmentEntranceDataProvider(SegmentEnter enter)
+        public SegmentEntranceDataProvider(SegmentEntrance enter)
         {
             Enter = enter;
         }
 
         public bool GetEntrancePoint(byte index, out IEntrancePointData pointData)
         {
-            if(Enter.TryGetPoint(index, MarkupPoint.PointType.Enter, out var point))
+            if(Enter.TryGetPoint(index, MarkingPoint.PointType.Enter, out var point))
             {
-                pointData = new EntrancePointDataProvider(point as MarkupEnterPoint);
+                pointData = new EntrancePointDataProvider(point as MarkingEnterPoint);
                 return true;
             }
             else
@@ -87,9 +85,9 @@ namespace NodeMarkup.Utilities.API
         }
         public bool GetNormalPoint(byte index, out INormalPointData pointData)
         {
-            if (Enter.TryGetPoint(index, MarkupPoint.PointType.Normal, out var point))
+            if (Enter.TryGetPoint(index, MarkingPoint.PointType.Normal, out var point))
             {
-                pointData = new NormalPointDataProvider(point as MarkupNormalPoint);
+                pointData = new NormalPointDataProvider(point as MarkingNormalPoint);
                 return true;
             }
             else
@@ -100,9 +98,9 @@ namespace NodeMarkup.Utilities.API
         }
         public bool GetCrosswalkPoint(byte index, out ICrosswalkPointData pointData)
         {
-            if (Enter.TryGetPoint(index, MarkupPoint.PointType.Crosswalk, out var point))
+            if (Enter.TryGetPoint(index, MarkingPoint.PointType.Crosswalk, out var point))
             {
-                pointData = new CrosswalkPointDataProvider(point as MarkupCrosswalkPoint);
+                pointData = new CrosswalkPointDataProvider(point as MarkingCrosswalkPoint);
                 return true;
             }
             else
@@ -113,9 +111,9 @@ namespace NodeMarkup.Utilities.API
         }
         public bool GetLanePoint(byte index, out ILanePointData pointData)
         {
-            if (Enter.TryGetPoint(index, MarkupPoint.PointType.Lane, out var point))
+            if (Enter.TryGetPoint(index, MarkingPoint.PointType.Lane, out var point))
             {
-                pointData = new LanePointDataProvider(point as MarkupLanePoint);
+                pointData = new LanePointDataProvider(point as MarkingLanePoint);
                 return true;
             }
             else
@@ -129,7 +127,7 @@ namespace NodeMarkup.Utilities.API
     }
     public struct NodeEntranceDataProvider : INodeEntranceData
     {
-        public NodeEnter Enter { get; }
+        public NodeEntrance Enter { get; }
         public ushort Id => Enter.Id;
         public int PointCount => Enter.PointCount;
 
@@ -165,16 +163,16 @@ namespace NodeMarkup.Utilities.API
             }
         }
 
-        public NodeEntranceDataProvider(NodeEnter enter)
+        public NodeEntranceDataProvider(NodeEntrance enter)
         {
             Enter = enter;
         }
 
         public bool GetEntrancePoint(byte index, out IEntrancePointData pointData)
         {
-            if (Enter.TryGetPoint(index, MarkupPoint.PointType.Enter, out var point))
+            if (Enter.TryGetPoint(index, MarkingPoint.PointType.Enter, out var point))
             {
-                pointData = new EntrancePointDataProvider(point as MarkupEnterPoint);
+                pointData = new EntrancePointDataProvider(point as MarkingEnterPoint);
                 return true;
             }
             else
@@ -185,9 +183,9 @@ namespace NodeMarkup.Utilities.API
         }
         public bool GetLanePoint(byte index, out ILanePointData pointData)
         {
-            if (Enter.TryGetPoint(index, MarkupPoint.PointType.Lane, out var point))
+            if (Enter.TryGetPoint(index, MarkingPoint.PointType.Lane, out var point))
             {
-                pointData = new LanePointDataProvider(point as MarkupLanePoint);
+                pointData = new LanePointDataProvider(point as MarkingLanePoint);
                 return true;
             }
             else

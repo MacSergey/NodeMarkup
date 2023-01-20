@@ -11,7 +11,7 @@ namespace NodeMarkup.Manager
     public class FillerContour : IOverlay
     {
         private static Comparer VertexComparer { get; } = new Comparer();
-        public static List<IFillerVertex> GetBeginCandidates(Markup markup)
+        public static List<IFillerVertex> GetBeginCandidates(Marking markup)
         {
             var points = new List<IFillerVertex>();
 
@@ -34,7 +34,7 @@ namespace NodeMarkup.Manager
             return points;
         }
 
-        public Markup Markup { get; }
+        public Marking Markup { get; }
         public bool IsComplite { get; private set; }
 
         private List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
@@ -66,16 +66,16 @@ namespace NodeMarkup.Manager
             {
                 foreach (var part in RawParts)
                 {
-                    if (part.Line is MarkupEnterLine enterLine && enterLine.IsDot)
+                    if (part.Line is MarkingEnterLine enterLine && enterLine.IsDot)
                         continue;
 
                     if (part.GetTrajectory(out ITrajectory trajectory))
-                        yield return new Part(trajectory, part.Line is MarkupEnterLine);
+                        yield return new Part(trajectory, part.Line is MarkingEnterLine);
                 }
             }
         }
 
-        public FillerContour(Markup markup, IEnumerable<IFillerVertex> vertices = null)
+        public FillerContour(Marking markup, IEnumerable<IFillerVertex> vertices = null)
         {
             Markup = markup;
 
@@ -112,7 +112,7 @@ namespace NodeMarkup.Manager
         {
             if (SupportPoints[i.NextIndex(SupportPoints.Count)] is LineEndFillerVertex nextEnd)
             {
-                if (end.Point.Enter != nextEnd.Point.Enter && end.Line != nextEnd.Line && end.GetCommonLine(nextEnd) is MarkupRegularLine line)
+                if (end.Point.Enter != nextEnd.Point.Enter && end.Line != nextEnd.Line && end.GetCommonLine(nextEnd) is MarkingRegularLine line)
                 {
                     SupportPoints.Insert(i + 1, new LineEndFillerVertex(end.Point, line));
                     SupportPoints.Insert(i + 2, new LineEndFillerVertex(nextEnd.Point, line));
@@ -132,14 +132,14 @@ namespace NodeMarkup.Manager
             }
             else
             {
-                if (SupportPoints[prevI] is EnterFillerVertexBase prevEnter && enter.GetCommonLine(prevEnter) is MarkupRegularLine prevLine)
+                if (SupportPoints[prevI] is EnterFillerVertexBase prevEnter && enter.GetCommonLine(prevEnter) is MarkingRegularLine prevLine)
                 {
                     SupportPoints.RemoveAt(i);
                     SupportPoints.Insert(prevI < i ? i : prevI, new LineEndFillerVertex(prevLine.PointPair.GetOther(enter.Point), prevLine));
                     SupportPoints.Insert(prevI < i ? i + 1 : i, new LineEndFillerVertex(enter.Point, prevLine));
                     i += prevI < i ? 1 : 0;
                 }
-                else if (SupportPoints[nextI] is EnterFillerVertexBase nextEnter && enter.GetCommonLine(nextEnter) is MarkupRegularLine nextLine)
+                else if (SupportPoints[nextI] is EnterFillerVertexBase nextEnter && enter.GetCommonLine(nextEnter) is MarkingRegularLine nextLine)
                 {
                     SupportPoints.RemoveAt(i);
                     SupportPoints.Insert(i, new LineEndFillerVertex(enter.Point, nextLine));
@@ -155,7 +155,7 @@ namespace NodeMarkup.Manager
 
             if (SupportPoints[nextI] is LineEndFillerVertex nextEnd && !intersect.Contains(nextEnd.Line))
             {
-                if (SupportPoints[prevI] is IFillerLineVertex prev && (prev.Contains(intersect.First) ? intersect.Second : intersect.First) is MarkupRegularLine line)
+                if (SupportPoints[prevI] is IFillerLineVertex prev && (prev.Contains(intersect.First) ? intersect.Second : intersect.First) is MarkingRegularLine line)
                 {
                     SupportPoints.Insert(i + 1, new LineEndFillerVertex(nextEnd.Point, line));
                     i += 1;
@@ -241,7 +241,7 @@ namespace NodeMarkup.Manager
             {
                 case EnterFillerVertex lastEnterVertex when lastEnterVertex.Enter != newEnterVertex.Enter:
                     {
-                        if (lastEnterVertex.GetCommonLine(newEnterVertex) is MarkupRegularLine line)
+                        if (lastEnterVertex.GetCommonLine(newEnterVertex) is MarkingRegularLine line)
                         {
                             SupportPoints.Remove(lastEnterVertex);
                             SupportPoints.Add(FixVertexByLine(lastEnterVertex, line));
@@ -253,7 +253,7 @@ namespace NodeMarkup.Manager
 
                 case LineEndFillerVertex lastLineEndVertex when newEnterVertex.Enter != lastLineEndVertex.Enter:
                     {
-                        if (lastLineEndVertex.GetCommonLine(newEnterVertex) is MarkupRegularLine line)
+                        if (lastLineEndVertex.GetCommonLine(newEnterVertex) is MarkingRegularLine line)
                         {
                             if (Prev is not LineEndFillerVertex prevLineEndVertex || prevLineEndVertex.Point != lastLineEndVertex.Point)
                                 SupportPoints.Add(FixVertexByLine(lastLineEndVertex, line));
@@ -271,15 +271,15 @@ namespace NodeMarkup.Manager
         static LineEndFillerVertex FixVertex(EnterFillerVertexBase enterVertex, IntersectFillerVertex intersectVertex)
         {
             if (intersectVertex.LinePair.First.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.First.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
-                return FixVertexByLine(enterVertex, intersectVertex.LinePair.First as MarkupRegularLine);
+                return FixVertexByLine(enterVertex, intersectVertex.LinePair.First as MarkingRegularLine);
 
             else if (intersectVertex.LinePair.Second.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.Second.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
-                return FixVertexByLine(enterVertex, intersectVertex.LinePair.Second as MarkupRegularLine);
+                return FixVertexByLine(enterVertex, intersectVertex.LinePair.Second as MarkingRegularLine);
 
             else
-                return FixVertexByLine(enterVertex, intersectVertex.LinePair.GetLine(enterVertex.Point) as MarkupRegularLine);
+                return FixVertexByLine(enterVertex, intersectVertex.LinePair.GetLine(enterVertex.Point) as MarkingRegularLine);
         }
-        static LineEndFillerVertex FixVertexByLine(EnterFillerVertexBase enterVertex, MarkupRegularLine line) => new LineEndFillerVertex(enterVertex.Point, line);
+        static LineEndFillerVertex FixVertexByLine(EnterFillerVertexBase enterVertex, MarkingRegularLine line) => new LineEndFillerVertex(enterVertex.Point, line);
 
         public void Remove()
         {
@@ -317,7 +317,7 @@ namespace NodeMarkup.Manager
         }
         public List<IFillerVertex> GetNextСandidates() => Last is IFillerVertex last ? last.GetNextCandidates(this, Prev) : GetBeginCandidates(Markup);
 
-        public void GetMinMaxT(IFillerVertex fillerVertex, MarkupLine line, out float resultT, out float resultMinT, out float resultMaxT)
+        public void GetMinMaxT(IFillerVertex fillerVertex, MarkingLine line, out float resultT, out float resultMinT, out float resultMaxT)
         {
             fillerVertex.GetT(line, out float vertexT);
             var minT = -1f;
@@ -333,7 +333,7 @@ namespace NodeMarkup.Manager
                     Set(fromT, false);
                     Set(toT, false);
                 }
-                else if (Markup.GetIntersect(new MarkupLinePair(line, part.Line)) is MarkupLinesIntersect intersect && intersect.IsIntersect)
+                else if (Markup.GetIntersect(new MarkingLinePair(line, part.Line)) is MarkupLinesIntersect intersect && intersect.IsIntersect)
                 {
                     var linePartT = intersect[part.Line];
 
@@ -364,7 +364,7 @@ namespace NodeMarkup.Manager
             resultMinT = minT;
             resultMaxT = maxT;
         }
-        public void GetMinMaxNum(MarkupPoint point, out byte minNum, out byte maxNum)
+        public void GetMinMaxNum(MarkingPoint point, out byte minNum, out byte maxNum)
         {
             if (VertexCount > 2 && First is EnterFillerVertexBase firstVertex && firstVertex.Point == point)
             {
@@ -391,7 +391,7 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        public bool IsAvailable(MarkupPoint point)
+        public bool IsAvailable(MarkingPoint point)
         {
             for (var i = 0; i < VertexCount - 1; i += 1)
             {
@@ -407,7 +407,7 @@ namespace NodeMarkup.Manager
             return true;
         }
 
-        public List<IFillerVertex> GetLinePoints(IFillerVertex fillerVertex, MarkupLine line)
+        public List<IFillerVertex> GetLinePoints(IFillerVertex fillerVertex, MarkingLine line)
         {
             var points = new List<IFillerVertex>();
             GetMinMaxT(fillerVertex, line, out float t, out float minT, out float maxT);
@@ -429,10 +429,10 @@ namespace NodeMarkup.Manager
                     break;
             }
 
-            if (line.Start.Type == MarkupPoint.PointType.Enter && t != 0 && minT < 0 && 0 < maxT)
+            if (line.Start.Type == MarkingPoint.PointType.Enter && t != 0 && minT < 0 && 0 < maxT)
                 points.Add(new EnterFillerVertex(line.Start, line.GetAlignment(line.Start)));
 
-            if (line.End.Type == MarkupPoint.PointType.Enter && t != 1 && minT < 1 && 1 < maxT)
+            if (line.End.Type == MarkingPoint.PointType.Enter && t != 1 && minT < 1 && 1 < maxT)
                 points.Add(new EnterFillerVertex(line.End, line.GetAlignment(line.End)));
 
             return points;

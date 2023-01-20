@@ -14,9 +14,9 @@ namespace NodeMarkup
         protected override string MapId { get; } = $"{Loader.Id}.Map";
 
         protected override ObjectsMap CreateMap(bool isSimple) => new ObjectsMap(isSimple: isSimple);
-        protected override XElement GetConfig() => MarkupManager.ToXml();
+        protected override XElement GetConfig() => MarkingManager.ToXml();
 
-        protected override void PlaceAsset(XElement config, ObjectsMap map) => MarkupManager.FromXml(config, map, true);
+        protected override void PlaceAsset(XElement config, ObjectsMap map) => MarkingManager.FromXml(config, map, true);
     }
     public class NetworkAssetDataExtension : BaseNetworkAssetDataExtension<Mod, NetworkAssetDataExtension, ObjectsMap>
     {
@@ -34,7 +34,7 @@ namespace NodeMarkup
         protected override ObjectsMap CreateMap(bool isSimple) => new ObjectsMap(isSimple: isSimple);
         protected override XElement GetConfig(NetInfo prefab, out ushort segmentId, out ushort startNodeId, out ushort endNodeId)
         {
-            foreach (var markup in SingletonManager<SegmentMarkupManager>.Instance)
+            foreach (var markup in SingletonManager<SegmentMarkingManager>.Instance)
             {
                 segmentId = markup.Id;
                 ref var segment = ref segmentId.GetSegment();
@@ -134,16 +134,16 @@ namespace NodeMarkup
             {
                 SingletonMod<Mod>.Logger.Debug($"Place asset {networkInfo.name}");
 
-                var version = MarkupManager.GetVersion(assetData.Config);
+                var version = MarkingManager.GetVersion(assetData.Config);
 
-                if (assetData.Config.Element(SegmentMarkup.XmlName) is XElement config)
+                if (assetData.Config.Element(SegmentMarking.XmlName) is XElement config)
                 {
                     var map = CreateMap(true);
                     map.AddSegment(assetData.SegmentId, segmentId);
                     map.AddNode(assetData.StartNodeId, startNodeId);
                     map.AddNode(assetData.EndNodeId, endNodeId);
 
-                    var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];
+                    var markup = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
                     markup.FromXml(version, config, map);
                 }
             }

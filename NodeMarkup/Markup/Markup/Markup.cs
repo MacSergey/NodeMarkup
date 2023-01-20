@@ -10,11 +10,10 @@ using System.Xml.Linq;
 using UnityEngine;
 using ObjectId = NodeMarkup.Utilities.ObjectId;
 using static ColossalFramework.Math.VectorUtils;
-using static ColossalFramework.IO.EncodedArray;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class Markup : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, IToXml
+    public abstract class Marking : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, IToXml
     {
         [Flags]
         public enum SupportType
@@ -30,7 +29,7 @@ namespace NodeMarkup.Manager
         }
 
         #region PROPERTIES
-        public abstract MarkupType Type { get; }
+        public abstract MarkingType Type { get; }
         public abstract SupportType Support { get; }
         public virtual LineType SupportLines => LineType.Regular | LineType.Lane;
 
@@ -46,18 +45,18 @@ namespace NodeMarkup.Manager
         public abstract string PanelCaption { get; }
         public abstract bool IsUnderground { get; }
 
-        protected List<Enter> RawEntersList { get; set; } = new List<Enter>();
-        protected List<Enter> EntersList { get; set; } = new List<Enter>();
-        protected Dictionary<ulong, MarkupLine> LinesDictionary { get; } = new Dictionary<ulong, MarkupLine>();
-        protected Dictionary<MarkupLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkupLinePair, MarkupLinesIntersect>(MarkupLinePair.Comparer);
-        protected List<MarkupFiller> FillersList { get; } = new List<MarkupFiller>();
-        protected Dictionary<MarkupLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkupLine, MarkupCrosswalk>();
+        protected List<Entrance> RawEntersList { get; set; } = new List<Entrance>();
+        protected List<Entrance> EntersList { get; set; } = new List<Entrance>();
+        protected Dictionary<ulong, MarkingLine> LinesDictionary { get; } = new Dictionary<ulong, MarkingLine>();
+        protected Dictionary<MarkingLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkingLinePair, MarkupLinesIntersect>(MarkingLinePair.Comparer);
+        protected List<MarkingFiller> FillersList { get; } = new List<MarkingFiller>();
+        protected Dictionary<MarkingLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkingLine, MarkupCrosswalk>();
 
         public bool IsEmpty => !LinesDictionary.Any() && !FillersList.Any();
 
-        public IEnumerable<MarkupLine> Lines => LinesDictionary.Values;
-        public IEnumerable<Enter> Enters => EntersList;
-        public IEnumerable<MarkupFiller> Fillers => FillersList;
+        public IEnumerable<MarkingLine> Lines => LinesDictionary.Values;
+        public IEnumerable<Entrance> Enters => EntersList;
+        public IEnumerable<MarkingFiller> Fillers => FillersList;
         public IEnumerable<MarkupCrosswalk> Crosswalks => CrosswalksDictionary.Values;
         public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
 
@@ -102,7 +101,7 @@ namespace NodeMarkup.Manager
 
         #endregion
 
-        public Markup(ushort id)
+        public Marking(ushort id)
         {
             Id = id;
 
@@ -201,9 +200,9 @@ namespace NodeMarkup.Manager
         protected abstract Vector3 GetPosition();
 
         protected abstract IEnumerable<ushort> GetEnters();
-        protected abstract Enter NewEnter(ushort id);
+        protected abstract Entrance NewEnter(ushort id);
 
-        private void UpdateBackup(ushort[] delete, ushort[] add, ushort[] changed, List<Enter> oldEnters, List<Enter> newEnters)
+        private void UpdateBackup(ushort[] delete, ushort[] add, ushort[] changed, List<Entrance> oldEnters, List<Entrance> newEnters)
         {
             if ((delete.Length != 1 || add.Length != 1) && changed.Length == 0)
                 return;
@@ -228,7 +227,7 @@ namespace NodeMarkup.Manager
             Clear();
             FromXml(SingletonMod<Mod>.Version, currentData, map);
         }
-        private bool UpdateBackup(ushort delete, ushort add, List<Enter> oldEnters, List<Enter> newEnters)
+        private bool UpdateBackup(ushort delete, ushort add, List<Entrance> oldEnters, List<Entrance> newEnters)
         {
             var oldEnter = oldEnters.Find(e => e.Id == delete);
             var newEnter = newEnters.Find(e => e.Id == add);
@@ -278,7 +277,7 @@ namespace NodeMarkup.Manager
                 crosswalk.Update(true);
         }
 
-        public void Update(MarkupPoint point, bool recalculate = false, bool recalcDependences = false)
+        public void Update(MarkingPoint point, bool recalculate = false, bool recalcDependences = false)
         {
             if (LoadInProgress)
                 return;
@@ -297,7 +296,7 @@ namespace NodeMarkup.Manager
             if (recalculate && !UpdateInProgress)
                 RecalculateAllStyleData();
         }
-        public void Update(MarkupLine line, bool recalculate = false, bool recalcDependences = false)
+        public void Update(MarkingLine line, bool recalculate = false, bool recalcDependences = false)
         {
             if (LoadInProgress)
                 return;
@@ -329,7 +328,7 @@ namespace NodeMarkup.Manager
                     toRecalculate.Add(crosswalk);
                 }
 
-                if (line is MarkupCrosswalkLine crosswalkLine)
+                if (line is MarkingCrosswalkLine crosswalkLine)
                 {
                     crosswalkLine.Crosswalk.Update(true);
                     toRecalculate.Add(crosswalkLine.Crosswalk);
@@ -339,7 +338,7 @@ namespace NodeMarkup.Manager
             if (recalculate && !UpdateInProgress)
                 RecalculateStyleData(toRecalculate);
         }
-        public void Update(MarkupFiller filler, bool recalculate = false, bool recalcDependences = false)
+        public void Update(MarkingFiller filler, bool recalculate = false, bool recalcDependences = false)
         {
             if (LoadInProgress)
                 return;
@@ -454,10 +453,10 @@ namespace NodeMarkup.Manager
 
         #region LINES
 
-        public bool ExistLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
+        public bool ExistLine(MarkingPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
-        private LineType AddLine<LineType>(MarkupPointPair pointPair, Func<LineType> newLine)
-            where LineType : MarkupLine
+        private LineType AddLine<LineType>(MarkingPointPair pointPair, Func<LineType> newLine)
+            where LineType : MarkingLine
         {
             if (!TryGetLine(pointPair, out LineType line))
             {
@@ -468,7 +467,7 @@ namespace NodeMarkup.Manager
 
             return line;
         }
-        public MarkupRegularLine AddLine(MarkupPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
+        public MarkingRegularLine AddLine(MarkingPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
         {
             if(pointPair.IsNormal)
                return AddNormalLine(pointPair, style, alignment);
@@ -477,30 +476,30 @@ namespace NodeMarkup.Manager
             else
                 return AddRegularLine(pointPair, style, alignment);
         }
-        public MarkupRegularLine AddRegularLine(MarkupPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
+        public MarkingRegularLine AddRegularLine(MarkingPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
         {
-            return AddLine(pointPair, () => new MarkupRegularLine(this, pointPair, style, alignment));
+            return AddLine(pointPair, () => new MarkingRegularLine(this, pointPair, style, alignment));
         }
-        public MarkupNormalLine AddNormalLine(MarkupPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
+        public MarkingNormalLine AddNormalLine(MarkingPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
         {
-            return AddLine(pointPair, () => new MarkupNormalLine(this, pointPair, style, alignment));
+            return AddLine(pointPair, () => new MarkingNormalLine(this, pointPair, style, alignment));
         }
-        public MarkupLaneLine AddLaneLine(MarkupPointPair pointPair, RegularLineStyle style)
+        public MarkingLaneLine AddLaneLine(MarkingPointPair pointPair, RegularLineStyle style)
         {
-            return AddLine(pointPair, () => new MarkupLaneLine(this, pointPair, style));
+            return AddLine(pointPair, () => new MarkingLaneLine(this, pointPair, style));
         }
-        public MarkupStopLine AddStopLine(MarkupPointPair pointPair, StopLineStyle style)
+        public MarkingStopLine AddStopLine(MarkingPointPair pointPair, StopLineStyle style)
         {
-            return AddLine(pointPair, () => new MarkupStopLine(this, pointPair, style));
+            return AddLine(pointPair, () => new MarkingStopLine(this, pointPair, style));
         }
-        public MarkupCrosswalkLine AddCrosswalkLine(MarkupPointPair pointPair, CrosswalkStyle style)
+        public MarkingCrosswalkLine AddCrosswalkLine(MarkingPointPair pointPair, CrosswalkStyle style)
         {
-            return AddLine(pointPair, () => new MarkupCrosswalkLine(this, pointPair, style));
+            return AddLine(pointPair, () => new MarkingCrosswalkLine(this, pointPair, style));
         }
 
 
-        public void RemoveLine(MarkupLine line) => RemoveLine(line, true);
-        private void RemoveLine(MarkupLine line, bool recalculate = false)
+        public void RemoveLine(MarkingLine line) => RemoveLine(line, true);
+        private void RemoveLine(MarkingLine line, bool recalculate = false)
         {
             var toRecalculate = new HashSet<IStyleItem>();
 
@@ -508,7 +507,7 @@ namespace NodeMarkup.Manager
 
             foreach (var intersect in GetExistIntersects(line).ToArray())
             {
-                if (intersect.Pair.GetOther(line) is MarkupRegularLine regularLine)
+                if (intersect.Pair.GetOther(line) is MarkingRegularLine regularLine)
                 {
                     if (regularLine.RemoveRules(line))
                         toRecalculate.Add(regularLine);
@@ -533,7 +532,7 @@ namespace NodeMarkup.Manager
             if (recalculate)
                 RecalculateStyleData(toRecalculate);
         }
-        public Dependences GetLineDependences(MarkupLine line)
+        public Dependences GetLineDependences(MarkingLine line)
         {
             var dependences = new Dependences
             {
@@ -544,7 +543,7 @@ namespace NodeMarkup.Manager
             };
             foreach (var intersect in GetExistIntersects(line).ToArray())
             {
-                if (intersect.Pair.GetOther(line) is MarkupRegularLine regularLine)
+                if (intersect.Pair.GetOther(line) is MarkingRegularLine regularLine)
                     dependences.Rules += regularLine.GetLineDependences(line);
             }
 
@@ -555,17 +554,17 @@ namespace NodeMarkup.Manager
 
         #region FILLERS
 
-        public void AddFiller(MarkupFiller filler)
+        public void AddFiller(MarkingFiller filler)
         {
             FillersList.Add(filler);
             RecalculateStyleData(filler);
         }
-        public MarkupFiller AddFiller(FillerContour contour, FillerStyle style, out List<MarkupRegularLine> lines)
+        public MarkingFiller AddFiller(FillerContour contour, FillerStyle style, out List<MarkingRegularLine> lines)
         {
-            lines = new List<MarkupRegularLine>();
+            lines = new List<MarkingRegularLine>();
             foreach (var part in contour.RawParts)
             {
-                if (part.Line is MarkupFillerTempLine line)
+                if (part.Line is MarkingFillerTempLine line)
                 {
                     var newLine = AddLine(part.Line.PointPair, null, line.Alignment);
                     lines.Add(newLine);
@@ -573,13 +572,13 @@ namespace NodeMarkup.Manager
             }
             contour.Update();
 
-            var filler = new MarkupFiller(contour, style);
+            var filler = new MarkingFiller(contour, style);
             FillersList.Add(filler);
             RecalculateStyleData(filler);
 
             return filler;
         }
-        public void RemoveFiller(MarkupFiller filler)
+        public void RemoveFiller(MarkingFiller filler)
         {
             FillersList.Remove(filler);
             RecalculateStyleData();
@@ -624,7 +623,7 @@ namespace NodeMarkup.Manager
                     if (!(fromT < intersect.FirstT && intersect.FirstT < toT) && !(toT < intersect.FirstT && intersect.FirstT < fromT))
                         continue;
 
-                    if ((line.End.Type == MarkupPoint.PointType.Enter && line.End.Enter == enter) ^ fromT < toT)
+                    if ((line.End.Type == MarkingPoint.PointType.Enter && line.End.Enter == enter) ^ fromT < toT)
                         rule.From = new LinesIntersectEdge(intersect.Pair);
                     else
                         rule.To = new LinesIntersectEdge(intersect.Pair);
@@ -636,12 +635,12 @@ namespace NodeMarkup.Manager
 
         #region GET & CONTAINS
 
-        public bool TryGetLine(MarkupPointPair pointPair, out MarkupLine line) => LinesDictionary.TryGetValue(pointPair.Hash, out line);
-        public bool TryGetLine<LineType>(MarkupPoint first, MarkupPoint second, out LineType line) where LineType : MarkupLine => TryGetLine(new MarkupPointPair(first, second), out line);
-        public bool TryGetLine<LineType>(MarkupPointPair pointPair, out LineType line)
-            where LineType : MarkupLine
+        public bool TryGetLine(MarkingPointPair pointPair, out MarkingLine line) => LinesDictionary.TryGetValue(pointPair.Hash, out line);
+        public bool TryGetLine<LineType>(MarkingPoint first, MarkingPoint second, out LineType line) where LineType : MarkingLine => TryGetLine(new MarkingPointPair(first, second), out line);
+        public bool TryGetLine<LineType>(MarkingPointPair pointPair, out LineType line)
+            where LineType : MarkingLine
         {
-            if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkupLine rawLine) && rawLine is LineType)
+            if (LinesDictionary.TryGetValue(pointPair.Hash, out MarkingLine rawLine) && rawLine is LineType)
             {
                 line = rawLine as LineType;
                 return true;
@@ -653,9 +652,9 @@ namespace NodeMarkup.Manager
             }
         }
         public bool TryGetLine<LineType>(ulong lineId, ObjectsMap map, out LineType line)
-            where LineType : MarkupLine
+            where LineType : MarkingLine
         {
-            if (MarkupPointPair.FromHash(lineId, this, map, out MarkupPointPair pair, out _))
+            if (MarkingPointPair.FromHash(lineId, this, map, out MarkingPointPair pair, out _))
                 return TryGetLine(pair, out line);
             else
             {
@@ -663,33 +662,33 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public bool TryGetFiller(int id, out MarkupFiller filler)
+        public bool TryGetFiller(int id, out MarkingFiller filler)
         {
             filler = FillersList.Find(f => f.Id == id);
             return filler != null;
         }
 
-        public bool TryGetEnter(ushort enterId, out Enter enter)
+        public bool TryGetEnter(ushort enterId, out Entrance enter)
         {
             enter = RawEntersList.Find(e => e.Id == enterId);
             return enter != null;
         }
         public bool ContainsEnter(ushort enterId) => RawEntersList.Find(e => e.Id == enterId) != null;
-        public bool ContainsLine(MarkupPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
+        public bool ContainsLine(MarkingPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
-        public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkupLine line, bool onlyIntersect = false)
+        public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkingLine line, bool onlyIntersect = false)
             => LineIntersects.Values.Where(i => i.Pair.ContainLine(line) && (!onlyIntersect || i.IsIntersect));
-        public IEnumerable<MarkupLinesIntersect> GetIntersects(MarkupLine line)
+        public IEnumerable<MarkupLinesIntersect> GetIntersects(MarkingLine line)
         {
             foreach (var otherLine in Lines)
             {
                 if (otherLine != line)
-                    yield return GetIntersect(new MarkupLinePair(line, otherLine));
+                    yield return GetIntersect(new MarkingLinePair(line, otherLine));
             }
         }
 
-        public MarkupLinesIntersect GetIntersect(MarkupLine first, MarkupLine second) => GetIntersect(new MarkupLinePair(first, second));
-        public MarkupLinesIntersect GetIntersect(MarkupLinePair linePair)
+        public MarkupLinesIntersect GetIntersect(MarkingLine first, MarkingLine second) => GetIntersect(new MarkingLinePair(first, second));
+        public MarkupLinesIntersect GetIntersect(MarkingLinePair linePair)
         {
             if (!LineIntersects.TryGetValue(linePair, out MarkupLinesIntersect intersect))
             {
@@ -706,24 +705,24 @@ namespace NodeMarkup.Manager
             {
                 for (var j = i + 1; j < lines.Length; j += 1)
                 {
-                    yield return GetIntersect(new MarkupLinePair(lines[i], lines[j]));
+                    yield return GetIntersect(new MarkingLinePair(lines[i], lines[j]));
                 }
             }
         }
 
-        public Enter GetNextEnter(Enter current) => GetNextEnter(EntersList.IndexOf(current));
-        public Enter GetNextEnter(int index) => EntersList[index.NextIndex(EntersList.Count)];
-        public Enter GetPrevEnter(Enter current) => GetPrevEnter(EntersList.IndexOf(current));
-        public Enter GetPrevEnter(int index) => EntersList[index.PrevIndex(EntersList.Count)];
+        public Entrance GetNextEnter(Entrance current) => GetNextEnter(EntersList.IndexOf(current));
+        public Entrance GetNextEnter(int index) => EntersList[index.NextIndex(EntersList.Count)];
+        public Entrance GetPrevEnter(Entrance current) => GetPrevEnter(EntersList.IndexOf(current));
+        public Entrance GetPrevEnter(int index) => EntersList[index.PrevIndex(EntersList.Count)];
 
-        public IEnumerable<MarkupLine> GetPointLines(MarkupPoint point) => Lines.Where(l => l.ContainsPoint(point));
-        public IEnumerable<MarkupFiller> GetLineFillers(MarkupLine line) => FillersList.Where(f => f.ContainsLine(line));
-        public IEnumerable<MarkupFiller> GetPointFillers(MarkupPoint point) => FillersList.Where(f => f.ContainsPoint(point));
-        public IEnumerable<MarkupCrosswalk> GetPointCrosswalks(MarkupPoint point) => Crosswalks.Where(c => c.ContainsPoint(point));
-        public IEnumerable<MarkupCrosswalk> GetLinesIsBorder(MarkupLine line) => Crosswalks.Where(c => c.IsBorder(line));
+        public IEnumerable<MarkingLine> GetPointLines(MarkingPoint point) => Lines.Where(l => l.ContainsPoint(point));
+        public IEnumerable<MarkingFiller> GetLineFillers(MarkingLine line) => FillersList.Where(f => f.ContainsLine(line));
+        public IEnumerable<MarkingFiller> GetPointFillers(MarkingPoint point) => FillersList.Where(f => f.ContainsPoint(point));
+        public IEnumerable<MarkupCrosswalk> GetPointCrosswalks(MarkingPoint point) => Crosswalks.Where(c => c.ContainsPoint(point));
+        public IEnumerable<MarkupCrosswalk> GetLinesIsBorder(MarkingLine line) => Crosswalks.Where(c => c.IsBorder(line));
 
-        public bool HaveLines(Enter enter) => Lines.Any(l => l.ContainsEnter(enter));
-        public bool HaveLines(MarkupPoint point) => Lines.Any(l => l.ContainsPoint(point));
+        public bool HaveLines(Entrance enter) => Lines.Any(l => l.ContainsEnter(enter));
+        public bool HaveLines(MarkingPoint point) => Lines.Any(l => l.ContainsPoint(point));
 
         #endregion
 
@@ -761,14 +760,14 @@ namespace NodeMarkup.Manager
             if (version < new Version("1.9"))
                 map = VersionMigration.Befor1_9(this, map);
 #endif
-            foreach (var pointConfig in config.Elements(MarkupPoint.XmlName))
-                MarkupPoint.FromXml(pointConfig, this, map);
+            foreach (var pointConfig in config.Elements(MarkingPoint.XmlName))
+                MarkingPoint.FromXml(pointConfig, this, map);
 
-            var toInitLines = new Dictionary<MarkupLine, XElement>();
-            var invertLines = new HashSet<MarkupLine>();
-            foreach (var lineConfig in config.Elements(MarkupLine.XmlName))
+            var toInitLines = new Dictionary<MarkingLine, XElement>();
+            var invertLines = new HashSet<MarkingLine>();
+            foreach (var lineConfig in config.Elements(MarkingLine.XmlName))
             {
-                if (MarkupLine.FromXml(lineConfig, this, map, out MarkupLine line, out bool invertLine))
+                if (MarkingLine.FromXml(lineConfig, this, map, out MarkingLine line, out bool invertLine))
                 {
                     LinesDictionary[line.Id] = line;
                     toInitLines[line] = lineConfig;
@@ -783,9 +782,9 @@ namespace NodeMarkup.Manager
 
             if ((Support & SupportType.Fillers) != 0)
             {
-                foreach (var fillerConfig in config.Elements(MarkupFiller.XmlName))
+                foreach (var fillerConfig in config.Elements(MarkingFiller.XmlName))
                 {
-                    if (MarkupFiller.FromXml(fillerConfig, this, map, out MarkupFiller filler))
+                    if (MarkingFiller.FromXml(fillerConfig, this, map, out MarkingFiller filler))
                         FillersList.Add(filler);
                 }
             }
@@ -917,8 +916,8 @@ namespace NodeMarkup.Manager
             public bool TryGetValue(int i, int j, out T value) => TryGetValue(GetId(i, j), out value);
         }
     }
-    public abstract class Markup<EnterType> : Markup
-        where EnterType : Enter
+    public abstract class Marking<EnterType> : Marking
+        where EnterType : Entrance
     {
         public new IEnumerable<EnterType> Enters => EntersList.Cast<EnterType>();
         public bool TryGetEnter(ushort enterId, out EnterType enter)
@@ -934,12 +933,12 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public Markup(ushort id) : base(id)
+        public Marking(ushort id) : base(id)
         {
             Update();
         }
     }
-    public enum MarkupType
+    public enum MarkingType
     {
         Node,
         Segment

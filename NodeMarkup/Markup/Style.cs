@@ -336,7 +336,7 @@ namespace NodeMarkup.Manager
 
             [NotItem]
             [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
-            RegularLine = Markup.Item.RegularLine,
+            RegularLine = Marking.Item.RegularLine,
 
             [Description(nameof(Localize.LineStyle_Solid))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
@@ -379,7 +379,7 @@ namespace NodeMarkup.Manager
             LineZigZag,
 
             [NotItem]
-            Regular3DLine = Markup.Item.RegularLine + 0x80,
+            Regular3DLine = Marking.Item.RegularLine + 0x80,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
             [NetworkType(NetworkType.All)]
@@ -423,7 +423,7 @@ namespace NodeMarkup.Manager
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             [NotVisible]
-            LineBuffer = Markup.Item.RegularLine + 0x100 - 1,
+            LineBuffer = Marking.Item.RegularLine + 0x100 - 1,
 
             #endregion
 
@@ -432,7 +432,7 @@ namespace NodeMarkup.Manager
             [NotItem]
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             [NetworkType(NetworkType.Road)]
-            StopLine = Markup.Item.StopLine,
+            StopLine = Marking.Item.StopLine,
 
             [Description(nameof(Localize.LineStyle_StopSolid))]
             [NetworkType(NetworkType.Road)]
@@ -465,7 +465,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.Road)]
             [NotVisible]
-            StopLineBuffer = Markup.Item.StopLine + 0x100 - 1,
+            StopLineBuffer = Marking.Item.StopLine + 0x100 - 1,
 
             #endregion
 
@@ -473,7 +473,7 @@ namespace NodeMarkup.Manager
 
             [NotItem]
             [Description(nameof(Localize.FillerStyle_Group))]
-            Filler = Markup.Item.Filler,
+            Filler = Marking.Item.Filler,
 
             [Description(nameof(Localize.FillerStyle_Stripe))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
@@ -517,7 +517,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.All)]
             [NotVisible]
-            FillerBuffer = Markup.Item.Filler + 0x100 - 1,
+            FillerBuffer = Marking.Item.Filler + 0x100 - 1,
 
             #endregion
 
@@ -525,7 +525,7 @@ namespace NodeMarkup.Manager
 
             [NotItem]
             [Description(nameof(Localize.CrosswalkStyle_Group))]
-            Crosswalk = Markup.Item.Crosswalk,
+            Crosswalk = Marking.Item.Crosswalk,
 
             [Description(nameof(Localize.CrosswalkStyle_Existent))]
             [NetworkType(NetworkType.Road)]
@@ -562,7 +562,7 @@ namespace NodeMarkup.Manager
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.Road)]
             [NotVisible]
-            CrosswalkBuffer = Markup.Item.Crosswalk + 0x100 - 1,
+            CrosswalkBuffer = Marking.Item.Crosswalk + 0x100 - 1,
 
             #endregion
         }

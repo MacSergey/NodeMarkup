@@ -39,7 +39,7 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyLineStyle() => new SolidLineStyle(Color, Width);
 
-        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             var borders = line.Borders;
             return new MarkupPartGroupData(lod, StyleHelper.CalculateSolid(trajectory, lod, GetDashes));
@@ -134,7 +134,7 @@ namespace NodeMarkup.Manager
             if (StyleHelper.CalculateSolidPart(borders, trajectory, secondOffset, Width, TwoColors ? SecondColor : Color, out MarkupPartData secondDash))
                 yield return secondDash;
         }
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
@@ -215,7 +215,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Width, DashLength))
                 return new MarkupPartGroupData(lod);
@@ -233,7 +233,7 @@ namespace NodeMarkup.Manager
                 yield return dash;
         }
 
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddLengthProperty(this, parent, false));
@@ -338,7 +338,7 @@ namespace NodeMarkup.Manager
             if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLength, secondOffset, Width, TwoColors ? SecondColor : Color, out MarkupPartData secondDash))
                 yield return secondDash;
         }
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddUseSecondColorProperty(this, parent, true));
@@ -473,7 +473,7 @@ namespace NodeMarkup.Manager
                 doubleAlignmentTarget.Alignment.Value = Alignment;
         }
 
-        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Width, DashLengthValue))
                 return new MarkupPartGroupData(lod);
@@ -515,7 +515,7 @@ namespace NodeMarkup.Manager
                 yield return secondDash;
         }
 
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
@@ -653,7 +653,7 @@ namespace NodeMarkup.Manager
             Invert.Value = value == Manager.Alignment.Right;
         }
 
-        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             var solidOffset = CenterSolid ? 0 : Invert ? Offset : -Offset;
             var dashedOffset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
@@ -697,7 +697,7 @@ namespace NodeMarkup.Manager
             if (target is IDoubleAlignmentLine doubleAlignmentTarget)
                 doubleAlignmentTarget.Alignment.Value = Alignment;
         }
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddUseSecondColorProperty(this, parent, true));
@@ -811,7 +811,7 @@ namespace NodeMarkup.Manager
             Invert = GetInvertProperty(true);
             Angle = GetAngleProperty(angle);
         }
-        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Height, Base))
                 return new MarkupPartGroupData(lod);
@@ -842,7 +842,7 @@ namespace NodeMarkup.Manager
                 sharkTeethTarget.Space.Value = Space;
             }
         }
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddTriangleProperty(this, parent, false));
@@ -970,7 +970,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             var count = Mathf.FloorToInt(trajectory.Length / Step.Value);
             var startOffset = (trajectory.Length - Step.Value * count) * 0.5f;
@@ -1023,7 +1023,7 @@ namespace NodeMarkup.Manager
             return new MarkupPartGroupData(lod, dashes);
         }
 
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddStepProperty(parent, false));

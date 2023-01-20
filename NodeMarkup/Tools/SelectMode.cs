@@ -48,11 +48,11 @@ namespace NodeMarkup.Tools
 
         public override void OnPrimaryMouseClicked(Event e)
         {
-            var markup = default(Markup);
+            var markup = default(Marking);
             if (IsHoverNode)
-                markup = SingletonManager<NodeMarkupManager>.Instance[HoverNode.Id];
+                markup = SingletonManager<NodeMarkingManager>.Instance[HoverNode.Id];
             else if (IsHoverSegment)
-                markup = SingletonManager<SegmentMarkupManager>.Instance[HoverSegment.Id];
+                markup = SingletonManager<SegmentMarkingManager>.Instance[HoverSegment.Id];
             else
                 return;
 

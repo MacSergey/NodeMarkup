@@ -56,10 +56,10 @@ namespace NodeMarkup.Tools
                 var targetId = enterTarget?.Enter.Id ?? 0;
                 switch (Markup.Type)
                 {
-                    case MarkupType.Node:
+                    case MarkingType.Node:
                         map.AddSegment(sourceId, targetId);
                         break;
-                    case MarkupType.Segment:
+                    case MarkingType.Segment:
                         map.AddNode(sourceId, targetId);
                         break;
                 }

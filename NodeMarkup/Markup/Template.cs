@@ -23,7 +23,7 @@ namespace NodeMarkup.Manager
         public string XmlSection => XmlName;
         public abstract TemplateType Type { get; }
         public abstract TemplateManager Manager { get; }
-        public abstract Markup.SupportType Support { get; }
+        public abstract Marking.SupportType Support { get; }
 
         public TemplateAsset Asset { get; set; }
         public bool IsAsset => Asset != null;
@@ -105,7 +105,7 @@ namespace NodeMarkup.Manager
     public class StyleTemplate : Template<StyleTemplate>
     {
         public override TemplateType Type => TemplateType.Style;
-        public override Markup.SupportType Support => Markup.SupportType.StyleTemplates;
+        public override Marking.SupportType Support => Marking.SupportType.StyleTemplates;
         public override TemplateManager Manager => SingletonManager<StyleTemplateManager>.Instance;
 
         public override bool HasPreview => true;
@@ -195,7 +195,7 @@ namespace NodeMarkup.Manager
     public class IntersectionTemplate : Template<IntersectionTemplate>
     {
         public override TemplateType Type => TemplateType.Intersection;
-        public override Markup.SupportType Support => Markup.SupportType.IntersectionTemplates;
+        public override Marking.SupportType Support => Marking.SupportType.IntersectionTemplates;
         public override TemplateManager Manager => SingletonManager<IntersectionTemplateManager>.Instance;
 
         public override string DeleteCaptionDescription => Localize.PresetEditor_DeleteCaptionDescription;
@@ -203,7 +203,7 @@ namespace NodeMarkup.Manager
         public override string Description => "Intersection";
 
         public XElement Data { get; private set; }
-        public EnterData[] Enters { get; private set; }
+        public EntranceData[] Enters { get; private set; }
         public ObjectsMap Map { get; } = new ObjectsMap();
 
         public int Roads => Enters.Length;
@@ -226,8 +226,8 @@ namespace NodeMarkup.Manager
 
         private IntersectionTemplate() : base() { }
 
-        public IntersectionTemplate(Markup markup) : this($"Intersection #{markup.Id}", markup) { }
-        public IntersectionTemplate(string name, Markup markup) : base(name)
+        public IntersectionTemplate(Marking markup) : this($"Intersection #{markup.Id}", markup) { }
+        public IntersectionTemplate(string name, Marking markup) : base(name)
         {
             Data = markup.ToXml();
             Enters = markup.Enters.Select(e => e.Data).ToArray();
@@ -262,7 +262,7 @@ namespace NodeMarkup.Manager
             if (base.FromXml(config) && config.Elements().FirstOrDefault() is XElement data)
             {
                 Data = data;
-                Enters = config.Elements(Enter.XmlName).Select(c => EnterData.FromXml(c)).ToArray();
+                Enters = config.Elements(Entrance.XmlName).Select(c => EntranceData.FromXml(c)).ToArray();
 
                 Lines = config.GetAttrValue<int>("LC");
                 Crosswalks = config.GetAttrValue<int>("CC");

@@ -95,7 +95,7 @@ namespace NodeMarkup.Tools
         protected override bool ShowToolTip => base.ShowToolTip && (Settings.ShowToolTip || Mode.Type == ToolModeType.Select);
         public override Shortcut Activation => ActivationShortcut;
 
-        public Markup Markup { get; private set; }
+        public Marking Markup { get; private set; }
         public bool IsUnderground => Markup?.IsUnderground ?? false;
 
         public NodeMarkupPanel Panel => SingletonItem<NodeMarkupPanel>.Instance;
@@ -146,7 +146,7 @@ namespace NodeMarkup.Tools
             base.SetModeNow(mode);
             Panel.Active = (Mode as NodeMarkupToolMode)?.ShowPanel == true;
         }
-        public void SetMarkup(Markup markup)
+        public void SetMarkup(Marking markup)
         {
             Markup = markup;
             Panel.SetMarkup(Markup);
@@ -157,7 +157,7 @@ namespace NodeMarkup.Tools
 
         private void StartCreateFiller()
         {
-            if ((Markup.Support & Markup.SupportType.Fillers) != 0)
+            if ((Markup.Support & Marking.SupportType.Fillers) != 0)
             {
                 SetMode(ToolModeType.MakeFiller);
                 if (NextMode is MakeFillerToolMode fillerToolMode)
@@ -305,8 +305,8 @@ namespace NodeMarkup.Tools
 
             foreach (var enter in Markup.Enters)
             {
-                var pair = new MarkupPointPair(enter.LastPoint, enter.Next.FirstPoint);
-                if (!Markup.TryGetLine(pair, out MarkupLine line))
+                var pair = new MarkingPointPair(enter.LastPoint, enter.Next.FirstPoint);
+                if (!Markup.TryGetLine(pair, out MarkingLine line))
                 {
                     line = Markup.AddRegularLine(pair, null);
                     Panel.AddLine(line);
@@ -359,10 +359,10 @@ namespace NodeMarkup.Tools
                         var indexSource = indexTarget.NextIndex(sourcePoints.Length, direct[0]);
                         switch (Markup.Type)
                         {
-                            case MarkupType.Node:
+                            case MarkingType.Node:
                                 map.AddSegment(sourceEnters[indexSource].Id, targetEnters[indexTarget].Id);
                                 break;
-                            case MarkupType.Segment:
+                            case MarkingType.Segment:
                                 map.AddNode(sourceEnters[indexSource].Id, targetEnters[indexTarget].Id);
                                 break;
                         }
@@ -379,10 +379,10 @@ namespace NodeMarkup.Tools
                         var indexSource = indexTarget.NextIndex(sourcePoints.Length, invert[0]);
                         switch (Markup.Type)
                         {
-                            case MarkupType.Node:
+                            case MarkingType.Node:
                                 map.AddSegment(sourceEnters[indexSource].Id, targetEnters[indexTarget].Id);
                                 break;
-                            case MarkupType.Segment:
+                            case MarkingType.Segment:
                                 map.AddNode(sourceEnters[indexSource].Id, targetEnters[indexTarget].Id);
                                 break;
                         }
@@ -409,14 +409,14 @@ namespace NodeMarkup.Tools
         }
         public static void ApplyDefaultMarking(NetInfo info, ushort segmentId, ushort startNode, ushort endNode)
         {
-            if(SegmentMarkupManager.RemovedMarkup is IntersectionTemplate removed)
+            if(SegmentMarkingManager.RemovedMarking is IntersectionTemplate removed)
             {
                 var firstNode = removed.Enters[0].Id;
                 var secondNode = removed.Enters[1].Id;
 
                 if(startNode == firstNode && endNode == secondNode || startNode == secondNode && endNode == firstNode)
                 {
-                    var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];
+                    var markup = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
                     var map = new ObjectsMap();
                     map.AddNode(startNode, endNode);
                     map.AddNode(endNode, startNode);
@@ -427,7 +427,7 @@ namespace NodeMarkup.Tools
 
             if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var presetId, out var flip, out var invert) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset))
             {
-                var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];
+                var markup = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
                 ref var segment = ref segmentId.GetSegment();
                 flip ^= (segment.m_flags & NetSegment.Flags.Invert) != 0;
 
@@ -478,7 +478,7 @@ namespace NodeMarkup.Tools
         {
             SingletonMod<Mod>.Logger.Debug($"Apply between intersections");
 
-            if (Markup.Type != MarkupType.Segment)
+            if (Markup.Type != MarkingType.Segment)
                 return;
 
             ref var segment = ref Markup.Id.GetSegment();
@@ -521,7 +521,7 @@ namespace NodeMarkup.Tools
         {
             SingletonMod<Mod>.Logger.Debug($"Apply to whole street");
 
-            if (Markup.Type != MarkupType.Segment)
+            if (Markup.Type != MarkingType.Segment)
                 return;
 
             ref var segment = ref Markup.Id.GetSegment();
@@ -600,7 +600,7 @@ namespace NodeMarkup.Tools
                 var map = new ObjectsMap();
                 map.AddSegment(nearNodeId, beforeSegmentId);
                 map.AddSegment(farNodeId, nextSegmentId.Value);
-                var markup = SingletonManager<NodeMarkupManager>.Instance[nodeId];
+                var markup = SingletonManager<NodeMarkingManager>.Instance[nodeId];
                 markup.Clear();
                 markup.FromXml(SingletonMod<Mod>.Version, config, map);
             }
@@ -619,7 +619,7 @@ namespace NodeMarkup.Tools
             var map = new ObjectsMap();
             map.AddNode(farNodeId, beforeNodeId);
             map.AddNode(nearNodeId, nextNodeId);
-            var markup = SingletonManager<SegmentMarkupManager>.Instance[segmentId];
+            var markup = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
             markup.Clear();
             markup.FromXml(SingletonMod<Mod>.Version, config, map);
 
@@ -898,7 +898,7 @@ namespace NodeMarkup.Tools
         public abstract ToolModeType Type { get; }
         public virtual bool ShowPanel => true;
         protected NodeMarkupPanel Panel => SingletonItem<NodeMarkupPanel>.Instance;
-        public Markup Markup => Tool.Markup;
+        public Marking Markup => Tool.Markup;
         protected bool IsUnderground => Tool.IsUnderground;
 
         public override void RenderGeometry(RenderManager.CameraInfo cameraInfo)

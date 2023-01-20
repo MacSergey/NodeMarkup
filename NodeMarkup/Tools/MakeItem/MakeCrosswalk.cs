@@ -38,9 +38,9 @@ namespace NodeMarkup.Tools
                 base.OnPrimaryMouseClicked(e);
             else
             {
-                var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
+                var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
 
-                if (Tool.Markup.TryGetLine(pointPair, out MarkupCrosswalkLine line))
+                if (Tool.Markup.TryGetLine(pointPair, out MarkingCrosswalkLine line))
                 {
                     if (Utility.OnlyCtrlIsPressed)
                         Panel.SelectCrosswalk(line.Crosswalk);
@@ -59,20 +59,20 @@ namespace NodeMarkup.Tools
                 SetTarget();
             }
         }
-        private void OnDelete(MarkupLine line)
+        private void OnDelete(MarkingLine line)
         {
-            Panel.DeleteCrosswalk((line as MarkupCrosswalkLine).Crosswalk);
+            Panel.DeleteCrosswalk((line as MarkingCrosswalkLine).Crosswalk);
             Panel.DeleteLine(line);
             Tool.Markup.RemoveLine(line);
         }
-        protected override IEnumerable<MarkupPoint> GetTarget(Enter enter, MarkupPoint ignore)
+        protected override IEnumerable<MarkingPoint> GetTarget(Entrance enter, MarkingPoint ignore)
         {
             if (ignore != null && ignore.Enter != enter)
                 yield break;
 
-            var nodeEnter = (SegmentEnter)enter;
+            var nodeEnter = (SegmentEntrance)enter;
             var allow = nodeEnter.CrosswalkPoints.Select(i => 1).ToArray();
-            var bridge = new Dictionary<MarkupPoint, int>();
+            var bridge = new Dictionary<MarkingPoint, int>();
             foreach (var crosswalk in nodeEnter.CrosswalkPoints)
                 bridge.Add(crosswalk, bridge.Count);
 
@@ -82,7 +82,7 @@ namespace NodeMarkup.Tools
             var leftIdx = ignoreIdx;
             var rightIdx = ignoreIdx;
 
-            foreach (var line in enter.Markup.Lines.Where(l => l.Type == LineType.Crosswalk && l.Start.Enter == enter))
+            foreach (var line in enter.Marking.Lines.Where(l => l.Type == LineType.Crosswalk && l.Start.Enter == enter))
             {
                 var from = Math.Min(bridge[line.Start], bridge[line.End]);
                 var to = Math.Max(bridge[line.Start], bridge[line.End]);
@@ -133,10 +133,10 @@ namespace NodeMarkup.Tools
         private void RenderConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
             var bezier = new Line3(SelectPoint.MarkerPosition, HoverPoint.MarkerPosition).GetBezier();
-            var pointPair = new MarkupPointPair(SelectPoint, HoverPoint);
+            var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
             var color = Tool.Markup.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
 
-            bezier.RenderBezier(new OverlayData(cameraInfo) { Color = color, Width = MarkupCrosswalkPoint.Shift * 2, Cut = true });
+            bezier.RenderBezier(new OverlayData(cameraInfo) { Color = color, Width = MarkingCrosswalkPoint.Shift * 2, Cut = true });
         }
         private void RenderNotConnectCrosswalkLine(RenderManager.CameraInfo cameraInfo)
         {
@@ -145,7 +145,7 @@ namespace NodeMarkup.Tools
             dir.Normalize();
             var bezier = new Line3(SelectPoint.MarkerPosition, SelectPoint.MarkerPosition + dir * Mathf.Max(lenght, 1f)).GetBezier();
 
-            bezier.RenderBezier(new OverlayData(cameraInfo) { Color = Colors.White, Width = MarkupCrosswalkPoint.Shift * 2, Cut = true });
+            bezier.RenderBezier(new OverlayData(cameraInfo) { Color = Colors.White, Width = MarkingCrosswalkPoint.Shift * 2, Cut = true });
         }
     }
 }

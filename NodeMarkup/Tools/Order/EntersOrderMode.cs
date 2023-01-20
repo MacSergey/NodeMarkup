@@ -261,7 +261,7 @@ namespace NodeMarkup.Tools
 
         protected override void ApplyClick()
         {
-            if (!string.IsNullOrEmpty(RoadName) && Markup.Type == MarkupType.Segment)
+            if (!string.IsNullOrEmpty(RoadName) && Markup.Type == MarkingType.Segment)
             {
                 var firstId = TargetEnters[0].Enter.Id;
                 var secondId = TargetEnters[1].Enter.Id;

@@ -4,19 +4,19 @@ using System.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public class SegmentEnter : Enter<NodeMarkup>
+    public class SegmentEntrance : Entrance<NodeMarking>
     {
-        public override EnterType Type => EnterType.Segment;
-        public override MarkupPoint.PointType SupportPoints => MarkupPoint.PointType.All;
+        public override EntranceType Type => EntranceType.Segment;
+        public override MarkingPoint.PointType SupportPoints => MarkingPoint.PointType.All;
 
-        private Dictionary<byte, MarkupCrosswalkPoint> CrosswalkPointsDic { get; set; } = new Dictionary<byte, MarkupCrosswalkPoint>();
-        private Dictionary<byte, MarkupNormalPoint> NormalPointsDic { get; set; } = new Dictionary<byte, MarkupNormalPoint>();
+        private Dictionary<byte, MarkingCrosswalkPoint> CrosswalkPointsDic { get; set; } = new Dictionary<byte, MarkingCrosswalkPoint>();
+        private Dictionary<byte, MarkingNormalPoint> NormalPointsDic { get; set; } = new Dictionary<byte, MarkingNormalPoint>();
 
         public int CrosswalkCount => CrosswalkPointsDic.Count;
         public int NormalCount => NormalPointsDic.Count;
 
-        public IEnumerable<MarkupCrosswalkPoint> CrosswalkPoints => CrosswalkPointsDic.Values;
-        public IEnumerable<MarkupNormalPoint> NormalPoints => NormalPointsDic.Values;
+        public IEnumerable<MarkingCrosswalkPoint> CrosswalkPoints => CrosswalkPointsDic.Values;
+        public IEnumerable<MarkingNormalPoint> NormalPoints => NormalPointsDic.Values;
 
         public override int SideSign => IsStartSide ? -1 : 1;
         public override int NormalSign => -1;
@@ -24,13 +24,13 @@ namespace NodeMarkup.Manager
 
         protected override bool IsExist => Id.ExistSegment();
 
-        public SegmentEnter(NodeMarkup markup, ushort segmentId) : base(markup, segmentId) { }
+        public SegmentEntrance(NodeMarking marking, ushort segmentId) : base(marking, segmentId) { }
         protected override void Init()
         {
             base.Init();
 
-            CrosswalkPointsDic = EnterPointsDic.Values.ToDictionary(p => p.Index, p => new MarkupCrosswalkPoint(p));
-            NormalPointsDic = EnterPointsDic.Values.ToDictionary(p => p.Index, p => new MarkupNormalPoint(p));
+            CrosswalkPointsDic = EnterPointsDic.Values.ToDictionary(p => p.Index, p => new MarkingCrosswalkPoint(p));
+            NormalPointsDic = EnterPointsDic.Values.ToDictionary(p => p.Index, p => new MarkingNormalPoint(p));
         }
         public override void UpdatePoints()
         {
@@ -42,19 +42,19 @@ namespace NodeMarkup.Manager
                 point.Update();
         }
 
-        public override bool TryGetPoint(byte pointIndex, MarkupPoint.PointType type, out MarkupPoint point)
+        public override bool TryGetPoint(byte pointIndex, MarkingPoint.PointType type, out MarkingPoint point)
         {
             switch (type)
             {
-                case MarkupPoint.PointType.Crosswalk:
-                    if (CrosswalkPointsDic.TryGetValue(pointIndex, out MarkupCrosswalkPoint crosswalkPoint))
+                case MarkingPoint.PointType.Crosswalk:
+                    if (CrosswalkPointsDic.TryGetValue(pointIndex, out MarkingCrosswalkPoint crosswalkPoint))
                     {
                         point = crosswalkPoint;
                         return true;
                     }
                     break;
-                case MarkupPoint.PointType.Normal:
-                    if (NormalPointsDic.TryGetValue(pointIndex, out MarkupNormalPoint normalPoint))
+                case MarkingPoint.PointType.Normal:
+                    if (NormalPointsDic.TryGetValue(pointIndex, out MarkingNormalPoint normalPoint))
                     {
                         point = normalPoint;
                         return true;
@@ -69,6 +69,6 @@ namespace NodeMarkup.Manager
 
         public override ushort GetSegmentId() => Id;
         public override ref NetSegment GetSegment() => ref Id.GetSegment();
-        public override bool GetIsStartSide() => GetSegment().m_startNode == Markup.Id;
+        public override bool GetIsStartSide() => GetSegment().m_startNode == Marking.Id;
     }
 }

@@ -36,7 +36,7 @@ namespace NodeMarkup.Manager
 
         public SolidStopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
             return new MarkupPartGroupData(lod, StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes));
@@ -86,7 +86,7 @@ namespace NodeMarkup.Manager
             SecondColor = GetSecondColorProperty(TwoColors ? secondColor : color);
             Offset = GetOffsetProperty(offset);
         }
-        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var offsetLeft = offsetNormal * (Width / 2);
@@ -113,7 +113,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
@@ -175,7 +175,7 @@ namespace NodeMarkup.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Width, DashLength))
                 return new MarkupPartGroupData(lod);
@@ -199,7 +199,7 @@ namespace NodeMarkup.Manager
                 dashedTarget.SpaceLength.Value = SpaceLength;
             }
         }
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddLengthProperty(this, parent, false));
@@ -273,7 +273,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Width, DashLength))
                 return new MarkupPartGroupData(lod);
@@ -291,7 +291,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
@@ -365,7 +365,7 @@ namespace NodeMarkup.Manager
         }
 
 
-        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
             var solidOffset = offsetNormal * (Width / 2);
@@ -403,7 +403,7 @@ namespace NodeMarkup.Manager
                 doubleTarget.TwoColors.Value = TwoColors;
             }
         }
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
@@ -474,7 +474,7 @@ namespace NodeMarkup.Manager
             Height = GetHeightProperty(height);
             Space = GetSpaceProperty(space);
         }
-        protected override IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!CheckDashedLod(lod, Base, Height))
                 return new MarkupPartGroupData(lod);
@@ -502,7 +502,7 @@ namespace NodeMarkup.Manager
                 sharkTeethTarget.Space.Value = Space;
             }
         }
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddTriangleProperty(this, parent, false));
@@ -542,9 +542,9 @@ namespace NodeMarkup.Manager
                 line3DTarget.Elevation.Value = Elevation;
         }
 
-        protected override IStyleData CalculateImpl(MarkupStopLine line, ITrajectory trajectory, MarkupLOD lod) => new MarkupLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
+        protected override IStyleData CalculateImpl(MarkingStopLine line, ITrajectory trajectory, MarkupLOD lod) => new MarkupLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
 
-        public override void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
             components.Add(AddElevationProperty(this, parent, false));

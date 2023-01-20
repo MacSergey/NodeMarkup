@@ -31,14 +31,14 @@ namespace NodeMarkup.Utilities
 
         public override object Copy(InstanceID sourceInstanceID) => sourceInstanceID.Type switch
         {
-            InstanceType.NetNode when SingletonManager<NodeMarkupManager>.Instance.TryGetMarkup(sourceInstanceID.NetNode, out Manager.NodeMarkup nodeMarkup) => nodeMarkup.ToXml(),
-            InstanceType.NetSegment when SingletonManager<SegmentMarkupManager>.Instance.TryGetMarkup(sourceInstanceID.NetSegment, out SegmentMarkup segmentMarkup) => segmentMarkup.ToXml(),
+            InstanceType.NetNode when SingletonManager<NodeMarkingManager>.Instance.TryGetMarking(sourceInstanceID.NetNode, out Manager.NodeMarking nodeMarkup) => nodeMarkup.ToXml(),
+            InstanceType.NetSegment when SingletonManager<SegmentMarkingManager>.Instance.TryGetMarking(sourceInstanceID.NetSegment, out SegmentMarking segmentMarkup) => segmentMarkup.ToXml(),
             _ => null,
         };
 
 
         public override void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap) => Paste(targetInstanceID, record, sourceMap, PasteMapGetter);
-        private ObjectsMap PasteMapGetter(Markup markup, Dictionary<InstanceID, InstanceID> sourceMap)
+        private ObjectsMap PasteMapGetter(Marking markup, Dictionary<InstanceID, InstanceID> sourceMap)
         {
             var map = new ObjectsMap();
             map.FromDictionary(sourceMap);
@@ -46,12 +46,12 @@ namespace NodeMarkup.Utilities
         }
 
         public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, float instanceRotation, float mirrorRotation) => Paste(targetInstanceID, record, sourceMap, MirrorMapGetter);
-        private ObjectsMap MirrorMapGetter(Markup markup, Dictionary<InstanceID, InstanceID> sourceMap)
+        private ObjectsMap MirrorMapGetter(Marking markup, Dictionary<InstanceID, InstanceID> sourceMap)
         {
             var map = new ObjectsMap(true);
             foreach (var source in sourceMap.Where(p => IsCorrect(p)))
             {
-                if (!markup.TryGetEnter(source.Value.NetSegment, out Enter enter))
+                if (!markup.TryGetEnter(source.Value.NetSegment, out Entrance enter))
                     continue;
 
                 map.AddSegment(source.Key.NetSegment, source.Value.NetSegment);
@@ -62,19 +62,19 @@ namespace NodeMarkup.Utilities
             static bool IsCorrect(KeyValuePair<InstanceID, InstanceID> pair) => pair.Key.Type == InstanceType.NetSegment && pair.Value.Type == InstanceType.NetSegment;
         }
 
-        private void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, Func<Markup, Dictionary<InstanceID, InstanceID>, ObjectsMap> mapGetter)
+        private void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, Func<Marking, Dictionary<InstanceID, InstanceID>, ObjectsMap> mapGetter)
         {
             if (record is not XElement config)
                 return;
 
-            Markup markup;
+            Marking markup;
             switch (targetInstanceID.Type)
             {
                 case InstanceType.NetNode:
-                    markup = SingletonManager<NodeMarkupManager>.Instance[targetInstanceID.NetNode];
+                    markup = SingletonManager<NodeMarkingManager>.Instance[targetInstanceID.NetNode];
                     break;
                 case InstanceType.NetSegment:
-                    markup = SingletonManager<SegmentMarkupManager>.Instance[targetInstanceID.NetSegment];
+                    markup = SingletonManager<SegmentMarkingManager>.Instance[targetInstanceID.NetSegment];
                     break;
                 default:
                     return;

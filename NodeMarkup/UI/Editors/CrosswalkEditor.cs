@@ -17,7 +17,7 @@ namespace NodeMarkup.UI.Editors
 
         public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
         public override string EmptyMessage => string.Format(NodeMarkup.Localize.CrosswalkEditor_EmptyMessage, LocalizeExtension.Shift);
-        public override Markup.SupportType Support { get; } = Markup.SupportType.Croswalks;
+        public override Marking.SupportType Support { get; } = Marking.SupportType.Croswalks;
 
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
         private CrosswalkBorderSelectPropertyPanel RightBorder { get; set; }
@@ -108,15 +108,15 @@ namespace NodeMarkup.UI.Editors
 
             Warning.isVisible = Settings.ShowPanelTip && (!LeftBorder.EnableControl || !RightBorder.EnableControl);
         }
-        private MarkupRegularLine[] GetBorderLines(BorderPosition border)
+        private MarkingRegularLine[] GetBorderLines(BorderPosition border)
         {
             var point = border == BorderPosition.Right ? EditObject.CrosswalkLine.Start : EditObject.CrosswalkLine.End;
-            if (point.Enter.TryGetPoint(point.Index, MarkupPoint.PointType.Enter, out MarkupPoint enterPoint))
-                return enterPoint.Markup.GetPointLines(enterPoint).OfType<MarkupRegularLine>().ToArray();
+            if (point.Enter.TryGetPoint(point.Index, MarkingPoint.PointType.Enter, out MarkingPoint enterPoint))
+                return enterPoint.Marking.GetPointLines(enterPoint).OfType<MarkingRegularLine>().ToArray();
             else
-                return new MarkupRegularLine[0];
+                return new MarkingRegularLine[0];
         }
-        private void FillBorder(CrosswalkBorderSelectPropertyPanel panel, Action<MarkupRegularLine> action, MarkupRegularLine[] lines, MarkupRegularLine value)
+        private void FillBorder(CrosswalkBorderSelectPropertyPanel panel, Action<MarkingRegularLine> action, MarkingRegularLine[] lines, MarkingRegularLine value)
         {
             panel.OnValueChanged -= action;
             panel.Selector.Clear();
@@ -167,8 +167,8 @@ namespace NodeMarkup.UI.Editors
             return border;
         }
 
-        private void RightBorgerChanged(MarkupRegularLine line) => EditObject.RightBorder.Value = line;
-        private void LeftBorgerChanged(MarkupRegularLine line) => EditObject.LeftBorder.Value = line;
+        private void RightBorgerChanged(MarkingRegularLine line) => EditObject.RightBorder.Value = line;
+        private void LeftBorgerChanged(MarkingRegularLine line) => EditObject.LeftBorder.Value = line;
 
         private void AddStyleTypeProperty()
         {
@@ -326,10 +326,10 @@ namespace NodeMarkup.UI.Editors
         }
     }
 
-    public class CrosswalkBorderToolMode : BasePanelMode<CrosswalksEditor, CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton, MarkupRegularLine>
+    public class CrosswalkBorderToolMode : BasePanelMode<CrosswalksEditor, CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton, MarkingRegularLine>
     {
         protected override bool IsHover => LineSelector.IsHoverLine;
-        protected override MarkupRegularLine Hover => LineSelector.HoverLine?.Line;
+        protected override MarkingRegularLine Hover => LineSelector.HoverLine?.Line;
 
         private LinesSelector<MarkupLineBound> LineSelector { get; set; }
 

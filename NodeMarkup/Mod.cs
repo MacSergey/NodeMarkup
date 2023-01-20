@@ -152,20 +152,20 @@ namespace NodeMarkup
         private bool Patch_NetManager_ReleaseNodeImplementation()
         {
             var parameters = new Type[] { typeof(ushort), typeof(NetNode).MakeByRefType() };
-            return AddPrefix(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseNodeImplementationPrefix), typeof(NetManager), "ReleaseNodeImplementation", parameters);
+            return AddPrefix(typeof(MarkingManager), nameof(MarkingManager.NetManagerReleaseNodeImplementationPrefix), typeof(NetManager), "ReleaseNodeImplementation", parameters);
         }
         private bool Patch_NetManager_ReleaseSegmentImplementation()
         {
             var parameters = new Type[] { typeof(ushort), typeof(NetSegment).MakeByRefType(), typeof(bool) };
-            return AddPrefix(typeof(MarkupManager), nameof(MarkupManager.NetManagerReleaseSegmentImplementationPrefix), typeof(NetManager), "ReleaseSegmentImplementation", parameters);
+            return AddPrefix(typeof(MarkingManager), nameof(MarkingManager.NetManagerReleaseSegmentImplementationPrefix), typeof(NetManager), "ReleaseSegmentImplementation", parameters);
         }
         private bool Patch_NetManager_SimulationStepImpl_Prefix()
         {
-            return AddPrefix(typeof(MarkupManager), nameof(MarkupManager.GetToUpdate), typeof(NetManager), "SimulationStepImpl");
+            return AddPrefix(typeof(MarkingManager), nameof(MarkingManager.GetToUpdate), typeof(NetManager), "SimulationStepImpl");
         }
         private bool Patch_NetManager_SimulationStepImpl_Postfix()
         {
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.Update), typeof(NetManager), "SimulationStepImpl");
+            return AddPostfix(typeof(MarkingManager), nameof(MarkingManager.Update), typeof(NetManager), "SimulationStepImpl");
         }
         private bool Patch_NetManager_EndOverlay_Prefix()
         {
@@ -188,7 +188,7 @@ namespace NodeMarkup
         private bool Patch_NetNode_RenderInstance()
         {
             var parameters = new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() };
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetNodeRenderInstancePostfix), typeof(NetNode), nameof(NetNode.RenderInstance), parameters);
+            return AddPostfix(typeof(MarkingManager), nameof(MarkingManager.NetNodeRenderInstancePostfix), typeof(NetNode), nameof(NetNode.RenderInstance), parameters);
         }
         private bool Patch_NetNode_CheckHeightOffset()
         {
@@ -203,14 +203,14 @@ namespace NodeMarkup
                 if (instruction.opcode == OpCodes.Ret)
                 {
                     yield return TranspilerUtilities.GetLDArg(original, "nodeID");
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.UpdateNode)));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkingManager), nameof(MarkingManager.UpdateNode)));
                     yield return instruction;
                 }
                 else if (instruction.opcode == OpCodes.Call && instruction.operand == updateLanes)
                 {
                     yield return instruction;
                     yield return new CodeInstruction(OpCodes.Ldloc_S, 13);
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkupManager), nameof(MarkupManager.UpdateSegment)));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkingManager), nameof(MarkingManager.UpdateSegment)));
                 }
                 else
                     yield return instruction;
@@ -228,7 +228,7 @@ namespace NodeMarkup
         private bool Patch_NetSegment_RenderInstance()
         {
             var parameters = new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(int), typeof(NetInfo), typeof(RenderManager.Instance).MakeByRefType() };
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetSegmentRenderInstancePostfix), typeof(NetSegment), nameof(NetSegment.RenderInstance), parameters);
+            return AddPostfix(typeof(MarkingManager), nameof(MarkingManager.NetSegmentRenderInstancePostfix), typeof(NetSegment), nameof(NetSegment.RenderInstance), parameters);
         }
 
         #endregion
@@ -248,15 +248,15 @@ namespace NodeMarkup
         }
         private bool Patch_NetInfo_NodeInitNodeInfo_Rail()
         {
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix_Rail), typeof(NetInfo), "InitNodeInfo");
+            return AddPostfix(typeof(MarkingManager), nameof(MarkingManager.NetInfoInitNodeInfoPostfix_Rail), typeof(NetInfo), "InitNodeInfo");
         }
         private bool Patch_NetInfo_NodeInitNodeInfo_LevelCrossing()
         {
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitNodeInfoPostfix_LevelCrossing), typeof(NetInfo), "InitNodeInfo");
+            return AddPostfix(typeof(MarkingManager), nameof(MarkingManager.NetInfoInitNodeInfoPostfix_LevelCrossing), typeof(NetInfo), "InitNodeInfo");
         }
         private bool Patch_NetInfo_InitSegmentInfo()
         {
-            return AddPostfix(typeof(MarkupManager), nameof(MarkupManager.NetInfoInitSegmentInfoPostfix), typeof(NetInfo), "InitSegmentInfo");
+            return AddPostfix(typeof(MarkingManager), nameof(MarkingManager.NetInfoInitSegmentInfoPostfix), typeof(NetInfo), "InitSegmentInfo");
         }
 
         #endregion

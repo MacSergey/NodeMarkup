@@ -12,16 +12,16 @@ using UnityEngine;
 namespace NodeMarkup.Manager
 {
 
-    public abstract class Enter : IOverlay, IDeletable, ISupport, IComparable<Enter>
+    public abstract class Entrance : IOverlay, IDeletable, ISupport, IComparable<Entrance>
     {
         public event Action OnPointOrderChanged;
 
         public static string XmlName { get; } = "E";
 
-        public virtual MarkupPoint.PointType SupportPoints => MarkupPoint.PointType.Enter;
-        public Markup Markup { get; private set; }
-        public abstract EnterType Type { get; }
-        public Markup.SupportType Support => Markup.SupportType.Enters;
+        public virtual MarkingPoint.PointType SupportPoints => MarkingPoint.PointType.Enter;
+        public Marking Marking { get; private set; }
+        public abstract EntranceType Type { get; }
+        public Marking.SupportType Support => Marking.SupportType.Enters;
         public ushort Id { get; }
         protected abstract bool IsExist { get; }
 
@@ -100,9 +100,9 @@ namespace NodeMarkup.Manager
                 }
             }
         }
-        protected Dictionary<byte, MarkupEnterPoint> EnterPointsDic { get; private set; } = new Dictionary<byte, MarkupEnterPoint>();
+        protected Dictionary<byte, MarkingEnterPoint> EnterPointsDic { get; private set; } = new Dictionary<byte, MarkingEnterPoint>();
         protected byte[] SortedIndexes { get; private set; }
-        protected Dictionary<byte, MarkupLanePoint> LanePointsDic { get; private set; } = new Dictionary<byte, MarkupLanePoint>();
+        protected Dictionary<byte, MarkingLanePoint> LanePointsDic { get; private set; } = new Dictionary<byte, MarkingLanePoint>();
 
         public Vector3 CornerDir { get; private set; }
         public Vector3 NormalDir { get; private set; }
@@ -112,28 +112,28 @@ namespace NodeMarkup.Manager
         public float CornerAndNormalAngle { get; private set; }
         public float TranformCoef { get; private set; }
 
-        public Enter Next => Markup.GetNextEnter(this);
-        public Enter Prev => Markup.GetPrevEnter(this);
-        public MarkupPoint FirstPoint => EnterPointsDic[1];
-        public MarkupPoint LastPoint => EnterPointsDic[(byte)PointCount];
+        public Entrance Next => Marking.GetNextEnter(this);
+        public Entrance Prev => Marking.GetPrevEnter(this);
+        public MarkingPoint FirstPoint => EnterPointsDic[1];
+        public MarkingPoint LastPoint => EnterPointsDic[(byte)PointCount];
 
         public int PointCount => EnterPointsDic.Count;
-        public IEnumerable<MarkupEnterPoint> EnterPoints => EnterPointsDic.Values;
+        public IEnumerable<MarkingEnterPoint> EnterPoints => EnterPointsDic.Values;
 
         public int LanePointCount => LanePointsDic.Count;
-        public IEnumerable<MarkupLanePoint> LanePoints => LanePointsDic.Values;
+        public IEnumerable<MarkingLanePoint> LanePoints => LanePointsDic.Values;
 
         public float T => IsStartSide ? 0f : 1f;
         public string XmlSection => XmlName;
 
-        public EnterData Data => new EnterData(this);
+        public EntranceData Data => new EntranceData(this);
 
         public string DeleteCaptionDescription => throw new NotImplementedException();
         public string DeleteMessageDescription => throw new NotImplementedException();
 
-        public Enter(Markup markup, ushort id)
+        public Entrance(Marking markup, ushort id)
         {
-            Markup = markup;
+            Marking = markup;
             Id = id;
 
             if (!IsExist)
@@ -173,7 +173,7 @@ namespace NodeMarkup.Manager
 
             for (var i = 0; i < sources.Count; i += 1)
             {
-                var point = new MarkupEnterPoint((byte)(i + 1), sources[i]);
+                var point = new MarkingEnterPoint((byte)(i + 1), sources[i]);
                 EnterPointsDic[point.Index] = point;
             }
 
@@ -183,7 +183,7 @@ namespace NodeMarkup.Manager
             {
                 //var index = SideSign > 0 ? i : sources.Count - 1 - i;
                 var laneSource = new NetLanePointSource(this, (byte)i);
-                var lanePoint = new MarkupLanePoint((byte)(i + 1), laneSource);
+                var lanePoint = new MarkingLanePoint((byte)(i + 1), laneSource);
                 LanePointsDic[lanePoint.Index] = lanePoint;
             }
         }
@@ -191,11 +191,11 @@ namespace NodeMarkup.Manager
         public abstract ushort GetSegmentId();
         public abstract ref NetSegment GetSegment();
         public abstract bool GetIsStartSide();
-        public virtual bool TryGetPoint(byte index, MarkupPoint.PointType type, out MarkupPoint point)
+        public virtual bool TryGetPoint(byte index, MarkingPoint.PointType type, out MarkingPoint point)
         {
             switch (type)
             {
-                case MarkupPoint.PointType.Lane:
+                case MarkingPoint.PointType.Lane:
                     if (LanePointsDic.TryGetValue(index, out var lanePoint))
                     {
                         point = lanePoint;
@@ -213,9 +213,9 @@ namespace NodeMarkup.Manager
             point = null;
             return false;
         }
-        public virtual bool TryGetSortedPoint(byte index, MarkupPoint.PointType type, out MarkupPoint point)
+        public virtual bool TryGetSortedPoint(byte index, MarkingPoint.PointType type, out MarkingPoint point)
         {
-            if (type == MarkupPoint.PointType.Enter && index < PointCount)
+            if (type == MarkingPoint.PointType.Enter && index < PointCount)
             {
                 var sortedIndex = SortedIndexes[index];
                 return TryGetPoint(sortedIndex, type, out point);
@@ -337,38 +337,38 @@ namespace NodeMarkup.Manager
             NodeMarkupTool.RenderBezier(cameraInfo, cornerBezier, Colors.Orange);
 #endif
         }
-        public int CompareTo(Enter other) => other.NormalAngle.CompareTo(NormalAngle);
+        public int CompareTo(Entrance other) => other.NormalAngle.CompareTo(NormalAngle);
         public override string ToString() => Id.ToString();
 
         public Dependences GetDependences() => throw new NotImplementedException();
     }
-    public abstract class Enter<MarkupType> : Enter
-        where MarkupType : Markup
+    public abstract class Entrance<MarkingType> : Entrance
+        where MarkingType : Marking
     {
-        public new MarkupType Markup => (MarkupType)base.Markup;
+        public new MarkingType Marking => (MarkingType)base.Marking;
 
-        public Enter(MarkupType markup, ushort id) : base(markup, id) { }
+        public Entrance(MarkingType marking, ushort id) : base(marking, id) { }
     }
-    public class EnterData : IToXml
+    public class EntranceData : IToXml
     {
         public ushort Id { get; private set; }
         public int PointCount { get; private set; }
         public float NormalAngle { get; private set; }
         public float CornerAngle { get; private set; }
 
-        public string XmlSection => Enter.XmlName;
+        public string XmlSection => Entrance.XmlName;
 
-        private EnterData() { }
-        public EnterData(Enter enter)
+        private EntranceData() { }
+        public EntranceData(Entrance enter)
         {
             Id = enter.Id;
             PointCount = enter.PointCount;
             NormalAngle = enter.NormalAngle;
             CornerAngle = enter.CornerAngle;
         }
-        public static EnterData FromXml(XElement config)
+        public static EntranceData FromXml(XElement config)
         {
-            var data = new EnterData
+            var data = new EntranceData
             {
                 Id = config.GetAttrValue<ushort>(nameof(Id)),
                 PointCount = config.GetAttrValue<int>("P"),
@@ -386,7 +386,7 @@ namespace NodeMarkup.Manager
             return config;
         }
     }
-    public enum EnterType
+    public enum EntranceType
     {
         Node,
         Segment

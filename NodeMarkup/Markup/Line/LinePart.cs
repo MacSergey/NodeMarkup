@@ -6,17 +6,17 @@ using System.Xml.Linq;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLinePart : IToXml, IOverlay
+    public abstract class MarkingLinePart : IToXml, IOverlay
     {
         public Action OnRuleChanged { private get; set; }
 
         public PropertyValue<ISupportPoint> From { get; }
         public PropertyValue<ISupportPoint> To { get; }
 
-        public MarkupLine Line { get; }
+        public MarkingLine Line { get; }
         public abstract string XmlSection { get; }
 
-        public MarkupLinePart(MarkupLine line, ISupportPoint from = null, ISupportPoint to = null)
+        public MarkingLinePart(MarkingLine line, ISupportPoint from = null, ISupportPoint to = null)
         {
             Line = line;
             From = new PropertyClassValue<ISupportPoint>(RuleChanged, from);
@@ -88,7 +88,7 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        protected static IEnumerable<ILinePartEdge> GetEdges(XElement config, MarkupLine line, ObjectsMap map)
+        protected static IEnumerable<ILinePartEdge> GetEdges(XElement config, MarkingLine line, ObjectsMap map)
         {
             foreach (var supportConfig in config.Elements(LinePartEdge.XmlName))
             {
@@ -100,8 +100,8 @@ namespace NodeMarkup.Manager
 
     public class MarkupLineBound : TrajectoryBound
     {
-        public MarkupRegularLine Line { get; }
-        public MarkupLineBound(MarkupRegularLine line, float size) : base(line.Trajectory, size)
+        public MarkingRegularLine Line { get; }
+        public MarkupLineBound(MarkingRegularLine line, float size) : base(line.Trajectory, size)
         {
             Line = line;
         }

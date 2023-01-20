@@ -69,7 +69,7 @@ namespace NodeMarkup.Manager
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
-        public abstract IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod);
+        public abstract IStyleData Calculate(MarkingLine line, ITrajectory trajectory, MarkupLOD lod);
 
         protected virtual float LodLength => 0.5f;
         protected virtual float LodWidth => 0.15f;
@@ -300,25 +300,25 @@ namespace NodeMarkup.Manager
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
+        public sealed override IStyleData Calculate(MarkingLine line, ITrajectory trajectory, MarkupLOD lod)
         {
-            if ((SupportLOD & lod) != 0 && line is MarkupRegularLine regularLine)
+            if ((SupportLOD & lod) != 0 && line is MarkingRegularLine regularLine)
                 return CalculateImpl(regularLine, trajectory, lod);
             else
                 return new MarkupPartGroupData(lod);
         }
-        protected abstract IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod);
+        protected abstract IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod);
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, isTemplate);
-            if (editObject is MarkupRegularLine line)
+            if (editObject is MarkingRegularLine line)
                 GetUIComponents(line, components, parent, isTemplate);
             else if (isTemplate)
                 GetUIComponents(null, components, parent, isTemplate);
             return components;
         }
-        public virtual void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
+        public virtual void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
         public enum RegularLineType
         {
@@ -434,25 +434,25 @@ namespace NodeMarkup.Manager
 
         public StopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override IStyleData Calculate(MarkupLine line, ITrajectory trajectory, MarkupLOD lod)
+        public sealed override IStyleData Calculate(MarkingLine line, ITrajectory trajectory, MarkupLOD lod)
         {
-            if ((SupportLOD & lod) != 0 && line is MarkupStopLine stopLine)
+            if ((SupportLOD & lod) != 0 && line is MarkingStopLine stopLine)
                 return CalculateImpl(stopLine, trajectory, lod);
             else
                 return new MarkupPartGroupData(lod);
         }
-        protected abstract IStyleData CalculateImpl(MarkupStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);
+        protected abstract IStyleData CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, isTemplate);
-            if (editObject is MarkupStopLine line)
+            if (editObject is MarkingStopLine line)
                 GetUIComponents(line, components, parent, isTemplate);
             else if (isTemplate)
                 GetUIComponents(null, components, parent, isTemplate);
             return components;
         }
-        public virtual void GetUIComponents(MarkupStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
+        public virtual void GetUIComponents(MarkingStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
         public enum StopLineType
         {

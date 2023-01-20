@@ -10,18 +10,18 @@ namespace NodeMarkup.Manager
     public interface IFillerVertex : ISupportPoint, IEquatable<IFillerVertex>
     {
         IFillerVertex ProcessedVertex { get; }
-        MarkupLine GetCommonLine(IFillerVertex other);
+        MarkingLine GetCommonLine(IFillerVertex other);
         List<IFillerVertex> GetNextCandidates(FillerContour contour, IFillerVertex prev);
         bool Some(IFillerVertex other);
     }
     public interface IFillerLineVertex : IFillerVertex
     {
-        bool Contains(MarkupLine line);
+        bool Contains(MarkingLine line);
     }
     public static class FillerVertex
     {
         public static string XmlName { get; } = "V";
-        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out IFillerVertex fillerVertex)
+        public static bool FromXml(XElement config, Marking markup, ObjectsMap map, out IFillerVertex fillerVertex)
         {
             var type = (SupportType)config.GetAttrValue<int>("T");
             switch (type)
@@ -40,13 +40,13 @@ namespace NodeMarkup.Manager
     }
     public abstract class EnterFillerVertexBase : EnterSupportPoint, IFillerVertex, IEquatable<EnterFillerVertexBase>
     {
-        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out EnterFillerVertexBase enterPoint)
+        public static bool FromXml(XElement config, Marking markup, ObjectsMap map, out EnterFillerVertexBase enterPoint)
         {
-            var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
-            if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
+            var pointId = config.GetAttrValue<int>(MarkingPoint.XmlName);
+            if (MarkingPoint.FromId(pointId, markup, map, out MarkingPoint point))
             {
-                var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
-                if (markup.TryGetLine(lineId, map, out MarkupRegularLine line))
+                var lineId = config.GetAttrValue<ulong>(MarkingLine.XmlName);
+                if (markup.TryGetLine(lineId, map, out MarkingRegularLine line))
                     enterPoint = new LineEndFillerVertex(point, line);
                 else
                     enterPoint = new EnterFillerVertex(point);
@@ -63,16 +63,16 @@ namespace NodeMarkup.Manager
         public abstract Alignment Alignment { get; }
         public abstract IFillerVertex ProcessedVertex { get; }
 
-        public EnterFillerVertexBase(MarkupPoint point) : base(point) { }
+        public EnterFillerVertexBase(MarkingPoint point) : base(point) { }
         public override void Update() => Init(Point.GetAbsolutePosition(Alignment));
 
         bool IEquatable<IFillerVertex>.Equals(IFillerVertex other) => other is EnterFillerVertexBase otherEnter && Equals(otherEnter);
         public bool Equals(EnterFillerVertexBase other) => base.Equals(other) && (!Point.IsSplit || other.Alignment == Alignment);
         public bool Some(IFillerVertex other) => other is EnterFillerVertexBase otherEnter && Equals(otherEnter);
 
-        public override bool GetT(MarkupLine line, out float t)
+        public override bool GetT(MarkingLine line, out float t)
         {
-            if (line is MarkupEnterLine enterLine && line.Start == line.End)
+            if (line is MarkingEnterLine enterLine && line.Start == line.End)
             {
                 if (enterLine.StartAlignment == Alignment)
                 {
@@ -93,12 +93,12 @@ namespace NodeMarkup.Manager
             else
                 return base.GetT(line, out t);
         }
-        public virtual MarkupLine GetCommonLine(IFillerVertex other) => other switch
+        public virtual MarkingLine GetCommonLine(IFillerVertex other) => other switch
         {
-            EnterFillerVertexBase otherE when Enter == otherE.Enter => new MarkupEnterLine(Point.Markup, Point, otherE.Point, Alignment, otherE.Alignment),
-            EnterFillerVertexBase otherE when Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is MarkupLine line => line,
-            EnterFillerVertexBase otherE when Enter.Markup.EntersCount > 2 && ((Enter.Next == otherE.Enter && Point.IsLast && otherE.Point.IsFirst) || (Enter.Prev == otherE.Enter && Point.IsFirst && otherE.Point.IsLast)) => new MarkupEnterLine(Point.Markup, Point, otherE.Point, Alignment, otherE.Alignment),
-            EnterFillerVertexBase otherE => new MarkupFillerTempLine(Point.Markup, Point, otherE.Point, alignment: Point.IsSplit ? Alignment : (otherE.Point.IsSplit ? otherE.Alignment.Invert() : Alignment.Centre)),
+            EnterFillerVertexBase otherE when Enter == otherE.Enter => new MarkingEnterLine(Point.Marking, Point, otherE.Point, Alignment, otherE.Alignment),
+            EnterFillerVertexBase otherE when Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is MarkingLine line => line,
+            EnterFillerVertexBase otherE when Enter.Marking.EntersCount > 2 && ((Enter.Next == otherE.Enter && Point.IsLast && otherE.Point.IsFirst) || (Enter.Prev == otherE.Enter && Point.IsFirst && otherE.Point.IsLast)) => new MarkingEnterLine(Point.Marking, Point, otherE.Point, Alignment, otherE.Alignment),
+            EnterFillerVertexBase otherE => new MarkingFillerTempLine(Point.Marking, Point, otherE.Point, alignment: Point.IsSplit ? Alignment : (otherE.Point.IsSplit ? otherE.Alignment.Invert() : Alignment.Centre)),
             IntersectFillerVertex otherI when otherI.LinePair.First.ContainsPoint(Point) => otherI.LinePair.First,
             IntersectFillerVertex otherI when otherI.LinePair.Second.ContainsPoint(Point) => otherI.LinePair.Second,
             _ => null,
@@ -152,14 +152,14 @@ namespace NodeMarkup.Manager
         {
             var points = new List<IFillerVertex>();
 
-            foreach (var enter in Point.Markup.Enters)
+            foreach (var enter in Point.Marking.Enters)
             {
                 if (enter != Point.Enter)
                 {
                     foreach (var point in enter.EnterPoints)
                         GetPointLinesPoints(contour, ref points, point);
                 }
-                else if(enter is SegmentEnter segmentEnter)
+                else if(enter is SegmentEntrance segmentEnter)
                 {
                     foreach (var point in segmentEnter.NormalPoints)
                         GetPointLinesPoints(contour, ref points, point);
@@ -169,14 +169,14 @@ namespace NodeMarkup.Manager
             return points;
         }
         private void GetPointLinesPoints<PointType>(FillerContour contour, ref List<IFillerVertex> points, PointType point)
-            where PointType : MarkupPoint
+            where PointType : MarkingPoint
         {
-            if (point.Markup.TryGetLine(Point, point, out MarkupRegularLine line))
+            if (point.Marking.TryGetLine(Point, point, out MarkingRegularLine line))
             {
                 if (!Point.IsSplit || line.GetAlignment(Point) == Alignment)
                     points.AddRange(contour.GetLinePoints(this, line));
             }
-            else if(point.Type == MarkupPoint.PointType.Enter)
+            else if(point.Type == MarkingPoint.PointType.Enter)
             {
                 var alignments = new List<Alignment>();
 
@@ -199,7 +199,7 @@ namespace NodeMarkup.Manager
 
                 foreach (var alignment in alignments)
                 {
-                    line = new MarkupFillerTempLine(point.Markup, Point, point, alignment: alignment);
+                    line = new MarkingFillerTempLine(point.Marking, Point, point, alignment: alignment);
                     contour.GetMinMaxT(this, line, out float t, out float minT, out float maxT);
                     if ((t == 0f && maxT >= 1f) || (t == 1f && minT <= 0f))
                         points.Add(new EnterFillerVertex(point, alignment.Invert()));
@@ -215,7 +215,7 @@ namespace NodeMarkup.Manager
         public override Alignment Alignment => RawAlignment;
         public Alignment RawAlignment { get; }
         public override IFillerVertex ProcessedVertex => new EnterFillerVertex(Point);
-        public EnterFillerVertex(MarkupPoint point, Alignment alignment = Alignment.Centre) : base(point)
+        public EnterFillerVertex(MarkingPoint point, Alignment alignment = Alignment.Centre) : base(point)
         {
             RawAlignment = alignment;
             Update();
@@ -225,28 +225,28 @@ namespace NodeMarkup.Manager
     {
         public override Alignment Alignment => Line?.GetAlignment(Point) ?? Alignment.Centre;
         public override IFillerVertex ProcessedVertex => new EnterFillerVertex(Point);
-        public MarkupRegularLine Line { get; private set; }
-        public LineEndFillerVertex(MarkupPoint point, MarkupRegularLine line) : base(point)
+        public MarkingRegularLine Line { get; private set; }
+        public LineEndFillerVertex(MarkingPoint point, MarkingRegularLine line) : base(point)
         {
             Line = line;
             Update();
         }
         public override void Update()
         {
-            if (Line is MarkupFillerTempLine && Point.Markup.TryGetLine<MarkupRegularLine>(Line.PointPair, out var regularLine))
+            if (Line is MarkingFillerTempLine && Point.Marking.TryGetLine<MarkingRegularLine>(Line.PointPair, out var regularLine))
                 Line = regularLine;
 
             base.Update();
         }
 
-        public override MarkupLine GetCommonLine(IFillerVertex other)
+        public override MarkingLine GetCommonLine(IFillerVertex other)
         {
             if (other is IntersectFillerVertex otherI && otherI.LinePair.ContainLine(Line))
                 return Line;
             else
                 return base.GetCommonLine(other);
         }
-        public bool Contains(MarkupLine line) => Line == line;
+        public bool Contains(MarkingLine line) => Line == line;
 
         bool IEquatable<IFillerVertex>.Equals(IFillerVertex other) => other is LineEndFillerVertex otherEnd && Equals(otherEnd);
         public bool Equals(LineEndFillerVertex other) => base.Equals(other) && other.Line == Line;
@@ -256,19 +256,19 @@ namespace NodeMarkup.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.AddAttr(MarkupLine.XmlName, Line.PointPair.Hash);
+            config.AddAttr(MarkingLine.XmlName, Line.PointPair.Hash);
             return config;
         }
     }
 
     public class IntersectFillerVertex : IntersectSupportPoint, IFillerVertex, IFillerLineVertex
     {
-        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out IntersectFillerVertex linePoint)
+        public static bool FromXml(XElement config, Marking markup, ObjectsMap map, out IntersectFillerVertex linePoint)
         {
-            var lineId1 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName1);
-            var lineId2 = config.GetAttrValue<ulong>(MarkupPointPair.XmlName2);
+            var lineId1 = config.GetAttrValue<ulong>(MarkingPointPair.XmlName1);
+            var lineId2 = config.GetAttrValue<ulong>(MarkingPointPair.XmlName2);
 
-            if (markup.TryGetLine(lineId1, map, out MarkupLine line1) && markup.TryGetLine(lineId2, map, out MarkupLine line2))
+            if (markup.TryGetLine(lineId1, map, out MarkingLine line1) && markup.TryGetLine(lineId2, map, out MarkingLine line2))
             {
                 linePoint = new IntersectFillerVertex(line1, line2);
                 return true;
@@ -282,10 +282,10 @@ namespace NodeMarkup.Manager
         public override string XmlSection => FillerVertex.XmlName;
         public IFillerVertex ProcessedVertex => this;
 
-        public IntersectFillerVertex(MarkupLinePair linePair) : base(linePair) { }
-        public IntersectFillerVertex(MarkupLine first, MarkupLine second) : this(new MarkupLinePair(first, second)) { }
+        public IntersectFillerVertex(MarkingLinePair linePair) : base(linePair) { }
+        public IntersectFillerVertex(MarkingLine first, MarkingLine second) : this(new MarkingLinePair(first, second)) { }
 
-        public MarkupLine GetCommonLine(IFillerVertex other)
+        public MarkingLine GetCommonLine(IFillerVertex other)
         {
             return other switch
             {
@@ -314,13 +314,13 @@ namespace NodeMarkup.Manager
             return points;
         }
 
-        public bool Contains(MarkupLine line) => LinePair.ContainLine(line);
+        public bool Contains(MarkingLine line) => LinePair.ContainLine(line);
 
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.AddAttr(MarkupPointPair.XmlName1, First.Id);
-            config.AddAttr(MarkupPointPair.XmlName2, Second.Id);
+            config.AddAttr(MarkingPointPair.XmlName1, First.Id);
+            config.AddAttr(MarkingPointPair.XmlName2, Second.Id);
             return config;
         }
         public override int GetHashCode() => LinePair.GetHashCode();

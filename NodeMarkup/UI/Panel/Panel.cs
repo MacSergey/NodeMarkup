@@ -41,7 +41,7 @@ namespace NodeMarkup.UI.Panel
 
         private float Width => 550f;
 
-        public Markup Markup { get; private set; }
+        public Marking Markup { get; private set; }
         private bool NeedRefreshOnVisible { get; set; }
 
         private PanelHeader Header { get; set; }
@@ -142,7 +142,7 @@ namespace NodeMarkup.UI.Panel
 
         #region UPDATE
 
-        public void SetMarkup(Markup markup)
+        public void SetMarkup(Marking markup)
         {
             if ((Markup = markup) != null)
             {
@@ -248,7 +248,7 @@ namespace NodeMarkup.UI.Panel
                 CurrentEditor?.RefreshEditor();
             }
         }
-        public void AddLine(MarkupLine line) => AddObject<LinesEditor, MarkupLine>(line);
+        public void AddLine(MarkingLine line) => AddObject<LinesEditor, MarkingLine>(line);
 
         #endregion
 
@@ -265,9 +265,9 @@ namespace NodeMarkup.UI.Panel
             }
         }
 
-        public void DeleteLine(MarkupLine line) => DeleteObject<LinesEditor, MarkupLine>(line);
+        public void DeleteLine(MarkingLine line) => DeleteObject<LinesEditor, MarkingLine>(line);
         public void DeleteCrosswalk(MarkupCrosswalk crosswalk) => DeleteObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
-        public void DeleteFiller(MarkupFiller filler) => DeleteObject<FillerEditor, MarkupFiller>(filler);
+        public void DeleteFiller(MarkingFiller filler) => DeleteObject<FillerEditor, MarkingFiller>(filler);
 
         #endregion
 
@@ -285,15 +285,15 @@ namespace NodeMarkup.UI.Panel
             editor?.Edit(item);
             return editor;
         }
-        public void SelectPoint(MarkupEnterPoint point) => SelectObject<PointsEditor, MarkupEnterPoint>(point);
-        public void SelectLine(MarkupLine line) => SelectObject<LinesEditor, MarkupLine>(line);
+        public void SelectPoint(MarkingEnterPoint point) => SelectObject<PointsEditor, MarkingEnterPoint>(point);
+        public void SelectLine(MarkingLine line) => SelectObject<LinesEditor, MarkingLine>(line);
         public void SelectCrosswalk(MarkupCrosswalk crosswalk) => SelectObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
         public void EditCrosswalk(MarkupCrosswalk crosswalk)
         {
             var editor = SelectObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
             editor?.BorderSetup();
         }
-        public void SelectFiller(MarkupFiller filler) => SelectObject<FillerEditor, MarkupFiller>(filler);
+        public void SelectFiller(MarkingFiller filler) => SelectObject<FillerEditor, MarkingFiller>(filler);
 
         private void EditTemplate<EditorType, TemplateType>(TemplateType template, bool editName)
             where EditorType : Editor, IEditor<TemplateType>, ITemplateEditor<TemplateType>

@@ -11,7 +11,7 @@ using static NetInfo;
 
 namespace NodeMarkup.Manager
 {
-    public static class MarkupManager
+    public static class MarkingManager
     {
         public static int Errors { get; set; } = 0;
         public static bool HasErrors => Errors != 0;
@@ -20,21 +20,21 @@ namespace NodeMarkup.Manager
 
         public static void Clear()
         {
-            SingletonManager<NodeMarkupManager>.Instance.Clear();
-            SingletonManager<SegmentMarkupManager>.Instance.Clear();
+            SingletonManager<NodeMarkingManager>.Instance.Clear();
+            SingletonManager<SegmentMarkingManager>.Instance.Clear();
         }
         public static void Destroy()
         {
-            SingletonManager<NodeMarkupManager>.Destroy();
-            SingletonManager<SegmentMarkupManager>.Destroy();
+            SingletonManager<NodeMarkingManager>.Destroy();
+            SingletonManager<SegmentMarkingManager>.Destroy();
         }
 
-        public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => SingletonManager<NodeMarkupManager>.Instance.Render(cameraInfo, nodeID, ref data);
+        public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => SingletonManager<NodeMarkingManager>.Instance.Render(cameraInfo, nodeID, ref data);
 
-        public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SingletonManager<SegmentMarkupManager>.Instance.Render(cameraInfo, segmentID, ref data);
+        public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SingletonManager<SegmentMarkingManager>.Instance.Render(cameraInfo, segmentID, ref data);
 
-        public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => SingletonManager<NodeMarkupManager>.Instance.Remove(node);
-        public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SingletonManager<SegmentMarkupManager>.Instance.Remove(segment);
+        public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => SingletonManager<NodeMarkingManager>.Instance.Remove(node);
+        public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SingletonManager<SegmentMarkingManager>.Instance.Remove(segment);
 
         public static void GetToUpdate()
         {
@@ -43,15 +43,15 @@ namespace NodeMarkup.Manager
         }
         public static void Update()
         {
-            SingletonManager<NodeMarkupManager>.Instance.Update(NeedUpdateNodeIds);
-            SingletonManager<SegmentMarkupManager>.Instance.Update(NeedUpdateSegmentIds);
+            SingletonManager<NodeMarkingManager>.Instance.Update(NeedUpdateNodeIds);
+            SingletonManager<SegmentMarkingManager>.Instance.Update(NeedUpdateSegmentIds);
         }
-        public static void UpdateNode(ushort nodeId) => SingletonManager<NodeMarkupManager>.Instance.Update(nodeId);
-        public static void UpdateSegment(ushort segmentId) => SingletonManager<SegmentMarkupManager>.Instance.Update(segmentId);
+        public static void UpdateNode(ushort nodeId) => SingletonManager<NodeMarkingManager>.Instance.Update(nodeId);
+        public static void UpdateSegment(ushort segmentId) => SingletonManager<SegmentMarkingManager>.Instance.Update(segmentId);
         public static void UpdateAll()
         {
-            SingletonManager<NodeMarkupManager>.Instance.UpdateAll();
-            SingletonManager<SegmentMarkupManager>.Instance.UpdateAll();
+            SingletonManager<NodeMarkingManager>.Instance.UpdateAll();
+            SingletonManager<SegmentMarkingManager>.Instance.UpdateAll();
         }
 
         public static void NetInfoInitNodeInfoPostfix_Rail(Node info)
@@ -77,13 +77,13 @@ namespace NodeMarkup.Manager
         }
         public static XElement ToXml()
         {
-            var config = new XElement(nameof(NodeMarkup));
+            var config = new XElement(nameof(NodeMarking));
             config.AddAttr("V", SingletonMod<Mod>.Version);
 
             Errors = 0;
 
-            SingletonManager<NodeMarkupManager>.Instance.ToXml(config);
-            SingletonManager<SegmentMarkupManager>.Instance.ToXml(config);
+            SingletonManager<NodeMarkingManager>.Instance.ToXml(config);
+            SingletonManager<SegmentMarkingManager>.Instance.ToXml(config);
 
             return config;
         }
@@ -93,8 +93,8 @@ namespace NodeMarkup.Manager
 
             var version = GetVersion(config);
 
-            SingletonManager<NodeMarkupManager>.Instance.FromXml(config, map, version, needUpdate);
-            SingletonManager<SegmentMarkupManager>.Instance.FromXml(config, map, version, needUpdate);
+            SingletonManager<NodeMarkingManager>.Instance.FromXml(config, map, version, needUpdate);
+            SingletonManager<SegmentMarkingManager>.Instance.FromXml(config, map, version, needUpdate);
         }
         public static Version GetVersion(XElement config)
         {
@@ -107,37 +107,37 @@ namespace NodeMarkup.Manager
             Errors = -1;
         }
     }
-    public abstract class MarkupManager<TypeMarkup> : IManager, IEnumerable<TypeMarkup>
-        where TypeMarkup : Markup
+    public abstract class MarkingManager<TypeMarking> : IManager, IEnumerable<TypeMarking>
+        where TypeMarking : Marking
     {
-        protected Dictionary<ushort, TypeMarkup> Markups { get; } = new Dictionary<ushort, TypeMarkup>();
-        protected abstract MarkupType Type { get; }
+        protected Dictionary<ushort, TypeMarking> Markings { get; } = new Dictionary<ushort, TypeMarking>();
+        protected abstract MarkingType Type { get; }
         protected abstract string XmlName { get; }
         protected abstract ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map);
 
 
         private static PropManager PropManager => Singleton<PropManager>.instance;
 
-        public bool Exist(ushort id) => Markups.ContainsKey(id);
-        public bool TryGetMarkup(ushort id, out TypeMarkup markup) => Markups.TryGetValue(id, out markup);
-        public TypeMarkup GetOrCreateMarkup(ushort id)
+        public bool Exist(ushort id) => Markings.ContainsKey(id);
+        public bool TryGetMarking(ushort id, out TypeMarking markup) => Markings.TryGetValue(id, out markup);
+        public TypeMarking GetOrCreateMarking(ushort id)
         {
-            if (!Markups.TryGetValue(id, out TypeMarkup markup))
+            if (!Markings.TryGetValue(id, out TypeMarking markup))
             {
-                markup = NewMarkup(id);
-                Markups[id] = markup;
+                markup = NewMarking(id);
+                Markings[id] = markup;
             }
 
             return markup;
         }
-        public TypeMarkup this[ushort id] => GetOrCreateMarkup(id);
-        protected abstract TypeMarkup NewMarkup(ushort id);
+        public TypeMarking this[ushort id] => GetOrCreateMarking(id);
+        protected abstract TypeMarking NewMarking(ushort id);
 
         public void Update(params ushort[] ids)
         {
             foreach (var id in ids)
             {
-                if (Markups.TryGetValue(id, out TypeMarkup markup))
+                if (Markings.TryGetValue(id, out TypeMarking markup))
                     markup.Update();
             }
         }
@@ -146,7 +146,7 @@ namespace NodeMarkup.Manager
             SingletonMod<Mod>.Logger.Debug($"Update all {Type} markings");
 
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var toUpdate = Markups.Keys.ToArray();
+            var toUpdate = Markings.Keys.ToArray();
             Update(toUpdate);
             sw.Stop();
 
@@ -163,7 +163,7 @@ namespace NodeMarkup.Manager
                 if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
                     return;
 
-                if (!TryGetMarkup(id, out TypeMarkup markup))
+                if (!TryGetMarking(id, out TypeMarking markup))
                     return;
 
                 if (markup.NeedRecalculateDrawData)
@@ -180,15 +180,15 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public virtual void Remove(ushort id) => Markups.Remove(id);
+        public virtual void Remove(ushort id) => Markings.Remove(id);
         public void Clear()
         {
-            SingletonMod<Mod>.Logger.Debug($"{typeof(TypeMarkup).Name} {nameof(Clear)}");
-            Markups.Clear();
+            SingletonMod<Mod>.Logger.Debug($"{typeof(TypeMarking).Name} {nameof(Clear)}");
+            Markings.Clear();
         }
         public void ToXml(XElement config)
         {
-            foreach (var markup in Markups.Values.OrderBy(m => m.Id))
+            foreach (var markup in Markings.Values.OrderBy(m => m.Id))
             {
                 try
                 {
@@ -197,7 +197,7 @@ namespace NodeMarkup.Manager
                 catch (Exception error)
                 {
                     SingletonMod<Mod>.Logger.Error($"Could not save {Type} #{markup.Id} markup", error);
-                    MarkupManager.Errors += 1;
+                    MarkingManager.Errors += 1;
                 }
             }
         }
@@ -206,7 +206,7 @@ namespace NodeMarkup.Manager
             var tryGet = MapTryGet(map);
             foreach (var markupConfig in config.Elements(XmlName))
             {
-                var id = markupConfig.GetAttrValue<ushort>(nameof(Markup.Id));
+                var id = markupConfig.GetAttrValue<ushort>(nameof(Marking.Id));
                 if (id == 0)
                     continue;
                 try
@@ -225,56 +225,56 @@ namespace NodeMarkup.Manager
                 catch (NotExistItemException error)
                 {
                     SingletonMod<Mod>.Logger.Error($"Could not load {error.Type} #{error.Id} markup: {error.Type} not exist");
-                    MarkupManager.Errors += 1;
+                    MarkingManager.Errors += 1;
                 }
                 catch (NotExistEnterException error)
                 {
                     SingletonMod<Mod>.Logger.Error($"Could not load {Type} #{id} markup: {error.Type} enter #{error.Id} not exist");
-                    MarkupManager.Errors += 1;
+                    MarkingManager.Errors += 1;
                 }
                 catch (Exception error)
                 {
                     SingletonMod<Mod>.Logger.Error($"Could not load {Type} #{id} markup", error);
-                    MarkupManager.Errors += 1;
+                    MarkingManager.Errors += 1;
                 }
             }
         }
 
-        public IEnumerator<TypeMarkup> GetEnumerator() => Markups.Values.GetEnumerator();
+        public IEnumerator<TypeMarking> GetEnumerator() => Markings.Values.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
-    public class NodeMarkupManager : MarkupManager<NodeMarkup>
+    public class NodeMarkingManager : MarkingManager<NodeMarking>
     {
-        public NodeMarkupManager()
+        public NodeMarkingManager()
         {
-            SingletonMod<Mod>.Logger.Debug("Create node markup manager");
+            SingletonMod<Mod>.Logger.Debug("Create node marking manager");
         }
 
-        protected override NodeMarkup NewMarkup(ushort id) => new NodeMarkup(id);
-        protected override MarkupType Type => MarkupType.Node;
-        protected override string XmlName => NodeMarkup.XmlName;
+        protected override NodeMarking NewMarking(ushort id) => new NodeMarking(id);
+        protected override MarkingType Type => MarkingType.Node;
+        protected override string XmlName => NodeMarking.XmlName;
         protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetNode;
     }
-    public class SegmentMarkupManager : MarkupManager<SegmentMarkup>
+    public class SegmentMarkingManager : MarkingManager<SegmentMarking>
     {
-        public static IntersectionTemplate RemovedMarkup { get; private set; }
-        public SegmentMarkupManager()
+        public static IntersectionTemplate RemovedMarking { get; private set; }
+        public SegmentMarkingManager()
         {
             SingletonMod<Mod>.Logger.Debug("Create segment markup manager");
         }
 
-        protected override SegmentMarkup NewMarkup(ushort id) => new SegmentMarkup(id);
-        protected override MarkupType Type => MarkupType.Segment;
-        protected override string XmlName => SegmentMarkup.XmlName;
+        protected override SegmentMarking NewMarking(ushort id) => new SegmentMarking(id);
+        protected override MarkingType Type => MarkingType.Segment;
+        protected override string XmlName => SegmentMarking.XmlName;
         protected override ObjectsMap.TryGetDelegate<ushort> MapTryGet(ObjectsMap map) => map.TryGetSegment;
 
         public override void Remove(ushort id)
         {
-            if (TryGetMarkup(id, out var markup))
-                RemovedMarkup = new IntersectionTemplate(markup);
+            if (TryGetMarking(id, out var markup))
+                RemovedMarking = new IntersectionTemplate(markup);
             else
-                RemovedMarkup = null;
+                RemovedMarking = null;
 
             base.Remove(id);
         }

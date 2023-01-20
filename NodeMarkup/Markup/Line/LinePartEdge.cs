@@ -10,12 +10,12 @@ namespace NodeMarkup.Manager
     public static class LinePartEdge
     {
         public static string XmlName { get; } = "E";
-        public static bool FromXml(XElement config, MarkupLine mainLine, ObjectsMap map, out ILinePartEdge supportPoint)
+        public static bool FromXml(XElement config, MarkingLine mainLine, ObjectsMap map, out ILinePartEdge supportPoint)
         {
             var type = (SupportType)config.GetAttrValue<int>("T");
             switch (type)
             {
-                case SupportType.EnterPoint when EnterPointEdge.FromXml(config, mainLine.Markup, map, out EnterPointEdge enterPoint):
+                case SupportType.EnterPoint when EnterPointEdge.FromXml(config, mainLine.Marking, map, out EnterPointEdge enterPoint):
                     supportPoint = enterPoint;
                     return true;
                 case SupportType.LinesIntersect when LinesIntersectEdge.FromXml(config, mainLine, map, out LinesIntersectEdge linePoint):
@@ -32,10 +32,10 @@ namespace NodeMarkup.Manager
     }
     public class EnterPointEdge : EnterSupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, Markup markup, ObjectsMap map, out EnterPointEdge enterPoint)
+        public static bool FromXml(XElement config, Marking markup, ObjectsMap map, out EnterPointEdge enterPoint)
         {
-            var pointId = config.GetAttrValue<int>(MarkupPoint.XmlName);
-            if (MarkupPoint.FromId(pointId, markup, map, out MarkupPoint point))
+            var pointId = config.GetAttrValue<int>(MarkingPoint.XmlName);
+            if (MarkingPoint.FromId(pointId, markup, map, out MarkingPoint point))
             {
                 enterPoint = new EnterPointEdge(point);
                 return true;
@@ -49,7 +49,7 @@ namespace NodeMarkup.Manager
 
         public override string XmlSection => LinePartEdge.XmlName;
 
-        public EnterPointEdge(MarkupPoint point) : base(point) { }
+        public EnterPointEdge(MarkingPoint point) : base(point) { }
 
         bool IEquatable<ILinePartEdge>.Equals(ILinePartEdge other) => other is EnterSupportPoint otherEnter && Equals(otherEnter);
 
@@ -58,10 +58,10 @@ namespace NodeMarkup.Manager
 
     public class LinesIntersectEdge : IntersectSupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, MarkupLine mainLine, ObjectsMap map, out LinesIntersectEdge linePoint)
+        public static bool FromXml(XElement config, MarkingLine mainLine, ObjectsMap map, out LinesIntersectEdge linePoint)
         {
-            var lineId = config.GetAttrValue<ulong>(MarkupLine.XmlName);
-            if (mainLine.Markup.TryGetLine(lineId, map, out MarkupLine line))
+            var lineId = config.GetAttrValue<ulong>(MarkingLine.XmlName);
+            if (mainLine.Marking.TryGetLine(lineId, map, out MarkingLine line))
             {
                 linePoint = new LinesIntersectEdge(mainLine, line);
                 return true;
@@ -74,18 +74,18 @@ namespace NodeMarkup.Manager
         }
 
         public override string XmlSection => LinePartEdge.XmlName;
-        public MarkupLine Main => First;
-        public MarkupLine Slave => Second;
+        public MarkingLine Main => First;
+        public MarkingLine Slave => Second;
 
-        public LinesIntersectEdge(MarkupLinePair pair) : base(pair) { }
-        public LinesIntersectEdge(MarkupLine first, MarkupLine second) : base(first, second) { }
+        public LinesIntersectEdge(MarkingLinePair pair) : base(pair) { }
+        public LinesIntersectEdge(MarkingLine first, MarkingLine second) : base(first, second) { }
 
         bool IEquatable<ILinePartEdge>.Equals(ILinePartEdge other) => other is IntersectSupportPoint otherIntersect && Equals(otherIntersect);
 
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            config.AddAttr(MarkupLine.XmlName, Slave.Id);
+            config.AddAttr(MarkingLine.XmlName, Slave.Id);
             return config;
         }
 
@@ -93,9 +93,9 @@ namespace NodeMarkup.Manager
     }
     public class CrosswalkBorderEdge : SupportPoint, ISupportPoint, ILinePartEdge, IEquatable<CrosswalkBorderEdge>
     {
-        public static bool FromXml(XElement config, MarkupLine line, ObjectsMap map, out CrosswalkBorderEdge borderPoint)
+        public static bool FromXml(XElement config, MarkingLine line, ObjectsMap map, out CrosswalkBorderEdge borderPoint)
         {
-            if (line is MarkupCrosswalkLine crosswalkLine)
+            if (line is MarkingCrosswalkLine crosswalkLine)
             {
                 var border = (config.GetAttrValue("B", (int)BorderPosition.Right) == (int)BorderPosition.Left) ^ map.Invert ? BorderPosition.Left : BorderPosition.Right;
                 borderPoint = new CrosswalkBorderEdge(crosswalkLine, border);
@@ -110,20 +110,20 @@ namespace NodeMarkup.Manager
 
         public override string XmlSection => LinePartEdge.XmlName;
         public override SupportType Type => SupportType.CrosswalkBorder;
-        public MarkupCrosswalkLine CrosswalkLine { get; }
+        public MarkingCrosswalkLine CrosswalkLine { get; }
         public MarkupCrosswalk Crosswalk => CrosswalkLine.Crosswalk;
         public BorderPosition Border { get; }
 
-        public CrosswalkBorderEdge(MarkupCrosswalkLine crosswalkLine, BorderPosition border) : base()
+        public CrosswalkBorderEdge(MarkingCrosswalkLine crosswalkLine, BorderPosition border) : base()
         {
             CrosswalkLine = crosswalkLine;
             Border = border;
             Update();
         }
 
-        public override bool GetT(MarkupLine line, out float t)
+        public override bool GetT(MarkingLine line, out float t)
         {
-            if (line is MarkupCrosswalkLine crosswalkLine)
+            if (line is MarkingCrosswalkLine crosswalkLine)
             {
                 t = crosswalkLine.GetT(Border);
                 return true;

@@ -79,7 +79,7 @@ namespace NodeMarkup.Tools
         protected override float BoundsSize => Size;
 
         public bool Invert { get; set; }
-        public EnterData Enter { get; }
+        public EntranceData Enter { get; }
 
         private ITarget<SourceEnter> _target;
 
@@ -96,7 +96,7 @@ namespace NodeMarkup.Tools
         }
         public SourcePoint[] Points { get; }
 
-        public SourceEnter(EnterData enter, int index) : base(index)
+        public SourceEnter(EntranceData enter, int index) : base(index)
         {
             Enter = enter;
             Points = Enumerable.Range(0, Enter.PointCount).Select(i => new SourcePoint(i)).ToArray();
@@ -152,11 +152,11 @@ namespace NodeMarkup.Tools
         public static float Size => 3f;
         protected override float BoundsSize => Size;
 
-        public EnterData Enter { get; }
+        public EntranceData Enter { get; }
 
         public TargetPoint[] Points { get; }
 
-        public TargetEnter(Enter enter, int index) : base(index, enter.Position)
+        public TargetEnter(Entrance enter, int index) : base(index, enter.Position)
         {
             Enter = enter.Data;
             Points = enter.EnterPoints.Select((p, i) => new TargetPoint(p, i)).ToArray();
@@ -187,7 +187,7 @@ namespace NodeMarkup.Tools
     {
         public static float Size => 1.2f;
         protected override float BoundsSize => Size;
-        public TargetPoint(MarkupEnterPoint point, int index) : base(index, point.ZeroPosition) { }
+        public TargetPoint(MarkingEnterPoint point, int index) : base(index, point.ZeroPosition) { }
         protected override Vector3 GetPosition(BaseOrderToolMode toolMode) => ZeroPosition;
 
         public override Vector3 GetSourcePosition(SourcePoint source) => Position;

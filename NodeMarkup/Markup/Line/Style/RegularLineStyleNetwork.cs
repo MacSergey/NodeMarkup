@@ -94,7 +94,7 @@ namespace NodeMarkup.Manager
                 networkTarget.RepeatDistance.Value = RepeatDistance;
             }
         }
-        protected override IStyleData CalculateImpl(MarkupRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
         {
             if (!IsValid)
                 return new MarkupPartGroupData(lod);
@@ -130,7 +130,7 @@ namespace NodeMarkup.Manager
             return new MarkupNetworkData(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, Elevation);
         }
 
-        public override void GetUIComponents(MarkupRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(line, components, parent, isTemplate);
 
