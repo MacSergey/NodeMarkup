@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public class MakeFillerToolMode : NodeMarkupToolMode
+    public class MakeFillerToolMode : IntersectionMarkingToolMode
     {
         public override ToolModeType Type => ToolModeType.MakeFiller;
 
@@ -22,7 +22,7 @@ namespace NodeMarkup.Tools
 
         protected override void Reset(IToolMode prevMode)
         {
-            Contour = new FillerContour(Tool.Markup);
+            Contour = new FillerContour(Tool.Marking);
             GetFillerPoints();
         }
 
@@ -59,7 +59,7 @@ namespace NodeMarkup.Tools
                 if (Contour.Add(Hover))
                 {
                     var style = Tool.GetStyleByModifier<FillerStyle, FillerStyle.FillerType>(NetworkType.All, LineType.All, FillerStyle.FillerType.Stripe);
-                    var filler = Markup.AddFiller(Contour, style, out var lines);
+                    var filler = Marking.AddFiller(Contour, style, out var lines);
 
                     foreach(var line in lines)
                         Panel.AddLine(line);
@@ -112,7 +112,7 @@ namespace NodeMarkup.Tools
             }
             else
             {
-                var bezier = new Line3(Contour.Last.Position, SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _)).GetBezier();
+                var bezier = new Line3(Contour.Last.Position, SingletonTool<IntersectionMarkingTool>.Instance.Ray.GetRayPosition(Marking.Position.y, out _)).GetBezier();
                 bezier.RenderBezier(new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }

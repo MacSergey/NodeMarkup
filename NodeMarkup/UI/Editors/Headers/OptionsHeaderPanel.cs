@@ -7,7 +7,6 @@ using NodeMarkup.Tools;
 using NodeMarkup.UI.Panel;
 using NodeMarkup.Utilities;
 using System;
-using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
@@ -24,14 +23,14 @@ namespace NodeMarkup.UI.Editors
 
         public StyleHeaderPanel()
         {
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.AddTemplateHeaderButton, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, SaveTemplateClick));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.AddTemplateHeaderButton, NodeMarkup.Localize.HeaderPanel_SaveAsTemplate, SaveTemplateClick));
 
-            ApplyTemplate = new HeaderButtonInfo<ApplyTemplateHeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.ApplyTemplateHeaderButton, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
+            ApplyTemplate = new HeaderButtonInfo<ApplyTemplateHeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.ApplyTemplateHeaderButton, NodeMarkup.Localize.HeaderPanel_ApplyTemplate);
             Content.AddButton(ApplyTemplate);
 
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.CopyHeaderButton, NodeMarkup.Localize.HeaderPanel_StyleCopy, CopyClick));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.CopyHeaderButton, NodeMarkup.Localize.HeaderPanel_StyleCopy, CopyClick));
 
-            PasteButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.PasteHeaderButton, NodeMarkup.Localize.HeaderPanel_StylePaste, PasteClick);
+            PasteButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.PasteHeaderButton, NodeMarkup.Localize.HeaderPanel_StylePaste, PasteClick);
             Content.AddButton(PasteButton);
         }
 
@@ -41,7 +40,7 @@ namespace NodeMarkup.UI.Editors
             ApplyTemplate.Button.Init(StyleGroup, onSelectTemplate);
 
             SetPasteEnabled();
-            SingletonTool<NodeMarkupTool>.Instance.OnStyleToBuffer += StyleToBuffer;
+            SingletonTool<IntersectionMarkingTool>.Instance.OnStyleToBuffer += StyleToBuffer;
 
             base.Init(isDeletable: isDeletable);
         }
@@ -51,7 +50,7 @@ namespace NodeMarkup.UI.Editors
             if (group == StyleGroup)
                 SetPasteEnabled();
         }
-        private void SetPasteEnabled() => PasteButton.Enable = SingletonTool<NodeMarkupTool>.Instance.IsStyleInBuffer(StyleGroup);
+        private void SetPasteEnabled() => PasteButton.Enable = SingletonTool<IntersectionMarkingTool>.Instance.IsStyleInBuffer(StyleGroup);
 
         public override void DeInit()
         {
@@ -61,7 +60,7 @@ namespace NodeMarkup.UI.Editors
             OnCopy = null;
             OnPaste = null;
 
-            SingletonTool<NodeMarkupTool>.Instance.OnStyleToBuffer -= StyleToBuffer;
+            SingletonTool<IntersectionMarkingTool>.Instance.OnStyleToBuffer -= StyleToBuffer;
         }
         private void SaveTemplateClick() => OnSaveTemplate?.Invoke();
         private void CopyClick() => OnCopy?.Invoke();
@@ -73,7 +72,7 @@ namespace NodeMarkup.UI.Editors
 
         public CrosswalkHeaderPanel()
         {
-            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.CutHeaderButton, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, CutClick));
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.CutHeaderButton, NodeMarkup.Localize.HeaderPanel_CutLinesByCrosswalk, CutClick));
         }
         public override void DeInit()
         {
@@ -122,19 +121,19 @@ namespace NodeMarkup.UI.Editors
         public TemplateHeaderPanel() => AddButtons();
         protected virtual void AddButtons()
         {
-            Edit = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.EditHeaderButton, NodeMarkup.Localize.HeaderPanel_Edit, EditClick);
+            Edit = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.EditHeaderButton, NodeMarkup.Localize.HeaderPanel_Edit, EditClick);
             Content.AddButton(Edit);
 
-            SaveAsAsset = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.PackageHeaderButton, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, SaveAssetClick);
+            SaveAsAsset = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.PackageHeaderButton, NodeMarkup.Localize.HeaderPanel_SaveAsAsset, SaveAssetClick);
             Content.AddButton(SaveAsAsset);
 
-            Save = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.SaveHeaderButton, NodeMarkup.Localize.HeaderPanel_Save, SaveClick);
+            Save = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.SaveHeaderButton, NodeMarkup.Localize.HeaderPanel_Save, SaveClick);
             Content.AddButton(Save);
 
-            NotSave = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.NotSaveHeaderButton, NodeMarkup.Localize.HeaderPanel_NotSave, NotSaveClick);
+            NotSave = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.NotSaveHeaderButton, NodeMarkup.Localize.HeaderPanel_NotSave, NotSaveClick);
             Content.AddButton(NotSave);
 
-            Discard = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.ClearHeaderButton, NodeMarkup.Localize.HeaderPanel_Discard, DiscardClick);
+            Discard = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.ClearHeaderButton, NodeMarkup.Localize.HeaderPanel_Discard, DiscardClick);
             Content.AddButton(Discard);
         }
 
@@ -188,13 +187,13 @@ namespace NodeMarkup.UI.Editors
 
         protected override void AddButtons()
         {
-            SetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.SetDefaultHeaderButton, NodeMarkup.Localize.HeaderPanel_SetAsDefault, SetAsDefaultClick);
+            SetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.SetDefaultHeaderButton, NodeMarkup.Localize.HeaderPanel_SetAsDefault, SetAsDefaultClick);
             Content.AddButton(SetAsDefaultButton);
 
-            UnsetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.UnsetDefaultHeaderButton, NodeMarkup.Localize.HeaderPanel_UnsetAsDefault, SetAsDefaultClick);
+            UnsetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.UnsetDefaultHeaderButton, NodeMarkup.Localize.HeaderPanel_UnsetAsDefault, SetAsDefaultClick);
             Content.AddButton(UnsetAsDefaultButton);
 
-            Duplicate = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.DuplicateHeaderButton, NodeMarkup.Localize.HeaderPanel_Duplicate, DuplicateClick);
+            Duplicate = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.DuplicateHeaderButton, NodeMarkup.Localize.HeaderPanel_Duplicate, DuplicateClick);
             Content.AddButton(Duplicate);
 
             base.AddButtons();
@@ -229,13 +228,13 @@ namespace NodeMarkup.UI.Editors
 
         protected override void AddButtons()
         {
-            Apply = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.ApplyHeaderButton, NodeMarkup.Localize.PresetEditor_ApplyPreset, ApplyClick);
+            Apply = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.ApplyHeaderButton, NodeMarkup.Localize.PresetEditor_ApplyPreset, ApplyClick);
             Content.AddButton(Apply);
 
-            Link = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.LinkHeaderButton, NodeMarkup.Localize.PresetEditor_LinkPreset, LinkClick);
+            Link = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.LinkHeaderButton, NodeMarkup.Localize.PresetEditor_LinkPreset, LinkClick);
             Content.AddButton(Link);
 
-            Unlink = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, NodeMarkupTextures.Atlas, NodeMarkupTextures.UnlinkHeaderButton, NodeMarkup.Localize.PresetEditor_UnlinkPreset, LinkClick);
+            Unlink = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.UnlinkHeaderButton, NodeMarkup.Localize.PresetEditor_UnlinkPreset, LinkClick);
             Content.AddButton(Unlink);
 
             base.AddButtons();
@@ -252,9 +251,9 @@ namespace NodeMarkup.UI.Editors
             Apply.Visible = EditMode == EditMode.Default;
             var canLink = false;
             var canUnlink = false;
-            if(EditMode == EditMode.Default && Template.Enters.Length == 2 && Editor.Markup.Type == MarkingType.Segment)
+            if(EditMode == EditMode.Default && Template.Enters.Length == 2 && Editor.Marking.Type == MarkingType.Segment)
             {
-                SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Markup.Id.GetSegment().Info.name, out var presetId);
+                SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Marking.Id.GetSegment().Info.name, out var presetId);
 
                 if (presetId == Template.Id)
                     canUnlink = true;

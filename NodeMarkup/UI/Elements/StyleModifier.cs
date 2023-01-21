@@ -23,7 +23,7 @@ namespace NodeMarkup.UI
 
         protected void Add(Style.StyleType style, string label = null)
         {
-            var modifier = AddKeymapping((StyleModifier)NodeMarkupTool.StylesModifier[style].value, label ?? style.Description());
+            var modifier = AddKeymapping((StyleModifier)IntersectionMarkingTool.StylesModifier[style].value, label ?? style.Description());
             Modifiers[modifier] = style;
         }
         public ModifierDropDown AddKeymapping(StyleModifier value, string description)

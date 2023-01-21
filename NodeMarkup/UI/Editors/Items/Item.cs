@@ -41,8 +41,8 @@ namespace NodeMarkup.UI.Editors
             AddLable();
 
             clipChildren = true;
-            atlas = NodeMarkupTextures.Atlas;
-            normalBgSprite = NodeMarkupTextures.ListItemBackground;
+            atlas = IntersectionMarkingToolTextures.Atlas;
+            normalBgSprite = IntersectionMarkingToolTextures.ListItemBackground;
             height = 25;
         }
 
@@ -226,7 +226,7 @@ namespace NodeMarkup.UI.Editors
         public StyleIcon()
         {
             Thumbnail = AddUIComponent<CustomUIButton>();
-            Thumbnail.atlas = NodeMarkupTextures.Atlas;
+            Thumbnail.atlas = IntersectionMarkingToolTextures.Atlas;
             Thumbnail.relativePosition = new Vector3(0, 0);
             Thumbnail.isInteractive = false;
         }

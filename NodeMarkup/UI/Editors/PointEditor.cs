@@ -25,7 +25,7 @@ namespace NodeMarkup.UI.Editors
         private BoolListPropertyPanel Split { get; set; }
         private FloatPropertyPanel Shift { get; set; }
 
-        protected override IEnumerable<MarkingEnterPoint> GetObjects() => Markup.Enters.SelectMany(e => e.EnterPoints);
+        protected override IEnumerable<MarkingEnterPoint> GetObjects() => Marking.Enters.SelectMany(e => e.EnterPoints);
         protected override void OnObjectSelect(MarkingEnterPoint point)
         {
             base.OnObjectSelect(point);

@@ -198,8 +198,8 @@ namespace NodeMarkup.UI
 
         protected override void AddSelectorItems()
         {
-            AddItem(StaticIndex, NodeMarkup.Localize.StyleOption_ObjectStatic, NodeMarkupTextures.Atlas, NodeMarkupTextures.SingleButtonIcons);
-            AddItem(RangeIndex, NodeMarkup.Localize.StyleOption_ObjectRange, NodeMarkupTextures.Atlas, NodeMarkupTextures.RangeButtonIcons);
+            AddItem(StaticIndex, NodeMarkup.Localize.StyleOption_ObjectStatic, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.SingleButtonIcons);
+            AddItem(RangeIndex, NodeMarkup.Localize.StyleOption_ObjectRange, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.RangeButtonIcons);
         }
 
         public override void DeInit()
@@ -326,7 +326,7 @@ namespace NodeMarkup.UI
 
         protected override void AddSelectorItems()
         {
-            AddItem(AutoIndex, NodeMarkup.Localize.StyleOption_ObjectAuto, NodeMarkupTextures.Atlas, NodeMarkupTextures.AutoButtonIcons);
+            AddItem(AutoIndex, NodeMarkup.Localize.StyleOption_ObjectAuto, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.AutoButtonIcons);
             base.AddSelectorItems();
         }
 
@@ -454,8 +454,8 @@ namespace NodeMarkup.UI
 
         protected override void AddSelectorItems()
         {
-            AddItem(AutoIndex, NodeMarkup.Localize.StyleOption_ObjectAuto, NodeMarkupTextures.Atlas, NodeMarkupTextures.AutoButtonIcons);
-            AddItem(StaticIndex, NodeMarkup.Localize.StyleOption_ObjectStatic, NodeMarkupTextures.Atlas, NodeMarkupTextures.SingleButtonIcons);
+            AddItem(AutoIndex, NodeMarkup.Localize.StyleOption_ObjectAuto, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.AutoButtonIcons);
+            AddItem(StaticIndex, NodeMarkup.Localize.StyleOption_ObjectStatic, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.SingleButtonIcons);
         }
 
         public override void DeInit()

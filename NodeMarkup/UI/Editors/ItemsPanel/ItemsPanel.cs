@@ -40,7 +40,7 @@ namespace NodeMarkup.UI.Editors
 
         #region PROPERTIES
 
-        protected NodeMarkupTool Tool => SingletonTool<NodeMarkupTool>.Instance;
+        protected IntersectionMarkingTool Tool => SingletonTool<IntersectionMarkingTool>.Instance;
         protected Editor Editor { get; private set; }
 
         private ItemType _selectItem;

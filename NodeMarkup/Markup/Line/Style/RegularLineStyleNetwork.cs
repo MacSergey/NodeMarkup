@@ -18,7 +18,7 @@ namespace NodeMarkup.Manager
     {
         public static bool IsValidNetwork(NetInfo info) => info != null && info.m_segments.Length != 0 && info.m_netAI is DecorationWallAI;
         public override StyleType Type => StyleType.LineNetwork;
-        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
+        public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
 
         public override bool CanOverlap => true;
         private bool IsValid => IsValidNetwork(Prefab.Value);
@@ -94,10 +94,10 @@ namespace NodeMarkup.Manager
                 networkTarget.RepeatDistance.Value = RepeatDistance;
             }
         }
-        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod)
         {
             if (!IsValid)
-                return new MarkupPartGroupData(lod);
+                return new MarkingPartGroupData(lod);
 
             var shift = Shift.Value;
             if (shift != 0)
@@ -107,7 +107,7 @@ namespace NodeMarkup.Manager
 
             var length = trajectory.Length;
             if (OffsetBefore + OffsetAfter >= length)
-                return new MarkupPartGroupData(lod);
+                return new MarkingPartGroupData(lod);
 
             var startT = OffsetBefore == 0f ? 0f : trajectory.Travel(OffsetBefore);
             var endT = OffsetAfter == 0f ? 1f : 1f - trajectory.Invert().Travel(OffsetAfter);
@@ -127,7 +127,7 @@ namespace NodeMarkup.Manager
                     trajectories[i] = trajectory.Cut(1f / count * i, 1f / count * (i + 1));
             }
 
-            return new MarkupNetworkData(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, Elevation);
+            return new MarkingNetworkData(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, Elevation);
         }
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)

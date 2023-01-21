@@ -2,13 +2,10 @@
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
-using static NodeMarkup.Manager.RegularLineStyle;
 
 namespace NodeMarkup.Manager
 {
@@ -69,13 +66,13 @@ namespace NodeMarkup.Manager
 
         public LineStyle(Color32 color, float width) : base(color, width) { }
 
-        public abstract IStyleData Calculate(MarkingLine line, ITrajectory trajectory, MarkupLOD lod);
+        public abstract IStyleData Calculate(MarkingLine line, ITrajectory trajectory, MarkingLOD lod);
 
         protected virtual float LodLength => 0.5f;
         protected virtual float LodWidth => 0.15f;
         public virtual bool CanOverlap => false;
 
-        protected bool CheckDashedLod(MarkupLOD lod, float width, float length) => lod != MarkupLOD.LOD1 || width > LodWidth || length > LodLength;
+        protected bool CheckDashedLod(MarkingLOD lod, float width, float length) => lod != MarkingLOD.LOD1 || width > LodWidth || length > LodLength;
 
         protected FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, bool canCollapse)
         {
@@ -300,14 +297,14 @@ namespace NodeMarkup.Manager
 
         public RegularLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override IStyleData Calculate(MarkingLine line, ITrajectory trajectory, MarkupLOD lod)
+        public sealed override IStyleData Calculate(MarkingLine line, ITrajectory trajectory, MarkingLOD lod)
         {
             if ((SupportLOD & lod) != 0 && line is MarkingRegularLine regularLine)
                 return CalculateImpl(regularLine, trajectory, lod);
             else
-                return new MarkupPartGroupData(lod);
+                return new MarkingPartGroupData(lod);
         }
-        protected abstract IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod);
+        protected abstract IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod);
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
@@ -434,14 +431,14 @@ namespace NodeMarkup.Manager
 
         public StopLineStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override IStyleData Calculate(MarkingLine line, ITrajectory trajectory, MarkupLOD lod)
+        public sealed override IStyleData Calculate(MarkingLine line, ITrajectory trajectory, MarkingLOD lod)
         {
             if ((SupportLOD & lod) != 0 && line is MarkingStopLine stopLine)
                 return CalculateImpl(stopLine, trajectory, lod);
             else
-                return new MarkupPartGroupData(lod);
+                return new MarkingPartGroupData(lod);
         }
-        protected abstract IStyleData CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkupLOD lod);
+        protected abstract IStyleData CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkingLOD lod);
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {

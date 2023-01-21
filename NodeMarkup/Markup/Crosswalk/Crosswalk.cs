@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public class MarkupCrosswalk : IStyleItem, IToXml, ISupport
+    public class MarkingCrosswalk : IStyleItem, IToXml, ISupport
     {
         #region PROPERTIES
 
@@ -43,7 +43,7 @@ namespace NodeMarkup.Manager
 
         #endregion
 
-        public MarkupCrosswalk(Marking marking, MarkingCrosswalkLine line, CrosswalkStyle style, MarkingRegularLine rightBorder = null, MarkingRegularLine leftBorder = null)
+        public MarkingCrosswalk(Marking marking, MarkingCrosswalkLine line, CrosswalkStyle style, MarkingRegularLine rightBorder = null, MarkingRegularLine leftBorder = null)
         {
             Marking = marking;
             CrosswalkLine = line;
@@ -82,7 +82,7 @@ namespace NodeMarkup.Manager
             Mod.Logger.Debug($"Recalculate crosswalk {this}");
 #endif
             StyleData.Clear();
-            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+            foreach (var lod in EnumExtension.GetEnumValues<MarkingLOD>())
             {
                 StyleData.Add(Style.Value.Calculate(this, lod));
             }
@@ -215,10 +215,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public static bool FromXml(XElement config, Marking markup, ObjectsMap map, out MarkupCrosswalk crosswalk)
+        public static bool FromXml(XElement config, Marking marking, ObjectsMap map, out MarkingCrosswalk crosswalk)
         {
             var lineId = config.GetAttrValue<ulong>(MarkingLine.XmlName);
-            if (markup.TryGetLine(lineId, map, out MarkingCrosswalkLine line))
+            if (marking.TryGetLine(lineId, map, out MarkingCrosswalkLine line))
             {
                 crosswalk = line.Crosswalk;
                 crosswalk.FromXml(config, map);

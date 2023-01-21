@@ -34,9 +34,9 @@ namespace NodeMarkup
         protected override ObjectsMap CreateMap(bool isSimple) => new ObjectsMap(isSimple: isSimple);
         protected override XElement GetConfig(NetInfo prefab, out ushort segmentId, out ushort startNodeId, out ushort endNodeId)
         {
-            foreach (var markup in SingletonManager<SegmentMarkingManager>.Instance)
+            foreach (var marking in SingletonManager<SegmentMarkingManager>.Instance)
             {
-                segmentId = markup.Id;
+                segmentId = marking.Id;
                 ref var segment = ref segmentId.GetSegment();
                 if (segment.Info == prefab)
                 {
@@ -44,7 +44,7 @@ namespace NodeMarkup
                     endNodeId = segment.m_endNode;
                     var config = new XElement(nameof(NodeMarkup));
                     config.AddAttr("V", SingletonMod<Mod>.Version);
-                    config.Add(markup.ToXml());
+                    config.Add(marking.ToXml());
                     return config;
                 }
             }
@@ -143,8 +143,8 @@ namespace NodeMarkup
                     map.AddNode(assetData.StartNodeId, startNodeId);
                     map.AddNode(assetData.EndNodeId, endNodeId);
 
-                    var markup = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
-                    markup.FromXml(version, config, map);
+                    var marking = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
+                    marking.FromXml(version, config, map);
                 }
             }
         }

@@ -226,14 +226,14 @@ namespace NodeMarkup.Manager
 
         private IntersectionTemplate() : base() { }
 
-        public IntersectionTemplate(Marking markup) : this($"Intersection #{markup.Id}", markup) { }
-        public IntersectionTemplate(string name, Marking markup) : base(name)
+        public IntersectionTemplate(Marking marking) : this($"Intersection #{marking.Id}", marking) { }
+        public IntersectionTemplate(string name, Marking marking) : base(name)
         {
-            Data = markup.ToXml();
-            Enters = markup.Enters.Select(e => e.Data).ToArray();
-            Lines = markup.LinesCount;
-            Crosswalks = markup.CrosswalksCount;
-            Fillers = markup.FillersCount;
+            Data = marking.ToXml();
+            Enters = marking.Enters.Select(e => e.Data).ToArray();
+            Lines = marking.LinesCount;
+            Crosswalks = marking.CrosswalksCount;
+            Fillers = marking.FillersCount;
         }
 
         public static bool FromXml(XElement config, out IntersectionTemplate template)

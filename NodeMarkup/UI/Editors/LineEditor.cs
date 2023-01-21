@@ -53,7 +53,7 @@ namespace NodeMarkup.UI.Editors
             PartEdgeToolMode.Init(this);
         }
 
-        protected override IEnumerable<MarkingLine> GetObjects() => Markup.Lines;
+        protected override IEnumerable<MarkingLine> GetObjects() => Marking.Lines;
         protected override void OnObjectSelect(MarkingLine editObject)
         {
             ContentPanel.StopLayout();
@@ -74,14 +74,14 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectDelete(MarkingLine line)
         {
-            var fillers = Markup.GetLineFillers(line).ToArray();
+            var fillers = Marking.GetLineFillers(line).ToArray();
 
             if (line is MarkingCrosswalkLine crosswalkLine)
                 Panel.DeleteCrosswalk(crosswalkLine.Crosswalk);
             foreach (var filler in fillers)
                 Panel.DeleteFiller(filler);
 
-            Markup.RemoveLine(line);
+            Marking.RemoveLine(line);
 
             base.OnObjectDelete(line);
         }
@@ -157,7 +157,7 @@ namespace NodeMarkup.UI.Editors
                 AddRulePanel(rule);
         }
 
-        private RulePanel AddRulePanel(MarkupLineRawRule rule)
+        private RulePanel AddRulePanel(MarkingLineRawRule rule)
         {
             var rulePanel = ComponentPool.Get<RulePanel>(ContentPanel.Content);
             rulePanel.Init(this, rule);
@@ -243,7 +243,7 @@ namespace NodeMarkup.UI.Editors
             {
                 var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
-                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{NodeMarkupMessageBox.CantUndone}";
+                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{IntersectionMarkingToolMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Delete;
             }
             else
@@ -251,7 +251,7 @@ namespace NodeMarkup.UI.Editors
 
             bool Delete()
             {
-                regularLine.RemoveRule(rulePanel.Rule as MarkupLineRawRule<RegularLineStyle>);
+                regularLine.RemoveRule(rulePanel.Rule as MarkingLineRawRule<RegularLineStyle>);
                 RemoveRulePanel(rulePanel);
                 RefreshEditor();
                 return true;

@@ -28,18 +28,18 @@ namespace NodeMarkup.Manager
                 line3DTarget.Elevation.Value = Elevation;
         }
 
-        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod)
         {
             if (trajectory is CombinedTrajectory combined)
             {
                 var data = new IStyleData[combined.Count];
                 for(var i = 0; i < data.Length; i += 1)
-                    data[i] = new MarkupLineMeshData(lod, combined[i], Width, Elevation, MaterialType.Pavement);
+                    data[i] = new MarkingLineMeshData(lod, combined[i], Width, Elevation, MaterialType.Pavement);
 
-                return new RenderGroupData(lod, MarkupLODType.Mesh, data);
+                return new RenderGroupData(lod, MarkingLODType.Mesh, data);
             }
             else
-                return new MarkupLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
+                return new MarkingLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
         }
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
@@ -65,7 +65,7 @@ namespace NodeMarkup.Manager
     public class PavementLineStyle : RegularLine3DStyle
     {
         public override StyleType Type { get; } = StyleType.LinePavement;
-        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
+        public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
         protected override MaterialType MaterialType => MaterialType.Pavement;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);

@@ -27,7 +27,7 @@ namespace NodeMarkup.Manager
     public interface IUpdatePoints : IUpdate<MarkingPoint> { }
     public interface IUpdateLines : IUpdate<MarkingLine> { }
     public interface IUpdateFillers : IUpdate<MarkingFiller> { }
-    public interface IUpdateCrosswalks : IUpdate<MarkupCrosswalk> { }
+    public interface IUpdateCrosswalks : IUpdate<MarkingCrosswalk> { }
 
     public interface IItem : IUpdate, IDeletable, IOverlay { }
     public interface IStyleItem : IItem
@@ -38,7 +38,7 @@ namespace NodeMarkup.Manager
     public interface IStyleData
     {
         IEnumerable<IDrawData> GetDrawData();
-        MarkupLOD LOD { get; }
-        MarkupLODType LODType { get; }
+        MarkingLOD LOD { get; }
+        MarkingLODType LODType { get; }
     }
 }

@@ -122,7 +122,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public override void Update() => Init(LinePair.Markup.GetIntersect(LinePair).Position);
+        public override void Update() => Init(LinePair.Marking.GetIntersect(LinePair).Position);
 
         bool IEquatable<ISupportPoint>.Equals(ISupportPoint other) => other is IntersectSupportPoint otherIntersect && Equals(otherIntersect);
         public bool Equals(IntersectSupportPoint other) => other.LinePair == LinePair;

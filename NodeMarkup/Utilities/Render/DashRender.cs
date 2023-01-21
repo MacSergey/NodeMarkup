@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Utilities
 {
-    public class MarkupPartData
+    public class MarkingPartData
     {
         public Material Material { get; set; }
         public Vector3 Position { get; set; }
@@ -19,7 +19,7 @@ namespace NodeMarkup.Utilities
         public float Width { get; set; }
         public Color32 Color { get; set; }
 
-        public MarkupPartData(Vector3 position, float angle, float length, float width, Color32 color, Material material)
+        public MarkingPartData(Vector3 position, float angle, float length, float width, Color32 color, Material material)
         {
             Position = position;
             Angle = angle;
@@ -28,42 +28,42 @@ namespace NodeMarkup.Utilities
             Color = color;
             Material = material;
         }
-        public MarkupPartData(Vector3 start, Vector3 end, float angle, float length, float width, Color32 color, Material material)
+        public MarkingPartData(Vector3 start, Vector3 end, float angle, float length, float width, Color32 color, Material material)
             : this((start + end) / 2, angle, length, width, color, material) { }
 
-        public MarkupPartData(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color32 color, Material material)
+        public MarkingPartData(Vector3 start, Vector3 end, Vector3 dir, float length, float width, Color32 color, Material material)
             : this(start, end, dir.AbsoluteAngle(), length, width, color, material) { }
 
-        public MarkupPartData(Vector3 start, Vector3 end, Vector3 dir, float width, Color32 color, Material material)
+        public MarkingPartData(Vector3 start, Vector3 end, Vector3 dir, float width, Color32 color, Material material)
             : this(start, end, dir, (end - start).magnitude, width, color, material) { }
 
-        public MarkupPartData(Vector3 start, Vector3 end, float width, Color32 color, Material material)
+        public MarkingPartData(Vector3 start, Vector3 end, float width, Color32 color, Material material)
             : this(start, end, end - start, (end - start).magnitude, width, color, material) { }
     }
-    public class MarkupPartGroupData : IStyleData, IEnumerable<MarkupPartData>
+    public class MarkingPartGroupData : IStyleData, IEnumerable<MarkingPartData>
     {
-        private List<MarkupPartData> Dashes { get; }
-        public MarkupLOD LOD { get; }
-        public MarkupLODType LODType => MarkupLODType.Dash;
+        private List<MarkingPartData> Dashes { get; }
+        public MarkingLOD LOD { get; }
+        public MarkingLODType LODType => MarkingLODType.Dash;
 
-        public MarkupPartGroupData(MarkupLOD lod)
+        public MarkingPartGroupData(MarkingLOD lod)
         {
             LOD = lod;
-            Dashes = new List<MarkupPartData>();
+            Dashes = new List<MarkingPartData>();
         }
-        public MarkupPartGroupData(MarkupLOD lod, IEnumerable<MarkupPartData> dashes)
+        public MarkingPartGroupData(MarkingLOD lod, IEnumerable<MarkingPartData> dashes)
         {
             LOD = lod;
             Dashes = dashes.ToList();
         }
 
-        public IEnumerator<MarkupPartData> GetEnumerator() => Dashes.GetEnumerator();
+        public IEnumerator<MarkingPartData> GetEnumerator() => Dashes.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public IEnumerable<IDrawData> GetDrawData() => MarkupPartsBatchData.FromDashes(this);
+        public IEnumerable<IDrawData> GetDrawData() => MarkingPartsBatchData.FromDashes(this);
     }
 
-    public class MarkupPartsBatchData : IDrawData
+    public class MarkingPartsBatchData : IDrawData
     {
         public static float MeshHeight => 5f;
 
@@ -75,7 +75,7 @@ namespace NodeMarkup.Utilities
         public Vector4[] Colors { get; }
         public Vector4 Size { get; }
 
-        public MarkupPartsBatchData(MarkupPartData[] dashes, int count, Vector3 size, Material material)
+        public MarkingPartsBatchData(MarkingPartData[] dashes, int count, Vector3 size, Material material)
         {
             Material = material;
             Count = count;
@@ -96,7 +96,7 @@ namespace NodeMarkup.Utilities
             Mesh = RenderHelper.CreateMesh(Count, size);
         }
 
-        public static IEnumerable<IDrawData> FromDashes(IEnumerable<MarkupPartData> dashes)
+        public static IEnumerable<IDrawData> FromDashes(IEnumerable<MarkingPartData> dashes)
         {
             var materialGroups = dashes.GroupBy(d => d.Material);
 
@@ -108,7 +108,7 @@ namespace NodeMarkup.Utilities
                 {
                     var groupEnumerator = sizeGroup.GetEnumerator();
 
-                    var buffer = new MarkupPartData[16];
+                    var buffer = new MarkingPartData[16];
                     var count = 0;
 
                     bool isEnd = groupEnumerator.MoveNext();
@@ -119,7 +119,7 @@ namespace NodeMarkup.Utilities
                         isEnd = !groupEnumerator.MoveNext();
                         if (isEnd || count == 16)
                         {
-                            var batch = new MarkupPartsBatchData(buffer, count, sizeGroup.Key, materialGroup.Key);
+                            var batch = new MarkingPartsBatchData(buffer, count, sizeGroup.Key, materialGroup.Key);
                             yield return batch;
                             count = 0;
                         }

@@ -6,18 +6,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 namespace NodeMarkup.Utilities
 {
-    public abstract class BaseMarkupMeshData : IStyleData, IDrawData
+    public abstract class BaseMarkingMeshData : IStyleData, IDrawData
     {
-        public MarkupLOD LOD { get; }
-        public abstract MarkupLODType LODType { get; }
+        public MarkingLOD LOD { get; }
+        public abstract MarkingLODType LODType { get; }
         protected Vector4 Scale { get; }
 
-        public BaseMarkupMeshData(MarkupLOD lod, float meshWidth, float meshLength)
+        public BaseMarkingMeshData(MarkingLOD lod, float meshWidth, float meshLength)
         {
             Scale = new Vector4(1f / meshWidth, 1f / meshLength, 1f, 1f);
             LOD = lod;
@@ -51,7 +50,7 @@ namespace NodeMarkup.Utilities
             right = NetSegment.CalculateControlMatrix(bezierR.a, bezierR.b, bezierR.c, bezierR.d, bezierL.a, bezierL.b, bezierL.c, bezierL.d, position, 0.05f);
         }
     }
-    public abstract class MarkupMeshData : BaseMarkupMeshData
+    public abstract class MarkingMeshData : BaseMarkingMeshData
     {
         protected virtual bool CastShadow => true;
         protected virtual bool ReceiveShadow => true;
@@ -63,7 +62,7 @@ namespace NodeMarkup.Utilities
         protected Mesh[] Meshes { get; private set; }
         protected MaterialType[] MaterialTypes { get; private set; }
 
-        public MarkupMeshData(MarkupLOD lod, float meshWidth, float meshLength) : base(lod, meshWidth, meshLength) { }
+        public MarkingMeshData(MarkingLOD lod, float meshWidth, float meshLength) : base(lod, meshWidth, meshLength) { }
 
         protected void Init(Vector3 position, Matrix4x4 left, Matrix4x4 right, params MaterialType[] materialTypes)
         {
@@ -108,7 +107,7 @@ namespace NodeMarkup.Utilities
                 yield return (i >= from && i < from + count ? -1 : 1) * normals[i];
         }
     }
-    public class MarkupFillerMeshData : MarkupMeshData
+    public class MarkingFillerMeshData : MarkingMeshData
     {
         public enum MeshType
         {
@@ -151,13 +150,13 @@ namespace NodeMarkup.Utilities
             public int[] _triangles;
         }
 
-        public override MarkupLODType LODType => MarkupLODType.Mesh;
+        public override MarkingLODType LODType => MarkingLODType.Mesh;
         protected override bool ReceiveShadow => false;
         private static float MeshHalfWidth => 20f;
         private static float MeshHalfLength => 20f;
         private RenderData[] Data { get; set; }
 
-        public MarkupFillerMeshData(MarkupLOD lod, float elevation, params RawData[] datas) : base(lod, MeshHalfWidth * 2f, MeshHalfLength * 2f)
+        public MarkingFillerMeshData(MarkingLOD lod, float elevation, params RawData[] datas) : base(lod, MeshHalfWidth * 2f, MeshHalfLength * 2f)
         {
             Data = new RenderData[datas.Length];
 
@@ -260,7 +259,7 @@ namespace NodeMarkup.Utilities
             {
                 var mesh = new Mesh
                 {
-                    name = "MarkupStyleFillerMesh",
+                    name = "MarkingStyleFillerMesh",
                     vertices = data._vertixes,
                     triangles = data._triangles,
                     bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
@@ -275,7 +274,7 @@ namespace NodeMarkup.Utilities
             }
         }
     }
-    public class MarkupLineMeshData : MarkupMeshData
+    public class MarkingLineMeshData : MarkingMeshData
     {
         private static int Split => 22;
         private static float HalfWidth => 10f;
@@ -283,9 +282,9 @@ namespace NodeMarkup.Utilities
         private static float Height => 2f;
         private static Mesh LineMesh { get; set; }
 
-        public override MarkupLODType LODType => MarkupLODType.Mesh;
+        public override MarkingLODType LODType => MarkingLODType.Mesh;
 
-        public MarkupLineMeshData(MarkupLOD lod, ITrajectory trajectory, float width, float elevation, MaterialType materialType) : base(lod, HalfWidth * 2f, HalfLength * 2f)
+        public MarkingLineMeshData(MarkingLOD lod, ITrajectory trajectory, float width, float elevation, MaterialType materialType) : base(lod, HalfWidth * 2f, HalfLength * 2f)
         {
             var position = (trajectory.StartPosition + trajectory.EndPosition) / 2;
             CalculateMatrix(trajectory, width, position, out Matrix4x4 left, out Matrix4x4 right);
@@ -299,7 +298,7 @@ namespace NodeMarkup.Utilities
             {
                 var mesh = new Mesh()
                 {
-                    name = nameof(MarkupLineMeshData),
+                    name = nameof(MarkingLineMeshData),
                     vertices = GetVertices().ToArray(),
                     triangles = GetTriangles().ToArray(),
                     bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),

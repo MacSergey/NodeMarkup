@@ -119,16 +119,16 @@ namespace NodeMarkup.Manager
         private static PropManager PropManager => Singleton<PropManager>.instance;
 
         public bool Exist(ushort id) => Markings.ContainsKey(id);
-        public bool TryGetMarking(ushort id, out TypeMarking markup) => Markings.TryGetValue(id, out markup);
+        public bool TryGetMarking(ushort id, out TypeMarking marking) => Markings.TryGetValue(id, out marking);
         public TypeMarking GetOrCreateMarking(ushort id)
         {
-            if (!Markings.TryGetValue(id, out TypeMarking markup))
+            if (!Markings.TryGetValue(id, out TypeMarking marking))
             {
-                markup = NewMarking(id);
-                Markings[id] = markup;
+                marking = NewMarking(id);
+                Markings[id] = marking;
             }
 
-            return markup;
+            return marking;
         }
         public TypeMarking this[ushort id] => GetOrCreateMarking(id);
         protected abstract TypeMarking NewMarking(ushort id);
@@ -137,8 +137,8 @@ namespace NodeMarkup.Manager
         {
             foreach (var id in ids)
             {
-                if (Markings.TryGetValue(id, out TypeMarking markup))
-                    markup.Update();
+                if (Markings.TryGetValue(id, out TypeMarking marking))
+                    marking.Update();
             }
         }
         public void UpdateAll()
@@ -163,15 +163,15 @@ namespace NodeMarkup.Manager
                 if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
                     return;
 
-                if (!TryGetMarking(id, out TypeMarking markup))
+                if (!TryGetMarking(id, out TypeMarking marking))
                     return;
 
-                if (markup.NeedRecalculateDrawData)
-                    markup.RecalculateDrawData();
+                if (marking.NeedRecalculateDrawData)
+                    marking.RecalculateDrawData();
 
                 bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
 
-                foreach (var drawData in markup.DrawData.Values)
+                foreach (var drawData in marking.DrawData.Values)
                     drawData.Render(cameraInfo, data, infoView);
             }
             catch (Exception error)
@@ -188,15 +188,15 @@ namespace NodeMarkup.Manager
         }
         public void ToXml(XElement config)
         {
-            foreach (var markup in Markings.Values.OrderBy(m => m.Id))
+            foreach (var marking in Markings.Values.OrderBy(m => m.Id))
             {
                 try
                 {
-                    config.Add(markup.ToXml());
+                    config.Add(marking.ToXml());
                 }
                 catch (Exception error)
                 {
-                    SingletonMod<Mod>.Logger.Error($"Could not save {Type} #{markup.Id} markup", error);
+                    SingletonMod<Mod>.Logger.Error($"Could not save {Type} #{marking.Id} markup", error);
                     MarkingManager.Errors += 1;
                 }
             }
@@ -204,9 +204,9 @@ namespace NodeMarkup.Manager
         public void FromXml(XElement config, ObjectsMap map, Version version, bool needUpdate)
         {
             var tryGet = MapTryGet(map);
-            foreach (var markupConfig in config.Elements(XmlName))
+            foreach (var markingConfig in config.Elements(XmlName))
             {
-                var id = markupConfig.GetAttrValue<ushort>(nameof(Marking.Id));
+                var id = markingConfig.GetAttrValue<ushort>(nameof(Marking.Id));
                 if (id == 0)
                     continue;
                 try
@@ -218,23 +218,23 @@ namespace NodeMarkup.Manager
                             break;
                     }
 
-                    var markup = this[id];
+                    var marking = this[id];
 
-                    markup.FromXml(version, markupConfig, map, needUpdate);
+                    marking.FromXml(version, markingConfig, map, needUpdate);
                 }
                 catch (NotExistItemException error)
                 {
-                    SingletonMod<Mod>.Logger.Error($"Could not load {error.Type} #{error.Id} markup: {error.Type} not exist");
+                    SingletonMod<Mod>.Logger.Error($"Could not load {error.Type} #{error.Id} marking: {error.Type} not exist");
                     MarkingManager.Errors += 1;
                 }
                 catch (NotExistEnterException error)
                 {
-                    SingletonMod<Mod>.Logger.Error($"Could not load {Type} #{id} markup: {error.Type} enter #{error.Id} not exist");
+                    SingletonMod<Mod>.Logger.Error($"Could not load {Type} #{id} marking: {error.Type} enter #{error.Id} not exist");
                     MarkingManager.Errors += 1;
                 }
                 catch (Exception error)
                 {
-                    SingletonMod<Mod>.Logger.Error($"Could not load {Type} #{id} markup", error);
+                    SingletonMod<Mod>.Logger.Error($"Could not load {Type} #{id} marking", error);
                     MarkingManager.Errors += 1;
                 }
             }
@@ -261,7 +261,7 @@ namespace NodeMarkup.Manager
         public static IntersectionTemplate RemovedMarking { get; private set; }
         public SegmentMarkingManager()
         {
-            SingletonMod<Mod>.Logger.Debug("Create segment markup manager");
+            SingletonMod<Mod>.Logger.Debug("Create segment marking manager");
         }
 
         protected override SegmentMarking NewMarking(ushort id) => new SegmentMarking(id);
@@ -271,8 +271,8 @@ namespace NodeMarkup.Manager
 
         public override void Remove(ushort id)
         {
-            if (TryGetMarking(id, out var markup))
-                RemovedMarking = new IntersectionTemplate(markup);
+            if (TryGetMarking(id, out var marking))
+                RemovedMarking = new IntersectionTemplate(marking);
             else
                 RemovedMarking = null;
 

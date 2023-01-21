@@ -8,12 +8,12 @@ namespace NodeMarkup.Utilities
 {
     public static class VersionMigration
     {
-        public static ObjectsMap Befor1_2(Manager.NodeMarking markup, ObjectsMap map)
+        public static ObjectsMap Befor1_2(NodeMarking marking, ObjectsMap map)
         {
             if (map == null)
                 map = new ObjectsMap();
 
-            foreach (var enter in markup.Enters)
+            foreach (var enter in marking.Enters)
             {
                 foreach (var point in enter.EnterPoints.Skip(1).Take(enter.PointCount - 2))
                 {
@@ -31,12 +31,12 @@ namespace NodeMarkup.Utilities
 
             return map;
         }
-        public static ObjectsMap Befor1_9(Marking markup, ObjectsMap map)
+        public static ObjectsMap Befor1_9(Marking marking, ObjectsMap map)
         {
             if (map == null)
                 map = new ObjectsMap();
 
-            foreach (var enter in markup.Enters)
+            foreach (var enter in marking.Enters)
             {
                 ref var segment = ref enter.GetSegment();
                 if (segment.Info.m_vehicleTypes.IsFlagSet(VehicleInfo.VehicleType.Plane))

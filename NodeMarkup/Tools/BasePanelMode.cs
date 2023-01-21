@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public abstract class BasePanelMode<EditorType, ButtonType, ObjectType> : NodeMarkupToolMode
+    public abstract class BasePanelMode<EditorType, ButtonType, ObjectType> : IntersectionMarkingToolMode
         where EditorType : Editor
         where ButtonType : SelectPropertyButton<ObjectType>
     {

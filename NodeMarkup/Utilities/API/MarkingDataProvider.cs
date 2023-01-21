@@ -20,35 +20,35 @@ namespace NodeMarkup.Utilities.API
     {
         private DataProvider DataProvider { get; }
         IDataProviderV1 IMarkingData.DataProvider => DataProvider;
-        private NodeMarking Markup { get; }
-        public ushort Id => Markup.Id;
-        public int EntranceCount => Markup.EntersCount;
+        private NodeMarking Marking { get; }
+        public ushort Id => Marking.Id;
+        public int EntranceCount => Marking.EntersCount;
 
         public IEnumerable<ISegmentEntranceData> Entrances
         {
             get
             {
-                foreach (var enter in Markup.Enters)
+                foreach (var enter in Marking.Enters)
                 {
                     yield return new SegmentEntranceDataProvider(enter);
                 }
             }
         }
 
-        public NodeMarkingDataProvider(DataProvider dataProvider, NodeMarking markup)
+        public NodeMarkingDataProvider(DataProvider dataProvider, NodeMarking marking)
         {
             DataProvider = dataProvider;
-            Markup = markup;
+            Marking = marking;
         }
 
         public void ClearMarkings()
         {
-            Markup.Clear();
+            Marking.Clear();
             DataProvider.Log($"Clear Node #{Id} marking");
         }
         public void ResetPointOffsets()
         {
-            Markup.ResetOffsets();
+            Marking.ResetOffsets();
             DataProvider.Log($"Reset Node #{Id} point offsets");
         }
 
@@ -56,7 +56,7 @@ namespace NodeMarkup.Utilities.API
 
         public bool TryGetEntrance(ushort id, out ISegmentEntranceData entrance)
         {
-            if (Markup.TryGetEnter(id, out var enter))
+            if (Marking.TryGetEnter(id, out var enter))
             {
                 entrance = new SegmentEntranceDataProvider(enter);
                 return true;
@@ -71,9 +71,9 @@ namespace NodeMarkup.Utilities.API
         public bool TryGetRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, out IRegularLineData regularLineData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, true);
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetEntrancePoint(Markup, endPointData);
-            if (Markup.TryGetLine<MarkingRegularLine>(startPoint, endPoint, out var line))
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetEntrancePoint(Marking, endPointData);
+            if (Marking.TryGetLine<MarkingRegularLine>(startPoint, endPoint, out var line))
             {
                 regularLineData = new RegularLineDataProvider(DataProvider, line);
                 return true;
@@ -87,9 +87,9 @@ namespace NodeMarkup.Utilities.API
         public bool TryGetLaneLine(ILanePointData startPointData, ILanePointData endPointData, out ILaneLineData laneLineData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, false);
-            var startPoint = APIHelper.GetLanePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetLanePoint(Markup, endPointData);
-            if (Markup.TryGetLine<MarkingLaneLine>(startPoint, endPoint, out var line))
+            var startPoint = APIHelper.GetLanePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetLanePoint(Marking, endPointData);
+            if (Marking.TryGetLine<MarkingLaneLine>(startPoint, endPoint, out var line))
             {
                 laneLineData = new LaneLineDataProvider(DataProvider, line);
                 return true;
@@ -103,9 +103,9 @@ namespace NodeMarkup.Utilities.API
         public bool TryGetNormalLine(IEntrancePointData startPointData, INormalPointData endPointData, out INormalLineData normalLineData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetNormalPoint(Markup, endPointData);
-            if (Markup.TryGetLine<MarkingNormalLine>(startPoint, endPoint, out var line))
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetNormalPoint(Marking, endPointData);
+            if (Marking.TryGetLine<MarkingNormalLine>(startPoint, endPoint, out var line))
             {
                 normalLineData = new NormalLineDataProvider(DataProvider, line);
                 return true;
@@ -119,9 +119,9 @@ namespace NodeMarkup.Utilities.API
         public bool TryGetStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData, out IStopLineData stopLineData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetEntrancePoint(Markup, endPointData);
-            if (Markup.TryGetLine<MarkingStopLine>(startPoint, endPoint, out var line))
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetEntrancePoint(Marking, endPointData);
+            if (Marking.TryGetLine<MarkingStopLine>(startPoint, endPoint, out var line))
             {
                 stopLineData = new StopLineDataProvider(DataProvider, line);
                 return true;
@@ -135,9 +135,9 @@ namespace NodeMarkup.Utilities.API
         public bool TryGetCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, out ICrosswalkData crosswalkData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, false);
-            var startPoint = APIHelper.GetCrosswalkPoint(Markup, startPointData);
-            var endPoint = APIHelper.GetCrosswalkPoint(Markup, endPointData);
-            if (Markup.TryGetLine<MarkingCrosswalkLine>(startPoint, endPoint, out var line))
+            var startPoint = APIHelper.GetCrosswalkPoint(Marking, startPointData);
+            var endPoint = APIHelper.GetCrosswalkPoint(Marking, endPointData);
+            if (Marking.TryGetLine<MarkingCrosswalkLine>(startPoint, endPoint, out var line))
             {
                 crosswalkData = new CrosswalkDataProvider(DataProvider, line.Crosswalk);
                 return true;
@@ -156,16 +156,16 @@ namespace NodeMarkup.Utilities.API
         public IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineStyleData styleData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, false);
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetEntrancePoint(Markup, endPointData);
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetEntrancePoint(Marking, endPointData);
 
             var pair = new MarkingPointPair(startPoint, endPoint);
-            if (Markup.ExistLine(pair))
+            if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
             var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
             var style = RegularLineStyle.GetDefault(type);
-            var line = Markup.AddRegularLine(pair, style);
+            var line = Marking.AddRegularLine(pair, style);
             DataProvider.Log($"Line {line} added");
             var lineData = new RegularLineDataProvider(DataProvider, line);
             return lineData;
@@ -176,16 +176,16 @@ namespace NodeMarkup.Utilities.API
             APIHelper.CheckPoints(Id, startPointData, endPointData, true);
             if (startPointData.Index == endPointData.Index)
                 throw new CreateLineException(startPointData, endPointData, "Start and end of stop line must have differen index");
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetEntrancePoint(Markup, endPointData);
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetEntrancePoint(Marking, endPointData);
 
             var pair = new MarkingPointPair(startPoint, endPoint);
-            if (Markup.ExistLine(pair))
+            if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
             var type = APIHelper.GetStyleType<StopLineType>(styleData.Name);
             var style = StopLineStyle.GetDefault(type);
-            var line = Markup.AddStopLine(pair, style);
+            var line = Marking.AddStopLine(pair, style);
             DataProvider.Log($"Line {line} added");
             var lineData = new StopLineDataProvider(DataProvider, line);
             return lineData;
@@ -196,16 +196,16 @@ namespace NodeMarkup.Utilities.API
             APIHelper.CheckPoints(Id, startPointData, endPointData, true);
             if (startPointData.Index != endPointData.Index)
                 throw new CreateLineException(startPointData, endPointData, "Start and end of normal line must have the same index");
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetNormalPoint(Markup, endPointData);
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetNormalPoint(Marking, endPointData);
 
             var pair = new MarkingPointPair(startPoint, endPoint);
-            if (Markup.ExistLine(pair))
+            if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
             var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
             var style = RegularLineStyle.GetDefault(type);
-            var line = Markup.AddNormalLine(pair, style);
+            var line = Marking.AddNormalLine(pair, style);
             DataProvider.Log($"Line {line} added");
             var lineData = new NormalLineDataProvider(DataProvider, line);
             return lineData;
@@ -214,16 +214,16 @@ namespace NodeMarkup.Utilities.API
         public ILaneLineData AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, ILaneLineStyleData styleData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, false);
-            var startPoint = APIHelper.GetLanePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetLanePoint(Markup, endPointData);
+            var startPoint = APIHelper.GetLanePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetLanePoint(Marking, endPointData);
 
             var pair = new MarkingPointPair(startPoint, endPoint);
-            if (Markup.ExistLine(pair))
+            if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
             var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
             var style = RegularLineStyle.GetDefault(type);
-            var line = Markup.AddLaneLine(pair, style);
+            var line = Marking.AddLaneLine(pair, style);
             DataProvider.Log($"Line {line} added");
             var lineData = new LaneLineDataProvider(DataProvider, line);
             return lineData;
@@ -234,16 +234,16 @@ namespace NodeMarkup.Utilities.API
             APIHelper.CheckPoints(Id, startPointData, endPointData, true);
             if (startPointData.Index == endPointData.Index)
                 throw new CreateLineException(startPointData, endPointData, "Start and end of crosswalk must have differen index");
-            var startPoint = APIHelper.GetCrosswalkPoint(Markup, startPointData);
-            var endPoint = APIHelper.GetCrosswalkPoint(Markup, endPointData);
+            var startPoint = APIHelper.GetCrosswalkPoint(Marking, startPointData);
+            var endPoint = APIHelper.GetCrosswalkPoint(Marking, endPointData);
 
             var pair = new MarkingPointPair(startPoint, endPoint);
-            if (Markup.ExistLine(pair))
+            if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Crosswalk {pair} already exist");
 
             var type = APIHelper.GetStyleType<CrosswalkType>(styleData.Name);
             var style = CrosswalkStyle.GetDefault(type);
-            var line = Markup.AddCrosswalkLine(pair, style);
+            var line = Marking.AddCrosswalkLine(pair, style);
             DataProvider.Log($"Added crosswalk {line.Crosswalk}");
             var crosswalkData = new CrosswalkDataProvider(DataProvider, line.Crosswalk);
             return crosswalkData;
@@ -251,11 +251,11 @@ namespace NodeMarkup.Utilities.API
 
         public IFillerData AddFiller(IEnumerable<IEntrancePointData> pointDatas, IFillerStyleData styleData)
         {
-            var contour = APIHelper.GetFillerContour(Markup, pointDatas);
+            var contour = APIHelper.GetFillerContour(Marking, pointDatas);
             var type = APIHelper.GetStyleType<FillerType>(styleData.Name);
             var style = FillerStyle.GetDefault(type);
 
-            var filler = Markup.AddFiller(contour, style, out var lines);
+            var filler = Marking.AddFiller(contour, style, out var lines);
             DataProvider.Log($"Filler {filler} added");
             var fillerData = new FillerDataProvider(DataProvider, filler);
             return fillerData;
@@ -267,12 +267,12 @@ namespace NodeMarkup.Utilities.API
 
         public void RemoveLine(MarkingLine line)
         {
-            Markup.RemoveLine(line);
+            Marking.RemoveLine(line);
             DataProvider.Log($"Line {line} removed");
         }
         public bool RemoveLine(MarkingPoint startPoint, MarkingPoint endPoint)
         {
-            if (Markup.TryGetLine(new MarkingPointPair(startPoint, endPoint), out var line))
+            if (Marking.TryGetLine(new MarkingPointPair(startPoint, endPoint), out var line))
             {
                 RemoveLine(line);
                 return true;
@@ -283,52 +283,52 @@ namespace NodeMarkup.Utilities.API
         public bool RemoveRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetEntrancePoint(Markup, endPointData);
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetEntrancePoint(Marking, endPointData);
             return RemoveLine(startPoint, endPoint);
         }
         public bool RemoveNormalLine(IEntrancePointData startPointData, INormalPointData endPointData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetNormalPoint(Markup, endPointData);
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetNormalPoint(Marking, endPointData);
             return RemoveLine(startPoint, endPoint);
         }
         public bool RemoveStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetEntrancePoint(Markup, endPointData);
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetEntrancePoint(Marking, endPointData);
             return RemoveLine(startPoint, endPoint);
         }
         public bool RemoveLaneLine(ILanePointData startPointData, ILanePointData endPointData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetLanePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetLanePoint(Markup, endPointData);
+            var startPoint = APIHelper.GetLanePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetLanePoint(Marking, endPointData);
             return RemoveLine(startPoint, endPoint);
         }
 
         public bool RemoveCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetCrosswalkPoint(Markup, startPointData);
-            var endPoint = APIHelper.GetCrosswalkPoint(Markup, endPointData);
+            var startPoint = APIHelper.GetCrosswalkPoint(Marking, startPointData);
+            var endPoint = APIHelper.GetCrosswalkPoint(Marking, endPointData);
             return RemoveLine(startPoint, endPoint);
         }
         public bool RemoveCrosswalk(ICrosswalkData crosswalk) => RemoveCrosswalk(crosswalk.Line.StartPoint, crosswalk.Line.EndPoint);
 
         public void RemoveFiller(MarkingFiller filler)
         {
-            Markup.RemoveFiller(filler);
+            Marking.RemoveFiller(filler);
             DataProvider.Log($"Filler {filler} removed");
         }
         public bool RemoveFiller(IFillerData fillerData)
         {
-            if (fillerData.MarkingId != Markup.Id)
-                throw new MarkingIdNotMatchException(Markup.Id, fillerData.MarkingId);
+            if (fillerData.MarkingId != Marking.Id)
+                throw new MarkingIdNotMatchException(Marking.Id, fillerData.MarkingId);
 
-            if (Markup.TryGetFiller(fillerData.Id, out var filler))
+            if (Marking.TryGetFiller(fillerData.Id, out var filler))
             {
                 RemoveFiller(filler);
                 return true;
@@ -344,42 +344,42 @@ namespace NodeMarkup.Utilities.API
         public bool RegularLineExist(IEntrancePointData startPointData, IEntrancePointData endPointData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetEntrancePoint(Markup, endPointData);
-            return Markup.ExistLine(new MarkingPointPair(startPoint, endPoint));
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetEntrancePoint(Marking, endPointData);
+            return Marking.ExistLine(new MarkingPointPair(startPoint, endPoint));
         }
         public bool NormalLineExist(IEntrancePointData startPointData, INormalPointData endPointData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetNormalPoint(Markup, endPointData);
-            return Markup.ExistLine(new MarkingPointPair(startPoint, endPoint));
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetNormalPoint(Marking, endPointData);
+            return Marking.ExistLine(new MarkingPointPair(startPoint, endPoint));
         }
         public bool StopLineExist(IEntrancePointData startPointData, IEntrancePointData endPointData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetEntrancePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetEntrancePoint(Markup, endPointData);
-            return Markup.ExistLine(new MarkingPointPair(startPoint, endPoint));
+            var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetEntrancePoint(Marking, endPointData);
+            return Marking.ExistLine(new MarkingPointPair(startPoint, endPoint));
         }
         public bool LaneLineExist(ILanePointData startPointData, ILanePointData endPointData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetLanePoint(Markup, startPointData);
-            var endPoint = APIHelper.GetLanePoint(Markup, endPointData);
-            return Markup.ExistLine(new MarkingPointPair(startPoint, endPoint));
+            var startPoint = APIHelper.GetLanePoint(Marking, startPointData);
+            var endPoint = APIHelper.GetLanePoint(Marking, endPointData);
+            return Marking.ExistLine(new MarkingPointPair(startPoint, endPoint));
         }
         public bool CrosswalkExist(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, null);
-            var startPoint = APIHelper.GetCrosswalkPoint(Markup, startPointData);
-            var endPoint = APIHelper.GetCrosswalkPoint(Markup, endPointData);
-            return Markup.ExistLine(new MarkingPointPair(startPoint, endPoint));
+            var startPoint = APIHelper.GetCrosswalkPoint(Marking, startPointData);
+            var endPoint = APIHelper.GetCrosswalkPoint(Marking, endPointData);
+            return Marking.ExistLine(new MarkingPointPair(startPoint, endPoint));
         }
 
         #endregion
 
-        public override string ToString() => Markup.ToString();
+        public override string ToString() => Marking.ToString();
     }
     public struct SegmentMarkingDataProvider : ISegmentMarkingData
     {
@@ -402,10 +402,10 @@ namespace NodeMarkup.Utilities.API
         public INodeEntranceData StartEntrance => throw new NotImplementedException();
         public INodeEntranceData EndEntrance => throw new NotImplementedException();
 
-        public SegmentMarkingDataProvider(DataProvider dataProvider, SegmentMarking markup)
+        public SegmentMarkingDataProvider(DataProvider dataProvider, SegmentMarking marking)
         {
             DataProvider = dataProvider;
-            Marking = markup;
+            Marking = marking;
         }
 
         public void ClearMarkings()

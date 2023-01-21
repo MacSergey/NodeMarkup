@@ -90,7 +90,7 @@ namespace NodeMarkup.UI.Editors
         public override Color32 PressedColor => new Color32(86, 167, 225, 255);
         public override Color32 FocusColor => NormalColor;
 
-        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? NodeMarkupTextures.ListItemCollapse : NodeMarkupTextures.ListItemExpand; }
+        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? IntersectionMarkingToolTextures.ListItemCollapse : IntersectionMarkingToolTextures.ListItemExpand; }
 
         private CustomUIPanel ExpandIcon { get; set; }
 
@@ -108,7 +108,7 @@ namespace NodeMarkup.UI.Editors
         private void AddExpandIcon()
         {
             ExpandIcon = AddUIComponent<CustomUIPanel>();
-            ExpandIcon.atlas = NodeMarkupTextures.Atlas;
+            ExpandIcon.atlas = IntersectionMarkingToolTextures.Atlas;
             ExpandIcon.size = new Vector2(20, 20);
             IsExpand = true;
         }

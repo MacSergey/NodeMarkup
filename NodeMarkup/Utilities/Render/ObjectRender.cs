@@ -1,17 +1,12 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
-using ModsCommon.Utilities;
 using NodeMarkup.Manager;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 namespace NodeMarkup.Utilities
 {
-    public struct MarkupPropItemData
+    public struct MarkingPropItemData
     {
         public Vector3 Position;
         public float AbsoluteAngle;
@@ -21,15 +16,15 @@ namespace NodeMarkup.Utilities
         public float Scale;
         public Color32 Color;
     }
-    public abstract class BaseMarkupPrefabData<PrefabType> : IStyleData, IDrawData
+    public abstract class BaseMarkingPrefabData<PrefabType> : IStyleData, IDrawData
         where PrefabType : PrefabInfo
     {
-        public MarkupLOD LOD => MarkupLOD.NoLOD;
-        public abstract MarkupLODType LODType { get; }
+        public MarkingLOD LOD => MarkingLOD.NoLOD;
+        public abstract MarkingLODType LODType { get; }
         public PrefabType Info { get; private set; }
-        protected MarkupPropItemData[] Items { get; private set; }
+        protected MarkingPropItemData[] Items { get; private set; }
 
-        public BaseMarkupPrefabData(PrefabType info, MarkupPropItemData[] items)
+        public BaseMarkingPrefabData(PrefabType info, MarkingPropItemData[] items)
         {
             Info = info;
             Items = items;
@@ -42,11 +37,11 @@ namespace NodeMarkup.Utilities
 
         public abstract void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
     }
-    public class MarkupPropData : BaseMarkupPrefabData<PropInfo>
+    public class MarkingPropData : BaseMarkingPrefabData<PropInfo>
     {
-        public override MarkupLODType LODType => MarkupLODType.Prop;
+        public override MarkingLODType LODType => MarkingLODType.Prop;
 
-        public MarkupPropData(PropInfo info, MarkupPropItemData[] items) : base(info, items) { }
+        public MarkingPropData(PropInfo info, MarkingPropItemData[] items) : base(info, items) { }
 
         public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
@@ -156,11 +151,11 @@ namespace NodeMarkup.Utilities
             }
         }
     }
-    public class MarkupTreeData : BaseMarkupPrefabData<TreeInfo>
+    public class MarkingTreeData : BaseMarkingPrefabData<TreeInfo>
     {
-        public override MarkupLODType LODType => MarkupLODType.Tree;
+        public override MarkingLODType LODType => MarkingLODType.Tree;
 
-        public MarkupTreeData(TreeInfo info, MarkupPropItemData[] items) : base(info, items) { }
+        public MarkingTreeData(TreeInfo info, MarkingPropItemData[] items) : base(info, items) { }
 
         public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {

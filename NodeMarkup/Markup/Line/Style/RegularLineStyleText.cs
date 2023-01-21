@@ -9,7 +9,6 @@ using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
@@ -23,7 +22,7 @@ namespace NodeMarkup.Manager
         private static Dictionary<int, Texture2D> MainTextures { get; } = new Dictionary<int, Texture2D>();
 
         public override StyleType Type => StyleType.LineText;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
         public override bool CanOverlap => true;
 
         private PropertyStringValue Text { get; }
@@ -148,10 +147,10 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, Text, Scale, Angle, Shift, Direction, Spacing, Alignment);
 
-        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod)
         {
             if (string.IsNullOrEmpty(Text))
-                return new MarkupPartGroupData(lod);
+                return new MarkingPartGroupData(lod);
 
             var text = Text.Value;
             if (Direction == TextDirection.TopToBottom)
@@ -159,7 +158,7 @@ namespace NodeMarkup.Manager
             else if (Direction == TextDirection.BottomToTop)
                 text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
-            var aciTextureId = new TextureId(Font, text, lod == MarkupLOD.LOD0 ? Scale : Scale * 0.2f, Spacing);
+            var aciTextureId = new TextureId(Font, text, lod == MarkingLOD.LOD0 ? Scale : Scale * 0.2f, Spacing);
             if (!TextTextures.TryGetValue(aciTextureId, out var textureData))
             {
                 var textTexture = RenderHelper.CreateTextTexture(aciTextureId.font, aciTextureId.text, aciTextureId.scale, aciTextureId.spacing, out var textWidth, out var textHeight);
@@ -183,7 +182,7 @@ namespace NodeMarkup.Manager
 
             Material material = RenderHelper.CreateDecalMaterial(mainTexture, textureData.texture);
 
-            var ratio = lod == MarkupLOD.LOD0 ? Ratio : Ratio * 5f;
+            var ratio = lod == MarkingLOD.LOD0 ? Ratio : Ratio * 5f;
             var offset = 0.5f * (textureData.width * ratio * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * Angle)) + textureData.height * ratio * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * Angle)));
 
             var t = Alignment.Value switch
@@ -200,9 +199,9 @@ namespace NodeMarkup.Manager
             var angle = direction.AbsoluteAngle() + (Angle.Value + (line.Marking.Type == MarkingType.Node ? -90 : 90)) * Mathf.Deg2Rad;
             var width = textureData.texture.width * ratio;
             var height = textureData.texture.height * ratio;
-            var data = new MarkupPartData(position, angle, width, height, Color, material);
+            var data = new MarkingPartData(position, angle, width, height, Color, material);
 
-            var groupData = new MarkupPartGroupData(lod, new MarkupPartData[] { data });
+            var groupData = new MarkingPartGroupData(lod, new MarkingPartData[] { data });
             return groupData;
         }
 
@@ -408,15 +407,15 @@ namespace NodeMarkup.Manager
         public enum TextDirection
         {
             [Description(nameof(Localize.StyleOption_TextDirectionLtoR))]
-            [Sprite(nameof(NodeMarkupTextures.LeftToRightButtonIcons))]
+            [Sprite(nameof(IntersectionMarkingToolTextures.LeftToRightButtonIcons))]
             LeftToRight,
 
             [Description(nameof(Localize.StyleOption_TextDirectionTtoB))]
-            [Sprite(nameof(NodeMarkupTextures.TopToBottomButtonIcons))]
+            [Sprite(nameof(IntersectionMarkingToolTextures.TopToBottomButtonIcons))]
             TopToBottom,
 
             [Description(nameof(Localize.StyleOption_TextDirectionBtoT))]
-            [Sprite(nameof(NodeMarkupTextures.BottomToTopButtonIcons))]
+            [Sprite(nameof(IntersectionMarkingToolTextures.BottomToTopButtonIcons))]
             BottomToTop,
         }
         public enum TextAlignment
@@ -447,7 +446,7 @@ namespace NodeMarkup.Manager
                         if (string.IsNullOrEmpty(sprite))
                             Selector.AddItem(value, GetDescription(value));
                         else
-                            Selector.AddItem(value, GetDescription(value), NodeMarkupTextures.Atlas, sprite);
+                            Selector.AddItem(value, GetDescription(value), IntersectionMarkingToolTextures.Atlas, sprite);
                     }
                 }
                 Selector.StartLayout();

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Manager
 {
-    public abstract class MarkupLineRawRule : MarkingLinePart
+    public abstract class MarkingLineRawRule : MarkingLinePart
     {
         public PropertyValue<LineStyle> Style { get; }
         public new ILinePartEdge From
@@ -39,7 +39,7 @@ namespace NodeMarkup.Manager
         }
 
 
-        public MarkupLineRawRule(MarkingLine line, LineStyle style, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to)
+        public MarkingLineRawRule(MarkingLine line, LineStyle style, ISupportPoint from = null, ISupportPoint to = null) : base(line, from, to)
         {
             style.OnStyleChanged = RuleChanged;
             Style = new PropertyClassValue<LineStyle>(StyleChanged, style);
@@ -50,7 +50,7 @@ namespace NodeMarkup.Manager
             RuleChanged();
         }
     }
-    public class MarkupLineRawRule<StyleType> : MarkupLineRawRule
+    public class MarkingLineRawRule<StyleType> : MarkingLineRawRule
         where StyleType : LineStyle
     {
         public static string XmlName { get; } = "R";
@@ -64,14 +64,14 @@ namespace NodeMarkup.Manager
 
         public override string XmlSection => XmlName;
 
-        public MarkupLineRawRule(MarkingLine line, StyleType style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, style, from, to) { }
-        public static MarkupLineRule[] GetRules(List<MarkupLineRawRule<StyleType>> rawRules)
+        public MarkingLineRawRule(MarkingLine line, StyleType style, ILinePartEdge from = null, ILinePartEdge to = null) : base(line, style, from, to) { }
+        public static MarkingLineRule[] GetRules(List<MarkingLineRawRule<StyleType>> rawRules)
         {
-            var rules = new List<MarkupLineRule>();
+            var rules = new List<MarkingLineRule>();
 
             foreach (var rawRule in rawRules)
             {
-                var rule = new MarkupLineRule(rawRule);
+                var rule = new MarkingLineRule(rawRule);
 
                 if (!rawRule.GetFromT(out float first) || !rawRule.GetToT(out float second) || first == second)
                     continue;
@@ -92,7 +92,7 @@ namespace NodeMarkup.Manager
 
             return rules.ToArray();
         }
-        private static void Add(List<MarkupLineRule> rules, MarkupLineRule newRule)
+        private static void Add(List<MarkingLineRule> rules, MarkingLineRule newRule)
         {
             if (!newRule.CanOverlap)
             {
@@ -156,12 +156,12 @@ namespace NodeMarkup.Manager
             config.Add(Style.ToXml());
             return config;
         }
-        public static bool FromXml(XElement config, MarkingLine line, ObjectsMap map, bool invertLine, bool typeChanged, out MarkupLineRawRule<StyleType> rule)
+        public static bool FromXml(XElement config, MarkingLine line, ObjectsMap map, bool invertLine, bool typeChanged, out MarkingLineRawRule<StyleType> rule)
         {
             if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, invertLine, typeChanged, out StyleType style))
             {
                 var edges = GetEdges(config, line, map).ToArray();
-                rule = new MarkupLineRawRule<StyleType>(line, style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1));
+                rule = new MarkingLineRawRule<StyleType>(line, style, edges.ElementAtOrDefault(0), edges.ElementAtOrDefault(1));
                 return true;
             }
             else
@@ -171,14 +171,14 @@ namespace NodeMarkup.Manager
             }
         }
     }
-    public struct MarkupLineRule
+    public struct MarkingLineRule
     {
         public float Start;
         public float End;
         public LineStyle LineStyle;
         public bool CanOverlap;
 
-        public MarkupLineRule(MarkupLineRawRule rawRule, float start = 0f, float end = 1f)
+        public MarkingLineRule(MarkingLineRawRule rawRule, float start = 0f, float end = 1f)
         {
             LineStyle = rawRule.Style;
             Start = start;

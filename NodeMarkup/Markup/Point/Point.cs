@@ -149,10 +149,10 @@ namespace NodeMarkup.Manager
             Offset.ToXml(config);
             return config;
         }
-        public static void FromXml(XElement config, Marking markup, ObjectsMap map)
+        public static void FromXml(XElement config, Marking marking, ObjectsMap map)
         {
             var id = config.GetAttrValue<int>(nameof(Id));
-            if (FromId(id, markup, map, out MarkingPoint point))
+            if (FromId(id, marking, map, out MarkingPoint point))
                 point.FromXml(config, map);
         }
         public virtual void FromXml(XElement config, ObjectsMap map)
@@ -422,12 +422,12 @@ namespace NodeMarkup.Manager
         public static string XmlName { get; } = "PP";
         public static string XmlName1 { get; } = "L1";
         public static string XmlName2 { get; } = "L2";
-        public static bool FromHash(ulong hash, Marking markup, ObjectsMap map, out MarkingPointPair pair, out bool invert)
+        public static bool FromHash(ulong hash, Marking marking, ObjectsMap map, out MarkingPointPair pair, out bool invert)
         {
             var firstId = (int)(hash >> 32);
             var secondId = (int)hash;
 
-            if (MarkingPoint.FromId(firstId, markup, map, out MarkingPoint first) && MarkingPoint.FromId(secondId, markup, map, out MarkingPoint second))
+            if (MarkingPoint.FromId(firstId, marking, map, out MarkingPoint first) && MarkingPoint.FromId(secondId, marking, map, out MarkingPoint second))
             {
                 pair = new MarkingPointPair(first, second);
                 invert = first.Id >= second.Id;

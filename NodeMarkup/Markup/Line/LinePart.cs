@@ -98,10 +98,10 @@ namespace NodeMarkup.Manager
         }
     }
 
-    public class MarkupLineBound : TrajectoryBound
+    public class MarkingLineBound : TrajectoryBound
     {
         public MarkingRegularLine Line { get; }
-        public MarkupLineBound(MarkingRegularLine line, float size) : base(line.Trajectory, size)
+        public MarkingLineBound(MarkingRegularLine line, float size) : base(line.Trajectory, size)
         {
             Line = line;
         }

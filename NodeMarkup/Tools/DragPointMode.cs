@@ -3,13 +3,12 @@ using ColossalFramework.UI;
 using ModsCommon;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Tools
 {
-    public class DragPointToolMode : NodeMarkupToolMode
+    public class DragPointToolMode : IntersectionMarkingToolMode
     {
         public override ToolModeType Type => ToolModeType.DragPoint;
         public MarkingEnterPoint DragPoint { get; set; } = null;
@@ -26,7 +25,7 @@ namespace NodeMarkup.Tools
         public override void OnMouseDrag(Event e)
         {
             var normal = DragPoint.Enter.CornerDir.Turn90(true);
-            var position = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(DragPoint.Position.y, out _);
+            var position = SingletonTool<IntersectionMarkingTool>.Instance.Ray.GetRayPosition(DragPoint.Position.y, out _);
             Line2.Intersect(XZ(DragPoint.MarkerPosition), XZ(DragPoint.MarkerPosition + DragPoint.Enter.CornerDir), XZ(position), XZ(position + normal), out float offsetChange, out _);
             DragPoint.Offset.Value = (DragPoint.Offset + offsetChange * Mathf.Sin(DragPoint.Enter.CornerAndNormalAngle)).RoundToNearest(Utility.OnlyShiftIsPressed ? 0.1f : 0.01f);
             Panel.SelectPoint(DragPoint);

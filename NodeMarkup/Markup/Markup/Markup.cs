@@ -48,17 +48,17 @@ namespace NodeMarkup.Manager
         protected List<Entrance> RawEntersList { get; set; } = new List<Entrance>();
         protected List<Entrance> EntersList { get; set; } = new List<Entrance>();
         protected Dictionary<ulong, MarkingLine> LinesDictionary { get; } = new Dictionary<ulong, MarkingLine>();
-        protected Dictionary<MarkingLinePair, MarkupLinesIntersect> LineIntersects { get; } = new Dictionary<MarkingLinePair, MarkupLinesIntersect>(MarkingLinePair.Comparer);
+        protected Dictionary<MarkingLinePair, MarkingLinesIntersect> LineIntersects { get; } = new Dictionary<MarkingLinePair, MarkingLinesIntersect>(MarkingLinePair.Comparer);
         protected List<MarkingFiller> FillersList { get; } = new List<MarkingFiller>();
-        protected Dictionary<MarkingLine, MarkupCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkingLine, MarkupCrosswalk>();
+        protected Dictionary<MarkingLine, MarkingCrosswalk> CrosswalksDictionary { get; } = new Dictionary<MarkingLine, MarkingCrosswalk>();
 
         public bool IsEmpty => !LinesDictionary.Any() && !FillersList.Any();
 
         public IEnumerable<MarkingLine> Lines => LinesDictionary.Values;
         public IEnumerable<Entrance> Enters => EntersList;
         public IEnumerable<MarkingFiller> Fillers => FillersList;
-        public IEnumerable<MarkupCrosswalk> Crosswalks => CrosswalksDictionary.Values;
-        public IEnumerable<MarkupLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
+        public IEnumerable<MarkingCrosswalk> Crosswalks => CrosswalksDictionary.Values;
+        public IEnumerable<MarkingLinesIntersect> Intersects => GetAllIntersect().Where(i => i.IsIntersect);
 
         public int EntersCount => EntersList.Count;
         public int LinesCount => LinesDictionary.Count;
@@ -68,7 +68,7 @@ namespace NodeMarkup.Manager
 
         public bool NeedRecalculateDrawData { get; private set; }
         private HashSet<IStyleItem> RecalculateList { get; set; } = new HashSet<IStyleItem>();
-        public MarkupRenderData DrawData { get; } = new MarkupRenderData();
+        public MarkingRenderData DrawData { get; } = new MarkingRenderData();
 
 
         private bool _needSetOrder;
@@ -347,7 +347,7 @@ namespace NodeMarkup.Manager
             if (recalculate && !UpdateInProgress)
                 RecalculateStyleData(filler);
         }
-        public void Update(MarkupCrosswalk crosswalk, bool recalculate = false, bool recalcDependences = false) => Update(crosswalk.CrosswalkLine, recalculate, recalcDependences);
+        public void Update(MarkingCrosswalk crosswalk, bool recalculate = false, bool recalcDependences = false) => Update(crosswalk.CrosswalkLine, recalculate, recalcDependences);
 
         public void Clear()
         {
@@ -416,25 +416,25 @@ namespace NodeMarkup.Manager
                 foreach (var item in RecalculateList)
                     item.RecalculateStyleData();
 
-                var dashesLOD0 = new List<MarkupPartData>();
-                var dashesLOD1 = new List<MarkupPartData>();
+                var dashesLOD0 = new List<MarkingPartData>();
+                var dashesLOD1 = new List<MarkingPartData>();
 
                 Seporate(Lines.SelectMany(l => l.StyleData));
                 Seporate(Fillers.SelectMany(f => f.StyleData));
                 Seporate(Crosswalks.SelectMany(c => c.StyleData));
 
-                DrawData[MarkupLODType.Dash][MarkupLOD.LOD0].AddRange(MarkupPartsBatchData.FromDashes(dashesLOD0));
-                DrawData[MarkupLODType.Dash][MarkupLOD.LOD1].AddRange(MarkupPartsBatchData.FromDashes(dashesLOD1));
+                DrawData[MarkingLODType.Dash][MarkingLOD.LOD0].AddRange(MarkingPartsBatchData.FromDashes(dashesLOD0));
+                DrawData[MarkingLODType.Dash][MarkingLOD.LOD1].AddRange(MarkingPartsBatchData.FromDashes(dashesLOD1));
 
                 void Seporate(IEnumerable<IStyleData> stylesData)
                 {
                     foreach (var styleData in stylesData)
                     {
-                        if (styleData is IEnumerable<MarkupPartData> styleDashes)
+                        if (styleData is IEnumerable<MarkingPartData> styleDashes)
                         {
-                            if (styleData.LOD == MarkupLOD.LOD0)
+                            if (styleData.LOD == MarkingLOD.LOD0)
                                 dashesLOD0.AddRange(styleDashes);
-                            else if (styleData.LOD == MarkupLOD.LOD1)
+                            else if (styleData.LOD == MarkingLOD.LOD1)
                                 dashesLOD1.AddRange(styleDashes);
                         }
                         else if (styleData != null)
@@ -588,20 +588,20 @@ namespace NodeMarkup.Manager
 
         #region CROSSWALK
 
-        public void AddCrosswalk(MarkupCrosswalk crosswalk)
+        public void AddCrosswalk(MarkingCrosswalk crosswalk)
         {
             CrosswalksDictionary[crosswalk.CrosswalkLine] = crosswalk;
             RecalculateStyleData(crosswalk);
         }
-        public void RemoveCrosswalk(MarkupCrosswalk crosswalk) => RemoveLine(crosswalk.CrosswalkLine);
-        public Dependences GetCrosswalkDependences(MarkupCrosswalk crosswalk)
+        public void RemoveCrosswalk(MarkingCrosswalk crosswalk) => RemoveLine(crosswalk.CrosswalkLine);
+        public Dependences GetCrosswalkDependences(MarkingCrosswalk crosswalk)
         {
             var dependences = GetLineDependences(crosswalk.CrosswalkLine);
             dependences.Crosswalks = 0;
             dependences.Lines = crosswalk.CrosswalkLine.Rules.Any() ? 1 : 0;
             return dependences;
         }
-        public void CutLinesByCrosswalk(MarkupCrosswalk crosswalk)
+        public void CutLinesByCrosswalk(MarkingCrosswalk crosswalk)
         {
             var enter = crosswalk.CrosswalkLine.Start.Enter;
             var lines = Lines.Where(l => l.Type == LineType.Regular && l.PointPair.ContainsEnter(enter)).ToArray();
@@ -676,9 +676,9 @@ namespace NodeMarkup.Manager
         public bool ContainsEnter(ushort enterId) => RawEntersList.Find(e => e.Id == enterId) != null;
         public bool ContainsLine(MarkingPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
-        public IEnumerable<MarkupLinesIntersect> GetExistIntersects(MarkingLine line, bool onlyIntersect = false)
+        public IEnumerable<MarkingLinesIntersect> GetExistIntersects(MarkingLine line, bool onlyIntersect = false)
             => LineIntersects.Values.Where(i => i.Pair.ContainLine(line) && (!onlyIntersect || i.IsIntersect));
-        public IEnumerable<MarkupLinesIntersect> GetIntersects(MarkingLine line)
+        public IEnumerable<MarkingLinesIntersect> GetIntersects(MarkingLine line)
         {
             foreach (var otherLine in Lines)
             {
@@ -687,18 +687,18 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public MarkupLinesIntersect GetIntersect(MarkingLine first, MarkingLine second) => GetIntersect(new MarkingLinePair(first, second));
-        public MarkupLinesIntersect GetIntersect(MarkingLinePair linePair)
+        public MarkingLinesIntersect GetIntersect(MarkingLine first, MarkingLine second) => GetIntersect(new MarkingLinePair(first, second));
+        public MarkingLinesIntersect GetIntersect(MarkingLinePair linePair)
         {
-            if (!LineIntersects.TryGetValue(linePair, out MarkupLinesIntersect intersect))
+            if (!LineIntersects.TryGetValue(linePair, out MarkingLinesIntersect intersect))
             {
-                intersect = MarkupLinesIntersect.Calculate(linePair);
+                intersect = MarkingLinesIntersect.Calculate(linePair);
                 LineIntersects.Add(linePair, intersect);
             }
 
             return intersect;
         }
-        public IEnumerable<MarkupLinesIntersect> GetAllIntersect()
+        public IEnumerable<MarkingLinesIntersect> GetAllIntersect()
         {
             var lines = Lines.ToArray();
             for (var i = 0; i < lines.Length; i += 1)
@@ -718,8 +718,8 @@ namespace NodeMarkup.Manager
         public IEnumerable<MarkingLine> GetPointLines(MarkingPoint point) => Lines.Where(l => l.ContainsPoint(point));
         public IEnumerable<MarkingFiller> GetLineFillers(MarkingLine line) => FillersList.Where(f => f.ContainsLine(line));
         public IEnumerable<MarkingFiller> GetPointFillers(MarkingPoint point) => FillersList.Where(f => f.ContainsPoint(point));
-        public IEnumerable<MarkupCrosswalk> GetPointCrosswalks(MarkingPoint point) => Crosswalks.Where(c => c.ContainsPoint(point));
-        public IEnumerable<MarkupCrosswalk> GetLinesIsBorder(MarkingLine line) => Crosswalks.Where(c => c.IsBorder(line));
+        public IEnumerable<MarkingCrosswalk> GetPointCrosswalks(MarkingPoint point) => Crosswalks.Where(c => c.ContainsPoint(point));
+        public IEnumerable<MarkingCrosswalk> GetLinesIsBorder(MarkingLine line) => Crosswalks.Where(c => c.IsBorder(line));
 
         public bool HaveLines(Entrance enter) => Lines.Any(l => l.ContainsEnter(enter));
         public bool HaveLines(MarkingPoint point) => Lines.Any(l => l.ContainsPoint(point));
@@ -791,9 +791,9 @@ namespace NodeMarkup.Manager
 
             if ((Support & SupportType.Croswalks) != 0)
             {
-                foreach (var crosswalkConfig in config.Elements(MarkupCrosswalk.XmlName))
+                foreach (var crosswalkConfig in config.Elements(MarkingCrosswalk.XmlName))
                 {
-                    if (MarkupCrosswalk.FromXml(crosswalkConfig, this, map, out MarkupCrosswalk crosswalk))
+                    if (MarkingCrosswalk.FromXml(crosswalkConfig, this, map, out MarkingCrosswalk crosswalk))
                         CrosswalksDictionary[crosswalk.CrosswalkLine] = crosswalk;
                 }
             }

@@ -63,18 +63,18 @@ namespace NodeMarkup.Manager
 
             return config;
         }
-        public static bool FromXml(XElement config, Marking markup, ObjectsMap map, out MarkingFiller filler)
+        public static bool FromXml(XElement config, Marking marking, ObjectsMap map, out MarkingFiller filler)
         {
             filler = default;
 
             if (config.Element(Manager.Style.XmlName) is not XElement styleConfig || !Manager.Style.FromXml(styleConfig, map, false, false, out FillerStyle style))
                 return false;
 
-            var vertixes = config.Elements(FillerVertex.XmlName).Select(e => FillerVertex.FromXml(e, markup, map, out IFillerVertex vertex) ? vertex : null).ToArray();
+            var vertixes = config.Elements(FillerVertex.XmlName).Select(e => FillerVertex.FromXml(e, marking, map, out IFillerVertex vertex) ? vertex : null).ToArray();
             if (vertixes.Any(v => v == null))
                 return false;
 
-            var contour = new FillerContour(markup, vertixes);
+            var contour = new FillerContour(marking, vertixes);
 
             if (contour.IsEmpty)
                 return false;

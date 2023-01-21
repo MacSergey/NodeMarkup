@@ -16,7 +16,7 @@ namespace NodeMarkup.UI.Editors
         #region PROPERTIES
 
         public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
-        public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, LocalizeExtension.Alt, NodeMarkupTool.AddFillerShortcut);
+        public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, LocalizeExtension.Alt, IntersectionMarkingTool.AddFillerShortcut);
         public override Marking.SupportType Support { get; } = Marking.SupportType.Fillers;
 
         public StylePropertyPanel Style { get; private set; }
@@ -37,7 +37,7 @@ namespace NodeMarkup.UI.Editors
             FillerGuideToolMode = Tool.CreateToolMode<FillerGuideToolMode>();
             FillerGuideToolMode.Init(this);
         }
-        protected override IEnumerable<MarkingFiller> GetObjects() => Markup.Fillers;
+        protected override IEnumerable<MarkingFiller> GetObjects() => Marking.Fillers;
 
         protected override void OnFillPropertiesPanel(MarkingFiller filler)
         {
@@ -48,7 +48,7 @@ namespace NodeMarkup.UI.Editors
         }
         protected override void OnObjectDelete(MarkingFiller filler)
         {
-            Markup.RemoveFiller(filler);
+            Marking.RemoveFiller(filler);
             base.OnObjectDelete(filler);
         }
         protected override void OnClear()

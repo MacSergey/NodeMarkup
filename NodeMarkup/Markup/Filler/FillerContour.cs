@@ -11,14 +11,14 @@ namespace NodeMarkup.Manager
     public class FillerContour : IOverlay
     {
         private static Comparer VertexComparer { get; } = new Comparer();
-        public static List<IFillerVertex> GetBeginCandidates(Marking markup)
+        public static List<IFillerVertex> GetBeginCandidates(Marking marking)
         {
             var points = new List<IFillerVertex>();
 
-            foreach (var intersect in markup.Intersects)
+            foreach (var intersect in marking.Intersects)
                 points.Add(new IntersectFillerVertex(intersect.Pair));
 
-            foreach (var enter in markup.Enters)
+            foreach (var enter in marking.Enters)
             {
                 foreach (var point in enter.EnterPoints)
                 {
@@ -75,9 +75,9 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public FillerContour(Marking markup, IEnumerable<IFillerVertex> vertices = null)
+        public FillerContour(Marking marking, IEnumerable<IFillerVertex> vertices = null)
         {
-            Markup = markup;
+            Markup = marking;
 
             if (vertices != null)
             {
@@ -333,7 +333,7 @@ namespace NodeMarkup.Manager
                     Set(fromT, false);
                     Set(toT, false);
                 }
-                else if (Markup.GetIntersect(new MarkingLinePair(line, part.Line)) is MarkupLinesIntersect intersect && intersect.IsIntersect)
+                else if (Markup.GetIntersect(new MarkingLinePair(line, part.Line)) is MarkingLinesIntersect intersect && intersect.IsIntersect)
                 {
                     var linePartT = intersect[part.Line];
 

@@ -343,11 +343,11 @@ namespace NodeMarkup.Manager
         protected override string DefaultName => Localize.Preset_NewPreset;
         public override SavedString Saved => Settings.Intersections;
 
-        protected override IntersectionTemplate CreateInstance(string name, Marking markup) => new IntersectionTemplate(name, markup);
+        protected override IntersectionTemplate CreateInstance(string name, Marking marking) => new IntersectionTemplate(name, marking);
 
-        public bool AddTemplate(Marking markup, Image image, out IntersectionTemplate template)
+        public bool AddTemplate(Marking marking, Image image, out IntersectionTemplate template)
         {
-            if (AddTemplate(GetNewName(), markup, out template))
+            if (AddTemplate(GetNewName(), marking, out template))
             {
                 if (Loader.SaveScreenshot(template, image))
                     template.Preview = image.CreateTexture();

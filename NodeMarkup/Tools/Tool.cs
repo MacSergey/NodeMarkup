@@ -15,39 +15,38 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Xml.Linq;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Tools
 {
-    public class NodeMarkupTool : BaseTool<Mod, NodeMarkupTool, ToolModeType>
+    public class IntersectionMarkingTool : BaseTool<Mod, IntersectionMarkingTool, ToolModeType>
     {
         #region STATIC
 
-        public static NodeMarkupShortcut ActivationShortcut { get; } = new NodeMarkupShortcut(nameof(ActivationShortcut), nameof(CommonLocalize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
-        public static NodeMarkupShortcut SelectionStepOverShortcut { get; } = new NodeMarkupShortcut(nameof(SelectionStepOverShortcut), nameof(CommonLocalize.Settings_ShortcutSelectionStepOver), SavedInputKey.Encode(KeyCode.Space, true, false, false), () => SingletonTool<NodeMarkupTool>.Instance.SelectionStepOver(), ToolModeType.Select);
+        public static IntersectionMarkingToolShortcut ActivationShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(ActivationShortcut), nameof(CommonLocalize.Settings_ShortcutActivateTool), SavedInputKey.Encode(KeyCode.L, true, false, false));
+        public static IntersectionMarkingToolShortcut SelectionStepOverShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(SelectionStepOverShortcut), nameof(CommonLocalize.Settings_ShortcutSelectionStepOver), SavedInputKey.Encode(KeyCode.Space, true, false, false), () => SingletonTool<IntersectionMarkingTool>.Instance.SelectionStepOver(), ToolModeType.Select);
 
-        public static NodeMarkupShortcut EnterUndergroundShortcut { get; } = new NodeMarkupShortcut(nameof(EnterUndergroundShortcut), nameof(Localize.Settings_ShortcutEnterUnderground), SavedInputKey.Encode(KeyCode.PageDown, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as SelectToolMode)?.ChangeUnderground(true), ToolModeType.Select);
-        public static NodeMarkupShortcut ExitUndergroundShortcut { get; } = new NodeMarkupShortcut(nameof(ExitUndergroundShortcut), nameof(Localize.Settings_ShortcutExitUnderground), SavedInputKey.Encode(KeyCode.PageUp, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as SelectToolMode)?.ChangeUnderground(false), ToolModeType.Select);
+        public static IntersectionMarkingToolShortcut EnterUndergroundShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(EnterUndergroundShortcut), nameof(Localize.Settings_ShortcutEnterUnderground), SavedInputKey.Encode(KeyCode.PageDown, false, false, false), () => (SingletonTool<IntersectionMarkingTool>.Instance.Mode as SelectToolMode)?.ChangeUnderground(true), ToolModeType.Select);
+        public static IntersectionMarkingToolShortcut ExitUndergroundShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(ExitUndergroundShortcut), nameof(Localize.Settings_ShortcutExitUnderground), SavedInputKey.Encode(KeyCode.PageUp, false, false, false), () => (SingletonTool<IntersectionMarkingTool>.Instance.Mode as SelectToolMode)?.ChangeUnderground(false), ToolModeType.Select);
 
-        public static NodeMarkupShortcut AddRuleShortcut { get; } = new NodeMarkupShortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false), () =>
+        public static IntersectionMarkingToolShortcut AddRuleShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(AddRuleShortcut), nameof(Localize.Settings_ShortcutAddNewLineRule), SavedInputKey.Encode(KeyCode.A, true, true, false), () =>
         {
-            if (SingletonItem<NodeMarkupPanel>.Instance.CurrentEditor is UI.Editors.LinesEditor linesEditor)
+            if (SingletonItem<IntersectionMarkingToolPanel>.Instance.CurrentEditor is UI.Editors.LinesEditor linesEditor)
                 linesEditor.AddRuleShortcut();
         });
-        public static NodeMarkupShortcut DeleteAllShortcut { get; } = new NodeMarkupShortcut(nameof(DeleteAllShortcut), nameof(Localize.Settings_ShortcutDeleteAllNodeLines), SavedInputKey.Encode(KeyCode.D, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.DeleteAllMarking());
-        public static NodeMarkupShortcut ResetOffsetsShortcut { get; } = new NodeMarkupShortcut(nameof(ResetOffsetsShortcut), nameof(Localize.Settings_ShortcutResetPointsOffset), SavedInputKey.Encode(KeyCode.R, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.ResetAllOffsets());
-        public static NodeMarkupShortcut AddFillerShortcut { get; } = new NodeMarkupShortcut(nameof(AddFillerShortcut), nameof(Localize.Settings_ShortcutAddNewFiller), SavedInputKey.Encode(KeyCode.F, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.StartCreateFiller());
-        public static NodeMarkupShortcut CopyMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(CopyMarkingShortcut), nameof(Localize.Settings_ShortcutCopyMarking), SavedInputKey.Encode(KeyCode.C, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.CopyMarkup());
-        public static NodeMarkupShortcut PasteMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(PasteMarkingShortcut), nameof(Localize.Settings_ShortcutPasteMarking), SavedInputKey.Encode(KeyCode.V, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.PasteMarkup());
-        public static NodeMarkupShortcut EditMarkingShortcut { get; } = new NodeMarkupShortcut(nameof(EditMarkingShortcut), nameof(Localize.Settings_ShortcutEditMarking), SavedInputKey.Encode(KeyCode.E, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.EditMarkup());
-        public static NodeMarkupShortcut CreateEdgeLinesShortcut { get; } = new NodeMarkupShortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.CreateEdgeLines());
-        public static NodeMarkupShortcut SaveAsIntersectionTemplateShortcut { get; } = new NodeMarkupShortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.SaveAsIntersectionTemplate());
-        public static NodeMarkupShortcut CutLinesByCrosswalksShortcut { get; } = new NodeMarkupShortcut(nameof(CutLinesByCrosswalksShortcut), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.CutByCrosswalks());
-        public static NodeMarkupShortcut ApplyBetweenIntersectionsShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ShortcutApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.ApplyBetweenIntersections());
-        public static NodeMarkupShortcut ApplyWholeStreetShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyWholeStreetShortcut), nameof(Localize.Settings_ShortcutApplyWholeStreet), SavedInputKey.Encode(KeyCode.B, true, true, false), () => SingletonTool<NodeMarkupTool>.Instance.ApplyWholeStreet());
+        public static IntersectionMarkingToolShortcut DeleteAllShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(DeleteAllShortcut), nameof(Localize.Settings_ShortcutDeleteAllNodeLines), SavedInputKey.Encode(KeyCode.D, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.DeleteAllMarking());
+        public static IntersectionMarkingToolShortcut ResetOffsetsShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(ResetOffsetsShortcut), nameof(Localize.Settings_ShortcutResetPointsOffset), SavedInputKey.Encode(KeyCode.R, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.ResetAllOffsets());
+        public static IntersectionMarkingToolShortcut AddFillerShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(AddFillerShortcut), nameof(Localize.Settings_ShortcutAddNewFiller), SavedInputKey.Encode(KeyCode.F, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.StartCreateFiller());
+        public static IntersectionMarkingToolShortcut CopyMarkingShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(CopyMarkingShortcut), nameof(Localize.Settings_ShortcutCopyMarking), SavedInputKey.Encode(KeyCode.C, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.CopyMarking());
+        public static IntersectionMarkingToolShortcut PasteMarkingShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(PasteMarkingShortcut), nameof(Localize.Settings_ShortcutPasteMarking), SavedInputKey.Encode(KeyCode.V, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.PasteMarking());
+        public static IntersectionMarkingToolShortcut EditMarkingShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(EditMarkingShortcut), nameof(Localize.Settings_ShortcutEditMarking), SavedInputKey.Encode(KeyCode.E, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.EditMarking());
+        public static IntersectionMarkingToolShortcut CreateEdgeLinesShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(CreateEdgeLinesShortcut), nameof(Localize.Settings_ShortcutCreateEdgeLines), SavedInputKey.Encode(KeyCode.W, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.CreateEdgeLines());
+        public static IntersectionMarkingToolShortcut SaveAsIntersectionTemplateShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(SaveAsIntersectionTemplateShortcut), nameof(Localize.Settings_ShortcutSaveAsPreset), SavedInputKey.Encode(KeyCode.S, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.SaveAsIntersectionTemplate());
+        public static IntersectionMarkingToolShortcut CutLinesByCrosswalksShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(CutLinesByCrosswalksShortcut), nameof(Localize.Settings_ShortcutCutLinesByCrosswalks), SavedInputKey.Encode(KeyCode.T, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.CutByCrosswalks());
+        public static IntersectionMarkingToolShortcut ApplyBetweenIntersectionsShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(ApplyBetweenIntersectionsShortcut), nameof(Localize.Settings_ShortcutApplyBetweenIntersections), SavedInputKey.Encode(KeyCode.G, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.ApplyBetweenIntersections());
+        public static IntersectionMarkingToolShortcut ApplyWholeStreetShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(ApplyWholeStreetShortcut), nameof(Localize.Settings_ShortcutApplyWholeStreet), SavedInputKey.Encode(KeyCode.B, true, true, false), () => SingletonTool<IntersectionMarkingTool>.Instance.ApplyWholeStreet());
 
         public static IEnumerable<Shortcut> ToolShortcuts
         {
@@ -95,18 +94,18 @@ namespace NodeMarkup.Tools
         protected override bool ShowToolTip => base.ShowToolTip && (Settings.ShowToolTip || Mode.Type == ToolModeType.Select);
         public override Shortcut Activation => ActivationShortcut;
 
-        public Marking Markup { get; private set; }
-        public bool IsUnderground => Markup?.IsUnderground ?? false;
+        public Marking Marking { get; private set; }
+        public bool IsUnderground => Marking?.IsUnderground ?? false;
 
-        public NodeMarkupPanel Panel => SingletonItem<NodeMarkupPanel>.Instance;
-        public IntersectionTemplate MarkupBuffer { get; private set; }
-        public bool IsMarkupBufferEmpty => MarkupBuffer == null;
+        public IntersectionMarkingToolPanel Panel => SingletonItem<IntersectionMarkingToolPanel>.Instance;
+        public IntersectionTemplate MarkingBuffer { get; private set; }
+        public bool IsMarkingBufferEmpty => MarkingBuffer == null;
         private Dictionary<Style.StyleType, Style> StyleBuffer { get; } = new Dictionary<Style.StyleType, Style>();
 
-        protected override UITextureAtlas UUIAtlas => NodeMarkupTextures.Atlas;
-        protected override string UUINormalSprite => NodeMarkupTextures.UUIButtonNormal;
-        protected override string UUIHoveredSprite => NodeMarkupTextures.UUIButtonHovered;
-        protected override string UUIPressedSprite => NodeMarkupTextures.UUIButtonPressed;
+        protected override UITextureAtlas UUIAtlas => IntersectionMarkingToolTextures.Atlas;
+        protected override string UUINormalSprite => IntersectionMarkingToolTextures.UUIButtonNormal;
+        protected override string UUIHoveredSprite => IntersectionMarkingToolTextures.UUIButtonHovered;
+        protected override string UUIPressedSprite => IntersectionMarkingToolTextures.UUIButtonPressed;
         protected override string UUIDisabledSprite => /*NodeMarkupTextures.UUIDisabled;*/string.Empty;
 
         #endregion
@@ -116,7 +115,7 @@ namespace NodeMarkup.Tools
         protected override void InitProcess()
         {
             base.InitProcess();
-            NodeMarkupPanel.CreatePanel();
+            IntersectionMarkingToolPanel.CreatePanel();
         }
         protected override IEnumerable<IToolMode<ToolModeType>> GetModes()
         {
@@ -144,12 +143,12 @@ namespace NodeMarkup.Tools
         protected override void SetModeNow(IToolMode mode)
         {
             base.SetModeNow(mode);
-            Panel.Active = (Mode as NodeMarkupToolMode)?.ShowPanel == true;
+            Panel.Active = (Mode as IntersectionMarkingToolMode)?.ShowPanel == true;
         }
-        public void SetMarkup(Marking markup)
+        public void SetMarking(Marking marking)
         {
-            Markup = markup;
-            Panel.SetMarkup(Markup);
+            Marking = marking;
+            Panel.SetMarking(Marking);
         }
         #endregion
 
@@ -157,7 +156,7 @@ namespace NodeMarkup.Tools
 
         private void StartCreateFiller()
         {
-            if ((Markup.Support & Marking.SupportType.Fillers) != 0)
+            if ((Marking.Support & Marking.SupportType.Fillers) != 0)
             {
                 SetMode(ToolModeType.MakeFiller);
                 if (NextMode is MakeFillerToolMode fillerToolMode)
@@ -177,12 +176,12 @@ namespace NodeMarkup.Tools
 
             var messageBox = MessageBox.Show<YesNoMessageBox>();
             messageBox.CaptionText = Localize.Tool_ClearMarkingsCaption;
-            messageBox.MessageText = string.Format($"{Localize.Tool_ClearMarkingsMessage}\n{NodeMarkupMessageBox.CantUndone}", Markup.Id);
+            messageBox.MessageText = string.Format($"{Localize.Tool_ClearMarkingsMessage}\n{IntersectionMarkingToolMessageBox.CantUndone}", Marking.Id);
             messageBox.OnButton1Click = Delete;
 
             bool Delete()
             {
-                Markup.Clear();
+                Marking.Clear();
                 Panel.UpdatePanel();
                 return true;
             }
@@ -195,7 +194,7 @@ namespace NodeMarkup.Tools
             {
                 var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_ResetOffsetsCaption;
-                messageBox.MessageText = $"{string.Format(Localize.Tool_ResetOffsetsMessage, Markup.Id)}\n{NodeMarkupMessageBox.CantUndone}";
+                messageBox.MessageText = $"{string.Format(Localize.Tool_ResetOffsetsMessage, Marking.Id)}\n{IntersectionMarkingToolMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Reset;
             }
             else
@@ -203,7 +202,7 @@ namespace NodeMarkup.Tools
 
             bool Reset()
             {
-                Markup.ResetOffsets();
+                Marking.ResetOffsets();
                 Panel.UpdatePanel();
                 return true;
             }
@@ -232,7 +231,7 @@ namespace NodeMarkup.Tools
             {
                 var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = string.Format(Localize.Tool_DeleteCaption, item.DeleteCaptionDescription);
-                messageBox.MessageText = $"{string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item)}\n{NodeMarkupMessageBox.CantUndone}\n\n{additional}";
+                messageBox.MessageText = $"{string.Format(Localize.Tool_DeleteMessage, item.DeleteMessageDescription, item)}\n{IntersectionMarkingToolMessageBox.CantUndone}\n\n{additional}";
                 messageBox.OnButton1Click = () =>
                     {
                         onDelete(item);
@@ -246,24 +245,24 @@ namespace NodeMarkup.Tools
             return $"{Localize.Tool_DeleteDependence}\n{string.Join(", ", strings)}.";
         }
 
-        private void CopyMarkup()
+        private void CopyMarking()
         {
             SingletonMod<Mod>.Logger.Debug($"Copy marking");
-            MarkupBuffer = new IntersectionTemplate(Markup);
+            MarkingBuffer = new IntersectionTemplate(Marking);
             Panel?.RefreshHeader();
         }
-        private void PasteMarkup()
+        private void PasteMarking()
         {
             SingletonMod<Mod>.Logger.Debug($"Paste marking");
 
-            if (MarkupBuffer == null)
+            if (MarkingBuffer == null)
                 return;
 
-            if (Settings.DeleteWarnings && !Markup.IsEmpty)
+            if (Settings.DeleteWarnings && !Marking.IsEmpty)
             {
                 var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_PasteMarkingsCaption;
-                messageBox.MessageText = $"{Localize.Tool_PasteMarkingsMessage}\n{NodeMarkupMessageBox.ItWillReplace}\n{NodeMarkupMessageBox.CantUndone}";
+                messageBox.MessageText = $"{Localize.Tool_PasteMarkingsMessage}\n{IntersectionMarkingToolMessageBox.ItWillReplace}\n{IntersectionMarkingToolMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Paste;
             }
             else
@@ -271,15 +270,15 @@ namespace NodeMarkup.Tools
 
             bool Paste()
             {
-                ApplyMarking(MarkupBuffer);
+                ApplyMarking(MarkingBuffer);
                 return true;
             }
         }
-        private void EditMarkup()
+        private void EditMarking()
         {
             SingletonMod<Mod>.Logger.Debug($"Edit marking order");
 
-            BaseOrderToolMode.IntersectionTemplate = new IntersectionTemplate(Markup);
+            BaseOrderToolMode.IntersectionTemplate = new IntersectionTemplate(Marking);
             SetMode(ToolModeType.EditEntersOrder);
         }
         public void LinkPreset(IntersectionTemplate template, string roadName)
@@ -303,12 +302,12 @@ namespace NodeMarkup.Tools
         {
             SingletonMod<Mod>.Logger.Debug($"Create edge lines");
 
-            foreach (var enter in Markup.Enters)
+            foreach (var enter in Marking.Enters)
             {
                 var pair = new MarkingPointPair(enter.LastPoint, enter.Next.FirstPoint);
-                if (!Markup.TryGetLine(pair, out MarkingLine line))
+                if (!Marking.TryGetLine(pair, out MarkingLine line))
                 {
-                    line = Markup.AddRegularLine(pair, null);
+                    line = Marking.AddRegularLine(pair, null);
                     Panel.AddLine(line);
                 }
 
@@ -324,7 +323,7 @@ namespace NodeMarkup.Tools
 
             void Callback(Image image)
             {
-                if (SingletonManager<IntersectionTemplateManager>.Instance.AddTemplate(Markup, image, out IntersectionTemplate template))
+                if (SingletonManager<IntersectionTemplateManager>.Instance.AddTemplate(Marking, image, out IntersectionTemplate template))
                     Panel.EditIntersectionTemplate(template);
             }
         }
@@ -332,16 +331,16 @@ namespace NodeMarkup.Tools
         {
             SingletonMod<Mod>.Logger.Debug($"Cut by crosswalk");
 
-            foreach (var crosswalk in Markup.Crosswalks)
-                Markup.CutLinesByCrosswalk(crosswalk);
+            foreach (var crosswalk in Marking.Crosswalks)
+                Marking.CutLinesByCrosswalk(crosswalk);
         }
 
         private void ApplyMarking(IntersectionTemplate source)
         {
             ObjectsMap map = null;
-            if (Settings.AutoApplyPasting && Markup.EntersCount == source.Enters.Length)
+            if (Settings.AutoApplyPasting && Marking.EntersCount == source.Enters.Length)
             {
-                var targetPoints = Markup.Enters.Select(e => e.PointCount).ToArray();
+                var targetPoints = Marking.Enters.Select(e => e.PointCount).ToArray();
                 var sourcePoints = source.Enters.Select(e => e.PointCount).ToArray();
                 var invertedPoints = source.Enters.Select(e => e.PointCount).Reverse().ToArray();
 
@@ -351,13 +350,13 @@ namespace NodeMarkup.Tools
                 if (direct.Length == 1 && invert.Length == 0)
                 {
                     map = new ObjectsMap();
-                    var targetEnters = Markup.Enters.ToArray();
+                    var targetEnters = Marking.Enters.ToArray();
                     var sourceEnters = source.Enters;
 
                     for (int indexTarget = 0; indexTarget < targetPoints.Length; indexTarget += 1)
                     {
                         var indexSource = indexTarget.NextIndex(sourcePoints.Length, direct[0]);
-                        switch (Markup.Type)
+                        switch (Marking.Type)
                         {
                             case MarkingType.Node:
                                 map.AddSegment(sourceEnters[indexSource].Id, targetEnters[indexTarget].Id);
@@ -371,13 +370,13 @@ namespace NodeMarkup.Tools
                 else if (Settings.AutoApplyPastingType == 1 && direct.Length == 0 && invert.Length == 1)
                 {
                     map = new ObjectsMap();
-                    var targetEnters = Markup.Enters.ToArray();
+                    var targetEnters = Marking.Enters.ToArray();
                     var sourceEnters = source.Enters.Reverse().ToArray();
 
                     for (int indexTarget = 0; indexTarget < targetPoints.Length; indexTarget += 1)
                     {
                         var indexSource = indexTarget.NextIndex(sourcePoints.Length, invert[0]);
-                        switch (Markup.Type)
+                        switch (Marking.Type)
                         {
                             case MarkingType.Node:
                                 map.AddSegment(sourceEnters[indexSource].Id, targetEnters[indexTarget].Id);
@@ -397,8 +396,8 @@ namespace NodeMarkup.Tools
 
             if (map != null)
             {
-                Markup.Clear();
-                Markup.FromXml(SingletonMod<Mod>.Version, source.Data, map);
+                Marking.Clear();
+                Marking.FromXml(SingletonMod<Mod>.Version, source.Data, map);
                 Panel.UpdatePanel();
             }
             else
@@ -416,18 +415,18 @@ namespace NodeMarkup.Tools
 
                 if(startNode == firstNode && endNode == secondNode || startNode == secondNode && endNode == firstNode)
                 {
-                    var markup = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
+                    var marking = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
                     var map = new ObjectsMap();
                     map.AddNode(startNode, endNode);
                     map.AddNode(endNode, startNode);
-                    markup.FromXml(SingletonMod<Mod>.Version, removed.Data, map);
+                    marking.FromXml(SingletonMod<Mod>.Version, removed.Data, map);
                     return;
                 }
             }
 
             if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var presetId, out var flip, out var invert) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset))
             {
-                var markup = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
+                var marking = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
                 ref var segment = ref segmentId.GetSegment();
                 flip ^= (segment.m_flags & NetSegment.Flags.Invert) != 0;
 
@@ -436,11 +435,11 @@ namespace NodeMarkup.Tools
                 map.AddNode(preset.Enters[1].Id, !flip ? endNode : startNode);
                 if (invert)
                 {
-                    foreach (var enter in markup.Enters)
+                    foreach (var enter in marking.Enters)
                         map.AddInvertEnter(enter);
                 }
 
-                markup.FromXml(SingletonMod<Mod>.Version, preset.Data, map);
+                marking.FromXml(SingletonMod<Mod>.Version, preset.Data, map);
                 return;
             }
             
@@ -478,10 +477,10 @@ namespace NodeMarkup.Tools
         {
             SingletonMod<Mod>.Logger.Debug($"Apply between intersections");
 
-            if (Markup.Type != MarkingType.Segment)
+            if (Marking.Type != MarkingType.Segment)
                 return;
 
-            ref var segment = ref Markup.Id.GetSegment();
+            ref var segment = ref Marking.Id.GetSegment();
             var startNode = segment.m_startNode;
             var endNode = segment.m_endNode;
             var info = segment.Info;
@@ -490,7 +489,7 @@ namespace NodeMarkup.Tools
             {
                 var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_ApplyBetweenIntersectionsCaption;
-                messageBox.MessageText = $"{Localize.Tool_ApplyBetweenIntersectionsMessage}\n{NodeMarkupMessageBox.ItWillReplace}\n{NodeMarkupMessageBox.CantUndone}";
+                messageBox.MessageText = $"{Localize.Tool_ApplyBetweenIntersectionsMessage}\n{IntersectionMarkingToolMessageBox.ItWillReplace}\n{IntersectionMarkingToolMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Apply;
             }
             else
@@ -499,9 +498,9 @@ namespace NodeMarkup.Tools
 
             bool Apply()
             {
-                var config = Markup.ToXml();
-                this.Apply(Markup.Id, startNode, endNode, info, config, SegmentGetter);
-                this.Apply(Markup.Id, endNode, startNode, info, config, SegmentGetter);
+                var config = Marking.ToXml();
+                this.Apply(Marking.Id, startNode, endNode, info, config, SegmentGetter);
+                this.Apply(Marking.Id, endNode, startNode, info, config, SegmentGetter);
                 return true;
             }
 
@@ -521,10 +520,10 @@ namespace NodeMarkup.Tools
         {
             SingletonMod<Mod>.Logger.Debug($"Apply to whole street");
 
-            if (Markup.Type != MarkingType.Segment)
+            if (Marking.Type != MarkingType.Segment)
                 return;
 
-            ref var segment = ref Markup.Id.GetSegment();
+            ref var segment = ref Marking.Id.GetSegment();
             var startNode = segment.m_startNode;
             var endNode = segment.m_endNode;
             var info = segment.Info;
@@ -532,10 +531,10 @@ namespace NodeMarkup.Tools
 
             if (Settings.DeleteWarnings)
             {
-                var streetName = Singleton<NetManager>.instance.GetSegmentName(Markup.Id);
+                var streetName = Singleton<NetManager>.instance.GetSegmentName(Marking.Id);
                 var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_ApplyWholeStreetCaption;
-                messageBox.MessageText = $"{string.Format(Localize.Tool_ApplyWholeStreetMessage, streetName)}\n{NodeMarkupMessageBox.ItWillReplace}\n{NodeMarkupMessageBox.CantUndone}";
+                messageBox.MessageText = $"{string.Format(Localize.Tool_ApplyWholeStreetMessage, streetName)}\n{IntersectionMarkingToolMessageBox.ItWillReplace}\n{IntersectionMarkingToolMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Apply;
             }
             else
@@ -543,9 +542,9 @@ namespace NodeMarkup.Tools
 
             bool Apply()
             {
-                var config = Markup.ToXml();
-                this.Apply(Markup.Id, startNode, endNode, info, config, SegmentGetter);
-                this.Apply(Markup.Id, endNode, startNode, info, config, SegmentGetter);
+                var config = Marking.ToXml();
+                this.Apply(Marking.Id, startNode, endNode, info, config, SegmentGetter);
+                this.Apply(Marking.Id, endNode, startNode, info, config, SegmentGetter);
                 return true;
             }
 
@@ -600,9 +599,9 @@ namespace NodeMarkup.Tools
                 var map = new ObjectsMap();
                 map.AddSegment(nearNodeId, beforeSegmentId);
                 map.AddSegment(farNodeId, nextSegmentId.Value);
-                var markup = SingletonManager<NodeMarkingManager>.Instance[nodeId];
-                markup.Clear();
-                markup.FromXml(SingletonMod<Mod>.Version, config, map);
+                var marking = SingletonManager<NodeMarkingManager>.Instance[nodeId];
+                marking.Clear();
+                marking.FromXml(SingletonMod<Mod>.Version, config, map);
             }
 
             return nextSegmentId;
@@ -619,9 +618,9 @@ namespace NodeMarkup.Tools
             var map = new ObjectsMap();
             map.AddNode(farNodeId, beforeNodeId);
             map.AddNode(nearNodeId, nextNodeId);
-            var markup = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
-            markup.Clear();
-            markup.FromXml(SingletonMod<Mod>.Version, config, map);
+            var marking = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
+            marking.Clear();
+            marking.FromXml(SingletonMod<Mod>.Version, config, map);
 
             return nextNodeId;
         }
@@ -692,7 +691,7 @@ namespace NodeMarkup.Tools
         }
         private float GetCameraAngle()
         {
-            var enters = Markup.Enters.ToArray();
+            var enters = Marking.Enters.ToArray();
 
             switch (enters.Length)
             {
@@ -728,11 +727,11 @@ namespace NodeMarkup.Tools
         }
         private void GetCameraPorition(float angle, out Vector3 position, out float size)
         {
-            var points = Markup.Enters.SelectMany(e => new Vector3[] { e.FirstPointSide, e.LastPointSide }).ToArray();
+            var points = Marking.Enters.SelectMany(e => new Vector3[] { e.FirstPointSide, e.LastPointSide }).ToArray();
 
             if (!points.Any())
             {
-                position = Markup.Position;
+                position = Marking.Position;
                 size = 10f;
                 return;
             }
@@ -743,13 +742,13 @@ namespace NodeMarkup.Tools
             var rect = new Rect();
             foreach (var point in points)
             {
-                Line2.Intersect(XZ(Markup.Position), XZ(Markup.Position + dir), XZ(point), XZ(point + normal), out float x, out _);
-                Line2.Intersect(XZ(Markup.Position), XZ(Markup.Position + normal), XZ(point), XZ(point + dir), out float y, out _);
+                Line2.Intersect(XZ(Marking.Position), XZ(Marking.Position + dir), XZ(point), XZ(point + normal), out float x, out _);
+                Line2.Intersect(XZ(Marking.Position), XZ(Marking.Position + normal), XZ(point), XZ(point + dir), out float y, out _);
 
                 Set(ref rect, x, y);
             }
 
-            position = Markup.Position + dir * rect.center.x + normal * rect.center.y;
+            position = Marking.Position + dir * rect.center.x + normal * rect.center.y;
             size = Mathf.Max(rect.width, rect.height);
 
             static void Set(ref Rect rect, float x, float y)
@@ -893,12 +892,12 @@ namespace NodeMarkup.Tools
 
         #endregion
     }
-    public abstract class NodeMarkupToolMode : BaseToolMode<NodeMarkupTool>, IToolMode<ToolModeType>, IToolModePanel
+    public abstract class IntersectionMarkingToolMode : BaseToolMode<IntersectionMarkingTool>, IToolMode<ToolModeType>, IToolModePanel
     {
         public abstract ToolModeType Type { get; }
         public virtual bool ShowPanel => true;
-        protected NodeMarkupPanel Panel => SingletonItem<NodeMarkupPanel>.Instance;
-        public Marking Markup => Tool.Markup;
+        protected IntersectionMarkingToolPanel Panel => SingletonItem<IntersectionMarkingToolPanel>.Instance;
+        public Marking Marking => Tool.Marking;
         protected bool IsUnderground => Tool.IsUnderground;
 
         public override void RenderGeometry(RenderManager.CameraInfo cameraInfo)
@@ -910,11 +909,11 @@ namespace NodeMarkup.Tools
                 if (intensity > 0.001f)
                 {
 #if DEBUG
-                    var position = Markup.CenterPosition + Vector3.up * Markup.CenterRadius * Settings.IlluminationDelta;
+                    var position = Marking.CenterPosition + Vector3.up * Marking.CenterRadius * Settings.IlluminationDelta;
 #else
-                    var position = Markup.CenterPosition + Vector3.up * Markup.CenterRadius * 1.41f;
+                    var position = Marking.CenterPosition + Vector3.up * Marking.CenterRadius * 1.41f;
 #endif
-                    lightSystem.DrawLight(LightType.Spot, position, Vector3.down, Vector3.zero, Color.white, intensity, Markup.CenterRadius * 2f, 90f, 1f, false);
+                    lightSystem.DrawLight(LightType.Spot, position, Vector3.down, Vector3.zero, Color.white, intensity, Marking.CenterRadius * 2f, 90f, 1f, false);
                 }
             }
         }
@@ -941,11 +940,11 @@ namespace NodeMarkup.Tools
     {
         public IEnumerable<Shortcut> Shortcuts { get; }
     }
-    public class NodeMarkupShortcut : ToolShortcut<Mod, NodeMarkupTool, ToolModeType>
+    public class IntersectionMarkingToolShortcut : ToolShortcut<Mod, IntersectionMarkingTool, ToolModeType>
     {
-        public NodeMarkupShortcut(string name, string labelKey, InputKey key, Action action = null, ToolModeType modeType = ToolModeType.MakeItem) : base(name, labelKey, key, action, modeType) { }
+        public IntersectionMarkingToolShortcut(string name, string labelKey, InputKey key, Action action = null, ToolModeType modeType = ToolModeType.MakeItem) : base(name, labelKey, key, action, modeType) { }
     }
-    public class NodeMarkupToolThreadingExtension : BaseUUIThreadingExtension<NodeMarkupTool> { }
-    public class NodeMarkupToolLoadingExtension : BaseUUIToolLoadingExtension<NodeMarkupTool> { }
+    public class IntersectionMarkingToolThreadingExtension : BaseUUIThreadingExtension<IntersectionMarkingTool> { }
+    public class IntersectionMarkingToolLoadingExtension : BaseUUIToolLoadingExtension<IntersectionMarkingTool> { }
 
 }

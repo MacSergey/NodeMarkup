@@ -1,28 +1,25 @@
-﻿using ColossalFramework.Math;
-using ModsCommon.Utilities;
+﻿using ModsCommon.Utilities;
 using NodeMarkup.Manager;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.Utilities
 {
-    public class MarkupLinesIntersect : Intersection
+    public class MarkingLinesIntersect : Intersection
     {
         public MarkingLinePair Pair { get; private set; }
         public Vector3 Position => (Pair.First.Trajectory.Position(FirstT) + Pair.Second.Trajectory.Position(SecondT)) / 2;
-        protected MarkupLinesIntersect(MarkingLinePair pair, float firstT, float secondT) : base(firstT, secondT)
+        protected MarkingLinesIntersect(MarkingLinePair pair, float firstT, float secondT) : base(firstT, secondT)
         {
             Pair = pair;
         }
-        protected MarkupLinesIntersect(MarkingLinePair pair) : base()
+        protected MarkingLinesIntersect(MarkingLinePair pair) : base()
         {
             Pair = pair;
         }
 
-        public static MarkupLinesIntersect Calculate(MarkingLine first, MarkingLine second) => Calculate(new MarkingLinePair(first, second));
-        public static MarkupLinesIntersect Calculate(MarkingLinePair pair)
+        public static MarkingLinesIntersect Calculate(MarkingLine first, MarkingLine second) => Calculate(new MarkingLinePair(first, second));
+        public static MarkingLinesIntersect Calculate(MarkingLinePair pair)
         {
             var mustIntersect = pair.MustIntersect;
 
@@ -33,10 +30,10 @@ namespace NodeMarkup.Utilities
 
                 var intersect = CalculateSingle(firstTrajectory, secondTrajectory);
                 if (intersect.IsIntersect)
-                    return new MarkupLinesIntersect(pair, intersect.FirstT, intersect.SecondT);
+                    return new MarkingLinesIntersect(pair, intersect.FirstT, intersect.SecondT);
             }
 
-            return new MarkupLinesIntersect(pair);
+            return new MarkingLinesIntersect(pair);
 
             static ITrajectory GetTrajectory(MarkingLine line, bool? mustIntersect)
                     => mustIntersect == true && line.Trajectory is StraightTrajectory straight ? new StraightTrajectory(straight.Trajectory, false) : line.Trajectory;

@@ -21,7 +21,7 @@ namespace NodeMarkup.Utilities
 
     public class MoveItIntegration : MoveItIntegrationBase
     {
-        public override string ID => "CS.macsergey.NodeMarkup";
+        public override string ID => "CS.macsergey.IntersectionMarkingTool";
 
         public override string Name => SingletonMod<Mod>.NameRaw;
 
@@ -31,14 +31,14 @@ namespace NodeMarkup.Utilities
 
         public override object Copy(InstanceID sourceInstanceID) => sourceInstanceID.Type switch
         {
-            InstanceType.NetNode when SingletonManager<NodeMarkingManager>.Instance.TryGetMarking(sourceInstanceID.NetNode, out Manager.NodeMarking nodeMarkup) => nodeMarkup.ToXml(),
+            InstanceType.NetNode when SingletonManager<NodeMarkingManager>.Instance.TryGetMarking(sourceInstanceID.NetNode, out NodeMarking nodeMarking) => nodeMarking.ToXml(),
             InstanceType.NetSegment when SingletonManager<SegmentMarkingManager>.Instance.TryGetMarking(sourceInstanceID.NetSegment, out SegmentMarking segmentMarkup) => segmentMarkup.ToXml(),
             _ => null,
         };
 
 
         public override void Paste(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap) => Paste(targetInstanceID, record, sourceMap, PasteMapGetter);
-        private ObjectsMap PasteMapGetter(Marking markup, Dictionary<InstanceID, InstanceID> sourceMap)
+        private ObjectsMap PasteMapGetter(Marking marking, Dictionary<InstanceID, InstanceID> sourceMap)
         {
             var map = new ObjectsMap();
             map.FromDictionary(sourceMap);
@@ -46,12 +46,12 @@ namespace NodeMarkup.Utilities
         }
 
         public override void Mirror(InstanceID targetInstanceID, object record, Dictionary<InstanceID, InstanceID> sourceMap, float instanceRotation, float mirrorRotation) => Paste(targetInstanceID, record, sourceMap, MirrorMapGetter);
-        private ObjectsMap MirrorMapGetter(Marking markup, Dictionary<InstanceID, InstanceID> sourceMap)
+        private ObjectsMap MirrorMapGetter(Marking marking, Dictionary<InstanceID, InstanceID> sourceMap)
         {
             var map = new ObjectsMap(true);
             foreach (var source in sourceMap.Where(p => IsCorrect(p)))
             {
-                if (!markup.TryGetEnter(source.Value.NetSegment, out Entrance enter))
+                if (!marking.TryGetEnter(source.Value.NetSegment, out Entrance enter))
                     continue;
 
                 map.AddSegment(source.Key.NetSegment, source.Value.NetSegment);
@@ -67,21 +67,21 @@ namespace NodeMarkup.Utilities
             if (record is not XElement config)
                 return;
 
-            Marking markup;
+            Marking marking;
             switch (targetInstanceID.Type)
             {
                 case InstanceType.NetNode:
-                    markup = SingletonManager<NodeMarkingManager>.Instance[targetInstanceID.NetNode];
+                    marking = SingletonManager<NodeMarkingManager>.Instance[targetInstanceID.NetNode];
                     break;
                 case InstanceType.NetSegment:
-                    markup = SingletonManager<SegmentMarkingManager>.Instance[targetInstanceID.NetSegment];
+                    marking = SingletonManager<SegmentMarkingManager>.Instance[targetInstanceID.NetSegment];
                     break;
                 default:
                     return;
             }
 
-            var map = mapGetter(markup, sourceMap);
-            markup.FromXml(SingletonMod<Mod>.Version, config, map);
+            var map = mapGetter(marking, sourceMap);
+            marking.FromXml(SingletonMod<Mod>.Version, config, map);
         }
 
         public override string Encode64(object record) => record == null ? null : EncodeUtil.BinaryEncode64(record?.ToString());

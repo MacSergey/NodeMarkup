@@ -37,7 +37,7 @@ namespace NodeMarkup.UI
 
         public void OnUpdate()
         {
-            if (SingletonTool<NodeMarkupTool>.Instance.MouseRayValid)
+            if (SingletonTool<IntersectionMarkingTool>.Instance.MouseRayValid)
             {
                 if (!IsHoverGroup || !HoverGroup.OnUpdate())
                     HoverGroup = Groups.FirstOrDefault(g => g.OnUpdate());
@@ -101,9 +101,9 @@ namespace NodeMarkup.UI
 
         public bool OnUpdate()
         {
-            IsHover = IsHover ? OnLeave(SingletonTool<NodeMarkupTool>.Instance.MouseRay) : HoverBounds.IntersectRay(SingletonTool<NodeMarkupTool>.Instance.MouseRay);
+            IsHover = IsHover ? OnLeave(SingletonTool<IntersectionMarkingTool>.Instance.MouseRay) : HoverBounds.IntersectRay(SingletonTool<IntersectionMarkingTool>.Instance.MouseRay);
             if (IsHover)
-                HoverPoint = PointsBounds.FirstOrDefault(p => p.Value.IntersectRay(SingletonTool<NodeMarkupTool>.Instance.MouseRay)).Key;
+                HoverPoint = PointsBounds.FirstOrDefault(p => p.Value.IntersectRay(SingletonTool<IntersectionMarkingTool>.Instance.MouseRay)).Key;
 
             return IsHover;
         }
@@ -151,7 +151,7 @@ namespace NodeMarkup.UI
         protected override void UpdateBounds()
         {
             var r = Mathf.Max((Step / 2) / Mathf.Sin(180 / Points.Count * Mathf.Deg2Rad), Step);
-            var dir = SingletonTool<NodeMarkupTool>.Instance.CameraDirection.Turn90(true);
+            var dir = SingletonTool<IntersectionMarkingTool>.Instance.CameraDirection.Turn90(true);
 
             CircleLeaveBounds = new Bounds(Position, Vector3.one * (Points.Count > 1 ? (2 * r + PointSize + 3 * Space) : PointSize));
             LineLeaveBounds = new TrajectoryBound(new StraightTrajectory(Position - dir * r, Position + dir * r), PointSize + 3 * Space);
@@ -184,11 +184,11 @@ namespace NodeMarkup.UI
 
         protected override void UpdateBounds()
         {
-            LeaveBounds = new TrajectoryBound(new StraightTrajectory(Position, Position + SingletonTool<NodeMarkupTool>.Instance.CameraDirection * (Step * Points.Count)), PointSize + 3 * Space);
+            LeaveBounds = new TrajectoryBound(new StraightTrajectory(Position, Position + SingletonTool<IntersectionMarkingTool>.Instance.CameraDirection * (Step * Points.Count)), PointSize + 3 * Space);
 
             foreach (var point in Points)
             {
-                var pointPosition = Points.Count > 1 ? Position + SingletonTool<NodeMarkupTool>.Instance.CameraDirection * (Step * (PointsBounds.Count + 1)) : Position;
+                var pointPosition = Points.Count > 1 ? Position + SingletonTool<IntersectionMarkingTool>.Instance.CameraDirection * (Step * (PointsBounds.Count + 1)) : Position;
                 var pointBounds = new Bounds(pointPosition, Vector3.one * PointSize);
                 PointsBounds.Add(point, pointBounds);
             }

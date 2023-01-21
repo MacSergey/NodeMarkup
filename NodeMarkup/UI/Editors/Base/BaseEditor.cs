@@ -22,8 +22,8 @@ namespace NodeMarkup.UI.Editors
     }
     public abstract class Editor : CustomUIPanel, ISupport
     {
-        public NodeMarkupPanel Panel { get; private set; }
-        public Marking Markup => Panel.Markup;
+        public IntersectionMarkingToolPanel Panel { get; private set; }
+        public Marking Marking => Panel.Marking;
 
         public abstract string Name { get; }
         public abstract Marking.SupportType Support { get; }
@@ -45,7 +45,7 @@ namespace NodeMarkup.UI.Editors
             }
         }
 
-        public void Init(NodeMarkupPanel panel) => Panel = panel;
+        public void Init(IntersectionMarkingToolPanel panel) => Panel = panel;
         protected abstract void ActiveEditor();
         public abstract void UpdateEditor();
         public abstract void RefreshEditor();
@@ -62,7 +62,7 @@ namespace NodeMarkup.UI.Editors
         protected static float ItemsRatio => 0.3f;
         protected static float ContentRatio => 1f - ItemsRatio;
 
-        public NodeMarkupTool Tool => SingletonTool<NodeMarkupTool>.Instance;
+        public IntersectionMarkingTool Tool => SingletonTool<IntersectionMarkingTool>.Instance;
         protected bool NeedUpdate { get; set; }
         public ObjectType EditObject => ItemsPanel.SelectedObject;
 

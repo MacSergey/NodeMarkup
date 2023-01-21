@@ -282,13 +282,13 @@ namespace NodeMarkup.UI
                             };
                             var sprite = style switch
                             {
-                                UnityEngine.FontStyle.Bold => NodeMarkupTextures.BoldButtonIcons,
-                                UnityEngine.FontStyle.Italic => NodeMarkupTextures.ItalicButtonIcons,
-                                UnityEngine.FontStyle.BoldAndItalic => NodeMarkupTextures.BoldItalicButtonIcons,
-                                _ => NodeMarkupTextures.RegularButtonIcons,
+                                UnityEngine.FontStyle.Bold => IntersectionMarkingToolTextures.BoldButtonIcons,
+                                UnityEngine.FontStyle.Italic => IntersectionMarkingToolTextures.ItalicButtonIcons,
+                                UnityEngine.FontStyle.BoldAndItalic => IntersectionMarkingToolTextures.BoldItalicButtonIcons,
+                                _ => IntersectionMarkingToolTextures.RegularButtonIcons,
                             };
 
-                            FontStyleSelector.AddItem(style, label, NodeMarkupTextures.Atlas, sprite);
+                            FontStyleSelector.AddItem(style, label, IntersectionMarkingToolTextures.Atlas, sprite);
                         }
 
                         if (styles.Contains(selectedStyle))

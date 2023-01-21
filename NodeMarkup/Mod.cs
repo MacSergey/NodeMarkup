@@ -173,7 +173,7 @@ namespace NodeMarkup
         }
         private static bool NetManagerEndOverlay()
         {
-            return !SingletonTool<NodeMarkupTool>.Instance.enabled || !Settings.HideStreetName;
+            return !SingletonTool<IntersectionMarkingTool>.Instance.enabled || !Settings.HideStreetName;
         }
 
         #endregion
@@ -513,16 +513,16 @@ namespace NodeMarkup
 
     public static class Patcher
     {
-        public static IEnumerable<CodeInstruction> ToolControllerAwakeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.ToolControllerAwakeTranspiler<Mod, NodeMarkupTool>(generator, instructions);
+        public static IEnumerable<CodeInstruction> ToolControllerAwakeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.ToolControllerAwakeTranspiler<Mod, IntersectionMarkingTool>(generator, instructions);
 
-        public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result) => ModsCommon.Patcher.GeneratedScrollPanelCreateOptionPanelPostfix<Mod, NodeMarkupButton>(templateName, ref __result, ModsCommon.Patcher.RoadsOptionPanel);
+        public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result) => ModsCommon.Patcher.GeneratedScrollPanelCreateOptionPanelPostfix<Mod, NodeMarkingButton>(templateName, ref __result, ModsCommon.Patcher.RoadsOptionPanel);
 
-        public static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.GameKeyShortcutsEscapeTranspiler<Mod, NodeMarkupTool>(generator, instructions);
+        public static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.GameKeyShortcutsEscapeTranspiler<Mod, IntersectionMarkingTool>(generator, instructions);
 
         public static void LoadAssetPanelOnLoadPostfix(LoadAssetPanel __instance, UIListBox ___m_SaveList) => ModsCommon.Patcher.LoadAssetPanelOnLoadPostfix<BuildingAssetDataExtension>(__instance, ___m_SaveList);
 
         public static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.BuildingDecorationLoadPathsTranspiler<BuildingAssetDataExtension>(instructions);
 
-        public static void NetManagerCreateSegmentPostfix(NetInfo info, ushort segment, ushort startNode, ushort endNode) => NodeMarkupTool.ApplyDefaultMarking(info, segment, startNode, endNode);
+        public static void NetManagerCreateSegmentPostfix(NetInfo info, ushort segment, ushort startNode, ushort endNode) => IntersectionMarkingTool.ApplyDefaultMarking(info, segment, startNode, endNode);
     }
 }

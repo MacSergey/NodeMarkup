@@ -62,7 +62,7 @@ namespace NodeMarkup.Tools
         public void Render(RenderManager.CameraInfo cameraInfo, BaseOrderToolMode<SourceType> toolMode)
         {
             var hue = (byte)(toolMode.SelectedSource == this || toolMode.HoverSource == this ? 255 : 192);
-            var position = toolMode.SelectedSource == this ? (toolMode.IsHoverTarget ? toolMode.HoverTarget.Position : SingletonTool<NodeMarkupTool>.Instance.MouseWorldPosition) : Position;
+            var position = toolMode.SelectedSource == this ? (toolMode.IsHoverTarget ? toolMode.HoverTarget.Position : SingletonTool<IntersectionMarkingTool>.Instance.MouseWorldPosition) : Position;
             var size = BoundsSize;
             var color = Colors.GetOverlayColor(Index, 255, hue);
             while (size > 0)
@@ -170,10 +170,10 @@ namespace NodeMarkup.Tools
         }
         protected override Vector3 GetPosition(BaseOrderToolMode toolMode)
         {
-            var dir = (ZeroPosition - toolMode.Markup.Position).normalized;
+            var dir = (ZeroPosition - toolMode.Marking.Position).normalized;
             var normal = dir.Turn90(true);
 
-            Line2.Intersect(XZ(toolMode.Centre), XZ(toolMode.Centre + normal), XZ(toolMode.Markup.Position), XZ(toolMode.Markup.Position + dir), out float p, out _);
+            Line2.Intersect(XZ(toolMode.Centre), XZ(toolMode.Centre + normal), XZ(toolMode.Marking.Position), XZ(toolMode.Marking.Position + dir), out float p, out _);
             var point = toolMode.Centre + normal * p;
             var distance = Mathf.Sqrt(Mathf.Pow(toolMode.Radius, 2) - Mathf.Pow(Math.Abs(p), 2));
             return point + dir * distance;

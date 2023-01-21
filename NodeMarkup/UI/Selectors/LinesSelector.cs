@@ -30,8 +30,8 @@ namespace NodeMarkup.UI
 
         public void OnUpdate()
         {
-            if (SingletonTool<NodeMarkupTool>.Instance.MouseRayValid)
-                HoverLine = Lines.FirstOrDefault(l => l.IntersectRay(SingletonTool<NodeMarkupTool>.Instance.MouseRay));
+            if (SingletonTool<IntersectionMarkingTool>.Instance.MouseRayValid)
+                HoverLine = Lines.FirstOrDefault(l => l.IntersectRay(SingletonTool<IntersectionMarkingTool>.Instance.MouseRay));
             else
                 HoverLine = null;
         }

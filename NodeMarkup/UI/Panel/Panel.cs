@@ -1,18 +1,15 @@
-﻿using ColossalFramework.UI;
-using ModsCommon;
+﻿using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using NodeMarkup.Tools;
 using NodeMarkup.UI.Editors;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using UnityEngine;
 
 namespace NodeMarkup.UI.Panel
 {
-    public class NodeMarkupPanel : ToolPanel<Mod, NodeMarkupTool, NodeMarkupPanel>
+    public class IntersectionMarkingToolPanel : ToolPanel<Mod, IntersectionMarkingTool, IntersectionMarkingToolPanel>
     {
         #region PROPERTIES
 
@@ -41,7 +38,7 @@ namespace NodeMarkup.UI.Panel
 
         private float Width => 550f;
 
-        public Marking Markup { get; private set; }
+        public Marking Marking { get; private set; }
         private bool NeedRefreshOnVisible { get; set; }
 
         private PanelHeader Header { get; set; }
@@ -66,11 +63,11 @@ namespace NodeMarkup.UI.Panel
 
         public override void Awake()
         {
-            SingletonItem<NodeMarkupPanel>.Instance = this;
+            SingletonItem<IntersectionMarkingToolPanel>.Instance = this;
 
             atlas = TextureHelper.InGameAtlas;
             backgroundSprite = "MenuPanel2";
-            name = "NodeMarkupPanel";
+            name = nameof(IntersectionMarkingToolPanel);
 
             CreateHeader();
             CreateTabStrip();
@@ -142,9 +139,9 @@ namespace NodeMarkup.UI.Panel
 
         #region UPDATE
 
-        public void SetMarkup(Marking markup)
+        public void SetMarking(Marking marking)
         {
-            if ((Markup = markup) != null)
+            if ((Marking = marking) != null)
             {
                 if (isVisible)
                     RefreshPanel();
@@ -162,9 +159,9 @@ namespace NodeMarkup.UI.Panel
         {
             NeedRefreshOnVisible = false;
 
-            Header.Text = Markup.PanelCaption;
-            Header.Init(Markup.Type);
-            TabStrip.SetVisible(Markup);
+            Header.Text = Marking.PanelCaption;
+            Header.Init(Marking.Type);
+            TabStrip.SetVisible(Marking);
             TabStrip.ArrangeTabs();
             TabStrip.SelectedTab = -1;
             SelectEditor<LinesEditor>();
@@ -266,7 +263,7 @@ namespace NodeMarkup.UI.Panel
         }
 
         public void DeleteLine(MarkingLine line) => DeleteObject<LinesEditor, MarkingLine>(line);
-        public void DeleteCrosswalk(MarkupCrosswalk crosswalk) => DeleteObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
+        public void DeleteCrosswalk(MarkingCrosswalk crosswalk) => DeleteObject<CrosswalksEditor, MarkingCrosswalk>(crosswalk);
         public void DeleteFiller(MarkingFiller filler) => DeleteObject<FillerEditor, MarkingFiller>(filler);
 
         #endregion
@@ -277,7 +274,7 @@ namespace NodeMarkup.UI.Panel
             where EditorType : Editor, IEditor<ItemType>
             where ItemType : class, ISupport, IDeletable
         {
-            if ((Markup.Support & item.Support) == 0)
+            if ((Marking.Support & item.Support) == 0)
                 return null;
 
             Available = true;
@@ -287,10 +284,10 @@ namespace NodeMarkup.UI.Panel
         }
         public void SelectPoint(MarkingEnterPoint point) => SelectObject<PointsEditor, MarkingEnterPoint>(point);
         public void SelectLine(MarkingLine line) => SelectObject<LinesEditor, MarkingLine>(line);
-        public void SelectCrosswalk(MarkupCrosswalk crosswalk) => SelectObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
-        public void EditCrosswalk(MarkupCrosswalk crosswalk)
+        public void SelectCrosswalk(MarkingCrosswalk crosswalk) => SelectObject<CrosswalksEditor, MarkingCrosswalk>(crosswalk);
+        public void EditCrosswalk(MarkingCrosswalk crosswalk)
         {
-            var editor = SelectObject<CrosswalksEditor, MarkupCrosswalk>(crosswalk);
+            var editor = SelectObject<CrosswalksEditor, MarkingCrosswalk>(crosswalk);
             editor?.BorderSetup();
         }
         public void SelectFiller(MarkingFiller filler) => SelectObject<FillerEditor, MarkingFiller>(filler);

@@ -33,12 +33,12 @@ namespace NodeMarkup.API.Applicators
 			}
 		}
 
-		public static MarkingEnterPoint GetEntrancePoint(Marking markup, IEntrancePointData pointData) => GetEntrancePoint(markup, pointData, out _);
+		public static MarkingEnterPoint GetEntrancePoint(Marking marking, IEntrancePointData pointData) => GetEntrancePoint(marking, pointData, out _);
 
-		public static MarkingEnterPoint GetEntrancePoint(Marking markup, IEntrancePointData pointData, out Entrance enter)
+		public static MarkingEnterPoint GetEntrancePoint(Marking marking, IEntrancePointData pointData, out Entrance enter)
 		{
-			if (!markup.TryGetEnter(pointData.EntranceId, out enter))
-				throw new EntranceNotExist(pointData.EntranceId, markup.Id);
+			if (!marking.TryGetEnter(pointData.EntranceId, out enter))
+				throw new EntranceNotExist(pointData.EntranceId, marking.Id);
 
 			if (!enter.TryGetPoint(pointData.Index, MarkingPoint.PointType.Enter, out var point))
 				throw new PointNotExist(pointData.Index, enter.Id);
@@ -46,10 +46,10 @@ namespace NodeMarkup.API.Applicators
 			return point as MarkingEnterPoint;
 		}
 
-		public static MarkingPoint GetCrosswalkPoint(Marking markup, ICrosswalkPointData pointData)
+		public static MarkingPoint GetCrosswalkPoint(Marking marking, ICrosswalkPointData pointData)
 		{
-			if (!markup.TryGetEnter(pointData.EntranceId, out var enter))
-				throw new EntranceNotExist(pointData.EntranceId, markup.Id);
+			if (!marking.TryGetEnter(pointData.EntranceId, out var enter))
+				throw new EntranceNotExist(pointData.EntranceId, marking.Id);
 
 			if (!enter.TryGetPoint(pointData.Index, MarkingPoint.PointType.Crosswalk, out var point))
 				throw new PointNotExist(pointData.Index, enter.Id);
@@ -57,10 +57,10 @@ namespace NodeMarkup.API.Applicators
 			return point;
 		}
 
-		public static MarkingPoint GetLanePoint(Marking markup, ILanePointData pointData)
+		public static MarkingPoint GetLanePoint(Marking marking, ILanePointData pointData)
 		{
-			if (!markup.TryGetEnter(pointData.EntranceId, out var enter))
-				throw new EntranceNotExist(pointData.EntranceId, markup.Id);
+			if (!marking.TryGetEnter(pointData.EntranceId, out var enter))
+				throw new EntranceNotExist(pointData.EntranceId, marking.Id);
 
 			if (!enter.TryGetPoint(pointData.Index, MarkingPoint.PointType.Lane, out var point))
 				throw new PointNotExist(pointData.Index, enter.Id);
@@ -68,7 +68,7 @@ namespace NodeMarkup.API.Applicators
 			return point;
 		}
 
-		public static FillerContour GetFillerContour(Marking markup, IEnumerable<IEntrancePointData> pointDatas)
+		public static FillerContour GetFillerContour(Marking marking, IEnumerable<IEntrancePointData> pointDatas)
 		{
 			if (pointDatas == null)
 				throw new ArgumentNullException(nameof(pointDatas));
@@ -76,14 +76,14 @@ namespace NodeMarkup.API.Applicators
 			var vertices = new List<IFillerVertex>();
 			foreach (var pointData in pointDatas)
 			{
-				if (pointData.MarkingId != markup.Id)
-					throw new MarkingIdNotMatchException(markup.Id, pointData.MarkingId);
+				if (pointData.MarkingId != marking.Id)
+					throw new MarkingIdNotMatchException(marking.Id, pointData.MarkingId);
 
-				var point = GetEntrancePoint(markup, pointData);
+				var point = GetEntrancePoint(marking, pointData);
 				vertices.Add(new EnterFillerVertex(point));
 			}
 
-			var contour = new FillerContour(markup, vertices);
+			var contour = new FillerContour(marking, vertices);
 			if (!contour.IsComplite)
 				throw new CreateFillerException("Filler contour is not complited");
 

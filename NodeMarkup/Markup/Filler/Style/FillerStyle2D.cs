@@ -1,11 +1,9 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
-using ICities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.API;
 using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
 using NodeMarkup.Utilities.API;
 using System;
@@ -46,12 +44,12 @@ namespace NodeMarkup.Manager
     {
         public Filler2DStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset) { }
 
-        protected sealed override IEnumerable<IStyleData> CalculateImpl(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
+        protected sealed override IEnumerable<IStyleData> CalculateImpl(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkingLOD lod)
         {
             if ((SupportLOD & lod) != 0)
-                yield return new MarkupPartGroupData(lod, CalculateProcess(filler, contours, lod));
+                yield return new MarkingPartGroupData(lod, CalculateProcess(filler, contours, lod));
         }
-        protected virtual IEnumerable<MarkupPartData> CalculateProcess(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod)
+        protected virtual IEnumerable<MarkingPartData> CalculateProcess(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkingLOD lod)
         {
             var originalContour = filler.Contour.TrajectoriesProcessed.ToArray();
             var guides = GetGuides(filler, originalContour).ToArray();
@@ -130,7 +128,7 @@ namespace NodeMarkup.Manager
                 return default;
         }
 
-        protected abstract IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod);
+        protected abstract IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod);
         protected IEnumerable<StraightTrajectory> GetParts(GuideLine guide, float dash, float space)
         {
             foreach (var part in StyleHelper.CalculateDashesBezierT(guide, dash, space, 1))
@@ -140,7 +138,7 @@ namespace NodeMarkup.Manager
                 yield return new StraightTrajectory(guide[startI].Position(part.Start - startI), guide[endI].Position(part.End - endI));
             }
         }
-        protected void GetItemParams(ref float width, float angle, MarkupLOD lod, out int itemsCount, out float itemWidth, out float itemStep)
+        protected void GetItemParams(ref float width, float angle, MarkingLOD lod, out int itemsCount, out float itemWidth, out float itemStep)
         {
             StyleHelper.GetParts(width, 0f, lod, out itemsCount, out itemWidth);
 
@@ -159,7 +157,7 @@ namespace NodeMarkup.Manager
                 yield return new PartItem(itemPos, itemDir, itemWidth, isBothDir);
             }
         }
-        protected virtual IEnumerable<MarkupPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithoutOrder(item, contours);
+        protected virtual IEnumerable<MarkingPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithoutOrder(item, contours);
         protected Intersection[] GetDashesIntersects(StraightTrajectory itemStraight, List<List<FillerContour.Part>> contours)
         {
             var intersectSet = new HashSet<Intersection>();
@@ -172,7 +170,7 @@ namespace NodeMarkup.Manager
             var intersects = intersectSet.OrderBy(i => i, Intersection.FirstComparer).ToArray();
             return intersects;
         }
-        protected IEnumerable<MarkupPartData> GetDashesWithoutOrder(PartItem item, List<List<FillerContour.Part>> contours)
+        protected IEnumerable<MarkingPartData> GetDashesWithoutOrder(PartItem item, List<List<FillerContour.Part>> contours)
         {
             var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
             var intersects = GetDashesIntersects(straight, contours);
@@ -183,10 +181,10 @@ namespace NodeMarkup.Manager
                 var end = intersects[i];
                 var startPos = start.Second.Position(start.SecondT);
                 var endPos = end.Second.Position(end.SecondT);
-                yield return new MarkupPartData(startPos, endPos, item.Direction, item.Width, Color.Value, RenderHelper.MaterialLib[MaterialType.RectangleFillers]);
+                yield return new MarkingPartData(startPos, endPos, item.Direction, item.Width, Color.Value, RenderHelper.MaterialLib[MaterialType.RectangleFillers]);
             }
         }
-        protected IEnumerable<MarkupPartData> GetDashesWithOrder(PartItem item, List<List<FillerContour.Part>> contours)
+        protected IEnumerable<MarkingPartData> GetDashesWithOrder(PartItem item, List<List<FillerContour.Part>> contours)
         {
             var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
             var intersects = GetDashesIntersects(straight, contours);
@@ -206,7 +204,7 @@ namespace NodeMarkup.Manager
                 {
                     var start = item.Position + item.Direction * input;
                     var end = item.Position + item.Direction * output;
-                    yield return new MarkupPartData(start, end, item.Direction, item.Width, Color.Value, RenderHelper.MaterialLib[MaterialType.RectangleFillers]);
+                    yield return new MarkingPartData(start, end, item.Direction, item.Width, Color.Value, RenderHelper.MaterialLib[MaterialType.RectangleFillers]);
                 }
             }
         }
@@ -452,7 +450,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IEnumerable<MarkupPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithOrder(item, contours);
+        protected override IEnumerable<MarkingPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithOrder(item, contours);
         protected override void GetGuides(FillerContour contour, out ITrajectory left, out ITrajectory right)
         {
             left = contour.GetGuide(LeftGuideA, LeftGuideB, RightGuideA, RightGuideB);
@@ -481,7 +479,7 @@ namespace NodeMarkup.Manager
     public class StripeFillerStyle : GuideFillerStyle, IFollowGuideFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerStripe;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         protected static string Turn => string.Empty;
 
@@ -585,7 +583,7 @@ namespace NodeMarkup.Manager
                 yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, Angle) };
             }
         }
-        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
+        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod)
         {
             var angle = FollowGuides ? 90f - Angle : 90f;
             var width = Width.Value;
@@ -632,7 +630,7 @@ namespace NodeMarkup.Manager
     public class ChevronFillerStyle : GuideFillerStyle, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerChevron;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         public PropertyValue<float> AngleBetween { get; }
         public PropertyBoolValue Invert { get; }
@@ -753,7 +751,7 @@ namespace NodeMarkup.Manager
             return turnAndInvert;
         }
 
-        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
+        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod)
         {
             var width = Width.Value;
             var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) / 2;
@@ -828,7 +826,7 @@ namespace NodeMarkup.Manager
     public class GridFillerStyle : Filler2DStyle, IPeriodicFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerGrid;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         public PropertyValue<float> Angle { get; }
         public PropertyValue<float> Step { get; }
@@ -890,7 +888,7 @@ namespace NodeMarkup.Manager
             yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, Angle) };
             yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, Angle < 0 ? Angle + 90 : Angle - 90) };
         }
-        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
+        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod)
         {
             var width = Width.Value;
             GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
@@ -920,7 +918,7 @@ namespace NodeMarkup.Manager
         public static float DefaultSolidWidth { get; } = 0.2f;
 
         public override StyleType Type => StyleType.FillerSolid;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         public PropertyValue<int> LeftGuideA { get; }
         public PropertyValue<int> RightGuideA { get; }
@@ -995,7 +993,7 @@ namespace NodeMarkup.Manager
             else
                 yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, 0) };
         }
-        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkupLOD lod)
+        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod)
         {
             foreach (var part in guide.OfType<StraightTrajectory>())
             {

@@ -30,10 +30,10 @@ namespace NodeMarkup.UI
 
 
 
-    public class MarkupLineListPropertyPanel : ListPropertyPanel<MarkingLine, MarkupLineListPropertyPanel.MarkupLineDropDown>
+    public class MarkingLineListPropertyPanel : ListPropertyPanel<MarkingLine, MarkingLineListPropertyPanel.MarkingLineDropDown>
     {
         protected override bool IsEqual(MarkingLine first, MarkingLine second) => ReferenceEquals(first, second);
-        public class MarkupLineDropDown : UIDropDown<MarkingLine> { }
+        public class MarkingLineDropDown : UIDropDown<MarkingLine> { }
     }
     public class ChevronFromPropertyPanel : EnumOncePropertyPanel<ChevronFillerStyle.From, ChevronFromPropertyPanel.ChevronFromSegmented>
     {

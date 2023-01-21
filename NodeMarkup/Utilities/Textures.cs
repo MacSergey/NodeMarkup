@@ -3,13 +3,11 @@ using ModsCommon.Utilities;
 using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 namespace NodeMarkup.Utilities
 {
-    public static class NodeMarkupTextures
+    public static class IntersectionMarkingToolTextures
     {
         public static UITextureAtlas Atlas;
         public static Texture2D Texture => Atlas.texture;
@@ -77,7 +75,7 @@ namespace NodeMarkup.Utilities
         public static string FixedFixedButtonIcons { get; } = nameof(FixedFixedButtonIcons);
         public static string FixedFreeButtonIcons { get; } = nameof(FixedFreeButtonIcons);
 
-        static NodeMarkupTextures()
+        static IntersectionMarkingToolTextures()
         {
             var spriteParams = new Dictionary<string, RectOffset>();
 

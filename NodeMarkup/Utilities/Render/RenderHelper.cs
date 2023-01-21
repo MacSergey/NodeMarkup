@@ -142,7 +142,7 @@ namespace NodeMarkup.Utilities
             var material = new Material(Shader.Find("Custom/Props/Decal/Blend"))
             {
                 mainTexture = texture,
-                name = "NodeMarkupDecal",
+                name = "IntersectionMarkingToolDecal",
                 color = new Color(1f, 1f, 1f, 1f),
                 doubleSidedGI = false,
                 enableInstancing = false,
@@ -184,7 +184,7 @@ namespace NodeMarkup.Utilities
             var width = 256;
             var texture = new Texture2D(height, width)
             {
-                name = "Markup",
+                name = "Marking",
             };
             for (var i = 0; i < height * width; i += 1)
             {
@@ -225,13 +225,13 @@ namespace NodeMarkup.Utilities
         Ruined,
         Cliff,
     }
-    public enum MarkupLOD
+    public enum MarkingLOD
     {
         NoLOD = 1,
         LOD0 = 2,
         LOD1 = 4,
     }
-    public enum MarkupLODType
+    public enum MarkingLODType
     {
         Dash,
         Mesh,
@@ -259,66 +259,66 @@ namespace NodeMarkup.Utilities
         }
         protected abstract Type GetDefault(EnumType value);
     }
-    public class MarkupRenderData : EnumDictionary<MarkupLODType, MarkupGroupDrawData>
+    public class MarkingRenderData : EnumDictionary<MarkingLODType, MarkingGroupDrawData>
     {
-        protected override MarkupGroupDrawData GetDefault(MarkupLODType value) => value switch
+        protected override MarkingGroupDrawData GetDefault(MarkingLODType value) => value switch
         {
-            MarkupLODType.Dash => new MarkupDashGroupDrawData(),
-            MarkupLODType.Mesh => new MarkupMeshGroupDrawData(),
-            MarkupLODType.Network => new MarkupNetworkGroupDrawData(),
-            MarkupLODType.Prop => new MarkupPropGroupDrawData(),
-            MarkupLODType.Tree => new MarkupTreeGroupDrawData(),
-            _ => new MarkupGroupDrawData(),
+            MarkingLODType.Dash => new MarkingDashGroupDrawData(),
+            MarkingLODType.Mesh => new MarkingMeshGroupDrawData(),
+            MarkingLODType.Network => new MarkingNetworkGroupDrawData(),
+            MarkingLODType.Prop => new MarkingPropGroupDrawData(),
+            MarkingLODType.Tree => new MarkingTreeGroupDrawData(),
+            _ => new MarkingGroupDrawData(),
         };
     }
-    public class MarkupGroupDrawData : EnumDictionary<MarkupLOD, List<IDrawData>>
+    public class MarkingGroupDrawData : EnumDictionary<MarkingLOD, List<IDrawData>>
     {
         public virtual float LODDistance => Settings.LODDistance;
         public void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
-            foreach (var drawData in this[MarkupLOD.NoLOD])
+            foreach (var drawData in this[MarkingLOD.NoLOD])
                 drawData.Draw(cameraInfo, data, infoView);
 
             if (cameraInfo.CheckRenderDistance(data.m_position, LODDistance))
             {
-                foreach (var drawData in this[MarkupLOD.LOD0])
+                foreach (var drawData in this[MarkingLOD.LOD0])
                     drawData.Draw(cameraInfo, data, infoView);
             }
             else
             {
-                foreach (var drawData in this[MarkupLOD.LOD1])
+                foreach (var drawData in this[MarkingLOD.LOD1])
                     drawData.Draw(cameraInfo, data, infoView);
             }
         }
-        protected override List<IDrawData> GetDefault(MarkupLOD value) => new List<IDrawData>();
+        protected override List<IDrawData> GetDefault(MarkingLOD value) => new List<IDrawData>();
     }
-    public class MarkupDashGroupDrawData : MarkupGroupDrawData
+    public class MarkingDashGroupDrawData : MarkingGroupDrawData
     {
         public override float LODDistance => Settings.LODDistance;
     }
-    public class MarkupMeshGroupDrawData : MarkupGroupDrawData
+    public class MarkingMeshGroupDrawData : MarkingGroupDrawData
     {
         public override float LODDistance => Settings.MeshLODDistance;
     }
-    public class MarkupNetworkGroupDrawData : MarkupGroupDrawData
+    public class MarkingNetworkGroupDrawData : MarkingGroupDrawData
     {
         public override float LODDistance => Settings.NetworkLODDistance;
     }
-    public class MarkupPropGroupDrawData : MarkupGroupDrawData
+    public class MarkingPropGroupDrawData : MarkingGroupDrawData
     {
         public override float LODDistance => Settings.PropLODDistance;
     }
-    public class MarkupTreeGroupDrawData : MarkupGroupDrawData
+    public class MarkingTreeGroupDrawData : MarkingGroupDrawData
     {
         public override float LODDistance => Settings.TreeLODDistance;
     }
     public class RenderGroupData : IStyleData
     {
         private IStyleData[] Datas { get; }
-        public MarkupLOD LOD { get; }
-        public MarkupLODType LODType { get; }
+        public MarkingLOD LOD { get; }
+        public MarkingLODType LODType { get; }
 
-        public RenderGroupData(MarkupLOD lod, MarkupLODType lodType, IStyleData[] datas)
+        public RenderGroupData(MarkingLOD lod, MarkingLODType lodType, IStyleData[] datas)
         {
             LOD = lod;
             LODType = lodType;

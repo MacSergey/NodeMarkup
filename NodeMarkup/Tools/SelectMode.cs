@@ -2,20 +2,13 @@
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.Manager;
-using NodeMarkup.UI;
-using NodeMarkup.Utilities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static ToolBase;
-using ColossalFramework.UI;
-using ColossalFramework;
 using ModsCommon;
 
 namespace NodeMarkup.Tools
 {
-    public class SelectToolMode : BaseSelectToolMode<NodeMarkupTool>, IToolModePanel, IToolMode<ToolModeType>, IShortcutMode
+    public class SelectToolMode : BaseSelectToolMode<IntersectionMarkingTool>, IToolModePanel, IToolMode<ToolModeType>, IShortcutMode
     {
         public bool ShowPanel => false;
         public ToolModeType Type => ToolModeType.Select;
@@ -25,9 +18,9 @@ namespace NodeMarkup.Tools
             get
             {
                 if (!Underground)
-                    yield return NodeMarkupTool.EnterUndergroundShortcut;
+                    yield return IntersectionMarkingTool.EnterUndergroundShortcut;
                 else
-                    yield return NodeMarkupTool.ExitUndergroundShortcut;
+                    yield return IntersectionMarkingTool.ExitUndergroundShortcut;
             }
         }
 
@@ -40,26 +33,26 @@ namespace NodeMarkup.Tools
             else if (Settings.IsUndergroundWithModifier)
                 return $"{Localize.Tool_SelectInfo}\n\n{string.Format(Localize.Tool_InfoUnderground, LocalizeExtension.Shift.AddInfoColor())}";
             else if (!Underground)
-                return $"{Localize.Tool_SelectInfo}\n\n{string.Format(Localize.Tool_EnterUnderground, NodeMarkupTool.EnterUndergroundShortcut.AddInfoColor())}";
+                return $"{Localize.Tool_SelectInfo}\n\n{string.Format(Localize.Tool_EnterUnderground, IntersectionMarkingTool.EnterUndergroundShortcut.AddInfoColor())}";
             else
-                return $"{Localize.Tool_SelectInfo}\n\n{string.Format(Localize.Tool_ExitUnderground, NodeMarkupTool.ExitUndergroundShortcut.AddInfoColor())}";
+                return $"{Localize.Tool_SelectInfo}\n\n{string.Format(Localize.Tool_ExitUnderground, IntersectionMarkingTool.ExitUndergroundShortcut.AddInfoColor())}";
         }
-        private string GetStepOverInfo() => NodeMarkupTool.SelectionStepOverShortcut.NotSet? string.Empty : "\n\n" + string.Format(CommonLocalize.Tool_InfoSelectionStepOver, Colors.AddInfoColor(NodeMarkupTool.SelectionStepOverShortcut));
+        private string GetStepOverInfo() => IntersectionMarkingTool.SelectionStepOverShortcut.NotSet? string.Empty : "\n\n" + string.Format(CommonLocalize.Tool_InfoSelectionStepOver, Colors.AddInfoColor(IntersectionMarkingTool.SelectionStepOverShortcut));
 
         public override void OnPrimaryMouseClicked(Event e)
         {
-            var markup = default(Marking);
+            var marking = default(Marking);
             if (IsHoverNode)
-                markup = SingletonManager<NodeMarkingManager>.Instance[HoverNode.Id];
+                marking = SingletonManager<NodeMarkingManager>.Instance[HoverNode.Id];
             else if (IsHoverSegment)
-                markup = SingletonManager<SegmentMarkingManager>.Instance[HoverSegment.Id];
+                marking = SingletonManager<SegmentMarkingManager>.Instance[HoverSegment.Id];
             else
                 return;
 
-            SingletonMod<Mod>.Logger.Debug($"Select marking {markup}");
-            Tool.SetMarkup(markup);
+            SingletonMod<Mod>.Logger.Debug($"Select marking {marking}");
+            Tool.SetMarking(marking);
 
-            if (markup.NeedSetOrder)
+            if (marking.NeedSetOrder)
             {
                 var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = Localize.Tool_RoadsWasChangedCaption;
@@ -72,15 +65,15 @@ namespace NodeMarkup.Tools
 
             bool OnYes()
             {
-                BaseOrderToolMode.IntersectionTemplate = markup.Backup;
+                BaseOrderToolMode.IntersectionTemplate = marking.Backup;
                 Tool.SetMode(ToolModeType.EditEntersOrder);
-                markup.NeedSetOrder = false;
+                marking.NeedSetOrder = false;
                 return true;
             }
             bool OnNo()
             {
                 Tool.SetDefaultMode();
-                markup.NeedSetOrder = false;
+                marking.NeedSetOrder = false;
                 return true;
             }
         }

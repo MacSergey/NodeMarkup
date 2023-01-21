@@ -16,7 +16,7 @@ namespace NodeMarkup.Manager
     public class ExistCrosswalkStyle : CrosswalkStyle, IWidthStyle
     {
         public override StyleType Type => StyleType.CrosswalkExistent;
-        public override MarkupLOD SupportLOD => 0;
+        public override MarkingLOD SupportLOD => 0;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -35,11 +35,11 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override float GetTotalWidth(MarkupCrosswalk crosswalk) => Width;
+        public override float GetTotalWidth(MarkingCrosswalk crosswalk) => Width;
 
         public ExistCrosswalkStyle(float width) : base(new Color32(0, 0, 0, 0), width) { }
 
-        protected override IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        protected override IEnumerable<MarkingPartData> CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod)
         {
             yield break;
         }
@@ -62,8 +62,8 @@ namespace NodeMarkup.Manager
         public PropertyValue<float> OffsetBefore { get; }
         public PropertyValue<float> OffsetAfter { get; }
 
-        public override float GetTotalWidth(MarkupCrosswalk crosswalk) => OffsetBefore + GetVisibleWidth(crosswalk) + OffsetAfter;
-        protected abstract float GetVisibleWidth(MarkupCrosswalk crosswalk);
+        public override float GetTotalWidth(MarkingCrosswalk crosswalk) => OffsetBefore + GetVisibleWidth(crosswalk) + OffsetAfter;
+        protected abstract float GetVisibleWidth(MarkingCrosswalk crosswalk);
 
         public CustomCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter) : base(color, width)
         {
@@ -80,7 +80,7 @@ namespace NodeMarkup.Manager
                 customTarget.OffsetAfter.Value = OffsetAfter;
             }
         }
-        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
             components.Add(AddOffsetProperty(parent, false));
@@ -138,7 +138,7 @@ namespace NodeMarkup.Manager
 
             return widthProperty;
         }
-        protected bool Cut(MarkupCrosswalk crosswalk, ITrajectory trajectory, float width, out ITrajectory cutTrajectory)
+        protected bool Cut(MarkingCrosswalk crosswalk, ITrajectory trajectory, float width, out ITrajectory cutTrajectory)
         {
             var delta = width / Mathf.Tan(crosswalk.CornerAndNormalAngle) / 2;
             if (2 * delta >= trajectory.Magnitude)
@@ -178,14 +178,14 @@ namespace NodeMarkup.Manager
         {
             LineWidth = GetLineWidthProperty(lineWidth);
         }
-        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+        protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is ILinedCrosswalk linedTarget)
                 linedTarget.LineWidth.Value = LineWidth;
         }
-        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
             components.Add(AddLineWidthProperty(this, parent, false));
@@ -207,7 +207,7 @@ namespace NodeMarkup.Manager
     public class ZebraCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk, IParallel
     {
         public override StyleType Type => StyleType.CrosswalkZebra;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
@@ -254,8 +254,8 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width, crosswalk);
-        protected float GetLengthCoef(float length, MarkupCrosswalk crosswalk) => length / (Parallel ? 1 : Mathf.Sin(crosswalk.CornerAndNormalAngle));
+        protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetLengthCoef(Width, crosswalk);
+        protected float GetLengthCoef(float length, MarkingCrosswalk crosswalk) => length / (Parallel ? 1 : Mathf.Sin(crosswalk.CornerAndNormalAngle));
 
         public ZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel) : base(color, width, offsetBefore, offsetAfter)
         {
@@ -295,7 +295,7 @@ namespace NodeMarkup.Manager
                 parallelTarget.Parallel.Value = Parallel;
         }
 
-        protected override IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        protected override IEnumerable<MarkingPartData> CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod)
         {
             var offset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
 
@@ -312,7 +312,7 @@ namespace NodeMarkup.Manager
 
                 return StyleHelper.CalculateDashed(trajectory, dashLength, spaceLength, CalculateDashes);
 
-                IEnumerable<MarkupPartData> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+                IEnumerable<MarkingPartData> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
                 {
                     index += 1;
                     foreach (var part in CalculateCroswalkPart(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength, GetColor(index)))
@@ -330,7 +330,7 @@ namespace NodeMarkup.Manager
 
                 return StyleHelper.CalculateDashed(trajectory, groupLength, gapLength, CalculateDashes);
 
-                IEnumerable<MarkupPartData> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+                IEnumerable<MarkingPartData> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
                 {
                     index += 1;
                     for (var i = 0; i < GapPeriod; i += 1)
@@ -345,7 +345,7 @@ namespace NodeMarkup.Manager
         }
         protected Color32 GetColor(int index) => TwoColors && index % 2 != 0 ? SecondColor : Color;
 
-        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
 
@@ -459,7 +459,7 @@ namespace NodeMarkup.Manager
     public class DoubleZebraCrosswalkStyle : ZebraCrosswalkStyle, ICrosswalkStyle, IDoubleCrosswalk
     {
         public override StyleType Type => StyleType.CrosswalkDoubleZebra;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         public PropertyValue<float> OffsetBetween { get; }
 
@@ -505,7 +505,7 @@ namespace NodeMarkup.Manager
         {
             OffsetBetween = GetOffsetProperty(offset);
         }
-        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(Width * 2 + OffsetBetween, crosswalk);
+        protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetLengthCoef(Width * 2 + OffsetBetween, crosswalk);
         public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel, OffsetBetween);
         public override void CopyTo(CrosswalkStyle target)
         {
@@ -514,7 +514,7 @@ namespace NodeMarkup.Manager
                 doubleTarget.OffsetBetween.Value = OffsetBetween;
         }
 
-        protected override IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        protected override IEnumerable<MarkingPartData> CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
             var deltaOffset = GetLengthCoef((Width + OffsetBetween) / 2, crosswalk);
@@ -542,7 +542,7 @@ namespace NodeMarkup.Manager
                 foreach (var dash in StyleHelper.CalculateDashed(trajectorySecond, dashLength, spaceLength, CalculateDashes))
                     yield return dash;
 
-                IEnumerable<MarkupPartData> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+                IEnumerable<MarkingPartData> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
                 {
                     index += 1;
                     foreach (var part in CalculateCroswalkPart(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength, GetColor(index)))
@@ -566,7 +566,7 @@ namespace NodeMarkup.Manager
                 foreach (var dash in StyleHelper.CalculateDashed(trajectorySecond, groupLength, gapLength, CalculateDashes))
                     yield return dash;
 
-                IEnumerable<MarkupPartData> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+                IEnumerable<MarkingPartData> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
                 {
                     index += 1;
                     for (var i = 0; i < GapPeriod; i += 1)
@@ -580,7 +580,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
             components.Add(AddOffsetBetweenProperty(parent, false));
@@ -619,7 +619,7 @@ namespace NodeMarkup.Manager
     public class ParallelSolidLinesCrosswalkStyle : LinedCrosswalkStyle, ICrosswalkStyle
     {
         public override StyleType Type => StyleType.CrosswalkParallelSolidLines;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -651,7 +651,7 @@ namespace NodeMarkup.Manager
 
         public override CrosswalkStyle CopyStyle() => new ParallelSolidLinesCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter, LineWidth);
 
-        protected override IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        protected override IEnumerable<MarkingPartData> CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
             var deltaOffset = (Width - LineWidth) / 2 / Mathf.Sin(crosswalk.CornerAndNormalAngle);
@@ -664,13 +664,13 @@ namespace NodeMarkup.Manager
             foreach (var dash in StyleHelper.CalculateSolid(secondTrajectory, lod, CalculateDashes))
                 yield return dash;
 
-            MarkupPartData CalculateDashes(ITrajectory dashTrajectory) => StyleHelper.CalculateSolidPart(dashTrajectory, 0, LineWidth, Color);
+            MarkingPartData CalculateDashes(ITrajectory dashTrajectory) => StyleHelper.CalculateSolidPart(dashTrajectory, 0, LineWidth, Color);
         }
     }
     public class ParallelDashedLinesCrosswalkStyle : LinedCrosswalkStyle, ICrosswalkStyle, IDashedLine
     {
         public override StyleType Type => StyleType.CrosswalkParallelDashedLines;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
@@ -720,13 +720,13 @@ namespace NodeMarkup.Manager
                 dashedTarget.SpaceLength.Value = SpaceLength;
             }
         }
-        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
             components.Add(AddLengthProperty(this, parent, false));
         }
 
-        protected override IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        protected override IEnumerable<MarkingPartData> CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod)
         {
             var middleOffset = GetVisibleWidth(crosswalk) / 2 + OffsetBefore;
             var deltaOffset = (Width - LineWidth) / 2 / Mathf.Sin(crosswalk.CornerAndNormalAngle);
@@ -739,7 +739,7 @@ namespace NodeMarkup.Manager
             foreach (var dash in StyleHelper.CalculateDashed(secondTrajectory, DashLength, SpaceLength, CalculateDashes))
                 yield return dash;
 
-            IEnumerable<MarkupPartData> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
+            IEnumerable<MarkingPartData> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
             {
                 yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, 0, LineWidth, Color);
             }
@@ -762,7 +762,7 @@ namespace NodeMarkup.Manager
     public class LadderCrosswalkStyle : ParallelSolidLinesCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk
     {
         public override StyleType Type => StyleType.CrosswalkLadder;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
@@ -812,7 +812,7 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        protected override IEnumerable<MarkingPartData> CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod)
         {
             foreach (var dash in base.CalculateImpl(crosswalk, lod))
                 yield return dash;
@@ -828,11 +828,11 @@ namespace NodeMarkup.Manager
             foreach (var dash in StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes))
                 yield return dash;
 
-            IEnumerable<MarkupPartData> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
+            IEnumerable<MarkingPartData> CalculateDashes(ITrajectory crosswalkTrajectory, float startT, float endT)
                 => CalculateCroswalkPart(crosswalkTrajectory, startT, endT, direction, borders, Width, DashLength, Color);
         }
 
-        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
             components.Add(AddLengthProperty(this, parent, false));
@@ -855,7 +855,7 @@ namespace NodeMarkup.Manager
     public class SolidCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle
     {
         public override StyleType Type => StyleType.CrosswalkSolid;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -882,9 +882,9 @@ namespace NodeMarkup.Manager
         public SolidCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter) : base(color, width, offsetBefore, offsetAfter) { }
 
         public override CrosswalkStyle CopyStyle() => new SolidCrosswalkStyle(Color, Width, OffsetBefore, OffsetAfter);
-        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+        protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
 
-        protected override IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        protected override IEnumerable<MarkingPartData> CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod)
         {
             StyleHelper.GetParts(Width, 0, lod, out int count, out float partWidth);
             var partOffset = GetVisibleWidth(crosswalk) / count;
@@ -892,14 +892,14 @@ namespace NodeMarkup.Manager
             for (var i = 0; i < count; i += 1)
             {
                 var trajectory = crosswalk.GetTrajectory(startOffset + partOffset * i + OffsetBefore);
-                yield return new MarkupPartData(trajectory.StartPosition, trajectory.EndPosition, trajectory.Direction, partWidth, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
+                yield return new MarkingPartData(trajectory.StartPosition, trajectory.EndPosition, trajectory.Direction, partWidth, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
             }
         }
     }
     public class ChessBoardCrosswalkStyle : CustomCrosswalkStyle, IColorStyle, IAsymLine
     {
         public override StyleType Type => StyleType.CrosswalkChessBoard;
-        public override MarkupLOD SupportLOD => MarkupLOD.LOD0 | MarkupLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         public PropertyValue<float> SquareSide { get; }
         public PropertyValue<int> LineCount { get; }
@@ -939,7 +939,7 @@ namespace NodeMarkup.Manager
             LineCount = GetLineCountProperty(lineCount);
             Invert = GetInvertProperty(invert);
         }
-        protected override IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        protected override IEnumerable<MarkingPartData> CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod)
         {
             var deltaOffset = GetLengthCoef(SquareSide, crosswalk);
             var startOffset = deltaOffset / 2 + OffsetBefore;
@@ -975,10 +975,10 @@ namespace NodeMarkup.Manager
                 chessBoardTarget.Invert.Value = Invert;
             }
         }
-        protected override float GetVisibleWidth(MarkupCrosswalk crosswalk) => GetLengthCoef(SquareSide * LineCount, crosswalk);
-        protected float GetLengthCoef(float length, MarkupCrosswalk crosswalk) => length / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+        protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetLengthCoef(SquareSide * LineCount, crosswalk);
+        protected float GetLengthCoef(float length, MarkingCrosswalk crosswalk) => length / Mathf.Sin(crosswalk.CornerAndNormalAngle);
 
-        public override void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(crosswalk, components, parent, isTemplate);
             components.Add(AddSquareSideProperty(parent, false));

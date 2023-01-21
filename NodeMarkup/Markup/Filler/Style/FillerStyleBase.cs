@@ -94,7 +94,7 @@ namespace NodeMarkup.Manager
         {
             var contours = GetContours(filler);
 
-            foreach (var lod in EnumExtension.GetEnumValues<MarkupLOD>())
+            foreach (var lod in EnumExtension.GetEnumValues<MarkingLOD>())
             {
                 foreach (var data in CalculateImpl(filler, contours, lod))
                     yield return data;
@@ -106,7 +106,7 @@ namespace NodeMarkup.Manager
             var contours = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
             return contours;
         }
-        protected abstract IEnumerable<IStyleData> CalculateImpl(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkupLOD lod);
+        protected abstract IEnumerable<IStyleData> CalculateImpl(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkingLOD lod);
 
         public virtual void Render(MarkingFiller filler, OverlayData data) { }
 

@@ -1,13 +1,11 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
-using static NodeMarkup.Manager.FillerStyle;
 
 namespace NodeMarkup.Manager
 {
@@ -44,29 +42,29 @@ namespace NodeMarkup.Manager
         protected override float WidthWheelStep => 0.1f;
         protected override float WidthMinValue => 0.1f;
 
-        public abstract float GetTotalWidth(MarkupCrosswalk crosswalk);
+        public abstract float GetTotalWidth(MarkingCrosswalk crosswalk);
 
         public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
         {
             var components = base.GetUIComponents(editObject, parent, isTemplate);
-            if (editObject is MarkupCrosswalk crosswalk)
+            if (editObject is MarkingCrosswalk crosswalk)
                 GetUIComponents(crosswalk, components, parent, isTemplate);
             else if (isTemplate)
                 GetUIComponents(null, components, parent, isTemplate);
             return components;
         }
-        public virtual void GetUIComponents(MarkupCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
+        public virtual void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
-        public IStyleData Calculate(MarkupCrosswalk crosswalk, MarkupLOD lod)
+        public IStyleData Calculate(MarkingCrosswalk crosswalk, MarkingLOD lod)
         {
             if ((SupportLOD & lod) != 0)
-                return new MarkupPartGroupData(lod, CalculateImpl(crosswalk, lod));
+                return new MarkingPartGroupData(lod, CalculateImpl(crosswalk, lod));
             else
-                return new MarkupPartGroupData(lod);
+                return new MarkingPartGroupData(lod);
         }
-        protected abstract IEnumerable<MarkupPartData> CalculateImpl(MarkupCrosswalk crosswalk, MarkupLOD lod);
+        protected abstract IEnumerable<MarkingPartData> CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod);
 
         protected Vector2PropertyPanel AddLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, bool canCollapse)
         {
@@ -92,7 +90,7 @@ namespace NodeMarkup.Manager
             return lengthProperty;
         }
 
-        protected IEnumerable<MarkupPartData> CalculateCroswalkPart(ITrajectory trajectory, float startT, float endT, Vector3 direction, ITrajectory[] borders, float length, float width, Color32 color)
+        protected IEnumerable<MarkingPartData> CalculateCroswalkPart(ITrajectory trajectory, float startT, float endT, Vector3 direction, ITrajectory[] borders, float length, float width, Color32 color)
         {
             var position = trajectory.Position((startT + endT) / 2);
             var partTrajectory = new StraightTrajectory(position, position + direction, false);
@@ -116,7 +114,7 @@ namespace NodeMarkup.Manager
                 var startPosition = position + direction * start;
                 var endPosition = position + direction * end;
 
-                yield return new MarkupPartData(startPosition, endPosition, direction, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
+                yield return new MarkingPartData(startPosition, endPosition, direction, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
             }
 
             static float GetOffset(Intersection intersect, float offset)

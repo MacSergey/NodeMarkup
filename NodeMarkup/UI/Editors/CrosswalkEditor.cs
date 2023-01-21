@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace NodeMarkup.UI.Editors
 {
-    public class CrosswalksEditor : SimpleEditor<CrosswalkItemsPanel, MarkupCrosswalk>
+    public class CrosswalksEditor : SimpleEditor<CrosswalkItemsPanel, MarkingCrosswalk>
     {
         #region PROPERTIES
 
@@ -40,9 +40,9 @@ namespace NodeMarkup.UI.Editors
             CrosswalkBorderToolMode.Init(this);
         }
 
-        protected override IEnumerable<MarkupCrosswalk> GetObjects() => Markup.Crosswalks;
+        protected override IEnumerable<MarkingCrosswalk> GetObjects() => Marking.Crosswalks;
 
-        protected override void OnFillPropertiesPanel(MarkupCrosswalk crosswalk)
+        protected override void OnFillPropertiesPanel(MarkingCrosswalk crosswalk)
         {
             AddHeader();
             AddWarning();
@@ -54,10 +54,10 @@ namespace NodeMarkup.UI.Editors
 
             FillBorders();
         }
-        protected override void OnObjectDelete(MarkupCrosswalk crosswalk)
+        protected override void OnObjectDelete(MarkingCrosswalk crosswalk)
         {
             Panel.DeleteLine(crosswalk.CrosswalkLine);
-            Markup.RemoveCrosswalk(crosswalk);
+            Marking.RemoveCrosswalk(crosswalk);
             base.OnObjectDelete(crosswalk);
         }
         protected override void OnClear()
@@ -73,7 +73,7 @@ namespace NodeMarkup.UI.Editors
 
             StyleProperties.Clear();
         }
-        protected override void OnObjectUpdate(MarkupCrosswalk editObject) => FillBorders();
+        protected override void OnObjectUpdate(MarkingCrosswalk editObject) => FillBorders();
 
         #endregion
 
@@ -261,7 +261,7 @@ namespace NodeMarkup.UI.Editors
             if (Tool.FromStyleBuffer<CrosswalkStyle>(Manager.Style.StyleType.Crosswalk, out var style))
                 ApplyStyle(style);
         }
-        private void CutLines() => Markup.CutLinesByCrosswalk(EditObject);
+        private void CutLines() => Marking.CutLinesByCrosswalk(EditObject);
 
         public void HoverBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton) => HoverBorderButton = selectButton;
         public void LeaveBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton) => HoverBorderButton = null;
@@ -305,9 +305,9 @@ namespace NodeMarkup.UI.Editors
 
         #endregion
     }
-    public class CrosswalkItemsPanel : ItemsPanel<CrosswalkItem, MarkupCrosswalk>
+    public class CrosswalkItemsPanel : ItemsPanel<CrosswalkItem, MarkingCrosswalk>
     {
-        public override int Compare(MarkupCrosswalk x, MarkupCrosswalk y)
+        public override int Compare(MarkingCrosswalk x, MarkingCrosswalk y)
         {
             int result;
             if ((result = x.CrosswalkLine.Start.Enter.CompareTo(y.CrosswalkLine.Start.Enter)) == 0)
@@ -315,7 +315,7 @@ namespace NodeMarkup.UI.Editors
             return result;
         }
     }
-    public class CrosswalkItem : EditItem<MarkupCrosswalk, StyleIcon>
+    public class CrosswalkItem : EditItem<MarkingCrosswalk, StyleIcon>
     {
         public override void Refresh()
         {
@@ -331,12 +331,12 @@ namespace NodeMarkup.UI.Editors
         protected override bool IsHover => LineSelector.IsHoverLine;
         protected override MarkingRegularLine Hover => LineSelector.HoverLine?.Line;
 
-        private LinesSelector<MarkupLineBound> LineSelector { get; set; }
+        private LinesSelector<MarkingLineBound> LineSelector { get; set; }
 
         protected override void OnSetButton()
         {
             var color = SelectButton.Position == BorderPosition.Left ? Colors.Green : Colors.Red;
-            LineSelector = new LinesSelector<MarkupLineBound>(SelectButton.Objects.Select(i => new MarkupLineBound(i, 0.5f)).ToArray(), color);
+            LineSelector = new LinesSelector<MarkingLineBound>(SelectButton.Objects.Select(i => new MarkingLineBound(i, 0.5f)).ToArray(), color);
         }
 
         public override void OnToolUpdate() => LineSelector.OnUpdate();

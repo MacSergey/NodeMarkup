@@ -15,12 +15,12 @@ namespace NodeMarkup.Tools
 {
     public abstract class BaseEntersOrderToolMode : BaseOrderToolMode<SourceEnter>, IShortcutMode
     {
-        public static NodeMarkupShortcut TurnRightShortcut { get; } = new NodeMarkupShortcut(nameof(TurnRightShortcut), nameof(TurnRightShortcut), SavedInputKey.Encode(KeyCode.RightArrow, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.TurnRightClick(), ToolModeType.Order);
-        public static NodeMarkupShortcut TurnLeftShortcut { get; } = new NodeMarkupShortcut(nameof(TurnLeftShortcut), nameof(TurnLeftShortcut), SavedInputKey.Encode(KeyCode.LeftArrow, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.TurnLeftClick(), ToolModeType.Order);
-        public static NodeMarkupShortcut FlipUpShortcut { get; } = new NodeMarkupShortcut(nameof(FlipUpShortcut), nameof(FlipUpShortcut), SavedInputKey.Encode(KeyCode.UpArrow, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.FlipClick(), ToolModeType.Order);
-        public static NodeMarkupShortcut FlipDownShortcut { get; } = new NodeMarkupShortcut(nameof(FlipDownShortcut), nameof(FlipDownShortcut), SavedInputKey.Encode(KeyCode.DownArrow, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.FlipClick(), ToolModeType.Order);
-        public static NodeMarkupShortcut ApplyShortcut { get; } = new NodeMarkupShortcut(nameof(ApplyShortcut), nameof(ApplyShortcut), SavedInputKey.Encode(KeyCode.Return, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.ApplyClick(), ToolModeType.Order);
-        public static NodeMarkupShortcut ResetShortcut { get; } = new NodeMarkupShortcut(nameof(ResetShortcut), nameof(ResetShortcut), SavedInputKey.Encode(KeyCode.Backspace, false, false, false), () => (SingletonTool<NodeMarkupTool>.Instance.Mode as BaseEntersOrderToolMode)?.ResetClick(), ToolModeType.Order);
+        public static IntersectionMarkingToolShortcut TurnRightShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(TurnRightShortcut), nameof(TurnRightShortcut), SavedInputKey.Encode(KeyCode.RightArrow, false, false, false), () => (SingletonTool<IntersectionMarkingTool>.Instance.Mode as BaseEntersOrderToolMode)?.TurnRightClick(), ToolModeType.Order);
+        public static IntersectionMarkingToolShortcut TurnLeftShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(TurnLeftShortcut), nameof(TurnLeftShortcut), SavedInputKey.Encode(KeyCode.LeftArrow, false, false, false), () => (SingletonTool<IntersectionMarkingTool>.Instance.Mode as BaseEntersOrderToolMode)?.TurnLeftClick(), ToolModeType.Order);
+        public static IntersectionMarkingToolShortcut FlipUpShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(FlipUpShortcut), nameof(FlipUpShortcut), SavedInputKey.Encode(KeyCode.UpArrow, false, false, false), () => (SingletonTool<IntersectionMarkingTool>.Instance.Mode as BaseEntersOrderToolMode)?.FlipClick(), ToolModeType.Order);
+        public static IntersectionMarkingToolShortcut FlipDownShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(FlipDownShortcut), nameof(FlipDownShortcut), SavedInputKey.Encode(KeyCode.DownArrow, false, false, false), () => (SingletonTool<IntersectionMarkingTool>.Instance.Mode as BaseEntersOrderToolMode)?.FlipClick(), ToolModeType.Order);
+        public static IntersectionMarkingToolShortcut ApplyShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(ApplyShortcut), nameof(ApplyShortcut), SavedInputKey.Encode(KeyCode.Return, false, false, false), () => (SingletonTool<IntersectionMarkingTool>.Instance.Mode as BaseEntersOrderToolMode)?.ApplyClick(), ToolModeType.Order);
+        public static IntersectionMarkingToolShortcut ResetShortcut { get; } = new IntersectionMarkingToolShortcut(nameof(ResetShortcut), nameof(ResetShortcut), SavedInputKey.Encode(KeyCode.Backspace, false, false, false), () => (SingletonTool<IntersectionMarkingTool>.Instance.Mode as BaseEntersOrderToolMode)?.ResetClick(), ToolModeType.Order);
 
         private GUIButton TurnLeftButton { get; }
         private GUIButton FlipButton { get; }
@@ -47,22 +47,22 @@ namespace NodeMarkup.Tools
 
         public BaseEntersOrderToolMode()
         {
-            TurnLeftButton = new GUIButton(1, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.TurnLeftOrderButton].region);
+            TurnLeftButton = new GUIButton(1, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.TurnLeftOrderButton].region);
             TurnLeftButton.OnClick += TurnLeftClick;
 
-            FlipButton = new GUIButton(2, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.FlipOrderButton].region);
+            FlipButton = new GUIButton(2, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.FlipOrderButton].region);
             FlipButton.OnClick += FlipClick;
 
-            TurnRightButton = new GUIButton(3, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.TurnRightOrderButton].region);
+            TurnRightButton = new GUIButton(3, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.TurnRightOrderButton].region);
             TurnRightButton.OnClick += TurnRightClick;
 
-            ApplyButton = new GUIButton(4, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.ApplyOrderButton].region);
+            ApplyButton = new GUIButton(4, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.ApplyOrderButton].region);
             ApplyButton.OnClick += ApplyClick;
 
-            NotApplyButton = new GUIButton(5, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.NotApplyOrderButton].region);
+            NotApplyButton = new GUIButton(5, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.NotApplyOrderButton].region);
             NotApplyButton.OnClick += NotApplyClick;
 
-            ResetButton = new GUIButton(6, 6, NodeMarkupTextures.Texture, NodeMarkupTextures.Atlas[NodeMarkupTextures.ResetOrderButton].region);
+            ResetButton = new GUIButton(6, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.ResetOrderButton].region);
             ResetButton.OnClick += ResetClick;
         }
         private void TurnLeftClick()
@@ -110,8 +110,8 @@ namespace NodeMarkup.Tools
 
         protected override void Reset(IToolMode prevMode)
         {
-            Centre = Markup.CenterPosition;
-            Radius = Markup.CenterRadius + TargetEnter.Size / 2;
+            Centre = Marking.CenterPosition;
+            Radius = Marking.CenterRadius + TargetEnter.Size / 2;
 
             base.Reset(prevMode);
         }
@@ -122,7 +122,7 @@ namespace NodeMarkup.Tools
         {
             if (!IsSelectedSource)
             {
-                var mouse = SingletonTool<NodeMarkupTool>.Instance.MousePositionScaled;
+                var mouse = SingletonTool<IntersectionMarkingTool>.Instance.MousePositionScaled;
 
                 if (TurnLeftButton.CheckHover(mouse))
                     return $"{Localize.Tool_InfoTurnСounterClockwise} ({TurnLeftShortcut})";
@@ -149,7 +149,7 @@ namespace NodeMarkup.Tools
                 Tool.SetMode(ToolModeType.PointsOrder);
             else
             {
-                var mouse = SingletonTool<NodeMarkupTool>.Instance.MousePositionScaled;
+                var mouse = SingletonTool<IntersectionMarkingTool>.Instance.MousePositionScaled;
 
                 TurnLeftButton.CheckClick(mouse);
                 FlipButton.CheckClick(mouse);
@@ -197,8 +197,8 @@ namespace NodeMarkup.Tools
 
         private void SetBackup()
         {
-            Markup.Clear();
-            Markup.FromXml(SingletonMod<Mod>.Version, Backup, new ObjectsMap());
+            Marking.Clear();
+            Marking.FromXml(SingletonMod<Mod>.Version, Backup, new ObjectsMap());
         }
 
         public override void OnToolGUI(Event e)
@@ -261,12 +261,12 @@ namespace NodeMarkup.Tools
 
         protected override void ApplyClick()
         {
-            if (!string.IsNullOrEmpty(RoadName) && Markup.Type == MarkingType.Segment)
+            if (!string.IsNullOrEmpty(RoadName) && Marking.Type == MarkingType.Segment)
             {
                 var firstId = TargetEnters[0].Enter.Id;
                 var secondId = TargetEnters[1].Enter.Id;
 
-                ref var segment = ref Markup.Id.GetSegment();
+                ref var segment = ref Marking.Id.GetSegment();
 
                 var firstIsStart = segment.m_startNode == firstId;
                 var secondIsEnd = segment.m_endNode == secondId;

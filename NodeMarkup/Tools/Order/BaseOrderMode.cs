@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace NodeMarkup.Tools
 {
-    public abstract class BaseOrderToolMode : NodeMarkupToolMode
+    public abstract class BaseOrderToolMode : IntersectionMarkingToolMode
     {
         public override bool ShowPanel => false;
         public Vector3 Centre { get; protected set; }
@@ -24,19 +24,19 @@ namespace NodeMarkup.Tools
 
         protected override void Reset(IToolMode prevMode)
         {
-            if (prevMode is BaseOrderToolMode pasteMarkupTool)
+            if (prevMode is BaseOrderToolMode pasteMarkingTool)
             {
-                Backup = pasteMarkupTool.Backup;
-                Invert = pasteMarkupTool.Invert;
-                SourceEnters = pasteMarkupTool.SourceEnters;
-                TargetEnters = pasteMarkupTool.TargetEnters;
+                Backup = pasteMarkingTool.Backup;
+                Invert = pasteMarkingTool.Invert;
+                SourceEnters = pasteMarkingTool.SourceEnters;
+                TargetEnters = pasteMarkingTool.TargetEnters;
             }
             else
             {
-                Backup = Markup.ToXml();
+                Backup = Marking.ToXml();
                 Invert = false;
                 SourceEnters = IntersectionTemplate.Enters.Select((e, i) => new SourceEnter(e, i)).ToArray();
-                TargetEnters = Markup.Enters.Select((e, i) => new TargetEnter(e, i)).ToArray();
+                TargetEnters = Marking.Enters.Select((e, i) => new TargetEnter(e, i)).ToArray();
 
                 var min = Math.Min(TargetEnters.Length, SourceEnters.Length);
                 for (var i = 0; i < min; i += 1)
@@ -54,7 +54,7 @@ namespace NodeMarkup.Tools
                 var enterTarget = source.Target as TargetEnter;
                 var sourceId = source.Enter.Id;
                 var targetId = enterTarget?.Enter.Id ?? 0;
-                switch (Markup.Type)
+                switch (Marking.Type)
                 {
                     case MarkingType.Node:
                         map.AddSegment(sourceId, targetId);
@@ -78,8 +78,8 @@ namespace NodeMarkup.Tools
                 }
             }
 
-            Markup.Clear();
-            Markup.FromXml(SingletonMod<Mod>.Version, IntersectionTemplate.Data, map);
+            Marking.Clear();
+            Marking.FromXml(SingletonMod<Mod>.Version, IntersectionTemplate.Data, map);
             Panel.UpdatePanel();
         }
     }
@@ -123,8 +123,8 @@ namespace NodeMarkup.Tools
         protected abstract SourceType[] GetSources(IToolMode prevMode);
         protected abstract Target<SourceType>[] GetTargets(IToolMode prevMode);
 
-        public void GetHoverSource() => HoverSource = SingletonTool<NodeMarkupTool>.Instance.MouseRayValid ? Sources.FirstOrDefault(s => s.IsHover(SingletonTool<NodeMarkupTool>.Instance.MouseRay)) : null;
-        public void GetHoverTarget() => HoverTarget = SingletonTool<NodeMarkupTool>.Instance.MouseRayValid ? AvailableTargets.FirstOrDefault(t => t.IsHover(SingletonTool<NodeMarkupTool>.Instance.MouseRay)) : null;
+        public void GetHoverSource() => HoverSource = SingletonTool<IntersectionMarkingTool>.Instance.MouseRayValid ? Sources.FirstOrDefault(s => s.IsHover(SingletonTool<IntersectionMarkingTool>.Instance.MouseRay)) : null;
+        public void GetHoverTarget() => HoverTarget = SingletonTool<IntersectionMarkingTool>.Instance.MouseRayValid ? AvailableTargets.FirstOrDefault(t => t.IsHover(SingletonTool<IntersectionMarkingTool>.Instance.MouseRay)) : null;
 
         public override void OnToolUpdate()
         {

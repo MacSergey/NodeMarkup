@@ -18,7 +18,7 @@ namespace NodeMarkup.UI.Editors
 
         private LinesEditor Editor { get; set; }
         private MarkingLine Line => Editor.EditObject;
-        public MarkupLineRawRule Rule { get; private set; }
+        public MarkingLineRawRule Rule { get; private set; }
 
         private StyleHeaderPanel Header { get; set; }
         private ErrorTextProperty Error { get; set; }
@@ -32,7 +32,7 @@ namespace NodeMarkup.UI.Editors
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
         public RulePanel() { }
-        public void Init(LinesEditor editor, MarkupLineRawRule rule)
+        public void Init(LinesEditor editor, MarkingLineRawRule rule)
         {
             Editor = editor;
             Rule = rule;

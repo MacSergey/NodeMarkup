@@ -22,9 +22,9 @@ namespace NodeMarkup.Tools
             {
                 tips.Add(Localize.Tool_InfoSelectLineStartPoint);
                 tips.Add(Settings.HoldCtrlToMovePoint ? string.Format(Localize.Tool_InfoStartDragPointMode, LocalizeExtension.Ctrl.AddInfoColor()) : Localize.Tool_InfoDragPointMode);
-                if ((Markup.Support & Marking.SupportType.Fillers) != 0)
+                if ((Marking.Support & Marking.SupportType.Fillers) != 0)
                     tips.Add(string.Format(Localize.Tool_InfoStartCreateFiller, LocalizeExtension.Alt.AddInfoColor()));
-                if ((Markup.Support & Marking.SupportType.Croswalks) != 0)
+                if ((Marking.Support & Marking.SupportType.Croswalks) != 0)
                     tips.Add(string.Format(Localize.Tool_InfoStartCreateCrosswalk, LocalizeExtension.Shift.AddInfoColor()));
             }
             else if (!IsHoverPoint)
@@ -58,13 +58,13 @@ namespace NodeMarkup.Tools
 
             if (!Tool.Panel.IsHover)
             {
-                if (Utility.OnlyAltIsPressed && (Markup.Support & Marking.SupportType.Fillers) != 0)
+                if (Utility.OnlyAltIsPressed && (Marking.Support & Marking.SupportType.Fillers) != 0)
                 {
                     Tool.SetMode(ToolModeType.MakeFiller);
                     if (Tool.NextMode is MakeFillerToolMode fillerToolMode)
                         fillerToolMode.DisableByAlt = true;
                 }
-                else if (Utility.OnlyShiftIsPressed && (Markup.Support & Marking.SupportType.Croswalks) != 0)
+                else if (Utility.OnlyShiftIsPressed && (Marking.Support & Marking.SupportType.Croswalks) != 0)
                     Tool.SetMode(ToolModeType.MakeCrosswalk);
             }
         }
@@ -85,7 +85,7 @@ namespace NodeMarkup.Tools
             {
                 var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
 
-                if (Tool.Markup.TryGetLine(pointPair, out MarkingLine line))
+                if (Tool.Marking.TryGetLine(pointPair, out MarkingLine line))
                 {
                     if (Utility.OnlyCtrlIsPressed)
                         Panel.SelectLine(line);
@@ -95,13 +95,13 @@ namespace NodeMarkup.Tools
                 else if (pointPair.IsStopLine)
                 {
                     var style = Tool.GetStyleByModifier<StopLineStyle, StopLineStyle.StopLineType>(NetworkType.Road, LineType.Stop, StopLineStyle.StopLineType.Solid);
-                    var newLine = Tool.Markup.AddStopLine(pointPair, style);
+                    var newLine = Tool.Marking.AddStopLine(pointPair, style);
                     Panel.SelectLine(newLine);
                 }
                 else if (pointPair.IsLane)
                 {
                     var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(pointPair.NetworkType, LineType.Lane, RegularLineStyle.RegularLineType.Prop, true);
-                    var newLine = Tool.Markup.AddLaneLine(pointPair, style);
+                    var newLine = Tool.Marking.AddLaneLine(pointPair, style);
                     Panel.SelectLine(newLine);
 
                     if (Settings.CreateLaneEdgeLines && pointPair.First is MarkingLanePoint lanePointS && pointPair.Second is MarkingLanePoint lanePointE)
@@ -110,16 +110,16 @@ namespace NodeMarkup.Tools
                         lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
 
                         var pairA = new MarkingPointPair(leftPointS, rightPointE);
-                        if (!Markup.TryGetLine(pairA, out MarkingLine lineA))
+                        if (!Marking.TryGetLine(pairA, out MarkingLine lineA))
                         {
-                            lineA = Markup.AddRegularLine(pairA, null);
+                            lineA = Marking.AddRegularLine(pairA, null);
                             Panel.AddLine(lineA);
                         }
 
                         var pairB = new MarkingPointPair(leftPointE, rightPointS);
-                        if (!Markup.TryGetLine(pairB, out MarkingLine lineB))
+                        if (!Marking.TryGetLine(pairB, out MarkingLine lineB))
                         {
-                            lineB = Markup.AddRegularLine(pairB, null);
+                            lineB = Marking.AddRegularLine(pairB, null);
                             Panel.AddLine(lineB);
                         }
                     }
@@ -127,7 +127,7 @@ namespace NodeMarkup.Tools
                 else
                 {
                     var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(pointPair.NetworkType, LineType.Regular, RegularLineStyle.RegularLineType.Dashed, true);
-                    var newLine = Tool.Markup.AddRegularLine(pointPair, style);
+                    var newLine = Tool.Marking.AddRegularLine(pointPair, style);
                     Panel.SelectLine(newLine);
                 }
 
@@ -137,7 +137,7 @@ namespace NodeMarkup.Tools
         }
         private void OnDelete(MarkingLine line)
         {
-            var fillers = Markup.GetLineFillers(line).ToArray();
+            var fillers = Marking.GetLineFillers(line).ToArray();
 
             if (line is MarkingCrosswalkLine crosswalkLine)
                 Panel.DeleteCrosswalk(crosswalkLine.Crosswalk);
@@ -145,7 +145,7 @@ namespace NodeMarkup.Tools
                 Panel.DeleteFiller(filler);
 
             Panel.DeleteLine(line);
-            Tool.Markup.RemoveLine(line);
+            Tool.Marking.RemoveLine(line);
         }
         protected override IEnumerable<MarkingPoint> GetTarget(Entrance enter, MarkingPoint ignore)
         {
@@ -155,7 +155,7 @@ namespace NodeMarkup.Tools
             {
                 foreach (var point in enter.EnterPoints)
                     yield return point;
-                if (Markup.EntersCount > 1)
+                if (Marking.EntersCount > 1)
                 {
                     foreach (var point in enter.LanePoints)
                         yield return point;
@@ -165,7 +165,7 @@ namespace NodeMarkup.Tools
             {
                 if (ignore != null && ignore.Enter == enter)
                 {
-                    if ((Markup.SupportLines & LineType.Stop) == 0)
+                    if ((Marking.SupportLines & LineType.Stop) == 0)
                         yield break;
 
                     var ignoreIdx = ignore.Index - 1;
@@ -250,9 +250,9 @@ namespace NodeMarkup.Tools
                 }
             }
 #if DEBUG
-            if (Settings.ShowNodeContour && Tool.Markup is Manager.NodeMarking markup)
+            if (Settings.ShowNodeContour && Tool.Marking is NodeMarking marking)
             {
-                foreach (var line in markup.Contour)
+                foreach (var line in marking.Contour)
                     line.Render(new OverlayData(cameraInfo));
             }
 #endif
@@ -269,14 +269,14 @@ namespace NodeMarkup.Tools
             var bezier = new BezierTrajectory(startPos, startDir, endPos, endDir, true, smoothStart, smoothEnd);
 
             var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
+            var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
 
             bezier.Render(new OverlayData(cameraInfo) { Color = color });
         }
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Markup.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Purple;
+            var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Purple;
 
             var lineBezier = new Bezier3()
             {
@@ -311,7 +311,7 @@ namespace NodeMarkup.Tools
                 };
 
                 var pointPair = new MarkingPointPair(pointA, pointB);
-                var color = Tool.Markup.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
+                var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
 
                 var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
                 points.RenderArea(triangles, new OverlayData(cameraInfo) { Color = color, AlphaBlend = false });
@@ -321,13 +321,13 @@ namespace NodeMarkup.Tools
         private void RenderNotConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             Vector3 endPosition;
-            if (Markup is SegmentMarking segmentMarkup)
+            if (Marking is SegmentMarking segmentMarking)
             {
-                segmentMarkup.Trajectory.GetHitPosition(SingletonTool<NodeMarkupTool>.Instance.Ray, out _, out _, out endPosition);
-                endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(endPosition.y, out _);
+                segmentMarking.Trajectory.GetHitPosition(SingletonTool<IntersectionMarkingTool>.Instance.Ray, out _, out _, out endPosition);
+                endPosition = SingletonTool<IntersectionMarkingTool>.Instance.Ray.GetRayPosition(endPosition.y, out _);
             }
             else
-                endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+                endPosition = SingletonTool<IntersectionMarkingTool>.Instance.Ray.GetRayPosition(Marking.Position.y, out _);
 
             new BezierTrajectory(SelectPoint.MarkerPosition, SelectPoint.Direction, endPosition).Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
         }
@@ -338,13 +338,13 @@ namespace NodeMarkup.Tools
                 var halfWidth = lanePoint.Width * lanePoint.Enter.TranformCoef * 0.5f;
 
                 Vector3 endPosition;
-                if (Markup is SegmentMarking segmentMarkup)
+                if (Marking is SegmentMarking segmentMarking)
                 {
-                    segmentMarkup.Trajectory.GetHitPosition(SingletonTool<NodeMarkupTool>.Instance.Ray, out _, out _, out endPosition);
-                    endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(endPosition.y, out _);
+                    segmentMarking.Trajectory.GetHitPosition(SingletonTool<IntersectionMarkingTool>.Instance.Ray, out _, out _, out endPosition);
+                    endPosition = SingletonTool<IntersectionMarkingTool>.Instance.Ray.GetRayPosition(endPosition.y, out _);
                 }
                 else
-                    endPosition = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _);
+                    endPosition = SingletonTool<IntersectionMarkingTool>.Instance.Ray.GetRayPosition(Marking.Position.y, out _);
 
                 if ((lanePoint.Position - endPosition).sqrMagnitude < 4f * halfWidth * halfWidth)
                 {

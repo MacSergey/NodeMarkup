@@ -8,7 +8,7 @@ using static ColossalFramework.Math.VectorUtils;
 
 namespace NodeMarkup.Tools
 {
-    public abstract class BaseMakeItemToolMode : NodeMarkupToolMode
+    public abstract class BaseMakeItemToolMode : IntersectionMarkingToolMode
     {
         protected List<MarkingPoint> TargetPoints { get; set; } = new List<MarkingPoint>();
 
@@ -27,11 +27,11 @@ namespace NodeMarkup.Tools
 
         public override void OnToolUpdate()
         {
-            if (SingletonTool<NodeMarkupTool>.Instance.MouseRayValid)
+            if (SingletonTool<IntersectionMarkingTool>.Instance.MouseRayValid)
             {
                 foreach (var point in TargetPoints)
                 {
-                    if (point.IsHover(SingletonTool<NodeMarkupTool>.Instance.MouseRay))
+                    if (point.IsHover(SingletonTool<IntersectionMarkingTool>.Instance.MouseRay))
                     {
                         HoverPoint = point;
                         return;
@@ -41,7 +41,7 @@ namespace NodeMarkup.Tools
 
             if (IsSelectPoint && SelectPoint.Type == MarkingPoint.PointType.Enter && (SelectPoint.Enter.SupportPoints & MarkingPoint.PointType.Normal) != 0)
             {
-                var connectLine = SingletonTool<NodeMarkupTool>.Instance.Ray.GetRayPosition(Markup.Position.y, out _) - SelectPoint.MarkerPosition;
+                var connectLine = SingletonTool<IntersectionMarkingTool>.Instance.Ray.GetRayPosition(Marking.Position.y, out _) - SelectPoint.MarkerPosition;
                 if (connectLine.magnitude >= 2 && 135 <= Vector3.Angle(XZ(SelectPoint.Direction), XZ(connectLine)) && SelectPoint.Enter.TryGetPoint(SelectPoint.Index, MarkingPoint.PointType.Normal, out MarkingPoint normalPoint))
                 {
                     HoverPoint = normalPoint;
@@ -54,7 +54,7 @@ namespace NodeMarkup.Tools
         public override string GetToolInfo()
         {
             var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
-            var exist = Tool.Markup.ExistLine(pointPair);
+            var exist = Tool.Marking.ExistLine(pointPair);
 
             if (pointPair.IsStopLine)
                 return exist ? $"{Localize.Tool_InfoDeleteStopLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine, pointPair.NetworkType, pointPair.LineType);
@@ -82,7 +82,7 @@ namespace NodeMarkup.Tools
             }
             else
             {
-                Tool.SetMarkup(null);
+                Tool.SetMarking(null);
                 Tool.SetMode(ToolModeType.Select);
             }
         }
@@ -103,7 +103,7 @@ namespace NodeMarkup.Tools
         protected void SetTarget(MarkingPoint ignore = null)
         {
             TargetPoints.Clear();
-            foreach (var enter in Tool.Markup.Enters)
+            foreach (var enter in Tool.Marking.Enters)
                 TargetPoints.AddRange(GetTarget(enter, ignore));
         }
         protected abstract IEnumerable<MarkingPoint> GetTarget(Entrance enter, MarkingPoint ignore);

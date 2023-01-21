@@ -306,7 +306,7 @@ namespace NodeMarkup.Manager
             distributionProperty.Text = Localize.StyleOption_Distribution;
             distributionProperty.Selector.AutoButtonSize = false;
             distributionProperty.Selector.ButtonWidth = 57f;
-            distributionProperty.Selector.atlas = NodeMarkupTextures.Atlas;
+            distributionProperty.Selector.atlas = IntersectionMarkingToolTextures.Atlas;
             distributionProperty.CanCollapse = canCollapse;
             distributionProperty.Init();
             distributionProperty.SelectedObject = Distribution;
@@ -389,10 +389,10 @@ namespace NodeMarkup.Manager
             }
         }
 
-        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkupLOD lod)
+        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod)
         {
             if (Prefab.Value is not PrefabType prefab)
-                return new MarkupPartGroupData(lod);
+                return new MarkingPartGroupData(lod);
 
             var shift = (Shift.Value.x + Shift.Value.y) * 0.5f;
 
@@ -403,7 +403,7 @@ namespace NodeMarkup.Manager
 
             var length = trajectory.Length;
             if (OffsetBefore + OffsetAfter >= length)
-                return new MarkupPartGroupData(lod);
+                return new MarkingPartGroupData(lod);
 
             var startT = OffsetBefore == 0f ? 0f : trajectory.Travel(OffsetBefore);
             var endT = OffsetAfter == 0f ? 1f : 1f - trajectory.Invert().Travel(OffsetAfter);
@@ -412,7 +412,7 @@ namespace NodeMarkup.Manager
             length = trajectory.Length;
             var stepValue = Step.HasValue ? Step.Value.Value : PrefabSize.x;
 
-            MarkupPropItemData[] items;
+            MarkingPropItemData[] items;
             int startIndex;
             int count;
             float startOffset;
@@ -424,7 +424,7 @@ namespace NodeMarkup.Manager
                         startIndex = 0;
                         count = Mathf.CeilToInt(length / stepValue);
                         startOffset = (length - (count - 1) * stepValue) * 0.5f;
-                        items = new MarkupPropItemData[count];
+                        items = new MarkingPropItemData[count];
                         break;
                     }
                 case DistributionType.FixedSpaceFixedEnd:
@@ -432,7 +432,7 @@ namespace NodeMarkup.Manager
                         startIndex = 1;
                         count = Math.Max(Mathf.RoundToInt(length / stepValue - 1.5f), 0);
                         startOffset = (length - (count - 1) * stepValue) * 0.5f;
-                        items = new MarkupPropItemData[count + 2];
+                        items = new MarkingPropItemData[count + 2];
 
                         CalculateItem(trajectory, 0f, prefab, ref items[0]);
                         CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
@@ -444,7 +444,7 @@ namespace NodeMarkup.Manager
                         count = Mathf.RoundToInt(length / stepValue);
                         stepValue = length / count;
                         startOffset = (length - (count - 1) * stepValue) * 0.5f;
-                        items = new MarkupPropItemData[count];
+                        items = new MarkingPropItemData[count];
                         break;
                     }
                 case DistributionType.DynamicSpaceFixedEnd:
@@ -453,14 +453,14 @@ namespace NodeMarkup.Manager
                         count = Math.Max(Mathf.RoundToInt(length / stepValue) - 1, 0);
                         stepValue = length / (count + 1);
                         startOffset = stepValue;
-                        items = new MarkupPropItemData[count + 2];
+                        items = new MarkingPropItemData[count + 2];
 
                         CalculateItem(trajectory, 0f, prefab, ref items[0]);
                         CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
                         break;
                     }
                 default:
-                    return new MarkupPartGroupData(lod);
+                    return new MarkingPartGroupData(lod);
             }
 
             for (int i = 0; i < count; i += 1)
@@ -482,7 +482,7 @@ namespace NodeMarkup.Manager
 
             return GetParts(prefab, items);
         }
-        private void CalculateItem(ITrajectory trajectory, float t, PrefabType prefab, ref MarkupPropItemData item)
+        private void CalculateItem(ITrajectory trajectory, float t, PrefabType prefab, ref MarkingPropItemData item)
         {
             item.Position = trajectory.Position(t);
 
@@ -525,8 +525,8 @@ namespace NodeMarkup.Manager
 
             CalculateItem(prefab, ref item);
         }
-        protected virtual void CalculateItem(PrefabType prefab, ref MarkupPropItemData item) { }
-        protected abstract IStyleData GetParts(PrefabType prefab, MarkupPropItemData[] items);
+        protected virtual void CalculateItem(PrefabType prefab, ref MarkingPropItemData item) { }
+        protected abstract IStyleData GetParts(PrefabType prefab, MarkingPropItemData[] items);
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -610,7 +610,7 @@ namespace NodeMarkup.Manager
         public static ColorOptionEnum DefaultColorOption => ColorOptionEnum.Random;
 
         public override StyleType Type => StyleType.LineProp;
-        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
+        public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
         protected override string AssetPropertyName => Localize.StyleOption_AssetProp;
 
@@ -669,7 +669,7 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution);
 
-        protected override void CalculateItem(PropInfo prop, ref MarkupPropItemData item)
+        protected override void CalculateItem(PropInfo prop, ref MarkingPropItemData item)
         {
             switch (ColorOption.Value)
             {
@@ -693,9 +693,9 @@ namespace NodeMarkup.Manager
                     break;
             }
         }
-        protected override IStyleData GetParts(PropInfo prop, MarkupPropItemData[] items)
+        protected override IStyleData GetParts(PropInfo prop, MarkingPropItemData[] items)
         {
-            return new MarkupPropData(prop, items);
+            return new MarkingPropData(prop, items);
         }
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -786,7 +786,7 @@ namespace NodeMarkup.Manager
     public class TreeLineStyle : BaseObjectLineStyle<TreeInfo, SelectTreeProperty>
     {
         public override StyleType Type => StyleType.LineTree;
-        public override MarkupLOD SupportLOD => MarkupLOD.NoLOD;
+        public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
         protected override string AssetPropertyName => Localize.StyleOption_AssetTree;
         public override bool CanSlope => true;
@@ -835,9 +835,9 @@ namespace NodeMarkup.Manager
 
         public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution);
 
-        protected override IStyleData GetParts(TreeInfo tree, MarkupPropItemData[] items)
+        protected override IStyleData GetParts(TreeInfo tree, MarkingPropItemData[] items)
         {
-            return new MarkupTreeData(tree, items);
+            return new MarkingTreeData(tree, items);
         }
 
         protected override bool IsValidPrefab(TreeInfo info) => info != null;
@@ -847,19 +847,19 @@ namespace NodeMarkup.Manager
     public enum DistributionType
     {
         [Description(nameof(Localize.StyleOption_DistributionFixedFree))]
-        [Sprite(nameof(NodeMarkupTextures.FixedFreeButtonIcons))]
+        [Sprite(nameof(IntersectionMarkingToolTextures.FixedFreeButtonIcons))]
         FixedSpaceFreeEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionFixedFixed))]
-        [Sprite(nameof(NodeMarkupTextures.FixedFixedButtonIcons))]
+        [Sprite(nameof(IntersectionMarkingToolTextures.FixedFixedButtonIcons))]
         FixedSpaceFixedEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionDynamicFree))]
-        [Sprite(nameof(NodeMarkupTextures.DynamicFreeButtonIcons))]
+        [Sprite(nameof(IntersectionMarkingToolTextures.DynamicFreeButtonIcons))]
         DynamicSpaceFreeEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionDynamicFixed))]
-        [Sprite(nameof(NodeMarkupTextures.DynamicFixedButtonIcons))]
+        [Sprite(nameof(IntersectionMarkingToolTextures.DynamicFixedButtonIcons))]
         DynamicSpaceFixedEnd,
     }
     public class DistributionTypePanel : EnumOncePropertyPanel<DistributionType, DistributionTypePanel.DistributionTypeSegmented>
@@ -878,7 +878,7 @@ namespace NodeMarkup.Manager
                     if (string.IsNullOrEmpty(sprite))
                         Selector.AddItem(value, GetDescription(value));
                     else
-                        Selector.AddItem(value, GetDescription(value), NodeMarkupTextures.Atlas, sprite);
+                        Selector.AddItem(value, GetDescription(value), IntersectionMarkingToolTextures.Atlas, sprite);
                 }
             }
             Selector.StartLayout();

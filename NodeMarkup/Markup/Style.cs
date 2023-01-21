@@ -4,12 +4,10 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using NodeMarkup.API;
 using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
 using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -93,7 +91,7 @@ namespace NodeMarkup.Manager
         public Action OnStyleChanged { private get; set; }
         public string XmlSection => XmlName;
         public abstract StyleType Type { get; }
-        public abstract MarkupLOD SupportLOD { get; }
+        public abstract MarkingLOD SupportLOD { get; }
 
         protected virtual void StyleChanged() => OnStyleChanged?.Invoke();
 

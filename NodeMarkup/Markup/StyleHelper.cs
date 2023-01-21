@@ -11,27 +11,27 @@ namespace NodeMarkup.Manager
 {
     public static class StyleHelper
     {
-        public delegate IEnumerable<MarkupPartData> SolidGetter(ITrajectory trajectory);
-        public delegate IEnumerable<MarkupPartData> DashedGetter(ITrajectory trajectory, float startT, float endT);
+        public delegate IEnumerable<MarkingPartData> SolidGetter(ITrajectory trajectory);
+        public delegate IEnumerable<MarkingPartData> DashedGetter(ITrajectory trajectory, float startT, float endT);
         public static float MinAngleDelta { get; } = 5f;
         public static float MinLength { get; } = 1f;
         public static float MaxLength { get; } = 10f;
         private static int MaxDepth => 5;
 
-        public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, Func<ITrajectory, Result> calculateParts, float? minAngle = null, float? minLength = null, float? maxLength = null)
+        public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkingLOD lod, Func<ITrajectory, Result> calculateParts, float? minAngle = null, float? minLength = null, float? maxLength = null)
         {
             return CalculateSolid<Result>(trajectory, lod, minAngle, minLength, maxLength, AddToResult);
             void AddToResult(List<Result> result, ITrajectory trajectory) => result.Add(calculateParts(trajectory));
         }
-        public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, Func<ITrajectory, IEnumerable<Result>> calculateParts, float? minAngle = null, float? minLength = null, float? maxLength = null)
+        public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkingLOD lod, Func<ITrajectory, IEnumerable<Result>> calculateParts, float? minAngle = null, float? minLength = null, float? maxLength = null)
         {
             return CalculateSolid<Result>(trajectory, lod, minAngle, minLength, maxLength, AddToResult);
             void AddToResult(List<Result> result, ITrajectory trajectory) => result.AddRange(calculateParts(trajectory));
         }
 
-        private static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkupLOD lod, float? minAngle, float? minLength, float? maxLength, Action<List<Result>, ITrajectory> addToResult)
+        private static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkingLOD lod, float? minAngle, float? minLength, float? maxLength, Action<List<Result>, ITrajectory> addToResult)
         {
-            var lodScale = lod == MarkupLOD.LOD0 ? 1f : 4f;
+            var lodScale = lod == MarkingLOD.LOD0 ? 1f : 4f;
             var result = new List<Result>();
 
             CalculateSolid(0, trajectory, trajectory.DeltaAngle, (minAngle ?? MinAngleDelta) * lodScale, (minLength ?? MinLength) * lodScale, (maxLength ?? MaxLength) * lodScale, t => addToResult(result, t));
@@ -74,7 +74,7 @@ namespace NodeMarkup.Manager
             addToResult(trajectory);
         }
 
-        public static IEnumerable<MarkupPartData> CalculateDashed(ITrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)
+        public static IEnumerable<MarkingPartData> CalculateDashed(ITrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)
         {
             List<PartT> partsT;
             switch (trajectory)
@@ -163,7 +163,7 @@ namespace NodeMarkup.Manager
 
             return parts;
         }
-        public static bool CalculateDashedParts(LineBorders borders, ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color, out MarkupPartData part)
+        public static bool CalculateDashedParts(LineBorders borders, ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color, out MarkingPartData part)
         {
             part = CalculateDashedPart(trajectory, startT, endT, dashLength, offset, width, color);
 
@@ -174,7 +174,7 @@ namespace NodeMarkup.Manager
             return !borders.Any(c => vertex.Any(v => Intersection.CalculateSingle(c, v).IsIntersect));
 
         }
-        public static MarkupPartData CalculateDashedPart(ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color)
+        public static MarkingPartData CalculateDashedPart(ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color)
         {
             if (offset == 0)
                 return CalculateDashedPart(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero, width, color);
@@ -185,7 +185,7 @@ namespace NodeMarkup.Manager
                 return CalculateDashedPart(trajectory, startT, endT, dashLength, startOffset, endOffset, width, color);
             }
         }
-        public static MarkupPartData CalculateDashedPart(ITrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color32 color, float? angle = null)
+        public static MarkingPartData CalculateDashedPart(ITrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color32 color, float? angle = null)
         {
             var startPosition = trajectory.Position(startT);
             var endPosition = trajectory.Position(endT);
@@ -195,10 +195,10 @@ namespace NodeMarkup.Manager
 
             var dir = angle?.Direction() ?? (endPosition - startPosition);
 
-            return new MarkupPartData(startPosition, endPosition, dir, dashLength, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
+            return new MarkingPartData(startPosition, endPosition, dir, dashLength, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
         }
 
-        public static bool CalculateSolidPart(LineBorders borders, ITrajectory trajectory, float offset, float width, Color32 color, out MarkupPartData part)
+        public static bool CalculateSolidPart(LineBorders borders, ITrajectory trajectory, float offset, float width, Color32 color, out MarkingPartData part)
         {
             part = CalculateSolidPart(trajectory, offset, width, color);
 
@@ -237,11 +237,11 @@ namespace NodeMarkup.Manager
             {
                 var dir = part.Angle.Direction() * (part.Length / 2);
                 var line = new StraightTrajectory(part.Position + dir, part.Position - dir).Cut(from, to);
-                part = new MarkupPartData(line.StartPosition, line.EndPosition, line.Direction, part.Width, part.Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
+                part = new MarkingPartData(line.StartPosition, line.EndPosition, line.Direction, part.Width, part.Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
             }
             return true;
         }
-        public static MarkupPartData CalculateSolidPart(ITrajectory trajectory, float offset, float width, Color32 color)
+        public static MarkingPartData CalculateSolidPart(ITrajectory trajectory, float offset, float width, Color32 color)
         {
             if (offset == 0)
                 return CalculateSolidPart(trajectory, Vector3.zero, Vector3.zero, width, color);
@@ -252,18 +252,18 @@ namespace NodeMarkup.Manager
                 return CalculateSolidPart(trajectory, startOffset, endOffset, width, color);
             }
         }
-        public static MarkupPartData CalculateSolidPart(ITrajectory trajectory, Vector3 startOffset, Vector3 endOffset, float width, Color32 color)
+        public static MarkingPartData CalculateSolidPart(ITrajectory trajectory, Vector3 startOffset, Vector3 endOffset, float width, Color32 color)
         {
             var startPosition = trajectory.StartPosition + startOffset;
             var endPosition = trajectory.EndPosition + endOffset;
-            return new MarkupPartData(startPosition, endPosition, endPosition - startPosition, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
+            return new MarkingPartData(startPosition, endPosition, endPosition - startPosition, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
         }
-        private static Dictionary<MarkupLOD, float> LodMax { get; } = new Dictionary<MarkupLOD, float>
+        private static Dictionary<MarkingLOD, float> LodMax { get; } = new Dictionary<MarkingLOD, float>
         {
-            {MarkupLOD.LOD0, 0.2f},
-            {MarkupLOD.LOD1, 1f}
+            {MarkingLOD.LOD0, 0.2f},
+            {MarkingLOD.LOD1, 1f}
         };
-        public static void GetParts(float width, float offset, MarkupLOD lod, out int count, out float partWidth)
+        public static void GetParts(float width, float offset, MarkingLOD lod, out int count, out float partWidth)
         {
             var max = LodMax[lod];
 

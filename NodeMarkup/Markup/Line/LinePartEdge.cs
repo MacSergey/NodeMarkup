@@ -32,10 +32,10 @@ namespace NodeMarkup.Manager
     }
     public class EnterPointEdge : EnterSupportPoint, ILinePartEdge
     {
-        public static bool FromXml(XElement config, Marking markup, ObjectsMap map, out EnterPointEdge enterPoint)
+        public static bool FromXml(XElement config, Marking marking, ObjectsMap map, out EnterPointEdge enterPoint)
         {
             var pointId = config.GetAttrValue<int>(MarkingPoint.XmlName);
-            if (MarkingPoint.FromId(pointId, markup, map, out MarkingPoint point))
+            if (MarkingPoint.FromId(pointId, marking, map, out MarkingPoint point))
             {
                 enterPoint = new EnterPointEdge(point);
                 return true;
@@ -111,7 +111,7 @@ namespace NodeMarkup.Manager
         public override string XmlSection => LinePartEdge.XmlName;
         public override SupportType Type => SupportType.CrosswalkBorder;
         public MarkingCrosswalkLine CrosswalkLine { get; }
-        public MarkupCrosswalk Crosswalk => CrosswalkLine.Crosswalk;
+        public MarkingCrosswalk Crosswalk => CrosswalkLine.Crosswalk;
         public BorderPosition Border { get; }
 
         public CrosswalkBorderEdge(MarkingCrosswalkLine crosswalkLine, BorderPosition border) : base()

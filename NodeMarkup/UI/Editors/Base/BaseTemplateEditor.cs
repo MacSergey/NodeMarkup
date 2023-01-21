@@ -295,7 +295,7 @@ namespace NodeMarkup.UI.Editors
         Create = 4,
     }
 
-    public abstract class EditTemplateMode<TemplateType> : NodeMarkupToolMode
+    public abstract class EditTemplateMode<TemplateType> : IntersectionMarkingToolMode
         where TemplateType : Template
     {
         public override ToolModeType Type => ToolModeType.PanelAction;

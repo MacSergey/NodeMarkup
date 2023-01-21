@@ -250,7 +250,7 @@ namespace NodeMarkup.Utilities.API
     {
         public DataProvider DataProvider { get; }
         IDataProviderV1 ICrosswalkData.DataProvider => DataProvider;
-        private MarkupCrosswalk Crosswalk { get; }
+        private MarkingCrosswalk Crosswalk { get; }
         public ICrosswalkLineData Line => new CrosswalkLineDataProvider(DataProvider, Crosswalk.CrosswalkLine);
 
         public ushort MarkingId => Crosswalk.Marking.Id;
@@ -265,7 +265,7 @@ namespace NodeMarkup.Utilities.API
             }
         }
 
-        public CrosswalkDataProvider(DataProvider dataProvider, MarkupCrosswalk crosswalk)
+        public CrosswalkDataProvider(DataProvider dataProvider, MarkingCrosswalk crosswalk)
         {
             DataProvider = dataProvider;
             Crosswalk = crosswalk;
@@ -327,11 +327,11 @@ namespace NodeMarkup.Utilities.API
 
     public struct RuleDataProvider : ILineRuleData
     {
-        private MarkupLineRawRule Rule { get; }
+        private MarkingLineRawRule Rule { get; }
 
-        public RuleDataProvider(MarkupLineRawRule markupLineRawRule)
+        public RuleDataProvider(MarkingLineRawRule markingLineRawRule)
         {
-            Rule = markupLineRawRule;
+            Rule = markingLineRawRule;
         }
     }
 }

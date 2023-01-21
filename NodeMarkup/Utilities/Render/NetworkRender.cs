@@ -1,17 +1,12 @@
 ﻿using ColossalFramework;
-using ColossalFramework.Math;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 namespace NodeMarkup.Utilities
 {
-    public class MarkupNetworkData : BaseMarkupMeshData
+    public class MarkingNetworkData : BaseMarkingMeshData
     {
         private struct Data
         {
@@ -27,10 +22,10 @@ namespace NodeMarkup.Utilities
             public Vector4 surfaceMapping;
         }
 
-        public override MarkupLODType LODType => MarkupLODType.Network;
+        public override MarkingLODType LODType => MarkingLODType.Network;
         Data[] Datas { get; set; }
 
-        public MarkupNetworkData(NetInfo info, ITrajectory[] trajectories, float width, float length, float scale, float elevation) : base(MarkupLOD.NoLOD, width, length)
+        public MarkingNetworkData(NetInfo info, ITrajectory[] trajectories, float width, float length, float scale, float elevation) : base(MarkingLOD.NoLOD, width, length)
         {
             var count = info.m_segments.Count(s => s.CheckFlags(NetSegment.Flags.None, out _));
             Datas = new Data[trajectories.Length * count];
