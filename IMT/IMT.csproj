@@ -394,6 +394,7 @@
   <PropertyGroup>
     <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(MSBuildProjectName)$(Type)</LocalDir>
     <WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
+    <RootNamespace>NodeMarkup</RootNamespace>
   </PropertyGroup>
 
   <Target Name="PdbToMdb" AfterTargets="Build">
