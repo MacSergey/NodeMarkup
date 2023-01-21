@@ -46,21 +46,41 @@ namespace NodeMarkup.API
 		}
 	}
 
-	public class EntranceNotExist : IntersectionMarkingToolException
+	public class EntranceNotExistException : IntersectionMarkingToolException
 	{
 		public ushort Id { get; }
 		public ushort MarkingId { get; }
-		public EntranceNotExist(ushort id, ushort markingId) : base($"Entrance #{id} does not exist in marking #{markingId}")
+		public EntranceNotExistException(ushort id, ushort markingId) : base($"Entrance #{id} does not exist in marking #{markingId}")
 		{
 			Id = id;
 			MarkingId = markingId;
 		}
 	}
-	public class PointNotExist : IntersectionMarkingToolException
+    public class LineNotExistException : IntersectionMarkingToolException
+    {
+        public ulong Id { get; }
+        public ushort MarkingId { get; }
+        public LineNotExistException(ulong id, ushort markingId) : base($"Line #{id} does not exist in marking #{markingId}")
+        {
+            Id = id;
+            MarkingId = markingId;
+        }
+    }
+    public class FillerNotExistException : IntersectionMarkingToolException
+    {
+        public int Id { get; }
+        public ushort MarkingId { get; }
+        public FillerNotExistException(int id, ushort markingId) : base($"Filler #{id} does not exist in marking #{markingId}")
+        {
+            Id = id;
+            MarkingId = markingId;
+        }
+    }
+    public class PointNotExistException : IntersectionMarkingToolException
 	{
 		public byte Id { get; }
 		public ushort EntranceId { get; }
-		public PointNotExist(byte id, ushort entranceId) : base($"Point #{id} does not exist in enter #{entranceId}")
+		public PointNotExistException(byte id, ushort entranceId) : base($"Point #{id} does not exist in enter #{entranceId}")
 		{
 			Id = id;
 			EntranceId = entranceId;

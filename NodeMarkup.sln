@@ -107,9 +107,9 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeManager", "ModsComm
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeShared.ro-RO", "ModsCommon\LocalizeShared\ro-RO\LocalizeShared.ro-RO.shproj", "{A7F303AF-C11E-4DD8-A195-6D0D459DEE53}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMT.API", "IMT.API\IMT.API.csproj", "{ADFE732E-D5A8-4C96-B0A6-86624FD41BDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntersectionMarkingTool.API", "IMT.API\IntersectionMarkingTool.API.csproj", "{ADFE732E-D5A8-4C96-B0A6-86624FD41BDF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMT", "IMT\IMT.csproj", "{0A17B8BB-D66A-44BE-BEF5-98DAE2964143}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntersectionMarkingTool", "IMT\IntersectionMarkingTool.csproj", "{0A17B8BB-D66A-44BE-BEF5-98DAE2964143}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

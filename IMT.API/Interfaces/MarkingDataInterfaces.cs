@@ -5,6 +5,7 @@ namespace NodeMarkup.API
     public interface IMarkingData
     {
         IDataProviderV1 DataProvider { get; }
+        MarkingType Type { get; }
         ushort Id { get; }
         int EntranceCount { get; }
 

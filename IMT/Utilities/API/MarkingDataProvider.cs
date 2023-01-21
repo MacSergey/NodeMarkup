@@ -20,8 +20,10 @@ namespace NodeMarkup.Utilities.API
     {
         private DataProvider DataProvider { get; }
         IDataProviderV1 IMarkingData.DataProvider => DataProvider;
-        private NodeMarking Marking { get; }
-        public ushort Id => Marking.Id;
+        public NodeMarkup.API.MarkingType Type => NodeMarkup.API.MarkingType.Node;
+        public ushort Id { get; }
+
+        private NodeMarking Marking => APIHelper.GetNodeMarking(Id);
         public int EntranceCount => Marking.EntersCount;
 
         public IEnumerable<ISegmentEntranceData> Entrances
@@ -30,7 +32,7 @@ namespace NodeMarkup.Utilities.API
             {
                 foreach (var enter in Marking.Enters)
                 {
-                    yield return new SegmentEntranceDataProvider(enter);
+                    yield return new SegmentEntranceDataProvider(DataProvider, enter);
                 }
             }
         }
@@ -38,7 +40,7 @@ namespace NodeMarkup.Utilities.API
         public NodeMarkingDataProvider(DataProvider dataProvider, NodeMarking marking)
         {
             DataProvider = dataProvider;
-            Marking = marking;
+            Id = marking.Id;
         }
 
         public void ClearMarkings()
@@ -58,7 +60,7 @@ namespace NodeMarkup.Utilities.API
         {
             if (Marking.TryGetEnter(id, out var enter))
             {
-                entrance = new SegmentEntranceDataProvider(enter);
+                entrance = new SegmentEntranceDataProvider(DataProvider, enter);
                 return true;
             }
             else
@@ -153,7 +155,7 @@ namespace NodeMarkup.Utilities.API
 
         #region ADD
 
-        public IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineStyleData styleData)
+        public IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineStyleData styleData = null)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, false);
             var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
@@ -163,9 +165,16 @@ namespace NodeMarkup.Utilities.API
             if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
-            var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
-            var style = RegularLineStyle.GetDefault(type);
-            var line = Marking.AddRegularLine(pair, style);
+            MarkingRegularLine line;
+            if (styleData != null)
+            {
+                var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
+                var style = RegularLineStyle.GetDefault(type);
+                line = Marking.AddRegularLine(pair, style);
+            }
+            else
+                line = Marking.AddRegularLine(pair, null);
+
             DataProvider.Log($"Line {line} added");
             var lineData = new RegularLineDataProvider(DataProvider, line);
             return lineData;
@@ -173,6 +182,9 @@ namespace NodeMarkup.Utilities.API
 
         public IStopLineData AddStopLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IStopLineStyleData styleData)
         {
+            if (styleData == null)
+                throw new ArgumentNullException(nameof(styleData));
+
             APIHelper.CheckPoints(Id, startPointData, endPointData, true);
             if (startPointData.Index == endPointData.Index)
                 throw new CreateLineException(startPointData, endPointData, "Start and end of stop line must have differen index");
@@ -191,7 +203,7 @@ namespace NodeMarkup.Utilities.API
             return lineData;
         }
 
-        public INormalLineData AddNormalLine(IEntrancePointData startPointData, INormalPointData endPointData, INormalLineStyleData styleData)
+        public INormalLineData AddNormalLine(IEntrancePointData startPointData, INormalPointData endPointData, INormalLineStyleData styleData = null)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, true);
             if (startPointData.Index != endPointData.Index)
@@ -203,15 +215,22 @@ namespace NodeMarkup.Utilities.API
             if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
-            var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
-            var style = RegularLineStyle.GetDefault(type);
-            var line = Marking.AddNormalLine(pair, style);
+            MarkingNormalLine line;
+            if (styleData != null)
+            {
+                var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
+                var style = RegularLineStyle.GetDefault(type);
+                line = Marking.AddNormalLine(pair, style);
+            }
+            else
+                line = Marking.AddNormalLine(pair, null);
+
             DataProvider.Log($"Line {line} added");
             var lineData = new NormalLineDataProvider(DataProvider, line);
             return lineData;
         }
 
-        public ILaneLineData AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, ILaneLineStyleData styleData)
+        public ILaneLineData AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, ILaneLineStyleData styleData = null)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, false);
             var startPoint = APIHelper.GetLanePoint(Marking, startPointData);
@@ -221,9 +240,16 @@ namespace NodeMarkup.Utilities.API
             if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
-            var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
-            var style = RegularLineStyle.GetDefault(type);
-            var line = Marking.AddLaneLine(pair, style);
+            MarkingLaneLine line;
+            if (styleData != null)
+            {
+                var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
+                var style = RegularLineStyle.GetDefault(type);
+                line = Marking.AddLaneLine(pair, style);
+            }
+            else
+                line = Marking.AddLaneLine(pair, null);
+
             DataProvider.Log($"Line {line} added");
             var lineData = new LaneLineDataProvider(DataProvider, line);
             return lineData;
@@ -231,6 +257,9 @@ namespace NodeMarkup.Utilities.API
 
         public ICrosswalkData AddCrosswalk(ICrosswalkPointData startPointData, ICrosswalkPointData endPointData, ICrosswalkStyleData styleData)
         {
+            if (styleData == null)
+                throw new ArgumentNullException(nameof(styleData));
+
             APIHelper.CheckPoints(Id, startPointData, endPointData, true);
             if (startPointData.Index == endPointData.Index)
                 throw new CreateLineException(startPointData, endPointData, "Start and end of crosswalk must have differen index");
@@ -251,6 +280,9 @@ namespace NodeMarkup.Utilities.API
 
         public IFillerData AddFiller(IEnumerable<IEntrancePointData> pointDatas, IFillerStyleData styleData)
         {
+            if (styleData == null)
+                throw new ArgumentNullException(nameof(styleData));
+
             var contour = APIHelper.GetFillerContour(Marking, pointDatas);
             var type = APIHelper.GetStyleType<FillerType>(styleData.Name);
             var style = FillerStyle.GetDefault(type);
@@ -385,8 +417,10 @@ namespace NodeMarkup.Utilities.API
     {
         private DataProvider DataProvider { get; }
         IDataProviderV1 IMarkingData.DataProvider => DataProvider;
-        private SegmentMarking Marking { get; }
-        public ushort Id => Marking.Id;
+        public NodeMarkup.API.MarkingType Type => NodeMarkup.API.MarkingType.Segment;
+        public ushort Id { get; }
+
+        private SegmentMarking Marking => APIHelper.GetSegmentMarking(Id);
         public int EntranceCount => Marking.EntersCount;
         public IEnumerable<INodeEntranceData> Entrances
         {
@@ -394,7 +428,7 @@ namespace NodeMarkup.Utilities.API
             {
                 foreach (var enter in Marking.Enters)
                 {
-                    yield return new NodeEntranceDataProvider(enter);
+                    yield return new NodeEntranceDataProvider(DataProvider, enter);
                 }
             }
         }
@@ -405,7 +439,7 @@ namespace NodeMarkup.Utilities.API
         public SegmentMarkingDataProvider(DataProvider dataProvider, SegmentMarking marking)
         {
             DataProvider = dataProvider;
-            Marking = marking;
+            Id = marking.Id;
         }
 
         public void ClearMarkings()
@@ -425,7 +459,7 @@ namespace NodeMarkup.Utilities.API
         {
             if (Marking.TryGetEnter(id, out var enter))
             {
-                entrance = new NodeEntranceDataProvider(enter);
+                entrance = new NodeEntranceDataProvider(DataProvider, enter);
                 return true;
             }
             else
@@ -472,7 +506,7 @@ namespace NodeMarkup.Utilities.API
 
         #region ADD
 
-        public IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineStyleData styleData)
+        public IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineStyleData styleData = null)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, true);
             var startPoint = APIHelper.GetEntrancePoint(Marking, startPointData);
@@ -482,14 +516,21 @@ namespace NodeMarkup.Utilities.API
             if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
-            var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
-            var style = RegularLineStyle.GetDefault(type);
-            var line = Marking.AddRegularLine(pair, style);
+            MarkingRegularLine line;
+            if (styleData != null)
+            {
+                var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
+                var style = RegularLineStyle.GetDefault(type);
+                line = Marking.AddRegularLine(pair, style);
+            }
+            else
+                line = Marking.AddRegularLine(pair, null);
+
             DataProvider.Log($"Line {line} added");
             var lineData = new RegularLineDataProvider(DataProvider, line);
             return lineData;
         }
-        public ILaneLineData AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, ILaneLineStyleData styleData)
+        public ILaneLineData AddLaneLine(ILanePointData startPointData, ILanePointData endPointData, ILaneLineStyleData styleData = null)
         {
             APIHelper.CheckPoints(Id, startPointData, endPointData, false);
             var startPoint = APIHelper.GetLanePoint(Marking, startPointData);
@@ -499,15 +540,25 @@ namespace NodeMarkup.Utilities.API
             if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
-            var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
-            var style = RegularLineStyle.GetDefault(type);
-            var line = Marking.AddLaneLine(pair, style);
+            MarkingLaneLine line;
+            if (styleData != null)
+            {
+                var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
+                var style = RegularLineStyle.GetDefault(type);
+                line = Marking.AddLaneLine(pair, style);
+            }
+            else
+                line = Marking.AddLaneLine(pair, null);
+
             DataProvider.Log($"Line {line} added");
             var lineData = new LaneLineDataProvider(DataProvider, line);
             return lineData;
         }
         public IFillerData AddFiller(IEnumerable<IEntrancePointData> pointDatas, IFillerStyleData styleData)
         {
+            if (styleData == null)
+                throw new ArgumentNullException(nameof(styleData));
+
             var contour = APIHelper.GetFillerContour(Marking, pointDatas);
             var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<FillerStyle>(Style.StyleType.FillerStripe);
 

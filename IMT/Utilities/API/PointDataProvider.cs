@@ -5,12 +5,36 @@ namespace NodeMarkup.Utilities.API
 {
     public struct EntrancePointDataProvider : IEntrancePointData
     {
-        private MarkingEnterPoint Point { get; }
+        public DataProvider DataProvider { get; }
+        IDataProviderV1 IPointData.DataProvider => DataProvider;
 
-        public byte Index => Point.Index;
-        public ushort EntranceId => Point.Enter.Id;
-        public ushort MarkingId => Point.Marking.Id;
+        private Manager.MarkingType MarkingType { get; }
+        private Manager.EntranceType EntranceType { get; }
+        public ushort MarkingId { get; }
+        public ushort EntranceId { get; }
+        public byte Index { get; }
 
+        IMarkingData IPointData.Marking
+        {
+            get
+            {
+                if (DataProvider.TryGetMarking(MarkingId, MarkingType, out IMarkingData marking))
+                    return marking;
+                else
+                    return null;
+            }
+        }
+        IEntranceData IPointData.Entrance
+        {
+            get
+            {
+                if (DataProvider.TryGetEntrance(MarkingId, EntranceId, MarkingType, out IEntranceData entrance))
+                    return entrance;
+                else
+                    return null;
+            }
+        }
+        private MarkingEnterPoint Point => APIHelper.GetPoint<MarkingEnterPoint>(MarkingId, EntranceId, EntranceType, Index, MarkingPoint.PointType.Enter);
         public IPointSourceData Source => new PointSourceDataProvider(Point.Source);
         public float Offset
         {
@@ -19,65 +43,154 @@ namespace NodeMarkup.Utilities.API
         }
 
         public float Position => throw new System.NotImplementedException();
-        public IEntranceData Entrance => throw new System.NotImplementedException();
 
-        public EntrancePointDataProvider(MarkingEnterPoint point)
+        public EntrancePointDataProvider(DataProvider dataProvider, MarkingEnterPoint point)
         {
-            Point = point;
+            DataProvider = dataProvider;
+            MarkingType = point.Marking.Type;
+            EntranceType = point.Enter.Type;
+            MarkingId = point.Marking.Id;
+            EntranceId = point.Enter.Id;
+            Index = point.Index;
         }
 
         public override string ToString() => Point.ToString();
     }
     public struct NormalPointDataProvider : INormalPointData
     {
-        private MarkingNormalPoint Point { get; }
+        public DataProvider DataProvider { get; }
+        IDataProviderV1 IPointData.DataProvider => DataProvider;
 
-        public byte Index => Point.Index;
-        public ushort EntranceId => Point.Enter.Id;
-        public ushort MarkingId => Point.Marking.Id;
-        public IEntrancePointData SourcePoint => new EntrancePointDataProvider(Point.SourcePoint);
+        private Manager.MarkingType MarkingType { get; }
+        private Manager.EntranceType EntranceType { get; }
+        public ushort MarkingId { get; }
+        public ushort EntranceId { get; }
+        public byte Index { get; }
 
-        public IEntranceData Entrance => throw new System.NotImplementedException();
-
-        public NormalPointDataProvider(MarkingNormalPoint point)
+        IMarkingData IPointData.Marking
         {
-            Point = point;
+            get
+            {
+                if (DataProvider.TryGetMarking(MarkingId, MarkingType, out IMarkingData marking))
+                    return marking;
+                else
+                    return null;
+            }
+        }
+        IEntranceData IPointData.Entrance
+        {
+            get
+            {
+                if (DataProvider.TryGetEntrance(MarkingId, EntranceId, MarkingType, out IEntranceData entrance))
+                    return entrance;
+                else
+                    return null;
+            }
+        }
+        private MarkingNormalPoint Point => APIHelper.GetPoint<MarkingNormalPoint>(MarkingId, EntranceId, EntranceType, Index, MarkingPoint.PointType.Normal);
+        public IEntrancePointData SourcePoint => new EntrancePointDataProvider(DataProvider, Point.SourcePoint);
+
+        public NormalPointDataProvider(DataProvider dataProvider, MarkingNormalPoint point)
+        {
+            DataProvider = dataProvider;
+            MarkingType = point.Marking.Type;
+            EntranceType = point.Enter.Type;
+            MarkingId = point.Marking.Id;
+            EntranceId = point.Enter.Id;
+            Index = point.Index;
         }
 
         public override string ToString() => Point.ToString();
     }
     public struct CrosswalkPointDataProvider : ICrosswalkPointData
     {
-        private MarkingCrosswalkPoint Point { get; }
+        public DataProvider DataProvider { get; }
+        IDataProviderV1 IPointData.DataProvider => DataProvider;
 
-        public byte Index => Point.Index;
-        public ushort EntranceId => Point.Enter.Id;
-        public ushort MarkingId => Point.Marking.Id;
-        public IEntrancePointData SourcePoint => new EntrancePointDataProvider(Point.SourcePoint);
+        private Manager.MarkingType MarkingType { get; }
+        private Manager.EntranceType EntranceType { get; }
+        public ushort MarkingId { get; }
+        public ushort EntranceId { get; }
+        public byte Index { get; }
 
-        public IEntranceData Entrance => throw new System.NotImplementedException();
-
-        public CrosswalkPointDataProvider(MarkingCrosswalkPoint point)
+        IMarkingData IPointData.Marking
         {
-            Point = point;
+            get
+            {
+                if (DataProvider.TryGetMarking(MarkingId, MarkingType, out IMarkingData marking))
+                    return marking;
+                else
+                    return null;
+            }
+        }
+        IEntranceData IPointData.Entrance
+        {
+            get
+            {
+                if (DataProvider.TryGetEntrance(MarkingId, EntranceId, MarkingType, out IEntranceData entrance))
+                    return entrance;
+                else
+                    return null;
+            }
+        }
+        private MarkingCrosswalkPoint Point => APIHelper.GetPoint<MarkingCrosswalkPoint>(MarkingId, EntranceId, EntranceType, Index, MarkingPoint.PointType.Crosswalk);
+        public IEntrancePointData SourcePoint => new EntrancePointDataProvider(DataProvider, Point.SourcePoint);
+
+        public CrosswalkPointDataProvider(DataProvider dataProvider, MarkingCrosswalkPoint point)
+        {
+            DataProvider = dataProvider;
+            MarkingType = point.Marking.Type;
+            EntranceType = point.Enter.Type;
+            MarkingId = point.Marking.Id;
+            EntranceId = point.Enter.Id;
+            Index = point.Index;
         }
 
         public override string ToString() => Point.ToString();
     }
     public struct LanePointDataProvider : ILanePointData
     {
-        private MarkingLanePoint Point { get; }
-        public byte Index => Point.Index;
-        public ushort EntranceId => Point.Enter.Id;
-        public ushort MarkingId => Point.Marking.Id;
-        public IEntrancePointData SourcePointA => new EntrancePointDataProvider(Point.SourcePointA);
-        public IEntrancePointData SourcePointB => new EntrancePointDataProvider(Point.SourcePointB);
+        public DataProvider DataProvider { get; }
+        IDataProviderV1 IPointData.DataProvider => DataProvider;
 
-        public IEntranceData Entrance => throw new System.NotImplementedException();
+        private Manager.MarkingType MarkingType { get; }
+        private Manager.EntranceType EntranceType { get; }
+        public ushort MarkingId { get; }
+        public ushort EntranceId { get; }
+        public byte Index { get; }
 
-        public LanePointDataProvider(MarkingLanePoint point)
+        IMarkingData IPointData.Marking
         {
-            Point = point;
+            get
+            {
+                if (DataProvider.TryGetMarking(MarkingId, MarkingType, out IMarkingData marking))
+                    return marking;
+                else
+                    return null;
+            }
+        }
+        IEntranceData IPointData.Entrance
+        {
+            get
+            {
+                if (DataProvider.TryGetEntrance(MarkingId, EntranceId, MarkingType, out IEntranceData entrance))
+                    return entrance;
+                else
+                    return null;
+            }
+        }
+        private MarkingLanePoint Point => APIHelper.GetPoint<MarkingLanePoint>(MarkingId, EntranceId, EntranceType, Index, MarkingPoint.PointType.Lane);
+        public IEntrancePointData SourcePointA => new EntrancePointDataProvider(DataProvider, Point.SourcePointA);
+        public IEntrancePointData SourcePointB => new EntrancePointDataProvider(DataProvider, Point.SourcePointB);
+
+        public LanePointDataProvider(DataProvider dataProvider, MarkingLanePoint point)
+        {
+            DataProvider = dataProvider;
+            MarkingType = point.Marking.Type;
+            EntranceType = point.Enter.Type;
+            MarkingId = point.Marking.Id;
+            EntranceId = point.Enter.Id;
+            Index = point.Index;
         }
 
         public override string ToString() => Point.ToString();

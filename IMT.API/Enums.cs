@@ -1,5 +1,15 @@
 ﻿namespace NodeMarkup.API
 {
+    public enum MarkingType
+    {
+        Node,
+        Segment,
+    }
+    public enum EntranceType
+    {
+        Node,
+        Segment,
+    }
     public enum RegularLineStyleType
     {
         Solid,

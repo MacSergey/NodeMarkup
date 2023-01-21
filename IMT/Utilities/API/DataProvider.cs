@@ -108,9 +108,9 @@ namespace NodeMarkup.Utilities.API
             Log("Created");
         }
 
-        public bool TryGetMarking(ushort id, MarkingType type, out IMarkingData marking)
+        public bool TryGetMarking(ushort id, Manager.MarkingType type, out IMarkingData marking)
         {
-            if (type == MarkingType.Node)
+            if (type == Manager.MarkingType.Node)
             {
                 if(TryGetNodeMarking(id, out var nodeMarking))
                 {
@@ -123,7 +123,7 @@ namespace NodeMarkup.Utilities.API
                     return false;
                 }
             }
-            else if (type == MarkingType.Segment)
+            else if (type == Manager.MarkingType.Segment)
             {
                 if (TryGetSegmentMarking(id, out var segmentMarking))
                 {
@@ -137,12 +137,12 @@ namespace NodeMarkup.Utilities.API
                 }
             }
             else
-                throw new IntersectionMarkingToolException($"Unsupported marking type \"{type}\"");
+                throw new IntersectionMarkingToolException($"Unsupported type of marking: {type}");
         }
 
         public bool TryGetNodeMarking(ushort id, out INodeMarkingData nodeMarkingData)
         {
-            if(SingletonManager<NodeMarkingManager>.Instance.TryGetMarking(id, out var nodeMarking))
+            if(APIHelper.GetNodeMarking(id, false) is NodeMarking nodeMarking)
             {
                 nodeMarkingData = new NodeMarkingDataProvider(this, nodeMarking);
                 return true;
@@ -155,7 +155,7 @@ namespace NodeMarkup.Utilities.API
         }
         public bool TryGetSegmentMarking(ushort id, out ISegmentMarkingData segmentMarkingData)
         {
-            if (SingletonManager<SegmentMarkingManager>.Instance.TryGetMarking(id, out var segmentMarking))
+            if (APIHelper.GetSegmentMarking(id, false) is SegmentMarking segmentMarking)
             {
                 segmentMarkingData = new SegmentMarkingDataProvider(this, segmentMarking);
                 return true;
@@ -163,6 +163,64 @@ namespace NodeMarkup.Utilities.API
             else
             {
                 segmentMarkingData = default;
+                return false;
+            }
+        }
+
+        public bool TryGetEntrance(ushort markingId, ushort entranceId, Manager.MarkingType type, out IEntranceData entranceData)
+        {
+            if (type == Manager.MarkingType.Node)
+            {
+                if (TryGetSegmentEntrance(markingId, entranceId, out var segmentEntrance))
+                {
+                    entranceData = segmentEntrance;
+                    return true;
+                }
+                else
+                {
+                    entranceData = null;
+                    return false;
+                }
+            }
+            else if (type == Manager.MarkingType.Segment)
+            {
+                if (TryGetNodeEntrance(markingId, entranceId, out var nodeEntrance))
+                {
+                    entranceData = nodeEntrance;
+                    return true;
+                }
+                else
+                {
+                    entranceData = null;
+                    return false;
+                }
+            }
+            else
+                throw new IntersectionMarkingToolException($"Unsupported type of marking: {type}");
+        }
+        public bool TryGetSegmentEntrance(ushort markingId, ushort entranceId, out ISegmentEntranceData entranceData)
+        {
+            if (APIHelper.GetSegmentEntrance(markingId, entranceId, false) is SegmentEntrance segmentEntrance)
+            {
+                entranceData = new SegmentEntranceDataProvider(this, segmentEntrance);
+                return true;
+            }
+            else
+            {
+                entranceData = default;
+                return false;
+            }
+        }
+        public bool TryGetNodeEntrance(ushort markingId, ushort entranceId, out INodeEntranceData entranceData)
+        {
+            if (APIHelper.GetNodeEntrance(markingId, entranceId, false) is NodeEntrance nodeEntrance)
+            {
+                entranceData = new NodeEntranceDataProvider(this, nodeEntrance);
+                return true;
+            }
+            else
+            {
+                entranceData = default;
                 return false;
             }
         }

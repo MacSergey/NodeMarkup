@@ -308,7 +308,7 @@
     <PackageReference Include="CitiesHarmony.API" Version="2.1.0" />
     <PackageReference Include="MoveItIntegration" Version="1.0.0" />
     <PackageReference Include="UnifiedUILib" Version="2.2.12" />
-    <ProjectReference Include="..\IMT.API\IMT.API.csproj" />
+    <ProjectReference Include="..\IMT.API\IntersectionMarkingTool.API.csproj" />
     <Reference Include="Assembly-CSharp">
       <Private>false</Private>
     </Reference>

@@ -2,10 +2,12 @@
 {
 	public interface IPointData
 	{
-		byte Index { get; }
-		ushort EntranceId { get; }
-		ushort MarkingId { get; }
-		IEntranceData Entrance { get; }
+        IDataProviderV1 DataProvider { get; }
+        IMarkingData Marking { get; }
+        IEntranceData Entrance { get; }
+        ushort MarkingId { get; }
+        ushort EntranceId { get; }
+        byte Index { get; }
     }
     public interface IEntrancePointData : IPointData
     {

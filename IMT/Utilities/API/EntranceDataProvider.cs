@@ -1,23 +1,44 @@
-﻿using NodeMarkup.API;
+﻿using ModsCommon;
+using NodeMarkup.API;
 using NodeMarkup.Manager;
-using System;
 using System.Collections.Generic;
+using EntranceType = NodeMarkup.API.EntranceType;
 
 namespace NodeMarkup.Utilities.API
 {
     public struct SegmentEntranceDataProvider : ISegmentEntranceData
     {
-        public SegmentEntrance Enter { get; }
-        public ushort Id => Enter.Id;
-        public int PointCount => Enter.PointCount;
+        public DataProvider DataProvider { get; }
+        IDataProviderV1 IEntranceData.DataProvider => DataProvider;
+
+        public EntranceType Type => EntranceType.Segment;
+        public ushort MarkingId { get; }
+        public ushort Id { get; }
+
+        private INodeMarkingData MarkingData
+        {
+            get
+            {
+                if (DataProvider.TryGetNodeMarking(MarkingId, out INodeMarkingData marking))
+                    return marking;
+                else
+                    return null;
+            }
+        }
+
+        IMarkingData IEntranceData.Marking => MarkingData;
+        INodeMarkingData ISegmentEntranceData.Marking => MarkingData;
+
+        private SegmentEntrance Entrance => APIHelper.GetSegmentEntrance(MarkingId, Id);
+        public int PointCount => Entrance.PointCount;
 
         public IEnumerable<IPointData> Points
         {
             get
             {
-                foreach (var point in Enter.EnterPoints)
+                foreach (var point in Entrance.EnterPoints)
                 {
-                    yield return new EntrancePointDataProvider(point);
+                    yield return new EntrancePointDataProvider(DataProvider, point);
                 }
             }
         }
@@ -25,56 +46,55 @@ namespace NodeMarkup.Utilities.API
         {
             get
             {
-                foreach (var point in Enter.EnterPoints)
+                foreach (var point in Entrance.EnterPoints)
                 {
-                    yield return new EntrancePointDataProvider(point);
+                    yield return new EntrancePointDataProvider(DataProvider, point);
                 }
             }
         }
-
         public IEnumerable<INormalPointData> NormalPoints
         {
             get
             {
-                foreach (var point in Enter.NormalPoints)
+                foreach (var point in Entrance.NormalPoints)
                 {
-                    yield return new NormalPointDataProvider(point);
+                    yield return new NormalPointDataProvider(DataProvider, point);
                 }
             }
         }
-
         public IEnumerable<ICrosswalkPointData> CrosswalkPoints
         {
             get
             {
-                foreach (var point in Enter.CrosswalkPoints)
+                foreach (var point in Entrance.CrosswalkPoints)
                 {
-                    yield return new CrosswalkPointDataProvider(point);
+                    yield return new CrosswalkPointDataProvider(DataProvider, point);
                 }
             }
         }
-
         public IEnumerable<ILanePointData> LanePoints
         {
             get
             {
-                foreach (var point in Enter.LanePoints)
+                foreach (var point in Entrance.LanePoints)
                 {
-                    yield return new LanePointDataProvider(point);
+                    yield return new LanePointDataProvider(DataProvider, point);
                 }
             }
         }
 
-        public SegmentEntranceDataProvider(SegmentEntrance enter)
+        public SegmentEntranceDataProvider(DataProvider dataProvider, SegmentEntrance enter)
         {
-            Enter = enter;
+            DataProvider = dataProvider;
+            Id = enter.Id;
+            MarkingId = enter.Marking.Id;
         }
 
         public bool GetEntrancePoint(byte index, out IEntrancePointData pointData)
         {
-            if(Enter.TryGetPoint(index, MarkingPoint.PointType.Enter, out var point))
+            if (Entrance.TryGetPoint(index, MarkingPoint.PointType.Enter, out var point))
             {
-                pointData = new EntrancePointDataProvider(point as MarkingEnterPoint);
+                pointData = new EntrancePointDataProvider(DataProvider, point as MarkingEnterPoint);
                 return true;
             }
             else
@@ -85,9 +105,9 @@ namespace NodeMarkup.Utilities.API
         }
         public bool GetNormalPoint(byte index, out INormalPointData pointData)
         {
-            if (Enter.TryGetPoint(index, MarkingPoint.PointType.Normal, out var point))
+            if (Entrance.TryGetPoint(index, MarkingPoint.PointType.Normal, out var point))
             {
-                pointData = new NormalPointDataProvider(point as MarkingNormalPoint);
+                pointData = new NormalPointDataProvider(DataProvider, point as MarkingNormalPoint);
                 return true;
             }
             else
@@ -98,9 +118,9 @@ namespace NodeMarkup.Utilities.API
         }
         public bool GetCrosswalkPoint(byte index, out ICrosswalkPointData pointData)
         {
-            if (Enter.TryGetPoint(index, MarkingPoint.PointType.Crosswalk, out var point))
+            if (Entrance.TryGetPoint(index, MarkingPoint.PointType.Crosswalk, out var point))
             {
-                pointData = new CrosswalkPointDataProvider(point as MarkingCrosswalkPoint);
+                pointData = new CrosswalkPointDataProvider(DataProvider, point as MarkingCrosswalkPoint);
                 return true;
             }
             else
@@ -111,9 +131,9 @@ namespace NodeMarkup.Utilities.API
         }
         public bool GetLanePoint(byte index, out ILanePointData pointData)
         {
-            if (Enter.TryGetPoint(index, MarkingPoint.PointType.Lane, out var point))
+            if (Entrance.TryGetPoint(index, MarkingPoint.PointType.Lane, out var point))
             {
-                pointData = new LanePointDataProvider(point as MarkingLanePoint);
+                pointData = new LanePointDataProvider(DataProvider, point as MarkingLanePoint);
                 return true;
             }
             else
@@ -123,21 +143,41 @@ namespace NodeMarkup.Utilities.API
             }
         }
 
-        public override string ToString() => Enter.ToString();
+        public override string ToString() => Id.ToString();
     }
     public struct NodeEntranceDataProvider : INodeEntranceData
     {
-        public NodeEntrance Enter { get; }
-        public ushort Id => Enter.Id;
-        public int PointCount => Enter.PointCount;
+        public DataProvider DataProvider { get; }
+        IDataProviderV1 IEntranceData.DataProvider => DataProvider;
+
+        public EntranceType Type => EntranceType.Node;
+        public ushort MarkingId { get; }
+        public ushort Id { get; }
+
+        private ISegmentMarkingData MarkingData
+        {
+            get
+            {
+                if (DataProvider.TryGetSegmentMarking(MarkingId, out ISegmentMarkingData marking))
+                    return marking;
+                else
+                    return null;
+            }
+        }
+
+        IMarkingData IEntranceData.Marking => MarkingData;
+        ISegmentMarkingData INodeEntranceData.Marking => MarkingData;
+
+        private NodeEntrance Entrance => APIHelper.GetNodeEntrance(MarkingId, Id);
+        public int PointCount => Entrance.PointCount;
 
         public IEnumerable<IPointData> Points
         {
             get
             {
-                foreach (var point in Enter.EnterPoints)
+                foreach (var point in Entrance.EnterPoints)
                 {
-                    yield return new EntrancePointDataProvider(point);
+                    yield return new EntrancePointDataProvider(DataProvider, point);
                 }
             }
         }
@@ -145,9 +185,9 @@ namespace NodeMarkup.Utilities.API
         {
             get
             {
-                foreach (var point in Enter.EnterPoints)
+                foreach (var point in Entrance.EnterPoints)
                 {
-                    yield return new EntrancePointDataProvider(point);
+                    yield return new EntrancePointDataProvider(DataProvider, point);
                 }
             }
         }
@@ -156,23 +196,25 @@ namespace NodeMarkup.Utilities.API
         {
             get
             {
-                foreach (var point in Enter.LanePoints)
+                foreach (var point in Entrance.LanePoints)
                 {
-                    yield return new LanePointDataProvider(point);
+                    yield return new LanePointDataProvider(DataProvider, point);
                 }
             }
         }
 
-        public NodeEntranceDataProvider(NodeEntrance enter)
+        public NodeEntranceDataProvider(DataProvider dataProvider, NodeEntrance enter)
         {
-            Enter = enter;
+            DataProvider = dataProvider;
+            Id = enter.Id;
+            MarkingId = enter.Marking.Id;
         }
 
         public bool GetEntrancePoint(byte index, out IEntrancePointData pointData)
         {
-            if (Enter.TryGetPoint(index, MarkingPoint.PointType.Enter, out var point))
+            if (Entrance.TryGetPoint(index, MarkingPoint.PointType.Enter, out var point))
             {
-                pointData = new EntrancePointDataProvider(point as MarkingEnterPoint);
+                pointData = new EntrancePointDataProvider(DataProvider, point as MarkingEnterPoint);
                 return true;
             }
             else
@@ -183,9 +225,9 @@ namespace NodeMarkup.Utilities.API
         }
         public bool GetLanePoint(byte index, out ILanePointData pointData)
         {
-            if (Enter.TryGetPoint(index, MarkingPoint.PointType.Lane, out var point))
+            if (Entrance.TryGetPoint(index, MarkingPoint.PointType.Lane, out var point))
             {
-                pointData = new LanePointDataProvider(point as MarkingLanePoint);
+                pointData = new LanePointDataProvider(DataProvider, point as MarkingLanePoint);
                 return true;
             }
             else
@@ -195,6 +237,6 @@ namespace NodeMarkup.Utilities.API
             }
         }
 
-        public override string ToString() => Enter.ToString();
+        public override string ToString() => Id.ToString();
     }
 }
