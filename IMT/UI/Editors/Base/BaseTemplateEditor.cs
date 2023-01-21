@@ -1,11 +1,11 @@
-﻿using ModsCommon;
+﻿using IMT.Manager;
+using IMT.Tools;
+using ModsCommon;
 using ModsCommon.UI;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public interface ITemplateEditor<ItemType> : IEditor<ItemType>
         where ItemType : Template
@@ -103,7 +103,7 @@ namespace NodeMarkup.UI.Editors
             if (EditObject.IsAsset)
             {
                 var authorProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Author");
-                authorProperty.Text = NodeMarkup.Localize.TemplateEditor_Author;
+                authorProperty.Text = IMT.Localize.TemplateEditor_Author;
                 authorProperty.FieldWidth = 230;
                 authorProperty.EnableControl = false;
                 authorProperty.Init();
@@ -113,7 +113,7 @@ namespace NodeMarkup.UI.Editors
         private void AddTemplateName()
         {
             NameProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Name");
-            NameProperty.Text = NodeMarkup.Localize.TemplateEditor_Name;
+            NameProperty.Text = IMT.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
             NameProperty.SubmitOnFocusLost = true;
             NameProperty.Init();
@@ -202,7 +202,7 @@ namespace NodeMarkup.UI.Editors
             if (!string.IsNullOrEmpty(name) && name != EditObject.Name && (EditObject.Manager as TemplateManager<TemplateType>).ContainsName(name, EditObject))
             {
                 messageBox = MessageBox.Show<YesNoMessageBox>();
-                messageBox.CaptionText = NodeMarkup.Localize.TemplateEditor_NameExistCaption;
+                messageBox.CaptionText = IMT.Localize.TemplateEditor_NameExistCaption;
                 messageBox.MessageText = string.Format(NameExistMessage, name);
                 messageBox.OnButton1Click = AgreeExistName;
                 messageBox.OnButton2Click = EditName;
@@ -262,7 +262,7 @@ namespace NodeMarkup.UI.Editors
             if (HasChanges)
             {
                 var messageBox = MessageBox.Show<ThreeButtonMessageBox>();
-                messageBox.CaptionText = NodeMarkup.Localize.TemplateEditor_SaveChanges;
+                messageBox.CaptionText = IMT.Localize.TemplateEditor_SaveChanges;
                 messageBox.MessageText = SaveChangesMessage;
                 messageBox.Button1Text = CommonLocalize.MessageBox_Yes;
                 messageBox.Button2Text = CommonLocalize.MessageBox_No;

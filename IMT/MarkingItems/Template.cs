@@ -2,9 +2,9 @@
 using ColossalFramework.IO;
 using ColossalFramework.Packaging;
 using ColossalFramework.PlatformServices;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class Template : IDeletable, ISupport, IToXml
     {
@@ -374,6 +374,9 @@ namespace NodeMarkup.Manager
     }
 
 
+}
+namespace IMT.Manager
+{
     [Serializable]
     public class MarkingInfo : PrefabInfo
     {

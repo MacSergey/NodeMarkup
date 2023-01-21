@@ -1,18 +1,15 @@
-﻿using ModsCommon;
+﻿using IMT.Manager;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public class PointsEditor : SimpleEditor<PointsItemsPanel, MarkingEnterPoint>
     {
-        public override string Name => NodeMarkup.Localize.PointEditor_Points;
+        public override string Name => IMT.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
         public override Marking.SupportType Support { get; } = Marking.SupportType.Points;
 
@@ -61,7 +58,7 @@ namespace NodeMarkup.UI.Editors
         {
             var position = ComponentPool.Get<FloatPropertyPanel>(DebugPanel, "Position");
             position.Text = "Position";
-            position.Format = NodeMarkup.Localize.NumberFormat_Meter;
+            position.Format = IMT.Localize.NumberFormat_Meter;
             position.isEnabled = false;
             position.Init();
             position.Value = point.GetRelativePosition();
@@ -145,8 +142,8 @@ namespace NodeMarkup.UI.Editors
         private void AddOffset(MarkingEnterPoint point)
         {
             Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Offset));
-            Offset.Text = NodeMarkup.Localize.PointEditor_Offset;
-            Offset.Format = NodeMarkup.Localize.NumberFormat_Meter;
+            Offset.Text = IMT.Localize.PointEditor_Offset;
+            Offset.Format = IMT.Localize.NumberFormat_Meter;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
             Offset.WheelTip = Settings.ShowToolTip;
@@ -157,16 +154,16 @@ namespace NodeMarkup.UI.Editors
         private void AddSplit(MarkingEnterPoint point)
         {
             Split = ComponentPool.Get<BoolListPropertyPanel>(PropertiesPanel, nameof(Split));
-            Split.Text = NodeMarkup.Localize.PointEditor_SplitIntoTwo;
-            Split.Init(NodeMarkup.Localize.StyleOption_No, NodeMarkup.Localize.StyleOption_Yes);
+            Split.Text = IMT.Localize.PointEditor_SplitIntoTwo;
+            Split.Init(IMT.Localize.StyleOption_No, IMT.Localize.StyleOption_Yes);
             Split.SelectedObject = point.Split;
             Split.OnSelectObjectChanged += SplitChanged;
         }
         private void AddShift(MarkingEnterPoint point)
         {
             Shift = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Shift));
-            Shift.Text = NodeMarkup.Localize.PointEditor_SplitOffset;
-            Shift.Format = NodeMarkup.Localize.NumberFormat_Meter;
+            Shift.Text = IMT.Localize.PointEditor_SplitOffset;
+            Shift.Format = IMT.Localize.NumberFormat_Meter;
             Shift.UseWheel = true;
             Shift.WheelStep = 0.1f;
             Shift.WheelTip = Settings.ShowToolTip;
@@ -180,7 +177,7 @@ namespace NodeMarkup.UI.Editors
         private void AddRoad(MarkingEnterPoint point)
         {
             var roadNameProperty = ComponentPool.Get<StringPropertyPanel>(TemplatePanel, "Road");
-            roadNameProperty.Text = NodeMarkup.Localize.PointEditor_RoadName;
+            roadNameProperty.Text = IMT.Localize.PointEditor_RoadName;
             roadNameProperty.FieldWidth = 230;
             roadNameProperty.EnableControl = false;
             roadNameProperty.Init();
@@ -189,8 +186,8 @@ namespace NodeMarkup.UI.Editors
         private void AddTemplate(MarkingEnterPoint point)
         {
             var buttonsPanel = ComponentPool.Get<ButtonsPanel>(TemplatePanel, "Buttons");
-            var saveIndex = buttonsPanel.AddButton(NodeMarkup.Localize.PointEditor_SaveOffsets);
-            var revertIndex = buttonsPanel.AddButton(NodeMarkup.Localize.PointEditor_RevertOffsets);
+            var saveIndex = buttonsPanel.AddButton(IMT.Localize.PointEditor_SaveOffsets);
+            var revertIndex = buttonsPanel.AddButton(IMT.Localize.PointEditor_RevertOffsets);
             buttonsPanel.Init();
 
             SetEnable();
@@ -244,7 +241,7 @@ namespace NodeMarkup.UI.Editors
         {
             EditObject.Offset.Value = value;
 #if DEBUG
-            if(DebugPanel.Find<FloatPropertyPanel>("Position") is FloatPropertyPanel position)
+            if (DebugPanel.Find<FloatPropertyPanel>("Position") is FloatPropertyPanel position)
                 position.Value = EditObject.GetRelativePosition();
 #endif
         }

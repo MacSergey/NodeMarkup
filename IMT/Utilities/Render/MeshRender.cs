@@ -1,14 +1,12 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
+using IMT.Manager;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public abstract class BaseMarkingMeshData : IStyleData, IDrawData
     {

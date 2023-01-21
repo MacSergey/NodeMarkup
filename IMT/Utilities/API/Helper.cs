@@ -1,13 +1,10 @@
-﻿using ModsCommon;
-using NodeMarkup.API;
-using NodeMarkup.Manager;
+﻿using IMT.API;
+using IMT.Manager;
+using ModsCommon;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using static NodeMarkup.Manager.MarkingPoint;
 
-namespace NodeMarkup.Utilities.API
+namespace IMT.Utilities.API
 {
     internal static class APIHelper
     {
@@ -30,21 +27,21 @@ namespace NodeMarkup.Utilities.API
             else
                 throw new MarkingNotExistException(markingId);
         }
-        internal static Marking GetMarking(ushort markingId, Manager.MarkingType type, bool throwEx = true) 
-        { 
-            if(type == Manager.MarkingType.Node)
+        internal static Marking GetMarking(ushort markingId, Manager.MarkingType type, bool throwEx = true)
+        {
+            if (type == Manager.MarkingType.Node)
                 return GetNodeMarking(markingId, throwEx);
-            else if(type == Manager.MarkingType.Segment)
+            else if (type == Manager.MarkingType.Segment)
                 return GetSegmentMarking(markingId, throwEx);
             else
                 throw new IntersectionMarkingToolException($"Unsupported type of marking: {type}");
         }
 
-        internal static SegmentEntrance GetSegmentEntrance(ushort markingId, ushort entranceId, bool throwEx = true) 
+        internal static SegmentEntrance GetSegmentEntrance(ushort markingId, ushort entranceId, bool throwEx = true)
         {
             var marking = GetNodeMarking(markingId);
 
-            if(marking.TryGetEnter(entranceId, out SegmentEntrance entrance))
+            if (marking.TryGetEnter(entranceId, out SegmentEntrance entrance))
                 return entrance;
             if (!throwEx)
                 return null;

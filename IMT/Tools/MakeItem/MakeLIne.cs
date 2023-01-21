@@ -1,14 +1,13 @@
 ﻿using ColossalFramework.Math;
+using IMT.Manager;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public class MakeLineToolMode : BaseMakeItemToolMode
     {
@@ -368,7 +367,7 @@ namespace NodeMarkup.Tools
                     var pointB = lanePoint.Marking.Type == MarkingType.Node ? lanePoint.SourcePointB : lanePoint.SourcePointA;
 
                     var trajectories = new List<ITrajectory>()
-                    { 
+                    {
                         new BezierTrajectory(pointA.Position, pointA.Direction, trajectory.EndPosition + normal * halfWidth, trajectory.EndDirection, false, true, true),
                         new StraightTrajectory(trajectory.EndPosition + normal * halfWidth, trajectory.EndPosition - normal * halfWidth),
                         new BezierTrajectory(trajectory.EndPosition - normal * halfWidth, trajectory.EndDirection, pointB.Position, pointB.Direction, false, true, true),

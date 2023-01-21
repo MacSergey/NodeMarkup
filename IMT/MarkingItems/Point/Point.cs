@@ -1,14 +1,14 @@
 ﻿using ColossalFramework.Math;
+using IMT.Utilities;
 using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using ObjectId = NodeMarkup.Utilities.ObjectId;
+using ObjectId = IMT.Utilities.ObjectId;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class MarkingPoint : IItem, IToXml, ISupport
     {

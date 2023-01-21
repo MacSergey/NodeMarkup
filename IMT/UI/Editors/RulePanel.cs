@@ -1,15 +1,14 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
-using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public class RulePanel : PropertyGroupPanel
     {
@@ -43,8 +42,8 @@ namespace NodeMarkup.UI.Editors
             AddError();
             AddWarning();
 
-            From = AddEdgeProperty(EdgePosition.Start, nameof(From), NodeMarkup.Localize.LineRule_From);
-            To = AddEdgeProperty(EdgePosition.End, nameof(To), NodeMarkup.Localize.LineRule_To);
+            From = AddEdgeProperty(EdgePosition.Start, nameof(From), IMT.Localize.LineRule_From);
+            To = AddEdgeProperty(EdgePosition.End, nameof(To), IMT.Localize.LineRule_To);
 
             Refresh();
 
@@ -89,13 +88,13 @@ namespace NodeMarkup.UI.Editors
         private void AddError()
         {
             Error = ComponentPool.Get<ErrorTextProperty>(this, nameof(Error));
-            Error.Text = NodeMarkup.Localize.LineEditor_RuleOverlappedWarning;
+            Error.Text = IMT.Localize.LineEditor_RuleOverlappedWarning;
             Error.Init();
         }
         private void AddWarning()
         {
             Warning = ComponentPool.Get<WarningTextProperty>(this, nameof(Warning));
-            Warning.Text = Line.IsSupportRules ? NodeMarkup.Localize.LineEditor_RulesWarning : NodeMarkup.Localize.LineEditor_NotSupportRules;
+            Warning.Text = Line.IsSupportRules ? IMT.Localize.LineEditor_RulesWarning : IMT.Localize.LineEditor_NotSupportRules;
             Warning.Init();
         }
 
@@ -155,7 +154,7 @@ namespace NodeMarkup.UI.Editors
                     return;
             }
 
-            Style.Text = NodeMarkup.Localize.Editor_Style;
+            Style.Text = IMT.Localize.Editor_Style;
             Style.Init(StyleSelector);
             Style.UseWheel = true;
             Style.WheelTip = true;
@@ -180,7 +179,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void SetOptionsCollapse()
         {
-            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {NodeMarkup.Localize.Editor_LessOptions} ▲" : $"▼ {NodeMarkup.Localize.Editor_MoreOptions} ▼";
+            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {IMT.Localize.Editor_LessOptions} ▲" : $"▼ {IMT.Localize.Editor_MoreOptions} ▼";
 
             foreach (var option in StyleProperties)
                 option.IsCollapsed = !ShowMoreOptions;
@@ -198,7 +197,7 @@ namespace NodeMarkup.UI.Editors
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
 
-            if(Settings.CollapseOptions && StyleProperties.Count(p => p.CanCollapse) >= 2)
+            if (Settings.CollapseOptions && StyleProperties.Count(p => p.CanCollapse) >= 2)
             {
                 MoreOptionsButton.isVisible = true;
                 MoreOptionsButton.BringToFront();

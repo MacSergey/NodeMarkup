@@ -1,16 +1,15 @@
 ﻿using ColossalFramework.Math;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
-
     public abstract class Entrance : IOverlay, IDeletable, ISupport, IComparable<Entrance>
     {
         public event Action OnPointOrderChanged;
@@ -150,23 +149,15 @@ namespace NodeMarkup.Manager
 
             var sources = new List<IPointSource>();
 
-            //if (segment.Info is IMarkingNetInfo info)
-            //{
-            //    foreach (var position in IsLaneInvert ? info.MarkupPoints : info.MarkupPoints.Reverse())
-            //        sources.Add(new RoadGeneratorPointSource(this, IsLaneInvert ? position : -position));
-            //}
-            //else
+            var driveLanes = DriveLanes.ToArray();
+            if (driveLanes.Any())
             {
-                var driveLanes = DriveLanes.ToArray();
-                if (driveLanes.Any())
+                for (var i = 0; i <= driveLanes.Length; i += 1)
                 {
-                    for (var i = 0; i <= driveLanes.Length; i += 1)
-                    {
-                        var left = i - 1 >= 0 ? driveLanes[i - 1] : null;
-                        var right = i < driveLanes.Length ? driveLanes[i] : null;
-                        foreach (var source in NetInfoPointSource.GetSource(this, left, right))
-                            sources.Add(source);
-                    }
+                    var left = i - 1 >= 0 ? driveLanes[i - 1] : null;
+                    var right = i < driveLanes.Length ? driveLanes[i] : null;
+                    foreach (var source in NetInfoPointSource.GetSource(this, left, right))
+                        sources.Add(source);
                 }
             }
 
@@ -180,7 +171,6 @@ namespace NodeMarkup.Manager
 
             for (int i = 0; i < sources.Count - 1; i += 1)
             {
-                //var index = SideSign > 0 ? i : sources.Count - 1 - i;
                 var laneSource = new NetLanePointSource(this, (byte)i);
                 var lanePoint = new MarkingLanePoint((byte)(i + 1), laneSource);
                 LanePointsDic[lanePoint.Index] = lanePoint;
@@ -328,13 +318,6 @@ namespace NodeMarkup.Manager
 
             var bezier = new Line3(GetPosition(-RoadHalfWidth), GetPosition(RoadHalfWidth)).GetBezier();
             bezier.RenderBezier(data);
-#if DEBUG_ENTER
-            var normalBezier = new Line3(Position, Position + NormalDir * 10f).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, normalBezier, Colors.Purple);
-
-            var cornerBezier = new Line3(Position, Position + CornerDir * 10f).GetBezier();
-            NodeMarkupTool.RenderBezier(cameraInfo, cornerBezier, Colors.Orange);
-#endif
         }
         public int CompareTo(Entrance other) => other.NormalAngle.CompareTo(NormalAngle);
         public override string ToString() => Id.ToString();

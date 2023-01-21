@@ -1,13 +1,11 @@
-﻿using ModsCommon;
+﻿using IMT.Utilities;
 using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static ColossalFramework.Math.VectorUtils;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public static class StyleHelper
     {

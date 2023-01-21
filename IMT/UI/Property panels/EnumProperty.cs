@@ -1,12 +1,11 @@
-﻿using ModsCommon.UI;
+﻿using IMT.Manager;
+using IMT.Utilities;
+using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public abstract class StylePropertyPanel : EnumOncePropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown>
     {

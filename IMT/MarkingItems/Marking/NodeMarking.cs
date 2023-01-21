@@ -1,11 +1,11 @@
-﻿using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
+﻿using IMT.Utilities;
+using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public class NodeMarking : Marking<SegmentEntrance>
     {

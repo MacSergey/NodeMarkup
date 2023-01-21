@@ -1,11 +1,11 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
 using ModsCommon.UI;
-using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public abstract class ItemsGroupPanel<ItemType, ObjectType, GroupItemType, GroupType> : ItemsPanel<ItemType, ObjectType>, IComparer<GroupType>
         where ItemType : EditItem<ObjectType>

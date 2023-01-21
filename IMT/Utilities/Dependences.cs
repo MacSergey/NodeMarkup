@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public class Dependences
     {

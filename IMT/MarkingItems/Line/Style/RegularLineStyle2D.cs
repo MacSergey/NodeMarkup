@@ -1,15 +1,15 @@
 ﻿using ColossalFramework.UI;
+using IMT.API;
+using IMT.Utilities;
+using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public class SolidLineStyle : RegularLineStyle, IRegularLine
     {
@@ -961,7 +961,7 @@ namespace NodeMarkup.Manager
         {
             base.CopyTo(target);
 
-            if(target is ZigZagLineStyle zigzagTarget)
+            if (target is ZigZagLineStyle zigzagTarget)
             {
                 zigzagTarget.Step.Value = Step;
                 zigzagTarget.Offset.Value = Offset;
@@ -1006,7 +1006,7 @@ namespace NodeMarkup.Manager
                 }
             }
 
-            if(!StartFrom)
+            if (!StartFrom)
             {
                 var startT = trajectory.Travel(startOffset);
                 var endT = trajectory.Travel(startOffset + Step.Value * count);

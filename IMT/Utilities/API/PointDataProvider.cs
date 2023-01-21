@@ -1,7 +1,7 @@
-﻿using NodeMarkup.API;
-using NodeMarkup.Manager;
+﻿using IMT.API;
+using IMT.Manager;
 
-namespace NodeMarkup.Utilities.API
+namespace IMT.Utilities.API
 {
     public struct EntrancePointDataProvider : IEntrancePointData
     {

@@ -1,8 +1,8 @@
-﻿using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
+﻿using IMT.Utilities;
+using ModsCommon.Utilities;
 using System.Collections.Generic;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface IDeletable
     {

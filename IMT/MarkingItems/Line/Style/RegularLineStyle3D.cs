@@ -1,14 +1,14 @@
 ﻿using ColossalFramework.UI;
+using IMT.API;
+using IMT.Utilities;
+using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class RegularLine3DStyle : RegularLineStyle, IWidthStyle, I3DLine
     {
@@ -33,7 +33,7 @@ namespace NodeMarkup.Manager
             if (trajectory is CombinedTrajectory combined)
             {
                 var data = new IStyleData[combined.Count];
-                for(var i = 0; i < data.Length; i += 1)
+                for (var i = 0; i < data.Length; i += 1)
                     data[i] = new MarkingLineMeshData(lod, combined[i], Width, Elevation, MaterialType.Pavement);
 
                 return new RenderGroupData(lod, MarkingLODType.Mesh, data);

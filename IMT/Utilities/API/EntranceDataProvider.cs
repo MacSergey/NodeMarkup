@@ -1,10 +1,9 @@
-﻿using ModsCommon;
-using NodeMarkup.API;
-using NodeMarkup.Manager;
+﻿using IMT.API;
+using IMT.Manager;
 using System.Collections.Generic;
-using EntranceType = NodeMarkup.API.EntranceType;
+using EntranceType = IMT.API.EntranceType;
 
-namespace NodeMarkup.Utilities.API
+namespace IMT.Utilities.API
 {
     public struct SegmentEntranceDataProvider : ISegmentEntranceData
     {

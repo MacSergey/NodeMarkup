@@ -1,16 +1,13 @@
-﻿using ModsCommon.UI;
+﻿using ColossalFramework.UI;
+using IMT.Utilities;
+using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-using ColossalFramework.UI;
-using System.Reflection.Emit;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public class FontPtopertyPanel : EditorPropertyPanel, IReusable
     {
@@ -42,13 +39,13 @@ namespace NodeMarkup.UI
         }
 
         private string _fontFamily;
-        public string FontFamily 
+        public string FontFamily
         {
             get => _fontFamily;
             private set
             {
                 _fontFamily = value;
-                FontSelector.text = value ?? NodeMarkup.Localize.StyleOption_DefaultFont;
+                FontSelector.text = value ?? IMT.Localize.StyleOption_DefaultFont;
             }
         }
 
@@ -275,20 +272,20 @@ namespace NodeMarkup.UI
                         {
                             var label = style switch
                             {
-                                UnityEngine.FontStyle.Bold => NodeMarkup.Localize.StyleOption_FontStyleBold,
-                                UnityEngine.FontStyle.Italic => NodeMarkup.Localize.StyleOption_FontStyleItalic,
-                                UnityEngine.FontStyle.BoldAndItalic => NodeMarkup.Localize.StyleOption_FontStyleBoldItalic,
-                                _ => NodeMarkup.Localize.StyleOption_FontStyleRegular,
+                                UnityEngine.FontStyle.Bold => IMT.Localize.StyleOption_FontStyleBold,
+                                UnityEngine.FontStyle.Italic => IMT.Localize.StyleOption_FontStyleItalic,
+                                UnityEngine.FontStyle.BoldAndItalic => IMT.Localize.StyleOption_FontStyleBoldItalic,
+                                _ => IMT.Localize.StyleOption_FontStyleRegular,
                             };
                             var sprite = style switch
                             {
-                                UnityEngine.FontStyle.Bold => IntersectionMarkingToolTextures.BoldButtonIcons,
-                                UnityEngine.FontStyle.Italic => IntersectionMarkingToolTextures.ItalicButtonIcons,
-                                UnityEngine.FontStyle.BoldAndItalic => IntersectionMarkingToolTextures.BoldItalicButtonIcons,
-                                _ => IntersectionMarkingToolTextures.RegularButtonIcons,
+                                UnityEngine.FontStyle.Bold => IMTTextures.BoldButtonIcons,
+                                UnityEngine.FontStyle.Italic => IMTTextures.ItalicButtonIcons,
+                                UnityEngine.FontStyle.BoldAndItalic => IMTTextures.BoldItalicButtonIcons,
+                                _ => IMTTextures.RegularButtonIcons,
                             };
 
-                            FontStyleSelector.AddItem(style, label, IntersectionMarkingToolTextures.Atlas, sprite);
+                            FontStyleSelector.AddItem(style, label, IMTTextures.Atlas, sprite);
                         }
 
                         if (styles.Contains(selectedStyle))
@@ -332,16 +329,17 @@ namespace NodeMarkup.UI
 
         public class FontPopup : SearchPopup<string, FontEntity>
         {
-            protected override string GetName(string value) => value ?? NodeMarkup.Localize.StyleOption_DefaultFont;
+            protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
+            protected override string GetName(string value) => value ?? IMT.Localize.StyleOption_DefaultFont;
         }
         public class FontEntity : PopupEntity<string>
         {
             private CustomUILabel Label { get; }
 
-            public override string Object 
-            { 
-                get => Label.text; 
-                protected set => Label.text = value ?? NodeMarkup.Localize.StyleOption_DefaultFont; 
+            public override string Object
+            {
+                get => Label.text;
+                protected set => Label.text = value ?? IMT.Localize.StyleOption_DefaultFont;
             }
 
             public FontEntity()

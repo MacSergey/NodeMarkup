@@ -1,10 +1,10 @@
 ﻿using ColossalFramework;
-using NodeMarkup.Manager;
+using IMT.Manager;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public static class VersionMigration
     {

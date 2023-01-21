@@ -1,12 +1,12 @@
-﻿using ModsCommon;
+﻿using IMT.Manager;
+using IMT.Utilities;
+using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace NodeMarkup
+namespace IMT
 {
     public class BuildingAssetDataExtension : BaseBuildingAssetDataExtension<Mod, BuildingAssetDataExtension, ObjectsMap>
     {
@@ -42,7 +42,7 @@ namespace NodeMarkup
                 {
                     startNodeId = segment.m_startNode;
                     endNodeId = segment.m_endNode;
-                    var config = new XElement(nameof(NodeMarkup));
+                    var config = new XElement("NodeMarkup");
                     config.AddAttr("V", SingletonMod<Mod>.Version);
                     config.Add(marking.ToXml());
                     return config;

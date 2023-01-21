@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NodeMarkup.API
+namespace IMT.API
 {
     public interface IDataProviderFactory
     {

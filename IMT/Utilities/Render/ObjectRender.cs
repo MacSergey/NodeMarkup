@@ -1,10 +1,10 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
-using NodeMarkup.Manager;
+using IMT.Manager;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public struct MarkingPropItemData
     {

@@ -1,12 +1,11 @@
-﻿using ModsCommon;
+﻿using IMT.Manager;
+using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public abstract class BaseMakeItemToolMode : IntersectionMarkingToolMode
     {

@@ -1,17 +1,17 @@
 ﻿using ColossalFramework.UI;
+using IMT.API;
+using IMT.UI;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.UI;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface IStyle { }
     public interface IColorStyle : IStyle
@@ -103,7 +103,7 @@ namespace NodeMarkup.Manager
         protected static Dictionary<string, int> CreatePropertyIndices(IEnumerable<string> names)
         {
             var dic = new Dictionary<string, int>();
-            foreach(var name in names)
+            foreach (var name in names)
             {
                 dic[name] = dic.Count;
             }
@@ -151,7 +151,7 @@ namespace NodeMarkup.Manager
         }
         public int GetUIComponentSortIndex(EditorItem item)
         {
-            if(PropertyIndices.TryGetValue(item.name, out var index))
+            if (PropertyIndices.TryGetValue(item.name, out var index))
                 return index;
             else
                 return int.MaxValue;
@@ -280,7 +280,7 @@ namespace NodeMarkup.Manager
             GP, //Gap period
             SS, //Square side
             LC, //Line count
-            
+
         }
 
         protected PropertyColorValue GetColorProperty(Color32 defaultValue) => new PropertyColorValue("C", StyleChanged, defaultValue);

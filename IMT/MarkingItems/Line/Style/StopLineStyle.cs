@@ -1,14 +1,14 @@
 ﻿using ColossalFramework.UI;
+using IMT.API;
+using IMT.Utilities;
+using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public class SolidStopLineStyle : StopLineStyle, IStopLine
     {

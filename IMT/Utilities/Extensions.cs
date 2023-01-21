@@ -1,17 +1,13 @@
 ﻿using ColossalFramework.Globalization;
-using ColossalFramework.PlatformServices;
+using IMT.Manager;
+using IMT.UI;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.UI;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using UnityEngine;
-using Alignment = NodeMarkup.Manager.Alignment;
+using Alignment = IMT.Manager.Alignment;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public static class Utilities
     {

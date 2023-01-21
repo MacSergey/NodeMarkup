@@ -1,7 +1,7 @@
-﻿namespace NodeMarkup.API
+﻿namespace IMT.API
 {
-	public interface IPointData
-	{
+    public interface IPointData
+    {
         IDataProviderV1 DataProvider { get; }
         IMarkingData Marking { get; }
         IEntranceData Entrance { get; }

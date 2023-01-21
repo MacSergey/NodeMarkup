@@ -1,14 +1,8 @@
-﻿using ModsCommon;
+﻿using IMT.Utilities;
 using ModsCommon.UI;
-using NodeMarkup.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public abstract class StaticRangeProperty<ValueType, FieldType> : VariationProperty<int, IntSegmented>
         where FieldType : ComparableUITextField<ValueType>
@@ -198,8 +192,8 @@ namespace NodeMarkup.UI
 
         protected override void AddSelectorItems()
         {
-            AddItem(StaticIndex, NodeMarkup.Localize.StyleOption_ObjectStatic, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.SingleButtonIcons);
-            AddItem(RangeIndex, NodeMarkup.Localize.StyleOption_ObjectRange, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.RangeButtonIcons);
+            AddItem(StaticIndex, IMT.Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcons);
+            AddItem(RangeIndex, IMT.Localize.StyleOption_ObjectRange, IMTTextures.Atlas, IMTTextures.RangeButtonIcons);
         }
 
         public override void DeInit()
@@ -326,7 +320,7 @@ namespace NodeMarkup.UI
 
         protected override void AddSelectorItems()
         {
-            AddItem(AutoIndex, NodeMarkup.Localize.StyleOption_ObjectAuto, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.AutoButtonIcons);
+            AddItem(AutoIndex, IMT.Localize.StyleOption_ObjectAuto, IMTTextures.Atlas, IMTTextures.AutoButtonIcons);
             base.AddSelectorItems();
         }
 
@@ -454,8 +448,8 @@ namespace NodeMarkup.UI
 
         protected override void AddSelectorItems()
         {
-            AddItem(AutoIndex, NodeMarkup.Localize.StyleOption_ObjectAuto, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.AutoButtonIcons);
-            AddItem(StaticIndex, NodeMarkup.Localize.StyleOption_ObjectStatic, IntersectionMarkingToolTextures.Atlas, IntersectionMarkingToolTextures.SingleButtonIcons);
+            AddItem(AutoIndex, IMT.Localize.StyleOption_ObjectAuto, IMTTextures.Atlas, IMTTextures.AutoButtonIcons);
+            AddItem(StaticIndex, IMT.Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcons);
         }
 
         public override void DeInit()
@@ -506,7 +500,7 @@ namespace NodeMarkup.UI
         {
             if (SelectedObject == StaticIndex)
                 Field.isEnabled = true;
-            else if(SelectedObject == AutoIndex)
+            else if (SelectedObject == AutoIndex)
                 Field.isEnabled = false;
         }
 

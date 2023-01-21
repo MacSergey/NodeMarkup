@@ -1,9 +1,9 @@
-﻿using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
+﻿using IMT.Utilities;
+using ModsCommon.Utilities;
 using System;
 using System.Xml.Linq;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface ILinePartEdge : ISupportPoint, IEquatable<ILinePartEdge> { }
 

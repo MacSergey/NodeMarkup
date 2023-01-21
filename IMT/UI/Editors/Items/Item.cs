@@ -1,12 +1,12 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
+using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
 using System;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public abstract class EditItemBase : CustomUIButton
     {
@@ -41,8 +41,8 @@ namespace NodeMarkup.UI.Editors
             AddLable();
 
             clipChildren = true;
-            atlas = IntersectionMarkingToolTextures.Atlas;
-            normalBgSprite = IntersectionMarkingToolTextures.ListItemBackground;
+            atlas = IMTTextures.Atlas;
+            normalBgSprite = IMTTextures.ListItemBackground;
             height = 25;
         }
 
@@ -226,7 +226,7 @@ namespace NodeMarkup.UI.Editors
         public StyleIcon()
         {
             Thumbnail = AddUIComponent<CustomUIButton>();
-            Thumbnail.atlas = IntersectionMarkingToolTextures.Atlas;
+            Thumbnail.atlas = IMTTextures.Atlas;
             Thumbnail.relativePosition = new Vector3(0, 0);
             Thumbnail.isInteractive = false;
         }

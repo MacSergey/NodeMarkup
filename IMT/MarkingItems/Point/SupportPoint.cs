@@ -1,11 +1,9 @@
 ﻿using ModsCommon.Utilities;
-using NodeMarkup.Tools;
-using NodeMarkup.Utilities;
 using System;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface ISupportPoint : IToXml, IEquatable<ISupportPoint>, IOverlay
     {
@@ -79,7 +77,7 @@ namespace NodeMarkup.Manager
             {
                 t = -1;
                 return false;
-            }  
+            }
         }
 
         public override void Update() => Init(Point.Position);

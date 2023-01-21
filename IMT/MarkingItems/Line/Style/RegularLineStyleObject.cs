@@ -1,17 +1,17 @@
 ﻿using ColossalFramework.UI;
+using IMT.API;
+using IMT.UI;
+using IMT.Utilities;
+using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.UI;
-using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class BaseObjectLineStyle : RegularLineStyle
     {
@@ -306,7 +306,7 @@ namespace NodeMarkup.Manager
             distributionProperty.Text = Localize.StyleOption_Distribution;
             distributionProperty.Selector.AutoButtonSize = false;
             distributionProperty.Selector.ButtonWidth = 57f;
-            distributionProperty.Selector.atlas = IntersectionMarkingToolTextures.Atlas;
+            distributionProperty.Selector.atlas = IMTTextures.Atlas;
             distributionProperty.CanCollapse = canCollapse;
             distributionProperty.Init();
             distributionProperty.SelectedObject = Distribution;
@@ -847,19 +847,19 @@ namespace NodeMarkup.Manager
     public enum DistributionType
     {
         [Description(nameof(Localize.StyleOption_DistributionFixedFree))]
-        [Sprite(nameof(IntersectionMarkingToolTextures.FixedFreeButtonIcons))]
+        [Sprite(nameof(IMTTextures.FixedFreeButtonIcons))]
         FixedSpaceFreeEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionFixedFixed))]
-        [Sprite(nameof(IntersectionMarkingToolTextures.FixedFixedButtonIcons))]
+        [Sprite(nameof(IMTTextures.FixedFixedButtonIcons))]
         FixedSpaceFixedEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionDynamicFree))]
-        [Sprite(nameof(IntersectionMarkingToolTextures.DynamicFreeButtonIcons))]
+        [Sprite(nameof(IMTTextures.DynamicFreeButtonIcons))]
         DynamicSpaceFreeEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionDynamicFixed))]
-        [Sprite(nameof(IntersectionMarkingToolTextures.DynamicFixedButtonIcons))]
+        [Sprite(nameof(IMTTextures.DynamicFixedButtonIcons))]
         DynamicSpaceFixedEnd,
     }
     public class DistributionTypePanel : EnumOncePropertyPanel<DistributionType, DistributionTypePanel.DistributionTypeSegmented>
@@ -878,7 +878,7 @@ namespace NodeMarkup.Manager
                     if (string.IsNullOrEmpty(sprite))
                         Selector.AddItem(value, GetDescription(value));
                     else
-                        Selector.AddItem(value, GetDescription(value), IntersectionMarkingToolTextures.Atlas, sprite);
+                        Selector.AddItem(value, GetDescription(value), IMTTextures.Atlas, sprite);
                 }
             }
             Selector.StartLayout();

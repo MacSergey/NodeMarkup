@@ -1,11 +1,11 @@
-﻿using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
+﻿using IMT.Utilities;
+using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface IFillerVertex : ISupportPoint, IEquatable<IFillerVertex>
     {
@@ -159,7 +159,7 @@ namespace NodeMarkup.Manager
                     foreach (var point in enter.EnterPoints)
                         GetPointLinesPoints(contour, ref points, point);
                 }
-                else if(enter is SegmentEntrance segmentEnter)
+                else if (enter is SegmentEntrance segmentEnter)
                 {
                     foreach (var point in segmentEnter.NormalPoints)
                         GetPointLinesPoints(contour, ref points, point);
@@ -176,7 +176,7 @@ namespace NodeMarkup.Manager
                 if (!Point.IsSplit || line.GetAlignment(Point) == Alignment)
                     points.AddRange(contour.GetLinePoints(this, line));
             }
-            else if(point.Type == MarkingPoint.PointType.Enter)
+            else if (point.Type == MarkingPoint.PointType.Enter)
             {
                 var alignments = new List<Alignment>();
 

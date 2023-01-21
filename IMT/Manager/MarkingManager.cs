@@ -1,7 +1,7 @@
 ﻿using ColossalFramework;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Xml.Linq;
 using static NetInfo;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public static class MarkingManager
     {

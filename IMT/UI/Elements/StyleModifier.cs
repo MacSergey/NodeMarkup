@@ -1,17 +1,17 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public abstract class StyleModifierPanel : UICustomControl
     {

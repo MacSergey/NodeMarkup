@@ -1,10 +1,10 @@
 ﻿using ColossalFramework.UI;
+using IMT.UI.Editors;
 using ModsCommon.UI;
-using NodeMarkup.UI.Editors;
 using System;
 using UnityEngine;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public abstract class BasePanelMode<EditorType, ButtonType, ObjectType> : IntersectionMarkingToolMode
         where EditorType : Editor

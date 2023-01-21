@@ -1,17 +1,17 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
+using IMT.Manager;
+using IMT.UI;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.UI;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public abstract class BaseEntersOrderToolMode : BaseOrderToolMode<SourceEnter>, IShortcutMode
     {
@@ -47,22 +47,22 @@ namespace NodeMarkup.Tools
 
         public BaseEntersOrderToolMode()
         {
-            TurnLeftButton = new GUIButton(1, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.TurnLeftOrderButton].region);
+            TurnLeftButton = new GUIButton(1, 6, IMTTextures.Texture, IMTTextures.Atlas[IMTTextures.TurnLeftOrderButton].region);
             TurnLeftButton.OnClick += TurnLeftClick;
 
-            FlipButton = new GUIButton(2, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.FlipOrderButton].region);
+            FlipButton = new GUIButton(2, 6, IMTTextures.Texture, IMTTextures.Atlas[IMTTextures.FlipOrderButton].region);
             FlipButton.OnClick += FlipClick;
 
-            TurnRightButton = new GUIButton(3, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.TurnRightOrderButton].region);
+            TurnRightButton = new GUIButton(3, 6, IMTTextures.Texture, IMTTextures.Atlas[IMTTextures.TurnRightOrderButton].region);
             TurnRightButton.OnClick += TurnRightClick;
 
-            ApplyButton = new GUIButton(4, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.ApplyOrderButton].region);
+            ApplyButton = new GUIButton(4, 6, IMTTextures.Texture, IMTTextures.Atlas[IMTTextures.ApplyOrderButton].region);
             ApplyButton.OnClick += ApplyClick;
 
-            NotApplyButton = new GUIButton(5, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.NotApplyOrderButton].region);
+            NotApplyButton = new GUIButton(5, 6, IMTTextures.Texture, IMTTextures.Atlas[IMTTextures.NotApplyOrderButton].region);
             NotApplyButton.OnClick += NotApplyClick;
 
-            ResetButton = new GUIButton(6, 6, IntersectionMarkingToolTextures.Texture, IntersectionMarkingToolTextures.Atlas[IntersectionMarkingToolTextures.ResetOrderButton].region);
+            ResetButton = new GUIButton(6, 6, IMTTextures.Texture, IMTTextures.Atlas[IMTTextures.ResetOrderButton].region);
             ResetButton.OnClick += ResetClick;
         }
         private void TurnLeftClick()

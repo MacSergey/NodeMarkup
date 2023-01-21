@@ -1,12 +1,12 @@
-﻿using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
+﻿using IMT.Utilities;
+using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public class MarkingCrosswalk : IStyleItem, IToXml, ISupport
     {

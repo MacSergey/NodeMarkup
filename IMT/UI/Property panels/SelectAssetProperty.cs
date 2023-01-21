@@ -1,13 +1,12 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public abstract class SelectPrefabProperty<PrefabType> : EditorPropertyPanel, IReusable
         where PrefabType : PrefabInfo
@@ -221,6 +220,7 @@ namespace NodeMarkup.UI
 
     public class SelectPropPopup : SearchPopup<PropInfo, PropEntity>
     {
+        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchText { get; set; } = string.Empty;
         public override void Init(IEnumerable<PropInfo> values, Func<PropInfo, bool> selector = null)
         {
@@ -236,6 +236,7 @@ namespace NodeMarkup.UI
     }
     public class SelectTreePopup : SearchPopup<TreeInfo, TreeEntity>
     {
+        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchText { get; set; } = string.Empty;
         public override void Init(IEnumerable<TreeInfo> values, Func<TreeInfo, bool> selector = null)
         {
@@ -251,6 +252,7 @@ namespace NodeMarkup.UI
     }
     public class SelectNetPopup : SearchPopup<NetInfo, NetEntity>
     {
+        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchText { get; set; } = string.Empty;
         public override void Init(IEnumerable<NetInfo> values, Func<NetInfo, bool> selector = null)
         {
@@ -336,7 +338,7 @@ namespace NodeMarkup.UI
 
         public void DeInit()
         {
-            Title.text = NodeMarkup.Localize.StyleOption_AssetNotSet;
+            Title.text = IMT.Localize.StyleOption_AssetNotSet;
             Screenshot.atlas = null;
             Screenshot.backgroundSprite = string.Empty;
         }
@@ -357,7 +359,7 @@ namespace NodeMarkup.UI
                 Screenshot.backgroundSprite = string.Empty;
                 Screenshot.isVisible = false;
                 autoLayoutPadding = new RectOffset(8, 8, 5, 5);
-                Title.text = NodeMarkup.Localize.StyleOption_AssetNotSet;
+                Title.text = IMT.Localize.StyleOption_AssetNotSet;
             }
 
             SetPosition();

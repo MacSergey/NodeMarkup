@@ -1,12 +1,11 @@
 ﻿using ColossalFramework.Math;
+using IMT.Manager;
+using IMT.UI;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.UI;
-using NodeMarkup.Utilities;
 using UnityEngine;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public class MakeFillerToolMode : IntersectionMarkingToolMode
     {
@@ -61,7 +60,7 @@ namespace NodeMarkup.Tools
                     var style = Tool.GetStyleByModifier<FillerStyle, FillerStyle.FillerType>(NetworkType.All, LineType.All, FillerStyle.FillerType.Stripe);
                     var filler = Marking.AddFiller(Contour, style, out var lines);
 
-                    foreach(var line in lines)
+                    foreach (var line in lines)
                         Panel.AddLine(line);
 
                     Panel.SelectFiller(filler);

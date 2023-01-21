@@ -1,9 +1,9 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
 using ModsCommon.UI;
-using NodeMarkup.Manager;
 using System;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public class FillerGuidePropertyPanel : EditorPropertyPanel, IReusable
     {

@@ -1,13 +1,13 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
+using IMT.Tools;
 using ModsCommon;
 using ModsCommon.UI;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public interface IItemPanel<ObjectType>
     {

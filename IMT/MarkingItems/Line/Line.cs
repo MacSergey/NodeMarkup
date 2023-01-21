@@ -1,7 +1,7 @@
 ﻿using ColossalFramework.Math;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class MarkingLine : IStyleItem, IToXml, ISupport
     {
@@ -223,7 +223,7 @@ namespace NodeMarkup.Manager
 
             var trajectory = new BezierTrajectory(startPos, startDir, endPos, endDir, startT, endT);
 
-            if(Marking.Type == MarkingType.Node || isStraight)
+            if (Marking.Type == MarkingType.Node || isStraight)
                 return trajectory;
 
             var deltaH = Mathf.Abs(trajectory.StartPosition.y - trajectory.EndPosition.y) / trajectory.Length;

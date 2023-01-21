@@ -1,4 +1,4 @@
-﻿namespace NodeMarkup.API
+﻿namespace IMT.API
 {
     public enum MarkingType
     {
@@ -83,11 +83,11 @@
         Cliff,
     }
     public enum Alignment
-	{
-		Left,
-		Centre,
-		Right
-	}
+    {
+        Left,
+        Centre,
+        Right
+    }
     public enum ColorOptions
     {
         Color1,

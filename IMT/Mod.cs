@@ -2,12 +2,11 @@
 using ColossalFramework.UI;
 using HarmonyLib;
 using ICities;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.UI;
 using ModsCommon;
-using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.UI;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,8 +15,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine;
 
-namespace NodeMarkup
+namespace IMT
 {
+    [SettingFile("NodeMarkup")]
     public class Mod : BasePatcherMod<Mod>
     {
         #region PROPERTIES
@@ -26,7 +26,7 @@ namespace NodeMarkup
         public static string WikiUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki";
         public static string TroubleshootingUrl { get; } = "https://github.com/MacSergey/NodeMarkup/wiki/Troubleshooting";
 
-        protected override string IdRaw => nameof(NodeMarkup);
+        protected override string IdRaw => "IntersectionMarkingTool";
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
             new ModVersion(new Version("1.12"), new DateTime(2023, 1, 7)),
@@ -269,6 +269,7 @@ namespace NodeMarkup
             {
                 success &= Patch_LoadingManager_LoadCustomContent();
                 success &= Patch_LoadingScreenMod_LoadImpl();
+                success &= Patch_PackageHelper_ResolveLegacyTypeHandler();
             }
         }
         private bool Patch_LoadingManager_LoadCustomContent()
@@ -469,10 +470,10 @@ namespace NodeMarkup
                     var newInstruction = new CodeInstruction(OpCodes.Ldloc_1);
                     newInstruction.labels.Add(newElseLabel);
                     newInstructions.Insert(++index, newInstruction);
-                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(UnityEngine.GameObject), nameof(UnityEngine.GameObject.GetComponent), new Type[0], new Type[] { typeof(MarkingInfo) })));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(UnityEngine.GameObject), nameof(UnityEngine.GameObject.GetComponent), new Type[0], new Type[] { typeof(IMT.Manager.MarkingInfo) })));
                     newInstructions.Insert(++index, new CodeInstruction(OpCodes.Dup));
 
-                    var markingLocal = generator.DeclareLocal(typeof(MarkingInfo));
+                    var markingLocal = generator.DeclareLocal(typeof(IMT.Manager.MarkingInfo));
                     newInstructions.Insert(++index, new CodeInstruction(OpCodes.Stloc_S, markingLocal));
                     newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldnull));
                     newInstructions.Insert(++index, new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(UnityEngine.Object), "op_Inequality")));
@@ -504,6 +505,21 @@ namespace NodeMarkup
             }
 
             return newInstructions;
+        }
+
+        private bool Patch_PackageHelper_ResolveLegacyTypeHandler()
+        {
+            return AddPrefix(typeof(Mod), nameof(Mod.PackageHelperResolveLegacyTypeHandlerPrefix), typeof(PackageHelper), nameof(PackageHelper.ResolveLegacyTypeHandler));
+        }
+        private static bool PackageHelperResolveLegacyTypeHandlerPrefix(string type, ref string __result)
+        {
+            if (type.StartsWith("NodeMarkup.Manager.MarkingInfo"))
+            {
+                __result = typeof(MarkingInfo).AssemblyQualifiedName;
+                return false;
+            }
+            else
+                return true;
         }
 
         #endregion

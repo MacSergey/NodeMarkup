@@ -1,6 +1,6 @@
-﻿using ModsCommon;
+﻿using IMT.Manager;
+using ModsCommon;
 using MoveItIntegration;
-using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public class MoveItIntegrationFactory : IMoveItIntegrationFactory
     {

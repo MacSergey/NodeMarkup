@@ -1,19 +1,19 @@
 ﻿using ColossalFramework;
 using ColossalFramework.UI;
+using IMT.API;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.UI;
+using IMT.UI.Panel;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.UI;
-using NodeMarkup.UI.Panel;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static ModsCommon.SettingsHelper;
 
-namespace NodeMarkup
+namespace IMT
 {
     public class Settings : BaseSettings<Mod>
     {
@@ -427,7 +427,7 @@ namespace NodeMarkup
                             endEnter.GetNormalPoint((byte)StartPointIndex.value, out var endPoint);
                             var style = provider.SolidLineStyle;
                             var line = nodeMarking.AddNormalLine(startPoint, endPoint, style);
-						AddingLineResult.text = $"Line {line} was added";
+                            AddingLineResult.text = $"Line {line} was added";
                         }
                         break;
                     case 3:
@@ -581,10 +581,10 @@ namespace NodeMarkup
 
                 var points = new List<IEntrancePointData>();
                 var raw = FillerPoints.value.Split(';');
-                foreach(var str in raw)
+                foreach (var str in raw)
                 {
                     var pd = str.Split(':');
-                    if(pd.Length == 2) 
+                    if (pd.Length == 2)
                     {
                         var enterId = ushort.Parse(pd[0]);
                         var index = byte.Parse(pd[1]);

@@ -1,7 +1,7 @@
 ﻿using ModsCommon;
 using System.Linq;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public class PointsOrderToolMode : BaseOrderToolMode<SourcePoint>
     {

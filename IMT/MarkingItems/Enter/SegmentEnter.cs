@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public class SegmentEntrance : Entrance<NodeMarking>
     {

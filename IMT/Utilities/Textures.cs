@@ -1,13 +1,12 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
-    public static class IntersectionMarkingToolTextures
+    public static class IMTTextures
     {
         public static UITextureAtlas Atlas;
         public static Texture2D Texture => Atlas.texture;
@@ -75,7 +74,7 @@ namespace NodeMarkup.Utilities
         public static string FixedFixedButtonIcons { get; } = nameof(FixedFixedButtonIcons);
         public static string FixedFreeButtonIcons { get; } = nameof(FixedFreeButtonIcons);
 
-        static IntersectionMarkingToolTextures()
+        static IMTTextures()
         {
             var spriteParams = new Dictionary<string, RectOffset>();
 
@@ -156,7 +155,7 @@ namespace NodeMarkup.Utilities
             foreach (var item in EnumExtension.GetEnumValues<FillerStyle.FillerType>())
                 spriteParams.Add(item.ToEnum<Style.StyleType, FillerStyle.FillerType>().ToString(), new RectOffset());
 
-            Atlas = TextureHelper.CreateAtlas(nameof(NodeMarkup), spriteParams);
+            Atlas = TextureHelper.CreateAtlas(nameof(IMT), spriteParams);
         }
     }
 }

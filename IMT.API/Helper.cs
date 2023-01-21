@@ -2,7 +2,7 @@
 
 using System;
 
-namespace NodeMarkup.API
+namespace IMT.API
 {
     public static class Helper
     {

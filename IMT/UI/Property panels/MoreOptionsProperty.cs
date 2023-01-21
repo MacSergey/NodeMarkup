@@ -4,7 +4,7 @@ using ModsCommon.Utilities;
 using System;
 using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public class MoreOptionsPanel : EditorItem, IReusable
     {

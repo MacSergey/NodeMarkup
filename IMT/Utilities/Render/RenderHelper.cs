@@ -1,16 +1,11 @@
-﻿using ColossalFramework.UI;
-using ModsCommon.UI;
+﻿using IMT.Manager;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using UnityEngine;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public static class RenderHelper
     {
@@ -329,7 +324,7 @@ namespace NodeMarkup.Utilities
         {
             foreach (var data in Datas)
             {
-                foreach(var drawData in data.GetDrawData())
+                foreach (var drawData in data.GetDrawData())
                     yield return drawData;
             }
         }

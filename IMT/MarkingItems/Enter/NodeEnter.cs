@@ -1,6 +1,6 @@
 ﻿using ModsCommon.Utilities;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public class NodeEntrance : Entrance<SegmentMarking>
     {

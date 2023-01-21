@@ -1,9 +1,9 @@
 ﻿using ColossalFramework.Importers;
 using ColossalFramework.IO;
 using ColossalFramework.Packaging;
+using IMT.Manager;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,12 +11,12 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup
+namespace IMT
 {
     public abstract class Loader : ModsCommon.Utilities.Loader
     {
-        public static string Id { get; } = nameof(NodeMarkup);
-   
+        public static string Id { get; } = "NodeMarkup";
+
         public static string MarkingRecovery => nameof(MarkingRecovery);
         public static string TemplatesRecovery => nameof(TemplatesRecovery);
         public static string PresetsRecovery => nameof(PresetsRecovery);
@@ -173,7 +173,7 @@ namespace NodeMarkup
             }
         }
 
-        public static void LoadTemplateAsset(MarkingInfo markingInfo, Package.Asset asset)
+        public static void LoadTemplateAsset(IMT.Manager.MarkingInfo markingInfo, Package.Asset asset)
         {
             SingletonMod<Mod>.Logger.Debug($"Start load template asset \"{asset.fullName}\" from {asset.package.packagePath}");
             try
@@ -212,8 +212,8 @@ namespace NodeMarkup
                     packageAuthor = $"steamid:{TemplateManager.UserId}",
                 };
 
-                var gameObject = new GameObject(typeof(MarkingInfo).Name);
-                var markingInfo = gameObject.AddComponent<MarkingInfo>();
+                var gameObject = new GameObject(typeof(IMT.Manager.MarkingInfo).Name);
+                var markingInfo = gameObject.AddComponent<IMT.Manager.MarkingInfo>();
                 markingInfo.data = GetString(templateAsset.Template.ToXml());
                 meta.assetRef = package.AddAsset($"{meta.name}_Data", markingInfo.gameObject);
 

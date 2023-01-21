@@ -1,7 +1,4 @@
-﻿using ModsCommon;
-using ModsCommon.UI;
-
-namespace NodeMarkup.UI
+﻿namespace IMT.UI
 {
     public static class IntersectionMarkingToolMessageBox
     {

@@ -1,13 +1,9 @@
-﻿using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using IMT.Manager;
+using ModsCommon.Utilities;
 using System.Linq;
-using static NodeMarkup.Manager.MarkingPoint;
+using static IMT.Manager.MarkingPoint;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public class ObjectsMap : NetObjectsMap<ObjectId>
     {

@@ -1,17 +1,15 @@
 ﻿using ColossalFramework.UI;
+using IMT.API;
+using IMT.UI;
+using IMT.Utilities;
+using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
-using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public class ExistCrosswalkStyle : CrosswalkStyle, IWidthStyle
     {

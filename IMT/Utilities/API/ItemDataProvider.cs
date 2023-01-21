@@ -1,11 +1,10 @@
-﻿using ModsCommon;
-using NodeMarkup.API;
-using NodeMarkup.Manager;
+﻿using IMT.API;
+using IMT.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NodeMarkup.Utilities.API
+namespace IMT.Utilities.API
 {
     public struct RegularLineDataProvider : IRegularLineData
     {
@@ -20,7 +19,7 @@ namespace NodeMarkup.Utilities.API
         {
             get
             {
-                if(DataProvider.TryGetMarking(MarkingId, MarkingType, out IMarkingData marking))
+                if (DataProvider.TryGetMarking(MarkingId, MarkingType, out IMarkingData marking))
                     return marking;
                 else
                     return null;

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NodeMarkup.API
+namespace IMT.API
 {
     public interface IStyleData
     {

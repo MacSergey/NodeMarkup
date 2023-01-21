@@ -1,9 +1,8 @@
 ﻿using ModsCommon.Utilities;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public class SegmentMarking : Marking<NodeEntrance>
     {

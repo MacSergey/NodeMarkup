@@ -1,12 +1,11 @@
-﻿using ColossalFramework.Math;
+﻿using IMT.Manager;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
 using System.Collections.Generic;
 using UnityEngine;
-using ModsCommon;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public class SelectToolMode : BaseSelectToolMode<IntersectionMarkingTool>, IToolModePanel, IToolMode<ToolModeType>, IShortcutMode
     {
@@ -37,7 +36,7 @@ namespace NodeMarkup.Tools
             else
                 return $"{Localize.Tool_SelectInfo}\n\n{string.Format(Localize.Tool_ExitUnderground, IntersectionMarkingTool.ExitUndergroundShortcut.AddInfoColor())}";
         }
-        private string GetStepOverInfo() => IntersectionMarkingTool.SelectionStepOverShortcut.NotSet? string.Empty : "\n\n" + string.Format(CommonLocalize.Tool_InfoSelectionStepOver, Colors.AddInfoColor(IntersectionMarkingTool.SelectionStepOverShortcut));
+        private string GetStepOverInfo() => IntersectionMarkingTool.SelectionStepOverShortcut.NotSet ? string.Empty : "\n\n" + string.Format(CommonLocalize.Tool_InfoSelectionStepOver, Colors.AddInfoColor(IntersectionMarkingTool.SelectionStepOverShortcut));
 
         public override void OnPrimaryMouseClicked(Event e)
         {
@@ -77,7 +76,7 @@ namespace NodeMarkup.Tools
                 return true;
             }
         }
-        protected override bool IsValidNode(ushort nodeId) => base.IsValidNode(nodeId) &&  nodeId.GetNode().m_flags.CheckFlags(NetNode.Flags.None, NetNode.Flags.Middle);
+        protected override bool IsValidNode(ushort nodeId) => base.IsValidNode(nodeId) && nodeId.GetNode().m_flags.CheckFlags(NetNode.Flags.None, NetNode.Flags.Middle);
 
         protected override bool CheckItemClass(ItemClass itemClass) => (itemClass.m_layer == ItemClass.Layer.Default || itemClass.m_layer == ItemClass.Layer.MetroTunnels) && itemClass switch
         {

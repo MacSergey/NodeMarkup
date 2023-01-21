@@ -1,15 +1,15 @@
-﻿using ModsCommon;
+﻿using IMT.API;
+using IMT.Manager;
+using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.Manager;
 using System;
 using System.Collections.Generic;
-using static NodeMarkup.Manager.CrosswalkStyle;
-using static NodeMarkup.Manager.FillerStyle;
-using static NodeMarkup.Manager.RegularLineStyle;
-using static NodeMarkup.Manager.StopLineStyle;
+using static IMT.Manager.CrosswalkStyle;
+using static IMT.Manager.FillerStyle;
+using static IMT.Manager.RegularLineStyle;
+using static IMT.Manager.StopLineStyle;
 
-namespace NodeMarkup.Utilities.API
+namespace IMT.Utilities.API
 {
     public class DataProviderFactory : IDataProviderFactory
     {
@@ -112,11 +112,11 @@ namespace NodeMarkup.Utilities.API
         {
             if (type == Manager.MarkingType.Node)
             {
-                if(TryGetNodeMarking(id, out var nodeMarking))
+                if (TryGetNodeMarking(id, out var nodeMarking))
                 {
                     marking = nodeMarking;
                     return true;
-                }    
+                }
                 else
                 {
                     marking = null;
@@ -142,7 +142,7 @@ namespace NodeMarkup.Utilities.API
 
         public bool TryGetNodeMarking(ushort id, out INodeMarkingData nodeMarkingData)
         {
-            if(APIHelper.GetNodeMarking(id, false) is NodeMarking nodeMarking)
+            if (APIHelper.GetNodeMarking(id, false) is NodeMarking nodeMarking)
             {
                 nodeMarkingData = new NodeMarkingDataProvider(this, nodeMarking);
                 return true;

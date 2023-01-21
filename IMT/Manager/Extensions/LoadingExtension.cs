@@ -1,12 +1,8 @@
-﻿using ICities;
-using ModsCommon;
+﻿using IMT.Manager;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.UI;
 
-namespace NodeMarkup
+namespace IMT
 {
     public class LoadingExtension : BaseLoadingExtension<Mod>
     {

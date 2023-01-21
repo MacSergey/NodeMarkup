@@ -1,11 +1,11 @@
 ﻿using ColossalFramework.UI;
+using IMT.API;
+using IMT.UI;
+using IMT.Utilities;
+using IMT.Utilities.API;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.UI;
-using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public class RegularLineStyleText : RegularLineStyle, IColorStyle
     {
@@ -188,7 +188,7 @@ namespace NodeMarkup.Manager
             var t = Alignment.Value switch
             {
                 TextAlignment.Start when line.Marking.Type == MarkingType.Node => trajectory.Length >= offset ? trajectory.Travel(offset) : 0.5f,
-                TextAlignment.Start when line.Marking.Type == MarkingType.Segment => trajectory.Length >= offset ?  1f - trajectory.Invert().Travel(offset) : 0.5f,
+                TextAlignment.Start when line.Marking.Type == MarkingType.Segment => trajectory.Length >= offset ? 1f - trajectory.Invert().Travel(offset) : 0.5f,
                 TextAlignment.End when line.Marking.Type == MarkingType.Node => trajectory.Length >= offset ? 1f - trajectory.Invert().Travel(offset) : 0.5f,
                 TextAlignment.End when line.Marking.Type == MarkingType.Segment => trajectory.Length >= offset ? trajectory.Travel(offset) : 0.5f,
                 _ => 0.5f,
@@ -407,15 +407,15 @@ namespace NodeMarkup.Manager
         public enum TextDirection
         {
             [Description(nameof(Localize.StyleOption_TextDirectionLtoR))]
-            [Sprite(nameof(IntersectionMarkingToolTextures.LeftToRightButtonIcons))]
+            [Sprite(nameof(IMTTextures.LeftToRightButtonIcons))]
             LeftToRight,
 
             [Description(nameof(Localize.StyleOption_TextDirectionTtoB))]
-            [Sprite(nameof(IntersectionMarkingToolTextures.TopToBottomButtonIcons))]
+            [Sprite(nameof(IMTTextures.TopToBottomButtonIcons))]
             TopToBottom,
 
             [Description(nameof(Localize.StyleOption_TextDirectionBtoT))]
-            [Sprite(nameof(IntersectionMarkingToolTextures.BottomToTopButtonIcons))]
+            [Sprite(nameof(IMTTextures.BottomToTopButtonIcons))]
             BottomToTop,
         }
         public enum TextAlignment
@@ -446,7 +446,7 @@ namespace NodeMarkup.Manager
                         if (string.IsNullOrEmpty(sprite))
                             Selector.AddItem(value, GetDescription(value));
                         else
-                            Selector.AddItem(value, GetDescription(value), IntersectionMarkingToolTextures.Atlas, sprite);
+                            Selector.AddItem(value, GetDescription(value), IMTTextures.Atlas, sprite);
                     }
                 }
                 Selector.StartLayout();

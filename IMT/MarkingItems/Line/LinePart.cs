@@ -1,10 +1,10 @@
-﻿using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
+﻿using IMT.Utilities;
+using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class MarkingLinePart : IToXml, IOverlay
     {

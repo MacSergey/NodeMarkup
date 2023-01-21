@@ -1,11 +1,11 @@
-﻿using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
+﻿using IMT.Utilities;
+using ModsCommon.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class MarkingLineRawRule : MarkingLinePart
     {
@@ -87,7 +87,7 @@ namespace NodeMarkup.Manager
                     rule.End = first;
                 }
 
-                 Add(rules, rule);
+                Add(rules, rule);
             }
 
             return rules.ToArray();

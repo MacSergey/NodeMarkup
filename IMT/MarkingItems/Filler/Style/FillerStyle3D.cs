@@ -1,15 +1,15 @@
 ﻿using ColossalFramework.UI;
+using IMT.API;
+using IMT.Utilities;
+using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using NodeMarkup.API;
-using NodeMarkup.Utilities.API;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class Filler3DStyle : FillerStyle
     {

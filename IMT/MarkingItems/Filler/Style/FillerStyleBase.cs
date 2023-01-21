@@ -1,18 +1,15 @@
 ﻿using ColossalFramework.UI;
+using IMT.UI;
+using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.UI;
-using NodeMarkup.UI.Editors;
-using NodeMarkup.Utilities;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Xml.Linq;
 using UnityEngine;
-using static NodeMarkup.Manager.StopLineStyle;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface IFillerStyle : IStyle
     {
@@ -212,7 +209,7 @@ namespace NodeMarkup.Manager
             guideProperty.Follow = (guideStyle as IFollowGuideFiller)?.FollowGuides.Value;
             guideProperty.OnValueChanged += (bool follow, FillerGuide left, FillerGuide right) =>
             {
-                if(guideStyle is IFollowGuideFiller followGuideStyle)
+                if (guideStyle is IFollowGuideFiller followGuideStyle)
                     followGuideStyle.FollowGuides.Value = follow;
 
                 guideStyle.LeftGuideA.Value = left.A;

@@ -1,14 +1,9 @@
-﻿using ModsCommon;
-using NodeMarkup.API;
-using NodeMarkup.Manager;
-using System.Collections.Generic;
-using static NodeMarkup.Manager.CrosswalkStyle;
-using static NodeMarkup.Manager.FillerStyle;
-using static NodeMarkup.Manager.RegularLineStyle;
-using static NodeMarkup.Manager.StopLineStyle;
+﻿using IMT.API;
+using IMT.Manager;
 using System;
+using System.Collections.Generic;
 
-namespace NodeMarkup.Utilities.API
+namespace IMT.Utilities.API
 {
     public interface IMarkingDataProvider
     {
@@ -20,7 +15,7 @@ namespace NodeMarkup.Utilities.API
     {
         private DataProvider DataProvider { get; }
         IDataProviderV1 IMarkingData.DataProvider => DataProvider;
-        public NodeMarkup.API.MarkingType Type => NodeMarkup.API.MarkingType.Node;
+        public IMT.API.MarkingType Type => IMT.API.MarkingType.Node;
         public ushort Id { get; }
 
         private NodeMarking Marking => APIHelper.GetNodeMarking(Id);
@@ -443,7 +438,7 @@ namespace NodeMarkup.Utilities.API
     {
         private DataProvider DataProvider { get; }
         IDataProviderV1 IMarkingData.DataProvider => DataProvider;
-        public NodeMarkup.API.MarkingType Type => NodeMarkup.API.MarkingType.Segment;
+        public IMT.API.MarkingType Type => IMT.API.MarkingType.Segment;
         public ushort Id { get; }
 
         private SegmentMarking Marking => APIHelper.GetSegmentMarking(Id);
@@ -501,7 +496,7 @@ namespace NodeMarkup.Utilities.API
             var marking = Marking;
             var startPoint = APIHelper.GetEntrancePoint(marking, startPointData);
             var endPoint = APIHelper.GetEntrancePoint(marking, endPointData);
-            if(marking.TryGetLine<MarkingRegularLine>(startPoint, endPoint, out var line))
+            if (marking.TryGetLine<MarkingRegularLine>(startPoint, endPoint, out var line))
             {
                 regularLineData = new RegularLineDataProvider(DataProvider, line);
                 return true;
@@ -546,9 +541,9 @@ namespace NodeMarkup.Utilities.API
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
             MarkingRegularLine line;
-            if(styleData is StyleDataProvider dataProvider && dataProvider.Style is RegularLineStyle regularStyle)
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is RegularLineStyle regularStyle)
                 line = marking.AddRegularLine(pair, regularStyle.CopyLineStyle());
-            else if(styleData == null)
+            else if (styleData == null)
                 line = marking.AddRegularLine(pair, null);
             else
                 throw new IntersectionMarkingToolException($"Unsupported lane line style: {styleData.Name}");

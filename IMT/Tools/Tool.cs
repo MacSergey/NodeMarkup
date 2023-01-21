@@ -3,14 +3,13 @@ using ColossalFramework.Importers;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
 using HarmonyLib;
-using ICities;
+using IMT.Manager;
+using IMT.UI;
+using IMT.UI.Panel;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.UI;
-using NodeMarkup.UI.Panel;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +18,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public class IntersectionMarkingTool : BaseTool<Mod, IntersectionMarkingTool, ToolModeType>
     {
@@ -102,11 +101,11 @@ namespace NodeMarkup.Tools
         public bool IsMarkingBufferEmpty => MarkingBuffer == null;
         private Dictionary<Style.StyleType, Style> StyleBuffer { get; } = new Dictionary<Style.StyleType, Style>();
 
-        protected override UITextureAtlas UUIAtlas => IntersectionMarkingToolTextures.Atlas;
-        protected override string UUINormalSprite => IntersectionMarkingToolTextures.UUIButtonNormal;
-        protected override string UUIHoveredSprite => IntersectionMarkingToolTextures.UUIButtonHovered;
-        protected override string UUIPressedSprite => IntersectionMarkingToolTextures.UUIButtonPressed;
-        protected override string UUIDisabledSprite => /*NodeMarkupTextures.UUIDisabled;*/string.Empty;
+        protected override UITextureAtlas UUIAtlas => IMTTextures.Atlas;
+        protected override string UUINormalSprite => IMTTextures.UUIButtonNormal;
+        protected override string UUIHoveredSprite => IMTTextures.UUIButtonHovered;
+        protected override string UUIPressedSprite => IMTTextures.UUIButtonPressed;
+        protected override string UUIDisabledSprite => /*IMTTextures.UUIDisabled;*/string.Empty;
 
         #endregion
 
@@ -285,12 +284,12 @@ namespace NodeMarkup.Tools
         {
             SingletonMod<Mod>.Logger.Debug($"Link preset");
 
-            if(ToolModes[ToolModeType.LinkPreset] is LinkPresetToolMode linkMode)
+            if (ToolModes[ToolModeType.LinkPreset] is LinkPresetToolMode linkMode)
             {
                 BaseOrderToolMode.IntersectionTemplate = template;
                 linkMode.RoadName = roadName;
             }
-            
+
             SetMode(ToolModeType.LinkPreset);
         }
         public void ApplyIntersectionTemplate(IntersectionTemplate template)
@@ -408,12 +407,12 @@ namespace NodeMarkup.Tools
         }
         public static void ApplyDefaultMarking(NetInfo info, ushort segmentId, ushort startNode, ushort endNode)
         {
-            if(SegmentMarkingManager.RemovedMarking is IntersectionTemplate removed)
+            if (SegmentMarkingManager.RemovedMarking is IntersectionTemplate removed)
             {
                 var firstNode = removed.Enters[0].Id;
                 var secondNode = removed.Enters[1].Id;
 
-                if(startNode == firstNode && endNode == secondNode || startNode == secondNode && endNode == firstNode)
+                if (startNode == firstNode && endNode == secondNode || startNode == secondNode && endNode == firstNode)
                 {
                     var marking = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
                     var map = new ObjectsMap();
@@ -442,7 +441,7 @@ namespace NodeMarkup.Tools
                 marking.FromXml(SingletonMod<Mod>.Version, preset.Data, map);
                 return;
             }
-            
+
             if (Settings.ApplyMarkingFromAssets)
                 SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segmentId, startNode, endNode);
         }

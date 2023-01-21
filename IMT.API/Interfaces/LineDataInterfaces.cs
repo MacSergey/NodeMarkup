@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NodeMarkup.API
+namespace IMT.API
 {
     public interface ILineData
     {
@@ -28,9 +28,9 @@ namespace NodeMarkup.API
         ILineRuleData AddRule(INormalLineStyleData line);
     }
     public interface ICrosswalkLineData : ILineData
-	{
-		ICrosswalkPointData StartPoint { get; }
-		ICrosswalkPointData EndPoint { get; }
+    {
+        ICrosswalkPointData StartPoint { get; }
+        ICrosswalkPointData EndPoint { get; }
 
         ILineRuleData AddRule(IRegularLineStyleData line);
     }

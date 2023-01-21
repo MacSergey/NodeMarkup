@@ -1,11 +1,11 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using IMT.API;
+using IMT.UI;
+using IMT.Utilities;
+using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.UI;
-using NodeMarkup.Utilities;
-using NodeMarkup.Utilities.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface IPeriodicFiller : IFillerStyle
     {

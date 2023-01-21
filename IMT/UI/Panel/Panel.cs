@@ -1,13 +1,13 @@
-﻿using ModsCommon;
+﻿using IMT.Manager;
+using IMT.Tools;
+using IMT.UI.Editors;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.UI.Editors;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Panel
+namespace IMT.UI.Panel
 {
     public class IntersectionMarkingToolPanel : ToolPanel<Mod, IntersectionMarkingTool, IntersectionMarkingToolPanel>
     {
@@ -224,7 +224,7 @@ namespace NodeMarkup.UI.Panel
         }
         public void SelectPrevEditor()
         {
-            if(PrevEditor is Editor editor)
+            if (PrevEditor is Editor editor)
             {
                 var editorIndex = Editors.IndexOf(editor);
                 TabStrip.SelectedTab = editorIndex;

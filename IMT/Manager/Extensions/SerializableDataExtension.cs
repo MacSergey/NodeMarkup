@@ -1,12 +1,8 @@
-﻿using ICities;
-using ModsCommon;
+﻿using IMT.Manager;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using System;
-using System.Diagnostics;
 using System.Xml.Linq;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public class SerializableDataExtension : BaseSerializableDataExtension<SerializableDataExtension, Mod>
     {

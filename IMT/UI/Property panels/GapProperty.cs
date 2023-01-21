@@ -1,12 +1,7 @@
-﻿using ModsCommon;
-using ModsCommon.UI;
+﻿using ModsCommon.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public class GapProperty : EditorPropertyPanel, IReusable
     {
@@ -101,14 +96,14 @@ namespace NodeMarkup.UI
             LengthField.SetDefaultStyle();
             LengthField.width = 50f;
             LengthField.name = nameof(LengthField);
-            LengthField.Format = NodeMarkup.Localize.NumberFormat_Meter;
+            LengthField.Format = IMT.Localize.NumberFormat_Meter;
             LengthField.OnValueChanged += LengthChanged;
 
             PeriodField = Content.AddUIComponent<IntUITextField>();
             PeriodField.SetDefaultStyle();
             PeriodField.width = 80f;
             PeriodField.name = nameof(PeriodField);
-            PeriodField.Format = NodeMarkup.Localize.NumberFormat_Period;
+            PeriodField.Format = IMT.Localize.NumberFormat_Period;
             PeriodField.OnValueChanged += PeriodChanged;
         }
 

@@ -1,15 +1,15 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Importers;
 using ColossalFramework.PlatformServices;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class DataManager : IManager
     {
@@ -410,7 +410,7 @@ namespace NodeMarkup.Manager
                 return false;
             }
         }
-        public bool TryGetPreset(string name, out Guid preset, out bool flip, out bool invert) 
+        public bool TryGetPreset(string name, out Guid preset, out bool flip, out bool invert)
         {
             if (Templates.TryGetValue(name, out var data))
             {

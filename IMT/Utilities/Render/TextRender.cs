@@ -1,14 +1,11 @@
 ﻿using ColossalFramework.UI;
-using ColossalFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using static ColossalFramework.UI.UIDynamicFont;
-using ModsCommon.Utilities;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public static class TextRenderHelper
     {
@@ -31,7 +28,7 @@ namespace NodeMarkup.Utilities
             static TextRenderer()
             {
                 var view = UIView.GetAView();
-   
+
                 DefaultFont = ScriptableObject.CreateInstance<UIDynamicFont>();
                 DefaultFont.baseFont = (view.defaultFont as UIDynamicFont).baseFont;
                 DefaultFont.material = DefaultFont.baseFont.material;
@@ -52,7 +49,7 @@ namespace NodeMarkup.Utilities
             }
             public TextRenderer(string fontName)
             {
-                if(!string.IsNullOrEmpty(fontName))
+                if (!string.IsNullOrEmpty(fontName))
                 {
                     if (!Fonts.TryGetValue(fontName, out var font))
                     {
@@ -65,7 +62,7 @@ namespace NodeMarkup.Utilities
                         Fonts.Add(fontName, font);
                     }
 
-                    if(font.isValid)
+                    if (font.isValid)
                     {
                         Font = font;
                         return;
@@ -94,18 +91,18 @@ namespace NodeMarkup.Utilities
                 for (var i = 0; i < pixels.Length; i += 1)
                     pixels[i] = Color.red;
                 texture.SetPixels(pixels);
-//#if DEBUG
-//                for (var i = 0; i < texture.width; i += 1)
-//                {
-//                    texture.SetPixel(i, 0, Color.black);
-//                    texture.SetPixel(i, texture.height - 1, Color.black);
-//                }
-//                for (var i = 0; i < texture.height; i += 1)
-//                {
-//                    texture.SetPixel(0, i, Color.black);
-//                    texture.SetPixel(texture.width - 1, 0, Color.black);
-//                }
-//#endif
+                //#if DEBUG
+                //                for (var i = 0; i < texture.width; i += 1)
+                //                {
+                //                    texture.SetPixel(i, 0, Color.black);
+                //                    texture.SetPixel(i, texture.height - 1, Color.black);
+                //                }
+                //                for (var i = 0; i < texture.height; i += 1)
+                //                {
+                //                    texture.SetPixel(0, i, Color.black);
+                //                    texture.SetPixel(texture.width - 1, 0, Color.black);
+                //                }
+                //#endif
                 var fontTexture = Font.texture.MakeReadable();
                 var position = new Vector2(0f, (texture.height - textHeight) * 0.5f);
                 for (int i = lineTokens.Count - 1; i >= 0; i -= 1)
@@ -120,13 +117,13 @@ namespace NodeMarkup.Utilities
             }
             private void RenderLine(Texture2D texture, Vector2 position, LineToken line, List<Token> tokens, Texture2D fontTexture)
             {
-//#if DEBUG
-//                for (var i = 0; i < texture.width; i += 1)
-//                {
-//                    texture.SetPixel(i, Mathf.CeilToInt(position.y), Color.black);
-//                    texture.SetPixel(i, Mathf.CeilToInt(position.y + line.Height), Color.black);
-//                }
-//#endif
+                //#if DEBUG
+                //                for (var i = 0; i < texture.width; i += 1)
+                //                {
+                //                    texture.SetPixel(i, Mathf.CeilToInt(position.y), Color.black);
+                //                    texture.SetPixel(i, Mathf.CeilToInt(position.y + line.Height), Color.black);
+                //                }
+                //#endif
                 position.x = (texture.width - line.Width) * 0.5f;
                 for (var i = line.StartIndex; i <= line.EndIndex; i += 1)
                 {

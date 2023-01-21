@@ -2,14 +2,14 @@
 using ModsCommon.UI;
 using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public class ColorAdvancedPropertyPanel : ColorPropertyPanel
     {
         private static Color32? Buffer { get; set; }
 
         Color32? _defaultColor;
-        private Color32 DefaultColor 
+        private Color32 DefaultColor
         {
             get => _defaultColor ?? Manager.Style.DefaultColor;
             set => _defaultColor = value;
@@ -38,18 +38,18 @@ namespace NodeMarkup.UI
 
         private void AddCopyButton()
         {
-            var button = CreateButton(Popup.component, NodeMarkup.Localize.Editor_ColorCopy, 1, 3);
+            var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorCopy, 1, 3);
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Copy();
         }
         private void AddPasteButton()
         {
-            var button = CreateButton(Popup.component, NodeMarkup.Localize.Editor_ColorPaste, 2, 3);
+            var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorPaste, 2, 3);
             button.isEnabled = Buffer.HasValue;
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Paste();
         }
         private void AddSetDefaultButton()
         {
-            var button = CreateButton(Popup.component, NodeMarkup.Localize.Editor_ColorDefault, 3, 3);
+            var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorDefault, 3, 3);
             button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => SetDefault();
         }
 

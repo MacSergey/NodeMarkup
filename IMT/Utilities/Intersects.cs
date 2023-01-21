@@ -1,9 +1,9 @@
-﻿using ModsCommon.Utilities;
-using NodeMarkup.Manager;
+﻿using IMT.Manager;
+using ModsCommon.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NodeMarkup.Utilities
+namespace IMT.Utilities
 {
     public class MarkingLinesIntersect : Intersection
     {

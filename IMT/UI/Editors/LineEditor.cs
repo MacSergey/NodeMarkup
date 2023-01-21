@@ -1,15 +1,15 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public class LinesEditor : Editor<LineItemsPanel, MarkingLine>
     {
@@ -24,8 +24,8 @@ namespace NodeMarkup.UI.Editors
                 return color;
             }
         }
-        public override string Name => NodeMarkup.Localize.LineEditor_Lines;
-        public override string EmptyMessage => NodeMarkup.Localize.LineEditor_EmptyMessage;
+        public override string Name => IMT.Localize.LineEditor_Lines;
+        public override string EmptyMessage => IMT.Localize.LineEditor_EmptyMessage;
         public override Marking.SupportType Support { get; } = Marking.SupportType.Lines;
 
         private PropertyGroupPanel LineProperties { get; set; }
@@ -106,7 +106,7 @@ namespace NodeMarkup.UI.Editors
 
             if (editObject is MarkingRegularLine line)
             {
-                var aligment = AddAlignmentProperty(line.RawAlignment, NodeMarkup.Localize.LineEditor_LineAlignment);
+                var aligment = AddAlignmentProperty(line.RawAlignment, IMT.Localize.LineEditor_LineAlignment);
                 var clipSidewalk = AddClipSidewalkProperty(line);
                 LinePropertiesVisibleAction = () =>
                 {
@@ -117,8 +117,8 @@ namespace NodeMarkup.UI.Editors
             }
             else if (editObject is MarkingStopLine stopLine)
             {
-                var start = AddAlignmentProperty(stopLine.RawStartAlignment, NodeMarkup.Localize.LineEditor_LineStartAlignment);
-                var end = AddAlignmentProperty(stopLine.RawEndAlignment, NodeMarkup.Localize.LineEditor_LineEndAlignment);
+                var start = AddAlignmentProperty(stopLine.RawStartAlignment, IMT.Localize.LineEditor_LineStartAlignment);
+                var end = AddAlignmentProperty(stopLine.RawEndAlignment, IMT.Localize.LineEditor_LineEndAlignment);
                 LinePropertiesVisibleAction = () =>
                 {
                     start.isVisible = stopLine.Start.IsSplit;
@@ -144,8 +144,8 @@ namespace NodeMarkup.UI.Editors
         {
             var clipSidewalk = ComponentPool.Get<BoolListPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
 
-            clipSidewalk.Text = NodeMarkup.Localize.LineEditor_ClipSidewalk;
-            clipSidewalk.Init(NodeMarkup.Localize.StyleOption_No, NodeMarkup.Localize.StyleOption_Yes);
+            clipSidewalk.Text = IMT.Localize.LineEditor_ClipSidewalk;
+            clipSidewalk.Init(IMT.Localize.StyleOption_No, IMT.Localize.StyleOption_Yes);
             clipSidewalk.SelectedObject = line.ClipSidewalk;
             clipSidewalk.OnSelectObjectChanged += (value) => line.ClipSidewalk.Value = value;
 
@@ -175,7 +175,7 @@ namespace NodeMarkup.UI.Editors
         private void AddAddButton()
         {
             AddButton = ComponentPool.Get<AddRuleButton>(ContentPanel.Content);
-            AddButton.Text = NodeMarkup.Localize.LineEditor_AddRuleButton;
+            AddButton.Text = IMT.Localize.LineEditor_AddRuleButton;
             AddButton.Init();
             AddButton.OnButtonClick += AddRule;
             SetAddButtonVisible();
@@ -242,8 +242,8 @@ namespace NodeMarkup.UI.Editors
             if (Settings.DeleteWarnings && Settings.DeleteWarningsType == 0)
             {
                 var messageBox = MessageBox.Show<YesNoMessageBox>();
-                messageBox.CaptionText = NodeMarkup.Localize.LineEditor_DeleteRuleCaption;
-                messageBox.MessageText = $"{NodeMarkup.Localize.LineEditor_DeleteRuleMessage}\n{IntersectionMarkingToolMessageBox.CantUndone}";
+                messageBox.CaptionText = IMT.Localize.LineEditor_DeleteRuleCaption;
+                messageBox.MessageText = $"{IMT.Localize.LineEditor_DeleteRuleMessage}\n{IntersectionMarkingToolMessageBox.CantUndone}";
                 messageBox.OnButton1Click = Delete;
             }
             else

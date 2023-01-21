@@ -287,7 +287,7 @@
     <None Include="Properties\Localize.resx">
       <Generator>LocalizeGenerator</Generator>
       <LastGenOutput>Localize.cs</LastGenOutput>
-      <CustomToolNamespace>NodeMarkup</CustomToolNamespace>
+      <CustomToolNamespace>IMT</CustomToolNamespace>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Localize.ro-RO.resx">
@@ -394,7 +394,6 @@
   <PropertyGroup>
     <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(MSBuildProjectName)$(Type)</LocalDir>
     <WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
-    <RootNamespace>NodeMarkup</RootNamespace>
   </PropertyGroup>
 
   <Target Name="PdbToMdb" AfterTargets="Build">

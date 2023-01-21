@@ -1,13 +1,11 @@
-﻿using ModsCommon;
+﻿using IMT.Tools;
+using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.UI
+namespace IMT.UI
 {
     public class LinesSelector<LineType>
         where LineType : TrajectoryBound

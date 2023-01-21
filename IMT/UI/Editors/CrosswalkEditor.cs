@@ -1,22 +1,21 @@
-﻿using ModsCommon;
+﻿using IMT.Manager;
+using IMT.Tools;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public class CrosswalksEditor : SimpleEditor<CrosswalkItemsPanel, MarkingCrosswalk>
     {
         #region PROPERTIES
 
-        public override string Name => NodeMarkup.Localize.CrosswalkEditor_Crosswalks;
-        public override string EmptyMessage => string.Format(NodeMarkup.Localize.CrosswalkEditor_EmptyMessage, LocalizeExtension.Shift);
+        public override string Name => IMT.Localize.CrosswalkEditor_Crosswalks;
+        public override string EmptyMessage => string.Format(IMT.Localize.CrosswalkEditor_EmptyMessage, LocalizeExtension.Shift);
         public override Marking.SupportType Support { get; } = Marking.SupportType.Croswalks;
 
         private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
@@ -91,13 +90,13 @@ namespace NodeMarkup.UI.Editors
         private void AddWarning()
         {
             Warning = ComponentPool.Get<WarningTextProperty>(PropertiesPanel, nameof(Warning));
-            Warning.Text = NodeMarkup.Localize.CrosswalkEditor_BordersWarning;
+            Warning.Text = IMT.Localize.CrosswalkEditor_BordersWarning;
             Warning.Init();
         }
         private void AddBordersProperties()
         {
-            LeftBorder = AddBorderProperty(BorderPosition.Left, nameof(LeftBorder), NodeMarkup.Localize.CrosswalkEditor_LeftBorder);
-            RightBorder = AddBorderProperty(BorderPosition.Right, nameof(RightBorder), NodeMarkup.Localize.CrosswalkEditor_RightBorder);
+            LeftBorder = AddBorderProperty(BorderPosition.Left, nameof(LeftBorder), IMT.Localize.CrosswalkEditor_LeftBorder);
+            RightBorder = AddBorderProperty(BorderPosition.Right, nameof(RightBorder), IMT.Localize.CrosswalkEditor_RightBorder);
 
             FillBorders();
         }
@@ -148,7 +147,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void SetOptionsCollapse()
         {
-            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {NodeMarkup.Localize.Editor_LessOptions} ▲" : $"▼ {NodeMarkup.Localize.Editor_MoreOptions} ▼";
+            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {IMT.Localize.Editor_LessOptions} ▲" : $"▼ {IMT.Localize.Editor_MoreOptions} ▼";
 
             foreach (var option in StyleProperties)
                 option.IsCollapsed = !ShowMoreOptions;
@@ -173,7 +172,7 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleTypeProperty()
         {
             Style = ComponentPool.Get<CrosswalkPropertyPanel>(PropertiesPanel, nameof(Style));
-            Style.Text = NodeMarkup.Localize.Editor_Style;
+            Style.Text = IMT.Localize.Editor_Style;
             Style.Init();
             Style.UseWheel = true;
             Style.WheelTip = true;

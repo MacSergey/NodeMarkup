@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public interface IPointSource
     {
@@ -92,11 +92,11 @@ namespace NodeMarkup.Manager
         {
             if ((Location & MarkingPoint.LocationType.Between) == MarkingPoint.LocationType.Between)
             {
-                if(Enter.IsLaneInvert)
+                if (Enter.IsLaneInvert)
                     return (RightLane.Position + LeftLane.Position) * 0.5f + offset;
                 else
                     return -(RightLane.Position + LeftLane.Position) * 0.5f + offset;
-            }            
+            }
             else if ((Location & MarkingPoint.LocationType.LeftEdge) == MarkingPoint.LocationType.LeftEdge)
             {
                 if (Enter.IsLaneInvert)

@@ -1,11 +1,11 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
+using IMT.Utilities;
 using ModsCommon.UI;
-using NodeMarkup.Manager;
-using NodeMarkup.Utilities;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public class EditGroup<GroupType, ItemType, ObjectType> : UIAutoLayoutPanel, IReusable
         where ItemType : EditItem<ObjectType>
@@ -90,7 +90,7 @@ namespace NodeMarkup.UI.Editors
         public override Color32 PressedColor => new Color32(86, 167, 225, 255);
         public override Color32 FocusColor => NormalColor;
 
-        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? IntersectionMarkingToolTextures.ListItemCollapse : IntersectionMarkingToolTextures.ListItemExpand; }
+        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? IMTTextures.ListItemCollapse : IMTTextures.ListItemExpand; }
 
         private CustomUIPanel ExpandIcon { get; set; }
 
@@ -108,7 +108,7 @@ namespace NodeMarkup.UI.Editors
         private void AddExpandIcon()
         {
             ExpandIcon = AddUIComponent<CustomUIPanel>();
-            ExpandIcon.atlas = IntersectionMarkingToolTextures.Atlas;
+            ExpandIcon.atlas = IMTTextures.Atlas;
             ExpandIcon.size = new Vector2(20, 20);
             IsExpand = true;
         }

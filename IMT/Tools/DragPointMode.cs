@@ -1,12 +1,12 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
+using IMT.Manager;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
 
-namespace NodeMarkup.Tools
+namespace IMT.Tools
 {
     public class DragPointToolMode : IntersectionMarkingToolMode
     {

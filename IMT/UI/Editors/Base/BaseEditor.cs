@@ -1,16 +1,15 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
+using IMT.Tools;
+using IMT.UI.Panel;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.UI.Panel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public interface IEditor<ObjectType>
         where ObjectType : class, IDeletable

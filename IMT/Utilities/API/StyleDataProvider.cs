@@ -1,13 +1,13 @@
-﻿using ModsCommon.Utilities;
-using NodeMarkup.API;
-using NodeMarkup.Manager;
+﻿using IMT.API;
+using IMT.Manager;
+using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using IStyleData = NodeMarkup.API.IStyleData;
+using IStyleData = IMT.API.IStyleData;
 
-namespace NodeMarkup.Utilities.API
+namespace IMT.Utilities.API
 {
     public struct StyleDataProvider : IStyleData, ILineStyleProvider, IStopLineStyleProvider, ICrosswalkStyleProvider, IFillerStyleProvider
     {
@@ -66,7 +66,7 @@ namespace NodeMarkup.Utilities.API
         public bool TwoColors { get => (bool)GetValue(nameof(TwoColors)); set => SetValue(nameof(TwoColors), value); }
         public Color32 SecondColor { get => (Color32)GetValue(nameof(SecondColor)); set => SetValue(nameof(SecondColor), value); }
         public float Offset { get => (float)GetValue(nameof(Offset)); set => SetValue(nameof(Offset), value); }
-        public NodeMarkup.API.Alignment Alignment { get => (NodeMarkup.API.Alignment)GetValue(nameof(Alignment)); set => SetValue(nameof(Alignment), value); }
+        public IMT.API.Alignment Alignment { get => (IMT.API.Alignment)GetValue(nameof(Alignment)); set => SetValue(nameof(Alignment), value); }
         public float DashLength { get => (float)GetValue(nameof(DashLength)); set => SetValue(nameof(DashLength), value); }
         public float SpaceLength { get => (float)GetValue(nameof(SpaceLength)); set => SetValue(nameof(SpaceLength), value); }
         public bool Invert { get => (bool)GetValue(nameof(Invert)); set => SetValue(nameof(Invert), value); }
@@ -81,7 +81,7 @@ namespace NodeMarkup.Utilities.API
         public float Elevation { get => (float)GetValue(nameof(Elevation)); set => SetValue(nameof(Elevation), value); }
         PropInfo IPropLineStyle.Prefab { get => (PropInfo)GetValue(nameof(IPropLineStyle.Prefab)); set => SetValue(nameof(IPropLineStyle.Prefab), value); }
         public ColorOptions ColorOption { get => (ColorOptions)GetValue(nameof(ColorOption)); set => SetValue(nameof(ColorOption), value); }
-        public NodeMarkup.API.DistributionType Distribution { get => (NodeMarkup.API.DistributionType)GetValue(nameof(Distribution)); set => SetValue(nameof(Distribution), value); }
+        public IMT.API.DistributionType Distribution { get => (IMT.API.DistributionType)GetValue(nameof(Distribution)); set => SetValue(nameof(Distribution), value); }
         public int Probability { get => (int)GetValue(nameof(Probability)); set => SetValue(nameof(Probability), value); }
         Vector2 IPropLineStyle.Angle { get => (Vector2)GetValue(nameof(Angle)); set => SetValue(nameof(Angle), value); }
         public Vector2 Tilt { get => (Vector2)GetValue(nameof(Tilt)); set => SetValue(nameof(Tilt), value); }
@@ -100,13 +100,13 @@ namespace NodeMarkup.Utilities.API
         float ITextLineStyle.Scale { get => (float)GetValue(nameof(Scale)); set => SetValue(nameof(Scale), value); }
         public TextDirection Direction { get => (TextDirection)GetValue(nameof(Direction)); set => SetValue(nameof(Direction), value); }
         public Vector2 Spacing { get => (Vector2)GetValue(nameof(Spacing)); set => SetValue(nameof(Spacing), value); }
-        NodeMarkup.API.TextAlignment ITextLineStyle.Alignment { get => (NodeMarkup.API.TextAlignment)GetValue(nameof(Alignment)); set => SetValue(nameof(Alignment), value); }
+        IMT.API.TextAlignment ITextLineStyle.Alignment { get => (IMT.API.TextAlignment)GetValue(nameof(Alignment)); set => SetValue(nameof(Alignment), value); }
         float ITextLineStyle.Shift { get => (float)GetValue(nameof(Shift)); set => SetValue(nameof(Shift), value); }
         NetInfo INetworkLineStyle.Prefab { get => (NetInfo)GetValue(nameof(INetworkLineStyle.Prefab)); set => SetValue(nameof(INetworkLineStyle.Prefab), value); }
         float INetworkLineStyle.Shift { get => (float)GetValue(nameof(Shift)); set => SetValue(nameof(Shift), value); }
         float INetworkLineStyle.Scale { get => (float)GetValue(nameof(Scale)); set => SetValue(nameof(Scale), value); }
         public int RepeatDistance { get => (int)GetValue(nameof(RepeatDistance)); set => SetValue(nameof(RepeatDistance), value); }
-        float? IPropLineStyle.Step { get => (float?)GetValue(nameof(IPropLineStyle.Step )); set => SetValue(nameof(IPropLineStyle.Step ), value); }
+        float? IPropLineStyle.Step { get => (float?)GetValue(nameof(IPropLineStyle.Step)); set => SetValue(nameof(IPropLineStyle.Step), value); }
         public bool Parallel { get => (bool)GetValue(nameof(Parallel)); set => SetValue(nameof(Parallel), value); }
         public bool UseGap { get => (bool)GetValue(nameof(UseGap)); set => SetValue(nameof(UseGap), value); }
         public float GapLength { get => (float)GetValue(nameof(GapLength)); set => SetValue(nameof(GapLength), value); }

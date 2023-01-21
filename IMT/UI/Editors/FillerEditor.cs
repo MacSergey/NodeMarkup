@@ -1,22 +1,21 @@
-﻿using ModsCommon;
+﻿using IMT.Manager;
+using IMT.Tools;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using NodeMarkup.Manager;
-using NodeMarkup.Tools;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace NodeMarkup.UI.Editors
+namespace IMT.UI.Editors
 {
     public class FillerEditor : SimpleEditor<FillerItemsPanel, MarkingFiller>
     {
         #region PROPERTIES
 
-        public override string Name => NodeMarkup.Localize.FillerEditor_Fillers;
-        public override string EmptyMessage => string.Format(NodeMarkup.Localize.FillerEditor_EmptyMessage, LocalizeExtension.Alt, IntersectionMarkingTool.AddFillerShortcut);
+        public override string Name => IMT.Localize.FillerEditor_Fillers;
+        public override string EmptyMessage => string.Format(IMT.Localize.FillerEditor_EmptyMessage, LocalizeExtension.Alt, IntersectionMarkingTool.AddFillerShortcut);
         public override Marking.SupportType Support { get; } = Marking.SupportType.Fillers;
 
         public StylePropertyPanel Style { get; private set; }
@@ -72,7 +71,7 @@ namespace NodeMarkup.UI.Editors
         private void AddStyleTypeProperty()
         {
             Style = ComponentPool.Get<FillerStylePropertyPanel>(PropertiesPanel, nameof(Style));
-            Style.Text = NodeMarkup.Localize.Editor_Style;
+            Style.Text = IMT.Localize.Editor_Style;
             Style.Init();
             Style.UseWheel = true;
             Style.WheelTip = true;
@@ -91,7 +90,7 @@ namespace NodeMarkup.UI.Editors
         }
         private void SetOptionsCollapse()
         {
-            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {NodeMarkup.Localize.Editor_LessOptions} ▲" : $"▼ {NodeMarkup.Localize.Editor_MoreOptions} ▼";
+            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {IMT.Localize.Editor_LessOptions} ▲" : $"▼ {IMT.Localize.Editor_MoreOptions} ▼";
 
             foreach (var option in StyleProperties)
                 option.IsCollapsed = !ShowMoreOptions;

@@ -1,17 +1,17 @@
 ﻿using ColossalFramework.Math;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
-using NodeMarkup.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using ObjectId = NodeMarkup.Utilities.ObjectId;
 using static ColossalFramework.Math.VectorUtils;
+using ObjectId = IMT.Utilities.ObjectId;
 
-namespace NodeMarkup.Manager
+namespace IMT.Manager
 {
     public abstract class Marking : IUpdatePoints, IUpdateLines, IUpdateFillers, IUpdateCrosswalks, IToXml
     {
@@ -469,9 +469,9 @@ namespace NodeMarkup.Manager
         }
         public MarkingRegularLine AddLine(MarkingPointPair pointPair, RegularLineStyle style, Alignment alignment = Alignment.Centre)
         {
-            if(pointPair.IsNormal)
-               return AddNormalLine(pointPair, style, alignment);
-            else if(pointPair.IsLane)
+            if (pointPair.IsNormal)
+                return AddNormalLine(pointPair, style, alignment);
+            else if (pointPair.IsLane)
                 return AddLaneLine(pointPair, style);
             else
                 return AddRegularLine(pointPair, style, alignment);
