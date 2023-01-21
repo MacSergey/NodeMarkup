@@ -11,7 +11,7 @@ namespace NodeMarkup.Utilities.API
 {
     public struct StyleDataProvider : IStyleData, ILineStyleProvider, IStopLineStyleProvider, ICrosswalkStyleProvider, IFillerStyleProvider
     {
-        private Style Style { get; }
+        public Style Style { get; }
         public string Name => Style.Type.ToString();
 
         private Dictionary<string, IStylePropertyData> _properties;

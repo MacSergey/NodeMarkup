@@ -166,14 +166,12 @@ namespace NodeMarkup.Utilities.API
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
             MarkingRegularLine line;
-            if (styleData != null)
-            {
-                var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
-                var style = RegularLineStyle.GetDefault(type);
-                line = Marking.AddRegularLine(pair, style);
-            }
-            else
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is RegularLineStyle regularStyle)
+                line = Marking.AddRegularLine(pair, regularStyle.CopyLineStyle());
+            else if (styleData == null)
                 line = Marking.AddRegularLine(pair, null);
+            else
+                throw new IntersectionMarkingToolException($"Unsupported lane line style: {styleData.Name}");
 
             DataProvider.Log($"Line {line} added");
             var lineData = new RegularLineDataProvider(DataProvider, line);
@@ -195,9 +193,12 @@ namespace NodeMarkup.Utilities.API
             if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
-            var type = APIHelper.GetStyleType<StopLineType>(styleData.Name);
-            var style = StopLineStyle.GetDefault(type);
-            var line = Marking.AddStopLine(pair, style);
+            MarkingStopLine line;
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is StopLineStyle stopStyle)
+                line = Marking.AddStopLine(pair, stopStyle.CopyLineStyle());
+            else
+                throw new IntersectionMarkingToolException($"Unsupported stop line style: {styleData.Name}");
+
             DataProvider.Log($"Line {line} added");
             var lineData = new StopLineDataProvider(DataProvider, line);
             return lineData;
@@ -216,14 +217,12 @@ namespace NodeMarkup.Utilities.API
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
             MarkingNormalLine line;
-            if (styleData != null)
-            {
-                var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
-                var style = RegularLineStyle.GetDefault(type);
-                line = Marking.AddNormalLine(pair, style);
-            }
-            else
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is RegularLineStyle regularStyle)
+                line = Marking.AddNormalLine(pair, regularStyle.CopyLineStyle());
+            else if (styleData == null)
                 line = Marking.AddNormalLine(pair, null);
+            else
+                throw new IntersectionMarkingToolException($"Unsupported normal line style: {styleData.Name}");
 
             DataProvider.Log($"Line {line} added");
             var lineData = new NormalLineDataProvider(DataProvider, line);
@@ -241,14 +240,12 @@ namespace NodeMarkup.Utilities.API
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
             MarkingLaneLine line;
-            if (styleData != null)
-            {
-                var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
-                var style = RegularLineStyle.GetDefault(type);
-                line = Marking.AddLaneLine(pair, style);
-            }
-            else
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is RegularLineStyle regularStyle)
+                line = Marking.AddLaneLine(pair, regularStyle.CopyLineStyle());
+            else if (styleData == null)
                 line = Marking.AddLaneLine(pair, null);
+            else
+                throw new IntersectionMarkingToolException($"Unsupported lane line style: {styleData.Name}");
 
             DataProvider.Log($"Line {line} added");
             var lineData = new LaneLineDataProvider(DataProvider, line);
@@ -270,9 +267,12 @@ namespace NodeMarkup.Utilities.API
             if (Marking.ExistLine(pair))
                 throw new IntersectionMarkingToolException($"Crosswalk {pair} already exist");
 
-            var type = APIHelper.GetStyleType<CrosswalkType>(styleData.Name);
-            var style = CrosswalkStyle.GetDefault(type);
-            var line = Marking.AddCrosswalkLine(pair, style);
+            MarkingCrosswalkLine line;
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is CrosswalkStyle crosswalkStyle)
+                line = Marking.AddCrosswalkLine(pair, crosswalkStyle.CopyStyle());
+            else
+                throw new IntersectionMarkingToolException($"Unsupported crosswalk style: {styleData.Name}");
+
             DataProvider.Log($"Added crosswalk {line.Crosswalk}");
             var crosswalkData = new CrosswalkDataProvider(DataProvider, line.Crosswalk);
             return crosswalkData;
@@ -284,13 +284,15 @@ namespace NodeMarkup.Utilities.API
                 throw new ArgumentNullException(nameof(styleData));
 
             var contour = APIHelper.GetFillerContour(Marking, pointDatas);
-            var type = APIHelper.GetStyleType<FillerType>(styleData.Name);
-            var style = FillerStyle.GetDefault(type);
-
-            var filler = Marking.AddFiller(contour, style, out var lines);
-            DataProvider.Log($"Filler {filler} added");
-            var fillerData = new FillerDataProvider(DataProvider, filler);
-            return fillerData;
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is FillerStyle fillerStyle)
+            {
+                var filler = Marking.AddFiller(contour, fillerStyle.CopyStyle(), out _);
+                DataProvider.Log($"Filler {filler} added");
+                var fillerData = new FillerDataProvider(DataProvider, filler);
+                return fillerData;
+            }
+            else
+                throw new IntersectionMarkingToolException($"Unsupported filler style: {styleData.Name}");
         }
 
         #endregion
@@ -517,14 +519,12 @@ namespace NodeMarkup.Utilities.API
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
             MarkingRegularLine line;
-            if (styleData != null)
-            {
-                var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
-                var style = RegularLineStyle.GetDefault(type);
-                line = Marking.AddRegularLine(pair, style);
-            }
-            else
+            if(styleData is StyleDataProvider dataProvider && dataProvider.Style is RegularLineStyle regularStyle)
+                line = Marking.AddRegularLine(pair, regularStyle.CopyLineStyle());
+            else if(styleData == null)
                 line = Marking.AddRegularLine(pair, null);
+            else
+                throw new IntersectionMarkingToolException($"Unsupported lane line style: {styleData.Name}");
 
             DataProvider.Log($"Line {line} added");
             var lineData = new RegularLineDataProvider(DataProvider, line);
@@ -541,14 +541,12 @@ namespace NodeMarkup.Utilities.API
                 throw new IntersectionMarkingToolException($"Line {pair} already exist");
 
             MarkingLaneLine line;
-            if (styleData != null)
-            {
-                var type = APIHelper.GetStyleType<RegularLineType>(styleData.Name);
-                var style = RegularLineStyle.GetDefault(type);
-                line = Marking.AddLaneLine(pair, style);
-            }
-            else
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is RegularLineStyle regularStyle)
+                line = Marking.AddLaneLine(pair, regularStyle.CopyLineStyle());
+            else if (styleData == null)
                 line = Marking.AddLaneLine(pair, null);
+            else
+                throw new IntersectionMarkingToolException($"Unsupported lane line style: {styleData.Name}");
 
             DataProvider.Log($"Line {line} added");
             var lineData = new LaneLineDataProvider(DataProvider, line);
@@ -560,12 +558,15 @@ namespace NodeMarkup.Utilities.API
                 throw new ArgumentNullException(nameof(styleData));
 
             var contour = APIHelper.GetFillerContour(Marking, pointDatas);
-            var style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<FillerStyle>(Style.StyleType.FillerStripe);
-
-            var filler = Marking.AddFiller(contour, style, out var lines);
-            DataProvider.Log($"Filler {filler} added");
-            var fillerData = new FillerDataProvider(DataProvider, filler);
-            return fillerData;
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is FillerStyle fillerStyle)
+            {
+                var filler = Marking.AddFiller(contour, fillerStyle.CopyStyle(), out _);
+                DataProvider.Log($"Filler {filler} added");
+                var fillerData = new FillerDataProvider(DataProvider, filler);
+                return fillerData;
+            }
+            else
+                throw new IntersectionMarkingToolException($"Unsupported filler style: {styleData.Name}");
         }
 
         #endregion
