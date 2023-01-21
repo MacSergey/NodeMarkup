@@ -2551,7 +2551,7 @@ namespace NodeMarkup
 		public static string Tool_NotLink => LocaleManager.GetString("Tool_NotLink", Culture);
 
 		/// <summary>
-		/// [NEW] - Added a new line style: Text. It allows to write custom text on road and set any font instal
+		/// [NEW] Added a new line style: Text. It allows to write custom text on road and set any font installe
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_12 => LocaleManager.GetString("Mod_WhatsNewMessage1_12", Culture);
 	}
