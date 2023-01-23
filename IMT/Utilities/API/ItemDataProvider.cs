@@ -338,7 +338,17 @@ namespace NodeMarkup.Utilities.API
             }
         }
 
-        public IEnumerable<IEntrancePointData> PointDatas => throw new NotImplementedException();
+        public IEnumerable<IEntrancePointData> PointDatas
+        {
+            get
+            {
+                foreach (var supportPoint in Filler.Contour.RawVertices.OfType<EnterSupportPoint>())
+                {
+                    if (supportPoint.Point is MarkingEnterPoint enterPoint)
+                        yield return new EntrancePointDataProvider(DataProvider, enterPoint);
+                }
+            }
+        }
 
         public FillerDataProvider(DataProvider dataProvider, MarkingFiller filler)
         {
