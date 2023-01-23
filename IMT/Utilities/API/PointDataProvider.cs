@@ -1,6 +1,8 @@
 ﻿using NodeMarkup.API;
 using NodeMarkup.Manager;
 
+using System.Drawing;
+
 namespace NodeMarkup.Utilities.API
 {
     public struct EntrancePointDataProvider : IEntrancePointData
@@ -42,7 +44,31 @@ namespace NodeMarkup.Utilities.API
             set => Point.Offset.Value = value;
         }
 
-        public float Position { get; }
+        public float Position
+        {
+            get
+            {
+                var source = Point.Source;
+
+                if ((source.Location & MarkingPoint.LocationType.Between) != MarkingPoint.LocationType.None)
+                {
+                    return (Point.Enter.IsLaneInvert ? -source.RightLane.HalfWidth : source.RightLane.HalfWidth) + source.RightLane.Position;
+                }
+                else if ((source.Location & MarkingPoint.LocationType.Edge) != MarkingPoint.LocationType.None)
+                {
+                    switch (source.Location)
+                    {
+                        case MarkingPoint.LocationType.LeftEdge:
+                            return (Point.Enter.IsLaneInvert ? -source.RightLane.HalfWidth : source.RightLane.HalfWidth) + source.RightLane.Position;
+
+                        case MarkingPoint.LocationType.RightEdge:
+                            return (Point.Enter.IsLaneInvert ? source.LeftLane.HalfWidth : -source.LeftLane.HalfWidth) + source.LeftLane.Position;
+                    }
+                }
+
+                return 0F;
+            }
+        }
 
         public EntrancePointDataProvider(DataProvider dataProvider, MarkingEnterPoint point)
         {
@@ -51,27 +77,7 @@ namespace NodeMarkup.Utilities.API
             EntranceType = point.Enter.Type;
             MarkingId = point.Marking.Id;
             EntranceId = point.Enter.Id;
-            Index = point.Index;
-			Position = 0F;
-
-			var source = point.Source;
-
-			if ((source.Location & MarkingPoint.LocationType.Between) != MarkingPoint.LocationType.None)
-			{
-				Position = (point.Enter.IsLaneInvert ? -source.RightLane.HalfWidth : source.RightLane.HalfWidth) + source.RightLane.Position;
-			}
-			else if ((source.Location & MarkingPoint.LocationType.Edge) != MarkingPoint.LocationType.None)
-			{
-				switch (source.Location)
-				{
-					case MarkingPoint.LocationType.LeftEdge:
-						Position = (point.Enter.IsLaneInvert ? -source.RightLane.HalfWidth : source.RightLane.HalfWidth) + source.RightLane.Position;
-                        break;
-					case MarkingPoint.LocationType.RightEdge:
-						Position = (point.Enter.IsLaneInvert ? source.LeftLane.HalfWidth : -source.LeftLane.HalfWidth) + source.LeftLane.Position;
-                        break;
-				}
-			}
+            Index = point.Index;			
 		}
 
         public override string ToString() => Point.ToString();
