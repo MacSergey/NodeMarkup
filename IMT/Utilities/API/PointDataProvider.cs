@@ -42,7 +42,31 @@ namespace IMT.Utilities.API
             set => Point.Offset.Value = value;
         }
 
-        public float Position => throw new System.NotImplementedException();
+        public float Position
+        {
+            get
+            {
+                var source = Point.Source;
+
+                if ((source.Location & MarkingPoint.LocationType.Between) != MarkingPoint.LocationType.None)
+                {
+                    return (Point.Enter.IsLaneInvert ? -source.RightLane.HalfWidth : source.RightLane.HalfWidth) + source.RightLane.Position;
+                }
+                else if ((source.Location & MarkingPoint.LocationType.Edge) != MarkingPoint.LocationType.None)
+                {
+                    switch (source.Location)
+                    {
+                        case MarkingPoint.LocationType.LeftEdge:
+                            return (Point.Enter.IsLaneInvert ? -source.RightLane.HalfWidth : source.RightLane.HalfWidth) + source.RightLane.Position;
+
+                        case MarkingPoint.LocationType.RightEdge:
+                            return (Point.Enter.IsLaneInvert ? source.LeftLane.HalfWidth : -source.LeftLane.HalfWidth) + source.LeftLane.Position;
+                    }
+                }
+
+                return 0F;
+            }
+        }
 
         public EntrancePointDataProvider(DataProvider dataProvider, MarkingEnterPoint point)
         {
@@ -51,8 +75,8 @@ namespace IMT.Utilities.API
             EntranceType = point.Enter.Type;
             MarkingId = point.Marking.Id;
             EntranceId = point.Enter.Id;
-            Index = point.Index;
-        }
+            Index = point.Index;			
+		}
 
         public override string ToString() => Point.ToString();
     }

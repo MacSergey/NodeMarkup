@@ -310,18 +310,14 @@ namespace IMT.API
     }
 
 
-    public interface IStripeFillerStyle : IFillerStyleData
-    {
+    public interface IStripeFillerStyle : IFillerStyleData, IGuidedFillerStyleData
+	{
         Color32 Color { get; set; }
         float Width { get; set; }
         float Step { get; set; }
         float Angle { get; set; }
         float LineOffset { get; set; }
         float MedianOffset { get; set; }
-        int LeftGuideA { get; set; }
-        int LeftGuideB { get; set; }
-        int RightGuideA { get; set; }
-        int RightGuideB { get; set; }
         bool FollowGuides { get; set; }
     }
     public interface IGridFillerStyle : IFillerStyleData
@@ -333,29 +329,21 @@ namespace IMT.API
         float LineOffset { get; set; }
         float MedianOffset { get; set; }
     }
-    public interface ISolidFillerStyle : IFillerStyleData
-    {
+    public interface ISolidFillerStyle : IFillerStyleData, IGuidedFillerStyleData
+	{
         Color32 Color { get; set; }
         float LineOffset { get; set; }
         float MedianOffset { get; set; }
-        int LeftGuideA { get; set; }
-        int LeftGuideB { get; set; }
-        int RightGuideA { get; set; }
-        int RightGuideB { get; set; }
         bool FollowGuides { get; set; }
     }
-    public interface IChevronFillerStyle : IFillerStyleData
-    {
+    public interface IChevronFillerStyle : IFillerStyleData, IGuidedFillerStyleData
+	{
         Color32 Color { get; set; }
         float Width { get; set; }
         float Step { get; set; }
         float AngleBetween { get; set; }
         float LineOffset { get; set; }
         float MedianOffset { get; set; }
-        int LeftGuideA { get; set; }
-        int LeftGuideB { get; set; }
-        int RightGuideA { get; set; }
-        int RightGuideB { get; set; }
         bool Invert { get; set; }
     }
     public interface IPavementFillerStyle : IFillerStyleData
@@ -395,15 +383,22 @@ namespace IMT.API
         float MedianCurbSize { get; set; }
         float LineOffset { get; set; }
         float MedianOffset { get; set; }
-    }
-    public interface ICliffFillerStyle : IFillerStyleData
-    {
-        float Elevation { get; set; }
-        float CornerRadius { get; set; }
-        float MedianCornerRadius { get; set; }
-        float CurbSize { get; set; }
-        float MedianCurbSize { get; set; }
-        float LineOffset { get; set; }
-        float MedianOffset { get; set; }
-    }
+	}
+	public interface ICliffFillerStyle : IFillerStyleData
+	{
+		float Elevation { get; set; }
+		float CornerRadius { get; set; }
+		float MedianCornerRadius { get; set; }
+		float CurbSize { get; set; }
+		float MedianCurbSize { get; set; }
+		float LineOffset { get; set; }
+		float MedianOffset { get; set; }
+	}
+	public interface IGuidedFillerStyleData
+	{
+		int LeftGuideA { get; set; }
+		int LeftGuideB { get; set; }
+		int RightGuideA { get; set; }
+		int RightGuideB { get; set; }
+	}
 }

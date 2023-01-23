@@ -1,6 +1,7 @@
 ﻿using IMT.API;
 using IMT.Manager;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace IMT.Utilities.API
@@ -454,10 +455,10 @@ namespace IMT.Utilities.API
             }
         }
 
-        public INodeEntranceData StartEntrance => throw new NotImplementedException();
-        public INodeEntranceData EndEntrance => throw new NotImplementedException();
+        public INodeEntranceData StartEntrance => new NodeEntranceDataProvider(DataProvider, Marking.Enters.First(x => x.IsStartSide));
+        public INodeEntranceData EndEntrance => new NodeEntranceDataProvider(DataProvider, Marking.Enters.First(x => !x.IsStartSide));
 
-        public SegmentMarkingDataProvider(DataProvider dataProvider, SegmentMarking marking)
+		public SegmentMarkingDataProvider(DataProvider dataProvider, SegmentMarking marking)
         {
             DataProvider = dataProvider;
             Id = marking.Id;
@@ -531,7 +532,7 @@ namespace IMT.Utilities.API
 
         public IRegularLineData AddRegularLine(IEntrancePointData startPointData, IEntrancePointData endPointData, IRegularLineStyleData styleData = null)
         {
-            APIHelper.CheckPoints(Id, startPointData, endPointData, true);
+            APIHelper.CheckPoints(Id, startPointData, endPointData, false);
             var marking = Marking;
             var startPoint = APIHelper.GetEntrancePoint(marking, startPointData);
             var endPoint = APIHelper.GetEntrancePoint(marking, endPointData);
