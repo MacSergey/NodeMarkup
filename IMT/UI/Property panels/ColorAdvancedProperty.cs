@@ -15,6 +15,8 @@ namespace IMT.UI
             set => _defaultColor = value;
         }
 
+        protected override Color32 PopupColor => new Color32(36, 44, 51, 255);
+
         protected override void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
         {
             base.ColorPickerOpen(dropdown, popup, ref overridden);
@@ -29,7 +31,7 @@ namespace IMT.UI
 
             var button = AddButton(parent);
             button.size = new Vector2(width, 20f);
-            button.relativePosition = new Vector2(10 * count + width * (count - 1), 223f);
+            button.relativePosition = new Vector2(10 * count + width * (count - 1), 273f);
             button.textPadding = new RectOffset(0, 0, 5, 0);
             button.textScale = 0.6f;
             button.text = text;
