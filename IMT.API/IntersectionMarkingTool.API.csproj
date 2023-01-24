@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net35</TargetFramework>
+    <Authors>MacSergey</Authors>
+    <Product>Intersection Marking Tool API</Product>
+    <PackageProjectUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2472062376</PackageProjectUrl>
+    <LangVersion>9.0</LangVersion>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>IMT.API</PackageId>
+    <Title>Intersection Marking Tool API</Title>
+    <Description>API for Intersection Marking Tool</Description>
+    <PackageIcon>IMTLogo.png</PackageIcon>
+    <RepositoryType>https://github.com/MacSergey/NodeMarkup</RepositoryType>
+    <PackageTags>CSL;IMT;API;Marking;Mod</PackageTags>
+    <Version>1.0.1</Version>
+    <ManagedDLLPath>$(MSBuildProgramFiles32)/Steam/steamapps/common/Cities_Skylines/Cities_Data/Managed</ManagedDLLPath>
+    <ExternalDLLPath>$(SolutionDir)/libs</ExternalDLLPath>
+    <AssemblySearchPaths>
+      $(AssemblySearchPaths);
+      $(ManagedDLLPath);
+      $(ExternalDLLPath)
+    </AssemblySearchPaths>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\Workshop\IMTLogo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ColossalManaged">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ICities">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

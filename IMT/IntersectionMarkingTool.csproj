@@ -1,0 +1,433 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net35</TargetFramework>
+    <Authors>MacSergey</Authors>
+    <Product>Intersection Marking Tool</Product>
+    <PackageProjectUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2472062376</PackageProjectUrl>
+    <LangVersion>9.0</LangVersion>
+    <ManagedDLLPath>$(MSBuildProgramFiles32)/Steam/steamapps/common/Cities_Skylines/Cities_Data/Managed</ManagedDLLPath>
+    <ExternalDLLPath>$(SolutionDir)/libs</ExternalDLLPath>
+    <AssemblySearchPaths>
+      $(AssemblySearchPaths);
+      $(ManagedDLLPath);
+      $(ExternalDLLPath)
+    </AssemblySearchPaths>
+    <Configurations>Beta Debug;Beta Release;Stable Debug;Stable Release</Configurations>
+  </PropertyGroup>
+	
+  <PropertyGroup>
+    <AssemblyVersion>1.13.0.38</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
+    <AssemblyVersion>1.12.0.2</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <DefineConstants />
+  </PropertyGroup>
+
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Debug|AnyCPU'">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta Release|AnyCPU'">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <DefineConstants>BETA</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta Debug|AnyCPU'">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>BETA, DEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Properties\Localize.cs-CZ.resx" />
+    <EmbeddedResource Remove="Properties\Localize.de-DE.resx" />
+    <EmbeddedResource Remove="Properties\Localize.en-GB.resx" />
+    <EmbeddedResource Remove="Properties\Localize.es-ES.resx" />
+    <EmbeddedResource Remove="Properties\Localize.fi-FI.resx" />
+    <EmbeddedResource Remove="Properties\Localize.fr-FR.resx" />
+    <EmbeddedResource Remove="Properties\Localize.id-ID.resx" />
+    <EmbeddedResource Remove="Properties\Localize.it-IT.resx" />
+    <EmbeddedResource Remove="Properties\Localize.ja-JP.resx" />
+    <EmbeddedResource Remove="Properties\Localize.ko-KR.resx" />
+    <EmbeddedResource Remove="Properties\Localize.nl-NL.resx" />
+    <EmbeddedResource Remove="Properties\Localize.pl-PL.resx" />
+    <EmbeddedResource Remove="Properties\Localize.pt-BR.resx" />
+    <EmbeddedResource Remove="Properties\Localize.pt-PT.resx" />
+    <EmbeddedResource Remove="Properties\Localize.resx" />
+    <EmbeddedResource Remove="Properties\Localize.ro-RO.resx" />
+    <EmbeddedResource Remove="Properties\Localize.ru-RU.resx" />
+    <EmbeddedResource Remove="Properties\Localize.tr-TR.resx" />
+    <EmbeddedResource Remove="Properties\Localize.zh-CN.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\launchSettings.json" />
+    <None Remove="Resources\ButtonIcons\AutoButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\BoldButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\BoldItalicButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\BottomToTopButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\DynamicFixedButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\DynamicFreeButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\FixedFixedButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\FixedFreeButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\ItalicButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\LeftToRightButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\RegularButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\TopToBottomButtonIcons.png" />
+    <None Remove="Resources\HeaderButtons\LinkHeaderButton.png" />
+    <None Remove="Resources\HeaderButtons\UnlinkHeaderButton.png" />
+    <None Remove="Resources\StylesLine\LineDoubleDashedAsym.png" />
+    <None Remove="Resources\StylesLine\LineText.png" />
+    <None Remove="Resources\StylesLine\LineZigZag.png" />
+    <None Remove="Resources\StylesPreview\StylesPreviewLineDoubleDashedAsym.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\launchSettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ButtonIcons\AutoButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\BoldButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\BoldItalicButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\BottomToTopButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\DynamicFixedButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\DynamicFreeButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\FixedFixedButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\FixedFreeButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\ItalicButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\LeftToRightButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\RegularButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\TopToBottomButtonIcons.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\LinkHeaderButton.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HeaderButtons\UnlinkHeaderButton.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ListItem\ListItemBackground.png" />
+    <EmbeddedResource Include="Resources\SharkTooth.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineDoubleDashedAsym.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineText.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineZigZag.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineDoubleDashedAsym.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesSteamBackground.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewBackground.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkChessBoard.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkDoubleZebra.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkLadder.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkParallelDashedLines.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkParallelSolidLines.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewCrosswalkZebra.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerChevron.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerGrid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerStripe.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineSolidAndDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLineSolidAndDashed.png" />
+
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerCliff.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerGrass.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerGravel.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerPavement.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewFillerRuined.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineNetwork.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLinePavement.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineProp.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineTree.png" />
+    <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLinePavement.png" />
+
+    <EmbeddedResource Include="Resources\ButtonIcons\RangeButtonIcons.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\SingleButtonIcons.png" />
+
+    <EmbeddedResource Include="Resources\ListItem\ListItemCollapse.png" />
+    <EmbeddedResource Include="Resources\ListItem\ListItemExpand.png" />
+
+    <EmbeddedResource Include="Resources\HeaderButtons\AddTemplateHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\ApplyHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\ApplyTemplateHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\BeetwenIntersectionsHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\ClearHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\CopyHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\CutHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\DuplicateHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\EdgeLinesHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\EditHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\NotSaveHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\OffsetHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\PackageHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\PasteHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\SaveHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\SetDefaultHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\UnsetDefaultHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\WholeStreetHeaderButton.png" />
+
+    <EmbeddedResource Include="Resources\OrderButtons\ApplyOrderButton.png" />
+    <EmbeddedResource Include="Resources\OrderButtons\FlipOrderButton.png" />
+    <EmbeddedResource Include="Resources\OrderButtons\NotApplyOrderButton.png" />
+    <EmbeddedResource Include="Resources\OrderButtons\ResetOrderButton.png" />
+    <EmbeddedResource Include="Resources\OrderButtons\TurnLeftOrderButton.png" />
+    <EmbeddedResource Include="Resources\OrderButtons\TurnRightOrderButton.png" />
+
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonActive.png" />
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonHover.png" />
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonIconActive.png" />
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonIconHover.png" />
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonIconNormal.png" />
+    <EmbeddedResource Include="Resources\ActivationButton\ActivationButtonNormal.png" />
+
+    <EmbeddedResource Include="Resources\UUIButton\UUIButtonHovered.png" />
+    <EmbeddedResource Include="Resources\UUIButton\UUIButtonNormal.png" />
+    <EmbeddedResource Include="Resources\UUIButton\UUIButtonPressed.png" />
+
+    <EmbeddedResource Include="Resources\StylesLine\LineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineNetwork.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LinePavement.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineProp.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineSolidAndDashed.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineTree.png" />
+
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineDashed.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineDoubleDashed.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineDoubleSolid.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLinePavement.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineSharkTeeth.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineSolid.png" />
+    <EmbeddedResource Include="Resources\StylesStopLine\StopLineSolidAndDashed.png" />
+
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkChessBoard.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkDoubleZebra.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkLadder.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkParallelDashedLines.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkParallelSolidLines.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkSolid.png" />
+    <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkZebra.png" />
+
+    <EmbeddedResource Include="Resources\StylesFiller\FillerChevron.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerCliff.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerGrass.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerGravel.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerGrid.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerPavement.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerRuined.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerSolid.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerStripe.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Properties\Localize.cs-CZ.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.de-DE.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.en-GB.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.es-ES.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.fi-FI.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.fr-FR.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.id-ID.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.it-IT.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.ja-JP.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.ko-KR.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.nl-NL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.pl-PL.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.pt-PT.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.resx">
+      <Generator>LocalizeGenerator</Generator>
+      <LastGenOutput>Localize.cs</LastGenOutput>
+      <CustomToolNamespace>IMT</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.ro-RO.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.ru-RU.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.tr-TR.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Localize.zh-CN.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CitiesHarmony.API" Version="2.1.0" />
+    <PackageReference Include="MoveItIntegration" Version="1.0.0" />
+    <PackageReference Include="UnifiedUILib" Version="2.2.12" />
+    <ProjectReference Include="..\IMT.API\IntersectionMarkingTool.API.csproj" />
+    <Reference Include="Assembly-CSharp">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ColossalManaged">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ICities">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Localize.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Localize.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <Import Project="..\ModsCommon\ModShared\ModsCommonShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\ToolShared\ModsToolShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\UIShared\ModsUIShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\HeaderShared\HeaderShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LoadExtensionShared\LoadExtensionShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\MessageBoxShared\MessageBoxShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\PropertyPanelShared\PropertyPanelShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\ObjectMapShared\ObjectMapShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\TrajectoryShared\TrajectoryShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\PropertyValueShared\PropertyValueShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\RenderExtension\RenderExtension.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\XmlExtension\XmlExtension.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\NetExtension\NetExtension.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\MathExtension\MathExtension.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\en-GB\LocalizeShared.en-GB.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\zh-CN\LocalizeShared.zh-CN.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\PluginsShared\PluginsShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\DependencyShared\DependencyShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LoggerShared\LoggerShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\SingletonShared\SingletonShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\WhatsNewMessageBoxShared\WhatsNewMessageBoxShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\NetObjectMapShared\NetObjectMapShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\NetAssetDataExtension\NetAssetDataExtension.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\ColorsShared\ColorsShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\UUIRegisterShared\UUIRegisterShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\ToolPanelShared\ToolPanelShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\TriangulatorShared\Triangulator.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\cs-CZ\LocalizeShared.cs-CZ.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\de-DE\LocalizeShared.de-DE.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\es-ES\LocalizeShared.es-ES.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\fi-FI\LocalizeShared.fi-FI.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\fr-FR\LocalizeShared.fr-FR.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\id-ID\LocalizeShared.id-ID.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\it-IT\LocalizeShared.it-IT.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ja-JP\LocalizeShared.ja-JP.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ko-KR\LocalizeShared.ko-KR.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\nl-NL\LocalizeShared.nl-NL.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\pl-PL\LocalizeShared.pl-PL.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\pt-PT\LocalizeShared.pt-PT.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ro-RO\LocalizeShared.ro-RO.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ru-RU\LocalizeShared.ru-RU.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\tr-TR\LocalizeShared.tr-TR.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\LocalizeManager\LocalizeManager.projitems" Label="Shared" />
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
+    <WorkshopId>2140418403</WorkshopId>
+    <Type>Stable</Type>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Beta Release' OR '$(Configuration)' == 'Beta Debug'">
+    <WorkshopId>2159934925</WorkshopId>
+    <Type>Beta</Type>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(MSBuildProjectName)$(Type)</LocalDir>
+    <WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
+  </PropertyGroup>
+
+  <Target Name="PdbToMdb" AfterTargets="Build">
+    <ItemGroup>
+      <FilesToDelete Include="$(OutDir)*.pdb" />
+    </ItemGroup>
+    <Delete Files="@(FilesToDelete)" />
+
+	  <ItemGroup>
+		  <LocalizeToMove Include="$(OutDir)Properties\*.resx" />
+	  </ItemGroup>
+	  <Move SourceFiles="@(LocalizeToMove)" DestinationFiles="@(LocalizeToMove->'$(OutDir)Localize\%(Filename)%(Extension)')" />
+	  <RemoveDir Directories="$(OutDir)Properties" />
+
+	  <ItemGroup>
+		  <CommonLocalizeToMove Include="$(OutDir)*.resx" />
+	  </ItemGroup>
+	  <Move SourceFiles="@(CommonLocalizeToMove)" DestinationFiles="@(CommonLocalizeToMove->'$(OutDir)Localize\%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="DeployToLocal" AfterTargets="PdbToMdb">
+    <Message Text="Deploy to local $(LocalDir)" Importance="high" />
+    <RemoveDir Directories="$(LocalDir)" />
+    <ItemGroup>
+      <FilesToCopy Include="$(OutDir)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(LocalDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="DeployToWorkshop" AfterTargets="PdbToMdb" Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Beta Release'">
+    <Message Text="Deploy to workshop $(WorkshopDir)" Importance="high" />
+    <RemoveDir Directories="$(WorkshopDir)" />
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(WorkshopDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="$(ProjectDir)..\Workshop\PreviewImage$(Type).png" DestinationFiles="$(WorkshopDir)\PreviewImage.png" />
+  </Target>
+
+</Project>

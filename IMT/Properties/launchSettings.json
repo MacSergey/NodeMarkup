@@ -1,0 +1,24 @@
+{
+  "profiles": {
+    "Normal": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files (x86)\\Steam\\steam.exe",
+      "commandLineArgs": "-applaunch 255710"
+    },
+    "No Workshop": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files (x86)\\Steam\\steam.exe",
+      "commandLineArgs": "-applaunch 255710 --noWorkshop"
+    },
+    "Release": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\MacSergey\\AppData\\Local\\Colossal Order\\Cities_Skylines\\LoadOrder\\Launch.bat",
+      "commandLineArgs": "Release release"
+    },
+    "Debug": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\MacSergey\\AppData\\Local\\Colossal Order\\Cities_Skylines\\LoadOrder\\Launch.bat",
+      "commandLineArgs": "Debug debug --noWorkshop"
+    }
+  }
+}
