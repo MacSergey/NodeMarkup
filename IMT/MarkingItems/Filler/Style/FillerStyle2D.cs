@@ -663,9 +663,9 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
                 yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
                 yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideB), LeftGuideB);
+                yield return new StylePropertyDataProvider<int>(nameof(RightGuideA), RightGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(RightGuideB), RightGuideB);
                 yield return new StylePropertyDataProvider<bool>(nameof(Invert), Invert);
             }
         }
@@ -945,9 +945,9 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
                 yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
                 yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideB), LeftGuideB);
+                yield return new StylePropertyDataProvider<int>(nameof(RightGuideA), RightGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(RightGuideB), RightGuideB);
                 yield return new StylePropertyDataProvider<bool>(nameof(FollowGuides), FollowGuides);
             }
         }

@@ -1,5 +1,8 @@
 ﻿using ColossalFramework.UI;
+using IMT.Utilities;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
+using System;
 using UnityEngine;
 
 namespace IMT.UI
@@ -15,11 +18,50 @@ namespace IMT.UI
             set => _defaultColor = value;
         }
 
+        private MultyAtlasUIButton CopyButton { get; }
+        private MultyAtlasUIButton PasteButton { get; }
+
         protected override Color32 PopupColor => new Color32(36, 44, 51, 255);
+
+        public ColorAdvancedPropertyPanel()
+        {
+            CopyButton = Content.AddUIComponent<MultyAtlasUIButton>();
+            CopyButton.SetDefaultStyle();
+            CopyButton.width = 20;
+            CopyButton.atlasForeground = IMTTextures.Atlas;
+            CopyButton.normalFgSprite = IMTTextures.CopyHeaderButton;
+            CopyButton.tooltip = IMT.Localize.Editor_ColorCopy;
+            CopyButton.eventClick += Copy;
+
+            PasteButton = Content.AddUIComponent<MultyAtlasUIButton>();
+            PasteButton.SetDefaultStyle();
+            PasteButton.width = 20;
+            PasteButton.atlasForeground = IMTTextures.Atlas;
+            PasteButton.normalFgSprite = IMTTextures.PasteHeaderButton;
+            PasteButton.tooltip = IMT.Localize.Editor_ColorPaste;
+            PasteButton.eventClick += Paste;
+        }
+        protected override void Init(float? height)
+        {
+            base.Init(height);
+            SetSize();
+        }
+        public void Init(Color32? defaultColor = null)
+        {
+            _defaultColor = defaultColor;
+            base.Init();
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+            _defaultColor = null;
+        }
 
         protected override void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
         {
             base.ColorPickerOpen(dropdown, popup, ref overridden);
+
+            Popup.component.size += new Vector2(0, 30);
 
             AddCopyButton();
             AddPasteButton();
@@ -31,7 +73,7 @@ namespace IMT.UI
 
             var button = AddButton(parent);
             button.size = new Vector2(width, 20f);
-            button.relativePosition = new Vector2(10 * count + width * (count - 1), 273f);
+            button.relativePosition = new Vector2(10 * count + width * (count - 1), 283f);
             button.textPadding = new RectOffset(0, 0, 5, 0);
             button.textScale = 0.6f;
             button.text = text;
@@ -41,27 +83,27 @@ namespace IMT.UI
         private void AddCopyButton()
         {
             var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorCopy, 1, 3);
-            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Copy();
+            button.eventClick += Copy;
         }
         private void AddPasteButton()
         {
             var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorPaste, 2, 3);
             button.isEnabled = Buffer.HasValue;
-            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => Paste();
+            button.eventClick += Paste;
         }
         private void AddSetDefaultButton()
         {
             var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorDefault, 3, 3);
-            button.eventClick += (UIComponent component, UIMouseEventParameter eventParam) => SetDefault();
+            button.eventClick += SetDefault;
         }
 
-        private void Copy()
+        private void Copy(UIComponent component, UIMouseEventParameter eventParam)
         {
             Buffer = Value;
             if (Popup != null)
                 Popup.component.Hide();
         }
-        private void Paste()
+        private void Paste(UIComponent component, UIMouseEventParameter eventParam)
         {
             if (Buffer != null)
             {
@@ -70,17 +112,20 @@ namespace IMT.UI
                     Popup.component.Hide();
             }
         }
-        private void SetDefault() => ValueChanged(DefaultColor, true, OnChangedValue);
+        private void SetDefault(UIComponent component, UIMouseEventParameter eventParam) => ValueChanged(DefaultColor, true, OnChangedValue);
 
-        public void Init(Color32? defaultColor = null)
+
+        protected override void OnSizeChanged()
         {
-            _defaultColor = defaultColor;
-            base.Init();
+            base.OnSizeChanged();
+            SetSize();
         }
-        public override void DeInit()
+        protected virtual void SetSize()
         {
-            base.DeInit();
-            _defaultColor = null;
+            if (CopyButton != null)
+                CopyButton.height = Content.height - ItemsPadding * 2;
+            if (PasteButton != null)
+                PasteButton.height = Content.height - ItemsPadding * 2;
         }
     }
 }

@@ -595,7 +595,8 @@ namespace IMT
                     }
                 }
                 points.Add(points[0]);
-                var style = provider.StripeFillerStyle;
+                var style = provider.SolidFillerStyle;
+                style.Color = new Color32(255, 0, 0, 255);
                 var filler = nodeMarking.AddFiller(points, style);
                 AddingFillerResult.text = $"Filler {filler} was added";
             }
