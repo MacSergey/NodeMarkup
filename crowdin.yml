@@ -1,4 +1,4 @@
 files:
-  - source: /NodeMarkup/Properties/Localize.resx
-    translation: /NodeMarkup/Properties/Localize.%locale%.resx
+  - source: /IMT/Properties/Localize.resx
+    translation: /IMT/Properties/Localize.%locale%.resx
     update_option: update_as_unapproved
