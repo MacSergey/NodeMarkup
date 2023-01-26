@@ -176,6 +176,7 @@ namespace IMT.UI.Editors
         {
             AddButton = ComponentPool.Get<AddRuleButton>(ContentPanel.Content);
             AddButton.Text = IMT.Localize.LineEditor_AddRuleButton;
+            AddButton.tooltip = IntersectionMarkingTool.AddRuleShortcut;
             AddButton.Init();
             AddButton.OnButtonClick += AddRule;
             SetAddButtonVisible();

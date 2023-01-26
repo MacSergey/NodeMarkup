@@ -2,7 +2,6 @@
 using ColossalFramework.Importers;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
-using Epic.OnlineServices.Presence;
 using HarmonyLib;
 using IMT.Manager;
 using IMT.UI;
@@ -15,11 +14,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Xml.Linq;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
-using static NetInfo;
 
 namespace IMT.Tools
 {
