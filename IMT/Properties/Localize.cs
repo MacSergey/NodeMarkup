@@ -2554,5 +2554,15 @@ namespace IMT
 		/// [NEW] Added a new line style: Text. It allows to write custom text on road and set any font installe
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_12 => LocaleManager.GetString("Mod_WhatsNewMessage1_12", Culture);
+
+		/// <summary>
+		/// Apply preset to all segments of this asset
+		/// </summary>
+		public static string PresetEditor_ApplyAllPreset => LocaleManager.GetString("PresetEditor_ApplyAllPreset", Culture);
+
+		/// <summary>
+		/// Reset to default
+		/// </summary>
+		public static string HeaderPanel_StyleReset => LocaleManager.GetString("HeaderPanel_StyleReset", Culture);
 	}
 }

@@ -297,6 +297,19 @@ namespace IMT.Tools
             SingletonMod<Mod>.Logger.Debug($"Apply intersection template");
             ApplyMarking(template);
         }
+        public void ApplyAllIntersectionTemplate(IntersectionTemplate template)
+        {
+            if (Marking.Type == MarkingType.Segment)
+            {
+                var segmentId = Marking.Id;
+                ref var segment = ref segmentId.GetSegment();
+                if (segment.Info != null)
+                {
+                    SingletonMod<Mod>.Logger.Debug($"Apply intersection template to all segments of asset {segment.Info.name}");
+                    ApplyMarking(template);
+                }
+            }
+        }
         private void CreateEdgeLines()
         {
             SingletonMod<Mod>.Logger.Debug($"Create edge lines");

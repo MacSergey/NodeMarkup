@@ -14,6 +14,7 @@ namespace IMT.UI.Editors
         public event Action OnSaveTemplate;
         public event Action OnCopy;
         public event Action OnPaste;
+        public event Action OnReset;
 
         private Style.StyleType StyleGroup { get; set; }
         private HeaderButtonInfo<HeaderButton> PasteButton { get; set; }
@@ -30,6 +31,8 @@ namespace IMT.UI.Editors
 
             PasteButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.PasteHeaderButton, IMT.Localize.HeaderPanel_StylePaste, PasteClick);
             Content.AddButton(PasteButton);
+
+            Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ResetHeaderButton, IMT.Localize.HeaderPanel_StyleReset, ResetClick));
         }
 
         public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
@@ -63,6 +66,7 @@ namespace IMT.UI.Editors
         private void SaveTemplateClick() => OnSaveTemplate?.Invoke();
         private void CopyClick() => OnCopy?.Invoke();
         private void PasteClick() => OnPaste?.Invoke();
+        private void ResetClick() => OnReset?.Invoke();
     }
     public class CrosswalkHeaderPanel : StyleHeaderPanel
     {
@@ -218,9 +222,11 @@ namespace IMT.UI.Editors
     public class IntersectionTemplateHeaderPanel : TemplateHeaderPanel<IntersectionTemplate>
     {
         public event Action OnApply;
+        public event Action OnApplyAll;
         public event Action OnLink;
 
         private HeaderButtonInfo<HeaderButton> Apply { get; set; }
+        private HeaderButtonInfo<HeaderButton> ApplyAll { get; set; }
         private HeaderButtonInfo<HeaderButton> Link { get; set; }
         private HeaderButtonInfo<HeaderButton> Unlink { get; set; }
 
@@ -228,6 +234,9 @@ namespace IMT.UI.Editors
         {
             Apply = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyHeaderButton, IMT.Localize.PresetEditor_ApplyPreset, ApplyClick);
             Content.AddButton(Apply);
+
+            ApplyAll = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyAllHeaderButton, IMT.Localize.PresetEditor_ApplyAllPreset, ApplyAllClick);
+            Content.AddButton(ApplyAll);
 
             Link = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.LinkHeaderButton, IMT.Localize.PresetEditor_LinkPreset, LinkClick);
             Content.AddButton(Link);
@@ -247,6 +256,7 @@ namespace IMT.UI.Editors
         public override void Refresh()
         {
             Apply.Visible = EditMode == EditMode.Default;
+            ApplyAll.Visible = EditMode == EditMode.Default && Editor.Marking.Type == MarkingType.Segment;
             var canLink = false;
             var canUnlink = false;
             if (EditMode == EditMode.Default && Template.Enters.Length == 2 && Editor.Marking.Type == MarkingType.Segment)
@@ -264,6 +274,7 @@ namespace IMT.UI.Editors
         }
 
         private void ApplyClick() => OnApply?.Invoke();
+        private void ApplyAllClick() => OnApplyAll?.Invoke();
         private void LinkClick() => OnLink?.Invoke();
     }
 }

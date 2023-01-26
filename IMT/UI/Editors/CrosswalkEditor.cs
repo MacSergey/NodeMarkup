@@ -85,6 +85,7 @@ namespace IMT.UI.Editors
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
+            header.OnReset += ResetStyle;
             header.OnCut += CutLines;
         }
         private void AddWarning()
@@ -260,6 +261,7 @@ namespace IMT.UI.Editors
             if (Tool.FromStyleBuffer<CrosswalkStyle>(Manager.Style.StyleType.Crosswalk, out var style))
                 ApplyStyle(style);
         }
+        private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<CrosswalkStyle>(EditObject.Style.Value.Type));
         private void CutLines() => Marking.CutLinesByCrosswalk(EditObject);
 
         public void HoverBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton) => HoverBorderButton = selectButton;

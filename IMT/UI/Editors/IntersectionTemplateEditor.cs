@@ -52,9 +52,11 @@ namespace IMT.UI.Editors
         {
             base.AddHeader();
             HeaderPanel.OnApply += Apply;
+            HeaderPanel.OnApplyAll += ApplyAll;
             HeaderPanel.OnLink += Link;
         }
         private void Apply() => Tool.ApplyIntersectionTemplate(EditObject);
+        private void ApplyAll() => Tool.ApplyAllIntersectionTemplate(EditObject);
         private void Link()
         {
             if (Marking.Type == MarkingType.Segment)

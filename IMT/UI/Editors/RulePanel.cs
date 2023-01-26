@@ -83,6 +83,7 @@ namespace IMT.UI.Editors
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnCopy += CopyStyle;
             Header.OnPaste += PasteStyle;
+            Header.OnPaste += ResetStyle;
         }
 
         private void AddError()
@@ -238,6 +239,8 @@ namespace IMT.UI.Editors
             if (Editor.Tool.FromStyleBuffer<LineStyle>(Rule.Style.Value.Type.GetGroup(), out var style))
                 ApplyStyle(style);
         }
+        private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<LineStyle>(Rule.Style.Value.Type));
+
         private void FromChanged(ILinePartEdge from) => Rule.From = from;
         private void ToChanged(ILinePartEdge to) => Rule.To = to;
         private void StyleChanged(Style.StyleType style)

@@ -67,6 +67,7 @@ namespace IMT.UI.Editors
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
+            header.OnReset += ResetStyle;
         }
         private void AddStyleTypeProperty()
         {
@@ -186,6 +187,7 @@ namespace IMT.UI.Editors
             if (Tool.FromStyleBuffer<FillerStyle>(Manager.Style.StyleType.Filler, out var style))
                 ApplyStyle(style);
         }
+        private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<FillerStyle>(EditObject.Style.Value.Type));
 
         public void HoverGuide(FillerGuidePropertyPanel.SelectGuideButton selectButton) => HoverGuideSelectButton = selectButton;
         public void LeaveGuide(FillerGuidePropertyPanel.SelectGuideButton selectButton) => HoverGuideSelectButton = null;
