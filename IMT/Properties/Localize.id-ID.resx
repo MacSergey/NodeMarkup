@@ -390,7 +390,6 @@ Klik untuk mengedit markah</value>
 [NEW] Gaya garis pemberhentian "Utuh ganda" dan "Putus-putus ganda" telah ditambah.
 [TRANSLATION] Terjemahan Bahasa Italia dan Portugis telah ditambah.</value>
   </data>
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Tambah isian baru</value>
   </data>
@@ -567,7 +566,6 @@ Cek titik "Dari" dan "Ke" aturan lainnya.</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>templat</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Pemuatan telah selesai dengan kendala.
 Pemuatan markah untuk {0} persimpangan gagal.</value>
@@ -773,12 +771,6 @@ Templat yang dipulihkan akan menggantikan semua templat yang ada.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Lanjutkan</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Keluar mode tempel</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Apakah anda ingin untuk keluar dari mode tempel dan terapkan perubahan?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Jangan terapkan</value>
   </data>
@@ -833,7 +825,6 @@ Templat yang dipulihkan akan menggantikan semua templat yang ada.</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Tekan dan tahan {0} untuk menggeser titik</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Aksi ini tidak dapat ditarik ulang.</value>
   </data>
@@ -858,7 +849,6 @@ Templat yang dipulihkan akan menggantikan semua templat yang ada.</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Awas: opsi ini akan mengubah urutan render objek di game</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Simpan sebagai aset</value>
   </data>
@@ -887,12 +877,6 @@ Untuk membuat sebuah prasetelan, klik {0} di bagian atas panel.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Prasetelan baru</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Keluar mode penerapan prasetelan</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Apakan Anda yakin untuk menerapkan prasetelan?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Ciptaan</value>
@@ -1034,7 +1018,6 @@ Apakah Anda yakin untuk memiliki lebih dari satu prasetelan dengan nama yang sam
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>prasetelan</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Garis jenis ini tidak mendukung aturan</value>
   </data>
@@ -1044,7 +1027,6 @@ Apakah Anda yakin untuk memiliki lebih dari satu prasetelan dengan nama yang sam
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Pembuat tidak diketahui</value>
   </data>
-  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Pemuatan telah selesai dengan kendala.
 Pemuatan markah untuk semua persimpangan gagal.</value>
@@ -1080,9 +1062,6 @@ Klik untuk mengedit markah</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Pilih titik kedua pemandu</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Hitungan warna</value>
   </data>
@@ -1140,17 +1119,12 @@ Klik untuk mengedit markah</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Pilih titik akhir untuk garis biasa atau pemberhentian</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Penjajaran ujung garis</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Penjajaran awal garis</value>
   </data>
-  
-  
-  
-  
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Hilangkan nama jalan saat menggunakan alat</value>
   </data>
@@ -1178,12 +1152,9 @@ Klik untuk mengedit markah</value>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Besar trotoar</value>
   </data>
-  
-  
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Buangkan</value>
   </data>
-  
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Pengurutan</value>
   </data>
@@ -1259,7 +1230,6 @@ Klik untuk mengedit markah</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Nama jalan</value>
   </data>
-  
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Benda</value>
   </data>
@@ -1350,7 +1320,6 @@ Klik untuk mengedit markah</value>
   <data name="StyleOption_ObjectStatic" xml:space="preserve">
     <value>Tunggal</value>
   </data>
-  
   <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
     <value>Urutan langsung dan terbalik</value>
   </data>
@@ -1363,7 +1332,6 @@ Klik untuk mengedit markah</value>
 [FIXED] Pembenaran perhitungan fillers dan penerangan.
 [UPDATED] Tombol "Default color" pada pilihan warna mensetel warna bawaan gaya dari pada warna bawaan mod.</value>
   </data>
-  
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Kemiringan</value>
   </data>
@@ -1484,7 +1452,6 @@ mode bawah tanah</value>
   <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
     <value>Tinggi</value>
   </data>
-  
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>Segitiga</value>
   </data>
@@ -1635,5 +1602,4 @@ mode bawah tanah</value>
   <data name="Tool_NotLink" xml:space="preserve">
     <value>Jangan hubungkan</value>
   </data>
-  
 </root>

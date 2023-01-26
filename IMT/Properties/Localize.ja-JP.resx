@@ -196,7 +196,7 @@
     <value>実線</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>交差点や高速道路のJCT・IC内に、ラインの作成・編集が出来るようになります</value>
+    <value>様々な交差点・様々なネットワークに対して、マーキングの作成・編集が出来ます。</value>
   </data>
   <data name="Panel_NodeCaption" xml:space="preserve">
     <value>#{0} のノードを編集中</value>
@@ -238,7 +238,7 @@
     <value>マーキングデータのダンプ出力</value>
   </data>
   <data name="Settings_DumpMessageFailed" xml:space="preserve">
-    <value>ダンプ出力に失敗しました。</value>
+    <value>ダンプ出力に失敗！！</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
     <value>ダンプ出力は正常に行われました。</value>
@@ -254,7 +254,7 @@
 復元すると、既存のマーキングデータを全て置き換えます。</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
-    <value>マーキングデータの復元に失敗しました。</value>
+    <value>マーキングデータの復元に失敗！！</value>
   </data>
   <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
     <value>マーキングデータの復元に成功しました。</value>
@@ -305,7 +305,17 @@
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>ポイントを選択して、ラインを作成＆削除</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
+    <value>[NEW] Fillers. Space between lines can be filled in to indicate the areas prohibited for stopping or driving. 3 styles are available: Lines, Grid and Solid Fill. To create hold Alt.
+[NEW] Stop lines. It is now possible to connect two points on the same road to create a stop line. 2 available styles: "Solid" and "Dashed".
+[NEW] New line style: "Solid &amp; Dashed".
+[NEW] Lines and templates in the list now have icons that show style and colour.
+[NEW] Markings will be now copied when the road is copied with MoveIt (function will not become available until MoveIt mod is updated).
+[NEW] Added Copy and Paste options for line colour.
+[UPDATED] Upgrading the road to a different road with the same amount of lanes will now preserve the markings.
+[NEW] Line segment with the rule will be highlighted when hovering over the edit panel of that rule.
+[TRANSLATION] Added Simplified Chinese translation.</value>
+  </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>復元</value>
   </data>
@@ -375,8 +385,23 @@
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>ベタ塗り</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>[FIXED] Fix hold Alt, Ctrl and Shift buttons on Mac OS and Linux.
+[NEW] Added "Double solid" and "Double Dashed" stop line styles.
+[TRANSLATION] Added Italian and Portuguese translations.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
+    <value>[UPDATED] "What`s New" message will pop-up one time after an update and can be disabled in the Options menu.
+[TRANSLATION] Added the following translations:  Czech, Dutch, French, German, Japanese, Polish, Russian, and Spanish.
+[NEW] End Points can now be dragged from one to another by holding Ctrl.
+[NEW] Backups - In the Options menu the marking data on a map can now be backed up by dumping to a file and then importing it. This is necessary if you need to disable the mod, make a new save without the mod, and then need to recovery all markings.
+[NEW] There will now be a popup warning when deleting items.  This applies to lines, rules and templates. This can be disabled in the options.
+[NEW] New shortcut added for adding a new rule - Shift+Ctrl+A (remappable).
+[NEW] Quick Rule setup: After adding a new rule the interface for selecting its start and end points now opens automatically. You no longer need to click the "From" and "To" areas. This can be disabled in the options.
+[FIXED] Fixed issue with lines appearing to be broken or split - only occurred at highway and city road transitions.
+[UPDATED] Lines will no longer render when Info View overlays are shown.
+[UPDATED] Activation shortcut will now trigger when another tool opens while Marking Tool is already opened.</value>
+  </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>新しい塗り潰しを追加</value>
   </data>
@@ -553,10 +578,23 @@
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>テンプレート</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
+    <value>[NEW] Added new filler style - Chevron (&lt;&lt;&lt;&lt;&lt;).
+[NEW] Added crosswalks. Hold Shift to create them. Currently available Styles: "Existing crosswalk", "Zebra", "Double Zebra", "Parallel solid lines", "Parallel dashed lines", "Ladder", "Solid".
+[NEW] Added perpendicular lines. These lines don't have second point, they are generated as a straight line from one point. To create perpendicular line, pull the line in the opposite direction from the intersection.
+[NEW] Added the ability to copy/paste style of lines, fillers, and crosswalks.
+[NEW] Added ability to sort lines and templates by styles and types. You can modify and disable the function in the settings.
+[UPDATED] Updated template selection menu.
+[NEW] Added grouping of nearby points for easier selection. There are two types of grouping available: in a circle and in a line. You can pick the type or disable the function in the settings.
+[NEW] Added indication of conflicting rules.
+[NEW] Added the ability to center a solid line in the "Solid &amp; Dashed" style.
+[UPDATED] Changed how to begin editing a point. Now you need to click on the point while holding Ctrl.
+[NEW] Added the ability to select tool's language different from the game language.
+[TRANSLATION] Added Finnish translation.</value>
+  </data>
   <data name="Mod_LoadFailed" xml:space="preserve">
-    <value>マーキングが正常に描画されず、ロードエラーがありました。
-{0} ヶ所のノードやセグメントで、マーキングの描画に失敗しました。</value>
+    <value>マーキングが正常に描画されず、ロード時にエラーがありました。
+{0} ヶ所のノードやセグメントで、マーキングの描画に失敗！！</value>
   </data>
   <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
     <value>チェス盤の横断歩道</value>
@@ -748,7 +786,7 @@
 復元すると、既存のテンプレートを全て置き換えます。</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
-    <value>テンプレートの復元に失敗しました。</value>
+    <value>テンプレートの復元に失敗！！</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageSuccess" xml:space="preserve">
     <value>テンプレートの復元に成功しました。</value>
@@ -758,12 +796,6 @@
   </data>
   <data name="Tool_Continue" xml:space="preserve">
     <value>作業を継続</value>
-  </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>マーキングの貼り付けモードを終了</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>貼り付けモードを終了して、変更したマーキングを適用しますか？</value>
   </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>適用しない</value>
@@ -806,10 +838,10 @@
     <value>実線を中心</value>
   </data>
   <data name="StyleOption_No" xml:space="preserve">
-    <value>No</value>
+    <value>いいえ</value>
   </data>
   <data name="StyleOption_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>はい</value>
   </data>
   <data name="Tool_InfoStartCreateCrosswalk" xml:space="preserve">
     <value>{0} ＆ 押下で、横断歩道の作成</value>
@@ -820,9 +852,31 @@
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>{0} + ドラッグで、ポイントのオフセットを移動</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
+    <value>[WARNING] Default templates setting will be reset.
+[NEW] Added the ability to copy/paste marking from one exist intersection to another exist intersection.
+[UPDATED] Now the marking is not removed if you replace the road with a different number of points.
+[NEW] Added map editor support.
+[NEW] Added the ability to save marking data in intersection assets.
+[NEW] Added "Shark teeth" line and stop line style.
+[NEW] Added "Solid&amp;Dashed" stop line style.
+[NEW] Added "Chess board" crosswalk style.
+[NEW] Added the ability to set create modifiers for any styles.
+[NEW] Added the ability to duplicate templates.
+[NEW] Added the ability to have several templates with some name.
+[NEW] Added Alignment option to all double line styles.
+[NEW] Added the ability to start filler "Chevron" style from edges.
+[NEW] Added the ability to get delete warning only if will affect others items.
+[NEW] Added the ability to resize panel.
+[NEW] Added the ability to backup templates.
+[NEW] Added the ability to reset all points offset.
+[NEW] Added MoveIt mirroring support (wait MoveIt update).
+[UPDATED] Update filler "Chevron" style calculation algorithm.
+[FIXED] Fix filler vertex duplicates in create interface.
+[FIXED] Fix asym lines wrong invert value after load.</value>
+  </data>
   <data name="MessageBox_CantUndone" xml:space="preserve">
-    <value>この操作は元に戻せません。</value>
+    <value>この操作は元に戻せません！！</value>
   </data>
   <data name="LineStyle_Empty" xml:space="preserve">
     <value>空のスタイル</value>
@@ -845,7 +899,18 @@
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：このオプションは、ゲーム内の描画順序を変更します</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
+    <value>[NEW] Added the ability to draw marking under tracks. This can be disabled in the options. WARNING: This option change game objects render order.
+[NEW] Added modifier to create a empty line (without rules).
+[NEW] Added the ability to create all edge lines at once (line from road last point to next road first point).
+[NEW] Lines no longer climb on pavement. Work only for lines from the first or last road point.
+[NEW] Added "Quick crosswalk option setup" - automatically open border selection interface after create crosswalk like line's "Quick rule setup". This can be disabled in the options.
+[NEW] Added panel additional options menu.
+[FIXED] Fix left mouse click on selection node.
+[FIXED] Fix panel out of screen.
+[UPDATED] Hover overlay color changed from white to light blue to avoid merging with the markup.
+[UPDATED] Crosswalk line no longer creates unnecessary intersections. You may need to set crosswalk borders for already created crosswalks.</value>
+  </data>
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>カスタムアセットで保存</value>
   </data>
@@ -875,10 +940,10 @@
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>名無しのプリセット</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>プリセットの編集モードを終了</value>
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
+    <value>プリセットの適用モードを終了</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
     <value>プリセットを適用しますか？</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
@@ -943,7 +1008,7 @@
 復元すると、既存のプリセットを全て置き換えます。</value>
   </data>
   <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
-    <value>プリセットの復元に失敗しました。</value>
+    <value>プリセットの復元に失敗！！</value>
   </data>
   <data name="Settings_RestorePresetsMessageSuccess" xml:space="preserve">
     <value>プリセットの復元に成功しました。</value>
@@ -1025,7 +1090,18 @@
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>プリセット</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
+    <value>[NEW] Added the ability to save whole intersection marking as preset and after apply to any other intersection.
+[NEW] Added the ability to save templates and presets as asset and share it over Workshop.
+[UPDATED] Updated UI and improved UI performance. Reduced delay when switching tabs and selecting items.
+[UPDATED] Now templates values can be changes only in edit mode, what prevents accidental changes to values.
+[NEW] Added panel tips (can be disable in settings).
+[NEW] Added the ability to cut new line by crosswalks (can be disable in settings).
+[NEW] Added the ability to change color values with mouse wheel.
+[FIXED] Fix train and monorail roads.
+[FIXED] Fix and improve points group overlay.
+[TRANSLATION] Added English-UK translation.</value>
+  </data>
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>このタイプは追加ルールをサポートしません。</value>
   </data>
@@ -1035,10 +1111,13 @@
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>不明な作成者</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_5_1" xml:space="preserve">
+    <value>[UPDATED] Improve messages about load data errors.
+[FIXED] Fix and update localizes.</value>
+  </data>
   <data name="Mod_LoadFailedAll" xml:space="preserve">
-    <value>マーキングが正常に描画されず、ロードエラーがありました。
-全てのマーキングで描画に失敗しました。</value>
+    <value>マーキングが正常に描画されず、ロード時にエラーがありました。
+全てのマーキングで描画に失敗！！</value>
   </data>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>#{0} のセグメントを編集中</value>
@@ -1071,9 +1150,23 @@
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>終点側のラインやポイントを選択</value>
   </data>
-  
-  
-  
+  <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
+    <value>[UPDATED] Update Harmony dependence: resolving conflicts with others mods that use it</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
+    <value>[FIXED] Fixed a situation where markings could disappear from saving</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
+    <value>[NEW] Added the ability to make markings on segments.
+[NEW] Added filler 3D styles: "Pavement" and "Grass".
+[NEW] Added line 3D style: "Pavement".
+[NEW] Added the ability follow rails to filler styles "Stripes" and "Chevron".
+[NEW] Improve performance by added LOD (Level Of Detail) to markings. The LOD distance is set in the settings.
+[NEW] Added support taxiways.
+[FIXED] Fixed a conflict with other mods that could cause the tool button to not appear.
+[FIXED] Fixed a conflict with scroll panel and scroll wheel to change values.
+[UPDATED] Now there is no difference that you enter a dot or a comma in the properties value field.</value>
+  </data>
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>横断歩道の色数</value>
   </data>
@@ -1087,13 +1180,13 @@
     <value>クリップボードから追加</value>
   </data>
   <data name="LineEditor_LineAlignment" xml:space="preserve">
-    <value>拡大したポイントの位置合わせ</value>
+    <value>ポイントの位置合わせ</value>
   </data>
   <data name="PointEditor_SplitIntoTwo" xml:space="preserve">
-    <value>ポイントを拡大する</value>
+    <value>ポイントを両側に分割</value>
   </data>
   <data name="PointEditor_SplitOffset" xml:space="preserve">
-    <value>拡大する大きさ</value>
+    <value>分割する幅</value>
   </data>
   <data name="Settings_GroupPoints" xml:space="preserve">
     <value>ポイントをタブで折り畳む</value>
@@ -1131,19 +1224,52 @@
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>ライン・停止線の終点を選択</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_7" xml:space="preserve">
+    <value>[NEW] New node/segment selection mode. The selection area exactly follows the actual shapes of the nodes and segments that prevents difficulties with selecting too close together nodes.
+[NEW] Added automatic line creation when create filler. No more need add lines before create filler.
+[NEW] Added the ability to split point to two virtual points, set split shift and choose lines alignment. Now possible continue one double line with two separating single lines.
+[NEW] Added style modifier "From clipboard". Hold Ctrl+Alt to apply style from clipboard to new line, rule, crosswalk or filler.
+[NEW] Added the ability to apply segment marking between two intersections and apply to whole street.
+[NEW] Added the ability set second color for "Zebra" and "Double zebra" crosswalk styles.
+[UPDATED] Changed press escape key behavior. Now it's like default game tool behavior. If something is being edited, then press escape will suggest an exit, rather than closing the tool with the loss of changes.
+[NEW] Added point grouping by road in list (can be disable in settings).
+[FIXED] Fix line connector overlay position on elevated roads.
+[FIXED] Fix 3D filler styles calculation.
+[FIXED] Fix error in copy/paste marking mode that made it impossible to use the tool.
+[FIXED] Fix reset panel scroll position when resize panel.
+[UPDATED] Crosswalk mode no more activate by hold shift when change value by scroll wheel.
+[NEW] Set panel default size by double click on panel resizer.</value>
+  </data>
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
-    <value>拡大したポイント(終点)の位置合わせ</value>
+    <value>ポイントの終点を位置合わせ</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
-    <value>拡大したポイント(始点)の位置合わせ</value>
+    <value>ポイントの始点を位置合わせ</value>
   </data>
-  
-  
-  
-  
+  <data name="Mod_WhatsNewMessage1_7_1" xml:space="preserve">
+    <value>[NEW] Added the ability to set alignment for stop lines.
+[NEW] Additional templates sort: 
+---1 - Default templates sorted by type
+---2 - Other templates sorted by type then by name
+---3 - Other author templates sort by author name then by type then by name
+[FIXED] Fix load segment presets.
+[FIXED] Fix default panel size.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
+    <value>[FIXED] Fix 3D fillers height outside available tiles.
+[FIXED] Fix creating button duplicates.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_3" xml:space="preserve">
+    <value>[NEW] Added missing dependencies checker.
+[FIXED] Fix 3D fillers height on nodes outside available tiles.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_7_4" xml:space="preserve">
+    <value>[FIXED] Fixed save and load presets' screenshot.
+[FIXED] Fixed bug when nodes with marking after loading had a wrong shape.
+[TRANSLATION] Added Indonesian translation.</value>
+  </data>
   <data name="Settings_HideStreetName" xml:space="preserve">
-    <value>ツール使用時に道路名を非表示</value>
+    <value>ツール使用時は道路名を非表示</value>
   </data>
   <data name="LineStyle_StopPavement" xml:space="preserve">
     <value>舗装(3Dスタイル)</value>
@@ -1169,12 +1295,36 @@
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>縁石の幅(ライン側)</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
+    <value>[NEW] Added selection step over like in MoveIt. Press Ctrl+Space to step over (you can rebind in mod options).
+[NEW] Added curbs to filler 3D styles.
+[NEW] Added rounded corners to filler 3D styles.
+[NEW] Added offset from lines to filler 3D styles.
+[NEW] Added filler styles: Gravel, Ruined, Cliff.
+[NEW] Added pavement stop line style.
+[NEW] Added option "Follow guide lines" for solid filler, so now possible make solid fillers on sloped segments.
+[NEW] Added the ability to click with Ctrl to select line or crosswalk instend of delete its.
+[NEW] Added warning for Linux users about missing libraries.
+[NEW] Added the ability to change style by scroll wheel.
+[NEW] Added the ability to hide street names while using tool. Can be disabled in mod options.
+[NEW] Added new icon for UUI button.
+[FIXED] Fixed select template button icon.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_8_1" xml:space="preserve">
+    <value>[UPDATED] Buttons on paste mode moved ouside of circle.
+[TRANSLATION] Added Korean translation.</value>
+  </data>
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>破棄</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_8_2" xml:space="preserve">
+    <value>[NEW] Added discard button after create template/preset.
+[NEW] Added colored text to tooltips.
+[NEW] Added the ability to hide original mod button in toolbar If you use UUI mod.
+[FIXED] Fixed not removed items from list when this items were removed.
+[FIXED] Fixed line grouping.
+[TRANSLATION] Added Turkish translation.</value>
+  </data>
   <data name="Settings_Sortings" xml:space="preserve">
     <value>ソートの方法</value>
   </data>
@@ -1227,7 +1377,7 @@
     <value>プリセットをタブで折り畳む</value>
   </data>
   <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
-    <value>寸詰まりの一致</value>
+    <value>ほとんど一致</value>
   </data>
   <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
     <value>完全に一致</value>
@@ -1250,7 +1400,19 @@
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>道路の名前</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_9" xml:space="preserve">
+    <value>[NEW] Added the ability to save points offset values for each roads.
+[NEW] Added gap option to zebra and double zebra crosswalk styles. It allows to set different space each N dashes.
+[NEW] Added intersection points to lines from one splited point with different alignment.
+[NEW] Added settings of sorting templates, presets and applying list.
+[NEW] Added template grouping by fit (Perfect/Close/Possible/Poor).
+[NEW] Added illumination to marking while editing at night.
+[NEW] Added illumination to cursor like default game tool.
+[NEW] Added option for placing markings under level crossings. Can be disabled in mod settings.
+[NEW] Added third (middle) point to taxiways/runways.
+[FIXED] Fixed error while saving template as asset.
+[FIXED] Fixed crosswalks calculation error.</value>
+  </data>
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Prop</value>
   </data>
@@ -1327,7 +1489,7 @@
     <value>ツリーのアセット</value>
   </data>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
-    <value>何も見つかりませんでした</value>
+    <value>何も見つかりません</value>
   </data>
   <data name="Settings_AutoApplyPasting" xml:space="preserve">
     <value>ソースとターゲットが一致する場合は、マーキングの貼り付けを自動的に適用</value>
@@ -1666,19 +1828,36 @@
     <value>リンクしない</value>
   </data>
   <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
-    <value>[NEW] - Added a new line style: Text. It allows to write custom text on road and set any font installed in the system.
-[NEW] - Added the ability to link preset to network asset. It will be auto applied when road is built.
-[NEW] - Added a new line type: Lane. It simplifies the placement props/trees/network/text that should be placed in the middle of lane.
-[New] - Added a new line style: Zigzag.
-[NEW] - Added the ability to save different markings for different types of road elevations (slope, tunnel) in asset editor.
-[NEW] - Auto creation of edge lines of lane. Can be disabled in the mod settings.
-[NEW] - Added distribution option to props/trees. it allows to make prop/tree fixed at the ends of the line and set dynamic space length.
-[NEW] - Added the ability to invert the value of network shift.
-[NEW] - Added shortcuts for the paste marking mode.
-[FIXED] - Lines and fillers follows sloped segment as much as possible. It may still not be perfect in some cases, but much better then before.
-[FIXED] - Pavement line follows filler properly.
-[FIXED] - Fixed when asym styles values were pasted with wrong invertation.
-[FIXED] - Networks/props/trees that were added by IMT are visible on preset screenshot.
-[FIXED] - Fixed that fillers were not updated after selecting filler guides.</value>
+    <value>[NEW] Added a new line style: Text. It allows to write custom text on road and set any font installed in the system.
+[NEW] Added the ability to link preset to network asset. It will be auto applied when road is built.
+[NEW] Added a new line type: Lane. It simplifies the placement props/trees/network/text that should be placed in the middle of lane.
+[New] Added a new line style: Zigzag.
+[NEW] Added the ability to save different markings for different types of road elevations (slope, tunnel) in asset editor.
+[NEW] Auto creation of edge lines of lane. Can be disabled in the mod settings.
+[NEW] Added distribution option to props/trees. it allows to make prop/tree fixed at the ends of the line and set dynamic space length.
+[NEW] Added the ability to invert the value of network shift.
+[NEW] Added shortcuts for the paste marking mode.
+[UPDATED] It is not needed to hold Ctrl to drag point anymore. Old behavior (with holding Ctrl) can be enabled in the mod settings.
+[FIXED] Lines and fillers follows sloped segment as much as possible. It may still not be perfect in some cases, but much better then before.
+[FIXED] Pavement line follows filler properly.
+[FIXED] Fixed when asym styles values were pasted with wrong invertation.
+[FIXED] Networks/props/trees that were added by IMT are visible on preset screenshot.
+[FIXED] Fixed that fillers were not updated after selecting filler guides.</value>
+  </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>このアセットの全セグメントにプリセットを適用</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>デフォルトに戻す</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>アセット名: {0} の全セグメントにプリセットを適用しますか？
+セグメントの数が多いと、完了まで時間が掛かる場合があります。</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>マーキングの貼り付けモードを終了</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>マーキングを適用しますか？</value>
   </data>
 </root>

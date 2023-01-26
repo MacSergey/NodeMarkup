@@ -305,7 +305,6 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Valitse piste luodaksesi tai poistaaksesi viivan</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Palauta</value>
   </data>
@@ -375,8 +374,6 @@ Napauta muokataksesi merkintöjä</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Kiinteä</value>
   </data>
-  
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Lisää uusi sulkualue</value>
   </data>
@@ -554,7 +551,6 @@ poistaaksesi suojatien</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>malli</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Tallennnuksen avaamisessa tapahtui virheitä.
 {0}:n risteyksen merkintöjen lataus epäonnistui.</value>
@@ -760,12 +756,6 @@ Palautetut mallit korvaavat kaikki olemassa olevat mallit.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Jatka</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Poistu editorista</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Haluatko poistua editorista ja asettaa muutokset?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Älä aseta</value>
   </data>
@@ -821,7 +811,6 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Raahaa {0} pohjassa siirtääksesi pistettä</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Tätä toimintoa ei voi kumota.</value>
   </data>
@@ -846,7 +835,6 @@ Haluatko asettaa merkinnät manuaalisest?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Varoitus: Tämä asetus muuttaa pelin piirtojärjestyksen</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Tallenna esineenä</value>
   </data>
@@ -875,12 +863,6 @@ Napauta {0} valikon yläreunassa luodaksesi esiasetus.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Uusi esiasetus</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Lopeta esiasetuksen asettaminen</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Haluatko asettaa esiasetuksen?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Tekijä</value>
@@ -1022,7 +1004,6 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>esiasetuksen</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Tällainen viiva ei tue sääntöjä</value>
   </data>
@@ -1032,7 +1013,6 @@ Haluatko varmasti, että sama nimi on käytössä useammalla esiasetuksella?</va
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Tuntematon tekijä</value>
   </data>
-  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Tallennnuksen avaamisessa tapahtui virheitä.
 Kaikkien risteyksien merkintöjen lataus epäonnistui.</value>
@@ -1068,8 +1048,6 @@ Napauta muokataksesi merkintöjä</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Valitse ohjausviivan toinen piste</value>
   </data>
-  
-  
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
     <value>[NEW] Lisätty mahdollisuus tehdä merkintöjä jaokkeisiin.
 [NEW] Lisätty sulkualueiden 3D tyylit: "Päällyste" ja "Ruoho".
@@ -1138,17 +1116,12 @@ Napauta muokataksesi merkintöjä</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Valitse viivan tai pysäytysviivan päätepiste</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Viivan lopun kohdistus</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Viivan alun kohdistus</value>
   </data>
-  
-  
-  
-  
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Piilota katujen nimet, kun työkalu on käytössä</value>
   </data>
@@ -1176,12 +1149,9 @@ Napauta muokataksesi merkintöjä</value>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Reunakiven koko</value>
   </data>
-  
-  
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Hylkää</value>
   </data>
-  
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Järjestely</value>
   </data>
@@ -1257,131 +1227,4 @@ Napauta muokataksesi merkintöjä</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Tien nimi</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 </root>

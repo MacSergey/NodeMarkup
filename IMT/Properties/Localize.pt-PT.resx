@@ -385,8 +385,6 @@ Clique para editar marcações</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Sólida</value>
   </data>
-  
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Adicionar novo preenchimento</value>
   </data>
@@ -565,7 +563,6 @@ Verifique os pontos "De" e "Para" de outras regras.</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>modelo</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>O carregamento foi completado com erros.
 O carregamento de {0} marcações falhou.</value>
@@ -771,12 +768,6 @@ Os modelos recuperados vão substituir todos os modelos existentes.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Continuar</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Sair do modo de colagem</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Quer sair do modo de colagem e aplicar as mudanças?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Não aplicar</value>
   </data>
@@ -832,7 +823,6 @@ Quer aplicar as marcações manualmente?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Arraste com {0} para mover o ponto</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Esta ação não pode ser desfeita.</value>
   </data>
@@ -857,7 +847,6 @@ Quer aplicar as marcações manualmente?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Atenção: esta opção modifica a ordem de renderização de objetos do jogo</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Guardar asset</value>
   </data>
@@ -885,12 +874,6 @@ Para criar uma predefinição, clique «{0}» no cabeçalho.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nova predefinição</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Sair do modo de aplicar predefinições</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Quer aplicar a predefinição?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autor</value>
@@ -1032,7 +1015,6 @@ Tem a certeza que pretende ter várias predefinições com o mesmo nome?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>predefinição</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Este tipo de linha não suporta regras</value>
   </data>
@@ -1081,9 +1063,6 @@ Clique para editar marcações</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selecione o segundo ponto do carril</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Quantidade de cores</value>
   </data>
@@ -1141,17 +1120,12 @@ Clique para editar marcações</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Selecione um ponto próprio para uma linha normal ou de paragem</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Alinhamento do fim da linha</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Alinhamento do inicio da linha</value>
   </data>
-  
-  
-  
-  
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Ocultar nomes de ruas enquanto a ferramenta está em uso</value>
   </data>
@@ -1179,12 +1153,9 @@ Clique para editar marcações</value>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Tamanho do lancil</value>
   </data>
-  
-  
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Descartar</value>
   </data>
-  
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Ordenações</value>
   </data>
@@ -1233,97 +1204,51 @@ Clique para editar marcações</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Jogabilidade</value>
   </data>
-  
-  
-  
   <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
     <value>Ajuste pobre</value>
   </data>
   <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
     <value>Ajuste possível</value>
   </data>
-  
-  
   <data name="PointEditor_SaveOffsets" xml:space="preserve">
     <value>Guardar deslocamentos</value>
   </data>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Nome da rua</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <data name="StyleOption_ColorCustom" xml:space="preserve">
     <value>Personalizado</value>
   </data>
   <data name="StyleOption_ColorRandom" xml:space="preserve">
     <value>Aleatório</value>
   </data>
-  
-  
   <data name="StyleOption_SharkToothAngle" xml:space="preserve">
     <value>Ângulo</value>
   </data>
-  
-  
-  
-  
   <data name="StyleOption_AssetNotSet" xml:space="preserve">
     <value>Não definido</value>
   </data>
-  
-  
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>Sem resultados</value>
   </data>
-  
   <data name="StyleOption_ObjectProbability" xml:space="preserve">
     <value>Probabilidade</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Declive</value>
   </data>
   <data name="StyleOption_Tilt" xml:space="preserve">
     <value>Inclinação</value>
   </data>
-  
-  
-  
   <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
     <value>Pressione {0} para entrar e {1} para sair</value>
   </data>
   <data name="Settings_ToggleUndergroundHold" xml:space="preserve">
     <value>Segure {0}</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
   <data name="StyleOption_ObjectAuto" xml:space="preserve">
     <value>Auto</value>
   </data>
-  
   <data name="Settings_Render" xml:space="preserve">
     <value>Renderizar</value>
   </data>
@@ -1333,80 +1258,10 @@ Clique para editar marcações</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Mais opções</value>
   </data>
-  
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Cor principal</value>
   </data>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Cor secundaria</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 </root>

@@ -305,7 +305,17 @@
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>点选起始点来创建/擦除线段</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
+    <value>[NEW] 填充图案。线段与线段之间的空白区域可以填充图案了，从而表示禁止停车或可驾驶的区域。有3种样式可供选择: 线段，网格和固体填充。按住Alt可以快速创建填充图案。
+[NEW] 车辆停止线。现在可以将同一条道路上的两个点连接起来，从而创建一条车辆停止线。有2种可用的样式:“实线”和“虚线”。
+[NEW] 新的线条样式:“实线&amp;虚线”。
+[NEW] 列表中的线和模板现在有显示样式和颜色的图标。
+[NEW] 道路被Move it模组复制时，道路标记将被同步复制（该功能需等到Move It 模组更新后才能使用)。
+[NEW] 新增了线条颜色的复制和粘贴选项。
+[UPDATED] 当道路被升级到不同的道路时，若两者拥有相同数量的车道，道路标记将被保留。
+[NEW] 当鼠标放在编辑面板上的某一规则（标记）时，带有该规则的线段将以高亮显示。
+[TRANSLATION] 新增了简体中文的翻译</value>
+  </data>
   <data name="Settings_Restore" xml:space="preserve">
     <value>恢复</value>
   </data>
@@ -375,8 +385,23 @@
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>实线</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>[FIXED] 修复了 Mac OS 和 Linux 操作系统上按住 Alt、Ctrl 和 Shift 的问题。
+[NEW] 新增了 “双实线” 和 “双虚线” 停止线样式。
+[TRANSLATION] 添加了意大利语和葡萄牙语翻译。</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
+    <value>[UPDATED] ”更新提示“消息在更新后只会弹出一次，并且可以在模组选项中关闭。
+[TRANSLATION] 添加以下语言的翻译：捷克语、荷兰语、法语、德语、日语、波兰语、俄语和西班牙语。
+[NEW] 现在可以按住 Ctrl，来把末端端点从一处拖动到另一处。
+[NEW] 备份 - 在模组选项中，地图的标线数据现在可以通过导出到文件然后再导入，来进行备份。如果您要禁用 IMT 模组，在禁用的情况下创建新存档，并恢复所有标记，备份是非常必要的。
+[NEW] 现在当删除线段、规则和模板时，会弹出一个警告。弹窗警告可以在模组选项中关闭。
+[NEW] 现在添加新规则时，可以使用新快捷键 - Shift+Ctrl+A（快捷键可以在选项中改变）
+[NEW] 快速初始化新规则：添加新规则后，将自动打开选择起点和终点的界面。您将不再需要点击“起点”和“终点”按钮来设置。快速初始化新规则功能，可以在模组选项中禁用。
+[FIXED] 修复了线段出现断开或分裂的问题 - 此问题仅发生在高速公路和城市道路的交接处
+[UPDATED] 当显示信息图层时，不再渲染线段。
+[UPDATED] 在 IMT 面板打开时，如果打开另一个工具，激活快捷键会立刻触发。</value>
+  </data>
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>创建新填充图案</value>
   </data>
@@ -554,7 +579,6 @@
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>模版</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>导入完毕，但出现了以下错误：
  {0} 个交叉口的地标线导入失败</value>
@@ -760,12 +784,6 @@
   <data name="Tool_Continue" xml:space="preserve">
     <value>继续</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>退出粘贴模式</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>确定要退出粘贴模式并应用粘贴吗？</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>不应用</value>
   </data>
@@ -821,7 +839,29 @@
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>按住{0}拖动来移动端点</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
+    <value>[WARNING] 默认模板设定会被重置。
+[NEW] 新增从一个现有路口复制/粘贴标记到另一个现有路口的功能。
+[UPDATED] 现在当您使用一条端点数量不同的道路替换当前道路时，已有标线不会被删除。
+[NEW] 添加对地图编辑器内使用的支持。
+[NEW] 新增在交叉口 (Intersection) 资产保存标线数据的功能。
+[NEW] 新增 ”三角式“ 线段和停止线样式。
+[NEW] 新增 ”虚实线“ 停止线样式。
+[NEW] 新增 ”棋盘格“ 人行横道样式。
+[NEW] 新增为任何样式设置 ”创建修饰键“ 的功能。
+[NEW] 新增复制模板的功能。
+[NEW] 新增在创建多个模板时，使用相同名称的功能。
+[NEW] 为所有双线的线段样式新增了对齐选项。
+[NEW] 新增从边缘开始创建“锯齿形样式”的填充图案的功能。
+[NEW] 新增仅当影响到其他标线时弹出删除警告的功能。
+[NEW] 新增改变 IMT 面板大小的功能。
+[NEW] 新增备份模板的功能。
+[NEW] 新增重置所有端点偏移的功能。
+[NEW] 新增 Move It 镜像功能的支持（等待 Move It 更新）
+[UPDATED] 更新“锯齿形样式”的算法。
+[FIXED] 修复了创建填充图案界面中，填充图案顶点的重复问题。
+[FIXED] 修复了载入存档后，非对称线段反转值错误的问题。</value>
+  </data>
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>此操作不可撤销。</value>
   </data>
@@ -846,7 +886,18 @@
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>警告：此设置会改变游戏渲染顺序</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_4_1" xml:space="preserve">
+    <value>[NEW] 新增在轨道下方绘制标线的功能。此功能可以在模组选项中禁用。警告：此功能会改变游戏渲染顺序。
+[NEW] 添加创建空线段（没有规则的线段）的修饰键
+[NEW] 新增一次性创建所有边缘线的功能（边缘线是从一条道路的最后一个端点，到另一条路第一个端点的线段）
+[NEW] 人行道上，从第一个或最后一个端点开始的的线段，将不再倾斜向上。
+[NEW] 新增“快速设置人行横道”功能 - 创建人行横道后，类似于线段的“快速初始化新规则”，会自动打开选择边界的界面。此功能可以在模组选项中关闭。
+[NEW] 新增了模组面板的附加选项菜单。
+[FIXED] 修复了点击左键选择节点的问题。
+[FIXED] 修复了面板超出屏幕的问题。
+[UPDATED] 悬停渲染层的颜色从白色更改为浅蓝色，以防止与标线混淆。
+[UPDATED] 人行横道线段将不再创建非必要的交叉点，因此您可能需要为已创建的人行横道设置边界。</value>
+  </data>
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>保存为资产</value>
   </data>
@@ -876,10 +927,10 @@
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>新预设</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>退出预设应用模式</value>
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
+    <value>退出应用预设模式</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
     <value>要应用预设吗？</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
@@ -1022,7 +1073,18 @@
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>预设​​​​</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_5" xml:space="preserve">
+    <value>[NEW] 新增把整个路口标线保存为预设的功能，之后可以将预设应用到另一个路口。
+[NEW] 新增把模板和预设保存为资产，并上传到创意工坊的功能。
+[UPDATED] 更新了 UI 并提升了 UI 的性能，减少了切换选项卡和选择项目时的卡顿。
+[UPDATED] 现在模板的数值只能在编辑模式中修改，以防止数值被意外更改。
+[NEW] 新增模组面板提示（可以在模组选项中禁用）。
+[NEW] 新增通过人行横道切割线段的功能（可以在模组选项中禁用）。
+[NEW] 新增通过滚轮改变颜色数值的功能。
+[FIXED] 修复了火车和单轨轨道道路的问题。
+[FIXED] 修复并改进了端点组的渲染覆盖层。
+[TRANSLATION] 添加了英式英语的翻译。</value>
+  </data>
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>此类标线不支持规则</value>
   </data>
@@ -1071,8 +1133,12 @@
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>选择边线的第二个端点</value>
   </data>
-  
-  
+  <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
+    <value>[UPDATED] 更新了 Harmony 依赖库：解决了与其他使用 Harmony 的模组之间的冲突</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_5_3" xml:space="preserve">
+    <value>[FIXED] 修复了标线可能从存档中消失的问题。</value>
+  </data>
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
     <value>[NEW] 添加了在道路节段上创建标线的功能
 [NEW] 添加了3D填充图案：路肩及草地
@@ -1163,7 +1229,15 @@
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>线段起点对齐</value>
   </data>
-  
+  <data name="Mod_WhatsNewMessage1_7_1" xml:space="preserve">
+    <value>[NEW] 新增对齐停止线的功能。
+[NEW] 新增模板排序方式：
+---1 - 默认状态下模板按类型排序
+---2 - 其他模板先按类型、再按名字排序
+---3 - 其他作者模板依次按作者名字、类型、模板名字排序
+[FIXED] 修复了段落预设加载的问题。
+[FIXED] 修复模组面板默认大小的问题。</value>
+  </data>
   <data name="Mod_WhatsNewMessage1_7_2" xml:space="preserve">
     <value>[FIXED] 修复了在可用地图区域格块外的3D填充高度
 [FIXED] 修复了按钮重复的问题</value>
@@ -1309,7 +1383,6 @@
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>道路名称</value>
   </data>
-  
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>摆件</value>
   </data>
@@ -1740,5 +1813,21 @@
 [FIXED] 修复不对称的样式值粘贴时的反转错误。
 [FIXED] 被 IMT 添加的装饰性网络/摆件/树木，会显示在预设的预览图中。
 [FIXED] 修复设定填充图案边界后，填充图案没有更新的问题。</value>
+  </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>对这个资产的所有路段应用此预设</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>重置为默认值</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>你想要对资产 "{0}" 的所有路段应用预设吗？
+如果有很多路段，可能将需要一段时间。</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>退出粘贴标线模式</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>要应用标线吗？</value>
   </data>
 </root>

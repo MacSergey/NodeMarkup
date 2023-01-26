@@ -306,7 +306,6 @@ Klik om de markering te wijzigen</value>
     <value>Selecteer een punt om
 een lijn te creëren of te verwijderen</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Herstel</value>
   </data>
@@ -376,8 +375,6 @@ een lijn te creëren of te verwijderen</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Ononderbroken</value>
   </data>
-  
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Nieuwe opvulling toevoegen</value>
   </data>
@@ -392,9 +389,6 @@ een lijn te creëren of te verwijderen</value>
   </data>
   <data name="HeaderPanel_StylePaste" xml:space="preserve">
     <value>Plakken</value>
-  </data>
-  <data name="FillerStyle_Chevron" xml:space="preserve">
-    <value>Chevron</value>
   </data>
   <data name="StyleOption_AngleBetween" xml:space="preserve">
     <value>Binnenhoek</value>
@@ -515,9 +509,6 @@ Controleer de "Van" en "Naar" punten van andere regels.</value>
   <data name="LineRule_RightBorder" xml:space="preserve">
     <value>Zebrapad rand rechts</value>
   </data>
-  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
-    <value>Reset</value>
-  </data>
   <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
     <value>Selecteer eindpunt</value>
   </data>
@@ -555,7 +546,6 @@ een zebrapad te creëren of te verwijderen</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>sjabloon</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Er zijn fouten opgetreden tijdens het laden.
 Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
@@ -645,7 +635,7 @@ Het is voor {0} kruispunten mislukt om markeringen te laden.</value>
     <value>Regels - {0}</value>
   </data>
   <data name="Settings_BackupTab" xml:space="preserve">
-    <value>Backup</value>
+    <value>Back-up</value>
   </data>
   <data name="Settings_DisplayAndUsage" xml:space="preserve">
     <value>Weergave en gebruik</value>
@@ -761,12 +751,6 @@ De herstelde sjablonen zullen alle bestaande sjablonen vervangen.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Doorgaan</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Uit plakmodus gaan</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Wil je de plakmodus verlaten en de kopie toepassen?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Niet toepassen</value>
   </data>
@@ -775,9 +759,6 @@ De herstelde sjablonen zullen alle bestaande sjablonen vervangen.</value>
   </data>
   <data name="Tool_infoPasteNotApply" xml:space="preserve">
     <value>Niet toepassen</value>
-  </data>
-  <data name="Tool_InfoPasteReset" xml:space="preserve">
-    <value>Reset</value>
   </data>
   <data name="Panel_EditMarking" xml:space="preserve">
     <value>Wijzig markeringsvolgorde</value>
@@ -822,7 +803,6 @@ Wil je de markering handmatig toepassen?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Houd {0} ingedrukt om het punt te verslepen</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Deze actie kan niet ongedaan worden gemaakt.</value>
   </data>
@@ -847,7 +827,6 @@ Wil je de markering handmatig toepassen?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Waarschuwing: Deze optie veranderd de volgorde waarin objecten gerenderd worden</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Opslaan als asset</value>
   </data>
@@ -858,9 +837,6 @@ door {1}</value>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
     <value>De lijst met presets is leeg.
 Klik bovenaan in het paneel op «{0}» om een preset te maken.</value>
-  </data>
-  <data name="PresetEditor_Presets" xml:space="preserve">
-    <value>Presets</value>
   </data>
   <data name="Panel_SaveAsPreset" xml:space="preserve">
     <value>Opslaan als preset</value>
@@ -876,12 +852,6 @@ Klik bovenaan in het paneel op «{0}» om een preset te maken.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nieuwe preset</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Preset toepas modus verlaten</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Wil je een preset toepassen?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Auteur</value>
@@ -915,9 +885,6 @@ Klik bovenaan in het paneel op «{0}» om een preset te maken.</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
     <value>Lijnen bij dit zebrapad afsnijden</value>
-  </data>
-  <data name="Settings_BackupPresets" xml:space="preserve">
-    <value>Backup presets</value>
   </data>
   <data name="Settings_DeletePresetsButton" xml:space="preserve">
     <value>Verwijder alle presets</value>
@@ -1017,13 +984,6 @@ Weet je zeker dat je meerdere presets wil hebben met dezelfde naam?</value>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
     <value>Dit sjabloon is een asset.</value>
   </data>
-  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>preset</value>
-  </data>
-  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
-    <value>preset</value>
-  </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Dit lijntype heeft geen ondersteuning voor regels</value>
   </data>
@@ -1033,7 +993,6 @@ Weet je zeker dat je meerdere presets wil hebben met dezelfde naam?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Onbekende auteur</value>
   </data>
-  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Er zijn fouten opgetreden tijdens het laden.
 Het laden van de markeringen is voor alle kruispunten mislukt.</value>
@@ -1069,9 +1028,6 @@ Klik om de markering te wijzigen</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selecteer tweede punt van de hulplijn</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Aantal kleuren</value>
   </data>
@@ -1129,17 +1085,12 @@ Klik om de markering te wijzigen</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Selecteer een eindpunt voor een normale lijn of stoplijn</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Uitlijning lijn einde</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Uitlijning lijn start</value>
   </data>
-  
-  
-  
-  
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Verberg straatnamen tijdens het gebruik van IMT</value>
   </data>
@@ -1167,12 +1118,9 @@ Klik om de markering te wijzigen</value>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Stoeprand hoogte</value>
   </data>
-  
-  
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Weggooien</value>
   </data>
-  
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Sorteringen</value>
   </data>
@@ -1218,9 +1166,6 @@ Klik om de markering te wijzigen</value>
   <data name="Settings_IlluminationIntensity" xml:space="preserve">
     <value>Verlichtingssterkte</value>
   </data>
-  <data name="Settings_Gameplay" xml:space="preserve">
-    <value>Gameplay</value>
-  </data>
   <data name="Settings_GroupPresets" xml:space="preserve">
     <value>Voorinstellingen groeperen</value>
   </data>
@@ -1248,10 +1193,6 @@ Klik om de markering te wijzigen</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Straatnaam</value>
   </data>
-  
-  <data name="LineStyle_Prop" xml:space="preserve">
-    <value>Prop</value>
-  </data>
   <data name="LineStyle_Tree" xml:space="preserve">
     <value>Boom</value>
   </data>
@@ -1260,9 +1201,6 @@ Klik om de markering te wijzigen</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Schaal</value>
-  </data>
-  <data name="StyleOption_ObjectShift" xml:space="preserve">
-    <value>Shift</value>
   </data>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>Stap</value>

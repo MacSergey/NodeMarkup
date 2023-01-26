@@ -305,7 +305,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Wybierz punkt aby utworzyć lub usunąć linię</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Przywróć</value>
   </data>
@@ -375,8 +374,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Wypełnienie</value>
   </data>
-  
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Dodaj nowe wypełnienie</value>
   </data>
@@ -554,7 +551,6 @@ utworzyć lub usunąć przejście dla pieszych</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>szablon</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Wystąpiły błędy podczas ładowania danych.
 Nie udało się załadować oznaczeń dla {0} skrzyżowań.</value>
@@ -760,12 +756,6 @@ Wszystkie istniejące szablony zostaną zastąpione.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Kontynuuj</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Wyjdź z trybu wklejania</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Czy chcesz zastosować zmiany przed wyjściem z trybu wklejania?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Nie wprowadzaj zmian</value>
   </data>
@@ -821,7 +811,6 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Przeciągnij, trzymając {0}, aby przesunąć ten punkt</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Nie będzie można cofnąć tej operacji.</value>
   </data>
@@ -846,7 +835,6 @@ Czy chcesz zastosować oznaczenia manualnie?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Ostrzeżenie: Ta opcja zmiena kolejność renderowania obiektów w grze</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Zapisz jako zasób</value>
   </data>
@@ -876,10 +864,10 @@ Aby, utworzyć preset, kliknij «{0}» na nagłówku panelu.</value>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nowy preset</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
     <value>Opuść tryb aplikacji presetu</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
     <value>Czy chcesz zastosować preset?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
@@ -1022,7 +1010,6 @@ Czy jesteś pewien, że chcesz użyć jednej nazwy dla kilku presetów?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>preset</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Ten typ linii nie obsługuje reguł</value>
   </data>
@@ -1071,9 +1058,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Wybierz drugi punkt linii pomocniczej</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Liczba kolorów</value>
   </data>
@@ -1131,17 +1115,12 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Wybierz punkt końcowy dla linii zwykłej lub zatrzymania</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Wyrównanie końca linii</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Wyrównanie początku linii</value>
   </data>
-  
-  
-  
-  
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Ukryj nazwy ulic podczas używania narzędzia</value>
   </data>
@@ -1169,12 +1148,9 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Wielkość krawężnika</value>
   </data>
-  
-  
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Odrzuć</value>
   </data>
-  
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Sortowania</value>
   </data>
@@ -1250,7 +1226,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Nazwa drogi</value>
   </data>
-  
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Rekwizyt</value>
   </data>
@@ -1439,7 +1414,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Drugi kolor</value>
   </data>
-  
   <data name="NumberFormat_Period" xml:space="preserve">
     <value>Każdy {0}</value>
   </data>
@@ -1449,26 +1423,30 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
     <value>Zwykły</value>
   </data>
-  
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Mediana</value>
+  </data>
   <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
     <value>Zwykły</value>
   </data>
-  
-  
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Mediana</value>
+  </data>
   <data name="StyleOption_Length" xml:space="preserve">
     <value>Długość</value>
   </data>
   <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
     <value>Linia</value>
   </data>
-  
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Mediana</value>
+  </data>
   <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
     <value>Po</value>
   </data>
   <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
     <value>Przed</value>
   </data>
-  
   <data name="StyleOption_Rails" xml:space="preserve">
     <value>Linie pomocnicze</value>
   </data>
@@ -1478,7 +1456,6 @@ Kliknij aby edytować oznaczenia</value>
   <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
     <value>Wysokość</value>
   </data>
-  
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>Trójkąt</value>
   </data>
@@ -1542,34 +1519,16 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
     <value>Twórz automatycznie linie pasów ruchu</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Lewo</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Prawo</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Przesunięcie</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Wyrównanie</value>
+  </data>
 </root>

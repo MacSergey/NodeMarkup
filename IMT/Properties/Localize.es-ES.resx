@@ -305,7 +305,6 @@ Haga clic para editar las marcas</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Seleccione el punto para crear o eliminar la línea</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Recuperar</value>
   </data>
@@ -375,8 +374,6 @@ Haga clic para editar las marcas</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Continua</value>
   </data>
-  
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Añadir nuevo relleno</value>
   </data>
@@ -554,7 +551,6 @@ crear o eliminar el paso de peatones</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>plantilla</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>La carga se completó con errores. Fallo al cargar las marcas para {0} intersecciones.</value>
   </data>
@@ -759,12 +755,6 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
   <data name="Tool_Continue" xml:space="preserve">
     <value>Continuar</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Salir del modo pegar</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>¿Quieres salir del modo pegar y aplicar un cambio?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>No aplicar</value>
   </data>
@@ -820,7 +810,6 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Mantener presionada la tecla {0} y arrastre un punto para cambiar desplazamiento</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>No se puede deshacer esta acción.</value>
   </data>
@@ -845,7 +834,6 @@ Las plantillas restauradas reemplazarán todas las plantillas existentes.</value
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Cuidado: esta opción cambia el orden de procesamiento de los objetos del juego</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Guardar como recurso</value>
   </data>
@@ -874,12 +862,6 @@ Para crear un preajuste, haga clic en «{0}» en la cabecera del panel.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nuevo preajuste</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Salir del modo de aplicación de preajustes</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>¿Quiere aplicar un preajuste?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autor</value>
@@ -1021,7 +1003,6 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>preajuste</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Este tipo de línea no apoya reglas</value>
   </data>
@@ -1069,9 +1050,6 @@ Haga clic para editar las marcas</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Seleccione el segundo punto de la pauta</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Numero de colores</value>
   </data>
@@ -1129,17 +1107,12 @@ Haga clic para editar las marcas</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Seleccione punto final para línea normal o transversal</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Alineamento de extremo de línea</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Alineamento de inicio de línea</value>
   </data>
-  
-  
-  
-  
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Esconder nombres de vías al usar la herramienta</value>
   </data>
@@ -1167,12 +1140,9 @@ Haga clic para editar las marcas</value>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Tamaño del bordillo</value>
   </data>
-  
-  
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Descartar</value>
   </data>
-  
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Ordenar</value>
   </data>
@@ -1248,7 +1218,6 @@ Haga clic para editar las marcas</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Nombre de carretera</value>
   </data>
-  
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Decoración</value>
   </data>
@@ -1677,5 +1646,11 @@ para modo subterráneo</value>
 [FIXED] Se corrigió cuando los valores de estilos asimétricos se pegaban con una inversión incorrecta.
 [FIXED] Redes/adornos/árboles que eran agregado por IMT son visibles en la captura de pantalla del preajuste.
 [FIXED] Se corrigió que los rellenos no se actualizaran después de seleccionar las guías de relleno.</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>Salir del modo de pegar marcas</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>¿Quiere aplicar lar marcas?</value>
   </data>
 </root>

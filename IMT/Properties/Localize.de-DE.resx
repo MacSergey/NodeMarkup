@@ -271,9 +271,6 @@ Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</va
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>Stilvorlage</value>
   </data>
-  <data name="TemplateEditor_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Stilvorlagen</value>
   </data>
@@ -579,7 +576,6 @@ Erstellen oder Löschen einer Fußgängerüberweg-Markierung</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>Stilvorlage</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Laden mit Fehlern beendet.
 Die Markierungen von {0} Kreuzungen konnten nicht geladen werden.</value>
@@ -785,12 +781,6 @@ Die wiederhergestellten Stilvorlagen werden alle vorhandenen Stilvorlagen ersetz
   <data name="Tool_Continue" xml:space="preserve">
     <value>Fortsetzen</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Einfügemodus verlassen</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Möchtest Du den Einfügemodus verlassen und das Eingefügte übernehmen?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Nicht anwenden</value>
   </data>
@@ -846,7 +836,6 @@ Möchtest du die Markierungen manuell zuordnen?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>{0} halten und Ziehen um den Punkt zu verschieben</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Diese Aktion kann nicht rückgängig gemacht werden.</value>
   </data>
@@ -910,12 +899,6 @@ Um eine Kreuzungsvorlage zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Neue Kreuzungsvorlage</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Modus zum Übernehmen von Kreuzungsvorlagen verlassen</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Möchtest du die Kreuzungsvorlage anwenden?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Ersteller</value>
@@ -1191,17 +1174,12 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Endpunkt für eine reguläre oder Haltelinie auswählen</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Ausrichtung des Linien-Endes</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Ausrichtung des Linien-Starts</value>
   </data>
-  
-  
-  
-  
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Straßennamen während der Verwendung ausblenden</value>
   </data>
@@ -1229,12 +1207,9 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Größe der Bordsteine</value>
   </data>
-  
-  
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Verwerfen</value>
   </data>
-  
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Sortierungen</value>
   </data>
@@ -1310,7 +1285,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Straßenname</value>
   </data>
-  
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Dekoration</value>
   </data>
@@ -1328,15 +1302,6 @@ Klicken um die Markierungen zu bearbeiten</value>
   </data>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>Schritt</value>
-  </data>
-  <data name="NumberFormat_Degree" xml:space="preserve">
-    <value>{0}°</value>
-  </data>
-  <data name="NumberFormat_Meter" xml:space="preserve">
-    <value>{0}m</value>
-  </data>
-  <data name="NumberFormat_Percent" xml:space="preserve">
-    <value>{0}%</value>
   </data>
   <data name="StyleOption_Color1" xml:space="preserve">
     <value>Variante #1</value>
@@ -1512,14 +1477,8 @@ zu verlassen</value>
   <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
     <value>Regulär</value>
   </data>
-  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
-    <value>Median</value>
-  </data>
   <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
     <value>Regulär</value>
-  </data>
-  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
-    <value>Median</value>
   </data>
   <data name="StyleOption_Dash" xml:space="preserve">
     <value>Streifen</value>
@@ -1529,9 +1488,6 @@ zu verlassen</value>
   </data>
   <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
     <value>Linie</value>
-  </data>
-  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
-    <value>Median</value>
   </data>
   <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
     <value>Danach</value>
@@ -1577,9 +1533,6 @@ zu verlassen</value>
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>Dreieck</value>
   </data>
-  <data name="LineStyle_Text" xml:space="preserve">
-    <value>Text</value>
-  </data>
   <data name="StyleOption_DefaultFont" xml:space="preserve">
     <value>Standardschriftart des Spiels</value>
   </data>
@@ -1606,9 +1559,6 @@ zu verlassen</value>
   </data>
   <data name="StyleOption_SpacingLine" xml:space="preserve">
     <value>Linie</value>
-  </data>
-  <data name="StyleOption_Text" xml:space="preserve">
-    <value>Text</value>
   </data>
   <data name="StyleOption_TextDirection" xml:space="preserve">
     <value>Richtung</value>

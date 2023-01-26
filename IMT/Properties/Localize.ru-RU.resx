@@ -800,12 +800,6 @@
   <data name="Tool_Continue" xml:space="preserve">
     <value>Продолжить</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Выход из режима вставки</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Вы хотите выйти из режима вставки и применить изменения?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Не применять</value>
   </data>
@@ -949,10 +943,10 @@
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Новый трафарет</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Выход из настройки трафарета</value>
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
+    <value>Выход из режима применения трафарета</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
     <value>Хотите ли вы применить трафарет?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
@@ -1849,5 +1843,21 @@
 [FIXED] Исправлены ошибки когда значения ассиметричных стилей вставлялись инвертированными.
 [FIXED] Декоративные сети/реквизит/деревья добавленые с помощью IMT видимы на скриншоте трафарета.
 [FIXED] Исправлено что заполнитель не обнавлялся при выборе направляющих.</value>
+  </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>Применить трафарет ко всем сегментам этого ассета</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>Сбросить к по умолчанию</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>Хотите ли вы применить трафарет ко всем сегментам ассета "{0}"?
+Это может занять время если много сегментов.</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>Выход из режима вставки</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>Хотите ли вы применить трафарет?</value>
   </data>
 </root>

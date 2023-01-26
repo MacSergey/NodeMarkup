@@ -798,12 +798,6 @@ I template ripristinati sostituiranno quelli esistenti.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Continua</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Esci dalla modalità di incollo</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Sei sicuro di voler uscire dalla modalità di incollo ed applicare?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Non applicare</value>
   </data>
@@ -946,10 +940,10 @@ Per creare un preimpostato, clicca «{0}» nell'intestazione del pannello.</valu
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nuovo preimpostato</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
     <value>Esci dalla modalità di applicazione dei predefiniti</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
     <value>Vuoi utilizzare un predefinito?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
@@ -1402,7 +1396,6 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Nome della strada</value>
   </data>
-  
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Proprietà</value>
   </data>
@@ -1457,23 +1450,6 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="StyleOption_SharkToothAngle" xml:space="preserve">
     <value>Angolo</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Pendenza</value>
   </data>
@@ -1505,85 +1481,4 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Tieni premuto {0} per
 modalità sotterranea</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 </root>

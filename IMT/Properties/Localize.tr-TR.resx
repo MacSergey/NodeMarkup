@@ -305,7 +305,6 @@ Yeni işaretler eskilerinin yerine geçecektir.</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Şeriti silmek veya oluşturmak için nokta seçin</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Geri yükle</value>
   </data>
@@ -375,8 +374,6 @@ Yeni işaretler eskilerinin yerine geçecektir.</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Dolu</value>
   </data>
-  
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Yeni dolgu ekle</value>
   </data>
@@ -553,7 +550,6 @@ Diğer kuralın başlangıç ve bitiş noktalarına bakın.</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>şablon</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Yükleme sırasında hata oldu.
 Tüm {0} kesişiminin işaretleri yüklenemedi.</value>
@@ -759,12 +755,6 @@ Yeni şablonlar eskilerinin yerine geçecektir.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Devam</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Moddan çıkış yapılıyor</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Düzenleme modundan çıkıp değişiklikleri uygulamak ister misiniz?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Uygulama</value>
   </data>
@@ -820,7 +810,6 @@ Yeni şablonlar eskilerinin yerine geçecektir.</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Noktayı {0} kullanarak sürükleyin</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Bu işlem geri alınamaz.</value>
   </data>
@@ -845,7 +834,6 @@ Yeni şablonlar eskilerinin yerine geçecektir.</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Dikkat: bu özellik oyundaki parçaların görüntüleme mesafesini değiştirir</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Kaydet</value>
   </data>
@@ -873,12 +861,6 @@ Yeni ön ayar oluşturmak için panel başlığında {0} tuşunu kullanın.</val
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Yeni ön ayar</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Ön ayar modunda çık</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Ön ayar uygulamak ister misiniz?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Tasarımcı</value>
@@ -1020,7 +1002,6 @@ Aynı isimde birden fazla ön ayar istediğinize emin misiniz?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>ön ayar</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Bu şerit kurallara uygun değil</value>
   </data>
@@ -1030,7 +1011,6 @@ Aynı isimde birden fazla ön ayar istediğinize emin misiniz?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Bilinmeyen yazar</value>
   </data>
-  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Yükleme sırasında hata oldu.
 Tüm kesişimlerin işaretleri yüklenemedi.</value>
@@ -1066,9 +1046,6 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Rehber için ikinci bir nokta seçin</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Renk sayısı</value>
   </data>
@@ -1126,17 +1103,12 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Düz şerit veya şerit sonu için bitme noktası seçin</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Şerit sonunu hizala</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Şerit başını hizala</value>
   </data>
-  
-  
-  
-  
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Aracı kullanırken sokak isimlerini kapat</value>
   </data>
@@ -1164,12 +1136,9 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Kaldırım Genişliği</value>
   </data>
-  
-  
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Çıkart</value>
   </data>
-  
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Sıralamalar</value>
   </data>
@@ -1245,7 +1214,6 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Yol ismi</value>
   </data>
-  
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Prop</value>
   </data>
@@ -1315,7 +1283,6 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="StyleOption_AssetNotSet" xml:space="preserve">
     <value>Ayarlanmamış</value>
   </data>
-  
   <data name="StyleOption_AssetTree" xml:space="preserve">
     <value>Ağaç varlığı</value>
   </data>
@@ -1483,7 +1450,6 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
     <value>Yükseklik</value>
   </data>
-  
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>Üçgen</value>
   </data>
@@ -1544,43 +1510,16 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="Tool_InfoSelectLane" xml:space="preserve">
     <value>Şeritleri seçmek için {0} tuşuyla beraber tıklayın</value>
   </data>
-  
   <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
     <value>Şerit oluşturmak için bitiş noktası seçin</value>
   </data>
   <data name="StyleOption_Distribution" xml:space="preserve">
     <value>Dağıtım</value>
   </data>
-  
-  
-  
-  
   <data name="LineStyle_ZigZag" xml:space="preserve">
     <value>Zikzak</value>
   </data>
   <data name="StyleOption_SideLeft" xml:space="preserve">
     <value>Sol</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 </root>

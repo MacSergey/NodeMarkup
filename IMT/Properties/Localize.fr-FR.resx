@@ -181,10 +181,10 @@
     <value>Intersection avec {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
-    <value>Point de bordure {0}</value>
+    <value>Point d'auto-bordure {0}</value>
   </data>
   <data name="LineStyle_Dashed" xml:space="preserve">
-    <value>Pointillée</value>
+    <value>Pointillé</value>
   </data>
   <data name="LineStyle_DoubleDashed" xml:space="preserve">
     <value>Double pointillé</value>
@@ -232,7 +232,7 @@
     <value>Extraire les données de marquage vers un fichier</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
-    <value>Copier le chemin au presse-papier</value>
+    <value>Copier le chemin dans le presse-papier</value>
   </data>
   <data name="Settings_DumpMarkingCaption" xml:space="preserve">
     <value>Extraire les données de marquage</value>
@@ -251,7 +251,7 @@
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Voulez-vous vraiment restaurer les données ?
-Les données restaurées ont remplacé tous les marquages existants.</value>
+Les données restaurées vont remplacer tous les marquages existants.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
     <value>La restauration des marquages a échoué</value>
@@ -300,7 +300,7 @@ Cliquez pour modifier le marquage</value>
     <value>Sélectionnez un nœud ou segment pour changer les marquages</value>
   </data>
   <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
-    <value>Sélectionnez un point de fin pour une ligne normal</value>
+    <value>Sélectionnez un point de fin pour une ligne normale</value>
   </data>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Sélectionnez un point pour
@@ -327,7 +327,7 @@ créer ou supprimer une ligne</value>
     <value>Largeur</value>
   </data>
   <data name="LineStyle_SolidAndDashed" xml:space="preserve">
-    <value>Continue et pointillée</value>
+    <value>Continue et pointillés</value>
   </data>
   <data name="LineStyle_StopSolid" xml:space="preserve">
     <value>Continue</value>
@@ -351,7 +351,7 @@ créer ou supprimer une ligne</value>
     <value>Grille</value>
   </data>
   <data name="LineStyle_StopDashed" xml:space="preserve">
-    <value>Pointillée</value>
+    <value>Pointillés</value>
   </data>
   <data name="StyleOption_Step" xml:space="preserve">
     <value>Intervalle</value>
@@ -369,7 +369,7 @@ créer ou supprimer une ligne</value>
     <value>Cliquez pour sélectionner le point suivant du contour</value>
   </data>
   <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
-    <value>Selectionnez un point pour commencer le remplissseur</value>
+    <value>Sélectionnez un point pour commencer le remplisseur</value>
   </data>
   <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
     <value>Sélectionnez le point suivant du contour</value>
@@ -410,7 +410,7 @@ créer ou supprimer une ligne</value>
     <value>Double continue</value>
   </data>
   <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
-    <value>Double pointillé</value>
+    <value>Double pointillés</value>
   </data>
   <data name="HeaderPanel_StyleCopy" xml:space="preserve">
     <value>Copier</value>
@@ -503,13 +503,13 @@ Pour créer un passage piéton, maintenez {0}.</value>
     <value>Double zébra</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
-    <value>Largeur de la ligne</value>
+    <value>Largeur de ligne</value>
   </data>
   <data name="StyleOption_ParallelToLanes" xml:space="preserve">
     <value>Parallèle aux voies</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
-    <value>Lignes pleines parallèles</value>
+    <value>Lignes continues parallèles</value>
   </data>
   <data name="CrosswalkEditor_LeftBorder" xml:space="preserve">
     <value>Bordure de gauche</value>
@@ -625,7 +625,7 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
     <value>Dents de scie</value>
   </data>
   <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
-    <value>Continue et pointillée</value>
+    <value>Continue et pointillés</value>
   </data>
   <data name="Panel_ClearMarking" xml:space="preserve">
     <value>Supprimer le marquage</value>
@@ -652,7 +652,7 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
     <value>Raccourcis pour les lignes de marquage</value>
   </data>
   <data name="Settings_StopLinesModifier" xml:space="preserve">
-    <value>Raccourcis pour les lignes de stop</value>
+    <value>Raccourcis pour les lignes d'arrêt</value>
   </data>
   <data name="Settings_StyleModifierNotSet" xml:space="preserve">
     <value>Non défini</value>
@@ -706,7 +706,7 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
     <value>Coin</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
-    <value>Vertex</value>
+    <value>Sommet</value>
   </data>
   <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
     <value>Réinitialiser tout les décalages de points</value>
@@ -718,11 +718,11 @@ Le marquage de {0} intersections n'a pas pu être chargé.</value>
     <value>Voulez-vous vraiment réinitialiser tous les décalages du nœud n°{0} ?</value>
   </data>
   <data name="Tool_InfoRoadsDrag" xml:space="preserve">
-    <value>Maintenez puis relâchez les cercles pour configurer l'ordre
+    <value>Glissez et déposez les cercles pour définir l'ordre des routes
 Cliquez le cercle pour modifier l'ordre des points</value>
   </data>
   <data name="Tool_InfoRoadsDrop" xml:space="preserve">
-    <value>Maintenez puis relâchez la cible intérieur/extérieur pour mettre/enlever l'ordre</value>
+    <value>Déposer le cercle à l'intérieur/extérieur de la cible pour définir/annuler l'ordre des routes</value>
   </data>
   <data name="Settings_ShortcutCopyMarking" xml:space="preserve">
     <value>Copier le marquage</value>
@@ -755,7 +755,7 @@ Cliquez le cercle pour modifier l'ordre des points</value>
     <value>Nom déjà utilisé</value>
   </data>
   <data name="TemplateEditor_NameExistMessage" xml:space="preserve">
-    <value>Le nom «{0}» est déjà utilisé pour un autre modèle.
+    <value>Le nom « {0} » est déjà utilisé pour un autre modèle.
 Êtes-vous sûr de vouloir avoir plusieurs modèles avec le même nom ?</value>
   </data>
   <data name="Settings_BackupMarking" xml:space="preserve">
@@ -787,7 +787,7 @@ Cliquez le cercle pour modifier l'ordre des points</value>
   </data>
   <data name="Settings_RestoreTemplatesMessage" xml:space="preserve">
     <value>Voulez-vous vraiment restaurer les modèles ?
-Les modèles restaurés vont remplacer tout les modèles actuels.</value>
+Les modèles restaurés vont remplacer tous les modèles actuels.</value>
   </data>
   <data name="Settings_RestoreTemplatesMessageFailed" xml:space="preserve">
     <value>La restauration des modèles a échoué</value>
@@ -800,12 +800,6 @@ Les modèles restaurés vont remplacer tout les modèles actuels.</value>
   </data>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Continuer</value>
-  </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Sortir du mode collage</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Voulez-vous quitter le mode collage et appliquer les modifications ?</value>
   </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Ne pas appliquer</value>
@@ -826,7 +820,7 @@ Les modèles restaurés vont remplacer tout les modèles actuels.</value>
     <value>Modifier l'ordre du marquage</value>
   </data>
   <data name="Tool_RoadsWasChangedCaption" xml:space="preserve">
-    <value>Les routes ont été changées</value>
+    <value>Les routes ont changé</value>
   </data>
   <data name="Tool_RoadsWasChangedMessage" xml:space="preserve">
     <value>Les routes à cette intersection ont changé, par conséquent le marquage existant ne peut pas être appliqué automatiquement.
@@ -842,7 +836,7 @@ Voulez-vous appliquer le marquage manuellement ?</value>
     <value>Glisser-déposer le cercle pour définir l'ordre des points</value>
   </data>
   <data name="Tool_InfoPointsDrop" xml:space="preserve">
-    <value>Maintenez puis relâchez la cible intérieur/extérieur pour mettre/enlever l'ordre des points</value>
+    <value>Déposez le cercle à l'intérieur/extérieur de la cible pour définir/annuler l'ordre des points</value>
   </data>
   <data name="StyleOption_SolidInCenter" xml:space="preserve">
     <value>Continue au centre</value>
@@ -860,7 +854,7 @@ Voulez-vous appliquer le marquage manuellement ?</value>
     <value>Maintenir {0} pour créer un remplisseur</value>
   </data>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
-    <value>Glissez avec {0} pour déplacer le point</value>
+    <value>Maintenez {0} et faites glisser un point pour modifier le décalage</value>
   </data>
   <data name="Mod_WhatsNewMessage1_4" xml:space="preserve">
     <value>[WARNING] Les paramètres par défaut des modèles seront réinitialisés.
@@ -898,13 +892,13 @@ Voulez-vous appliquer le marquage manuellement ?</value>
     <value>Créer les lignes de bord</value>
   </data>
   <data name="Panel_ResetOffset" xml:space="preserve">
-    <value>Réinitialiser tout les décalages de points</value>
+    <value>Réinitialiser le décalage de tous les points</value>
   </data>
   <data name="Settings_QuickBorderSetup" xml:space="preserve">
-    <value>Bordures de passage piétons rapide</value>
+    <value>Bordures de passage piéton rapide</value>
   </data>
   <data name="Settings_RailUnderMarking" xml:space="preserve">
-    <value>Marquage en dessous des rails</value>
+    <value>Marquage sous les rails</value>
   </data>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Attention : cette option change l'ordre de rendu des objets</value>
@@ -930,16 +924,16 @@ par {1}</value>
   </data>
   <data name="PresetEditor_EmptyMessage" xml:space="preserve">
     <value>La liste des préréglages est vide.
-Pour créer un préréglages, cliquez sur «{0}» sur le haut de la fenêtre.</value>
+Pour créer un préréglage, cliquez sur «{0}» dans l'en-tête de la fenêtre.</value>
   </data>
   <data name="PresetEditor_Presets" xml:space="preserve">
     <value>Préréglages</value>
   </data>
   <data name="Panel_SaveAsPreset" xml:space="preserve">
-    <value>Sauvegarder comme préréglage</value>
+    <value>Enregistrer en tant que préréglage</value>
   </data>
   <data name="Settings_ShortcutSaveAsPreset" xml:space="preserve">
-    <value>Sauvegarder comme préréglage</value>
+    <value>Enregistrer en tant que préréglage</value>
   </data>
   <data name="HeaderPanel_NoPresets" xml:space="preserve">
     <value>Aucun préréglage</value>
@@ -950,10 +944,10 @@ Pour créer un préréglages, cliquez sur «{0}» sur le haut de la fenêtre.</v
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nouveau préréglage</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
     <value>Quitter le mode d'application des préréglages</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
     <value>Souhaitez vous appliquer un préréglage ?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
@@ -1015,7 +1009,7 @@ Pour créer un préréglages, cliquez sur «{0}» sur le haut de la fenêtre.</v
   </data>
   <data name="Settings_RestorePresetsMessage" xml:space="preserve">
     <value>Voulez-vous vraiment restaurer les préréglages ?
-Les préréglages restaurés vont remplacer tout les préréglages existants.</value>
+Les préréglages restaurés vont remplacer tous les préréglages existants.</value>
   </data>
   <data name="Settings_RestorePresetsMessageFailed" xml:space="preserve">
     <value>La restauration des préréglages a échoué</value>
@@ -1027,7 +1021,7 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
     <value>Couper les lignes au niveau de tous les passages piétons</value>
   </data>
   <data name="Panel_CutLinesByCrosswalks" xml:space="preserve">
-    <value>Couper les lignes au niveau de tout les passages piétons</value>
+    <value>Couper les lignes au niveau de tous les passages piétons</value>
   </data>
   <data name="PresetEditor_RewriteCaption" xml:space="preserve">
     <value>Réécriture de la ressource du préréglage</value>
@@ -1069,7 +1063,7 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
     <value>Voulez-vous enregistrer les valeurs modifiées du modèle ?</value>
   </data>
   <data name="PresetEditor_NameExistMessage" xml:space="preserve">
-    <value>Le nom «{0}» est déjà utilisé pour un autre préréglage.
+    <value>Le nom « {0} » est déjà utilisé pour un autre préréglage.
 Êtes-vous sûr de vouloir avoir plusieurs préréglages avec le même nom ?</value>
   </data>
   <data name="PresetEditor_IsAssetWarningMessage" xml:space="preserve">
@@ -1112,7 +1106,7 @@ Les préréglages restaurés vont remplacer tout les préréglages existants.</v
     <value>Ce type de ligne ne prend pas en charge les règles</value>
   </data>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
-    <value>Ne pas couper les lignes de passages piétons si c'est leur bordure</value>
+    <value>Ne pas couper la ligne par le passage pour piétons si c'est leur bordure</value>
   </data>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Auteur inconnu</value>
@@ -1151,10 +1145,10 @@ Le marquage de toutes les intersections n'a pas pu être chargé.</value>
 Cliquez pour modifier le marquage</value>
   </data>
   <data name="FillerEditor_InfoSelectRailFirst" xml:space="preserve">
-    <value>Sélectionnez le premier point ou ligne du rail</value>
+    <value>Sélectionnez le premier point ou la première ligne du guide</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
-    <value>Sélectionnez le second point du rail</value>
+    <value>Sélectionnez le deuxième point du guide</value>
   </data>
   <data name="Mod_WhatsNewMessage1_5_2" xml:space="preserve">
     <value>[UPDATED] Mise à jour de la dépendance d'Harmony : résolution des conflits avec les autres mods qui l'utilisent</value>
@@ -1228,7 +1222,7 @@ Cliquez pour modifier le marquage</value>
     <value>Glissez derrière le point pour une ligne perpendiculaire</value>
   </data>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
-    <value>Sélectionnez un point de fin pour une ligne ou ligne d'arrêt</value>
+    <value>Sélectionnez un point de fin pour une ligne normale ou une ligne d'arrêt</value>
   </data>
   <data name="Mod_WhatsNewMessage1_7" xml:space="preserve">
     <value>[NEW] Nouveau mode de sélection des nœuds/segments. La zone de sélection suit exactement les formes des nœuds et des segments, ce qui évite les difficultés liées à la sélection de nœuds trop proches les uns des autres.
@@ -1299,7 +1293,7 @@ Cliquez pour modifier le marquage</value>
     <value>Rayon du coin</value>
   </data>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
-    <value>Taille de bordure</value>
+    <value>Taille du trottoir</value>
   </data>
   <data name="Mod_WhatsNewMessage1_8" xml:space="preserve">
     <value>[NEW] Ajout d'un pas de sélection comme dans MoveIt. Appuyez sur Ctrl+Espace pour passer au suivant (vous pouvez relier dans les options du mod).
@@ -1355,7 +1349,7 @@ Cliquez pour modifier le marquage</value>
     <value>Trier les modèles</value>
   </data>
   <data name="Settings_SortApplyByAuthor" xml:space="preserve">
-    <value>Par auteur, puis par type et puis par nom</value>
+    <value>Par auteur, puis par type, puis par nom</value>
   </data>
   <data name="Settings_SortApplyByNames" xml:space="preserve">
     <value>Par nom, puis par type</value>
@@ -1552,7 +1546,7 @@ Cliquez pour modifier le marquage</value>
     <value>Quitter le mode souterrain</value>
   </data>
   <data name="Settings_ToggleUnderground" xml:space="preserve">
-    <value>Activer le souterrain</value>
+    <value>Mode souterrain</value>
   </data>
   <data name="Settings_ToggleUndergroundButtons" xml:space="preserve">
     <value>Appuyez sur {0} pour entrer et {1} pour quitter</value>
@@ -1569,25 +1563,26 @@ en mode souterrain</value>
 le mode souterrain</value>
   </data>
   <data name="Tool_InfoUnderground" xml:space="preserve">
-    <value>Maintenez {0} pour utiliser le mode souterrain</value>
+    <value>Maintenez {0} pour utiliser
+le mode souterrain</value>
   </data>
   <data name="Settings_LODDistanceMarking" xml:space="preserve">
-    <value>Distance de LOD du marquage 2D</value>
+    <value>Distance d'affichage du marquage 2D</value>
   </data>
   <data name="Settings_LODDistanceNetwork" xml:space="preserve">
-    <value>Distance de LOD des réseaux</value>
+    <value>Distance d'affichage des réseaux</value>
   </data>
   <data name="Settings_LODDistanceProp" xml:space="preserve">
-    <value>Distance de LOD des accessoires</value>
+    <value>Distance d'affichage des accessoires</value>
   </data>
   <data name="Settings_LODDistanceTree" xml:space="preserve">
-    <value>Distance de LOD des arbres</value>
+    <value>Distance d'affichage des arbres</value>
   </data>
   <data name="StyleOption_ObjectAuto" xml:space="preserve">
     <value>Automatique</value>
   </data>
   <data name="Settings_LODDistanceMesh" xml:space="preserve">
-    <value>Distance de LOD du marquage 3D</value>
+    <value>Distance d'affichage du marquage 3D</value>
   </data>
   <data name="Settings_Render" xml:space="preserve">
     <value>Rendu</value>
@@ -1650,7 +1645,7 @@ le mode souterrain</value>
     <value>Espace</value>
   </data>
   <data name="StyleOption_Rails" xml:space="preserve">
-    <value>Rails</value>
+    <value>Guides</value>
   </data>
   <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
     <value>Base</value>
@@ -1847,5 +1842,21 @@ le mode souterrain</value>
 [FIXED] Correction d'un problème où les valeurs des styles asymétriques étaient collées avec une mauvaise inversion.
 [FIXED] Les réseaux/props/arbres qui ont été ajoutés par IMT sont visibles sur la capture d'écran du préréglage.
 [FIXED] Correction du fait que les remplisseurs n'étaient pas mis à jour après avoir sélectionné les guides de remplissage.</value>
+  </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>Appliquer le préréglage à tous les segments de cette ressource</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>Rétablir les paramètres par défaut</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>Voulez-vous appliquer un préréglage à tous les segments de la ressource "{0}" ?
+Cela peut prendre du temps s'il y a beaucoup de segments.</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>Quitter le mode de collage du marquage</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>Voulez-vous appliquer le marquage ?</value>
   </data>
 </root>

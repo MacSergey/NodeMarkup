@@ -305,7 +305,6 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Vyberte bod pro vytvoření nebo odstranění čáry</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Obnovit</value>
   </data>
@@ -375,8 +374,6 @@ Klikněte pro změnu značení</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Plná</value>
   </data>
-  
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Přidat výplň</value>
   </data>
@@ -554,7 +551,6 @@ nebo odstranění přechodu</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>šablonu</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Při načítání se vyskytly chyby.
 Nepodařilo se načíst značení pro {0} křižovatek.</value>
@@ -760,12 +756,6 @@ Původní data připíší všechny existující šablony.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Pokračovat</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Opustit režim vkládání</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Chcete opustim režim vkládání a použít změny?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Zrušit</value>
   </data>
@@ -821,7 +811,6 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Táhněte s {0} pro posun bodu</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Tuto akci nelze vrátit zpět.</value>
   </data>
@@ -846,7 +835,6 @@ Chcete nastavit předchozí značení manuálně?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Pozor: Tato možnost ovlivní pořadí renderování objektů ve hře</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Uložit jako asset</value>
   </data>
@@ -875,12 +863,6 @@ Pro vytvoření předvolby, vyberte «{0}» v hlavičce panelu.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nová předvolba</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Opustit režim aplikování předvolby</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Opravdu chcete aplikovat předvolbu?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autor</value>
@@ -1022,7 +1004,6 @@ Opravdu chcete mít více předvoleb se stejným jménem?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>předvolba</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Tento typ čáry nepodporuje pravidla</value>
   </data>
@@ -1071,8 +1052,6 @@ Klikněte pro změnu značení</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Vyberte koncový bod koleje</value>
   </data>
-  
-  
   <data name="Mod_WhatsNewMessage1_6" xml:space="preserve">
     <value>[NEW] Přidána možnost značení silnic a segmentů.
 [NEW] Přidány 3D výplně "Chodník" a "Tráva".
@@ -1141,17 +1120,12 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Vyberte koncový bod čáry</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Zarovnání konce čáry</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Zarovnání začátku čáry</value>
   </data>
-  
-  
-  
-  
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Skrýt názvy ulic při používání nástroje</value>
   </data>
@@ -1179,12 +1153,9 @@ Klikněte pro změnu značení</value>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Velikost obrubníku</value>
   </data>
-  
-  
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Zahodit</value>
   </data>
-  
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Řazení</value>
   </data>
@@ -1260,7 +1231,6 @@ Klikněte pro změnu značení</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Název silnice</value>
   </data>
-  
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Objekt</value>
   </data>
@@ -1449,73 +1419,4 @@ Klikněte pro změnu značení</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Druhá barva</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 </root>

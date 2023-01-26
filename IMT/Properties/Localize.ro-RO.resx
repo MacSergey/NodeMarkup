@@ -305,7 +305,6 @@ Apăsați pentru a modifica marcajele</value>
   <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
     <value>Selectați un punct pentru a crea sau șterge o linie</value>
   </data>
-  
   <data name="Settings_Restore" xml:space="preserve">
     <value>Restabilește</value>
   </data>
@@ -375,8 +374,6 @@ Apăsați pentru a modifica marcajele</value>
   <data name="FillerStyle_Solid" xml:space="preserve">
     <value>Linie continuă</value>
   </data>
-  
-  
   <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
     <value>Adăugare filtru nou</value>
   </data>
@@ -554,7 +551,6 @@ crea ori șterge o trecere de pietoni</value>
   <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
     <value>șablon</value>
   </data>
-  
   <data name="Mod_LoadFailed" xml:space="preserve">
     <value>Încărcarea a fost efectuată cu erori.
 Încărcarea marcajelor a {0} intersecții a eșuat.</value>
@@ -760,12 +756,6 @@ Sigur doriți să aveți mai multe șabloane cu același nume?</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Continuare</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Ieșire mod lipire</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Vreți să ieșiți din modul lipire aplicând modificările?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Nu aplica</value>
   </data>
@@ -821,7 +811,6 @@ Vreți să aplicați marcajele în mod automat?</value>
   <data name="Tool_InfoStartDragPointMode" xml:space="preserve">
     <value>Trageți punctul cu {0} pentru a-l muta</value>
   </data>
-  
   <data name="MessageBox_CantUndone" xml:space="preserve">
     <value>Această acțiune nu poate fi anulată.</value>
   </data>
@@ -846,7 +835,6 @@ Vreți să aplicați marcajele în mod automat?</value>
   <data name="Settings_RailUnderMarkingWarning" xml:space="preserve">
     <value>Atenție: opțiunea asta schimbă ordinea de render a obiectelor din joc</value>
   </data>
-  
   <data name="HeaderPanel_SaveAsAsset" xml:space="preserve">
     <value>Salvați ca asset</value>
   </data>
@@ -875,12 +863,6 @@ Pentru a crea un preset, apăsați «{0}» pe antetul panoului.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Presetare nouă</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
-    <value>Ieșiți din modul aplicare preset</value>
-  </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
-    <value>Vreți să aplicați un preset?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autor</value>
@@ -1022,7 +1004,6 @@ Sigur doriți să aveți mai multe preseturi cu același nume?</value>
   <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
     <value>preset</value>
   </data>
-  
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Nu se pot aplica reguli la acest tip de linie</value>
   </data>
@@ -1032,7 +1013,6 @@ Sigur doriți să aveți mai multe preseturi cu același nume?</value>
   <data name="Template_UnknownAuthor" xml:space="preserve">
     <value>Autor necunoscut</value>
   </data>
-  
   <data name="Mod_LoadFailedAll" xml:space="preserve">
     <value>Încărcarea a fost efectuată cu erori.
 Încărcarea marcajelor a toate intersecțiilor a eșuat.</value>
@@ -1068,9 +1048,6 @@ Apăsați pentru a modifica marcajele</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selectați al doilea punct al ghidului</value>
   </data>
-  
-  
-  
   <data name="StyleOption_ColorCount" xml:space="preserve">
     <value>Numărare culori</value>
   </data>
@@ -1128,17 +1105,12 @@ Apăsați pentru a modifica marcajele</value>
   <data name="Tool_InfoSelectLineEndPointStop" xml:space="preserve">
     <value>Selectați punctul final pentru liniile regulare sau de stop</value>
   </data>
-  
   <data name="LineEditor_LineEndAlignment" xml:space="preserve">
     <value>Aliniere linie finală</value>
   </data>
   <data name="LineEditor_LineStartAlignment" xml:space="preserve">
     <value>Aliniere linie de început</value>
   </data>
-  
-  
-  
-  
   <data name="Settings_HideStreetName" xml:space="preserve">
     <value>Ascundeți numele străzilor între timp ce folosiți unealta</value>
   </data>
@@ -1166,12 +1138,9 @@ Apăsați pentru a modifica marcajele</value>
   <data name="FillerStyle_CurbSize" xml:space="preserve">
     <value>Dimensiunea curbei</value>
   </data>
-  
-  
   <data name="HeaderPanel_Discard" xml:space="preserve">
     <value>Elimină</value>
   </data>
-  
   <data name="Settings_Sortings" xml:space="preserve">
     <value>Ordinări</value>
   </data>
@@ -1247,7 +1216,6 @@ Apăsați pentru a modifica marcajele</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Numele străzii</value>
   </data>
-  
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Obiect</value>
   </data>
@@ -1438,73 +1406,4 @@ modul Underground</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Culoare secundară</value>
   </data>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 </root>
