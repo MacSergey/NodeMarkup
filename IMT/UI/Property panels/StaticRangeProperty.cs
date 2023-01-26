@@ -192,8 +192,8 @@ namespace IMT.UI
 
         protected override void AddSelectorItems()
         {
-            AddItem(StaticIndex, IMT.Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcons);
-            AddItem(RangeIndex, IMT.Localize.StyleOption_ObjectRange, IMTTextures.Atlas, IMTTextures.RangeButtonIcons);
+            AddItem(StaticIndex, IMT.Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcon);
+            AddItem(RangeIndex, IMT.Localize.StyleOption_ObjectRange, IMTTextures.Atlas, IMTTextures.RangeButtonIcon);
         }
 
         public override void DeInit()
@@ -320,7 +320,7 @@ namespace IMT.UI
 
         protected override void AddSelectorItems()
         {
-            AddItem(AutoIndex, IMT.Localize.StyleOption_ObjectAuto, IMTTextures.Atlas, IMTTextures.AutoButtonIcons);
+            AddItem(AutoIndex, IMT.Localize.StyleOption_ObjectAuto, IMTTextures.Atlas, IMTTextures.AutoButtonIcon);
             base.AddSelectorItems();
         }
 
@@ -448,8 +448,8 @@ namespace IMT.UI
 
         protected override void AddSelectorItems()
         {
-            AddItem(AutoIndex, IMT.Localize.StyleOption_ObjectAuto, IMTTextures.Atlas, IMTTextures.AutoButtonIcons);
-            AddItem(StaticIndex, IMT.Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcons);
+            AddItem(AutoIndex, IMT.Localize.StyleOption_ObjectAuto, IMTTextures.Atlas, IMTTextures.AutoButtonIcon);
+            AddItem(StaticIndex, IMT.Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcon);
         }
 
         public override void DeInit()

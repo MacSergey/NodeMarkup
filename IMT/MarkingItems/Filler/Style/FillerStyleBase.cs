@@ -203,7 +203,7 @@ namespace IMT.Manager
             var guideProperty = ComponentPool.Get<FillerGuidePropertyPanel>(parent, Guide);
             guideProperty.Text = Localize.StyleOption_Rails;
             guideProperty.CanCollapse = canCollapse;
-            guideProperty.Init();
+            guideProperty.Init(contour.ProcessedCount);
             guideProperty.LeftGuide = new FillerGuide(contour.GetCorrectIndex(guideStyle.LeftGuideA), contour.GetCorrectIndex(guideStyle.LeftGuideB));
             guideProperty.RightGuide = new FillerGuide(contour.GetCorrectIndex(guideStyle.RightGuideA), contour.GetCorrectIndex(guideStyle.RightGuideB));
             guideProperty.Follow = (guideStyle as IFollowGuideFiller)?.FollowGuides.Value;

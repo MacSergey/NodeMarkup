@@ -407,15 +407,15 @@ namespace IMT.Manager
         public enum TextDirection
         {
             [Description(nameof(Localize.StyleOption_TextDirectionLtoR))]
-            [Sprite(nameof(IMTTextures.LeftToRightButtonIcons))]
+            [Sprite(nameof(IMTTextures.LeftToRightButtonIcon))]
             LeftToRight,
 
             [Description(nameof(Localize.StyleOption_TextDirectionTtoB))]
-            [Sprite(nameof(IMTTextures.TopToBottomButtonIcons))]
+            [Sprite(nameof(IMTTextures.TopToBottomButtonIcon))]
             TopToBottom,
 
             [Description(nameof(Localize.StyleOption_TextDirectionBtoT))]
-            [Sprite(nameof(IMTTextures.BottomToTopButtonIcons))]
+            [Sprite(nameof(IMTTextures.BottomToTopButtonIcon))]
             BottomToTop,
         }
         public enum TextAlignment

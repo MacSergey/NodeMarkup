@@ -31,6 +31,7 @@ namespace IMT.Utilities
         public static string SetDefaultHeaderButton => nameof(SetDefaultHeaderButton);
         public static string UnsetDefaultHeaderButton => nameof(UnsetDefaultHeaderButton);
         public static string ApplyHeaderButton => nameof(ApplyHeaderButton);
+        public static string ApplyAllHeaderButton => nameof(ApplyAllHeaderButton);
         public static string PackageHeaderButton => nameof(PackageHeaderButton);
         public static string ClearHeaderButton => nameof(ClearHeaderButton);
         public static string EditHeaderButton => nameof(EditHeaderButton);
@@ -43,6 +44,7 @@ namespace IMT.Utilities
         public static string WholeStreetHeaderButton => nameof(WholeStreetHeaderButton);
         public static string LinkHeaderButton => nameof(LinkHeaderButton);
         public static string UnlinkHeaderButton => nameof(UnlinkHeaderButton);
+        public static string ResetHeaderButton => nameof(ResetHeaderButton);
 
         public static string TurnLeftOrderButton => nameof(TurnLeftOrderButton);
         public static string FlipOrderButton => nameof(FlipOrderButton);
@@ -55,24 +57,26 @@ namespace IMT.Utilities
         public static string ListItemCollapse { get; } = nameof(ListItemCollapse);
         public static string ListItemExpand { get; } = nameof(ListItemExpand);
 
-        public static string AutoButtonIcons { get; } = nameof(AutoButtonIcons);
-        public static string SingleButtonIcons { get; } = nameof(SingleButtonIcons);
-        public static string RangeButtonIcons { get; } = nameof(RangeButtonIcons);
+        public static string AutoButtonIcon { get; } = nameof(AutoButtonIcon);
+        public static string SingleButtonIcon { get; } = nameof(SingleButtonIcon);
+        public static string RangeButtonIcon { get; } = nameof(RangeButtonIcon);
 
-        public static string RegularButtonIcons { get; } = nameof(RegularButtonIcons);
-        public static string BoldButtonIcons { get; } = nameof(BoldButtonIcons);
-        public static string ItalicButtonIcons { get; } = nameof(ItalicButtonIcons);
-        public static string BoldItalicButtonIcons { get; } = nameof(BoldItalicButtonIcons);
+        public static string RegularButtonIcon { get; } = nameof(RegularButtonIcon);
+        public static string BoldButtonIcon { get; } = nameof(BoldButtonIcon);
+        public static string ItalicButtonIcon { get; } = nameof(ItalicButtonIcon);
+        public static string BoldItalicButtonIcon { get; } = nameof(BoldItalicButtonIcon);
 
-        public static string LeftToRightButtonIcons { get; } = nameof(LeftToRightButtonIcons);
-        public static string TopToBottomButtonIcons { get; } = nameof(TopToBottomButtonIcons);
-        public static string BottomToTopButtonIcons { get; } = nameof(BottomToTopButtonIcons);
+        public static string LeftToRightButtonIcon { get; } = nameof(LeftToRightButtonIcon);
+        public static string TopToBottomButtonIcon { get; } = nameof(TopToBottomButtonIcon);
+        public static string BottomToTopButtonIcon { get; } = nameof(BottomToTopButtonIcon);
 
 
-        public static string DynamicFixedButtonIcons { get; } = nameof(DynamicFixedButtonIcons);
-        public static string DynamicFreeButtonIcons { get; } = nameof(DynamicFreeButtonIcons);
-        public static string FixedFixedButtonIcons { get; } = nameof(FixedFixedButtonIcons);
-        public static string FixedFreeButtonIcons { get; } = nameof(FixedFreeButtonIcons);
+        public static string DynamicFixedButtonIcon { get; } = nameof(DynamicFixedButtonIcon);
+        public static string DynamicFreeButtonIcon { get; } = nameof(DynamicFreeButtonIcon);
+        public static string FixedFixedButtonIcon { get; } = nameof(FixedFixedButtonIcon);
+        public static string FixedFreeButtonIcon { get; } = nameof(FixedFreeButtonIcon);
+
+        public static string RotateButtonIcon { get; } = nameof(RotateButtonIcon);
 
         static IMTTextures()
         {
@@ -100,6 +104,7 @@ namespace IMT.Utilities
             spriteParams[SetDefaultHeaderButton] = new RectOffset();
             spriteParams[UnsetDefaultHeaderButton] = new RectOffset();
             spriteParams[ApplyHeaderButton] = new RectOffset();
+            spriteParams[ApplyAllHeaderButton] = new RectOffset();
             spriteParams[PackageHeaderButton] = new RectOffset();
             spriteParams[ClearHeaderButton] = new RectOffset();
             spriteParams[EditHeaderButton] = new RectOffset();
@@ -112,6 +117,7 @@ namespace IMT.Utilities
             spriteParams[WholeStreetHeaderButton] = new RectOffset();
             spriteParams[LinkHeaderButton] = new RectOffset();
             spriteParams[UnlinkHeaderButton] = new RectOffset();
+            spriteParams[ResetHeaderButton] = new RectOffset();
 
             //OrderButtons
             spriteParams[TurnLeftOrderButton] = new RectOffset();
@@ -122,21 +128,23 @@ namespace IMT.Utilities
             spriteParams[ResetOrderButton] = new RectOffset();
 
             //ButtonIcons
-            spriteParams[AutoButtonIcons] = new RectOffset();
-            spriteParams[SingleButtonIcons] = new RectOffset();
-            spriteParams[RangeButtonIcons] = new RectOffset();
-            spriteParams[RegularButtonIcons] = new RectOffset();
-            spriteParams[BoldButtonIcons] = new RectOffset();
-            spriteParams[ItalicButtonIcons] = new RectOffset();
-            spriteParams[BoldItalicButtonIcons] = new RectOffset();
-            spriteParams[LeftToRightButtonIcons] = new RectOffset();
-            spriteParams[TopToBottomButtonIcons] = new RectOffset();
-            spriteParams[BottomToTopButtonIcons] = new RectOffset();
+            spriteParams[AutoButtonIcon] = new RectOffset();
+            spriteParams[SingleButtonIcon] = new RectOffset();
+            spriteParams[RangeButtonIcon] = new RectOffset();
+            spriteParams[RegularButtonIcon] = new RectOffset();
+            spriteParams[BoldButtonIcon] = new RectOffset();
+            spriteParams[ItalicButtonIcon] = new RectOffset();
+            spriteParams[BoldItalicButtonIcon] = new RectOffset();
+            spriteParams[LeftToRightButtonIcon] = new RectOffset();
+            spriteParams[TopToBottomButtonIcon] = new RectOffset();
+            spriteParams[BottomToTopButtonIcon] = new RectOffset();
 
-            spriteParams[DynamicFixedButtonIcons] = new RectOffset();
-            spriteParams[DynamicFreeButtonIcons] = new RectOffset();
-            spriteParams[FixedFixedButtonIcons] = new RectOffset();
-            spriteParams[FixedFreeButtonIcons] = new RectOffset();
+            spriteParams[DynamicFixedButtonIcon] = new RectOffset();
+            spriteParams[DynamicFreeButtonIcon] = new RectOffset();
+            spriteParams[FixedFixedButtonIcon] = new RectOffset();
+            spriteParams[FixedFreeButtonIcon] = new RectOffset();
+
+            spriteParams[RotateButtonIcon] = new RectOffset();
 
             //ListItem
             spriteParams[ListItemBackground] = new RectOffset(4, 4, 4, 4);

@@ -481,8 +481,6 @@ namespace IMT.Manager
         public override StyleType Type => StyleType.FillerStripe;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
-        protected static string Turn => string.Empty;
-
         public PropertyValue<float> Angle { get; }
         public PropertyValue<bool> FollowGuides { get; }
 
@@ -497,7 +495,6 @@ namespace IMT.Manager
                 yield return nameof(Angle);
                 yield return nameof(Offset);
                 yield return nameof(Guide);
-                yield return nameof(Turn);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -545,29 +542,7 @@ namespace IMT.Manager
             if (!isTemplate)
             {
                 components.Add(AddGuideProperty(this, filler.Contour, parent, true));
-                components.Add(AddTurnProperty(filler, parent, false));
             }
-        }
-
-        private ButtonPanel AddTurnProperty(MarkingFiller filler, UIComponent parent, bool canCollapse)
-        {
-            var turnButton = ComponentPool.Get<ButtonPanel>(parent, nameof(Turn));
-            turnButton.Text = Localize.StyleOption_Turn;
-            turnButton.CanCollapse = canCollapse;
-            turnButton.Init();
-
-            turnButton.OnButtonClick += () =>
-            {
-                var vertexCount = filler.Contour.ProcessedCount;
-
-                if (parent.Find<FillerGuidePropertyPanel>(Guide) is FillerGuidePropertyPanel guideProperty)
-                {
-                    guideProperty.LeftGuide = (guideProperty.LeftGuide + 1) % vertexCount;
-                    guideProperty.RightGuide = (guideProperty.RightGuide + 1) % vertexCount;
-                }
-            };
-
-            return turnButton;
         }
 
         protected override IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour)
@@ -700,7 +675,7 @@ namespace IMT.Manager
             if (!isTemplate)
             {
                 components.Add(AddGuideProperty(this, filler.Contour, parent, true));
-                components.Add(AddInvertAndTurnProperty(filler, parent, false));
+                components.Add(AddInvertProperty(parent, false));
             }
         }
 
@@ -723,32 +698,17 @@ namespace IMT.Manager
 
             return angleProperty;
         }
-        protected ButtonsPanel AddInvertAndTurnProperty(MarkingFiller filler, UIComponent parent, bool canCollapse)
+        protected ButtonPanel AddInvertProperty(UIComponent parent, bool canCollapse)
         {
-            var turnAndInvert = ComponentPool.Get<ButtonsPanel>(parent, "TurnAndInvert");
-            var invertIndex = turnAndInvert.AddButton(Localize.StyleOption_Invert);
-            var turnIndex = turnAndInvert.AddButton(Localize.StyleOption_Turn);
-            turnAndInvert.CanCollapse = canCollapse;
-            turnAndInvert.Init();
+            var buttonsPanel = ComponentPool.Get<ButtonPanel>(parent, nameof(Invert));
+            buttonsPanel.Text = Localize.StyleOption_Invert;
+            buttonsPanel.CanCollapse = canCollapse;
+            buttonsPanel.Init();
+            buttonsPanel.OnButtonClick += OnButtonClick;
 
-            turnAndInvert.OnButtonClick += (int buttonIndex) =>
-            {
-                if (buttonIndex == invertIndex)
-                {
-                    Invert.Value = !Invert;
-                }
-                else if (buttonIndex == turnIndex)
-                {
-                    var vertexCount = filler.Contour.ProcessedCount;
-                    if (parent.Find<FillerGuidePropertyPanel>(Guide) is FillerGuidePropertyPanel guideProperty)
-                    {
-                        guideProperty.LeftGuide = (guideProperty.LeftGuide + 1) % vertexCount;
-                        guideProperty.RightGuide = (guideProperty.RightGuide + 1) % vertexCount;
-                    }
-                }
-            };
+            void OnButtonClick() => Invert.Value = !Invert;
 
-            return turnAndInvert;
+            return buttonsPanel;
         }
 
         protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod)

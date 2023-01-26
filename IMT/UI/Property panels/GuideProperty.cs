@@ -1,7 +1,9 @@
 ﻿using ColossalFramework.UI;
 using IMT.Manager;
+using IMT.Utilities;
 using ModsCommon.UI;
 using System;
+using UnityEngine;
 
 namespace IMT.UI
 {
@@ -17,7 +19,9 @@ namespace IMT.UI
         private BoolSegmented FollowGuide { get; }
         protected SelectGuideButton LeftGuideSelector { get; set; }
         protected SelectGuideButton RightGuideSelector { get; set; }
+        protected MultyAtlasUIButton TurnButton { get; set; }
 
+        public int VertexCount { get; private set; }
         public FillerGuide LeftGuide
         {
             get => LeftGuideSelector.Value;
@@ -79,12 +83,26 @@ namespace IMT.UI
             RightGuideSelector.Button.eventMouseEnter += ButtonMouseEnter;
             RightGuideSelector.Button.eventMouseLeave += ButtonMouseLeave;
             RightGuideSelector.OnValueChanged += RightGuideChanged;
+
+            TurnButton = Content.AddUIComponent<MultyAtlasUIButton>();
+            TurnButton.SetDefaultStyle();
+            TurnButton.size = new Vector2(20f, 20f);
+            TurnButton.atlasForeground = IMTTextures.Atlas;
+            TurnButton.normalFgSprite = IMTTextures.RotateButtonIcon;
+            TurnButton.tooltip = IMT.Localize.StyleOption_Turn;
+            TurnButton.eventClick += TurnClick;
         }
 
+        public void Init(int vertexCount)
+        {
+            base.Init();
+            VertexCount = vertexCount;
+        }
         public override void DeInit()
         {
             base.DeInit();
 
+            VertexCount = 0;
             OnSelect = null;
             OnEnter = null;
             OnLeave = null;
@@ -117,6 +135,15 @@ namespace IMT.UI
         protected virtual void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(component.parent as SelectGuideButton);
         protected virtual void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnEnter?.Invoke(component.parent as SelectGuideButton);
         protected virtual void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(component.parent as SelectGuideButton);
+
+        protected virtual void TurnClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (VertexCount > 0)
+            {
+                LeftGuide = (LeftGuide + 1) % VertexCount;
+                RightGuide = (RightGuide + 1) % VertexCount;
+            }
+        }
 
         public class SelectGuideButton : SelectItemPropertyButton<FillerGuide>
         {

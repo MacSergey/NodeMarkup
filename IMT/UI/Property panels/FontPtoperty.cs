@@ -279,10 +279,10 @@ namespace IMT.UI
                             };
                             var sprite = style switch
                             {
-                                UnityEngine.FontStyle.Bold => IMTTextures.BoldButtonIcons,
-                                UnityEngine.FontStyle.Italic => IMTTextures.ItalicButtonIcons,
-                                UnityEngine.FontStyle.BoldAndItalic => IMTTextures.BoldItalicButtonIcons,
-                                _ => IMTTextures.RegularButtonIcons,
+                                UnityEngine.FontStyle.Bold => IMTTextures.BoldButtonIcon,
+                                UnityEngine.FontStyle.Italic => IMTTextures.ItalicButtonIcon,
+                                UnityEngine.FontStyle.BoldAndItalic => IMTTextures.BoldItalicButtonIcon,
+                                _ => IMTTextures.RegularButtonIcon,
                             };
 
                             FontStyleSelector.AddItem(style, label, IMTTextures.Atlas, sprite);

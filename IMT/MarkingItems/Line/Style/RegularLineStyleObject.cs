@@ -847,19 +847,19 @@ namespace IMT.Manager
     public enum DistributionType
     {
         [Description(nameof(Localize.StyleOption_DistributionFixedFree))]
-        [Sprite(nameof(IMTTextures.FixedFreeButtonIcons))]
+        [Sprite(nameof(IMTTextures.FixedFreeButtonIcon))]
         FixedSpaceFreeEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionFixedFixed))]
-        [Sprite(nameof(IMTTextures.FixedFixedButtonIcons))]
+        [Sprite(nameof(IMTTextures.FixedFixedButtonIcon))]
         FixedSpaceFixedEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionDynamicFree))]
-        [Sprite(nameof(IMTTextures.DynamicFreeButtonIcons))]
+        [Sprite(nameof(IMTTextures.DynamicFreeButtonIcon))]
         DynamicSpaceFreeEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionDynamicFixed))]
-        [Sprite(nameof(IMTTextures.DynamicFixedButtonIcons))]
+        [Sprite(nameof(IMTTextures.DynamicFixedButtonIcon))]
         DynamicSpaceFixedEnd,
     }
     public class DistributionTypePanel : EnumOncePropertyPanel<DistributionType, DistributionTypePanel.DistributionTypeSegmented>
