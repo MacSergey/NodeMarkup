@@ -31,6 +31,9 @@ namespace IMT.Tools
 
         protected override string InfoDrag => Localize.Tool_InfoRoadsDrag;
         protected override string InfoDrop => Localize.Tool_InfoRoadsDrop;
+        protected virtual string ApplyButtonText => Localize.Tool_Apply;
+        protected virtual string NotApplyButtonText => Localize.Tool_NotApply;
+        protected virtual bool AskBeforeApply => false;
 
         public IEnumerable<Shortcut> Shortcuts
         {
@@ -91,12 +94,21 @@ namespace IMT.Tools
             SetBaskets();
             Paste();
         }
-        protected virtual void ApplyClick() => Tool.SetDefaultMode();
-        protected virtual void NotApplyClick()
+        protected virtual void Exit(bool revert)
         {
-            SetBackup();
-            ApplyClick();
+            if(revert)
+                SetBackup();
+
+            Tool.SetDefaultMode();
         }
+        protected void ApplyClick()
+        {
+            if (AskBeforeApply)
+                AskOnExit();
+            else
+                Exit(false);
+        }
+        protected void NotApplyClick() => Exit(true);
         private void ResetClick() => Reset(null);
 
         private void Transform(Func<int, int> func)
@@ -162,16 +174,13 @@ namespace IMT.Tools
         protected abstract string EndCaption { get; }
         protected abstract string EndMessage { get; }
 
-        public override void OnSecondaryMouseClicked() => Exit();
+        public override void OnSecondaryMouseClicked() => AskOnExit();
         public override bool OnEscape()
         {
-            Exit();
+            AskOnExit();
             return true;
         }
-
-        protected virtual string ApplyButtonText => Localize.Tool_Apply;
-        protected virtual string NotApplyButtonText => Localize.Tool_NotApply;
-        private void Exit()
+        private void AskOnExit()
         {
             var messageBox = MessageBox.Show<ThreeButtonMessageBox>();
             messageBox.CaptionText = EndCaption;
@@ -185,12 +194,12 @@ namespace IMT.Tools
 
             bool OnApply()
             {
-                ApplyClick();
+                Exit(false);
                 return true;
             }
             bool OnNotApply()
             {
-                NotApplyClick();
+                Exit(true);
                 return true;
             }
         }
@@ -238,30 +247,30 @@ namespace IMT.Tools
         }
     }
 
-    public class PasteEntersOrderToolMode : BaseEntersOrderToolMode
-    {
-        public override ToolModeType Type => ToolModeType.PasteEntersOrder;
-        protected override string EndCaption => Localize.Tool_EndPasteOrderCaption;
-        protected override string EndMessage => Localize.Tool_EndPasteOrderMessage;
-    }
+
     public class EditEntersOrderToolMode : BaseEntersOrderToolMode
     {
         public override ToolModeType Type => ToolModeType.EditEntersOrder;
         protected override string EndCaption => Localize.Tool_EndEditOrderCaption;
         protected override string EndMessage => Localize.Tool_EndEditOrderMessage;
     }
-    public class LinkPresetToolMode : BaseEntersOrderToolMode
+    public class PasteMarkingToolMode : BaseEntersOrderToolMode
     {
-        public string RoadName { get; set; }
-        public override ToolModeType Type => ToolModeType.LinkPreset;
-        protected override string EndCaption => Localize.Tool_EndLinkPresetCaption;
-        protected override string EndMessage => Localize.Tool_EndLinkPresetMessage;
-        protected override string ApplyButtonText => Localize.Tool_Link;
-        protected override string NotApplyButtonText => Localize.Tool_NotLink;
-
-        protected override void ApplyClick()
+        public override ToolModeType Type => ToolModeType.PasteMarking;
+        protected override string EndCaption => Localize.Tool_EndPasteMarkingCaption;
+        protected override string EndMessage => Localize.Tool_EndPasteMArkingMessage;
+    }
+    public class ApplyPresetToolMode : BaseEntersOrderToolMode
+    {
+        public override ToolModeType Type => ToolModeType.ApplyPreset;
+        protected override string EndCaption => Localize.Tool_EndApplyPresetCaption;
+        protected override string EndMessage => Localize.Tool_EndApplyPresetMessage;
+    }
+    public abstract class BaseApplyPresetToolMode : BaseEntersOrderToolMode 
+    {
+        protected bool Flip
         {
-            if (!string.IsNullOrEmpty(RoadName) && Marking.Type == MarkingType.Segment)
+            get
             {
                 var firstId = TargetEnters[0].Enter.Id;
                 var secondId = TargetEnters[1].Enter.Id;
@@ -273,13 +282,50 @@ namespace IMT.Tools
                 var segmentInverted = (segment.m_flags & NetSegment.Flags.Invert) != 0;
                 var flip = Sources[0].Target != Targets[0];
                 flip ^= segmentInverted;
-                flip ^= (!firstIsStart || !secondIsEnd);
+                flip ^= !firstIsStart || !secondIsEnd;
 
+                return flip;
+            }
+        }
+    }
+    public class ApplyAllPresetToolMode : BaseApplyPresetToolMode
+    {
+        public override ToolModeType Type => ToolModeType.ApplyAllPreset;
+        protected override string EndCaption => Localize.Tool_EndApplyPresetCaption;
+        protected override string EndMessage => string.Format(Localize.Tool_EndApplyAllPresetMessage, Marking.Id.GetSegment().Info.name);
+        protected override bool AskBeforeApply => true;
+
+        protected override void Exit(bool revert)
+        {
+            if (!revert && Marking.Type == MarkingType.Segment)
+            {
+                var info = Marking.Id.GetSegment().Info;
+                var flip = Flip;
+                var invert = Invert;
+                Tool.ApplyPresetToAsset(info, IntersectionTemplate, flip, invert);
+            }
+            base.Exit(revert);
+        }
+    }
+    public class LinkPresetToolMode : BaseApplyPresetToolMode
+    {
+        public string RoadName { get; set; }
+        public override ToolModeType Type => ToolModeType.LinkPreset;
+        protected override string EndCaption => Localize.Tool_EndLinkPresetCaption;
+        protected override string EndMessage => Localize.Tool_EndLinkPresetMessage;
+        protected override string ApplyButtonText => Localize.Tool_Link;
+        protected override string NotApplyButtonText => Localize.Tool_NotLink;
+
+        protected override void Exit(bool revert)
+        {
+            if (!revert && !string.IsNullOrEmpty(RoadName) && Marking.Type == MarkingType.Segment)
+            {
+                var flip = Flip;
                 var invert = Invert;
                 SingletonManager<RoadTemplateManager>.Instance.SavePreset(RoadName, IntersectionTemplate.Id, flip, invert);
                 Panel.UpdatePanel();
             }
-            base.ApplyClick();
+            base.Exit(revert);
         }
         public override void Deactivate()
         {

@@ -2,6 +2,7 @@
 using ColossalFramework.Importers;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
+using Epic.OnlineServices.Presence;
 using HarmonyLib;
 using IMT.Manager;
 using IMT.UI;
@@ -14,9 +15,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Xml.Linq;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
+using static NetInfo;
 
 namespace IMT.Tools
 {
@@ -123,7 +126,9 @@ namespace IMT.Tools
             yield return CreateToolMode<MakeCrosswalkToolMode>();
             yield return CreateToolMode<MakeFillerToolMode>();
             yield return CreateToolMode<DragPointToolMode>();
-            yield return CreateToolMode<PasteEntersOrderToolMode>();
+            yield return CreateToolMode<PasteMarkingToolMode>();
+            yield return CreateToolMode<ApplyPresetToolMode>();
+            yield return CreateToolMode<ApplyAllPresetToolMode>();
             yield return CreateToolMode<EditEntersOrderToolMode>();
             yield return CreateToolMode<LinkPresetToolMode>();
             yield return CreateToolMode<PointsOrderToolMode>();
@@ -185,27 +190,6 @@ namespace IMT.Tools
                 return true;
             }
         }
-        private void ResetAllOffsets()
-        {
-            SingletonMod<Mod>.Logger.Debug($"Reset all points offsets");
-
-            if (Settings.DeleteWarnings)
-            {
-                var messageBox = MessageBox.Show<YesNoMessageBox>();
-                messageBox.CaptionText = Localize.Tool_ResetOffsetsCaption;
-                messageBox.MessageText = $"{string.Format(Localize.Tool_ResetOffsetsMessage, Marking.Id)}\n{IntersectionMarkingToolMessageBox.CantUndone}";
-                messageBox.OnButton1Click = Reset;
-            }
-            else
-                Reset();
-
-            bool Reset()
-            {
-                Marking.ResetOffsets();
-                Panel.UpdatePanel();
-                return true;
-            }
-        }
         public void DeleteItem<T>(T item, Action<T> onDelete)
             where T : IDeletable
         {
@@ -244,6 +228,27 @@ namespace IMT.Tools
             return $"{Localize.Tool_DeleteDependence}\n{string.Join(", ", strings)}.";
         }
 
+        private void ResetAllOffsets()
+        {
+            SingletonMod<Mod>.Logger.Debug($"Reset all points offsets");
+
+            if (Settings.DeleteWarnings)
+            {
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
+                messageBox.CaptionText = Localize.Tool_ResetOffsetsCaption;
+                messageBox.MessageText = $"{string.Format(Localize.Tool_ResetOffsetsMessage, Marking.Id)}\n{IntersectionMarkingToolMessageBox.CantUndone}";
+                messageBox.OnButton1Click = Reset;
+            }
+            else
+                Reset();
+
+            bool Reset()
+            {
+                Marking.ResetOffsets();
+                Panel.UpdatePanel();
+                return true;
+            }
+        }
         private void CopyMarking()
         {
             SingletonMod<Mod>.Logger.Debug($"Copy marking");
@@ -269,7 +274,20 @@ namespace IMT.Tools
 
             bool Paste()
             {
-                ApplyMarking(MarkingBuffer);
+                ObjectsMap map = GetMap(MarkingBuffer);
+
+                if (map != null)
+                {
+                    Marking.Clear();
+                    Marking.FromXml(SingletonMod<Mod>.Version, MarkingBuffer.Data, map);
+                    Panel.UpdatePanel();
+                }
+                else
+                {
+                    BaseOrderToolMode.IntersectionTemplate = MarkingBuffer;
+                    SetMode(ToolModeType.PasteMarking);
+                }
+
                 return true;
             }
         }
@@ -292,24 +310,7 @@ namespace IMT.Tools
 
             SetMode(ToolModeType.LinkPreset);
         }
-        public void ApplyIntersectionTemplate(IntersectionTemplate template)
-        {
-            SingletonMod<Mod>.Logger.Debug($"Apply intersection template");
-            ApplyMarking(template);
-        }
-        public void ApplyAllIntersectionTemplate(IntersectionTemplate template)
-        {
-            if (Marking.Type == MarkingType.Segment)
-            {
-                var segmentId = Marking.Id;
-                ref var segment = ref segmentId.GetSegment();
-                if (segment.Info != null)
-                {
-                    SingletonMod<Mod>.Logger.Debug($"Apply intersection template to all segments of asset {segment.Info.name}");
-                    ApplyMarking(template);
-                }
-            }
-        }
+
         private void CreateEdgeLines()
         {
             SingletonMod<Mod>.Logger.Debug($"Create edge lines");
@@ -347,7 +348,64 @@ namespace IMT.Tools
                 Marking.CutLinesByCrosswalk(crosswalk);
         }
 
-        private void ApplyMarking(IntersectionTemplate source)
+        #region APPLY
+
+        public void ApplyIntersectionTemplate(IntersectionTemplate template)
+        {
+            SingletonMod<Mod>.Logger.Debug($"Apply intersection template");
+
+            ObjectsMap map = GetMap(template);
+
+            if (map != null)
+            {
+                Marking.Clear();
+                Marking.FromXml(SingletonMod<Mod>.Version, template.Data, map);
+                Panel.UpdatePanel();
+            }
+            else
+            {
+                BaseOrderToolMode.IntersectionTemplate = template;
+                SetMode(ToolModeType.ApplyPreset);
+            }
+        }
+        public void ApplyAllIntersectionTemplate(IntersectionTemplate template)
+        {
+            if (Marking.Type == MarkingType.Segment)
+            {
+                var segmentId = Marking.Id;
+                ref var sourceSegment = ref segmentId.GetSegment();
+                if (sourceSegment.Info != null)
+                {
+                    if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(sourceSegment.Info.name, out var presetId, out var flip, out var invert) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset))
+                    {
+                        ApplyPresetToAsset(sourceSegment.Info, preset, flip, invert);
+                    }
+                    else
+                    {
+                        BaseOrderToolMode.IntersectionTemplate = template;
+                        SetMode(ToolModeType.ApplyAllPreset);
+                    }
+                }
+            }
+        }
+        public void ApplyPresetToAsset(NetInfo info, IntersectionTemplate preset, bool flip, bool invert)
+        {
+            SingletonMod<Mod>.Logger.Debug($"Apply intersection template to all segments of asset {info.name}");
+
+            for (ushort i = 0; i < NetManager.MAX_SEGMENT_COUNT; i += 1)
+            {
+                ref var segment = ref i.GetSegment();
+
+                if ((segment.m_flags & NetSegment.Flags.Created) == 0)
+                    continue;
+
+                if (segment.Info != info)
+                    continue;
+
+                ApplyLinkedMarking(preset, i, segment.m_startNode, segment.m_endNode, flip, invert);
+            }
+        }
+        private ObjectsMap GetMap(IntersectionTemplate source)
         {
             ObjectsMap map = null;
             if (Settings.AutoApplyPasting && Marking.EntersCount == source.Enters.Length)
@@ -405,58 +463,54 @@ namespace IMT.Tools
                     }
                 }
             }
-
-            if (map != null)
-            {
-                Marking.Clear();
-                Marking.FromXml(SingletonMod<Mod>.Version, source.Data, map);
-                Panel.UpdatePanel();
-            }
-            else
-            {
-                BaseOrderToolMode.IntersectionTemplate = source;
-                SetMode(ToolModeType.PasteEntersOrder);
-            }
+            return map;
         }
         public static void ApplyDefaultMarking(NetInfo info, ushort segmentId, ushort startNode, ushort endNode)
         {
-            if (SegmentMarkingManager.RemovedMarking is IntersectionTemplate removed)
-            {
-                var firstNode = removed.Enters[0].Id;
-                var secondNode = removed.Enters[1].Id;
-
-                if (startNode == firstNode && endNode == secondNode || startNode == secondNode && endNode == firstNode)
-                {
-                    var marking = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
-                    var map = new ObjectsMap();
-                    map.AddNode(startNode, endNode);
-                    map.AddNode(endNode, startNode);
-                    marking.FromXml(SingletonMod<Mod>.Version, removed.Data, map);
-                    return;
-                }
-            }
-
-            if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var presetId, out var flip, out var invert) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset))
-            {
-                var marking = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
-                ref var segment = ref segmentId.GetSegment();
-                flip ^= (segment.m_flags & NetSegment.Flags.Invert) != 0;
-
-                var map = new ObjectsMap(invert);
-                map.AddNode(preset.Enters[0].Id, !flip ? startNode : endNode);
-                map.AddNode(preset.Enters[1].Id, !flip ? endNode : startNode);
-                if (invert)
-                {
-                    foreach (var enter in marking.Enters)
-                        map.AddInvertEnter(enter);
-                }
-
-                marking.FromXml(SingletonMod<Mod>.Version, preset.Data, map);
+            if (SegmentMarkingManager.RemovedMarking is IntersectionTemplate removed && ApplyRemovedMarking(removed, segmentId, startNode, endNode))
                 return;
-            }
+
+            if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var presetId, out var flip, out var invert) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset) && ApplyLinkedMarking(preset, segmentId, startNode, endNode, flip, invert))
+                return;
 
             if (Settings.ApplyMarkingFromAssets)
                 SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segmentId, startNode, endNode);
+        }
+        private static bool ApplyRemovedMarking(IntersectionTemplate removed, ushort segmentId, ushort startNode, ushort endNode)
+        {
+            var firstNode = removed.Enters[0].Id;
+            var secondNode = removed.Enters[1].Id;
+
+            if (startNode == firstNode && endNode == secondNode || startNode == secondNode && endNode == firstNode)
+            {
+                var marking = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
+                var map = new ObjectsMap();
+                map.AddNode(startNode, endNode);
+                map.AddNode(endNode, startNode);
+                marking.FromXml(SingletonMod<Mod>.Version, removed.Data, map);
+                return true;
+            }
+
+            return false;
+        }
+        private static bool ApplyLinkedMarking(IntersectionTemplate preset, ushort segmentId, ushort startNode, ushort endNode, bool flip, bool invert)
+        {
+            var marking = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
+            ref var segment = ref segmentId.GetSegment();
+            flip ^= (segment.m_flags & NetSegment.Flags.Invert) != 0;
+
+            var map = new ObjectsMap(invert);
+            map.AddNode(preset.Enters[0].Id, !flip ? startNode : endNode);
+            map.AddNode(preset.Enters[1].Id, !flip ? endNode : startNode);
+            if (invert)
+            {
+                foreach (var enter in marking.Enters)
+                    map.AddInvertEnter(enter);
+            }
+
+            marking.Clear();
+            marking.FromXml(SingletonMod<Mod>.Version, preset.Data, map);
+            return true;
         }
 
         private int[] MatchMarkings(int[] source, int[] target)
@@ -574,7 +628,6 @@ namespace IMT.Tools
                 return null;
             }
         }
-
         void Apply(ushort startSegmentId, ushort nearNodeId, ushort farNodeId, NetInfo info, XElement config, SegmentGetter segmentGetter)
         {
             var nodeId = (ushort?)nearNodeId;
@@ -598,7 +651,6 @@ namespace IMT.Tools
                     break;
             }
         }
-
         ushort? ApplyToNode(ushort nodeId, ushort beforeSegmentId, ushort nearNodeId, ushort farNodeId, XElement config, SegmentGetter nextGetter)
         {
             ref var node = ref nodeId.GetNode();
@@ -618,7 +670,6 @@ namespace IMT.Tools
 
             return nextSegmentId;
         }
-
         ushort? ApplyToSegment(ushort segmentId, ushort beforeNodeId, ushort nearNodeId, ushort farNodeId, NetInfo info, XElement config)
         {
             ref var segment = ref segmentId.GetSegment();
@@ -637,6 +688,9 @@ namespace IMT.Tools
             return nextNodeId;
         }
 
+        #endregion
+
+        #region SCREENSHOT
 
         private int ScreenshotSize => 400;
 
@@ -788,6 +842,8 @@ namespace IMT.Tools
 
         #endregion
 
+        #endregion
+
         #region UTILITIES
 
         public TStyle GetStyleByModifier<TStyle, TStyleType>(NetworkType networkType, LineType lineType, TStyleType ifNotFound, bool allowNull = false)
@@ -934,19 +990,21 @@ namespace IMT.Tools
     {
         None = 0,
 
-        Select = 1,
-        MakeLine = 2,
-        MakeCrosswalk = 4,
-        MakeFiller = 8,
-        PanelAction = 16,
-        PasteEntersOrder = 32,
-        EditEntersOrder = 64,
-        LinkPreset = 128,
-        PointsOrder = 256,
-        DragPoint = 512,
+        Select = 1 << 0,
+        MakeLine = 1 << 1,
+        MakeCrosswalk = 1 << 2,
+        MakeFiller = 1 << 3,
+        PanelAction = 1 << 4,
+        PasteMarking = 1 << 5,
+        ApplyPreset = 1 << 6,
+        ApplyAllPreset = 1 << 7,
+        EditEntersOrder = 1 << 8,
+        LinkPreset = 1 << 9,
+        PointsOrder = 1 << 10,
+        DragPoint = 1 << 11,
 
         MakeItem = MakeLine | MakeCrosswalk,
-        Order = PasteEntersOrder | EditEntersOrder | LinkPreset | PointsOrder,
+        Order = ApplyPreset | EditEntersOrder | LinkPreset | PointsOrder,
     }
     public interface IShortcutMode
     {

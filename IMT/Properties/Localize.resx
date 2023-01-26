@@ -798,12 +798,6 @@ The restored templates will replace all existing templates.</value>
   <data name="Tool_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="Tool_EndPasteOrderCaption" xml:space="preserve">
-    <value>Exit paste mode</value>
-  </data>
-  <data name="Tool_EndPasteOrderMessage" xml:space="preserve">
-    <value>Do you want to exit paste mode and apply changes?</value>
-  </data>
   <data name="Tool_NotApply" xml:space="preserve">
     <value>Don't apply</value>
   </data>
@@ -947,10 +941,10 @@ To create a preset, click «{0}» at the panel header.</value>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>New preset</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderCaption" xml:space="preserve">
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
     <value>Exit applying preset mode</value>
   </data>
-  <data name="Tool_EndApplyPresetOrderMessage" xml:space="preserve">
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
     <value>Do you want to apply a preset?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
@@ -1853,5 +1847,15 @@ underground mode</value>
   </data>
   <data name="HeaderPanel_StyleReset" xml:space="preserve">
     <value>Reset to default</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>Do you want to apply a preset to all segments of asset "{0}"?
+It can take time if there are a lot of segments.</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>Exit paste marking mode</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>Do you want to apply marking?</value>
   </data>
 </root>

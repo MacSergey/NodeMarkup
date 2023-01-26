@@ -1071,16 +1071,6 @@ namespace IMT
 		public static string Tool_Continue => LocaleManager.GetString("Tool_Continue", Culture);
 
 		/// <summary>
-		/// Exit paste mode
-		/// </summary>
-		public static string Tool_EndPasteOrderCaption => LocaleManager.GetString("Tool_EndPasteOrderCaption", Culture);
-
-		/// <summary>
-		/// Do you want to exit paste mode and apply changes?
-		/// </summary>
-		public static string Tool_EndPasteOrderMessage => LocaleManager.GetString("Tool_EndPasteOrderMessage", Culture);
-
-		/// <summary>
 		/// Don't apply
 		/// </summary>
 		public static string Tool_NotApply => LocaleManager.GetString("Tool_NotApply", Culture);
@@ -1268,12 +1258,12 @@ namespace IMT
 		/// <summary>
 		/// Exit applying preset mode
 		/// </summary>
-		public static string Tool_EndApplyPresetOrderCaption => LocaleManager.GetString("Tool_EndApplyPresetOrderCaption", Culture);
+		public static string Tool_EndApplyPresetCaption => LocaleManager.GetString("Tool_EndApplyPresetCaption", Culture);
 
 		/// <summary>
 		/// Do you want to apply a preset?
 		/// </summary>
-		public static string Tool_EndApplyPresetOrderMessage => LocaleManager.GetString("Tool_EndApplyPresetOrderMessage", Culture);
+		public static string Tool_EndApplyPresetMessage => LocaleManager.GetString("Tool_EndApplyPresetMessage", Culture);
 
 		/// <summary>
 		/// Author
@@ -2564,5 +2554,20 @@ namespace IMT
 		/// Reset to default
 		/// </summary>
 		public static string HeaderPanel_StyleReset => LocaleManager.GetString("HeaderPanel_StyleReset", Culture);
+
+		/// <summary>
+		/// Do you want to apply a preset to all segments of asset "{0}"?
+		/// </summary>
+		public static string Tool_EndApplyAllPresetMessage => LocaleManager.GetString("Tool_EndApplyAllPresetMessage", Culture);
+
+		/// <summary>
+		/// Exit paste marking mode
+		/// </summary>
+		public static string Tool_EndPasteMarkingCaption => LocaleManager.GetString("Tool_EndPasteMarkingCaption", Culture);
+
+		/// <summary>
+		/// Do you want to apply marking?
+		/// </summary>
+		public static string Tool_EndPasteMArkingMessage => LocaleManager.GetString("Tool_EndPasteMArkingMessage", Culture);
 	}
 }
