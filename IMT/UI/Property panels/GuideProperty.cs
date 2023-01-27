@@ -110,6 +110,7 @@ namespace IMT.UI
             FollowGuide.isVisible = true;
             LeftGuideSelector.isEnabled = true;
             RightGuideSelector.isEnabled = true;
+            TurnButton.isEnabled = true;
         }
 
         private void FollowChanged(bool value)
@@ -128,8 +129,10 @@ namespace IMT.UI
 
         private void Refresh()
         {
-            LeftGuideSelector.isEnabled = !FollowGuide.isVisible || FollowGuide.SelectedObject;
-            RightGuideSelector.isEnabled = !FollowGuide.isVisible || FollowGuide.SelectedObject;
+            var isEnabled = !FollowGuide.isVisible || FollowGuide.SelectedObject;
+            LeftGuideSelector.isEnabled = isEnabled;
+            RightGuideSelector.isEnabled = isEnabled;
+            TurnButton.isEnabled = isEnabled;
         }
 
         protected virtual void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(component.parent as SelectGuideButton);

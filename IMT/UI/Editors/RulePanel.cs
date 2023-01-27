@@ -83,7 +83,7 @@ namespace IMT.UI.Editors
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnCopy += CopyStyle;
             Header.OnPaste += PasteStyle;
-            Header.OnPaste += ResetStyle;
+            Header.OnReset += ResetStyle;
         }
 
         private void AddError()
