@@ -487,9 +487,6 @@ Para criar uma passadeira pressione {0}.</value>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Largura da linha</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Paralelo as vias</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Linhas solidas paralelas</value>
   </data>

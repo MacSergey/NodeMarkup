@@ -474,9 +474,6 @@ Para crear un paso de peatones, mantener presionada la tecla {0}.</value>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Ancho de línea</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Paralelo a los carriles</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Líneas paralelas continuas</value>
   </data>
@@ -862,6 +859,12 @@ Para crear un preajuste, haga clic en «{0}» en la cabecera del panel.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nuevo preajuste</value>
+  </data>
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
+    <value>Salir del modo de aplicación de preajuste</value>
+  </data>
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
+    <value>¿Desa aplicar el preajuste?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autor</value>
@@ -1397,9 +1400,6 @@ para modo subterráneo</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Más opciones</value>
   </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>Colapsar opciones adicionales de estilo</value>
-  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Color principal</value>
   </data>
@@ -1647,10 +1647,119 @@ para modo subterráneo</value>
 [FIXED] Redes/adornos/árboles que eran agregado por IMT son visibles en la captura de pantalla del preajuste.
 [FIXED] Se corrigió que los rellenos no se actualizaran después de seleccionar las guías de relleno.</value>
   </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>Aplicar preajuste a todos los segmentos de este recurso</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>Restaurar predeterminado</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>¿Desea aplicar el preajuste a todos los segmentos del recurso "{0}"?
+Puede demorar un tiempo si hay muchos segmentos.</value>
+  </data>
   <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
     <value>Salir del modo de pegar marcas</value>
   </data>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
     <value>¿Quiere aplicar lar marcas?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Densidad</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Escala</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Grietas</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Vacíos</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Densidad de textura</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Adicional</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Efectos gráficos</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Principal</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>Aplicar a todos los elementos</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>Aplicar a todas las reglas</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>Aplicar a todos los pasos de peatones</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>Aplicar a todos los "{0}" pasos de peatones</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>Aplicar a todos los rellenos</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>Aplicar a todos los "{0}" rellenos</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>Aplicar a todas las líneas</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>Aplicar a todas las "{0}" líneas</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>Aplicar a todas las líneas de parada</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>Aplicar a todas las "{0}" líneas de parada</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>Copiar efectos</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>Pegar efectos</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>Ambos</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>Final</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Final fijo</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Máx</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Mín</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Límites</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>No paralelo</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>Paralelo a las líneas y final en pendiente</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>Paralelo a las líneas y final recto</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Tipo de guiones</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Invertir red</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Dos diferentes</value>
   </data>
 </root>

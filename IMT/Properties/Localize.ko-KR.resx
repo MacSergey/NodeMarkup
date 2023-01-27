@@ -474,9 +474,6 @@
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>두께</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>차선에 평행하게 생성</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>평행한 실선</value>
   </data>
@@ -1404,9 +1401,6 @@
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>상세 설정</value>
   </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>추가 스타일 설정 접기</value>
-  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>주 색상</value>
   </data>
@@ -1637,6 +1631,23 @@
   <data name="Tool_NotLink" xml:space="preserve">
     <value>연결 안 함</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[신규] '내용' 선 스타일을 추가했습니다. 도로에 마음대로 글씨를 쓸 수 있으며, 시스템에 있는 모든 글꼴 중에서 글꼴을 지정할 수 있습니다.
+[신규] 프리셋을 네트워크 에셋에 연결하는 기능을 추가했습니다. 도로가 지어질 때 자동 적용됩니다.
+[신규] '차선' 선 스타일을 추가했습니다. 차선 한가운데에 프롭/나무/네트워크/글자를 쉽게 배치할 수 있습니다.
+[신규] '지그재그' 선 스타일을 추가했습니다.
+[신규] 에셋 편집기에서 여러 도로 높이(경사로, 터널)에 대해 다른 마킹을 지정하여 저장할 수 있습니다.
+[신규] 차선에 모서리 선을 자동 생성하도록 했습니다. 모드 설정에서 끌 수 있습니다.
+[신규] 프롭/나무에 분포 설정을 추가했습니다. 선 끝에 프롭/나무를 고정하고 동적으로 간격을 설정할 수 있습니다.
+[신규] 네트워크 시프트 값을 반전시키는 기능을 추가했습니다.
+[신규] 마킹 붙여넣기 모드에 대한 단축키를 추가했습니다.
+[변경] 더는 점을 드래그할 때 Ctrl 키를 누르지 않아도 됩니다. 기존 방식(Ctrl 키를 누른 채 이동)은 모드 설정에서 켤 수 있습니다.
+[수정] 선과 필러가 최대한 경사 구간을 따라가도록 수정했습니다. 아직 어떤 경우에는 완벽하지 않지만 전보다는 훨씬 낫습니다.
+[수정] 인도 포장 선이 필러를 정확히 따라옵니다.
+[수정] 비대칭 스타일의 값이 잘못 반전된 채로 붙여넣어지는 현상을 수정했습니다.
+[수정] 이 모드로 추가한 네트워크/프롭/나무를 프리셋 스크린샷에서 볼 수 있습니다.
+[수정] 필러 가이드를 선택한 뒤 필러가 갱신되지 않는 현상을 수정했습니다.</value>
+  </data>
   <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
     <value>이 에셋의 모든 구간에 프리셋 적용</value>
   </data>
@@ -1652,5 +1663,86 @@
   </data>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
     <value>마킹을 적용하시겠습니까?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>밀도</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>스케일</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>균열</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>공백</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>텍스처 밀도</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>추가 설정</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>그래픽 효과</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>모든 항목에 적용</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>모든 규칙에 적용</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>모든 횡단보도에 적용</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>모든 "{0}" 횡단보도에 적용</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>모든 필터에 적용</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>모든 "{0}" 필터에 적용</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>모든 선에 적용</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>모든 "{0}" 선에 적용</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>모든 정지선에 적용</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>모든 "{0}" 정지선에 적용</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>효과 복사</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>효과 붙여넣기</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>모두</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>끝</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>시작</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>끝 고정</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>최대</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>최소</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>제한</value>
   </data>
 </root>

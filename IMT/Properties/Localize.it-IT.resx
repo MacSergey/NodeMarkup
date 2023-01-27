@@ -502,9 +502,6 @@ Per crearli tieni premuto {0}.</value>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Spessore linea</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Parallelo alle corsie</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Doppia linea continua</value>
   </data>
@@ -1396,6 +1393,19 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Nome della strada</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_9" xml:space="preserve">
+    <value>[NOVITÀ] Aggiunta la possibilità di salvare i valori di offset dei punti per ogni strada.
+[NOVITÀ] Aggiunta l'opzione spazio agli stili di strisce pedonali zebra e doppia zebra. Permette di impostare uno spazio diverso ogni N trattini.
+[NOVITÀ] Aggiunti punti di intersezione alle linee da un punto diviso con allineamento diverso.
+[NOVITÀ] Aggiunte impostazioni di ordinamento di modelli, preimpostazioni ed elenco di applicazione.
+[NOVITÀ] Aggiunto il raggruppamento dei modelli in base all'adattamento (Perfetto/Vicino/Possibile/Scarso).
+[NOVITÀ] Aggiunta l'illuminazione alla marcatura durante la modifica notturna.
+[NOVITÀ] Aggiunta illuminazione al cursore come strumento di gioco predefinito.
+[NOVITÀ] Aggiunta opzione per posizionare i segnali sotto i passaggi a livello. Può essere disabilitato nelle impostazioni mod.
+[NOVITÀ] Aggiunto il terzo punto (centrale) alle vie di rullaggio/piste.
+[RISOLTO] Risolto errore durante il salvataggio del modello come risorsa.
+[RISOLTO] Risolto errore di calcolo delle strisce pedonali.</value>
+  </data>
   <data name="LineStyle_Prop" xml:space="preserve">
     <value>Proprietà</value>
   </data>
@@ -1450,6 +1460,74 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="StyleOption_SharkToothAngle" xml:space="preserve">
     <value>Angolo</value>
   </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Network Decorativo</value>
+  </data>
+  <data name="StyleOption_NetWidthScale" xml:space="preserve">
+    <value>Larghezza</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Distanza di Ripetizione</value>
+  </data>
+  <data name="StyleOption_AssetNetwork" xml:space="preserve">
+    <value>Assetto del Network</value>
+  </data>
+  <data name="StyleOption_AssetNotSet" xml:space="preserve">
+    <value>Non Impostato</value>
+  </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>Assetto dell'Oggetto</value>
+  </data>
+  <data name="StyleOption_AssetTree" xml:space="preserve">
+    <value>Assetto dell'Albero</value>
+  </data>
+  <data name="AssetPopup_NothingFound" xml:space="preserve">
+    <value>Nessun risultato</value>
+  </data>
+  <data name="Settings_AutoApplyPasting" xml:space="preserve">
+    <value>Applica automaticamente marcatura incolla se la fonte corrisponde</value>
+  </data>
+  <data name="StyleOption_ObjectProbability" xml:space="preserve">
+    <value>Probabilità</value>
+  </data>
+  <data name="StyleOption_ObjectRange" xml:space="preserve">
+    <value>Raggio</value>
+  </data>
+  <data name="StyleOption_ObjectStatic" xml:space="preserve">
+    <value>Singolo</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10" xml:space="preserve">
+    <value>[NOVITÀ] Aggiunti gli stili della linea dell'albero e dell'oggetto. Consentono di posizionare qualsiasi sostegno o albero sulle linee. Questi oggetti non vengono conteggiati nel gioco e nei limiti dell'albero.
+[NOVITÀ] Aggiunto lo stile della linea di rete decorativa. Permette di posizionare qualsiasi rete decorativa come recinzione su linee. Tali reti non vengono conteggiate nei limiti del nodo e del segmento di gioco.
+[NOVITÀ] Aggiunta la possibilità di utilizzare i segnali sui binari del treno, della metropolitana e sui percorsi pedonali.
+[NOVITÀ] Aggiunto il contrassegno di applicazione automatica quando viene incollato dal buffer o preimpostato se l'intersezione di destinazione corrisponde all'intersezione di origine. Può essere disabilitato nelle impostazioni mod.
+[NOVITÀ] Aggiunta la possibilità di disattivare il ritaglio del marciapiede.
+[NOVITÀ] Il ritaglio del marciapiede è disponibile per i segmenti.
+[AGGIORNATO] La rete di riempimento 3D si estende al di sotto della superficie stradale per evitare spazi vuoti sui nodi del pendio.
+[AGGIORNATO] Aggiunta la possibilità di ruotare i denti di squalo.
+[RISOLTO] Risolto il problema con la sovrapposizione durante la selezione di nodi così grandi.
+[RISOLTO] Corretta l'ombra sulla linea del marciapiede.
+[AGGIORNATO] Aggiunto formato numerico (m, %, °) a tutte le proprietà.
+[RISOLTO] Risolti i punti di riempimento mancanti all'intersezione tra le linee normali.
+[TRADUZIONE] Aggiunta lingua rumena.</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectAndInvert" xml:space="preserve">
+    <value>Ordine diretto e inverso</value>
+  </data>
+  <data name="Settings_AutoApplyPastingDirectOnly" xml:space="preserve">
+    <value>Solo ordine diretto</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_1" xml:space="preserve">
+    <value>[AGGIORNATO] L'applicazione automatica della marcatura è abilitata solo quando esiste una sola opzione possibile per incollare la marcatura.
+[NOVITÀ] Aggiunta l'opzione 'Solo ordine diretto' e 'Ordine diretto e invertito' all'applicazione automatica del contrassegno.
+[FISSO] Correzione del calcolo e dell'illuminazione dei riempitivi.
+[AGGIORNATO] Il pulsante 'Colore predefinito' sul selettore colore imposta il colore predefinito dello stile anziché il colore predefinito della mod.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_10_2" xml:space="preserve">
+    <value>[AGGIORNATO] Aggiunto il supporto del DLC Plazas &amp; Promenades.
+[NOVITÀ] Aggiunto il supporto per la modifica della schermata di caricamento.
+[RISOLTO] Risolto il problema con l'interfaccia utente che lampeggiava durante la ricerca di oggetti di scena/alberi/reti.</value>
+  </data>
   <data name="StyleOption_Slope" xml:space="preserve">
     <value>Pendenza</value>
   </data>
@@ -1480,5 +1558,319 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="Tool_InfoUnderground" xml:space="preserve">
     <value>Tieni premuto {0} per
 modalità sotterranea</value>
+  </data>
+  <data name="Settings_LODDistanceMarking" xml:space="preserve">
+    <value>Segnando la distanza LOD 2D</value>
+  </data>
+  <data name="Settings_LODDistanceNetwork" xml:space="preserve">
+    <value>Distanza LOD del Network</value>
+  </data>
+  <data name="Settings_LODDistanceProp" xml:space="preserve">
+    <value>Distanza LOD del Prop</value>
+  </data>
+  <data name="Settings_LODDistanceTree" xml:space="preserve">
+    <value>Distanza LOD dell'Albero</value>
+  </data>
+  <data name="StyleOption_ObjectAuto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="Settings_LODDistanceMesh" xml:space="preserve">
+    <value>Segnando la distanza LOD 3D</value>
+  </data>
+  <data name="Settings_Render" xml:space="preserve">
+    <value>Renderizza</value>
+  </data>
+  <data name="Editor_LessOptions" xml:space="preserve">
+    <value>Meno Opzioni</value>
+  </data>
+  <data name="Editor_MoreOptions" xml:space="preserve">
+    <value>Più Opzioni</value>
+  </data>
+  <data name="StyleOption_MainColor" xml:space="preserve">
+    <value>Colore Principale</value>
+  </data>
+  <data name="StyleOption_SecondColor" xml:space="preserve">
+    <value>Colore Secondario</value>
+  </data>
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Doppia linea tratteggiata asimmetrica</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Ogni {0}</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Intervallo</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>Regolare</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Mediana</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>Regolare</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Mediana</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Tratteggiata</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Lunghezza</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>Linea</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Mediana</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>Dopo</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>Prima</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Spazio</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Guida</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Altezza</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_11" xml:space="preserve">
+    <value>[NOVITÀ] Salva i dati di marcatura nell'asset di rete e applicali automaticamente quando la rete viene posizionata.
+[NOVITÀ] Aggiunta la possibilità di impostare segnali nei tunnel.
+[NOVITÀ] Aggiunto lo stile asimmetrico con doppio trattino.
+[NOVITÀ] Aggiunta la possibilità di comprimere le opzioni non necessarie.
+[NOVITÀ] Aggiunta la possibilità di impostare l'inclinazione e l'inclinazione di oggetti di scena e alberi.
+[NOVITÀ] Aggiunta la possibilità di impostare il passo automatico degli oggetti di scena in base alle loro dimensioni.
+[NOVITÀ] Aggiunta la possibilità di impostare la distanza per lo spostamento e l'elevazione di oggetti di scena/alberi.
+[NOVITÀ] Aggiunta la possibilità di impostare il secondo colore su linee doppie.
+[NOVITÀ] Oggetti di scena/alberi/reti sono ordinati per nome.
+[NOVITÀ] Ricorda il testo cercato durante la ricerca di oggetti di scena/alberi/reti.
+[RISOLTO] Colore delle reti decorative che utilizzano trame a tema.
+[RISOLTO] Riempitivi 3D, oggetti di scena, alberi e reti aggiunti da IMT sono visibili nelle viste informative.
+[RISOLTO] Sfarfallio dell'interfaccia utente durante la ricerca di oggetti di scena/alberi/reti.
+[AGGIORNATO] La distanza LOD può essere impostata separatamente per ogni tipo di marcatura.
+[AGGIORNATO] le proprietà 'Offset prima' e 'Offset dopo' sono combinate nella proprietà 'Offset'.
+[AGGIORNATO] le proprietà 'Lunghezza trattino' e 'Lunghezza spazio' sono combinate nella proprietà 'Lunghezza'.
+[AGGIORNATO] le proprietà 'Usa intervallo', 'Lunghezza intervallo' e 'Periodo intervallo' sono combinate nella proprietà 'Interspazio'.
+[AGGIORNATO] le proprietà 'Usa guide', 'Guida sinistra' e 'Guida destra' sono combinate nella proprietà 'Guida'.
+[AGGIORNATO] le proprietà 'Base' e 'Altezza' sono combinate nella proprietà 'Triangolo'.
+[AGGIORNATO] le proprietà 'Raggio angolo' e 'Raggio angolo mediano' sono combinate nella proprietà 'Raggio angolo'.
+[AGGIORNATO] le proprietà 'Dimensione cordolo' e 'Dimensione cordolo medio' sono combinate nella proprietà 'Dimensione cordolo'.</value>
+  </data>
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Triangolo</value>
+  </data>
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Testo</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>Carattere Predefinito di Gioco</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>Carattere</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>Grassetto</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>Grassetto Corsivo</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>Corsivo</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>Normale</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>Spaziatura</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>Carattere</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>Linea</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Testo</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>Direzione</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>Dal basso verso l'alto</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>Da sinistra a destra</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>Dall'alto in basso</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>Corsia</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>Clicca per creare una corsia</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>Clicca per cancellare la corsia</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>Click+{0} per selezionare la corsia</value>
+  </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>Crea automaticamente linee di bordo corsia</value>
+  </data>
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Selezionare il punto finale per creare una corsia</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>Distribuzione</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>Spazio dinamico e estremità fisse</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>Spazio dinamico e estremità libere</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>Spazio fisso e estremità fisse</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>Spazio fisso e estremità libere</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Zig zag</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Sinistra</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Destra</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Spostamento</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Laterale</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Inizia da</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Linea</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Esterni</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Passo</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Allineamento</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>Fine</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Centrale</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Inizio</value>
+  </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Collega questo preset all'asset di rete</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Scollega questo preset dall'asset di rete</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Connesso</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Trascina un punto per cambiare lo spostamento</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Tieni premuto {0} per spostare un punto</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Applica automaticamente i contrassegni dalle risorse di rete</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Uscire dalla modalità preimpostata di collegamento</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Vuoi uscire dalla modalità di collegamento delle preimpostazioni e collegare questa preimpostazione all'asset di rete?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Collega</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Non collegare</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NOVITÀ] Aggiunto un nuovo stile di linea: Testo. Permette di scrivere testo personalizzato su strada e impostare qualsiasi font installato nel sistema.
+[NOVITÀ] Aggiunta la possibilità di collegare il preset all'asset di rete. Sarà applicato automaticamente quando la strada sarà costruita.
+[NOVITÀ] Aggiunto un nuovo tipo di linea: Corsia. Semplifica il posizionamento di oggetti di scena/alberi/rete/testo che devono essere posizionati al centro della corsia.
+[Nuovo] Aggiunto un nuovo stile di linea: Zigzag.
+[NOVITÀ] Aggiunta la possibilità di salvare diversi contrassegni per diversi tipi di elevazione stradale (pendenza, tunnel) nell'editor delle risorse.
+[NOVITÀ] Creazione automatica delle linee di confine della corsia. Può essere disabilitato nelle impostazioni mod.
+[NOVITÀ] Aggiunta opzione di distribuzione a oggetti di scena/alberi. permette di rendere fisso l'oggetto/albero alle estremità della linea e di impostare la lunghezza dinamica dello spazio.
+[NOVITÀ] Aggiunta la possibilità di invertire il valore del cambio di rete.
+[NOVITÀ] Aggiunte scorciatoie per la modalità di marcatura incolla.
+[AGGIORNATO] Non è più necessario tenere premuto Ctrl per trascinare il punto. Il vecchio comportamento (tenendo premuto Ctrl) può essere abilitato nelle impostazioni mod.
+[RISOLTO] Linee e riempimenti seguono il più possibile il segmento inclinato. Potrebbe non essere ancora perfetto in alcuni casi, ma molto meglio di prima.
+[RISOLTO] La linea della pavimentazione segue correttamente il riempimento.
+[RISOLTO] Risolto quando i valori degli stili asimmetrici venivano incollati con un'inversione errata.
+[RISOLTO] Le reti/oggetti di scena/alberi aggiunti da IMT sono visibili sullo screenshot preimpostato.
+[RISOLTO] Risolto il problema per cui i riempitivi non venivano aggiornati dopo aver selezionato le guide dei riempitivi.</value>
+  </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>Applica la preimpostazione a tutti i segmenti di questa risorsa</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>Ripristina impostazioni predefinite</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>Vuoi applicare una preimpostazione a tutti i segmenti dell'asset '{0}'?
+Può volerci del tempo se ci sono molti segmenti.</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>Uscendo dalla modalità Incolla</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>Vuoi salvare la Segnaletica?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Densità</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Scala</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Crepe</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Vuoti</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Densità della trama</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Aggiuntive</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Effetti Grafici</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Principale</value>
   </data>
 </root>

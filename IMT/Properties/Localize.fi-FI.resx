@@ -474,9 +474,6 @@ Pidä {0}-näppäintä pohjassa luodaksesi suojatie.</value>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Viivan leveys</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Kaistaviivojen suuntainen</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Samansuuntaiset viivat</value>
   </data>

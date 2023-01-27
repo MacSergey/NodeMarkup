@@ -490,9 +490,6 @@ Untuk membuat penyeberangan, tekan dan tahan {0}.</value>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Lebar garis</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Paralel ke lajur</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Garis utuh paralel</value>
   </data>
@@ -1391,9 +1388,6 @@ mode bawah tanah</value>
   </data>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Pilihan lainnya</value>
-  </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>Tutup pilihan gaya tambahan</value>
   </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Warna utama</value>

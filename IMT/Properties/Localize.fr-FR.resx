@@ -505,9 +505,6 @@ Pour créer un passage piéton, maintenez {0}.</value>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Largeur de ligne</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Parallèle aux voies</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Lignes continues parallèles</value>
   </data>
@@ -1593,9 +1590,6 @@ le mode souterrain</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Plus d'options</value>
   </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>Réduire les options de style supplémentaires</value>
-  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Couleur principale</value>
   </data>
@@ -1858,5 +1852,104 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
   </data>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
     <value>Voulez-vous appliquer le marquage ?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Densité</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Échelle</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Fissures</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Vides</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Densité de la texture</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Autres</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Effets visuels</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Principaux</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>Appliquer à tous les éléments</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>Appliquer à toutes les règles</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>Appliquer à tous les passages piétons</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>Appliquer à tous les passages piétons « {0} »</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>Appliquer à tous les remplisseurs</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>Appliquer à tous les remplisseurs « {0} »</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>Appliquer à toutes les lignes</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>Appliquer à toutes les lignes « {0} »</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>Appliquer à toutes les lignes d'arrêt</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>Appliquer à toutes les lignes d'arrêt « {0} »</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>Copier les effets</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>Coller les effets</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>Les deux</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>Fin</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Début</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Extrémité fixe</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Limites</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>Non parallèles</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>Parallèles aux lignes et aux extrémités en pente</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>Parallèles aux lignes et aux extrémités droites</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Type de pointillés</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Inverser le réseau</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Deux différents</value>
   </data>
 </root>

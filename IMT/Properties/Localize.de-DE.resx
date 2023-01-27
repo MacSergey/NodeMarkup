@@ -271,6 +271,9 @@ Die wiederhergestellten Daten werden alle vorhandenen Markierungen ersetzen.</va
   <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>Stilvorlage</value>
   </data>
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="TemplateEditor_Templates" xml:space="preserve">
     <value>Stilvorlagen</value>
   </data>
@@ -498,9 +501,6 @@ Zum Erstellen einer Fußgängerüberweg-Markierung {0} gedrückt halten.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Linienstärke</value>
-  </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Parallel zu Fahrspuren</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Parallele durchgezogene Linien</value>
@@ -899,6 +899,12 @@ Um eine Kreuzungsvorlage zu erstellen klicke «{0}» in der Kopf-Zeile.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Neue Kreuzungsvorlage</value>
+  </data>
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
+    <value>Modus zum Übernehmen von Kreuzungsvorlagen verlassen</value>
+  </data>
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
+    <value>Möchtest du die Kreuzungsvorlage anwenden?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Ersteller</value>
@@ -1303,6 +1309,15 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>Schritt</value>
   </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
   <data name="StyleOption_Color1" xml:space="preserve">
     <value>Variante #1</value>
   </data>
@@ -1456,9 +1471,6 @@ zu verlassen</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Weitere Optionen</value>
   </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>Weitere Stil-Optionen zusammenklappen</value>
-  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Hauptfarbe</value>
   </data>
@@ -1477,8 +1489,14 @@ zu verlassen</value>
   <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
     <value>Regulär</value>
   </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Median</value>
+  </data>
   <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
     <value>Regulär</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Median</value>
   </data>
   <data name="StyleOption_Dash" xml:space="preserve">
     <value>Streifen</value>
@@ -1488,6 +1506,9 @@ zu verlassen</value>
   </data>
   <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
     <value>Linie</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Median</value>
   </data>
   <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
     <value>Danach</value>
@@ -1533,6 +1554,9 @@ zu verlassen</value>
   <data name="StyleOption_Triangle" xml:space="preserve">
     <value>Dreieck</value>
   </data>
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
   <data name="StyleOption_DefaultFont" xml:space="preserve">
     <value>Standardschriftart des Spiels</value>
   </data>
@@ -1559,6 +1583,9 @@ zu verlassen</value>
   </data>
   <data name="StyleOption_SpacingLine" xml:space="preserve">
     <value>Linie</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Text</value>
   </data>
   <data name="StyleOption_TextDirection" xml:space="preserve">
     <value>Richtung</value>
@@ -1690,5 +1717,105 @@ zu verlassen</value>
 [FIXED] Asymmetrische Markierungen werden nun mit der richtigen Rotation eingefügt.
 [FIXED] Netzwerke / Requisiten / Bäume, die mit IMT hinzugefügt wurden, sind auf dem Vorlage-Screenshot sichtbar.
 [FIXED] Füllungen werden aktualisiert nach der Auswahl der Hilfslinien.</value>
+  </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>Vorlage auf alle Segmente dieses Spiel-Objektes anwenden</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>Auf Standard zurücksetzen</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>Möchtest du diese Vorlage auf alle Segmente von "{0}" anwenden?
+Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>Einfügemodus für Markierungen verlassen</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>Möchtest du diese Markierung anwenden?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Dichte</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Skalierung</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Risse</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Lücken</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Textur-Dichte</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Weiteres</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Grafikeffekte</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Primäres</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>Auf alles anwenden</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>Auf alle Regeln anwenden</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>Auf alle Fußgängerüberwege anwenden</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>Auf alle "{0}" Fußgängerüberwege anwenden</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>Auf alle Füllungen anwenden</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>Auf alle "{0}" Füllungen anwenden</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>Auf alle Linien anwenden</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>Auf alle "{0}" Linien anwenden</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>Auf alle Haltelinien anwenden</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>Auf alle "{0}" Haltelinien anwenden</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>Effekte kopieren</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>Effekte einfügen</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>Beide</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>Ende</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Anfang</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Fixiertes Ende</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>Nicht parallel</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>Parallel zu Linien und geneigtes Ende</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>Parallel zu Linien und gerade Enden</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Strichart</value>
   </data>
 </root>

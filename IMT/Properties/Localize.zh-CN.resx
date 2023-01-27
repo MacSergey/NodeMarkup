@@ -502,9 +502,6 @@
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>线条宽度</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>与车道平行</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>平行实线</value>
   </data>
@@ -1564,8 +1561,8 @@
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>显示更多选项</value>
   </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>折叠其他样式选项</value>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>折叠线段规则面板</value>
   </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>主配色</value>
@@ -1829,5 +1826,107 @@
   </data>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
     <value>要应用标线吗？</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>密度</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>缩放</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>裂缝</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>空白</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>纹理密度</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>附加</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>图形效果：</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>主要的</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>应用于所有项目</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>应用于所有规则</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>应用于所有人行横道</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>应用于所有“{0}”类型的人行横道</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>应用于所有填充图案</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>应用于所有“{0}”类型的填充图案</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>应用于所有线段</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>应用于所有“{0}”类型的线段</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>应用于所有停止线</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>应用于所有“{0}”类型的停止线</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>复制效果</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>粘贴效果</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>两者</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>终点</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>起点</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>固定的终点</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>最大值</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>最小值</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>上限</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>不平行</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>平行于直线和斜坡末端</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>平行于线段和直线末端</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>虚线类型</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>反转网络</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>两个不同的</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>按住 {0} 以折叠/展开所有规则</value>
   </data>
 </root>

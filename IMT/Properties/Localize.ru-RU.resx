@@ -504,9 +504,6 @@
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Ширина линии</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Параллельно линиям</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Параллельные сплошные линии</value>
   </data>
@@ -1594,8 +1591,8 @@
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Больше параметров</value>
   </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>Сворачивать дополнительные параметры стилей</value>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Сворачивать панели правил линии</value>
   </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Основной цвет</value>
@@ -1859,5 +1856,138 @@
   </data>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
     <value>Хотите ли вы применить трафарет?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Плотность</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Масштаб</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Трещины</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Пустоты</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Текстура</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Дополнительные</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Графические эффекты</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Основные</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>Применить ко всем элементам</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>Применить ко всем правилам</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>Применить ко всем переходам</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>Применить всем перекресткам типа «{0}»</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>Применить ко всем заполнителям</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>Применить всем заполнителям типа «{0}»</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>Применить ко всем линиям</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>Применить всем линиям типа «{0}»</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>Применить ко всем стоп линиям</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>Применить всем стоп линиям типа «{0}»</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>Копировать эффект</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>Вставить эффект</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>Оба</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>Конец</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Начало</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Фиксировать окончания</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Макс</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Мин</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Ограничения</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>Не параллельно</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>Параллельно линиям и косые окончания</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>Параллельно линиям и прямые окончания</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Тип полос</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Инвертировать сеть</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Два разных</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>Удерживайте {0} чтобы свернуть/развернуть все правила</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
+    <value>[UPDATED] Улучшено качество отрисовки и форма заполнителей и переходов.
+[NEW] Добавлен эффект трещин к линиям, заполнителям и переходам.
+[NEW] Добавлена текстура материала разметки, теперь она выглядит менее плоско.
+[FIXED] Исправлен расчет отступа заполнителей.
+[NEW] Добавлена возможность применить трафарет ко всем сегментам выбранной сети.
+[NEW] Добавлена возможность сворачивать правила линий. Автосворачивание можно включить в настройках мода.
+[NEW] Добавлены категории свойств. Они могут быть свернуты.
+[NEW] Добавлена возможность копировать цвет без открытия панели выбора цвета.
+[NEW] Добавлена возможность задавать HEX значение цвета.
+[NEW] Добавлена возможность применять стиль ко всем правилам линии.
+[NEW] Добавлена возможность применять стиль ко всем линиям на перекрестке имеющим тот же стиль.
+[NEW] Добавлена возможность применять стиль ко всем линиям на перекрестке.
+[NEW] Добавлена возможность применять шаблон ко всем линиям/заполнителям/переходам на перекрестке.
+[NEW] Добавлена возможность сбросить значения свойств стиля к по умолчанию.
+[NEW] Добавлена возможность выбирать какой конец стиля реквизит/деревья/сеть будет зафиксирован.[NEW] Добавлена возможность задавать разный сдвиг для разных концов сети.
+[NEW] Добавлено минимальное и максимальное количество реквизита/деревьев.
+[NEW] Добавлена возможность сделать окончание посол зебры косым.
+[NEW] Добавлена возможность задавать сдвиг для текста.
+[NEW] Добавлена возможность задавать цвет для сетей (применимо только к некоторым сетям).
+[NEW] Фокус автоматчески устанавливается на поле поиска реквизита/деревьев/сетей когда панель выбора открывается.
+[UPDATED] Задержка между прокруткой и изменением свойства с помощью колесика увеличина до 3 секунд.
+[UPDATED] Изменен приоритет применения разметки по умолчанию:
+---1. Связанный трафарет.
+---2. Разметка сохраненная в ассете.
+---3. Разметка с сегмента который был заменен.
+[FIXED] Поле поиска реквизита/деревьев/сетей теряет фокус когда панель инстурмента закрывается, теперь это не блокирует управление камерой.
+[NEW] Добавлен поиск шрифтов.
+[FIXED] Неиспользуемые текстуры удаляются своевременно что позволяет уменьшить использование памяти и предотвратить ее утечку.
+[NEW] Добавлен API. Доступен как Nuget пакет www.nuget.org/packages/IMT.API.</value>
   </data>
 </root>

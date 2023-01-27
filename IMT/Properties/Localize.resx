@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -501,9 +501,6 @@ To create a crosswalk hold {0}.</value>
   </data>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Line width</value>
-  </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Parallel to lanes</value>
   </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Parallel solid lines</value>
@@ -1592,8 +1589,8 @@ underground mode</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>More options</value>
   </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>Collapse additional style options</value>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Collapse line rule panels</value>
   </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Main color</value>
@@ -1857,5 +1854,139 @@ It can take time if there are a lot of segments.</value>
   </data>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
     <value>Do you want to apply marking?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Density</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Cracks</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Voids</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Texture density</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Additional</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Graphic effects</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>Apply to all items</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>Apply to all rules</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>Apply to all crosswalks</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>Apply to all "{0}" crosswalks</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>Apply to all fillers</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>Apply to all "{0}" fillers</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>Apply to all lines</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>Apply to all "{0}" lines</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>Apply to all stop lines</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>Apply to all "{0}" stop lines</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>Copy effects</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>Paste effects</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>Both</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Fixed end</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Limits</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>Not parallel</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>Parallel to lines and slope end</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>Parallel to lines and straight ends</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Dashes type</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Invert network</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Two different</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>Hold {0} to collapse/expand all rules</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
+    <value>[UPDATED] Improved resolution of rendering and shape of 2D fillers and crosswalks.
+[NEW] Added effects of cracks and voids to all 2D lines, 2D fillers and crosswalks.
+[NEW] Added texture of material to markings, so that it looks not so flat.
+[FIXED] Fixed filler offset calculation.
+[NEW] Added the ability to apply a preset to all segments of network asset.
+[NEW] Added the ability to collapse line rules. Auto collapsing can be enabled in the mod settings.
+[NEW] Added property categories. they can be collapsed.
+[NEW] Added copy/paste option to color property.
+[NEW] Added the ability to set HEX value of color.
+[NEW] Added the ability to set style to all rules of line.
+[NEW] Added the ability to set style to all rules on node/segment with the same style.
+[NEW] Added the ability to set style to all rules on node/segment.
+[NEW] Added the ability to apply template to all lines/crosswalks/fillers on node/segment.
+[NEW] Added the ability to reset style settings to default values.
+[NEW] Added the ability to select which end of prop/tree style is fixed (both/only start/only end).
+[NEW] Added the ability to set different shift on to each ends of network.
+[NEW] Added min max count of props/trees.
+[NEW] Added the ability to make slope ends of zebra.
+[NEW] Added the ability to set offset to text.
+[NEW] Added the ability to set color to network (can affect only certain networks).
+[NEW] Focus is auto set to search field when prop/tree/network selector opens.
+[UPDATED] Timeout between panel scrolling and changing value by wheel is increased to 3 second to prevent exidently changing value of property.
+[UPDATED] Changed priority of applying default marking:
+---1. linked preset.
+---2. saved in asset data.
+---3. data from segment which was replaced.
+[FIXED] Search field of prop/tree/network selector lost focus when tool panel is closed so that it does not block camera control if tool is closed while searching.
+[NEW] Added Font search.
+[FIXED] Properly removing unused texture and meshes to reduce memory usage and prevent memory leaks.
+[NEW] Added API. Other mods can communicate with IMT. Available as Nuget package www.nuget.org/packages/IMT.API.</value>
   </data>
 </root>

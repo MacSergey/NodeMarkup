@@ -502,9 +502,6 @@
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>外枠線の幅</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>道路と平行にする</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>2本の実線</value>
   </data>
@@ -1594,9 +1591,6 @@
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>オプションを展開</value>
   </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>追加したスタイルのオプションを折り畳む</value>
-  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>メインカラー</value>
   </data>
@@ -1859,5 +1853,98 @@
   </data>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
     <value>マーキングを適用しますか？</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>密度</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>縮尺</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>亀裂</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>窪み</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>テクスチャの密度</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>追加機能</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>描画エフェクト</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>メイン</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>全ての項目に適用</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>全てのルールに適用</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>全ての横断歩道に適用</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>"{0}" タイプの横断歩道に全て適用</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>全ての塗り潰しに適用</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>"{0}" タイプの塗り潰しに全て適用</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>全てのラインに適用</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>"{0}" タイプのラインに全て適用</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>全ての停止線に適用</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>"{0}" タイプの停止線に全て適用</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>エフェクトをコピー</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>エフェクトを貼り付け</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>両方</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>終点</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>始点</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>端は固定</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>最大</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>最小</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>制限</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>平行にしない</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>ラインと終端は斜めで平行</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>ラインと終端は直線で平行</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>破線のタイプ</value>
   </data>
 </root>

@@ -474,9 +474,6 @@ Pro vytvoření přechodu podržte {0}.</value>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Tloušťka čáry</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Souběžná s pruhy</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Souběžné plné čáry</value>
   </data>
@@ -1410,13 +1407,160 @@ Klikněte pro změnu značení</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Více možností</value>
   </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>Sbalení dalších možností stylu</value>
-  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Hlavní barva</value>
   </data>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Druhá barva</value>
+  </data>
+  <data name="StyleOption_CrosswalkGap" xml:space="preserve">
+    <value>Mezera</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusAbrv" xml:space="preserve">
+    <value>Běžný</value>
+  </data>
+  <data name="FillerStyle_CornerRadiusMedianAbrv" xml:space="preserve">
+    <value>Medián</value>
+  </data>
+  <data name="FillerStyle_CurbSizeAbrv" xml:space="preserve">
+    <value>Běžný</value>
+  </data>
+  <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
+    <value>Medián</value>
+  </data>
+  <data name="StyleOption_Length" xml:space="preserve">
+    <value>Délka</value>
+  </data>
+  <data name="StyleOption_LineOffsetAbrv" xml:space="preserve">
+    <value>Čára</value>
+  </data>
+  <data name="StyleOption_MedianOffsetAbrv" xml:space="preserve">
+    <value>Medián</value>
+  </data>
+  <data name="StyleOption_OffsetAfterAbrv" xml:space="preserve">
+    <value>Po</value>
+  </data>
+  <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
+    <value>Před</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Mezera</value>
+  </data>
+  <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
+    <value>Základna</value>
+  </data>
+  <data name="StyleOption_SharkToothHeightAbrv" xml:space="preserve">
+    <value>Výška</value>
+  </data>
+  <data name="StyleOption_Triangle" xml:space="preserve">
+    <value>Trojúhelník</value>
+  </data>
+  <data name="LineStyle_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="StyleOption_DefaultFont" xml:space="preserve">
+    <value>Výchozí styl písma</value>
+  </data>
+  <data name="StyleOption_Font" xml:space="preserve">
+    <value>Písmo</value>
+  </data>
+  <data name="StyleOption_FontStyleBold" xml:space="preserve">
+    <value>Tučně</value>
+  </data>
+  <data name="StyleOption_FontStyleBoldItalic" xml:space="preserve">
+    <value>Tučně a kurzíva</value>
+  </data>
+  <data name="StyleOption_FontStyleItalic" xml:space="preserve">
+    <value>Kurzíva</value>
+  </data>
+  <data name="StyleOption_FontStyleRegular" xml:space="preserve">
+    <value>Běžný</value>
+  </data>
+  <data name="StyleOption_Spacing" xml:space="preserve">
+    <value>Mezery</value>
+  </data>
+  <data name="StyleOption_SpacingChar" xml:space="preserve">
+    <value>Znak</value>
+  </data>
+  <data name="StyleOption_SpacingLine" xml:space="preserve">
+    <value>Čára</value>
+  </data>
+  <data name="StyleOption_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="StyleOption_TextDirection" xml:space="preserve">
+    <value>Směr</value>
+  </data>
+  <data name="StyleOption_TextDirectionBtoT" xml:space="preserve">
+    <value>Ze spoda nahoru</value>
+  </data>
+  <data name="StyleOption_TextDirectionLtoR" xml:space="preserve">
+    <value>Zleva doprava</value>
+  </data>
+  <data name="StyleOption_TextDirectionTtoB" xml:space="preserve">
+    <value>Od shora dolů</value>
+  </data>
+  <data name="LineStyle_LaneGroup" xml:space="preserve">
+    <value>Pruh</value>
+  </data>
+  <data name="Tool_InfoCreateLaneLine" xml:space="preserve">
+    <value>Klikněte pro vytvoření čáry</value>
+  </data>
+  <data name="Tool_InfoDeleteLaneLine" xml:space="preserve">
+    <value>Kliknětě pro odstranění čáry</value>
+  </data>
+  <data name="Tool_InfoSelectLane" xml:space="preserve">
+    <value>Klikněte s {0} pro výběr čáry</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>Distribuce</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Klikatě</value>
+  </data>
+  <data name="StyleOption_SideLeft" xml:space="preserve">
+    <value>Vlevo</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Vpravo</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Odsazení</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Strana</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Začíná od</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Čára</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Z venku</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Krok</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Zarovnání</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>Konec</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Prostředek</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Začátek</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Podržte {0} pro přesun bodu</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>Obnovit výchozí nastavení</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>Chcete použít značení?</value>
   </data>
 </root>

@@ -390,6 +390,9 @@ een lijn te creëren of te verwijderen</value>
   <data name="HeaderPanel_StylePaste" xml:space="preserve">
     <value>Plakken</value>
   </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Visgraat</value>
+  </data>
   <data name="StyleOption_AngleBetween" xml:space="preserve">
     <value>Binnenhoek</value>
   </data>
@@ -472,9 +475,6 @@ Houd {0} ingedrukt om een zebrapad te maken.</value>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Lijnbreedte</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Parallel aan rijstroken</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Parallelle ononderbroken lijnen</value>
   </data>
@@ -508,6 +508,9 @@ Controleer de "Van" en "Naar" punten van andere regels.</value>
   </data>
   <data name="LineRule_RightBorder" xml:space="preserve">
     <value>Zebrapad rand rechts</value>
+  </data>
+  <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
+    <value>Herstellen</value>
   </data>
   <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
     <value>Selecteer eindpunt</value>
@@ -760,6 +763,9 @@ De herstelde sjablonen zullen alle bestaande sjablonen vervangen.</value>
   <data name="Tool_infoPasteNotApply" xml:space="preserve">
     <value>Niet toepassen</value>
   </data>
+  <data name="Tool_InfoPasteReset" xml:space="preserve">
+    <value>Herstellen</value>
+  </data>
   <data name="Panel_EditMarking" xml:space="preserve">
     <value>Wijzig markeringsvolgorde</value>
   </data>
@@ -838,6 +844,9 @@ door {1}</value>
     <value>De lijst met presets is leeg.
 Klik bovenaan in het paneel op «{0}» om een preset te maken.</value>
   </data>
+  <data name="PresetEditor_Presets" xml:space="preserve">
+    <value>Voorinstellingen</value>
+  </data>
   <data name="Panel_SaveAsPreset" xml:space="preserve">
     <value>Opslaan als preset</value>
   </data>
@@ -852,6 +861,12 @@ Klik bovenaan in het paneel op «{0}» om een preset te maken.</value>
   </data>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nieuwe preset</value>
+  </data>
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
+    <value>Modus voorinstelling toepassen verlaten</value>
+  </data>
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
+    <value>Wil je een voorinstelling toepassen?</value>
   </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Auteur</value>
@@ -885,6 +900,9 @@ Klik bovenaan in het paneel op «{0}» om een preset te maken.</value>
   </data>
   <data name="HeaderPanel_CutLinesByCrosswalk" xml:space="preserve">
     <value>Lijnen bij dit zebrapad afsnijden</value>
+  </data>
+  <data name="Settings_BackupPresets" xml:space="preserve">
+    <value>Back-up voorinstellingen</value>
   </data>
   <data name="Settings_DeletePresetsButton" xml:space="preserve">
     <value>Verwijder alle presets</value>
@@ -983,6 +1001,12 @@ Weet je zeker dat je meerdere presets wil hebben met dezelfde naam?</value>
   </data>
   <data name="TemplateEditor_TemplateIsAsset" xml:space="preserve">
     <value>Dit sjabloon is een asset.</value>
+  </data>
+  <data name="PresetEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>voorinstelling</value>
+  </data>
+  <data name="PresetEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>voorinstelling</value>
   </data>
   <data name="LineEditor_NotSupportRules" xml:space="preserve">
     <value>Dit lijntype heeft geen ondersteuning voor regels</value>
@@ -1166,6 +1190,9 @@ Klik om de markering te wijzigen</value>
   <data name="Settings_IlluminationIntensity" xml:space="preserve">
     <value>Verlichtingssterkte</value>
   </data>
+  <data name="Settings_Gameplay" xml:space="preserve">
+    <value>Spel</value>
+  </data>
   <data name="Settings_GroupPresets" xml:space="preserve">
     <value>Voorinstellingen groeperen</value>
   </data>
@@ -1193,6 +1220,9 @@ Klik om de markering te wijzigen</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Straatnaam</value>
   </data>
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Prop</value>
+  </data>
   <data name="LineStyle_Tree" xml:space="preserve">
     <value>Boom</value>
   </data>
@@ -1201,6 +1231,9 @@ Klik om de markering te wijzigen</value>
   </data>
   <data name="StyleOption_ObjectScale" xml:space="preserve">
     <value>Schaal</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Verschuiven (loodrecht)</value>
   </data>
   <data name="StyleOption_ObjectStep" xml:space="preserve">
     <value>Stap</value>
@@ -1363,9 +1396,6 @@ Klik om de markering te wijzigen</value>
   </data>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Meer opties</value>
-  </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>Extra stijlopties samenvouwen</value>
   </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Hoofdkleur</value>
@@ -1613,5 +1643,45 @@ Klik om de markering te wijzigen</value>
 [FIXED] Asymmetrische markeringen worden nu met de juiste rotatie ingevoegd.
 [FIXED] Netwerken/props/bomen die zijn toegevoegd door IMT zijn zichtbaar op de afbeelding van het sjabloon.
 [FIXED] Vullingen worden bijgewerkt na het selecteren van hulplijnen.</value>
+  </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>Voorinstelling toepassen op alle segmenten van deze asset</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>Standaardinstellingen herstellen</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>Wil je een voorinstelling toepassen op alle segmenten van de asset "{0}"?
+Het kan even duren als er veel segmenten zijn.</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>Modus markering plakken verlaten</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>Wil je de markering aanbrengen?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Dichtheid</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Schaal</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Scheuren</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Leegtes</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Textuurdichtheid</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Extra</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Grafische effecten</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Algemeen</value>
   </data>
 </root>

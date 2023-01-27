@@ -474,9 +474,6 @@ Aby utworzyć przejście dla pieszych, przytrzymaj klawisz {0}.</value>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Szerokość linii</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Równolegle do pasów</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Równoległe linie ciągłe</value>
   </data>
@@ -1404,9 +1401,6 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Więcej opcji</value>
-  </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>Schowaj dodatkowe opcje styli</value>
   </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Główny kolor</value>
