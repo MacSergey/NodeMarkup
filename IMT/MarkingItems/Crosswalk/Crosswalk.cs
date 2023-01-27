@@ -109,8 +109,8 @@ namespace IMT.Manager
         {
             if (border != null && Intersection.CalculateSingle(trajectory, border.Trajectory) is Intersection intersect && intersect.IsIntersect)
             {
-                t = intersect.FirstT;
-                return EnterLine.PointPair.ContainsPoint(border.Start) ? border.Trajectory.Cut(0, intersect.SecondT) : border.Trajectory.Cut(intersect.SecondT, 1);
+                t = intersect.firstT;
+                return EnterLine.PointPair.ContainsPoint(border.Start) ? border.Trajectory.Cut(0, intersect.secondT) : border.Trajectory.Cut(intersect.secondT, 1);
             }
             else
             {
@@ -129,7 +129,7 @@ namespace IMT.Manager
             return trajectory.Cut(startT, endT);
 
             static float GetT(StraightTrajectory trajectory, ITrajectory lineTrajectory, float defaultT)
-            => Intersection.CalculateSingle(trajectory, lineTrajectory) is Intersection intersect && intersect.IsIntersect ? intersect.FirstT : defaultT;
+            => Intersection.CalculateSingle(trajectory, lineTrajectory) is Intersection intersect && intersect.IsIntersect ? intersect.firstT : defaultT;
         }
         public StraightTrajectory GetFullTrajectory(float offset, Vector3 normal)
         {
@@ -140,8 +140,8 @@ namespace IMT.Manager
 
             return trajectory.Cut(startT, endT);
 
-            static float MinAggregate(Intersection[] intersects) => intersects.Min(i => i.IsIntersect ? i.FirstT : 0);
-            static float MaxAggregate(Intersection[] intersects) => intersects.Max(i => i.IsIntersect ? i.FirstT : 1);
+            static float MinAggregate(Intersection[] intersects) => intersects.Min(i => i.IsIntersect ? i.firstT : 0);
+            static float MaxAggregate(Intersection[] intersects) => intersects.Max(i => i.IsIntersect ? i.firstT : 1);
             static float GetT(StraightTrajectory trajectory, Vector3 normal, Vector3[] positions, float defaultT, Func<Intersection[], float> aggregate)
             {
                 var intersects = positions.SelectMany(p => Intersection.Calculate(trajectory, new StraightTrajectory(p, p + normal, false))).ToArray();

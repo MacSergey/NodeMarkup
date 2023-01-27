@@ -104,7 +104,7 @@ namespace IMT.Manager
                 foreach (var intersect in Marking.GetIntersects(this))
                 {
                     if (intersect.IsIntersect)
-                        yield return intersect.Pair.GetOther(this);
+                        yield return intersect.pair.GetOther(this);
                 }
             }
         }
@@ -312,12 +312,12 @@ namespace IMT.Manager
             if (!Settings.CutLineByCrosswalk || point.Type == MarkingPoint.PointType.Normal)
                 return new EnterPointEdge(point);
 
-            var intersects = Marking.GetIntersects(this).Where(i => i.IsIntersect && i.Pair.GetOther(this) is MarkingCrosswalkLine line && line.PointPair.ContainsEnter(point.Enter)).ToArray();
+            var intersects = Marking.GetIntersects(this).Where(i => i.IsIntersect && i.pair.GetOther(this) is MarkingCrosswalkLine line && line.PointPair.ContainsEnter(point.Enter)).ToArray();
             if (!intersects.Any())
                 return new EnterPointEdge(point);
 
             var intersect = intersects.Aggregate((i, j) => point == End ^ (i.FirstT > i.SecondT) ? i : j);
-            return new LinesIntersectEdge(intersect.Pair);
+            return new LinesIntersectEdge(intersect.pair);
         }
 
         public MarkingLineRawRule<RegularLineStyle> AddRule(bool empty = true, bool update = true)

@@ -179,8 +179,8 @@ namespace IMT.Manager
             {
                 var start = intersects[i - 1];
                 var end = intersects[i];
-                var startPos = start.Second.Position(start.SecondT);
-                var endPos = end.Second.Position(end.SecondT);
+                var startPos = start.Second.Position(start.secondT);
+                var endPos = end.Second.Position(end.secondT);
                 yield return new MarkingPartData(startPos, endPos, item.Direction, item.Width, Color.Value, RenderHelper.MaterialLib[MaterialType.RectangleFillers]);
             }
         }
@@ -192,11 +192,11 @@ namespace IMT.Manager
             var beforeIntersect = Intersection.CalculateSingle(straight, item.Before);
             var afterIntersect = Intersection.CalculateSingle(straight, item.After);
 
-            var beforeT = beforeIntersect.IsIntersect ? beforeIntersect.FirstT : float.MaxValue;
-            var afterT = afterIntersect.IsIntersect ? afterIntersect.FirstT : float.MinValue;
+            var beforeT = beforeIntersect.IsIntersect ? beforeIntersect.firstT : float.MaxValue;
+            var afterT = afterIntersect.IsIntersect ? afterIntersect.firstT : float.MinValue;
 
-            var beforeIsPriority = beforeIntersect.IsIntersect && Mathf.Abs(beforeIntersect.SecondT) < Mathf.Abs(beforeIntersect.FirstT);
-            var afterIsPriority = afterIntersect.IsIntersect && Mathf.Abs(afterIntersect.SecondT) < Mathf.Abs(afterIntersect.FirstT);
+            var beforeIsPriority = beforeIntersect.IsIntersect && Mathf.Abs(beforeIntersect.secondT) < Mathf.Abs(beforeIntersect.firstT);
+            var afterIsPriority = afterIntersect.IsIntersect && Mathf.Abs(afterIntersect.secondT) < Mathf.Abs(afterIntersect.firstT);
 
             for (var i = 1; i < intersects.Length; i += 2)
             {
@@ -210,8 +210,8 @@ namespace IMT.Manager
         }
         private bool GetDashesT(PartItem item, Intersection[] intersects, int i, float beforeT, bool beforeIsPriority, float afterT, bool afterIsPriority, out float input, out float output)
         {
-            input = intersects[i - 1].FirstT;
-            output = intersects[i].FirstT;
+            input = intersects[i - 1].firstT;
+            output = intersects[i].firstT;
 
             if (!item.IsBothDir && input < 0)
             {
@@ -385,12 +385,12 @@ namespace IMT.Manager
             for (var i = index + step; isIncrement ? i < borders.Length : i >= 0; i += step)
             {
                 var intersection = Intersection.CalculateSingle(part, borders[i]);
-                if (intersection.IsIntersect && Math.Abs(intersection.FirstT) < 1000f && Math.Abs(intersection.SecondT) < 1000f)
+                if (intersection.IsIntersect && Math.Abs(intersection.firstT) < 1000f && Math.Abs(intersection.secondT) < 1000f)
                 {
-                    if (Mathf.Abs(intersection.FirstT) < Mathf.Abs(t))
+                    if (Mathf.Abs(intersection.firstT) < Mathf.Abs(t))
                     {
                         border = borders[i];
-                        t = intersection.FirstT;
+                        t = intersection.firstT;
                     }
                     else
                         break;

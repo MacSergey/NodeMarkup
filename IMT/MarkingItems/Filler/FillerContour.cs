@@ -15,7 +15,7 @@ namespace IMT.Manager
             var points = new List<IFillerVertex>();
 
             foreach (var intersect in marking.Intersects)
-                points.Add(new IntersectFillerVertex(intersect.Pair));
+                points.Add(new IntersectFillerVertex(intersect.pair));
 
             foreach (var enter in marking.Enters)
             {

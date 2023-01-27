@@ -310,8 +310,8 @@ namespace IMT.Manager
             {
                 foreach (var intersect in GetExistIntersects(line).ToArray())
                 {
-                    LineIntersects.Remove(intersect.Pair);
-                    var otherLine = intersect.Pair.GetOther(line);
+                    LineIntersects.Remove(intersect.pair);
+                    var otherLine = intersect.pair.GetOther(line);
                     otherLine.Update();
                     toRecalculate.Add(otherLine);
                 }
@@ -507,13 +507,13 @@ namespace IMT.Manager
 
             foreach (var intersect in GetExistIntersects(line).ToArray())
             {
-                if (intersect.Pair.GetOther(line) is MarkingRegularLine regularLine)
+                if (intersect.pair.GetOther(line) is MarkingRegularLine regularLine)
                 {
                     if (regularLine.RemoveRules(line))
                         toRecalculate.Add(regularLine);
                 }
 
-                LineIntersects.Remove(intersect.Pair);
+                LineIntersects.Remove(intersect.pair);
             }
             foreach (var filler in GetLineFillers(line).ToArray())
                 FillersList.Remove(filler);
@@ -543,7 +543,7 @@ namespace IMT.Manager
             };
             foreach (var intersect in GetExistIntersects(line).ToArray())
             {
-                if (intersect.Pair.GetOther(line) is MarkingRegularLine regularLine)
+                if (intersect.pair.GetOther(line) is MarkingRegularLine regularLine)
                     dependences.Rules += regularLine.GetLineDependences(line);
             }
 
@@ -624,9 +624,9 @@ namespace IMT.Manager
                         continue;
 
                     if ((line.End.Type == MarkingPoint.PointType.Enter && line.End.Enter == enter) ^ fromT < toT)
-                        rule.From = new LinesIntersectEdge(intersect.Pair);
+                        rule.From = new LinesIntersectEdge(intersect.pair);
                     else
-                        rule.To = new LinesIntersectEdge(intersect.Pair);
+                        rule.To = new LinesIntersectEdge(intersect.pair);
                 }
             }
         }
@@ -677,7 +677,7 @@ namespace IMT.Manager
         public bool ContainsLine(MarkingPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
         public IEnumerable<MarkingLinesIntersect> GetExistIntersects(MarkingLine line, bool onlyIntersect = false)
-            => LineIntersects.Values.Where(i => i.Pair.ContainLine(line) && (!onlyIntersect || i.IsIntersect));
+            => LineIntersects.Values.Where(i => i.pair.ContainLine(line) && (!onlyIntersect || i.IsIntersect));
         public IEnumerable<MarkingLinesIntersect> GetIntersects(MarkingLine line)
         {
             foreach (var otherLine in Lines)

@@ -312,12 +312,12 @@ namespace IMT.Manager
                         var x = i;
                         var y = (i + j) % parts.Count;
                         var intersect = Intersection.CalculateSingle(parts[x].Trajectory, parts[y].Trajectory);
-                        if (intersect.IsIntersect && (intersect.FirstT > 0.5f || intersect.SecondT < 0.5f))
+                        if (intersect.IsIntersect && (intersect.firstT > 0.5f || intersect.secondT < 0.5f))
                         {
                             var xPart = parts[x];
                             var yPart = parts[y];
-                            xPart.Trajectory = xPart.Trajectory.Cut(0f, intersect.FirstT);
-                            yPart.Trajectory = yPart.Trajectory.Cut(intersect.SecondT, 1f);
+                            xPart.Trajectory = xPart.Trajectory.Cut(0f, intersect.firstT);
+                            yPart.Trajectory = yPart.Trajectory.Cut(intersect.secondT, 1f);
                             parts[x] = xPart;
                             parts[y] = yPart;
 
@@ -495,7 +495,7 @@ namespace IMT.Manager
                     var intersections = Intersection.Calculate(parts[i].Trajectory, parts[j].Trajectory);
                     foreach (var intersection in intersections)
                     {
-                        TrajectoryIntersect.Create(i, j, intersection.FirstT, intersection.SecondT, out iIntersect, out jIntersect);
+                        TrajectoryIntersect.Create(i, j, intersection.firstT, intersection.secondT, out iIntersect, out jIntersect);
                         partsIntersections[i].Add(iIntersect);
                         partsIntersections[j].Add(jIntersect);
                     }
@@ -646,7 +646,7 @@ namespace IMT.Manager
 
             var firstInter = Intersection.CalculateSingle(first, new StraightTrajectory(center, center + firstDir, false));
             var secondInter = Intersection.CalculateSingle(second, new StraightTrajectory(center, center + secondDir, false));
-            return firstInter.IsIntersect && CorrectT(firstInter.FirstT, first.Length) && secondInter.IsIntersect && CorrectT(secondInter.FirstT, second.Length);
+            return firstInter.IsIntersect && CorrectT(firstInter.firstT, first.Length) && secondInter.IsIntersect && CorrectT(secondInter.firstT, second.Length);
 
             static bool CorrectT(float t, float length) => -0.05f / length < t && t < 1f + 0.05f / length;
         }

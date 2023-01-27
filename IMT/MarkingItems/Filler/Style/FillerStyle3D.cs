@@ -295,14 +295,14 @@ namespace IMT.Manager
                     {
                         if (isClockWise)
                         {
-                            A[x] = xPart.Cut(0f, intersect.FirstT);
-                            B[y] = yPart.Cut(intersect.SecondT, 1f);
+                            A[x] = xPart.Cut(0f, intersect.firstT);
+                            B[y] = yPart.Cut(intersect.secondT, 1f);
                             B.RemoveRange(0, y);
                         }
                         else
                         {
-                            A[x] = xPart.Cut(intersect.FirstT, 1f);
-                            B[y] = yPart.Cut(0f, intersect.SecondT);
+                            A[x] = xPart.Cut(intersect.firstT, 1f);
+                            B[y] = yPart.Cut(0f, intersect.secondT);
                             B.RemoveRange(y + 1, B.Count - (y + 1));
                         }
 

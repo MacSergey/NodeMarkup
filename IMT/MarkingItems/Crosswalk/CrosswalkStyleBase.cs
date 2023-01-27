@@ -95,7 +95,7 @@ namespace IMT.Manager
             var position = trajectory.Position((startT + endT) / 2);
             var partTrajectory = new StraightTrajectory(position, position + direction, false);
             var intersects = Intersection.Calculate(partTrajectory, borders, true);
-            intersects = intersects.OrderBy(i => i.FirstT).ToList();
+            intersects = intersects.OrderBy(i => i.firstT).ToList();
 
             var halfLength = length / 2;
             var halfWidth = width / 2;
@@ -104,8 +104,8 @@ namespace IMT.Manager
                 var startOffset = GetOffset(intersects[i - 1], halfWidth);
                 var endOffset = GetOffset(intersects[i], halfWidth);
 
-                var start = Mathf.Clamp(intersects[i - 1].FirstT + startOffset, -halfLength, halfLength);
-                var end = Mathf.Clamp(intersects[i].FirstT - endOffset, -halfLength, halfLength);
+                var start = Mathf.Clamp(intersects[i - 1].firstT + startOffset, -halfLength, halfLength);
+                var end = Mathf.Clamp(intersects[i].firstT - endOffset, -halfLength, halfLength);
 
                 var delta = end - start;
                 if (delta < 0.9 * length && delta < 0.67 * width)
@@ -119,8 +119,8 @@ namespace IMT.Manager
 
             static float GetOffset(Intersection intersect, float offset)
             {
-                var firstDir = intersect.First.Tangent(intersect.FirstT);
-                var secondDir = intersect.Second.Tangent(intersect.SecondT);
+                var firstDir = intersect.First.Tangent(intersect.firstT);
+                var secondDir = intersect.Second.Tangent(intersect.secondT);
                 var angel = Vector3.Angle(firstDir, secondDir) * Mathf.Deg2Rad;
                 var tan = Mathf.Tan(angel);
                 return tan != 0 ? offset / tan : 1000f;
