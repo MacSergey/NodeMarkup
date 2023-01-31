@@ -11,7 +11,7 @@ namespace IMT.Utilities
         public readonly Intersection intersection;
         public float FirstT => intersection.firstT;
         public float SecondT => intersection.secondT;
-        public bool IsIntersect => intersection.IsIntersect;
+        public bool IsIntersect => intersection.isIntersect;
         public Vector3 Position => (pair.First.Trajectory.Position(FirstT) + pair.Second.Trajectory.Position(SecondT)) / 2;
         private MarkingLinesIntersect(MarkingLinePair pair, Intersection intersection)
         {
@@ -30,7 +30,7 @@ namespace IMT.Utilities
                 var secondTrajectory = GetTrajectory(pair.Second, mustIntersect);
 
                 var intersect = Intersection.CalculateSingle(firstTrajectory, secondTrajectory);
-                if (intersect.IsIntersect)
+                if (intersect.isIntersect)
                     return new MarkingLinesIntersect(pair, intersect);
             }
 

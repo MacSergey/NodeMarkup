@@ -216,7 +216,7 @@ namespace IMT.UI.Editors
 
             if (HoverGuideSelectButton != null)
             {
-                var guide = EditObject.Contour.GetGuide(HoverGuideSelectButton.Value.A, HoverGuideSelectButton.Value.B, HoverGuideSelectButton.Other.A, HoverGuideSelectButton.Other.B);
+                var guide = EditObject.Contour.GetGuide(HoverGuideSelectButton.Value.a, HoverGuideSelectButton.Value.b, HoverGuideSelectButton.Other.a, HoverGuideSelectButton.Other.b);
                 guide.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }
@@ -309,7 +309,7 @@ namespace IMT.UI.Editors
             if (!IsFirstSelected)
             {
                 var overlayData = new OverlayData(cameraInfo) { Color = Colors.Hover };
-                foreach (var part in Contour.RawParts)
+                foreach (var part in Contour.RawEdges)
                 {
                     if (part.IsPoint)
                         part.Render(overlayData);

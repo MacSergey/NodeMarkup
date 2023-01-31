@@ -3,6 +3,7 @@ using IMT.UI;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -28,6 +29,10 @@ namespace IMT.Manager
         public static float DefaultCornerRadius => 0f;
         public static float DefaultCurbSize => 0f;
         public static bool DefaultFollowGuides => false;
+
+        protected static float MinAngle => 5f;
+        protected static float MinLength => 1f;
+        protected static float MaxLength => 10f;
 
         protected static string Guide => nameof(Guide);
 
@@ -87,23 +92,21 @@ namespace IMT.Manager
             }
         }
 
-        public virtual IEnumerable<IStyleData> Calculate(MarkingFiller filler)
+        public virtual void Calculate(MarkingFiller filler, Action<IStyleData> addData)
         {
             var contours = GetContours(filler);
-
             foreach (var lod in EnumExtension.GetEnumValues<MarkingLOD>())
             {
-                foreach (var data in CalculateImpl(filler, contours, lod))
-                    yield return data;
+                CalculateImpl(filler, contours, lod, addData);
             }
         }
-        protected virtual List<List<FillerContour.Part>> GetContours(MarkingFiller filler)
+        protected virtual FillerContour.EdgeSetGroup GetContours(MarkingFiller filler)
         {
-            var originalContour = filler.Contour.Parts.ToList();
-            var contours = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
-            return contours;
+            var originalContour = filler.Contour.Edges;
+            var contourSets = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
+            return contourSets;
         }
-        protected abstract IEnumerable<IStyleData> CalculateImpl(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkingLOD lod);
+        protected abstract void CalculateImpl(MarkingFiller filler, FillerContour.EdgeSetGroup contourSets, MarkingLOD lod, Action<IStyleData> addData);
 
         public virtual void Render(MarkingFiller filler, OverlayData data) { }
 
@@ -198,28 +201,6 @@ namespace IMT.Manager
             return stepProperty;
         }
 
-        protected FillerGuidePropertyPanel AddGuideProperty(IGuideFiller guideStyle, FillerContour contour, UIComponent parent, bool canCollapse)
-        {
-            var guideProperty = ComponentPool.Get<FillerGuidePropertyPanel>(parent, Guide);
-            guideProperty.Text = Localize.StyleOption_Rails;
-            guideProperty.CanCollapse = canCollapse;
-            guideProperty.Init(contour.ProcessedCount);
-            guideProperty.LeftGuide = new FillerGuide(contour.GetCorrectIndex(guideStyle.LeftGuideA), contour.GetCorrectIndex(guideStyle.LeftGuideB));
-            guideProperty.RightGuide = new FillerGuide(contour.GetCorrectIndex(guideStyle.RightGuideA), contour.GetCorrectIndex(guideStyle.RightGuideB));
-            guideProperty.Follow = (guideStyle as IFollowGuideFiller)?.FollowGuides.Value;
-            guideProperty.OnValueChanged += (bool follow, FillerGuide left, FillerGuide right) =>
-            {
-                if (guideStyle is IFollowGuideFiller followGuideStyle)
-                    followGuideStyle.FollowGuides.Value = follow;
-
-                guideStyle.LeftGuideA.Value = left.A;
-                guideStyle.LeftGuideB.Value = left.B;
-                guideStyle.RightGuideA.Value = right.A;
-                guideStyle.RightGuideB.Value = right.B;
-            };
-            return guideProperty;
-        }
-
         public enum FillerType
         {
             [Description(nameof(Localize.FillerStyle_Stripe))]
@@ -249,14 +230,12 @@ namespace IMT.Manager
             [Description(nameof(Localize.FillerStyle_Cliff))]
             Cliff = StyleType.FillerCliff,
 
+            [Description("Test style")]
+            Test = StyleType.FillerTest,
+
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
             Buffer = StyleType.FillerBuffer,
-        }
-        public enum GuideType
-        {
-            Left,
-            Right
         }
     }
 }

@@ -419,14 +419,14 @@ namespace IMT.Manager
                 var dashesLOD0 = new List<MarkingPartData>();
                 var dashesLOD1 = new List<MarkingPartData>();
 
-                Seporate(Lines.SelectMany(l => l.StyleData));
-                Seporate(Fillers.SelectMany(f => f.StyleData));
-                Seporate(Crosswalks.SelectMany(c => c.StyleData));
+                Seporate(DrawData, dashesLOD0, dashesLOD1, Lines.SelectMany(l => l.StyleData));
+                Seporate(DrawData, dashesLOD0, dashesLOD1, Fillers.SelectMany(f => f.StyleData));
+                Seporate(DrawData, dashesLOD0, dashesLOD1, Crosswalks.SelectMany(c => c.StyleData));
 
                 DrawData[MarkingLODType.Dash][MarkingLOD.LOD0].AddRange(MarkingPartsBatchData.FromDashes(dashesLOD0));
                 DrawData[MarkingLODType.Dash][MarkingLOD.LOD1].AddRange(MarkingPartsBatchData.FromDashes(dashesLOD1));
 
-                void Seporate(IEnumerable<IStyleData> stylesData)
+                static void Seporate(MarkingRenderData drawData, List<MarkingPartData> dashesLOD0, List<MarkingPartData> dashesLOD1, IEnumerable<IStyleData> stylesData)
                 {
                     foreach (var styleData in stylesData)
                     {
@@ -436,10 +436,15 @@ namespace IMT.Manager
                                 dashesLOD0.AddRange(styleDashes);
                             else if (styleData.LOD == MarkingLOD.LOD1)
                                 dashesLOD1.AddRange(styleDashes);
+                            else if (styleData.LOD == MarkingLOD.NoLOD)
+                            {
+                                dashesLOD0.AddRange(styleDashes);
+                                dashesLOD1.AddRange(styleDashes);
+                            }
                         }
                         else if (styleData != null)
                         {
-                            DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
+                            drawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
                         }
                     }
                 }
@@ -562,7 +567,7 @@ namespace IMT.Manager
         public MarkingFiller AddFiller(FillerContour contour, FillerStyle style, out List<MarkingRegularLine> lines)
         {
             lines = new List<MarkingRegularLine>();
-            foreach (var part in contour.RawParts)
+            foreach (var part in contour.RawEdges)
             {
                 if (part.Line is MarkingFillerTempLine line)
                 {

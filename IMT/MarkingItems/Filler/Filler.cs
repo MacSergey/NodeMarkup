@@ -29,7 +29,7 @@ namespace IMT.Manager
         {
             Id = Math.Abs(GetHashCode());
             Contour = contour;
-            Marking = Contour.Markup;
+            Marking = Contour.Marking;
             style.OnStyleChanged = FillerChanged;
             Style = new PropertyClassValue<FillerStyle>(StyleChanged, style);
         }
@@ -40,7 +40,7 @@ namespace IMT.Manager
             FillerChanged();
         }
         private void FillerChanged() => Marking?.Update(this, true);
-        public bool ContainsLine(MarkingLine line) => Contour.RawParts.Any(p => p.Line is not MarkingEnterLine && p.Line.PointPair == line.PointPair);
+        public bool ContainsLine(MarkingLine line) => Contour.RawEdges.Any(p => p.Line is not MarkingEnterLine && p.Line.PointPair == line.PointPair);
         public bool ContainsPoint(MarkingPoint point) => Contour.RawVertices.Any(s => s is EnterFillerVertexBase vertex && vertex.Point == point);
 
         public void Update(bool onlySelfUpdate = false) => Contour.Update();
@@ -50,7 +50,8 @@ namespace IMT.Manager
             Mod.Logger.Debug($"Recalculate filler {this}");
 #endif
             StyleData.Clear();
-            StyleData.AddRange(Style.Value.Calculate(this));
+            Style.Value.Calculate(this, (data) => StyleData.Add(data));
+            //StyleData.AddRange(Style.Value.Calculate(this, ));
         }
         public Dependences GetDependences() => new Dependences();
 

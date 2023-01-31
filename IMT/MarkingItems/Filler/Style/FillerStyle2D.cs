@@ -1,18 +1,18 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
 using IMT.API;
-using IMT.UI;
 using IMT.Utilities;
 using IMT.Utilities.API;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using static ColossalFramework.Math.VectorUtils;
 
 namespace IMT.Manager
 {
@@ -28,6 +28,13 @@ namespace IMT.Manager
     {
         PropertyValue<float> Angle { get; }
     }
+    public interface ITextureFiller : IFillerStyle
+    {
+        public PropertyStructValue<float> ScratchDensity { get; }
+        public PropertyStructValue<float> ScratchTiling { get; }
+        public PropertyStructValue<float> VoidDensity { get; }
+        public PropertyStructValue<float> VoidTiling { get; }
+    }
     public interface IGuideFiller : IFillerStyle
     {
         PropertyValue<int> LeftGuideA { get; }
@@ -40,446 +47,94 @@ namespace IMT.Manager
         PropertyValue<bool> FollowGuides { get; }
     }
 
-    public abstract class Filler2DStyle : FillerStyle
+    public abstract class Filler2DStyle : FillerStyle, ITextureFiller
     {
-        public Filler2DStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset) { }
+        public PropertyStructValue<float> ScratchDensity { get; set; }
+        public PropertyStructValue<float> ScratchTiling { get; set; }
+        public PropertyStructValue<float> VoidDensity { get; set; }
+        public PropertyStructValue<float> VoidTiling { get; set; }
 
-        protected sealed override IEnumerable<IStyleData> CalculateImpl(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkingLOD lod)
+        public Filler2DStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
         {
-            if ((SupportLOD & lod) != 0)
-                yield return new MarkingPartGroupData(lod, CalculateProcess(filler, contours, lod));
-        }
-        protected virtual IEnumerable<MarkingPartData> CalculateProcess(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkingLOD lod)
-        {
-            var originalContour = filler.Contour.TrajectoriesProcessed.ToArray();
-            var guides = GetGuides(filler, originalContour).ToArray();
-
-            foreach (var guide in guides)
-            {
-                var partItems = GetItems(guide, lod).ToArray();
-
-                foreach (var partItem in partItems)
-                {
-                    foreach (var dash in GetDashes(partItem, contours))
-                        yield return dash;
-                }
-            }
-        }
-
-        protected abstract IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour);
-        protected Rect GetRect(ITrajectory[] contour)
-        {
-            var firstPos = contour.FirstOrDefault(t => t != null)?.StartPosition ?? default;
-            var rect = Rect.MinMaxRect(firstPos.x, firstPos.z, firstPos.x, firstPos.z);
-
-            foreach (var trajectory in contour)
-            {
-                switch (trajectory)
-                {
-                    case BezierTrajectory bezierTrajectory:
-                        Set(bezierTrajectory.Trajectory.a);
-                        Set(bezierTrajectory.Trajectory.b);
-                        Set(bezierTrajectory.Trajectory.c);
-                        Set(bezierTrajectory.Trajectory.d);
-                        break;
-                    case StraightTrajectory straightTrajectory:
-                        Set(straightTrajectory.Trajectory.a);
-                        Set(straightTrajectory.Trajectory.b);
-                        break;
-                }
-            }
-
-            return rect;
-
-            void Set(Vector3 pos)
-            {
-                if (pos.x < rect.xMin)
-                    rect.xMin = pos.x;
-                else if (pos.x > rect.xMax)
-                    rect.xMax = pos.x;
-
-                if (pos.z < rect.yMin)
-                    rect.yMin = pos.z;
-                else if (pos.z > rect.yMax)
-                    rect.yMax = pos.z;
-            }
-        }
-        protected StraightTrajectory GetGuide(Rect rect, float height, float angle)
-        {
-            if (angle > 90)
-                angle -= 180;
-            else if (angle < -90)
-                angle += 180;
-
-            var absAngle = Mathf.Abs(angle) * Mathf.Deg2Rad;
-            var guideLength = rect.width * Mathf.Sin(absAngle) + rect.height * Mathf.Cos(absAngle);
-            var dx = guideLength * Mathf.Sin(absAngle);
-            var dy = guideLength * Mathf.Cos(absAngle);
-
-            if (angle == -90 || angle == 90)
-                return new StraightTrajectory(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMax, height, rect.yMax));
-            else if (90 > angle && angle > 0)
-                return new StraightTrajectory(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin + dx, height, rect.yMax - dy));
-            else if (angle == 0)
-                return new StraightTrajectory(new Vector3(rect.xMin, height, rect.yMax), new Vector3(rect.xMin, height, rect.yMin));
-            else if (0 > angle && angle > -90)
-                return new StraightTrajectory(new Vector3(rect.xMin, height, rect.yMin), new Vector3(rect.xMin + dx, height, rect.yMin + dy));
-            else
-                return default;
-        }
-
-        protected abstract IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod);
-        protected IEnumerable<StraightTrajectory> GetParts(GuideLine guide, float dash, float space)
-        {
-            foreach (var part in StyleHelper.CalculateDashesBezierT(guide, dash, space, 1))
-            {
-                var startI = Math.Min((int)part.Start, guide.Count - 1);
-                var endI = Math.Min((int)part.End, guide.Count - 1);
-                yield return new StraightTrajectory(guide[startI].Position(part.Start - startI), guide[endI].Position(part.End - endI));
-            }
-        }
-        protected void GetItemParams(ref float width, float angle, MarkingLOD lod, out int itemsCount, out float itemWidth, out float itemStep)
-        {
-            StyleHelper.GetParts(width, 0f, lod, out itemsCount, out itemWidth);
-
-            var coef = Math.Max(Mathf.Sin(Mathf.Abs(angle) * Mathf.Deg2Rad), 0.01f);
-            width /= coef;
-            itemStep = itemWidth / coef;
-        }
-        protected IEnumerable<PartItem> GetPartItems(StraightTrajectory part, float angle, int itemsCount, float itemWidth, float itemStep, bool isBothDir = true)
-        {
-            var itemDir = part.Direction.MakeFlat().TurnDeg(angle, true);
-
-            var start = (part.Length - itemStep * (itemsCount - 1)) / 2;
-            for (var i = 0; i < itemsCount; i += 1)
-            {
-                var itemPos = part.StartPosition + (start + itemStep * i) * part.StartDirection;
-                yield return new PartItem(itemPos, itemDir, itemWidth, isBothDir);
-            }
-        }
-        protected virtual IEnumerable<MarkingPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithoutOrder(item, contours);
-        protected Intersection[] GetDashesIntersects(StraightTrajectory itemStraight, List<List<FillerContour.Part>> contours)
-        {
-            var intersectSet = new HashSet<Intersection>();
-            foreach (var contour in contours)
-            {
-                foreach (var contourPart in contour)
-                    intersectSet.AddRange(Intersection.Calculate(itemStraight, contourPart.Trajectory));
-            }
-
-            var intersects = intersectSet.OrderBy(i => i, Intersection.FirstComparer).ToArray();
-            return intersects;
-        }
-        protected IEnumerable<MarkingPartData> GetDashesWithoutOrder(PartItem item, List<List<FillerContour.Part>> contours)
-        {
-            var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
-            var intersects = GetDashesIntersects(straight, contours);
-
-            for (var i = 1; i < intersects.Length; i += 2)
-            {
-                var start = intersects[i - 1];
-                var end = intersects[i];
-                var startPos = start.Second.Position(start.secondT);
-                var endPos = end.Second.Position(end.secondT);
-                yield return new MarkingPartData(startPos, endPos, item.Direction, item.Width, Color.Value, RenderHelper.MaterialLib[MaterialType.RectangleFillers]);
-            }
-        }
-        protected IEnumerable<MarkingPartData> GetDashesWithOrder(PartItem item, List<List<FillerContour.Part>> contours)
-        {
-            var straight = new StraightTrajectory(item.Position, item.Position + item.Direction, false);
-            var intersects = GetDashesIntersects(straight, contours);
-
-            var beforeIntersect = Intersection.CalculateSingle(straight, item.Before);
-            var afterIntersect = Intersection.CalculateSingle(straight, item.After);
-
-            var beforeT = beforeIntersect.IsIntersect ? beforeIntersect.firstT : float.MaxValue;
-            var afterT = afterIntersect.IsIntersect ? afterIntersect.firstT : float.MinValue;
-
-            var beforeIsPriority = beforeIntersect.IsIntersect && Mathf.Abs(beforeIntersect.secondT) < Mathf.Abs(beforeIntersect.firstT);
-            var afterIsPriority = afterIntersect.IsIntersect && Mathf.Abs(afterIntersect.secondT) < Mathf.Abs(afterIntersect.firstT);
-
-            for (var i = 1; i < intersects.Length; i += 2)
-            {
-                if (GetDashesT(item, intersects, i, beforeT, beforeIsPriority, afterT, afterIsPriority, out float input, out float output))
-                {
-                    var start = item.Position + item.Direction * input;
-                    var end = item.Position + item.Direction * output;
-                    yield return new MarkingPartData(start, end, item.Direction, item.Width, Color.Value, RenderHelper.MaterialLib[MaterialType.RectangleFillers]);
-                }
-            }
-        }
-        private bool GetDashesT(PartItem item, Intersection[] intersects, int i, float beforeT, bool beforeIsPriority, float afterT, bool afterIsPriority, out float input, out float output)
-        {
-            input = intersects[i - 1].firstT;
-            output = intersects[i].firstT;
-
-            if (!item.IsBothDir && input < 0)
-            {
-                if (output < 0)
-                    return false;
-                else
-                    input = 0f;
-            }
-
-            var isMain = input <= 0f && output >= 0f;
-
-            if (isMain)
-            {
-                Cut(beforeT, beforeIsPriority, ref input, ref output);
-                Cut(afterT, afterIsPriority, ref input, ref output);
-            }
-            else if (Skip(beforeT, beforeIsPriority, input, output) || Skip(afterT, afterIsPriority, input, output))
-                return false;
-
-            return true;
-
-            static void Cut(float t, bool isPriority, ref float input, ref float output)
-            {
-                if (t < 0f)
-                {
-                    if (input < t && isPriority)
-                        input = t;
-                }
-                else
-                {
-                    if (output > t && isPriority)
-                        output = t;
-                }
-            }
-            static bool Skip(float t, bool isPriority, float input, float output) => isPriority && ((t < 0f && input < t) || (t > 0f && output > t));
-        }
-
-        protected class GuideLine : List<ITrajectory> { }
-        protected class PartItem
-        {
-            public Vector3 Position { get; }
-            public Vector3 Direction { get; }
-            public float Width { get; }
-            public bool IsBothDir { get; }
-            public StraightTrajectory Before { get; set; }
-            public StraightTrajectory After { get; set; }
-
-            public PartItem(Vector3 position, Vector3 direction, float width, bool isBothDir)
-            {
-                Position = position;
-                Direction = direction;
-                Width = width;
-                IsBothDir = isBothDir;
-            }
-        }
-    }
-    public abstract class PeriodicFillerStyle : Filler2DStyle, IPeriodicFiller
-    {
-        public PropertyValue<float> Step { get; }
-
-        public PeriodicFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
-        {
-            Step = GetStepProperty(step);
+            ScratchDensity = new PropertyStructValue<float>(StyleChanged, 0);
+            ScratchTiling = new PropertyStructValue<float>(StyleChanged, 1f);
+            VoidDensity = new PropertyStructValue<float>(StyleChanged, 0);
+            VoidTiling = new PropertyStructValue<float>(StyleChanged, 1f);
         }
 
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
 
-            if (target is IPeriodicFiller periodicTarget)
-                periodicTarget.Step.Value = Step;
+            if (target is Filler2DStyle target2D)
+            {
+                target2D.ScratchDensity.Value = ScratchDensity;
+                target2D.ScratchTiling.Value = ScratchTiling;
+                target2D.VoidDensity.Value = VoidDensity;
+                target2D.VoidTiling.Value = VoidTiling;
+            }
         }
+
         public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddStepProperty(this, parent, false));
+
+            components.Add(GetScratch(parent));
+            components.Add(GetVoid(parent));
         }
 
-        protected override IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour)
+        protected Vector2PropertyPanel GetScratch(UIComponent parent)
         {
-            var rect = GetRect(contour);
-            var guide = new GuideLine();
-            var halfAngelRad = GetAngle() * Mathf.Deg2Rad;
-            if (GetMiddleLine(filler.Contour) is ITrajectory middleLine)
+            var scratchProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(ScratchDensity));
+            scratchProperty.Text = "Scratch";
+            scratchProperty.SetLabels("Density", "Scale");
+            scratchProperty.Format = Localize.NumberFormat_Percent;
+            scratchProperty.FieldsWidth = 50f;
+            scratchProperty.CanCollapse = false;
+            scratchProperty.CheckMax = true;
+            scratchProperty.CheckMin = true;
+            scratchProperty.MinValue = new Vector2(0f, 10f);
+            scratchProperty.MaxValue = new Vector2(100f, 1000f);
+            scratchProperty.WheelStep = new Vector2(10f, 10f);
+            scratchProperty.UseWheel = true;
+            scratchProperty.Init(0, 1);
+            scratchProperty.Value = new Vector2(ScratchDensity, ScratchTiling) * 100f;
+            scratchProperty.OnValueChanged += (Vector2 value) =>
             {
-                if (GetBeforeMiddleLine(middleLine, filler.Marking.Height, halfAngelRad, rect, out ITrajectory lineBefore))
-                    guide.Add(lineBefore.Invert());
-                guide.Add(middleLine);
-                if (GetAfterMiddleLine(middleLine, filler.Marking.Height, halfAngelRad, rect, out ITrajectory lineAfter))
-                    guide.Add(lineAfter);
-            }
-
-            yield return guide;
-        }
-        protected abstract float GetAngle();
-        private ITrajectory GetMiddleLine(FillerContour contour)
-        {
-            GetGuides(contour, out ITrajectory left, out ITrajectory right);
-            if (left == null || right == null)
-                return null;
-
-            var leftLength = left.Length;
-            var rightLength = right.Length;
-
-            var leftRatio = leftLength / (leftLength + rightLength);
-            var rightRatio = rightLength / (leftLength + rightLength);
-
-            var straight = new StraightTrajectory((right.EndPosition + left.StartPosition) / 2, (right.StartPosition + left.EndPosition) / 2);
-            var middle = new Bezier3()
-            {
-                a = (right.EndPosition + left.StartPosition) / 2,
-                b = GetDirection(rightRatio * right.EndDirection, leftRatio * left.StartDirection, straight.StartDirection),
-                c = GetDirection(rightRatio * right.StartDirection, leftRatio * left.EndDirection, straight.EndDirection),
-                d = (right.StartPosition + left.EndPosition) / 2,
+                ScratchDensity.Value = value.x * 0.01f;
+                ScratchTiling.Value = value.y * 0.01f;
             };
-            NetSegment.CalculateMiddlePoints(middle.a, middle.b, middle.d, middle.c, true, true, out middle.b, out middle.c);
-            return new BezierTrajectory(middle);
-
-            static Vector3 GetDirection(Vector3 left, Vector3 right, Vector3 straight)
+            return scratchProperty;
+        }
+        protected Vector2PropertyPanel GetVoid(UIComponent parent)
+        {
+            var voidProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(ScratchDensity));
+            voidProperty.Text = "Void";
+            voidProperty.SetLabels("Density", "Scale");
+            voidProperty.Format = Localize.NumberFormat_Percent;
+            voidProperty.FieldsWidth = 50f;
+            voidProperty.CanCollapse = false;
+            voidProperty.CheckMax = true;
+            voidProperty.CheckMin = true;
+            voidProperty.MinValue = new Vector2(0f, 10f);
+            voidProperty.MaxValue = new Vector2(100f, 1000f);
+            voidProperty.WheelStep = new Vector2(10f, 10f);
+            voidProperty.UseWheel = true;
+            voidProperty.Init(0, 1);
+            voidProperty.Value = new Vector2(VoidDensity, VoidTiling) * 100f;
+            voidProperty.OnValueChanged += (Vector2 value) =>
             {
-                var dir = (left + right).normalized;
-                if (Vector2.Angle(XZ(left), XZ(right)) > 150f || Vector2.Angle(XZ(dir), XZ(straight)) > 90f)
-                    dir = straight;
-
-                return dir;
-            }
-
-        }
-        protected abstract void GetGuides(FillerContour contour, out ITrajectory left, out ITrajectory right);
-        private bool GetBeforeMiddleLine(ITrajectory middleLine, float height, float halfAngelRad, Rect rect, out ITrajectory line) => GetAdditionalLine(middleLine.StartPosition, -middleLine.StartDirection, height, halfAngelRad, rect, out line);
-        private bool GetAfterMiddleLine(ITrajectory middleLine, float height, float halfAngelRad, Rect rect, out ITrajectory line) => GetAdditionalLine(middleLine.EndPosition, -middleLine.EndDirection, height, halfAngelRad, rect, out line);
-        private bool GetAdditionalLine(Vector3 pos, Vector3 dir, float height, float halfAngelRad, Rect rect, out ITrajectory line)
-        {
-            var dirRight = dir.TurnRad(halfAngelRad, true);
-            var dirLeft = dir.TurnRad(halfAngelRad, false);
-
-            var rightGuide = GetGuide(rect, height, dirRight.AbsoluteAngle() * Mathf.Rad2Deg);
-            var leftGuide = GetGuide(rect, height, dirLeft.AbsoluteAngle() * Mathf.Rad2Deg);
-
-            var t = Mathf.Max(0f, GetT(rightGuide.StartPosition, dirRight), GetT(rightGuide.EndPosition, dirRight), GetT(leftGuide.StartPosition, dirLeft), GetT(leftGuide.EndPosition, dirLeft));
-
-            if (t > 0.1)
-            {
-                line = new StraightTrajectory(pos, pos + dir * t);
-                return true;
-            }
-            else
-            {
-                line = default;
-                return false;
-            }
-
-            float GetT(Vector3 guidePos, Vector3 guideDir)
-            {
-                Line2.Intersect(XZ(pos), XZ(pos + dir), XZ(guidePos), XZ(guidePos + guideDir), out float p, out _);
-                return p;
-            }
-        }
-        protected void GetPartBorders(StraightTrajectory[] parts, float halfAngle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders)
-        {
-            startBorders = parts.Select(p => new StraightTrajectory(p.StartPosition, p.StartPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
-            endBorders = parts.Select(p => new StraightTrajectory(p.EndPosition, p.EndPosition + p.Direction.TurnDeg(halfAngle, true), false)).ToArray();
-        }
-        protected StraightTrajectory GetPartBorder(StraightTrajectory[] borders, StraightTrajectory part, int index, bool isIncrement)
-        {
-            var step = isIncrement ? 1 : -1;
-
-            var border = default(StraightTrajectory);
-            var t = float.MaxValue;
-
-            for (var i = index + step; isIncrement ? i < borders.Length : i >= 0; i += step)
-            {
-                var intersection = Intersection.CalculateSingle(part, borders[i]);
-                if (intersection.IsIntersect && Math.Abs(intersection.firstT) < 1000f && Math.Abs(intersection.secondT) < 1000f)
-                {
-                    if (Mathf.Abs(intersection.firstT) < Mathf.Abs(t))
-                    {
-                        border = borders[i];
-                        t = intersection.firstT;
-                    }
-                    else
-                        break;
-                }
-            }
-            return border;
-        }
-
-        public override void Render(MarkingFiller filler, OverlayData data)
-        {
-            GetGuides(filler.Contour, out ITrajectory left, out ITrajectory right);
-
-            data.Color = Colors.Green;
-            left?.Render(data);
-
-            data.Color = Colors.Red;
-            right?.Render(data);
-        }
-
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            Step.ToXml(config);
-            return config;
-        }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
-        {
-            base.FromXml(config, map, invert, typeChanged);
-            Step.FromXml(config, DefaultStepGrid);
-        }
-    }
-    public abstract class GuideFillerStyle : PeriodicFillerStyle, IGuideFiller
-    {
-        public PropertyValue<int> LeftGuideA { get; }
-        public PropertyValue<int> RightGuideA { get; }
-        public PropertyValue<int> LeftGuideB { get; }
-        public PropertyValue<int> RightGuideB { get; }
-
-        public GuideFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset) : base(color, width, step, lineOffset, medianOffset)
-        {
-            LeftGuideA = GetLeftGuideAProperty(0);
-            LeftGuideB = GetLeftGuideBProperty(1);
-            RightGuideA = GetRightGuideAProperty(1);
-            RightGuideB = GetRightGuideBProperty(2);
-        }
-
-        public override void CopyTo(FillerStyle target)
-        {
-            base.CopyTo(target);
-
-            if (target is IGuideFiller guideTarget)
-            {
-                guideTarget.LeftGuideA.Value = LeftGuideA;
-                guideTarget.LeftGuideB.Value = LeftGuideB;
-                guideTarget.RightGuideA.Value = RightGuideA;
-                guideTarget.RightGuideB.Value = RightGuideB;
-            }
-        }
-
-        protected override IEnumerable<MarkingPartData> GetDashes(PartItem item, List<List<FillerContour.Part>> contours) => GetDashesWithOrder(item, contours);
-        protected override void GetGuides(FillerContour contour, out ITrajectory left, out ITrajectory right)
-        {
-            left = contour.GetGuide(LeftGuideA, LeftGuideB, RightGuideA, RightGuideB);
-            right = contour.GetGuide(RightGuideA, RightGuideB, LeftGuideA, LeftGuideB);
-        }
-
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            LeftGuideA.ToXml(config);
-            LeftGuideB.ToXml(config);
-            RightGuideA.ToXml(config);
-            RightGuideB.ToXml(config);
-            return config;
-        }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
-        {
-            base.FromXml(config, map, invert, typeChanged);
-            LeftGuideA.FromXml(config);
-            LeftGuideB.FromXml(config);
-            RightGuideA.FromXml(config);
-            RightGuideB.FromXml(config);
+                VoidDensity.Value = value.x * 0.01f;
+                VoidTiling.Value = value.y * 0.01f;
+            };
+            return voidProperty;
         }
     }
 
     public class StripeFillerStyle : GuideFillerStyle, IFollowGuideFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerStripe;
-        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
 
         public PropertyValue<float> Angle { get; }
         public PropertyValue<bool> FollowGuides { get; }
@@ -495,6 +150,17 @@ namespace IMT.Manager
                 yield return nameof(Angle);
                 yield return nameof(Offset);
                 yield return nameof(Guide);
+                yield return nameof(ScratchDensity);
+                yield return nameof(ScratchTiling);
+                yield return nameof(VoidDensity);
+                yield return nameof(VoidTiling);
+#if DEBUG
+                yield return nameof(RenderOnly);
+                yield return nameof(Start);
+                yield return nameof(End);
+                yield return nameof(StartBorder);
+                yield return nameof(EndBorder);
+#endif
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -537,47 +203,75 @@ namespace IMT.Manager
             base.GetUIComponents(filler, components, parent, isTemplate);
 
             if (!isTemplate)
-                components.Add(AddAngleProperty(this, parent, false));
-
-            if (!isTemplate)
             {
-                components.Add(AddGuideProperty(this, filler.Contour, parent, true));
+                components.Add(AddAngleProperty(this, parent, false));
             }
         }
 
-        protected override IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour)
+        protected override ITrajectory[] GetGuides(MarkingFiller filler, FillerContour.EdgeSetGroup contours)
         {
             if (FollowGuides)
+                return base.GetGuides(filler, contours);
+            else
+                return new ITrajectory[] { GetGuide(contours.Limits, filler.Marking.Height, Angle) };
+        }
+
+#if DEBUG_PERIODIC_FILLER
+        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
+#else
+        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod)
+#endif
+        {
+            var angle = FollowGuides ? 90f - Angle : 90f;
+            var coef = Math.Max(Mathf.Sin(Mathf.Abs(angle) * Mathf.Deg2Rad), 0.01f);
+            var width = Width.Value / coef;
+
+            var limits = contours.GetLimits();
+            var trajectories = GetPartTrajectories(guide, limits, width, width * (Step - 1));
+            var parts = new List<Part>(trajectories.Count);
+
+            if (!FollowGuides)
             {
-                foreach (var guide in base.GetGuides(filler, contour))
-                    yield return guide;
+                for (var i = 0; i < trajectories.Count; i += 1)
+                {
+                    var part = new Part(trajectories[i], null, null, angle, true);
+                    if (part.CanIntersect(contours, true))
+                        parts.Add(part);
+                }
             }
             else
             {
-                var rect = GetRect(contour);
-                yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, Angle) };
-            }
-        }
-        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod)
-        {
-            var angle = FollowGuides ? 90f - Angle : 90f;
-            var width = Width.Value;
-            GetItemParams(ref width, angle, lod, out int itemsCount, out float itemWidth, out float itemStep);
-
-            var parts = GetParts(guide, width, width * (Step - 1)).ToArray();
-            GetPartBorders(parts, angle, out StraightTrajectory[] startBorders, out StraightTrajectory[] endBorders);
-
-            for (var i = 0; i < parts.Length; i += 1)
-            {
-                var before = GetPartBorder(endBorders, startBorders[i], i, false);
-                var after = GetPartBorder(startBorders, endBorders[i], i, true);
-                foreach (var item in GetPartItems(parts[i], angle, itemsCount, itemWidth, itemStep))
+                var borders = BorderPair.GetBorders(trajectories, contours, angle, true);
+                for (var i = 0; i < borders.Count; i += 1)
                 {
-                    item.Before = before;
-                    item.After = after;
-                    yield return item;
+#if DEBUG
+                    Border? startBorder = null;
+                    Border? endBorder = null;
+                    if (RenderOnly == -1 || i == RenderOnly)
+                        borders[i].GetPartBorders(borders, i, out startBorder, out endBorder);
+#else
+                    borders[i].GetPartBorders(borders, i, out var startBorder, out var endBorder);
+#endif
+                    parts.Add(new Part(borders[i].trajectory, startBorder, endBorder, angle, true));
                 }
+
+#if DEBUG_PERIODIC_FILLER
+                var dashes = new List<MarkingPartData>();
+
+                for (var i = 0; i < borders.Count; i += 1)
+                    borders[i].Draw(dashes);
+
+                if (RenderOnly != -1 && parts.Count > RenderOnly)
+                {
+                    parts[RenderOnly].startBorder?.Draw(dashes, UnityEngine.Color.blue, 0.3f);
+                    parts[RenderOnly].endBorder?.Draw(dashes, UnityEngine.Color.blue, 0.3f);
+                }
+
+                addData(new MarkingPartGroupData(lod, dashes));
+#endif
             }
+
+            return parts;
         }
 
         protected override float GetAngle() => 90f - Angle;
@@ -605,7 +299,7 @@ namespace IMT.Manager
     public class ChevronFillerStyle : GuideFillerStyle, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerChevron;
-        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
 
         public PropertyValue<float> AngleBetween { get; }
         public PropertyBoolValue Invert { get; }
@@ -624,6 +318,17 @@ namespace IMT.Manager
                 yield return nameof(Offset);
                 yield return nameof(Guide);
                 yield return nameof(Invert);
+                yield return nameof(ScratchDensity);
+                yield return nameof(ScratchTiling);
+                yield return nameof(VoidDensity);
+                yield return nameof(VoidTiling);
+#if DEBUG
+                yield return nameof(RenderOnly);
+                yield return nameof(Start);
+                yield return nameof(End);
+                yield return nameof(StartBorder);
+                yield return nameof(EndBorder);
+#endif
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -674,7 +379,6 @@ namespace IMT.Manager
             components.Add(AddAngleBetweenProperty(parent, false));
             if (!isTemplate)
             {
-                components.Add(AddGuideProperty(this, filler.Contour, parent, true));
                 components.Add(AddInvertProperty(parent, false));
             }
         }
@@ -711,35 +415,54 @@ namespace IMT.Manager
             return buttonsPanel;
         }
 
-        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod)
+#if DEBUG_PERIODIC_FILLER
+        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
+#else
+        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod)
+#endif
         {
-            var width = Width.Value;
-            var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) / 2;
-            GetItemParams(ref width, halfAngle, lod, out int itemsCount, out float itemWidth, out float itemStep);
+            var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) * 0.5f;
+            var coef = Math.Max(Mathf.Sin(Mathf.Abs(halfAngle) * Mathf.Deg2Rad), 0.01f);
+            var width = Width.Value / coef;
 
-            var parts = GetParts(guide, width, width * (Step - 1)).ToArray();
-            GetPartBorders(parts, halfAngle, out StraightTrajectory[] leftStartBorders, out StraightTrajectory[] leftEndBorders);
-            GetPartBorders(parts, -halfAngle, out StraightTrajectory[] rightStartBorders, out StraightTrajectory[] rightEndBorders);
+            var limits = contours.GetLimits();
+            var trajectories = GetPartTrajectories(guide, limits, width, width * (Step - 1));
+            var parts = new List<Part>(trajectories.Count * 2);
 
-            for (var i = 0; i < parts.Length; i += 1)
+            var leftBorders = BorderPair.GetBorders(trajectories, contours, halfAngle - 180, false);
+            for (var i = 0; i < leftBorders.Count; i += 1)
             {
-                var leftBefore = GetPartBorder(leftEndBorders, leftStartBorders[i], i, false);
-                var leftAfter = GetPartBorder(leftStartBorders, leftEndBorders[i], i, true);
-                var rightBefore = GetPartBorder(rightEndBorders, rightStartBorders[i], i, false);
-                var rightAfter = GetPartBorder(rightStartBorders, rightEndBorders[i], i, true);
-                foreach (var item in GetPartItems(parts[i], halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
-                {
-                    item.Before = leftBefore;
-                    item.After = leftAfter;
-                    yield return item;
-                }
-                foreach (var item in GetPartItems(parts[i], -halfAngle, itemsCount, itemWidth, itemStep, isBothDir: false))
-                {
-                    item.Before = rightBefore;
-                    item.After = rightAfter;
-                    yield return item;
-                }
+                leftBorders[i].GetPartBorders(leftBorders, i, out var leftStartBorder, out var leftEndBorder);
+                var part = new Part(leftBorders[i].trajectory, leftStartBorder, leftEndBorder, halfAngle, false);
+                parts.Add(part);
             }
+
+            var rightBorders = BorderPair.GetBorders(trajectories, contours, 180 - halfAngle, false);
+            for (var i = 0; i < rightBorders.Count; i += 1)
+            {
+                rightBorders[i].GetPartBorders(rightBorders, i, out var rightStartBorder, out var rightEndBorder);
+                var part = new Part(rightBorders[i].trajectory, rightStartBorder, rightEndBorder, -halfAngle, false);
+                parts.Add(part);
+            }
+
+#if DEBUG_PERIODIC_FILLER
+            var dashes = new List<MarkingPartData>();
+
+            for (var i = 0; i < leftBorders.Count; i += 1)
+                leftBorders[i].Draw(dashes);
+
+            for (var i = 0; i < rightBorders.Count; i += 1)
+                rightBorders[i].Draw(dashes);
+
+            if (RenderOnly != -1 && parts.Count > RenderOnly)
+            {
+                parts[RenderOnly].startBorder?.Draw(dashes, UnityEngine.Color.blue, 0.3f);
+                parts[RenderOnly].endBorder?.Draw(dashes, UnityEngine.Color.blue, 0.3f);
+            }
+
+            addData(new MarkingPartGroupData(lod, dashes));
+#endif
+            return parts;
         }
         protected override float GetAngle() => (Invert ? 360 - AngleBetween : AngleBetween) / 2;
 
@@ -783,13 +506,12 @@ namespace IMT.Manager
             Edge = 1
         }
     }
-    public class GridFillerStyle : Filler2DStyle, IPeriodicFiller, IRotateFiller, IWidthStyle, IColorStyle
+    public class GridFillerStyle : PeriodicFillerStyle, IPeriodicFiller, IRotateFiller, IWidthStyle, IColorStyle
     {
         public override StyleType Type => StyleType.FillerGrid;
-        public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
 
         public PropertyValue<float> Angle { get; }
-        public PropertyValue<float> Step { get; }
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -801,6 +523,10 @@ namespace IMT.Manager
                 yield return nameof(Step);
                 yield return nameof(Angle);
                 yield return nameof(Offset);
+                yield return nameof(ScratchDensity);
+                yield return nameof(ScratchTiling);
+                yield return nameof(VoidDensity);
+                yield return nameof(VoidTiling);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -817,10 +543,9 @@ namespace IMT.Manager
             }
         }
 
-        public GridFillerStyle(Color32 color, float width, float angle, float step, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
+        public GridFillerStyle(Color32 color, float width, float angle, float step, float lineOffset, float medianOffset) : base(color, width, step, lineOffset, medianOffset)
         {
             Angle = GetAngleProperty(angle);
-            Step = GetStepProperty(step);
         }
 
         public override FillerStyle CopyStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, LineOffset, DefaultOffset);
@@ -842,21 +567,32 @@ namespace IMT.Manager
                 components.Add(AddAngleProperty(this, parent, false));
         }
 
-        protected override IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour)
+        protected override ITrajectory[] GetGuides(MarkingFiller filler, FillerContour.EdgeSetGroup contours)
         {
-            var rect = GetRect(contour);
-            yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, Angle) };
-            yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, Angle < 0 ? Angle + 90 : Angle - 90) };
+            return new ITrajectory[]
+            {
+                GetGuide(contours.Limits, filler.Marking.Height, Angle),
+                GetGuide(contours.Limits, filler.Marking.Height, Angle < 0 ? Angle + 90 : Angle - 90)
+            };
         }
-        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod)
+
+#if DEBUG_PERIODIC_FILLER
+        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
+#else
+        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod)
+#endif
         {
             var width = Width.Value;
-            GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
-            foreach (var part in GetParts(guide, width, width * (Step - 1)))
+            var trajectories = GetPartTrajectories(guide, contours.Limits, width, width * (Step - 1));
+
+            var parts = new List<Part>(trajectories.Count);
+            for (var i = 0; i < trajectories.Count; i += 1)
             {
-                foreach (var item in GetPartItems(part, 90f, itemsCount, itemWidth, itemStep))
-                    yield return item;
+                var part = new Part(trajectories[i], null, null, 90f, true);
+                if (part.CanIntersect(contours, true))
+                    parts.Add(part);
             }
+            return parts;
         }
 
         public override XElement ToXml()
@@ -873,18 +609,18 @@ namespace IMT.Manager
             Step.FromXml(config, DefaultStepGrid);
         }
     }
-    public class SolidFillerStyle : Filler2DStyle, IGuideFiller, IFollowGuideFiller, IColorStyle
+    public class SolidFillerStyle : Filler2DStyle, IColorStyle, ITextureFiller
     {
         public static float DefaultSolidWidth { get; } = 0.2f;
 
         public override StyleType Type => StyleType.FillerSolid;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
-        public PropertyValue<int> LeftGuideA { get; }
-        public PropertyValue<int> RightGuideA { get; }
-        public PropertyValue<int> LeftGuideB { get; }
-        public PropertyValue<int> RightGuideB { get; }
-        public PropertyValue<bool> FollowGuides { get; }
+#if DEBUG
+        public new PropertyValue<float> MinAngle { get; }
+        public new PropertyValue<float> MinLength { get; }
+        public new PropertyValue<float> MaxLength { get; }
+#endif
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -893,7 +629,15 @@ namespace IMT.Manager
             {
                 yield return nameof(Color);
                 yield return nameof(Offset);
-                yield return nameof(Guide);
+                yield return nameof(ScratchDensity);
+                yield return nameof(ScratchTiling);
+                yield return nameof(VoidDensity);
+                yield return nameof(VoidTiling);
+#if DEBUG
+                yield return nameof(MinAngle);
+                yield return nameof(MinLength);
+                yield return nameof(MaxLength);
+#endif
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -904,94 +648,102 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
                 yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
                 yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideB), LeftGuideB);
-                yield return new StylePropertyDataProvider<int>(nameof(RightGuideA), RightGuideA);
-                yield return new StylePropertyDataProvider<int>(nameof(RightGuideB), RightGuideB);
-                yield return new StylePropertyDataProvider<bool>(nameof(FollowGuides), FollowGuides);
             }
         }
 
-        public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset, bool followGuides = false) : base(color, DefaultSolidWidth, lineOffset, medianOffset)
+        public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset) : base(color, DefaultSolidWidth, lineOffset, medianOffset)
         {
-            LeftGuideA = GetLeftGuideAProperty(0);
-            LeftGuideB = GetLeftGuideBProperty(1);
-            RightGuideA = GetRightGuideAProperty(1);
-            RightGuideB = GetRightGuideBProperty(2);
-            FollowGuides = GetFollowGuidesProperty(followGuides);
+#if DEBUG
+            MinAngle = new PropertyStructValue<float>(StyleChanged, FillerStyle.MinAngle);
+            MinLength = new PropertyStructValue<float>(StyleChanged, FillerStyle.MinLength);
+            MaxLength = new PropertyStructValue<float>(StyleChanged, FillerStyle.MaxLength);
+#endif
         }
 
         public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, LineOffset, DefaultOffset);
-        public override void CopyTo(FillerStyle target)
-        {
-            base.CopyTo(target);
 
-            if (target is IGuideFiller guideTarget)
-            {
-                guideTarget.LeftGuideA.Value = LeftGuideA;
-                guideTarget.LeftGuideB.Value = LeftGuideB;
-                guideTarget.RightGuideA.Value = RightGuideA;
-                guideTarget.RightGuideB.Value = RightGuideB;
-            }
-            if (target is IFollowGuideFiller followGuideTarget)
-                followGuideTarget.FollowGuides.Value = FollowGuides;
-        }
-
-        protected override IEnumerable<GuideLine> GetGuides(MarkingFiller filler, ITrajectory[] contour)
+        protected override void CalculateImpl(MarkingFiller filler, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {
-            var rect = GetRect(contour);
-
-            if (FollowGuides)
+            if ((SupportLOD & lod) != 0)
             {
-                var left = filler.Contour.GetGuide(LeftGuideA, LeftGuideB, RightGuideA, RightGuideB);
-                var right = filler.Contour.GetGuide(RightGuideA, RightGuideB, LeftGuideA, LeftGuideB);
-                var startPos = (right.EndPosition + left.StartPosition) / 2;
-                var endPos = (right.StartPosition + left.EndPosition) / 2;
-                var angle = (endPos - startPos).Turn90(true).AbsoluteAngle() * Mathf.Rad2Deg;
-                yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, angle) };
-            }
-            else
-                yield return new GuideLine() { GetGuide(rect, filler.Marking.Height, 0) };
-        }
-        protected override IEnumerable<PartItem> GetItems(GuideLine guide, MarkingLOD lod)
-        {
-            foreach (var part in guide.OfType<StraightTrajectory>())
-            {
-                var width = part.Length;
-                GetItemParams(ref width, 90f, lod, out int itemsCount, out float itemWidth, out float itemStep);
-                foreach (var item in GetPartItems(part, 90f, itemsCount, itemWidth, itemStep))
-                    yield return item;
+                foreach (var contour in contours)
+                {
+                    var trajectories = contour.Select(c => c.trajectory).ToArray();
+                    foreach (var data in DecalData.GetData(lod, trajectories, MinAngle, MinLength, MaxLength, Color, Vector2.one, ScratchDensity, new Vector2(1f / ScratchTiling, 1f / ScratchTiling), VoidDensity, new Vector2(1f / VoidTiling, 1f / VoidTiling)))
+                    {
+                        addData(data);
+                    }
+                }
             }
         }
 
         public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
-
-            if (!isTemplate)
-            {
-                components.Add(AddGuideProperty(this, filler.Contour, parent, true));
-            }
+#if DEBUG
+            components.Add(GetMinAngle(parent));
+            components.Add(GetMinLength(parent));
+            components.Add(GetMaxLength(parent));
+#endif
         }
-
+#if DEBUG
+        private FloatPropertyPanel GetMinAngle(UIComponent parent)
+        {
+            var minAngleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MinAngle));
+            minAngleProperty.Text = "Min angle";
+            minAngleProperty.CanCollapse = true;
+            minAngleProperty.CheckMax = true;
+            minAngleProperty.CheckMin = true;
+            minAngleProperty.MinValue = 1f;
+            minAngleProperty.MaxValue = 90f;
+            minAngleProperty.WheelStep = 1f;
+            minAngleProperty.UseWheel = true;
+            minAngleProperty.Init();
+            minAngleProperty.Value = MinAngle;
+            minAngleProperty.OnValueChanged += (float value) => MinAngle.Value = value;
+            return minAngleProperty;
+        }
+        private FloatPropertyPanel GetMinLength(UIComponent parent)
+        {
+            var minLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MinLength));
+            minLengthProperty.Text = "Min length";
+            minLengthProperty.CanCollapse = true;
+            minLengthProperty.CheckMax = true;
+            minLengthProperty.CheckMin = true;
+            minLengthProperty.MinValue = 0.1f;
+            minLengthProperty.MaxValue = 10f;
+            minLengthProperty.WheelStep = 0.1f;
+            minLengthProperty.UseWheel = true;
+            minLengthProperty.Init();
+            minLengthProperty.Value = MinLength;
+            minLengthProperty.OnValueChanged += (float value) => MinLength.Value = value;
+            return minLengthProperty;
+        }
+        private FloatPropertyPanel GetMaxLength(UIComponent parent)
+        {
+            var maxLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MaxLength));
+            maxLengthProperty.Text = "Max length";
+            maxLengthProperty.CanCollapse = true;
+            maxLengthProperty.CheckMax = true;
+            maxLengthProperty.CheckMin = true;
+            maxLengthProperty.MinValue = 1f;
+            maxLengthProperty.MaxValue = 100f;
+            maxLengthProperty.WheelStep = 0.1f;
+            maxLengthProperty.UseWheel = true;
+            maxLengthProperty.Init();
+            maxLengthProperty.Value = MaxLength;
+            maxLengthProperty.OnValueChanged += (float value) => MaxLength.Value = value;
+            return maxLengthProperty;
+        }
+#endif
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            LeftGuideA.ToXml(config);
-            LeftGuideB.ToXml(config);
-            RightGuideA.ToXml(config);
-            RightGuideB.ToXml(config);
-            FollowGuides.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
-            LeftGuideA.FromXml(config);
-            LeftGuideB.FromXml(config);
-            RightGuideA.FromXml(config);
-            RightGuideB.FromXml(config);
-            FollowGuides.FromXml(config, DefaultFollowGuides);
         }
     }
 }

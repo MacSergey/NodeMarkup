@@ -111,7 +111,7 @@ namespace IMT.Manager
         public virtual void Render(OverlayData data) => Trajectory.Render(data);
         public virtual void RenderRule(MarkingLineRawRule rule, OverlayData data)
         {
-            if (rule.GetTrajectory(out var trajectory))
+            if (rule.Style.Value.RenderOverlay && rule.GetTrajectory(out var trajectory))
                 trajectory.Render(data);
         }
         public abstract bool ContainsRule(MarkingLineRawRule rule);

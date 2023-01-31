@@ -119,8 +119,8 @@ namespace IMT.Manager
 
             static float GetOffset(Intersection intersect, float offset)
             {
-                var firstDir = intersect.First.Tangent(intersect.firstT);
-                var secondDir = intersect.Second.Tangent(intersect.secondT);
+                var firstDir = intersect.first.Tangent(intersect.firstT);
+                var secondDir = intersect.second.Tangent(intersect.secondT);
                 var angel = Vector3.Angle(firstDir, secondDir) * Mathf.Deg2Rad;
                 var tan = Mathf.Tan(angel);
                 return tan != 0 ? offset / tan : 1000f;

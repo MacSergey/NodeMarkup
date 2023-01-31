@@ -4,6 +4,7 @@ using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -19,9 +20,6 @@ namespace IMT.Manager
     {
         protected abstract MaterialType MaterialType { get; }
 
-        public float MinAngle => 5f;
-        public float MinLength => 0.3f;
-        public float MaxLength => 10f;
         public PropertyValue<float> Elevation { get; }
         public PropertyValue<float> CornerRadius { get; }
         public PropertyValue<float> MedianCornerRadius { get; }
@@ -44,7 +42,7 @@ namespace IMT.Manager
             }
         }
 
-        protected override List<List<FillerContour.Part>> GetContours(MarkingFiller filler)
+        protected override FillerContour.EdgeSetGroup GetContours(MarkingFiller filler)
         {
             var contours = base.GetContours(filler);
 
@@ -53,10 +51,10 @@ namespace IMT.Manager
 
             return contours;
         }
-        protected override IEnumerable<IStyleData> CalculateImpl(MarkingFiller filler, List<List<FillerContour.Part>> contours, MarkingLOD lod)
+        protected override void CalculateImpl(MarkingFiller filler, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {
             if ((SupportLOD & lod) == 0)
-                yield break;
+                return;
 
             foreach (var contour in contours)
             {
@@ -65,19 +63,20 @@ namespace IMT.Manager
                 {
                     //SplitTriangles(contour, points, triangles, 2f, out var topPoints, out var topTriangles);
 
-                    yield return new MarkingFillerMeshData(lod, Elevation, MarkingFillerMeshData.RawData.SetSide(groups, points, MaterialType.Pavement), MarkingFillerMeshData.RawData.SetTop(points, triangles, MaterialType));
+                    var data = new MarkingFillerMeshData(lod, Elevation, MarkingFillerMeshData.RawData.SetSide(groups, points, MaterialType.Pavement), MarkingFillerMeshData.RawData.SetTop(points, triangles, MaterialType));
+                    addData(data);
 #if DEBUG
                     //if ((Settings.ShowFillerTriangulation & 2) != 0)
                     //    yield return GetTriangulationLines(topPoints, topTriangles, UnityEngine.Color.red, MaterialType.RectangleFillers);
                     if ((Settings.ShowFillerTriangulation & 1) != 0)
-                        yield return GetTriangulationLines(points, triangles, UnityEngine.Color.green, MaterialType.RectangleLines);
+                        addData(GetTriangulationLines(points, triangles, UnityEngine.Color.green, MaterialType.RectangleLines));
 #endif
                 }
             }
         }
-        protected Vector3[] GetContourPoints(List<FillerContour.Part> contour, MarkingLOD lod, out int[] groups)
+        protected Vector3[] GetContourPoints(List<FillerContour.Edge> contour, MarkingLOD lod, out int[] groups)
         {
-            var trajectories = contour.Select(i => i.Trajectory).ToList();
+            var trajectories = contour.Select(i => i.trajectory).ToList();
             if (trajectories.GetDirection() == TrajectoryHelper.Direction.CounterClockWise)
                 trajectories = trajectories.Select(t => t.Invert()).Reverse().ToList();
 
@@ -291,7 +290,7 @@ namespace IMT.Manager
                 {
                     var yPart = new StraightTrajectory(B[y]);
                     var intersect = Intersection.CalculateSingle(xPart, yPart);
-                    if (intersect.IsIntersect)
+                    if (intersect.isIntersect)
                     {
                         if (isClockWise)
                         {
@@ -450,8 +449,8 @@ namespace IMT.Manager
     {
         public struct CounterData
         {
-            public List<FillerContour.Part> _side;
-            public List<FillerContour.Part> _hole;
+            public FillerContour.EdgeSet _side;
+            public FillerContour.EdgeSet _hole;
         }
 
         public PropertyValue<float> CurbSize { get; }
@@ -473,16 +472,15 @@ namespace IMT.Manager
                 curbTarget.MedianCurbSize.Value = MedianCurbSize;
             }
         }
-        public override IEnumerable<IStyleData> Calculate(MarkingFiller filler)
+        public override void Calculate(MarkingFiller filler, Action<IStyleData> addData)
         {
             if (CurbSize == 0f && MedianCurbSize == 0f)
             {
-                foreach (var data in base.Calculate(filler))
-                    yield return data;
+                base.Calculate(filler, addData);
             }
             else
             {
-                var originalContour = filler.Contour.Parts.ToList();
+                var originalContour = filler.Contour.Edges;
 
                 var contourDatas = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset).Select(i => new CounterData() { _side = i }).ToArray();
 
@@ -495,20 +493,19 @@ namespace IMT.Manager
 
                 foreach (var lod in EnumExtension.GetEnumValues<MarkingLOD>())
                 {
-                    foreach (var data in Calculate(filler, contourDatas, lod))
-                        yield return data;
+                    Calculate(filler, contourDatas, lod, addData);
                 }
             }
         }
-        private IEnumerable<IStyleData> Calculate(MarkingFiller filler, CounterData[] contours, MarkingLOD lod)
+        private void Calculate(MarkingFiller filler, CounterData[] contours, MarkingLOD lod, Action<IStyleData> addData)
         {
             if ((SupportLOD & lod) == 0)
-                yield break;
+                return;
 
             if (lod == MarkingLOD.LOD1)
             {
-                foreach (var data in base.CalculateImpl(filler, contours.Select(c => c._side).ToList(), lod))
-                    yield return data;
+                var sideContours = new FillerContour.EdgeSetGroup(contours.Select(c => c._side));
+                base.CalculateImpl(filler, sideContours, lod, addData);
             }
             else
             {
@@ -581,7 +578,7 @@ namespace IMT.Manager
                                 //        for (int i = firstTriangles.Length; i < triangles.Length; i += 1)
                                 //            triangles[i] += firstPoints.Length;
 
-                                //        meshParts.Add(MarkupStyleFillerMesh.RawData.SetTop(holePoints, holeTriangles, MaterialType));
+                                //        meshParts.Add(MarkingStyleFillerMesh.RawData.SetTop(holePoints, holeTriangles, MaterialType));
                                 //    }
                                 //}
                             }
@@ -590,7 +587,7 @@ namespace IMT.Manager
                         meshParts.Add(MarkingFillerMeshData.RawData.SetTop(sidePoints, triangles, MaterialType.Pavement));
                     }
 
-                    yield return new MarkingFillerMeshData(lod, Elevation, meshParts.ToArray());
+                    addData(new MarkingFillerMeshData(lod, Elevation, meshParts.ToArray()));
                 }
             }
         }

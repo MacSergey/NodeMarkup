@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using IMT.Manager;
 using ModsCommon.Utilities;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,23 +41,23 @@ namespace IMT.Utilities
     }
     public class MarkingPartGroupData : IStyleData, IEnumerable<MarkingPartData>
     {
-        private List<MarkingPartData> Dashes { get; }
+        private MarkingPartData[] Dashes { get; }
         public MarkingLOD LOD { get; }
         public MarkingLODType LODType => MarkingLODType.Dash;
 
         public MarkingPartGroupData(MarkingLOD lod)
         {
             LOD = lod;
-            Dashes = new List<MarkingPartData>();
+            Dashes = new MarkingPartData[0];
         }
         public MarkingPartGroupData(MarkingLOD lod, IEnumerable<MarkingPartData> dashes)
         {
             LOD = lod;
-            Dashes = dashes.ToList();
+            Dashes = dashes.ToArray();
         }
 
-        public IEnumerator<MarkingPartData> GetEnumerator() => Dashes.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public IEnumerator<MarkingPartData> GetEnumerator() => ((IEnumerable<MarkingPartData>)Dashes).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => Dashes.GetEnumerator();
 
         public IEnumerable<IDrawData> GetDrawData() => MarkingPartsBatchData.FromDashes(this);
     }

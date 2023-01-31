@@ -1,7 +1,9 @@
-﻿using IMT.Utilities;
+﻿using ColossalFramework.Math;
+using IMT.Utilities;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -33,7 +35,7 @@ namespace IMT.Manager
             return points;
         }
 
-        public Marking Markup { get; }
+        public Marking Marking { get; }
         public bool IsComplite { get; private set; }
 
         private List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
@@ -49,34 +51,42 @@ namespace IMT.Manager
         public bool IsEmpty => VertexCount == 0;
         public bool PossibleComplite => VertexCount >= 3;
 
-        public FillerLinePart[] RawParts { get; private set; } = new FillerLinePart[0];
-        public FillerLinePart[] ProcessedParts { get; private set; } = new FillerLinePart[0];
-        public int RawCount => RawParts.Length;
-        public int ProcessedCount => ProcessedParts.Length;
+        private FillerLinePart[] RawPartsArray { get; set; } = new FillerLinePart[0];
+        private FillerLinePart[] ProcessedPartsArray { get; set; } = new FillerLinePart[0];
 
-        public List<ITrajectory> TrajectoriesRaw => GetTrajectories(RawParts);
-        public List<ITrajectory> TrajectoriesProcessed => GetTrajectories(ProcessedParts);
+        public IEnumerable<FillerLinePart> RawEdges => RawPartsArray;
+        public IEnumerable<FillerLinePart> ProcessedEdges => ProcessedPartsArray;
+
+        public int RawCount => RawPartsArray.Length;
+        public int ProcessedCount => ProcessedPartsArray.Length;
+
+        public List<ITrajectory> TrajectoriesRaw => GetTrajectories(RawPartsArray);
+        public List<ITrajectory> TrajectoriesProcessed => GetTrajectories(ProcessedPartsArray);
         public TrajectoryHelper.Direction Direction => TrajectoriesRaw.GetDirection();
 
-        public bool IsMedian => Parts.Any(p => p.IsEnter);
-        public IEnumerable<Part> Parts
+        public bool IsMedian => Edges.Any(p => p.isEnter);
+        public EdgeSet Edges
         {
             get
             {
-                foreach (var part in RawParts)
+                var edges = new EdgeSet();
+
+                foreach (var part in RawPartsArray)
                 {
                     if (part.Line is MarkingEnterLine enterLine && enterLine.IsDot)
                         continue;
 
                     if (part.GetTrajectory(out ITrajectory trajectory))
-                        yield return new Part(trajectory, part.Line is MarkingEnterLine);
+                        edges.Add(new Edge(trajectory, part.Line is MarkingEnterLine));
                 }
+
+                return edges;
             }
         }
 
         public FillerContour(Marking marking, IEnumerable<IFillerVertex> vertices = null)
         {
-            Markup = marking;
+            Marking = marking;
 
             if (vertices != null)
             {
@@ -314,7 +324,7 @@ namespace IMT.Manager
             var linePart = new FillerLinePart(line, first, second);
             return linePart;
         }
-        public List<IFillerVertex> GetNextСandidates() => Last is IFillerVertex last ? last.GetNextCandidates(this, Prev) : GetBeginCandidates(Markup);
+        public List<IFillerVertex> GetNextСandidates() => Last is IFillerVertex last ? last.GetNextCandidates(this, Prev) : GetBeginCandidates(Marking);
 
         public void GetMinMaxT(IFillerVertex fillerVertex, MarkingLine line, out float resultT, out float resultMinT, out float resultMaxT)
         {
@@ -322,7 +332,7 @@ namespace IMT.Manager
             var minT = -1f;
             var maxT = 2f;
 
-            foreach (var part in RawParts)
+            foreach (var part in RawPartsArray)
             {
                 part.GetFromT(out float fromT);
                 part.GetToT(out float toT);
@@ -332,7 +342,7 @@ namespace IMT.Manager
                     Set(fromT, false);
                     Set(toT, false);
                 }
-                else if (Markup.GetIntersect(new MarkingLinePair(line, part.Line)) is MarkingLinesIntersect intersect && intersect.IsIntersect)
+                else if (Marking.GetIntersect(new MarkingLinePair(line, part.Line)) is MarkingLinesIntersect intersect && intersect.IsIntersect)
                 {
                     var linePartT = intersect[part.Line];
 
@@ -478,7 +488,6 @@ namespace IMT.Manager
         }
         public int GetCorrectIndex(int value) => value >= 0 ? value % ProcessedCount : value % ProcessedCount + ProcessedCount;
 
-        public int IndexOfRaw(IFillerVertex vertex) => IndexOf(SupportPoints, vertex);
         public int IndexOfProcessed(IFillerVertex vertex) => IndexOf(ProcessedVertex, vertex.ProcessedVertex);
         private int IndexOf(IEnumerable<IFillerVertex> vertices, IFillerVertex vertex)
         {
@@ -498,8 +507,8 @@ namespace IMT.Manager
                 supportPoint.Update();
 
             ProcessedVertex = SupportPoints.Select(p => p.ProcessedVertex).Distinct(VertexComparer).ToArray();
-            RawParts = GetParts(true).ToArray();
-            ProcessedParts = GetParts(false).ToArray();
+            RawPartsArray = GetParts(true).ToArray();
+            ProcessedPartsArray = GetParts(false).ToArray();
         }
         private IEnumerable<FillerLinePart> GetParts(bool isRaw)
         {
@@ -523,8 +532,8 @@ namespace IMT.Manager
             }
             else
             {
-                foreach (var part in Parts)
-                    part.Trajectory.Render(data);
+                foreach (var part in Edges)
+                    part.trajectory.Render(data);
             }
         }
 
@@ -533,34 +542,409 @@ namespace IMT.Manager
             public bool Equals(IFillerVertex x, IFillerVertex y) => x.Equals(y);
             public int GetHashCode(IFillerVertex vertex) => vertex.GetHashCode();
         }
-        public struct Part
-        {
-            public ITrajectory Trajectory { get; set; }
-            public bool IsEnter { get; }
 
-            public Part(ITrajectory trajectory, bool isEnter = false)
+        public class EdgeSetGroup : List<EdgeSet>
+        {
+            private Rect? limits;
+            private Vector3[] points;
+
+            public Rect Limits => limits ??= this.GetLimits();
+            public Vector3[] Points => points ??= this.GetPoints();
+
+            public EdgeSetGroup() { }
+            public EdgeSetGroup(IEnumerable<EdgeSet> edges) : base(edges) { }
+
+            public new void Add(EdgeSet edge)
             {
-                Trajectory = trajectory;
-                IsEnter = isEnter;
+                base.Add(edge);
+                limits = null;
+                points = null;
+            }
+            public new void AddRange(IEnumerable<EdgeSet> edges)
+            {
+                base.AddRange(edges);
+                limits = null;
+                points = null;
+            }
+            public new void RemoveAt(int index)
+            {
+                base.RemoveAt(index);
+                limits = null;
+                points = null;
             }
 
-            public override string ToString() => $"{Trajectory} {IsEnter}";
+            public bool CanIntersect(in StraightTrajectory line, bool precise) => precise ? Intersection.CanIntersect(Points, line, out _) : Intersection.CanIntersect(Limits, line, out _);
+        }
+        public class EdgeSet : List<Edge>
+        {
+            public TrajectoryHelper.Direction Direction => this.Select(i => i.trajectory).GetDirection();
+
+            private Rect? limits;
+            private Vector3[] points;
+
+            public Rect Limits
+            {
+                get
+                {
+                    if (limits == null)
+                    {
+                        var limits = new Rect();
+                        for (var i = 0; i < Count; i += 1)
+                        {
+                            if (i == 0)
+                            {
+                                var pos = this[i].trajectory.StartPosition;
+                                limits = Rect.MinMaxRect(pos.x, pos.z, pos.x, pos.z);
+                                continue;
+                            }
+
+                            switch (this[i].trajectory)
+                            {
+                                case BezierTrajectory bezierTrajectory:
+                                    SetRect(ref limits, bezierTrajectory.Trajectory.a);
+                                    SetRect(ref limits, bezierTrajectory.Trajectory.b);
+                                    SetRect(ref limits, bezierTrajectory.Trajectory.c);
+                                    SetRect(ref limits, bezierTrajectory.Trajectory.d);
+                                    break;
+                                case StraightTrajectory straightTrajectory:
+                                    SetRect(ref limits, straightTrajectory.Trajectory.a);
+                                    SetRect(ref limits, straightTrajectory.Trajectory.b);
+                                    break;
+                            }
+                        }
+                        this.limits = limits;
+                    }
+                    return limits.Value;
+
+                    static void SetRect(ref Rect rect, Vector3 pos)
+                    {
+                        if (pos.x < rect.xMin)
+                            rect.xMin = pos.x;
+                        else if (pos.x > rect.xMax)
+                            rect.xMax = pos.x;
+
+                        if (pos.z < rect.yMin)
+                            rect.yMin = pos.z;
+                        else if (pos.z > rect.yMax)
+                            rect.yMax = pos.z;
+                    }
+                }
+            }
+            public Vector3[] Points
+            {
+                get
+                {
+                    if (points == null)
+                    {
+                        var count = 0;
+
+                        for (var i = 0; i < Count; i += 1)
+                        {
+                            switch (this[i].trajectory)
+                            {
+                                case BezierTrajectory:
+                                    count += 3;
+                                    break;
+                                case StraightTrajectory:
+                                    count += 1;
+                                    break;
+                            }
+                        }
+
+                        points = new Vector3[count];
+
+                        count = 0;
+                        for (var i = 0; i < Count; i += 1)
+                        {
+                            switch (this[i].trajectory)
+                            {
+                                case BezierTrajectory bezier:
+                                    points[count++] = bezier.Trajectory.a;
+                                    points[count++] = bezier.Trajectory.b;
+                                    points[count++] = bezier.Trajectory.c;
+                                    break;
+                                case StraightTrajectory straight:
+                                    points[count++] = straight.Trajectory.a;
+                                    break;
+                            }
+                        }
+                    }
+                    return points;
+                }
+            }
+
+            public EdgeSet() { }
+            public EdgeSet(IEnumerable<Edge> items) : base(items) { }
+
+            public new void Add(Edge edge)
+            {
+                base.Add(edge);
+                limits = null;
+                points = null;
+            }
+            public new void AddRange(IEnumerable<Edge> edges)
+            {
+                base.AddRange(edges);
+                limits = null;
+                points = null;
+            }
+            public new void RemoveAt(int index)
+            {
+                base.RemoveAt(index);
+                limits = null;
+                points = null;
+            }
+
+            public bool CanIntersect(in StraightTrajectory line, bool precise) => precise ? Intersection.CanIntersect(Points, line, out _) : Intersection.CanIntersect(Limits, line, out _);
+
+            public List<EdgeSet> Cut(in StraightTrajectory line, Intersection.Side cutSide)
+            {
+                var result = new List<EdgeSet>();
+
+                if (Count <= 1)
+                    return result;
+
+                HashSet<Intersection> intersections = GetIntersections(line);
+
+                if (intersections.Count <= 1)
+                {
+                    var point = this.AverageOrDefault(i => i.trajectory.StartPosition, Vector3.zero);
+                    var pos = line.StartPosition;
+                    var dir = line.Direction;
+
+                    var side = Intersection.GetSide(dir, point - pos);
+                    if (side == cutSide)
+                        result.Add(this);
+
+                    return result;
+                }
+
+                var linePoints = intersections.OrderBy(i => i, Intersection.FirstComparer).ToArray();
+                var setPoints = intersections.OrderBy(i => i, Intersection.SecondComparer).ToArray();
+                var pairs = new List<IntersectionPairEdge>();
+
+                for (int i = 1; i < linePoints.Length; i += 2)
+                    pairs.Add(new IntersectionPairEdge(false, linePoints[i - 1], linePoints[i]));
+
+                var edgeIndex = Mathf.FloorToInt(setPoints[0].secondT);
+                var t = setPoints[0].secondT - edgeIndex;
+                var edgeSide = Intersection.GetSide(line.Direction, this[edgeIndex].trajectory.Tangent(t));
+                if (edgeSide == cutSide)
+                {
+                    for (int i = 1; i < setPoints.Length; i += 2)
+                        pairs.Add(new IntersectionPairEdge(true, setPoints[i - 1].GetReverse(), setPoints[i].GetReverse()));
+                }
+                else
+                {
+                    for (int i = setPoints.Length - 1; i > 0; i -= 2)
+                        pairs.Add(new IntersectionPairEdge(true, setPoints[i].GetReverse(), setPoints[(i + 1) % setPoints.Length].GetReverse()));
+                }
+
+                var count = pairs.Count;
+                for (var i = 0; i < count && pairs.Count > 0; i += 1)
+                {
+                    var area = new List<IntersectionPairEdge>();
+                    var start = pairs[0];
+                    var current = start;
+                    var index = 0;
+                    var iteration = 0;
+                    while (true)
+                    {
+                        pairs.RemoveAt(index);
+                        area.Add(current);
+
+                        var searchFor = current.pair.to.GetReverse();
+                        var nextIndex = pairs.FindIndex(i => i.pair.Contain(searchFor));
+                        if (nextIndex == -1)
+                            break;
+
+                        var next = pairs[nextIndex].pair.from == searchFor ? pairs[nextIndex] : pairs[nextIndex].Reverse;
+                        current = next;
+                        index = nextIndex;
+                        iteration += 1;
+                    }
+
+                    if (area.Count <= 1)
+                        continue;
+
+                    var newSet = new EdgeSet();
+                    foreach (var areaPart in area)
+                    {
+                        if (areaPart.isContour)
+                        {
+                            var startIndex = Mathf.FloorToInt(areaPart.pair.from.firstT);
+                            var endIndex = Mathf.FloorToInt(areaPart.pair.to.firstT);
+
+                            if (!areaPart.Inverted)
+                            {
+                                if (endIndex < startIndex || (endIndex == startIndex && areaPart.pair.to.firstT < areaPart.pair.from.firstT))
+                                    endIndex += Count;
+                            }
+                            else
+                            {
+                                if (startIndex < endIndex || (startIndex == endIndex && areaPart.pair.from.firstT < areaPart.pair.to.firstT))
+                                    startIndex += Count;
+                            }
+
+                            var k = startIndex;
+                            while (true)
+                            {
+                                var fromT = k == startIndex ?
+                                    areaPart.pair.from.firstT - (startIndex % Count) :
+                                    (!areaPart.Inverted ? 0f : 1f);
+
+                                var toT = k == endIndex ?
+                                    areaPart.pair.to.firstT - (endIndex % Count) :
+                                    (!areaPart.Inverted ? 1f : 0f);
+
+                                var trajectory = this[k % Count].trajectory.Cut(fromT, toT);
+                                newSet.Add(new Edge(trajectory, this[k % Count].isEnter));
+
+                                if (k == endIndex)
+                                    break;
+                                else if (!areaPart.Inverted)
+                                    k += 1;
+                                else
+                                    k -= 1;
+                            }
+                        }
+                        else
+                        {
+                            var startIndex = Mathf.FloorToInt(areaPart.pair.from.secondT);
+                            var endIndex = Mathf.FloorToInt(areaPart.pair.to.secondT);
+                            var startT = areaPart.pair.from.secondT - startIndex;
+                            var endT = areaPart.pair.to.secondT - endIndex;
+                            var startPos = this[startIndex].trajectory.Position(startT);
+                            var endPos = this[endIndex].trajectory.Position(endT);
+                            newSet.Add(new Edge(new StraightTrajectory(startPos, endPos)));
+                        }
+                    }
+                    result.Add(newSet);
+                }
+
+                return result;
+            }
+            public HashSet<Intersection> GetIntersections(in StraightTrajectory line)
+            {
+                HashSet<Intersection> intersections = new HashSet<Intersection>();
+                for (int i = 0; i < Count; i += 1)
+                {
+                    foreach (var inter in Intersection.Calculate(line, this[i].trajectory))
+                    {
+                        var index = inter.secondT + i;
+                        if (Mathf.Abs(index - Count) < float.Epsilon)
+                            index = 0f;
+                        intersections.Add(new Intersection(inter.firstT, index));
+                    }
+                }
+                return intersections;
+            }
+
+            public override string ToString() => $"{Count} Edges";
+        }
+        public readonly struct Edge
+        {
+            public readonly ITrajectory trajectory;
+            public readonly bool isEnter;
+
+            public Edge(ITrajectory trajectory, bool isEnter = false)
+            {
+                this.trajectory = trajectory;
+                this.isEnter = isEnter;
+            }
+
+            public override string ToString() => $"{trajectory} {isEnter}";
+        }
+        public readonly struct EdgePart
+        {
+            public readonly Edge part;
+            public readonly TrajectoryIntersect start;
+            public readonly TrajectoryIntersect end;
+            public Edge Processed => new Edge(part.trajectory.Cut(start.t, end.t), part.isEnter);
+            public EdgePart(Edge part, TrajectoryIntersect start, TrajectoryIntersect end)
+            {
+                this.part = part;
+                this.start = start;
+                this.end = end;
+            }
+
+            public override string ToString() => $"{start} — {end}";
+        }
+        readonly struct IntersectionPairEdge
+        {
+            public readonly bool isContour;
+            public readonly IntersectionPair pair;
+
+            public bool Inverted => pair.Inverted;
+            public IntersectionPairEdge Reverse => new IntersectionPairEdge(isContour, pair.Reverse);
+
+            public IntersectionPairEdge(bool isContour, IntersectionPair pair)
+            {
+                this.isContour = isContour;
+                this.pair = pair;
+            }
+            public IntersectionPairEdge(bool isContour, Intersection from, Intersection to) : this(isContour, new IntersectionPair(from, to)) { }
+
+            public override string ToString() => $"{(isContour ? "Contour" : "Straight")} {pair}";
         }
     }
 
-    public class FillerGuide
+    public readonly struct FillerGuide
     {
-        public int A { get; }
-        public int B { get; }
+        public readonly int a;
+        public readonly int b;
 
         public FillerGuide(int a, int b)
         {
-            A = Math.Max(a, 0);
-            B = Math.Max(b, 0);
+            this.a = Math.Max(a, 0);
+            this.b = Math.Max(b, 0);
         }
-        public static FillerGuide operator +(FillerGuide guide, int delta) => new FillerGuide(guide.A + delta, guide.B + delta);
-        public static FillerGuide operator %(FillerGuide guide, int max) => new FillerGuide(guide.A % max, guide.B % max);
+        public static FillerGuide operator +(FillerGuide guide, int delta) => new FillerGuide(guide.a + delta, guide.b + delta);
+        public static FillerGuide operator %(FillerGuide guide, int max) => new FillerGuide(guide.a % max, guide.b % max);
 
-        public override string ToString() => $"{A + 1}-{B + 1}";
+        public override string ToString() => $"{a + 1}-{b + 1}";
+    }
+
+    public static class FillerContourUtil
+    {
+        public static Rect GetLimits(this IEnumerable<FillerContour.EdgeSet> contours)
+        {
+            int index = 0;
+            Rect limits = default;
+            foreach (var contour in contours)
+            {
+                if (index == 0)
+                    limits = contour.Limits;
+                else
+                {
+                    var thisLimits = contour.Limits;
+                    limits.min = Vector2.Min(limits.min, thisLimits.min);
+                    limits.max = Vector2.Max(limits.max, thisLimits.max);
+                }
+
+                index += 1;
+            }
+            return limits;
+        }
+        public static Vector3[] GetPoints(this IEnumerable<FillerContour.EdgeSet> contours)
+        {
+            var count = 0;
+
+            foreach (var contour in contours)
+                count += contour.Points.Length;
+
+            var points = new Vector3[count];
+            count = 0;
+            foreach (var contour in contours)
+            {
+                var thisPoints = contour.Points;
+                for (var i = 0; i < thisPoints.Length; i += 1)
+                    points[i + count] = thisPoints[i];
+                count += thisPoints.Length;
+            }
+
+            return points;
+        }
+        
     }
 }

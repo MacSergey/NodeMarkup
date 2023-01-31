@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.13.0.52</AssemblyVersion>
+    <AssemblyVersion>1.13.0.320</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -109,6 +109,7 @@
     <None Remove="Resources\HeaderButtons\LinkHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\ResetHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\UnlinkHeaderButton.png" />
+    <None Remove="Resources\imt" />
     <None Remove="Resources\StylesLine\LineDoubleDashedAsym.png" />
     <None Remove="Resources\StylesLine\LineText.png" />
     <None Remove="Resources\StylesLine\LineZigZag.png" />
@@ -142,6 +143,7 @@
     <EmbeddedResource Include="Resources\HeaderButtons\UnlinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\imt" />
     <EmbeddedResource Include="Resources\ListItem\ListItemBackground.png" />
     <EmbeddedResource Include="Resources\SharkTooth.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineDoubleDashedAsym.png" />
@@ -413,6 +415,7 @@
   <PropertyGroup>
     <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(MSBuildProjectName)$(Type)</LocalDir>
     <WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
+    <RootNamespace>IMT</RootNamespace>
   </PropertyGroup>
 
   <Target Name="PdbToMdb" AfterTargets="Build">

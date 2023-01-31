@@ -1,7 +1,9 @@
 ﻿using IMT.Manager;
+using ModsCommon;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using UnityEngine;
 
@@ -9,38 +11,12 @@ namespace IMT.Utilities
 {
     public static class RenderHelper
     {
-        public static Dictionary<MaterialType, Material> MaterialLib { get; private set; } = new Dictionary<MaterialType, Material>()
-        {
-            { MaterialType.RectangleLines, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white))},
-            { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
-            { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), Assembly.GetExecutingAssembly().LoadTextureFromAssembly("SharkTooth"))},
-            { MaterialType.Pavement, CreateRoadMaterial(MaterialType.Pavement, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black)) },
-            { MaterialType.Grass, CreateRoadMaterial(MaterialType.Grass, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(255, 0, 0, 255)))},
-            { MaterialType.Gravel, CreateRoadMaterial(MaterialType.Gravel, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
-            { MaterialType.Asphalt, CreateRoadMaterial(MaterialType.Asphalt, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(0, 255, 255, 255)))},
-            { MaterialType.Ruined, CreateRoadMaterial(MaterialType.Ruined, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
-            { MaterialType.Cliff, CreateRoadMaterial(MaterialType.Cliff, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
-        };
-        public static Dictionary<MaterialType, Texture2D> SurfaceALib { get; } = new Dictionary<MaterialType, Texture2D>()
-        {
-            { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
-            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
-            { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 127)) },
-            { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 127)) },
-            { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 191, 127)) },
-            { MaterialType.Cliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 191)) },
-        };
-        public static Dictionary<MaterialType, Texture2D> SurfaceBLib { get; } = new Dictionary<MaterialType, Texture2D>()
-        {
-            { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 255, 0)) },
-            { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Cliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-        };
-
-
+        private static AssetBundle Bundle { get; set; }
+        private static Material[] DecalMaterials { get; set; }
+        public static Mesh DecalMesh { get; private set; }
+        public static Dictionary<MaterialType, Material> MaterialLib { get; }
+        public static Dictionary<MaterialType, Texture2D> SurfaceALib { get; }
+        public static Dictionary<MaterialType, Texture2D> SurfaceBLib { get; }
         public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
         public static int RoadLayer => 9;
 
@@ -64,6 +40,96 @@ namespace IMT.Utilities
         };
         private static int VCount { get; } = 24;
         private static int TCount { get; } = 36;
+
+        static RenderHelper()
+        {
+            MaterialLib = new Dictionary<MaterialType, Material>()
+            {
+            { MaterialType.RectangleLines, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white))},
+            { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
+            { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), Assembly.GetExecutingAssembly().LoadTextureFromAssembly("SharkTooth"))},
+            { MaterialType.Pavement, CreateRoadMaterial(MaterialType.Pavement, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black)) },
+            { MaterialType.Grass, CreateRoadMaterial(MaterialType.Grass, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(255, 0, 0, 255)))},
+            { MaterialType.Gravel, CreateRoadMaterial(MaterialType.Gravel, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            { MaterialType.Asphalt, CreateRoadMaterial(MaterialType.Asphalt, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(0, 255, 255, 255)))},
+            { MaterialType.Ruined, CreateRoadMaterial(MaterialType.Ruined, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            { MaterialType.Cliff, CreateRoadMaterial(MaterialType.Cliff, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            };
+
+            SurfaceALib = new Dictionary<MaterialType, Texture2D>()
+            {
+            { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
+            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
+            { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 127)) },
+            { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 127)) },
+            { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 191, 127)) },
+            { MaterialType.Cliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 191)) },
+            };
+
+            SurfaceBLib = new Dictionary<MaterialType, Texture2D>()
+            {
+            { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 255, 0)) },
+            { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.Cliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            };
+        }
+
+        public static void LoadBundle()
+        {
+            if (Bundle != null)
+                UnloadBundle();
+
+            try
+            {
+                SingletonMod<Mod>.Logger.Debug("Start loading bundle");
+
+                var data = ResourceUtility.LoadResource($"{nameof(IMT)}.Resources.imt");
+                Bundle = AssetBundle.LoadFromMemory(data);
+
+                var materials = new Material[5];
+                materials[0] = Bundle.LoadAsset<Material>("MarkingZero.mat");
+                materials[1] = Bundle.LoadAsset<Material>("MarkingUpTo4.mat");
+                materials[2] = Bundle.LoadAsset<Material>("MarkingUpTo8.mat");
+                materials[3] = Bundle.LoadAsset<Material>("MarkingUpTo12.mat");
+                materials[4] = Bundle.LoadAsset<Material>("MarkingUpTo16.mat");
+                DecalMaterials = materials;
+
+                DecalMesh = Bundle.LoadAsset<Mesh>("Cube.fbx");
+                DecalMesh.bounds = new Bounds(DecalMesh.bounds.center, Vector3.one * 100f);
+
+                SingletonMod<Mod>.Logger.Debug("Bundle loaded");
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error("Can't load bundle", error);
+            }
+        }
+        public static void UnloadBundle()
+        {
+            try
+            {
+                SingletonMod<Mod>.Logger.Debug("Start unloading bundle");
+
+                if (Bundle != null)
+                    Bundle.Unload(true);
+
+                DecalMaterials = null;
+                DecalMesh = null;
+
+                SingletonMod<Mod>.Logger.Debug("Bundle unloaded");
+            }
+            catch(Exception error) 
+            {
+                SingletonMod<Mod>.Logger.Error("Can't unload bundle", error);
+            }
+        }
+        public static Material GetMaterial(int points)
+        {
+            return DecalMaterials[(Math.Min(points, 16) + 3) / 4];
+        }
 
         public static Mesh CreateMesh(int count, Vector3 size)
         {
@@ -132,7 +198,7 @@ namespace IMT.Utilities
         }
         public static Color32 VerticesColor(int i) => new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, (byte)(16 * i));
 
-        public static Material CreateDecalMaterial(Texture2D texture, Texture2D aci = null, int renderQueue = 2460)
+        public static Material CreateDecalMaterial(Texture2D texture, Texture2D aci = null, int renderQueue = 2460, bool multiInstance = true)
         {
             var material = new Material(Shader.Find("Custom/Props/Decal/Blend"))
             {
@@ -147,7 +213,8 @@ namespace IMT.Utilities
             if (aci != null)
                 material.SetTexture("_ACIMap", aci);
 
-            material.EnableKeyword("MULTI_INSTANCE");
+            if (multiInstance)
+                material.EnableKeyword("MULTI_INSTANCE");
 
             var tiling = new Vector4(1f, 0f, 1f, 0f);
             material.SetVector("_DecalTiling", tiling);

@@ -316,7 +316,7 @@ namespace IMT.Manager
 
             var line = new StraightTrajectory(SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction, false);
             foreach (var contour in Marking.Contour)
-                tSet.AddRange(Intersection.Calculate(line, contour).Where(i => i.IsIntersect).Select(i => i.firstT));
+                tSet.AddRange(Intersection.Calculate(line, contour).Where(i => i.isIntersect).Select(i => i.firstT));
 
             var tSetSort = tSet.OrderBy(i => i).ToArray();
 

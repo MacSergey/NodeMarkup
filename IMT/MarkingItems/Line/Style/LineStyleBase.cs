@@ -71,6 +71,7 @@ namespace IMT.Manager
         protected virtual float LodLength => 0.5f;
         protected virtual float LodWidth => 0.15f;
         public virtual bool CanOverlap => false;
+        public virtual bool RenderOverlay => true;
 
         protected bool CheckDashedLod(MarkingLOD lod, float width, float length) => lod != MarkingLOD.LOD1 || width > LodWidth || length > LodLength;
 

@@ -21,6 +21,7 @@
       $(ManagedDLLPath);
       $(ExternalDLLPath)
     </AssemblySearchPaths>
+    <RootNamespace>IMT.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
