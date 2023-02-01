@@ -208,7 +208,7 @@ namespace IMT.Manager
             }
         }
 
-        protected override ITrajectory[] GetGuides(MarkingFiller filler, FillerContour.EdgeSetGroup contours)
+        protected override ITrajectory[] GetGuides(MarkingFiller filler, ContourGroup contours)
         {
             if (FollowGuides)
                 return base.GetGuides(filler, contours);
@@ -217,9 +217,9 @@ namespace IMT.Manager
         }
 
 #if DEBUG_PERIODIC_FILLER
-        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
+        protected override List<Part> GetParts(ITrajectory guide, EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
 #else
-        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod)
+        protected override List<Part> GetParts(ITrajectory guide, ContourGroup contours, MarkingLOD lod)
 #endif
         {
             var angle = FollowGuides ? 90f - Angle : 90f;
@@ -416,9 +416,9 @@ namespace IMT.Manager
         }
 
 #if DEBUG_PERIODIC_FILLER
-        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
+        protected override List<Part> GetParts(ITrajectory guide, EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
 #else
-        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod)
+        protected override List<Part> GetParts(ITrajectory guide, ContourGroup contours, MarkingLOD lod)
 #endif
         {
             var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) * 0.5f;
@@ -567,7 +567,7 @@ namespace IMT.Manager
                 components.Add(AddAngleProperty(this, parent, false));
         }
 
-        protected override ITrajectory[] GetGuides(MarkingFiller filler, FillerContour.EdgeSetGroup contours)
+        protected override ITrajectory[] GetGuides(MarkingFiller filler, ContourGroup contours)
         {
             return new ITrajectory[]
             {
@@ -577,9 +577,9 @@ namespace IMT.Manager
         }
 
 #if DEBUG_PERIODIC_FILLER
-        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
+        protected override List<Part> GetParts(ITrajectory guide, EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
 #else
-        protected override List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod)
+        protected override List<Part> GetParts(ITrajectory guide, ContourGroup contours, MarkingLOD lod)
 #endif
         {
             var width = Width.Value;
@@ -662,7 +662,7 @@ namespace IMT.Manager
 
         public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, LineOffset, DefaultOffset);
 
-        protected override void CalculateImpl(MarkingFiller filler, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void CalculateImpl(MarkingFiller filler, ContourGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {
             if ((SupportLOD & lod) != 0)
             {

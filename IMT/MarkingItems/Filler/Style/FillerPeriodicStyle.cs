@@ -110,7 +110,7 @@ namespace IMT.Manager
         }
 #endif
 
-        protected sealed override void CalculateImpl(MarkingFiller filler, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
+        protected sealed override void CalculateImpl(MarkingFiller filler, ContourGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {
             if ((SupportLOD & lod) != 0)
             {
@@ -133,7 +133,7 @@ namespace IMT.Manager
                             continue;
 #endif
                         var part = parts[i];
-                        var cutContours = new Queue<FillerContour.EdgeSet>(contours);
+                        var cutContours = new Queue<Contour>(contours);
 
                         if (!part.isBothDir)
                         {
@@ -212,7 +212,7 @@ namespace IMT.Manager
 #endif
             }
 
-            static void Process(Queue<FillerContour.EdgeSet> cutContours, in StraightTrajectory line, Intersection.Side side)
+            static void Process(Queue<Contour> cutContours, in StraightTrajectory line, Intersection.Side side)
             {
                 var count = cutContours.Count;
                 for (var i = 0; i < count; i += 1)
@@ -224,7 +224,7 @@ namespace IMT.Manager
             }
         }
 
-        protected abstract ITrajectory[] GetGuides(MarkingFiller filler, FillerContour.EdgeSetGroup contours);
+        protected abstract ITrajectory[] GetGuides(MarkingFiller filler, ContourGroup contours);
         protected StraightTrajectory GetGuide(Rect limits, float height, float angle)
         {
             if (angle > 90)
@@ -250,9 +250,9 @@ namespace IMT.Manager
         }
 
 #if DEBUG_PERIODIC_FILLER
-        protected abstract List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData);
+        protected abstract List<Part> GetParts(ITrajectory guide, EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData);
 #else
-        protected abstract List<Part> GetParts(ITrajectory guide, FillerContour.EdgeSetGroup contours, MarkingLOD lod);
+        protected abstract List<Part> GetParts(ITrajectory guide, ContourGroup contours, MarkingLOD lod);
 #endif
 
         protected List<StraightTrajectory> GetPartTrajectories(ITrajectory guide, Rect limits, float dash, float space)
@@ -307,7 +307,7 @@ namespace IMT.Manager
                 this.endBorder = endBorder;
             }
 
-            public bool CanIntersect(FillerContour.EdgeSetGroup contours, bool precise) => contours.CanIntersect(start, precise) || contours.CanIntersect(end, precise);
+            public bool CanIntersect(ContourGroup contours, bool precise) => contours.CanIntersect(start, precise) || contours.CanIntersect(end, precise);
 
             public override string ToString() => $"{start} ÷ {end}";
         }
@@ -326,7 +326,7 @@ namespace IMT.Manager
 
             public bool IsMain(float startT, float endT) => startBorder.IsMain(startT) || endBorder.IsMain(endT);
 
-            public static List<BorderPair> GetBorders(List<StraightTrajectory> trajectories, FillerContour.EdgeSetGroup contours, float angle, bool isBothDir)
+            public static List<BorderPair> GetBorders(List<StraightTrajectory> trajectories, ContourGroup contours, float angle, bool isBothDir)
             {
                 var borders = new List<BorderPair>(trajectories.Count);
                 var orientation = Mathf.Abs(angle) <= 90 ? Border.Type.Forward : Border.Type.Backward;
@@ -467,7 +467,7 @@ namespace IMT.Manager
 
             public bool IsMain(float t) => mainStartT != null && mainEndT != null && mainStartT <= t && t <= mainEndT;
 
-            public static Border GetBorder(in StraightTrajectory trajectory, Type type, Intersection.Side side, FillerContour.EdgeSetGroup contours)
+            public static Border GetBorder(in StraightTrajectory trajectory, Type type, Intersection.Side side, ContourGroup contours)
             {
                 var intersections = new HashSet<Intersection>();
 

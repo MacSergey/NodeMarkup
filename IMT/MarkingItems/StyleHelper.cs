@@ -294,12 +294,14 @@ namespace IMT.Manager
             public override string ToString() => $"{start}:{end}";
         }
 
-        public static FillerContour.EdgeSetGroup SetOffset(FillerContour.EdgeSet contourSet, float lineOffset, float medianOffset)
+        public static ContourGroup SetOffset(Contour contourSet, float lineOffset, float medianOffset)
         {
-            var result = new FillerContour.EdgeSetGroup();
+            contourSet.SetOffset(lineOffset, medianOffset);
+
+            var result = new ContourGroup();
 
             if (lineOffset <= 0f && medianOffset <= 0f)
-                result.Add(new FillerContour.EdgeSet(contourSet));
+                result.Add(new Contour(contourSet));
             else
             {
                 var direction = contourSet.Select(i => i.trajectory).GetDirection();
@@ -318,9 +320,9 @@ namespace IMT.Manager
             }
             return result;
         }
-        private static List<FillerContour.Edge> Move(FillerContour.EdgeSet originalParts, TrajectoryHelper.Direction direction, float lineOffset, float medianOffset)
+        private static Contour Move(Contour originalParts, TrajectoryHelper.Direction direction, float lineOffset, float medianOffset)
         {
-            var result = new List<FillerContour.Edge>(originalParts.Count);
+            var result = new Contour(originalParts.Count);
 
             foreach (var part in originalParts)
             {
@@ -331,14 +333,14 @@ namespace IMT.Manager
                 else
                 {
                     var movedTrajectory = part.trajectory.Shift(offset, offset);
-                    var newPart = new FillerContour.Edge(movedTrajectory, part.isEnter);
+                    var newPart = new ContourEdge(movedTrajectory, part.isEnter);
                     result.Add(newPart);
                 }
             }
 
             return result;
         }
-        private static void Connect(List<FillerContour.Edge> parts, FillerContour.EdgeSet originalParts, float lineOffset, float medianOffset)
+        private static void Connect(Contour parts, Contour originalParts, float lineOffset, float medianOffset)
         {
             var count = 0;
             for (var i = 0; i < parts.Count; i += 1)
@@ -357,8 +359,8 @@ namespace IMT.Manager
                             var firstTrajectory = new StraightTrajectory(first.trajectory.EndPosition, originalParts[count].trajectory.EndPosition);
                             var secondTrajectory = new StraightTrajectory(originalParts[nextCount].trajectory.StartPosition, second.trajectory.StartPosition);
 
-                            AddToList(parts, i + 1, new FillerContour.Edge(firstTrajectory));
-                            AddToList(parts, i + 2, new FillerContour.Edge(secondTrajectory));
+                            AddToList(parts, i + 1, new ContourEdge(firstTrajectory));
+                            AddToList(parts, i + 2, new ContourEdge(secondTrajectory));
                             i += 2;
                         }
                     }
@@ -366,9 +368,9 @@ namespace IMT.Manager
                     {
                         if (first.trajectory.Length * (1f - firstT) < 0.1f || second.trajectory.Length * secondT < 0.1f)
                         {
-                            first = new FillerContour.Edge(first.trajectory.Cut(0f, firstT), first.isEnter);
+                            first = new ContourEdge(first.trajectory.Cut(0f, firstT), first.isEnter);
                             parts[i] = first;
-                            second = new FillerContour.Edge(second.trajectory.Cut(secondT, 1f), second.isEnter);
+                            second = new ContourEdge(second.trajectory.Cut(secondT, 1f), second.isEnter);
                             parts[j] = second;
                         }
                         else
@@ -376,7 +378,7 @@ namespace IMT.Manager
                     }
                     else if (Intersection.CalculateSingle(new StraightTrajectory(first.trajectory.EndPosition, first.trajectory.EndPosition - first.trajectory.EndDirection), second.trajectory, out _, out var t))
                     {
-                        second = new FillerContour.Edge(second.trajectory.Cut(t, 1f), second.isEnter);
+                        second = new ContourEdge(second.trajectory.Cut(t, 1f), second.isEnter);
                         parts[j] = second;
 
                         Add(parts, ref i, first.trajectory.EndPosition, second.trajectory.StartPosition);
@@ -390,9 +392,9 @@ namespace IMT.Manager
                     {
                         if (first.trajectory.Length * (1f - firstT) < 0.1f || second.trajectory.Length * secondT < 0.1f)
                         {
-                            first = new FillerContour.Edge(first.trajectory.Cut(0f, firstT), first.isEnter);
+                            first = new ContourEdge(first.trajectory.Cut(0f, firstT), first.isEnter);
                             parts[i] = first;
-                            second = new FillerContour.Edge(second.trajectory.Cut(secondT, 1f), second.isEnter);
+                            second = new ContourEdge(second.trajectory.Cut(secondT, 1f), second.isEnter);
                             parts[j] = second;
                         }
                         else
@@ -401,7 +403,7 @@ namespace IMT.Manager
                     else if (Intersection.CalculateSingle(first.trajectory, new StraightTrajectory(second.trajectory.StartPosition, second.trajectory.StartPosition - second.trajectory.StartDirection), out var t, out _))
                     {
                         var newTrajectory = first.trajectory.Cut(0f, t);
-                        first = new FillerContour.Edge(newTrajectory, first.isEnter);
+                        first = new ContourEdge(newTrajectory, first.isEnter);
                         parts[i] = first;
 
                         Add(parts, ref i, first.trajectory.EndPosition, second.trajectory.StartPosition);
@@ -413,16 +415,16 @@ namespace IMT.Manager
                 count += 1;
             }
 
-            static void Add(List<FillerContour.Edge> parts, ref int i, Vector3 start, Vector3 end)
+            static void Add(Contour parts, ref int i, Vector3 start, Vector3 end)
             {
                 var addTrajectory = new StraightTrajectory(start, end);
                 if (addTrajectory.Length >= 0.01f)
                 {
-                    AddToList(parts, i + 1, new FillerContour.Edge(addTrajectory));
+                    AddToList(parts, i + 1, new ContourEdge(addTrajectory));
                     i += 1;
                 }
             }
-            static void AddToList(List<FillerContour.Edge> parts, int i, FillerContour.Edge value)
+            static void AddToList(Contour parts, int i, ContourEdge value)
             {
                 if (i >= parts.Count)
                     parts.Add(value);
@@ -430,7 +432,7 @@ namespace IMT.Manager
                     parts.Insert(i, value);
             }
         }
-        private static List<TrajectoryIntersect>[] GetIntersections(List<FillerContour.Edge> parts)
+        private static List<TrajectoryIntersect>[] GetIntersections(Contour parts)
         {
             var partsIntersections = new List<TrajectoryIntersect>[parts.Count];
 
@@ -461,7 +463,7 @@ namespace IMT.Manager
 
             return partsIntersections;
         }
-        private static List<FillerContour.EdgePart>[] GetEdgeParts(List<FillerContour.Edge> parts, List<TrajectoryIntersect>[] intersections)
+        private static List<FillerContour.EdgePart>[] GetEdgeParts(List<ContourEdge> parts, List<TrajectoryIntersect>[] intersections)
         {
             var partOfEdges = new List<FillerContour.EdgePart>[intersections.Length];
 
@@ -478,13 +480,13 @@ namespace IMT.Manager
 
             return partOfEdges;
         }
-        private static List<FillerContour.EdgeSet> GetContourSets(List<FillerContour.EdgePart>[] parts)
+        private static ContourGroup GetContourSets(List<FillerContour.EdgePart>[] parts)
         {
             var process = new List<FillerContour.EdgePart>(parts.Length);
             foreach (var part in parts)
                 process.AddRange(part);
 
-            var countours = new List<FillerContour.EdgeSet>();
+            var countours = new ContourGroup();
 
             while (process.Count != 0)
             {
@@ -505,7 +507,7 @@ namespace IMT.Manager
 
                     if (part.end.Other == contourParts.First().start)
                     {
-                        countours.Add(new FillerContour.EdgeSet(contourParts.Select(p => p.Processed)));
+                        countours.Add(new Contour(contourParts.Select(p => p.Processed)));
                         break;
                     }
                 }
@@ -513,9 +515,9 @@ namespace IMT.Manager
 
             return countours;
         }
-        public static FillerContour.EdgeSet SetCornerRadius(FillerContour.EdgeSet originalEdges, float lineRadius, float medianRadius)
+        public static Contour SetCornerRadius(Contour originalEdges, float lineRadius, float medianRadius)
         {
-            var edges = new FillerContour.EdgeSet(originalEdges);
+            var edges = new Contour(originalEdges);
 
             if (lineRadius > 0f || medianRadius > 0f)
             {
@@ -528,7 +530,7 @@ namespace IMT.Manager
 
             return edges;
         }
-        private static bool SetRadius(int i, List<FillerContour.Edge> parts, float lineRadius, float medianRadius)
+        private static bool SetRadius(int i, List<ContourEdge> parts, float lineRadius, float medianRadius)
         {
             var j = (i + 1) % parts.Count;
             var radius = (parts[i].isEnter || parts[j].isEnter) ? medianRadius : lineRadius;
@@ -604,18 +606,18 @@ namespace IMT.Manager
 
             static bool CorrectT(float t, float length) => -0.05f / length < t && t < 1f + 0.05f / length;
         }
-        private static void AddRadius(int i, int j, List<FillerContour.Edge> parts, Vector3 center, Vector3 firstDir, Vector3 secondDir)
+        private static void AddRadius(int i, int j, List<ContourEdge> parts, Vector3 center, Vector3 firstDir, Vector3 secondDir)
         {
             var firstInter = Intersection.CalculateSingle(parts[i].trajectory, new StraightTrajectory(center, center + firstDir, false), out var firstT, out _);
             var secondInter = Intersection.CalculateSingle(new StraightTrajectory(center, center + secondDir, false), parts[j].trajectory, out _, out var secondT);
             if (firstInter && secondInter)
             {
-                parts[i] = new FillerContour.Edge(parts[i].trajectory.Cut(0f, firstT), parts[i].isEnter);
-                parts[j] = new FillerContour.Edge(parts[j].trajectory.Cut(secondT, 1f), parts[j].isEnter);
+                parts[i] = new ContourEdge(parts[i].trajectory.Cut(0f, firstT), parts[i].isEnter);
+                parts[j] = new ContourEdge(parts[j].trajectory.Cut(secondT, 1f), parts[j].isEnter);
 
                 var corner = new BezierTrajectory(parts[i].trajectory.EndPosition, -parts[i].trajectory.EndDirection, parts[j].trajectory.StartPosition, -parts[j].trajectory.StartDirection);
 
-                parts.Insert(j, new FillerContour.Edge(corner));
+                parts.Insert(j, new ContourEdge(corner));
             }
         }
     }

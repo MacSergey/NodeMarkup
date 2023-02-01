@@ -42,7 +42,7 @@ namespace IMT.Manager
             }
         }
 
-        protected override FillerContour.EdgeSetGroup GetContours(MarkingFiller filler)
+        protected override ContourGroup GetContours(MarkingFiller filler)
         {
             var contours = base.GetContours(filler);
 
@@ -51,7 +51,7 @@ namespace IMT.Manager
 
             return contours;
         }
-        protected override void CalculateImpl(MarkingFiller filler, FillerContour.EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void CalculateImpl(MarkingFiller filler, ContourGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {
             if ((SupportLOD & lod) == 0)
                 return;
@@ -74,7 +74,7 @@ namespace IMT.Manager
                 }
             }
         }
-        protected Vector3[] GetContourPoints(List<FillerContour.Edge> contour, MarkingLOD lod, out int[] groups)
+        protected Vector3[] GetContourPoints(List<ContourEdge> contour, MarkingLOD lod, out int[] groups)
         {
             var trajectories = contour.Select(i => i.trajectory).ToList();
             if (trajectories.GetDirection() == TrajectoryHelper.Direction.CounterClockWise)
@@ -449,8 +449,8 @@ namespace IMT.Manager
     {
         public struct CounterData
         {
-            public FillerContour.EdgeSet _side;
-            public FillerContour.EdgeSet _hole;
+            public Contour _side;
+            public Contour _hole;
         }
 
         public PropertyValue<float> CurbSize { get; }
@@ -504,7 +504,7 @@ namespace IMT.Manager
 
             if (lod == MarkingLOD.LOD1)
             {
-                var sideContours = new FillerContour.EdgeSetGroup(contours.Select(c => c._side));
+                var sideContours = new ContourGroup(contours.Select(c => c._side));
                 base.CalculateImpl(filler, sideContours, lod, addData);
             }
             else

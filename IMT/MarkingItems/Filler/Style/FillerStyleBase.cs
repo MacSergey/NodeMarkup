@@ -100,13 +100,13 @@ namespace IMT.Manager
                 CalculateImpl(filler, contours, lod, addData);
             }
         }
-        protected virtual FillerContour.EdgeSetGroup GetContours(MarkingFiller filler)
+        protected virtual ContourGroup GetContours(MarkingFiller filler)
         {
             var originalContour = filler.Contour.Edges;
             var contourSets = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
             return contourSets;
         }
-        protected abstract void CalculateImpl(MarkingFiller filler, FillerContour.EdgeSetGroup contourSets, MarkingLOD lod, Action<IStyleData> addData);
+        protected abstract void CalculateImpl(MarkingFiller filler, ContourGroup contourSets, MarkingLOD lod, Action<IStyleData> addData);
 
         public virtual void Render(MarkingFiller filler, OverlayData data) { }
 

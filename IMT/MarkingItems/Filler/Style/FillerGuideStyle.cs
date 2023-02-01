@@ -46,7 +46,7 @@ namespace IMT.Manager
 
         protected abstract float GetAngle();
 
-        protected override ITrajectory[] GetGuides(MarkingFiller filler, FillerContour.EdgeSetGroup contours)
+        protected override ITrajectory[] GetGuides(MarkingFiller filler, ContourGroup contours)
         {
             var parts = new List<ITrajectory>();
             var halfAngelRad = GetAngle() * Mathf.Deg2Rad;
