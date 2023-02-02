@@ -512,10 +512,6 @@ namespace IMT.Manager
             [NetworkType(NetworkType.All)]
             FillerCliff,
 
-            [Description("Test style")]
-            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
-            FillerTest = FillerBuffer - 1,
-
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.All)]
             [NotVisible]

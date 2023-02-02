@@ -28,7 +28,7 @@ namespace IMT.Utilities
             LOD = lod;
             Position = position;
             Color = color.ToX3Vector();
-            size.y = 3f;
+            size.y = 5f;
             Size = size;
             Tiling = new Vector4(tiling.x, 0, tiling.y, 0);
             ScratchDensity = scratch;

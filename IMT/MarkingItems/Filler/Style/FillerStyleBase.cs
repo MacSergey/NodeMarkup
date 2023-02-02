@@ -206,34 +206,40 @@ namespace IMT.Manager
         public enum FillerType
         {
             [Description(nameof(Localize.FillerStyle_Stripe))]
+            [Order(0)]
             Stripe = StyleType.FillerStripe,
 
             [Description(nameof(Localize.FillerStyle_Grid))]
+            [Order(2)]
             Grid = StyleType.FillerGrid,
 
             [Description(nameof(Localize.FillerStyle_Solid))]
+            [Order(3)]
             Solid = StyleType.FillerSolid,
 
             [Description(nameof(Localize.FillerStyle_Chevron))]
+            [Order(1)]
             Chevron = StyleType.FillerChevron,
 
             [Description(nameof(Localize.FillerStyle_Pavement))]
+            [Order(4)]
             Pavement = StyleType.FillerPavement,
 
             [Description(nameof(Localize.FillerStyle_Grass))]
+            [Order(5)]
             Grass = StyleType.FillerGrass,
 
             [Description(nameof(Localize.FillerStyle_Gravel))]
+            [Order(6)]
             Gravel = StyleType.FillerGravel,
 
             [Description(nameof(Localize.FillerStyle_Ruined))]
+            [Order(7)]
             Ruined = StyleType.FillerRuined,
 
             [Description(nameof(Localize.FillerStyle_Cliff))]
+            [Order(8)]
             Cliff = StyleType.FillerCliff,
-
-            [Description("Test style")]
-            Test = StyleType.FillerTest,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]
