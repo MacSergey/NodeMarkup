@@ -34,14 +34,16 @@ namespace IMT.Manager
         protected static float MinLength => 1f;
         protected static float MaxLength => 10f;
 
+        protected static Vector2 DefaultEffect => new Vector2(0f, 1f);
+
         protected static string Guide => nameof(Guide);
 
         private static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
-            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset,  DefaultFollowGuides)},
-            {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
-            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset, DefaultOffset)},
-            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
+            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultEffect, DefaultEffect,  DefaultFollowGuides)},
+            {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset, DefaultEffect, DefaultEffect)},
+            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset, DefaultOffset, DefaultEffect, DefaultEffect)},
+            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe, DefaultEffect, DefaultEffect)},
             {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
             {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
             {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
@@ -103,7 +105,7 @@ namespace IMT.Manager
         protected virtual ContourGroup GetContours(MarkingFiller filler)
         {
             var originalContour = filler.Contour.Edges;
-            var contourSets = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset);
+            var contourSets = originalContour.SetOffset(LineOffset, MedianOffset);
             return contourSets;
         }
         protected abstract void CalculateImpl(MarkingFiller filler, ContourGroup contourSets, MarkingLOD lod, Action<IStyleData> addData);

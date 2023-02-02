@@ -47,7 +47,7 @@ namespace IMT.Manager
             var contours = base.GetContours(filler);
 
             for (int i = 0; i < contours.Count; i += 1)
-                contours[i] = StyleHelper.SetCornerRadius(contours[i], CornerRadius, MedianCornerRadius);
+                contours[i] = contours[i].SetCornerRadius(CornerRadius, MedianCornerRadius);
 
             return contours;
         }
@@ -449,8 +449,8 @@ namespace IMT.Manager
     {
         public struct CounterData
         {
-            public Contour _side;
-            public Contour _hole;
+            public Contour side;
+            public Contour center;
         }
 
         public PropertyValue<float> CurbSize { get; }
@@ -482,13 +482,18 @@ namespace IMT.Manager
             {
                 var originalContour = filler.Contour.Edges;
 
-                var contourDatas = StyleHelper.SetOffset(originalContour, LineOffset, MedianOffset).Select(i => new CounterData() { _side = i }).ToArray();
+                var contourDatas = originalContour.SetOffset(LineOffset, MedianOffset).Select(i => new CounterData() { side = i }).ToArray();
 
                 for (int i = 0; i < contourDatas.Length; i += 1)
                 {
-                    contourDatas[i]._side = StyleHelper.SetCornerRadius(contourDatas[i]._side, CornerRadius, MedianCornerRadius);
                     if (CurbSize > 0 || MedianCurbSize > 0)
-                        contourDatas[i]._hole = StyleHelper.SetOffset(contourDatas[i]._side, CurbSize, MedianCurbSize).FirstOrDefault();
+                    {
+                        contourDatas[i].center = contourDatas[i].side.SetOffset(CurbSize, MedianCurbSize).FirstOrDefault();
+                        var lineCornerRadius = Mathf.Max(0f, CornerRadius - CurbSize);
+                        var medianCornerRadius = Mathf.Max(0f, MedianCornerRadius - MedianCurbSize);
+                        contourDatas[i].center = contourDatas[i].center.SetCornerRadius(lineCornerRadius, medianCornerRadius);
+                    }
+                    contourDatas[i].side = contourDatas[i].side.SetCornerRadius(CornerRadius, MedianCornerRadius);
                 }
 
                 foreach (var lod in EnumExtension.GetEnumValues<MarkingLOD>())
@@ -504,7 +509,7 @@ namespace IMT.Manager
 
             if (lod == MarkingLOD.LOD1)
             {
-                var sideContours = new ContourGroup(contours.Select(c => c._side));
+                var sideContours = new ContourGroup(contours.Select(c => c.side));
                 base.CalculateImpl(filler, sideContours, lod, addData);
             }
             else
@@ -513,14 +518,14 @@ namespace IMT.Manager
                 {
                     var meshParts = new List<MarkingFillerMeshData.RawData>();
 
-                    var sidePoints = GetContourPoints(contour._side, lod, out var sideGroups);
+                    var sidePoints = GetContourPoints(contour.side, lod, out var sideGroups);
                     if (Triangulate(sidePoints, out var triangles))
                     {
                         meshParts.Add(MarkingFillerMeshData.RawData.SetSide(sideGroups, sidePoints, MaterialType.Pavement));
 
-                        if (contour._hole != null)
+                        if (contour.center != null)
                         {
-                            var holePoints = GetContourPoints(contour._hole, lod, out var holeGroups);
+                            var holePoints = GetContourPoints(contour.center, lod, out var holeGroups);
                             if (Triangulate(holePoints, out var holeTriangles))
                             {
                                 holePoints = holePoints.Select(p => p += new Vector3(0f, 0.03f, 0f)).ToArray();

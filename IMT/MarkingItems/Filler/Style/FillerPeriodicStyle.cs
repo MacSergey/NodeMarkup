@@ -25,7 +25,7 @@ namespace IMT.Manager
         public PropertyBoolValue EndBorder { get; }
 #endif
 
-        public PeriodicFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
+        public PeriodicFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset, Vector2 scratches, Vector2 voids) : base(color, width, lineOffset, medianOffset, scratches, voids)
         {
             Step = GetStepProperty(step);
 #if DEBUG
@@ -194,7 +194,7 @@ namespace IMT.Manager
                         foreach (var contour in cutContours)
                         {
                             var trajectories = contour.Select(e => e.trajectory).ToArray();
-                            foreach (var data in DecalData.GetData(lod, trajectories, MinAngle, MinLength, MaxLength, Color, Vector2.one, ScratchDensity, new Vector2(1f / ScratchTiling, 1f / ScratchTiling), VoidDensity, new Vector2(1f / VoidTiling, 1f / VoidTiling)))
+                            foreach (var data in DecalData.GetData(lod, trajectories, MinAngle, MinLength, MaxLength, Color, Vector2.one, Scratches.Value.x, new Vector2(1f / Scratches.Value.y, 1f / Scratches.Value.y), Voids.Value.x, new Vector2(1f / Voids.Value.y, 1f / Voids.Value.y)))
                             {
                                 addData(data);
                             }

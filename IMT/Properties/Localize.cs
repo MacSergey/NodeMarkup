@@ -2569,5 +2569,25 @@ namespace IMT
 		/// Do you want to apply marking?
 		/// </summary>
 		public static string Tool_EndPasteMArkingMessage => LocaleManager.GetString("Tool_EndPasteMArkingMessage", Culture);
+
+		/// <summary>
+		/// Density
+		/// </summary>
+		public static string StyleOption_Density => LocaleManager.GetString("StyleOption_Density", Culture);
+
+		/// <summary>
+		/// Scale
+		/// </summary>
+		public static string StyleOption_Scale => LocaleManager.GetString("StyleOption_Scale", Culture);
+
+		/// <summary>
+		/// Scratches
+		/// </summary>
+		public static string StyleOption_Scratches => LocaleManager.GetString("StyleOption_Scratches", Culture);
+
+		/// <summary>
+		/// Voids
+		/// </summary>
+		public static string StyleOption_Voids => LocaleManager.GetString("StyleOption_Voids", Culture);
 	}
 }

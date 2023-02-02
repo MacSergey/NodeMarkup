@@ -23,7 +23,7 @@ namespace IMT.Manager
         public PropertyValue<int> LeftGuideB { get; }
         public PropertyValue<int> RightGuideB { get; }
 
-        public GuideFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset) : base(color, width, step, lineOffset, medianOffset)
+        public GuideFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset, Vector2 scratches, Vector2 voids) : base(color, width, step, lineOffset, medianOffset, scratches, voids)
         {
             LeftGuideA = GetLeftGuideAProperty(0);
             LeftGuideB = GetLeftGuideBProperty(1);
@@ -137,7 +137,7 @@ namespace IMT.Manager
 
             if (!isTemplate)
             {
-                components.Add(AddGuideProperty(filler.Contour, parent, true));
+                components.Add(AddGuideProperty(filler.Contour, parent, false));
             }
         }
         protected FillerGuidePropertyPanel AddGuideProperty(FillerContour contour, UIComponent parent, bool canCollapse)

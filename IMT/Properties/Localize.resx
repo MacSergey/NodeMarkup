@@ -1858,4 +1858,16 @@ It can take time if there are a lot of segments.</value>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
     <value>Do you want to apply marking?</value>
   </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Density</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="StyleOption_Scratches" xml:space="preserve">
+    <value>Scratches</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Voids</value>
+  </data>
 </root>

@@ -30,10 +30,8 @@ namespace IMT.Manager
     }
     public interface ITextureFiller : IFillerStyle
     {
-        public PropertyStructValue<float> ScratchDensity { get; }
-        public PropertyStructValue<float> ScratchTiling { get; }
-        public PropertyStructValue<float> VoidDensity { get; }
-        public PropertyStructValue<float> VoidTiling { get; }
+        public PropertyVector2Value Scratches { get; }
+        public PropertyVector2Value Voids { get; }
     }
     public interface IGuideFiller : IFillerStyle
     {
@@ -49,17 +47,16 @@ namespace IMT.Manager
 
     public abstract class Filler2DStyle : FillerStyle, ITextureFiller
     {
-        public PropertyStructValue<float> ScratchDensity { get; set; }
-        public PropertyStructValue<float> ScratchTiling { get; set; }
-        public PropertyStructValue<float> VoidDensity { get; set; }
-        public PropertyStructValue<float> VoidTiling { get; set; }
+        protected override float WidthWheelStep => 0.1f;
+        protected override float WidthMinValue => 0.1f;
 
-        public Filler2DStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width, lineOffset, medianOffset)
+        public PropertyVector2Value Scratches { get; set; }
+        public PropertyVector2Value Voids { get; set; }
+
+        public Filler2DStyle(Color32 color, float width, float lineOffset, float medianOffset, Vector2 scratches, Vector2 voids) : base(color, width, lineOffset, medianOffset)
         {
-            ScratchDensity = new PropertyStructValue<float>(StyleChanged, 0);
-            ScratchTiling = new PropertyStructValue<float>(StyleChanged, 1f);
-            VoidDensity = new PropertyStructValue<float>(StyleChanged, 0);
-            VoidTiling = new PropertyStructValue<float>(StyleChanged, 1f);
+            Scratches = new PropertyVector2Value(StyleChanged, scratches, "ST", "SS");
+            Voids = new PropertyVector2Value(StyleChanged, voids, "VT", "VS");
         }
 
         public override void CopyTo(FillerStyle target)
@@ -68,10 +65,8 @@ namespace IMT.Manager
 
             if (target is Filler2DStyle target2D)
             {
-                target2D.ScratchDensity.Value = ScratchDensity;
-                target2D.ScratchTiling.Value = ScratchTiling;
-                target2D.VoidDensity.Value = VoidDensity;
-                target2D.VoidTiling.Value = VoidTiling;
+                target2D.Scratches.Value = Scratches;
+                target2D.Voids.Value = Voids;
             }
         }
 
@@ -79,15 +74,15 @@ namespace IMT.Manager
         {
             base.GetUIComponents(filler, components, parent, isTemplate);
 
-            components.Add(GetScratch(parent));
-            components.Add(GetVoid(parent));
+            components.Add(GetScratches(parent));
+            components.Add(GetVoids(parent));
         }
 
-        protected Vector2PropertyPanel GetScratch(UIComponent parent)
+        protected Vector2PropertyPanel GetScratches(UIComponent parent)
         {
-            var scratchProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(ScratchDensity));
-            scratchProperty.Text = "Scratch";
-            scratchProperty.SetLabels("Density", "Scale");
+            var scratchProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Scratches));
+            scratchProperty.Text = Localize.StyleOption_Scratches;
+            scratchProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
             scratchProperty.Format = Localize.NumberFormat_Percent;
             scratchProperty.FieldsWidth = 50f;
             scratchProperty.CanCollapse = false;
@@ -98,19 +93,15 @@ namespace IMT.Manager
             scratchProperty.WheelStep = new Vector2(10f, 10f);
             scratchProperty.UseWheel = true;
             scratchProperty.Init(0, 1);
-            scratchProperty.Value = new Vector2(ScratchDensity, ScratchTiling) * 100f;
-            scratchProperty.OnValueChanged += (Vector2 value) =>
-            {
-                ScratchDensity.Value = value.x * 0.01f;
-                ScratchTiling.Value = value.y * 0.01f;
-            };
+            scratchProperty.Value = Scratches.Value * 100f;
+            scratchProperty.OnValueChanged += (Vector2 value) => Scratches.Value = value * 0.01f;
             return scratchProperty;
         }
-        protected Vector2PropertyPanel GetVoid(UIComponent parent)
+        protected Vector2PropertyPanel GetVoids(UIComponent parent)
         {
-            var voidProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(ScratchDensity));
-            voidProperty.Text = "Void";
-            voidProperty.SetLabels("Density", "Scale");
+            var voidProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Scratches));
+            voidProperty.Text = Localize.StyleOption_Voids;
+            voidProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
             voidProperty.Format = Localize.NumberFormat_Percent;
             voidProperty.FieldsWidth = 50f;
             voidProperty.CanCollapse = false;
@@ -121,13 +112,23 @@ namespace IMT.Manager
             voidProperty.WheelStep = new Vector2(10f, 10f);
             voidProperty.UseWheel = true;
             voidProperty.Init(0, 1);
-            voidProperty.Value = new Vector2(VoidDensity, VoidTiling) * 100f;
-            voidProperty.OnValueChanged += (Vector2 value) =>
-            {
-                VoidDensity.Value = value.x * 0.01f;
-                VoidTiling.Value = value.y * 0.01f;
-            };
+            voidProperty.Value = Voids.Value * 100f;
+            voidProperty.OnValueChanged += (Vector2 value) => Voids.Value = value * 0.01f;
             return voidProperty;
+        }
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            Scratches.ToXml(config);
+            Voids.ToXml(config);
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
+        {
+            base.FromXml(config, map, invert, typeChanged);
+            Scratches.FromXml(config, DefaultEffect);
+            Voids.FromXml(config, DefaultEffect);
         }
     }
 
@@ -150,10 +151,8 @@ namespace IMT.Manager
                 yield return nameof(Angle);
                 yield return nameof(Offset);
                 yield return nameof(Guide);
-                yield return nameof(ScratchDensity);
-                yield return nameof(ScratchTiling);
-                yield return nameof(VoidDensity);
-                yield return nameof(VoidTiling);
+                yield return nameof(Scratches);
+                yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(RenderOnly);
                 yield return nameof(Start);
@@ -182,12 +181,12 @@ namespace IMT.Manager
             }
         }
 
-        public StripeFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angle, float step, bool followGuides = false) : base(color, width, step, lineOffset, medianOffset)
+        public StripeFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angle, float step, Vector2 scratches, Vector2 voids, bool followGuides = false) : base(color, width, step, lineOffset, medianOffset, scratches, voids)
         {
             Angle = GetAngleProperty(angle);
             FollowGuides = GetFollowGuidesProperty(followGuides);
         }
-        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, LineOffset, DefaultOffset, DefaultAngle, Step, FollowGuides);
+        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, LineOffset, DefaultOffset, DefaultAngle, Step, Scratches, Voids, FollowGuides);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
@@ -317,11 +316,9 @@ namespace IMT.Manager
                 yield return nameof(AngleBetween);
                 yield return nameof(Offset);
                 yield return nameof(Guide);
+                yield return nameof(Scratches);
+                yield return nameof(Voids);
                 yield return nameof(Invert);
-                yield return nameof(ScratchDensity);
-                yield return nameof(ScratchTiling);
-                yield return nameof(VoidDensity);
-                yield return nameof(VoidTiling);
 #if DEBUG
                 yield return nameof(RenderOnly);
                 yield return nameof(Start);
@@ -350,7 +347,7 @@ namespace IMT.Manager
             }
         }
 
-        public ChevronFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angleBetween, float step) : base(color, width, step, lineOffset, medianOffset)
+        public ChevronFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angleBetween, float step, Vector2 scratches, Vector2 voids) : base(color, width, step, lineOffset, medianOffset, scratches, voids)
         {
             AngleBetween = GetAngleBetweenProperty(angleBetween);
             Invert = GetInvertProperty(false);
@@ -359,7 +356,7 @@ namespace IMT.Manager
             StartingFrom = GetStartingFromProperty(From.Vertex);
         }
 
-        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, LineOffset, DefaultOffset, AngleBetween, Step);
+        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, LineOffset, DefaultOffset, AngleBetween, Step, Scratches, Voids);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
@@ -523,10 +520,8 @@ namespace IMT.Manager
                 yield return nameof(Step);
                 yield return nameof(Angle);
                 yield return nameof(Offset);
-                yield return nameof(ScratchDensity);
-                yield return nameof(ScratchTiling);
-                yield return nameof(VoidDensity);
-                yield return nameof(VoidTiling);
+                yield return nameof(Scratches);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -543,12 +538,12 @@ namespace IMT.Manager
             }
         }
 
-        public GridFillerStyle(Color32 color, float width, float angle, float step, float lineOffset, float medianOffset) : base(color, width, step, lineOffset, medianOffset)
+        public GridFillerStyle(Color32 color, float width, float angle, float step, float lineOffset, float medianOffset, Vector2 scratches, Vector2 voids) : base(color, width, step, lineOffset, medianOffset, scratches, voids)
         {
             Angle = GetAngleProperty(angle);
         }
 
-        public override FillerStyle CopyStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, LineOffset, DefaultOffset);
+        public override FillerStyle CopyStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, LineOffset, DefaultOffset, Scratches, Voids);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
@@ -629,10 +624,8 @@ namespace IMT.Manager
             {
                 yield return nameof(Color);
                 yield return nameof(Offset);
-                yield return nameof(ScratchDensity);
-                yield return nameof(ScratchTiling);
-                yield return nameof(VoidDensity);
-                yield return nameof(VoidTiling);
+                yield return nameof(Scratches);
+                yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(MinAngle);
                 yield return nameof(MinLength);
@@ -651,7 +644,7 @@ namespace IMT.Manager
             }
         }
 
-        public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset) : base(color, DefaultSolidWidth, lineOffset, medianOffset)
+        public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset, Vector2 scratches, Vector2 voids) : base(color, DefaultSolidWidth, lineOffset, medianOffset, scratches, voids)
         {
 #if DEBUG
             MinAngle = new PropertyStructValue<float>(StyleChanged, FillerStyle.MinAngle);
@@ -660,7 +653,7 @@ namespace IMT.Manager
 #endif
         }
 
-        public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, LineOffset, DefaultOffset);
+        public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, LineOffset, DefaultOffset, Scratches, Voids);
 
         protected override void CalculateImpl(MarkingFiller filler, ContourGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {
@@ -669,7 +662,7 @@ namespace IMT.Manager
                 foreach (var contour in contours)
                 {
                     var trajectories = contour.Select(c => c.trajectory).ToArray();
-                    foreach (var data in DecalData.GetData(lod, trajectories, MinAngle, MinLength, MaxLength, Color, Vector2.one, ScratchDensity, new Vector2(1f / ScratchTiling, 1f / ScratchTiling), VoidDensity, new Vector2(1f / VoidTiling, 1f / VoidTiling)))
+                    foreach (var data in DecalData.GetData(lod, trajectories, MinAngle, MinLength, MaxLength, Color, Vector2.one, Scratches.Value.x, new Vector2(1f / Scratches.Value.y, 1f / Scratches.Value.y), Voids.Value.x, new Vector2(1f / Voids.Value.y, 1f / Voids.Value.y)))
                     {
                         addData(data);
                     }

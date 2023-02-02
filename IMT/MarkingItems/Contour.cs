@@ -168,10 +168,8 @@ namespace IMT.Manager
 
         public ContourGroup Cut(in StraightTrajectory line, Intersection.Side cutSide)
         {
-            var result = new ContourGroup();
-
             if (Count <= 1)
-                return result;
+                return new ContourGroup();
 
             HashSet<Intersection> intersections = GetIntersections(line);
 
@@ -181,13 +179,36 @@ namespace IMT.Manager
                 var pos = line.StartPosition;
                 var dir = line.Direction;
 
+                var group = new ContourGroup();
                 var side = Intersection.GetSide(dir, point - pos);
                 if (side == cutSide)
-                    result.Add(this);
+                    group.Add(this);
 
-                return result;
+                return group;
             }
+            else
+            {
+                var pairs = GetCutPairs(in line, cutSide, intersections);
+                return ConnectEdges(this, pairs);
+            }
+        }
 
+        public ContourGroup SetOffset(float lineOffset, float medianOffset)
+        {
+            if (lineOffset <= 0f && medianOffset <= 0f)
+            {
+                return new ContourGroup() { this };
+            }
+            else
+            {
+                var movedContour = Move(lineOffset, medianOffset, out var minT, out var maxT);
+                var pairs = GetSeparateIntersections(movedContour, minT, maxT);
+                return ConnectEdges(movedContour, pairs);
+            }
+        }
+
+        private List<IntersectionPairEdge> GetCutPairs(in StraightTrajectory line, Intersection.Side cutSide, HashSet<Intersection> intersections)
+        {
             var linePoints = intersections.OrderBy(i => i, Intersection.FirstComparer).ToArray();
             var setPoints = intersections.OrderBy(i => i, Intersection.SecondComparer).ToArray();
             var pairs = new List<IntersectionPairEdge>();
@@ -208,6 +229,12 @@ namespace IMT.Manager
                 for (int i = setPoints.Length - 1; i > 0; i -= 2)
                     pairs.Add(new IntersectionPairEdge(true, setPoints[i].GetReverse(), setPoints[(i + 1) % setPoints.Length].GetReverse()));
             }
+
+            return pairs;
+        }
+        private static ContourGroup ConnectEdges(Contour contour, List<IntersectionPairEdge> pairs)
+        {
+            var group = new ContourGroup();
 
             var count = pairs.Count;
             for (var i = 0; i < count && pairs.Count > 0; i += 1)
@@ -247,27 +274,36 @@ namespace IMT.Manager
                         if (!areaPart.Inverted)
                         {
                             if (endIndex < startIndex || (endIndex == startIndex && areaPart.pair.to.firstT < areaPart.pair.from.firstT))
-                                endIndex += Count;
+                                endIndex += contour.Count;
                         }
                         else
                         {
                             if (startIndex < endIndex || (startIndex == endIndex && areaPart.pair.from.firstT < areaPart.pair.to.firstT))
-                                startIndex += Count;
+                                startIndex += contour.Count;
                         }
 
                         var k = startIndex;
                         while (true)
                         {
                             var fromT = k == startIndex ?
-                                areaPart.pair.from.firstT - (startIndex % Count) :
+                                areaPart.pair.from.firstT - (startIndex % contour.Count) :
                                 (!areaPart.Inverted ? 0f : 1f);
 
                             var toT = k == endIndex ?
-                                areaPart.pair.to.firstT - (endIndex % Count) :
+                                areaPart.pair.to.firstT - (endIndex % contour.Count) :
                                 (!areaPart.Inverted ? 1f : 0f);
 
-                            var trajectory = this[k % Count].trajectory.Cut(fromT, toT);
-                            newSet.Add(new ContourEdge(trajectory, this[k % Count].isEnter));
+                            var trajectory = contour[k % contour.Count].trajectory.Cut(fromT, toT);
+                            if (trajectory is CombinedTrajectory combined)
+                            {
+                                foreach (var trajectoryPart in combined)
+                                {
+                                    if (trajectoryPart.Magnitude >= 0.05f)
+                                        newSet.Add(new ContourEdge(trajectoryPart, contour[k % contour.Count].isEnter));
+                                }
+                            }
+                            else
+                                newSet.Add(new ContourEdge(trajectory, contour[k % contour.Count].isEnter));
 
                             if (k == endIndex)
                                 break;
@@ -283,73 +319,148 @@ namespace IMT.Manager
                         var endIndex = Mathf.FloorToInt(areaPart.pair.to.secondT);
                         var startT = areaPart.pair.from.secondT - startIndex;
                         var endT = areaPart.pair.to.secondT - endIndex;
-                        var startPos = this[startIndex].trajectory.Position(startT);
-                        var endPos = this[endIndex].trajectory.Position(endT);
+                        var startPos = contour[startIndex].trajectory.Position(startT);
+                        var endPos = contour[endIndex].trajectory.Position(endT);
                         newSet.Add(new ContourEdge(new StraightTrajectory(startPos, endPos)));
                     }
                 }
-                result.Add(newSet);
+                group.Add(newSet);
+            }
+
+            return group;
+        }
+
+        private Contour Move(float lineOffset, float medianOffset, out float[] minT, out float[] maxT)
+        {
+            var result = new Contour(Count);
+
+            var direction = Direction;
+            minT = new float[Count];
+            maxT = new float[Count]; 
+
+            for(int i = 0; i < Count; i+= 1)
+            {
+                var offset = (direction == TrajectoryHelper.Direction.ClockWise ? 1f : -1f) * (this[i].isEnter ? medianOffset : lineOffset);
+
+                var newEdge = offset == 0f ? this[i].trajectory : this[i].trajectory.Shift(offset, offset);
+                if (newEdge.TrajectoryType == TrajectoryType.Line)
+                {
+                    var length = newEdge.Length;
+                    var coef = 100f / length;
+                    newEdge = newEdge.Cut(-coef, 1f + coef);
+                    minT[i] = 100f / newEdge.Length;
+                    maxT[i] = (100f + length) / newEdge.Length;
+
+                    result.Add(new ContourEdge(newEdge, this[i].isEnter));
+                }
+                else
+                {
+                    var beforeEdge = new StraightTrajectory(newEdge.StartPosition - newEdge.StartDirection * 100f, newEdge.StartPosition);
+                    var afterEdge = new StraightTrajectory(newEdge.EndPosition, newEdge.EndPosition - newEdge.EndDirection * 100f);
+                    var combined = new CombinedTrajectory(beforeEdge, newEdge, afterEdge);
+                    minT[i] = combined.Parts[1];
+                    maxT[i] = combined.Parts[2];
+
+                    result.Add(new ContourEdge(combined, this[i].isEnter));
+                }
             }
 
             return result;
         }
-
-        public ContourGroup SetOffset(float lineOffset, float medianOffset)
+        private static List<IntersectionPairEdge> GetSeparateIntersections(Contour contour, float[] minT, float[] maxT)
         {
-            var result = new ContourGroup();
+            var allInters = new List<List<Intersection>>();
+            for (int i = 0; i < contour.Count; i += 1)
+                allInters.Add(new List<Intersection>());
 
-            if (lineOffset <= 0f && medianOffset <= 0f)
-                result.Add(this);
-            else
+            for (int i = 0; i < contour.Count - 1; i += 1)
             {
-                var direction = Direction;
-
-                var movedParts = Move(direction, lineOffset, medianOffset);
-
-                var partsIntersections = new List<List<Intersection>>();
-                for (int i = 0; i < movedParts.Count; i += 1)
-                    partsIntersections.Add(new List<Intersection>());
-
-                for (int i = 0; i < movedParts.Count - 1; i += 1)
+                for (int j = i + 1; j < contour.Count; j += 1)
                 {
-                    for (int j = i + 1; j < movedParts.Count; j += 1)
+                    var inters = Intersection.Calculate(contour[i].trajectory, contour[j].trajectory);
+                    foreach (var inter in inters)
                     {
-                        var inters = Intersection.Calculate(movedParts[i].trajectory, movedParts[j].trajectory);
-                        foreach (var inter in inters)
+                        allInters[i].Add(new Intersection(inter.firstT + i, inter.secondT + j));
+                        allInters[j].Add(new Intersection(inter.secondT + j, inter.firstT + i));
+                    }
+                }
+            }
+
+            for (var i = 0; i < allInters.Count; i += 1)
+            {
+                var edgeInters = allInters[i];
+                edgeInters.Sort(Intersection.FirstComparer);
+
+                var startI = 0;
+                var endI = edgeInters.Count - 1;
+
+                if (edgeInters.Count > 2)
+                {
+                    for (var j = 0; j < edgeInters.Count; j += 1)
+                    {
+                        if (edgeInters[j].firstT - i >= minT[i])
                         {
-                            partsIntersections[i].Add(new Intersection(inter.firstT, inter.secondT + j));
-                            partsIntersections[j].Add(new Intersection(inter.secondT, inter.firstT + i));
+                            startI = j;
+                            break;
+                        }
+                    }
+                    for (var j = edgeInters.Count - 1; j >= 0; j -= 1)
+                    {
+                        if (edgeInters[j].firstT - i <= maxT[i])
+                        {
+                            endI = j;
+                            break;
+                        }
+                    }
+
+                    var countInside = endI - startI + 1;
+
+                    if (countInside % 2 == 1)
+                    {
+                        if (startI > 0 && Mathf.FloorToInt(edgeInters[startI - 1].secondT) == (i - 1 + contour.Count) % contour.Count)
+                        {
+                            startI -= 1;
+                            countInside += 1;
+                        }
+                        else if (endI < edgeInters.Count - 1 && Mathf.FloorToInt(edgeInters[endI + 1].secondT) == (i + 1) % contour.Count)
+                        {
+                            endI += 1;
+                            countInside += 1;
+                        }
+                    }
+                }
+
+                for (int j = 0; j < edgeInters.Count; j += 1)
+                {
+                    if (j < startI || j > endI)
+                    {
+                        var inverted = edgeInters[j].GetReverse();
+                        var index = Mathf.FloorToInt(inverted.firstT);
+                        if (index > i)
+                        {
+                            var foundIndex = allInters[index].FindIndex(i => i == inverted);
+                            if (foundIndex >= 0)
+                            {
+                                edgeInters[j] = Intersection.NotIntersect;
+                                allInters[index][foundIndex] = Intersection.NotIntersect;
+                            }
                         }
                     }
                 }
             }
-            return result;
-        }
 
-        private Contour Move(TrajectoryHelper.Direction direction, float lineOffset, float medianOffset)
-        {
-            var result = new Contour(Count);
-
-            foreach (var part in this)
+            var pairs = new List<IntersectionPairEdge>();
+            for (var i = 0; i < allInters.Count; i += 1)
             {
-                var offset = (direction == TrajectoryHelper.Direction.ClockWise ? 1f : -1f) * (part.isEnter ? medianOffset : lineOffset);
-
-                if (offset == 0f)
-                    result.Add(part);
-                else
+                var inters = allInters[i];
+                inters = inters.Where(i => i.isIntersect).ToList();
+                for (int j = 1; j < inters.Count; j += 2)
                 {
-                    var movedTrajectory = part.trajectory.Shift(offset, offset);
-                    var newPart = new ContourEdge(movedTrajectory, part.isEnter);
-                    result.Add(newPart);
+                    pairs.Add(new IntersectionPairEdge(true, inters[j - 1], inters[j]));
                 }
             }
-
-            return result;
+            return pairs;
         }
-        //private List<List<Intersection>> GetIntersections(Contour contour)
-        //{
-
-        //}
 
         public HashSet<Intersection> GetIntersections(in StraightTrajectory line)
         {
