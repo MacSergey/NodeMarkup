@@ -124,6 +124,9 @@ namespace IMT.Utilities
 
         public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
+            if (infoView)
+                return;
+
             var instance = Singleton<PropManager>.instance;
             var materialBlock = instance.m_materialBlock;
             materialBlock.Clear();
