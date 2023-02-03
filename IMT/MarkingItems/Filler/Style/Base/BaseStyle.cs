@@ -17,6 +17,29 @@ namespace IMT.Manager
         PropertyValue<float> LineOffset { get; }
         PropertyValue<float> MedianOffset { get; }
     }
+    public interface IPeriodicFiller : IFillerStyle
+    {
+        PropertyValue<float> Step { get; }
+    }
+    public interface IOffsetFiller : IFillerStyle
+    {
+        PropertyValue<float> Offset { get; }
+    }
+    public interface IRotateFiller : IFillerStyle
+    {
+        PropertyValue<float> Angle { get; }
+    }
+    public interface IGuideFiller : IFillerStyle
+    {
+        PropertyValue<int> LeftGuideA { get; }
+        PropertyValue<int> LeftGuideB { get; }
+        PropertyValue<int> RightGuideA { get; }
+        PropertyValue<int> RightGuideB { get; }
+    }
+    public interface IFollowGuideFiller : IGuideFiller
+    {
+        PropertyValue<bool> FollowGuides { get; }
+    }
     public abstract class FillerStyle : Style<FillerStyle>, IFillerStyle
     {
         public static float DefaultAngle => 0f;
@@ -33,8 +56,6 @@ namespace IMT.Manager
         protected static float MinAngle => 5f;
         protected static float MinLength => 1f;
         protected static float MaxLength => 10f;
-
-        protected static Vector2 DefaultEffect => new Vector2(0f, 1f);
 
         protected static string Guide => nameof(Guide);
 
@@ -55,9 +76,17 @@ namespace IMT.Manager
             return Defaults.TryGetValue(type, out var style) ? style.CopyStyle() : null;
         }
 
+        protected override float WidthWheelStep => 0.1f;
+        protected override float WidthMinValue => 0.1f;
+
         public PropertyValue<float> MedianOffset { get; }
         public PropertyValue<float> LineOffset { get; }
 
+        public FillerStyle(Color32 color, float width, float lineOffset, float medianOffset, Vector2 scratches, Vector2 voids) : base(color, width, scratches, voids)
+        {
+            MedianOffset = GetMedianOffsetProperty(medianOffset);
+            LineOffset = GetLineOffsetProperty(lineOffset);
+        }
         public FillerStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width)
         {
             MedianOffset = GetMedianOffsetProperty(medianOffset);

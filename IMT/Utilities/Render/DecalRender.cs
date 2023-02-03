@@ -23,7 +23,7 @@ namespace IMT.Utilities
         private float VoidDensity { get; }
         private Vector4 VoidTiling { get; }
 
-        public DecalData(MarkingLOD lod, Vector3 position, Color32 color, Vector3 size, Vector2 tiling, float scratch, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling, params Vector2[] points)
+        public DecalData(MarkingLOD lod, Vector3 position, Color32 color, Vector3 size, Vector2 tiling, float scratchDensity, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling, params Vector2[] points)
         {
             LOD = lod;
             Position = position;
@@ -31,7 +31,7 @@ namespace IMT.Utilities
             size.y = 5f;
             Size = size;
             Tiling = new Vector4(tiling.x, 0, tiling.y, 0);
-            ScratchDensity = scratch;
+            ScratchDensity = scratchDensity;
             ScratchTiling = new Vector4(scratchTiling.x, 0, scratchTiling.y, 0);
             VoidDensity = voidDensity;
             VoidTiling = new Vector4(voidTiling.x, 0, voidTiling.y, 0);
@@ -47,7 +47,7 @@ namespace IMT.Utilities
                     Points[i / 2] += new Vector4(0f, 0f, point.x, point.y);
             }
         }
-        public DecalData(MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float scratch, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling)
+        public DecalData(MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float scratchDensity, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling)
         {
             var min = points[0];
             var max = points[0];
@@ -70,9 +70,9 @@ namespace IMT.Utilities
                 pointUVs[i] = new Vector2(x, y);
             }
 
-            this = new DecalData(lod, position, color, size, tiling, scratch, scratchTiling, voidDensity, voidTiling, pointUVs);
+            this = new DecalData(lod, position, color, size, tiling, scratchDensity, scratchTiling, voidDensity, voidTiling, pointUVs);
         }
-        public DecalData(MarkingLOD lod, Area area, Color32 color, Vector2 tiling, float scratch, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling)
+        public DecalData(MarkingLOD lod, Area area, Color32 color, Vector2 tiling, float scratchDensity, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling)
         {
             var min = area.Min;
             var max = area.Max;
@@ -88,31 +88,34 @@ namespace IMT.Utilities
                 pointUVs[i] = new Vector2(x, y);
             }
 
-            this = new DecalData(lod, position, color, size, tiling, scratch, scratchTiling, voidDensity, voidTiling, pointUVs);
+            this = new DecalData(lod, position, color, size, tiling, scratchDensity, scratchTiling, voidDensity, voidTiling, pointUVs);
         }
         public IEnumerable<IDrawData> GetDrawData() { yield return this; }
 
-        public static IEnumerable<DecalData> GetData(MarkingLOD lod, ITrajectory[] trajectories, float minAngle, float minLength, float maxLength, Color32 color, Vector2 tiling, float scratch, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling)
+        public static List<DecalData> GetData(MarkingLOD lod, ITrajectory[] trajectories, float minAngle, float minLength, float maxLength, Color32 color, Vector2 tiling, float scratch, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling)
         {
+            var result = new List<DecalData>();
+
             var points = trajectories.SelectMany(c => GetPoints(c, lod, minAngle, minLength, maxLength)).ToArray();
             var triangles = Triangulator.TriangulateSimple(points, trajectories.GetDirection());
-            if (triangles == null)
-                yield break;
 
-            if (points.Length <= 16)
+            if (triangles != null)
             {
-                yield return new DecalData(lod, points, color, tiling, scratch, scratchTiling, voidDensity, voidTiling);
-            }
-            else
-            {
-                var polygon = new Polygon(points, triangles);
-                polygon.Arange(8, 3f);
-
-                foreach (var area in polygon)
+                if (points.Length <= 16)
                 {
-                    yield return new DecalData(lod, area, color, tiling, scratch, scratchTiling, voidDensity, voidTiling);
+                    result.Add(new DecalData(lod, points, color, tiling, scratch, scratchTiling, voidDensity, voidTiling));
+                }
+                else
+                {
+                    var polygon = new Polygon(points, triangles);
+                    polygon.Arange(8, 3f);
+
+                    foreach (var area in polygon)
+                        result.Add(new DecalData(lod, area, color, tiling, scratch, scratchTiling, voidDensity, voidTiling));
                 }
             }
+
+            return result;
         }
         private static IEnumerable<Vector3> GetPoints(ITrajectory trajectory, MarkingLOD lod, float minAngle, float minLength, float maxLength)
         {

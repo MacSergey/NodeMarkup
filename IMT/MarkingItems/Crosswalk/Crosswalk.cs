@@ -1,4 +1,5 @@
-﻿using IMT.Utilities;
+﻿using IMT.MarkingItems.Crosswalk.Styles.Base;
+using IMT.Utilities;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,34 @@ namespace IMT.Manager
         public ITrajectory RightBorderTrajectory { get; private set; }
         public ITrajectory LeftBorderTrajectory { get; private set; }
 
-        public ITrajectory[] BorderTrajectories => new ITrajectory[] { EnterLine.Trajectory, RightBorderTrajectory, CrosswalkLine.Trajectory, LeftBorderTrajectory };
+        public ITrajectory[] BorderTrajectories
+        {
+            get
+            {
+                var trajectories = new ITrajectory[4];
+
+                trajectories[0] = EnterLine.Trajectory;
+
+                if (LeftBorder.Value == null)
+                    trajectories[1] = LeftBorderTrajectory;
+                else if (LeftBorder.Value.PointPair.First == EnterLine.PointPair.Second)
+                    trajectories[1] = LeftBorderTrajectory;
+                else
+                    trajectories[1] = LeftBorderTrajectory.Invert();
+
+                trajectories[2] = CrosswalkLine.Trajectory.Invert();
+
+                if (RightBorder.Value == null)
+                    trajectories[3] = RightBorderTrajectory.Invert();
+                else if (RightBorder.Value.PointPair.Second == EnterLine.PointPair.First)
+                    trajectories[3] = RightBorderTrajectory;
+                else
+                    trajectories[3] = RightBorderTrajectory.Invert();
+
+                return trajectories;
+            }
+        }
+        public Contour Contour => new Contour(BorderTrajectories.Select(i => new ContourEdge(i)));
 
         public float TotalWidth => Style.Value.GetTotalWidth(this);
         public float CornerAndNormalAngle => EnterLine.Start.Enter.CornerAndNormalAngle;
@@ -82,15 +110,12 @@ namespace IMT.Manager
             Mod.Logger.Debug($"Recalculate crosswalk {this}");
 #endif
             StyleData.Clear();
-            foreach (var lod in EnumExtension.GetEnumValues<MarkingLOD>())
-            {
-                StyleData.Add(Style.Value.Calculate(this, lod));
-            }
+            Style.Value.Calculate(this, StyleData.Add);
         }
 
         public MarkingRegularLine GetBorder(BorderPosition borderType) => borderType == BorderPosition.Right ? RightBorder : LeftBorder;
 
-        private StraightTrajectory GetOffsetTrajectory(float offset)
+        public StraightTrajectory GetOffsetTrajectory(float offset)
         {
             var start = EnterLine.Start.Position + NormalDir * offset;
             var end = EnterLine.End.Position + NormalDir * offset;
@@ -163,28 +188,8 @@ namespace IMT.Manager
         public Dependences GetDependences() => Marking.GetCrosswalkDependences(this);
         public void Render(OverlayData data)
         {
-            var trajectories = new ITrajectory[4];
-
-            trajectories[0] = EnterLine.Trajectory;
-
-            if (LeftBorder.Value == null)
-                trajectories[1] = LeftBorderTrajectory;
-            else if (LeftBorder.Value.PointPair.First == EnterLine.PointPair.Second)
-                trajectories[1] = LeftBorderTrajectory;
-            else
-                trajectories[1] = LeftBorderTrajectory.Invert();
-
-            trajectories[2] = CrosswalkLine.Trajectory.Invert();
-
-            if (RightBorder.Value == null)
-                trajectories[3] = RightBorderTrajectory.Invert();
-            else if (RightBorder.Value.PointPair.Second == EnterLine.PointPair.First)
-                trajectories[3] = RightBorderTrajectory;
-            else
-                trajectories[3] = RightBorderTrajectory.Invert();
-
             data.AlphaBlend = false;
-            var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
+            var triangles = Triangulator.TriangulateSimple(BorderTrajectories, out var points, minAngle: 5, maxLength: 10f);
             points.RenderArea(triangles, data);
         }
 

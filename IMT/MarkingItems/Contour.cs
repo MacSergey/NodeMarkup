@@ -551,6 +551,15 @@ namespace IMT.Manager
 
             return points;
         }
-
+        public static void Process(this Queue<Contour> contours, in StraightTrajectory line, Intersection.Side side)
+        {
+            var count = contours.Count;
+            for (var i = 0; i < count; i += 1)
+            {
+                var newContours = contours.Dequeue().Cut(line, side);
+                for (var j = 0; j < newContours.Count; j += 1)
+                    contours.Enqueue(newContours[j]);
+            }
+        }
     }
 }

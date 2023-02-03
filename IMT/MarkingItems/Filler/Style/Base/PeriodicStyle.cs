@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public abstract class PeriodicFillerStyle : Filler2DStyle, IPeriodicFiller
+    public abstract class PeriodicFillerStyle : FillerStyle, IPeriodicFiller
     {
         public PropertyValue<float> Step { get; }
 #if DEBUG
@@ -141,7 +141,7 @@ namespace IMT.Manager
                             if (RenderOnly == i)
                                 new Border(part.trajectory, Border.Type.Forward, Intersection.Side.Left).Draw(dashes, UnityEngine.Color.cyan, 0.3f);
 #endif
-                            Process(cutContours, part.trajectory, Intersection.Side.Left);
+                            cutContours.Process(part.trajectory, Intersection.Side.Left);
                             if (cutContours.Count == 0)
                                 continue;
                         }
@@ -154,7 +154,7 @@ namespace IMT.Manager
                             if (RenderOnly == i)
                                 new Border(part.start, Border.Type.Forward, Intersection.Side.Left).Draw(dashes, UnityEngine.Color.magenta, 0.3f);
 #endif
-                            Process(cutContours, part.start, Intersection.Side.Left);
+                            cutContours.Process(part.start, Intersection.Side.Left);
                             if (cutContours.Count == 0)
                                 continue;
                         }
@@ -167,7 +167,7 @@ namespace IMT.Manager
                             if (RenderOnly == i)
                                 new Border(part.end, Border.Type.Forward, Intersection.Side.Left).Draw(dashes, UnityEngine.Color.yellow, 0.3f);
 #endif
-                            Process(cutContours, part.end, Intersection.Side.Left);
+                            cutContours.Process(part.end, Intersection.Side.Left);
                             if (cutContours.Count == 0)
                                 continue;
                         }
@@ -177,7 +177,7 @@ namespace IMT.Manager
 #endif
                             if (part.startBorder != null)
                             {
-                                Process(cutContours, part.startBorder.Value.trajectory, part.startBorder.Value.side);
+                                cutContours.Process(part.startBorder.Value.trajectory, part.startBorder.Value.side);
                                 if (cutContours.Count == 0)
                                     continue;
                             }
@@ -187,14 +187,14 @@ namespace IMT.Manager
 #endif
                             if (part.endBorder != null)
                             {
-                                Process(cutContours, part.endBorder.Value.trajectory, part.endBorder.Value.side);
+                                cutContours.Process(part.endBorder.Value.trajectory, part.endBorder.Value.side);
                                 if (cutContours.Count == 0)
                                     continue;
                             }
                         foreach (var contour in cutContours)
                         {
                             var trajectories = contour.Select(e => e.trajectory).ToArray();
-                            foreach (var data in DecalData.GetData(lod, trajectories, MinAngle, MinLength, MaxLength, Color, Vector2.one, Scratches.Value.x, new Vector2(1f / Scratches.Value.y, 1f / Scratches.Value.y), Voids.Value.x, new Vector2(1f / Voids.Value.y, 1f / Voids.Value.y)))
+                            foreach (var data in DecalData.GetData(lod, trajectories, MinAngle, MinLength, MaxLength, Color, Vector2.one, ScratchDensity, ScratchTiling, VoidDensity, VoidTiling))
                             {
                                 addData(data);
                             }
@@ -210,17 +210,6 @@ namespace IMT.Manager
 
                 addData(new MarkingPartGroupData(lod, dashes));
 #endif
-            }
-
-            static void Process(Queue<Contour> cutContours, in StraightTrajectory line, Intersection.Side side)
-            {
-                var count = cutContours.Count;
-                for (var i = 0; i < count; i += 1)
-                {
-                    var newContours = cutContours.Dequeue().Cut(line, side);
-                    for (var j = 0; j < newContours.Count; j += 1)
-                        cutContours.Enqueue(newContours[j]);
-                }
             }
         }
 
@@ -258,7 +247,7 @@ namespace IMT.Manager
         protected List<StraightTrajectory> GetPartTrajectories(ITrajectory guide, Rect limits, float dash, float space)
         {
             List<StraightTrajectory> trajectories = new List<StraightTrajectory>();
-            foreach (var part in StyleHelper.CalculateDashesBezierT(guide, dash, space, 1))
+            foreach (var part in StyleHelper.   CalculateDashesBezierT(guide, dash, space, 1))
             {
                 trajectories.Add(new StraightTrajectory(guide.Position(part.start), guide.Position(part.end)));
             }

@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.MarkingItems.Crosswalk.Styles.Base;
 using IMT.UI;
 using IMT.Utilities;
 using ModsCommon;
@@ -8,6 +9,7 @@ using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -22,6 +24,12 @@ namespace IMT.Manager
     {
         PropertyStructValue<float> Width { get; }
     }
+    public interface ITexture : IStyle
+    {
+        public PropertyVector2Value Scratches { get; }
+        public PropertyVector2Value Voids { get; }
+    }
+
     public abstract class Style : IToXml
     {
         public static float DefaultDashLength => 1.5f;
@@ -61,11 +69,12 @@ namespace IMT.Manager
             return rawType;
         }
 
-        public static Color32 DefaultColor { get; } = new Color32(136, 136, 136, 224);
-        public static float DefaultWidth { get; } = 0.15f;
+        public static Color32 DefaultColor => new Color32(136, 136, 136, 224);
+        public static float DefaultWidth => 0.15f;
+        protected static Vector2 DefaultEffect => new Vector2(0f, 1f);
 
-        protected virtual float WidthWheelStep { get; } = 0.01f;
-        protected virtual float WidthMinValue { get; } = 0.05f;
+        protected virtual float WidthWheelStep => 0.01f;
+        protected virtual float WidthMinValue => 0.05f;
 
         protected abstract Style GetDefault();
         public static T GetDefault<T>(StyleType type) where T : Style
@@ -97,6 +106,13 @@ namespace IMT.Manager
 
         public PropertyColorValue Color { get; }
         public PropertyStructValue<float> Width { get; }
+        public PropertyVector2Value Scratches { get; }
+        public PropertyVector2Value Voids { get; }
+
+        protected float ScratchDensity => Scratches.Value.x;
+        protected Vector2 ScratchTiling => new Vector2(1f / Scratches.Value.y, 1f / Scratches.Value.y);
+        protected float VoidDensity => Voids.Value.x;
+        protected Vector2 VoidTiling => new Vector2(1f / Voids.Value.y, 1f / Voids.Value.y);
 
         public abstract IEnumerable<IStylePropertyData> Properties { get; }
         public abstract Dictionary<string, int> PropertyIndices { get; }
@@ -110,24 +126,14 @@ namespace IMT.Manager
             return dic;
         }
 
-        public Style(Color32 color, float width)
+        public Style(Color32 color, float width, Vector2 scratches, Vector2 voids)
         {
             Color = GetColorProperty(color);
             Width = GetWidthProperty(width);
+            Scratches = new PropertyVector2Value(StyleChanged, scratches, "ST", "SS");
+            Voids = new PropertyVector2Value(StyleChanged, voids, "VT", "VS");
         }
-        protected XElement BaseToXml() => new XElement(XmlSection, new XAttribute("T", TypeToInt(Type)));
-        public virtual XElement ToXml()
-        {
-            var config = BaseToXml();
-            Color.ToXml(config);
-            Width.ToXml(config);
-            return config;
-        }
-        public virtual void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
-        {
-            Color.FromXml(config, DefaultColor);
-            Width.FromXml(config, DefaultWidth);
-        }
+        public Style(Color32 color, float width) : this(color, width, DefaultEffect, DefaultEffect) { }
 
         public abstract Style Copy();
         protected void CopyTo(Style target)
@@ -136,6 +142,11 @@ namespace IMT.Manager
                 widthTarget.Width.Value = widthSource.Width;
             if (this is IColorStyle colorSource && target is IColorStyle colorTarget)
                 colorTarget.Color.Value = colorSource.Color;
+            if (this is ITexture textureSource && target is ITexture textureTarget)
+            {
+                textureTarget.Scratches.Value = textureSource.Scratches.Value;
+                textureTarget.Voids.Value = textureSource.Voids.Value;
+            }
         }
 
         public virtual List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
@@ -146,6 +157,11 @@ namespace IMT.Manager
                 components.Add(AddColorProperty(parent, false));
             if (this is IWidthStyle)
                 components.Add(AddWidthProperty(parent, false));
+            if (this is ITexture)
+            {
+                components.Add(GetScratches(parent, true));
+                components.Add(GetVoids(parent, true));
+            }
 
             return components;
         }
@@ -185,6 +201,45 @@ namespace IMT.Manager
 
             return widthProperty;
         }
+        private Vector2PropertyPanel GetScratches(UIComponent parent, bool canCollapse)
+        {
+            var scratchProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Scratches));
+            scratchProperty.Text = Localize.StyleOption_Scratches;
+            scratchProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
+            scratchProperty.Format = Localize.NumberFormat_Percent;
+            scratchProperty.FieldsWidth = 50f;
+            scratchProperty.CanCollapse = canCollapse;
+            scratchProperty.CheckMax = true;
+            scratchProperty.CheckMin = true;
+            scratchProperty.MinValue = new Vector2(-1000f, 10f);
+            scratchProperty.MaxValue = new Vector2(1000f, 1000f);
+            scratchProperty.WheelStep = new Vector2(10f, 10f);
+            scratchProperty.UseWheel = true;
+            scratchProperty.Init(0, 1);
+            scratchProperty.Value = Scratches.Value * 100f;
+            scratchProperty.OnValueChanged += (Vector2 value) => Scratches.Value = value * 0.01f;
+            return scratchProperty;
+        }
+        private Vector2PropertyPanel GetVoids(UIComponent parent, bool canCollapse)
+        {
+            var voidProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Scratches));
+            voidProperty.Text = Localize.StyleOption_Voids;
+            voidProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
+            voidProperty.Format = Localize.NumberFormat_Percent;
+            voidProperty.FieldsWidth = 50f;
+            voidProperty.CanCollapse = canCollapse;
+            voidProperty.CheckMax = true;
+            voidProperty.CheckMin = true;
+            voidProperty.MinValue = new Vector2(0f, 10f);
+            voidProperty.MaxValue = new Vector2(100f, 1000f);
+            voidProperty.WheelStep = new Vector2(10f, 10f);
+            voidProperty.UseWheel = true;
+            voidProperty.Init(0, 1);
+            voidProperty.Value = Voids.Value * 100f;
+            voidProperty.OnValueChanged += (Vector2 value) => Voids.Value = value * 0.01f;
+            return voidProperty;
+        }
+
         protected Vector2PropertyPanel AddLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
         {
             var lengthProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Length));
@@ -253,6 +308,30 @@ namespace IMT.Manager
             void OnButtonClick() => asymStyle.Invert.Value = !asymStyle.Invert;
 
             return buttonsPanel;
+        }
+
+        protected XElement BaseToXml() => new XElement(XmlSection, new XAttribute("T", TypeToInt(Type)));
+        public virtual XElement ToXml()
+        {
+            var config = BaseToXml();
+            Color.ToXml(config);
+            Width.ToXml(config);
+            if (this is ITexture)
+            {
+                Scratches.ToXml(config);
+                Voids.ToXml(config);
+            }
+            return config;
+        }
+        public virtual void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
+        {
+            Color.FromXml(config, DefaultColor);
+            Width.FromXml(config, DefaultWidth);
+            if (this is ITexture)
+            {
+                Scratches.FromXml(config, DefaultEffect);
+                Voids.FromXml(config, DefaultEffect);
+            }
         }
 
         protected enum PropertyNames
@@ -568,6 +647,7 @@ namespace IMT.Manager
     public abstract class Style<StyleType> : Style
         where StyleType : Style<StyleType>
     {
+        public Style(Color32 color, float width, Vector2 scratches, Vector2 voids) : base(color, width, scratches, voids) { }
         public Style(Color32 color, float width) : base(color, width) { }
 
         public virtual void CopyTo(StyleType target) => base.CopyTo(target);

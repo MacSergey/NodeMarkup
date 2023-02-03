@@ -11,7 +11,7 @@ namespace IMT.Manager
     {
         public delegate IEnumerable<MarkingPartData> SolidGetter(ITrajectory trajectory);
         public delegate IEnumerable<MarkingPartData> DashedGetter(ITrajectory trajectory, float startT, float endT);
-        public static float MinAngleDelta { get; } = 5f;
+        public static float MinAngle { get; } = 5f;
         public static float MinLength { get; } = 1f;
         public static float MaxLength { get; } = 10f;
         private static int MaxDepth => 5;
@@ -36,7 +36,7 @@ namespace IMT.Manager
             };
             var result = new List<Result>();
 
-            CalculateSolid(0, trajectory, trajectory.DeltaAngle, (minAngle ?? MinAngleDelta) * lodScale, (minLength ?? MinLength) * lodScale, (maxLength ?? MaxLength) * lodScale, t => addToResult(result, t));
+            CalculateSolid(0, trajectory, trajectory.DeltaAngle, (minAngle ?? MinAngle) * lodScale, (minLength ?? MinLength) * lodScale, (maxLength ?? MaxLength) * lodScale, t => addToResult(result, t));
 
             return result;
         }
@@ -129,7 +129,7 @@ namespace IMT.Manager
                 startSpace = (startSpace + endSpace) / 2;
             }
         }
-        private static List<PartT> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
+        public static List<PartT> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
         {
             var length = straightTrajectory.Length;
             var partCount = (int)(length / (dashLength + spaceLength));
@@ -245,40 +245,6 @@ namespace IMT.Manager
             var startPosition = trajectory.StartPosition + startOffset;
             var endPosition = trajectory.EndPosition + endOffset;
             return new MarkingPartData(startPosition, endPosition, endPosition - startPosition, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
-        }
-        private static Dictionary<MarkingLOD, float> LodMax { get; } = new Dictionary<MarkingLOD, float>
-        {
-            {MarkingLOD.LOD0, 0.2f},
-            {MarkingLOD.LOD1, 1f}
-        };
-        public static void GetParts(float width, float offset, MarkingLOD lod, out int count, out float partWidth)
-        {
-            var max = LodMax[lod];
-
-            if (width < max || offset != 0f)
-            {
-                count = 1;
-                partWidth = width;
-            }
-            else
-            {
-                var intWidth = (int)(width * 100);
-                var delta = (int)(max * 100);
-                var num = 0;
-                for (var i = (int)(max * 50); i < (int)(max * 100); i += 1)
-                {
-                    var iDelta = intWidth - (intWidth / i) * i;
-                    if (iDelta < delta)
-                    {
-                        delta = iDelta;
-                        num = i;
-                    }
-
-
-                }
-                count = intWidth / num;
-                partWidth = num / 100f;
-            }
         }
 
         public readonly struct PartT

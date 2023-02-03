@@ -1,13 +1,15 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 
-namespace IMT.Manager
+namespace IMT.MarkingItems.Crosswalk.Styles.Base
 {
     public abstract class CrosswalkStyle : Style<CrosswalkStyle>
     {
@@ -26,13 +28,13 @@ namespace IMT.Manager
         private static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
         {
             {CrosswalkType.Existent, new ExistCrosswalkStyle(DefaultCrosswalkWidth) },
-            {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultColor, false, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, false, DefaultCrosswalkSpaceLength, DefaulCrosswalkGapPeriod, true) },
-            {CrosswalkType.DoubleZebra, new DoubleZebraCrosswalkStyle(DefaultColor, DefaultColor, false, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, false, DefaultCrosswalkSpaceLength, DefaulCrosswalkGapPeriod,true, DefaultCrosswalkOffset) },
-            {CrosswalkType.ParallelSolidLines, new ParallelSolidLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth) },
-            {CrosswalkType.ParallelDashedLines, new ParallelDashedLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth, DefaultDashLength, DefaultSpaceLength) },
-            {CrosswalkType.Ladder, new LadderCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, DefaultWidth) },
-            {CrosswalkType.Solid, new SolidCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultCrosswalkOffset, DefaultCrosswalkOffset) },
-            {CrosswalkType.ChessBoard, new ChessBoardCrosswalkStyle(DefaultColor, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkSquareSide, DefaultCrosswalkLineCount, false) },
+            {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultColor, false, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, false, DefaultCrosswalkSpaceLength, DefaulCrosswalkGapPeriod, true) },
+            {CrosswalkType.DoubleZebra, new DoubleZebraCrosswalkStyle(DefaultColor, DefaultColor, false, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, false, DefaultCrosswalkSpaceLength, DefaulCrosswalkGapPeriod,true, DefaultCrosswalkOffset) },
+            {CrosswalkType.ParallelSolidLines, new ParallelSolidLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth) },
+            {CrosswalkType.ParallelDashedLines, new ParallelDashedLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth, DefaultDashLength, DefaultSpaceLength) },
+            {CrosswalkType.Ladder, new LadderCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, DefaultWidth) },
+            {CrosswalkType.Solid, new SolidCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultCrosswalkOffset, DefaultCrosswalkOffset) },
+            {CrosswalkType.ChessBoard, new ChessBoardCrosswalkStyle(DefaultColor, DefaultEffect, DefaultEffect, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkSquareSide, DefaultCrosswalkLineCount, false) },
         };
         public static CrosswalkStyle GetDefault(CrosswalkType type)
         {
@@ -44,6 +46,7 @@ namespace IMT.Manager
 
         public abstract float GetTotalWidth(MarkingCrosswalk crosswalk);
 
+        public CrosswalkStyle(Color32 color, float width, Vector2 scratches, Vector2 voids) : base(color, width, scratches, voids) { }
         public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
         public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
@@ -57,14 +60,15 @@ namespace IMT.Manager
         }
         public virtual void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
 
-        public IStyleData Calculate(MarkingCrosswalk crosswalk, MarkingLOD lod)
+        public void Calculate(MarkingCrosswalk crosswalk, Action<IStyleData> addData)
         {
-            if ((SupportLOD & lod) != 0)
-                return new MarkingPartGroupData(lod, CalculateImpl(crosswalk, lod));
-            else
-                return new MarkingPartGroupData(lod);
+            foreach (var lod in EnumExtension.GetEnumValues<MarkingLOD>())
+            {
+                if ((SupportLOD & lod) != 0)
+                    CalculateImpl(crosswalk, lod, addData);
+            }
         }
-        protected abstract IEnumerable<MarkingPartData> CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod);
+        protected abstract void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData);
 
         protected Vector2PropertyPanel AddLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, bool canCollapse)
         {
@@ -81,7 +85,7 @@ namespace IMT.Manager
             lengthProperty.CanCollapse = canCollapse;
             lengthProperty.Init(0, 1);
             lengthProperty.Value = new Vector2(dashedStyle.DashLength, dashedStyle.SpaceLength);
-            lengthProperty.OnValueChanged += (Vector2 value) =>
+            lengthProperty.OnValueChanged += (value) =>
                 {
                     dashedStyle.DashLength.Value = value.x;
                     dashedStyle.SpaceLength.Value = value.y;
@@ -90,40 +94,30 @@ namespace IMT.Manager
             return lengthProperty;
         }
 
-        protected IEnumerable<MarkingPartData> CalculateCroswalkPart(ITrajectory trajectory, float startT, float endT, Vector3 direction, ITrajectory[] borders, float length, float width, Color32 color)
+        protected void CalculateCrosswalkPart(ITrajectory trajectory, StyleHelper.PartT part, Vector3 direction, Contour crosswalkContour, Color32 color, MarkingLOD lod, Action<IStyleData> addData)
         {
-            var position = trajectory.Position((startT + endT) / 2);
-            var partTrajectory = new StraightTrajectory(position, position + direction, false);
-            var intersects = Intersection.Calculate(partTrajectory, borders, true);
-            intersects = intersects.OrderBy(i => i.firstT).ToList();
+            var cutContours = new Queue<Contour>();
+            cutContours.Enqueue(crosswalkContour);
 
-            var halfLength = length / 2;
-            var halfWidth = width / 2;
-            for (var i = 1; i < intersects.Count; i += 2)
+            var startPos = trajectory.Position(part.start);
+            var startLine = new StraightTrajectory(startPos, startPos + direction, false);
+            cutContours.Process(startLine, Intersection.Side.Left);
+            if (cutContours.Count == 0)
+                return;
+
+            var endPos = trajectory.Position(part.end);
+            var endLine = new StraightTrajectory(endPos, endPos + direction, false);
+            cutContours.Process(endLine, Intersection.Side.Right);
+            if (cutContours.Count == 0)
+                return;
+
+            foreach (var contour in cutContours)
             {
-                var startOffset = GetOffset(intersects[i - 1], halfWidth);
-                var endOffset = GetOffset(intersects[i], halfWidth);
+                var trajectories = contour.Select(e => e.trajectory).ToArray();
+                var datas = DecalData.GetData(lod, trajectories, StyleHelper.MinAngle, StyleHelper.MinLength, StyleHelper.MaxLength, color, Vector2.one, ScratchDensity, ScratchTiling, VoidDensity, VoidTiling);
 
-                var start = Mathf.Clamp(intersects[i - 1].firstT + startOffset, -halfLength, halfLength);
-                var end = Mathf.Clamp(intersects[i].firstT - endOffset, -halfLength, halfLength);
-
-                var delta = end - start;
-                if (delta < 0.9 * length && delta < 0.67 * width)
-                    continue;
-
-                var startPosition = position + direction * start;
-                var endPosition = position + direction * end;
-
-                yield return new MarkingPartData(startPosition, endPosition, direction, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
-            }
-
-            static float GetOffset(Intersection intersect, float offset)
-            {
-                var firstDir = intersect.first.Tangent(intersect.firstT);
-                var secondDir = intersect.second.Tangent(intersect.secondT);
-                var angel = Vector3.Angle(firstDir, secondDir) * Mathf.Deg2Rad;
-                var tan = Mathf.Tan(angel);
-                return tan != 0 ? offset / tan : 1000f;
+                foreach (var data in datas)
+                    addData(data);
             }
         }
 

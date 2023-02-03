@@ -1,0 +1,227 @@
+﻿using ColossalFramework.Math;
+using ColossalFramework.UI;
+using IMT.API;
+using IMT.Utilities;
+using IMT.Utilities.API;
+using ModsCommon;
+using ModsCommon.UI;
+using ModsCommon.Utilities;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Xml.Linq;
+using UnityEngine;
+
+namespace IMT.Manager
+{
+    public class ChevronFillerStyle : GuideFillerStyle, IWidthStyle, IColorStyle, ITexture
+    {
+        public override StyleType Type => StyleType.FillerChevron;
+        public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
+
+        public PropertyValue<float> AngleBetween { get; }
+        public PropertyBoolValue Invert { get; }
+        public PropertyValue<int> Output { get; }
+        public PropertyEnumValue<From> StartingFrom { get; }
+
+        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
+        private static IEnumerable<string> PropertyIndicesList
+        {
+            get
+            {
+                yield return nameof(Color);
+                yield return nameof(Width);
+                yield return nameof(Step);
+                yield return nameof(AngleBetween);
+                yield return nameof(Offset);
+                yield return nameof(Guide);
+                yield return nameof(Scratches);
+                yield return nameof(Voids);
+                yield return nameof(Invert);
+#if DEBUG
+                yield return nameof(RenderOnly);
+                yield return nameof(Start);
+                yield return nameof(End);
+                yield return nameof(StartBorder);
+                yield return nameof(EndBorder);
+#endif
+            }
+        }
+        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
+        public override IEnumerable<IStylePropertyData> Properties
+        {
+            get
+            {
+                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
+                yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
+                yield return new StylePropertyDataProvider<float>(nameof(Step), Step);
+                yield return new StylePropertyDataProvider<float>(nameof(AngleBetween), AngleBetween);
+                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(LeftGuideB), LeftGuideB);
+                yield return new StylePropertyDataProvider<int>(nameof(RightGuideA), RightGuideA);
+                yield return new StylePropertyDataProvider<int>(nameof(RightGuideB), RightGuideB);
+                yield return new StylePropertyDataProvider<bool>(nameof(Invert), Invert);
+            }
+        }
+
+        public ChevronFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angleBetween, float step, Vector2 scratches, Vector2 voids) : base(color, width, step, lineOffset, medianOffset, scratches, voids)
+        {
+            AngleBetween = GetAngleBetweenProperty(angleBetween);
+            Invert = GetInvertProperty(false);
+
+            Output = GetOutputProperty(0);
+            StartingFrom = GetStartingFromProperty(From.Vertex);
+        }
+
+        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, LineOffset, DefaultOffset, AngleBetween, Step, Scratches, Voids);
+        public override void CopyTo(FillerStyle target)
+        {
+            base.CopyTo(target);
+
+            if (target is ChevronFillerStyle chevronTarget)
+            {
+                chevronTarget.AngleBetween.Value = AngleBetween;
+                chevronTarget.Step.Value = Step;
+                chevronTarget.Invert.Value = Invert;
+            }
+            if (target is IFollowGuideFiller followGuideTarget)
+                followGuideTarget.FollowGuides.Value = true;
+        }
+        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        {
+            base.GetUIComponents(filler, components, parent, isTemplate);
+            components.Add(AddAngleBetweenProperty(parent, false));
+            if (!isTemplate)
+            {
+                components.Add(AddInvertProperty(parent, false));
+            }
+        }
+
+        protected FloatPropertyPanel AddAngleBetweenProperty(UIComponent parent, bool canCollapse)
+        {
+            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(AngleBetween));
+            angleProperty.Text = Localize.StyleOption_AngleBetween;
+            angleProperty.Format = Localize.NumberFormat_Degree;
+            angleProperty.UseWheel = true;
+            angleProperty.WheelStep = 1f;
+            angleProperty.WheelTip = Settings.ShowToolTip;
+            angleProperty.CheckMin = true;
+            angleProperty.MinValue = 30;
+            angleProperty.CheckMax = true;
+            angleProperty.MaxValue = 150;
+            angleProperty.CanCollapse = canCollapse;
+            angleProperty.Init();
+            angleProperty.Value = AngleBetween;
+            angleProperty.OnValueChanged += (float value) => AngleBetween.Value = value;
+
+            return angleProperty;
+        }
+        protected ButtonPanel AddInvertProperty(UIComponent parent, bool canCollapse)
+        {
+            var buttonsPanel = ComponentPool.Get<ButtonPanel>(parent, nameof(Invert));
+            buttonsPanel.Text = Localize.StyleOption_Invert;
+            buttonsPanel.CanCollapse = canCollapse;
+            buttonsPanel.Init();
+            buttonsPanel.OnButtonClick += OnButtonClick;
+
+            void OnButtonClick() => Invert.Value = !Invert;
+
+            return buttonsPanel;
+        }
+
+#if DEBUG_PERIODIC_FILLER
+        protected override List<Part> GetParts(ITrajectory guide, EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData)
+#else
+        protected override List<Part> GetParts(ITrajectory guide, ContourGroup contours, MarkingLOD lod)
+#endif
+        {
+            var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) * 0.5f;
+            var coef = Math.Max(Mathf.Sin(Mathf.Abs(halfAngle) * Mathf.Deg2Rad), 0.01f);
+            var width = Width.Value / coef;
+
+            var limits = contours.GetLimits();
+            var trajectories = GetPartTrajectories(guide, limits, width, width * (Step - 1));
+            var parts = new List<Part>(trajectories.Count * 2);
+
+            var leftBorders = BorderPair.GetBorders(trajectories, contours, halfAngle - 180, false);
+            for (var i = 0; i < leftBorders.Count; i += 1)
+            {
+                leftBorders[i].GetPartBorders(leftBorders, i, out var leftStartBorder, out var leftEndBorder);
+                var part = new Part(leftBorders[i].trajectory, leftStartBorder, leftEndBorder, halfAngle, false);
+                parts.Add(part);
+            }
+
+            var rightBorders = BorderPair.GetBorders(trajectories, contours, 180 - halfAngle, false);
+            for (var i = 0; i < rightBorders.Count; i += 1)
+            {
+                rightBorders[i].GetPartBorders(rightBorders, i, out var rightStartBorder, out var rightEndBorder);
+                var part = new Part(rightBorders[i].trajectory, rightStartBorder, rightEndBorder, -halfAngle, false);
+                parts.Add(part);
+            }
+
+#if DEBUG_PERIODIC_FILLER
+            var dashes = new List<MarkingPartData>();
+
+            for (var i = 0; i < leftBorders.Count; i += 1)
+                leftBorders[i].Draw(dashes);
+
+            for (var i = 0; i < rightBorders.Count; i += 1)
+                rightBorders[i].Draw(dashes);
+
+            if (RenderOnly != -1 && parts.Count > RenderOnly)
+            {
+                parts[RenderOnly].startBorder?.Draw(dashes, UnityEngine.Color.blue, 0.3f);
+                parts[RenderOnly].endBorder?.Draw(dashes, UnityEngine.Color.blue, 0.3f);
+            }
+
+            addData(new MarkingPartGroupData(lod, dashes));
+#endif
+            return parts;
+        }
+        protected override float GetAngle() => (Invert ? 360 - AngleBetween : AngleBetween) / 2;
+
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            AngleBetween.ToXml(config);
+            Invert.ToXml(config);
+            return config;
+        }
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
+        {
+            Output.FromXml(config, 0);
+            StartingFrom.FromXml(config, From.Vertex);
+
+            LeftGuideA.Value = Output;
+            LeftGuideB.Value = Output + 1;
+
+            if (StartingFrom == From.Vertex)
+            {
+                RightGuideA.Value = Output;
+                RightGuideB.Value = Output - 1;
+            }
+            else if (StartingFrom == From.Edge)
+            {
+                RightGuideA.Value = Output - 1;
+                RightGuideB.Value = Output - 2;
+            }
+
+            base.FromXml(config, map, invert, typeChanged);
+            AngleBetween.FromXml(config, DefaultAngle);
+            Invert.FromXml(config, false);
+        }
+
+        public enum From
+        {
+            [Description(nameof(Localize.StyleOption_Vertex))]
+            Vertex = 0,
+
+            [Description(nameof(Localize.StyleOption_Edge))]
+            Edge = 1
+        }
+    }
+}

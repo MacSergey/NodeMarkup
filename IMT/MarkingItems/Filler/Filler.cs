@@ -50,8 +50,7 @@ namespace IMT.Manager
             Mod.Logger.Debug($"Recalculate filler {this}");
 #endif
             StyleData.Clear();
-            Style.Value.Calculate(this, (data) => StyleData.Add(data));
-            //StyleData.AddRange(Style.Value.Calculate(this, ));
+            Style.Value.Calculate(this, StyleData.Add);
         }
         public Dependences GetDependences() => new Dependences();
 
