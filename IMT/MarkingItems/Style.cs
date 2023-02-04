@@ -9,7 +9,6 @@ using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Security.Cryptography;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -211,8 +210,8 @@ namespace IMT.Manager
             scratchProperty.CanCollapse = canCollapse;
             scratchProperty.CheckMax = true;
             scratchProperty.CheckMin = true;
-            scratchProperty.MinValue = new Vector2(-1000f, 10f);
-            scratchProperty.MaxValue = new Vector2(1000f, 1000f);
+            scratchProperty.MinValue = new Vector2(0f, 10f);
+            scratchProperty.MaxValue = new Vector2(100f, 1000f);
             scratchProperty.WheelStep = new Vector2(10f, 10f);
             scratchProperty.UseWheel = true;
             scratchProperty.Init(0, 1);
@@ -409,7 +408,7 @@ namespace IMT.Manager
             [NotItem]
             GroupMask = ~ItemMask,
 
-            #region REGULAR
+#region REGULAR
 
             [NotItem]
             [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
@@ -502,9 +501,9 @@ namespace IMT.Manager
             [NotVisible]
             LineBuffer = Marking.Item.RegularLine + 0x100 - 1,
 
-            #endregion
+#endregion
 
-            #region STOP
+#region STOP
 
             [NotItem]
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
@@ -544,9 +543,9 @@ namespace IMT.Manager
             [NotVisible]
             StopLineBuffer = Marking.Item.StopLine + 0x100 - 1,
 
-            #endregion
+#endregion
 
-            #region FILLER
+#region FILLER
 
             [NotItem]
             [Description(nameof(Localize.FillerStyle_Group))]
@@ -596,9 +595,9 @@ namespace IMT.Manager
             [NotVisible]
             FillerBuffer = Marking.Item.Filler + 0x100 - 1,
 
-            #endregion
+#endregion
 
-            #region CROSSWALK
+#region CROSSWALK
 
             [NotItem]
             [Description(nameof(Localize.CrosswalkStyle_Group))]
@@ -641,7 +640,7 @@ namespace IMT.Manager
             [NotVisible]
             CrosswalkBuffer = Marking.Item.Crosswalk + 0x100 - 1,
 
-            #endregion
+#endregion
         }
     }
     public abstract class Style<StyleType> : Style
