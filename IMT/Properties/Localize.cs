@@ -2581,13 +2581,18 @@ namespace IMT
 		public static string StyleOption_Scale => LocaleManager.GetString("StyleOption_Scale", Culture);
 
 		/// <summary>
-		/// Scratches
+		/// Cracks
 		/// </summary>
-		public static string StyleOption_Scratches => LocaleManager.GetString("StyleOption_Scratches", Culture);
+		public static string StyleOption_Cracks => LocaleManager.GetString("StyleOption_Cracks", Culture);
 
 		/// <summary>
 		/// Voids
 		/// </summary>
 		public static string StyleOption_Voids => LocaleManager.GetString("StyleOption_Voids", Culture);
+
+		/// <summary>
+		/// Texture density
+		/// </summary>
+		public static string StyleOption_Texture => LocaleManager.GetString("StyleOption_Texture", Culture);
 	}
 }

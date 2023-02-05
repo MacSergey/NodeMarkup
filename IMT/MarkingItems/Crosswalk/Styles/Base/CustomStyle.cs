@@ -28,8 +28,9 @@ namespace IMT.Manager
 
         public override float GetTotalWidth(MarkingCrosswalk crosswalk) => OffsetBefore + GetVisibleWidth(crosswalk) + OffsetAfter;
         protected abstract float GetVisibleWidth(MarkingCrosswalk crosswalk);
+        protected virtual float GetAbsoluteWidth(float length, MarkingCrosswalk crosswalk) => length / Mathf.Sin(crosswalk.CornerAndNormalAngle);
 
-        public CustomCrosswalkStyle(Color32 color, float width, Vector2 scratches, Vector2 voids, float offsetBefore, float offsetAfter) : base(color, width, scratches, voids)
+        public CustomCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter) : base(color, width, cracks, voids, texture)
         {
             OffsetBefore = GetOffsetBeforeProperty(offsetBefore);
             OffsetAfter = GetOffsetAfterProperty(offsetAfter);

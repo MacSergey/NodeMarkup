@@ -16,7 +16,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class SolidFillerStyle : FillerStyle, IColorStyle, ITexture
+    public class SolidFillerStyle : FillerStyle, IColorStyle, IEffectStyle
     {
         public static float DefaultSolidWidth { get; } = 0.2f;
 
@@ -36,7 +36,8 @@ namespace IMT.Manager
             {
                 yield return nameof(Color);
                 yield return nameof(Offset);
-                yield return nameof(Scratches);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
                 yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(MinAngle);
@@ -56,7 +57,7 @@ namespace IMT.Manager
             }
         }
 
-        public SolidFillerStyle(Color32 color, float lineOffset, float medianOffset, Vector2 scratches, Vector2 voids) : base(color, DefaultSolidWidth, lineOffset, medianOffset, scratches, voids)
+        public SolidFillerStyle(Color32 color, Vector2 cracks, Vector2 voids, float texture, float lineOffset, float medianOffset) : base(color, DefaultSolidWidth, cracks, voids, texture, lineOffset, medianOffset)
         {
 #if DEBUG
             MinAngle = new PropertyStructValue<float>(StyleChanged, FillerStyle.MinAngle);
@@ -65,7 +66,7 @@ namespace IMT.Manager
 #endif
         }
 
-        public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, LineOffset, DefaultOffset, Scratches, Voids);
+        public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, Cracks, Voids, Texture, LineOffset, DefaultOffset);
 
         protected override void CalculateImpl(MarkingFiller filler, ContourGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {
@@ -74,7 +75,7 @@ namespace IMT.Manager
                 foreach (var contour in contours)
                 {
                     var trajectories = contour.Select(c => c.trajectory).ToArray();
-                    foreach (var data in DecalData.GetData(lod, trajectories, MinAngle, MinLength, MaxLength, Color, Vector2.one, ScratchDensity, ScratchTiling, VoidDensity, VoidTiling))
+                    foreach (var data in DecalData.GetData(lod, trajectories, MinAngle, MinLength, MaxLength, Color, Vector2.one, CracksDensity, CracksTiling, VoidDensity, VoidTiling, Texture))
                     {
                         addData(data);
                     }

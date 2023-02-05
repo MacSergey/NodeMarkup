@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class ParallelDashedLinesCrosswalkStyle : LinedCrosswalkStyle, ICrosswalkStyle, IDashedLine, ITexture
+    public class ParallelDashedLinesCrosswalkStyle : LinedCrosswalkStyle, ICrosswalkStyle, IDashedLine, IEffectStyle
     {
         public override StyleType Type => StyleType.CrosswalkParallelDashedLines;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -32,7 +32,8 @@ namespace IMT.Manager
                 yield return nameof(LineWidth);
                 yield return nameof(Length);
                 yield return nameof(Offset);
-                yield return nameof(Scratches);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
                 yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(RenderOnly);
@@ -58,13 +59,13 @@ namespace IMT.Manager
             }
         }
 
-        public ParallelDashedLinesCrosswalkStyle(Color32 color, float width, Vector2 scratches, Vector2 voids, float offsetBefore, float offsetAfter, float lineWidth, float dashLength, float spaceLength) : base(color, width, scratches, voids, offsetBefore, offsetAfter, lineWidth)
+        public ParallelDashedLinesCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float lineWidth, float dashLength, float spaceLength) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter, lineWidth)
         {
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        public override CrosswalkStyle CopyStyle() => new ParallelDashedLinesCrosswalkStyle(Color, Width, Scratches, Voids, OffsetBefore, OffsetAfter, LineWidth, DashLength, SpaceLength);
+        public override CrosswalkStyle CopyStyle() => new ParallelDashedLinesCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, LineWidth, DashLength, SpaceLength);
 
         public override void CopyTo(CrosswalkStyle target)
         {

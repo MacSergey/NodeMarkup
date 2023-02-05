@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class LadderCrosswalkStyle : ParallelSolidLinesCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk, ITexture
+    public class LadderCrosswalkStyle : ParallelSolidLinesCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk, IEffectStyle
     {
         public override StyleType Type => StyleType.CrosswalkLadder;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -32,7 +32,8 @@ namespace IMT.Manager
                 yield return nameof(LineWidth);
                 yield return nameof(Length);
                 yield return nameof(Offset);
-                yield return nameof(Scratches);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
                 yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(RenderOnly);
@@ -58,13 +59,13 @@ namespace IMT.Manager
             }
         }
 
-        public LadderCrosswalkStyle(Color32 color, float width, Vector2 scratches, Vector2 voids, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, float lineWidth) : base(color, width, scratches, voids, offsetBefore, offsetAfter, lineWidth)
+        public LadderCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, float lineWidth) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter, lineWidth)
         {
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        public override CrosswalkStyle CopyStyle() => new LadderCrosswalkStyle(Color, Width, Scratches, Voids, OffsetBefore, OffsetAfter, DashLength, SpaceLength, LineWidth);
+        public override CrosswalkStyle CopyStyle() => new LadderCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, LineWidth);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
@@ -82,7 +83,7 @@ namespace IMT.Manager
 
             var offset = GetVisibleWidth(crosswalk) * 0.5f + OffsetBefore;
             var direction = crosswalk.CornerDir.Turn90(true);
-            var width = Width - 2 * LineWidth;
+            var width = GetAbsoluteWidth(Width - 2 * LineWidth, crosswalk);
 
             if (GetContour(crosswalk, offset, width, out var contour))
             {

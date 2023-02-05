@@ -108,7 +108,7 @@ namespace IMT.Manager
         public float CornerAngle { get; private set; }
         public float NormalAngle { get; private set; }
         public float CornerAndNormalAngle { get; private set; }
-        public float TranformCoef { get; private set; }
+        public float TranformRatio { get; private set; }
 
         public Entrance Next => Marking.GetNextEnter(this);
         public Entrance Prev => Marking.GetPrevEnter(this);
@@ -245,7 +245,7 @@ namespace IMT.Manager
 
             var angle = Vector3.Angle(NormalDir, CornerDir);
             CornerAndNormalAngle = (angle > 90 ? 180 - angle : angle) * Mathf.Deg2Rad;
-            TranformCoef = Mathf.Sin(CornerAndNormalAngle);
+            TranformRatio = Mathf.Sin(CornerAndNormalAngle);
 
             Position = (leftPos + rightPos) / 2f;
 
@@ -310,7 +310,7 @@ namespace IMT.Manager
             }
         }
 
-        public Vector3 GetPosition(float offset) => Position + offset / TranformCoef * CornerDir;
+        public Vector3 GetPosition(float offset) => Position + offset / TranformRatio * CornerDir;
         public void Render(OverlayData data)
         {
             if (Position == null)

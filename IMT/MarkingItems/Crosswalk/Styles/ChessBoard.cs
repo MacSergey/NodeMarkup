@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class ChessBoardCrosswalkStyle : CustomCrosswalkStyle, IColorStyle, IAsymLine, ITexture
+    public class ChessBoardCrosswalkStyle : CustomCrosswalkStyle, IColorStyle, IAsymLine, IEffectStyle
     {
         public override StyleType Type => StyleType.CrosswalkChessBoard;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -33,7 +33,8 @@ namespace IMT.Manager
                 yield return nameof(LineCount);
                 yield return nameof(Offset);
                 yield return nameof(Invert);
-                yield return nameof(Scratches);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
                 yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(RenderOnly);
@@ -59,7 +60,7 @@ namespace IMT.Manager
             }
         }
 
-        public ChessBoardCrosswalkStyle(Color32 color, Vector2 scratches, Vector2 voids, float offsetBefore, float offsetAfter, float squareSide, int lineCount, bool invert) : base(color, 0, scratches, voids, offsetBefore, offsetAfter)
+        public ChessBoardCrosswalkStyle(Color32 color, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float squareSide, int lineCount, bool invert) : base(color, 0, cracks, voids, texture, offsetBefore, offsetAfter)
         {
             SquareSide = GetSquareSideProperty(squareSide);
             LineCount = GetLineCountProperty(lineCount);
@@ -67,14 +68,14 @@ namespace IMT.Manager
         }
         protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData)
         {
-            var deltaOffset = GetLengthCoef(SquareSide, crosswalk);
-            var startOffset = deltaOffset * 0.5f + OffsetBefore;
+            var width = GetAbsoluteWidth(SquareSide, crosswalk);
+            var startOffset = width * 0.5f + OffsetBefore;
             var direction = crosswalk.CornerDir.Turn90(true);
 
             for (var i = 0; i < LineCount; i += 1)
             {
-                var offset = startOffset + deltaOffset * i;
-                if (GetContour(crosswalk, offset, SquareSide, out var contour))
+                var offset = startOffset + width * i;
+                if (GetContour(crosswalk, offset, width, out var contour))
                 {
                     var trajectory = crosswalk.GetFullTrajectory(offset, direction);
                     var trajectoryLength = trajectory.Length;
@@ -91,7 +92,7 @@ namespace IMT.Manager
             }
         }
 
-        public override CrosswalkStyle CopyStyle() => new ChessBoardCrosswalkStyle(Color, Scratches, Voids, OffsetBefore, OffsetAfter, SquareSide, LineCount, Invert);
+        public override CrosswalkStyle CopyStyle() => new ChessBoardCrosswalkStyle(Color, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, SquareSide, LineCount, Invert);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
@@ -102,8 +103,7 @@ namespace IMT.Manager
                 chessBoardTarget.Invert.Value = Invert;
             }
         }
-        protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetLengthCoef(SquareSide * LineCount, crosswalk);
-        protected float GetLengthCoef(float length, MarkingCrosswalk crosswalk) => length / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+        protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetAbsoluteWidth(SquareSide * LineCount, crosswalk);
 
         public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {

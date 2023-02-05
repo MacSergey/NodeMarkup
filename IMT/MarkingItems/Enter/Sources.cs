@@ -64,7 +64,7 @@ namespace IMT.Manager
                 position = Vector3.Lerp(rightPos, leftPos, part);
             }
 
-            position += Enter.CornerDir * (offset / Enter.TranformCoef);
+            position += Enter.CornerDir * (offset / Enter.TranformRatio);
         }
         private void GetEdgePositionAndDirection(MarkingPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
         {
@@ -84,7 +84,7 @@ namespace IMT.Manager
             }
             direction = (direction * Enter.SideSign).normalized;
 
-            var shift = (lineShift + offset) / Enter.TranformCoef;
+            var shift = (lineShift + offset) / Enter.TranformRatio;
 
             position += Enter.CornerDir * shift;
         }

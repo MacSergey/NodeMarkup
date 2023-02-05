@@ -16,7 +16,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class ChevronFillerStyle : GuideFillerStyle, IWidthStyle, IColorStyle, ITexture
+    public class ChevronFillerStyle : GuideFillerStyle, IWidthStyle, IColorStyle, IEffectStyle
     {
         public override StyleType Type => StyleType.FillerChevron;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
@@ -37,9 +37,10 @@ namespace IMT.Manager
                 yield return nameof(AngleBetween);
                 yield return nameof(Offset);
                 yield return nameof(Guide);
-                yield return nameof(Scratches);
+                yield return nameof(Cracks);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
                 yield return nameof(Voids);
-                yield return nameof(Invert);
 #if DEBUG
                 yield return nameof(RenderOnly);
                 yield return nameof(Start);
@@ -68,7 +69,7 @@ namespace IMT.Manager
             }
         }
 
-        public ChevronFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angleBetween, float step, Vector2 scratches, Vector2 voids) : base(color, width, step, lineOffset, medianOffset, scratches, voids)
+        public ChevronFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float lineOffset, float medianOffset, float angleBetween, float step) : base(color, width, cracks, voids, texture, step, lineOffset, medianOffset)
         {
             AngleBetween = GetAngleBetweenProperty(angleBetween);
             Invert = GetInvertProperty(false);
@@ -77,7 +78,7 @@ namespace IMT.Manager
             StartingFrom = GetStartingFromProperty(From.Vertex);
         }
 
-        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, LineOffset, DefaultOffset, AngleBetween, Step, Scratches, Voids);
+        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, Cracks, Voids, Texture, LineOffset, DefaultOffset, AngleBetween, Step);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
@@ -140,8 +141,8 @@ namespace IMT.Manager
 #endif
         {
             var halfAngle = (Invert ? 360 - AngleBetween : AngleBetween) * 0.5f;
-            var coef = Math.Max(Mathf.Sin(Mathf.Abs(halfAngle) * Mathf.Deg2Rad), 0.01f);
-            var width = Width.Value / coef;
+            var ratio = Math.Max(Mathf.Sin(Mathf.Abs(halfAngle) * Mathf.Deg2Rad), 0.01f);
+            var width = Width.Value / ratio;
 
             var limits = contours.GetLimits();
             var trajectories = GetPartTrajectories(guide, limits, width, width * (Step - 1));

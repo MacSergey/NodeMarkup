@@ -334,7 +334,7 @@ namespace IMT.Tools
         {
             if (SelectPoint is MarkingLanePoint lanePoint)
             {
-                var halfWidth = lanePoint.Width * lanePoint.Enter.TranformCoef * 0.5f;
+                var halfWidth = lanePoint.Width * lanePoint.Enter.TranformRatio * 0.5f;
 
                 Vector3 endPosition;
                 if (Marking is SegmentMarking segmentMarking)

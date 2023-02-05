@@ -18,7 +18,7 @@ namespace IMT.Manager
     {
         public PropertyValue<float> LineWidth { get; }
 
-        public LinedCrosswalkStyle(Color32 color, float width, Vector2 scratches, Vector2 voids, float offsetBefore, float offsetAfter, float lineWidth) : base(color, width, scratches, voids, offsetBefore, offsetAfter)
+        public LinedCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float lineWidth) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter)
         {
             LineWidth = GetLineWidthProperty(lineWidth);
         }

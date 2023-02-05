@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class ParallelSolidLinesCrosswalkStyle : LinedCrosswalkStyle, ICrosswalkStyle, ITexture
+    public class ParallelSolidLinesCrosswalkStyle : LinedCrosswalkStyle, ICrosswalkStyle, IEffectStyle
     {
         public override StyleType Type => StyleType.CrosswalkParallelSolidLines;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -28,7 +28,8 @@ namespace IMT.Manager
                 yield return nameof(Width);
                 yield return nameof(LineWidth);
                 yield return nameof(Offset);
-                yield return nameof(Scratches);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
                 yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(RenderOnly);
@@ -52,10 +53,10 @@ namespace IMT.Manager
             }
         }
 
-        public ParallelSolidLinesCrosswalkStyle(Color32 color, float width, Vector2 scratches, Vector2 voids, float offsetBefore, float offsetAfter, float lineWidth) : base(color, width, scratches, voids, offsetBefore, offsetAfter, lineWidth)
+        public ParallelSolidLinesCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float lineWidth) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter, lineWidth)
         { }
 
-        public override CrosswalkStyle CopyStyle() => new ParallelSolidLinesCrosswalkStyle(Color, Width, Scratches, Voids, OffsetBefore, OffsetAfter, LineWidth);
+        public override CrosswalkStyle CopyStyle() => new ParallelSolidLinesCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, LineWidth);
 
         protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData)
         {

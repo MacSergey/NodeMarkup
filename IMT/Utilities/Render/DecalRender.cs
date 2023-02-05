@@ -8,46 +8,59 @@ using System.Linq;
 
 namespace IMT.Utilities
 {
-    public struct DecalData : IStyleData, IDrawData
+    public readonly struct DecalData : IStyleData, IDrawData
     {
+        private static int colorId = Shader.PropertyToID("_Color");
+        private static int sizeId = Shader.PropertyToID("_Size");
+        private static int tilingId = Shader.PropertyToID("_Tiling");
+        private static int pointsId = Shader.PropertyToID("_Points");
+        private static int cracksDensityId = Shader.PropertyToID("_CracksDensity");
+        private static int cracksTilingId = Shader.PropertyToID("_CracksTiling");
+        private static int voidDensityId = Shader.PropertyToID("_VoidDensity");
+        private static int voidTilingId = Shader.PropertyToID("_VoidTiling");
+        private static int textureDensityId = Shader.PropertyToID("_TextureDensity");
+
+
         public MarkingLOD LOD { get; }
         public MarkingLODType LODType => MarkingLODType.Dash;
 
-        private Vector3 Position { get; }
-        private Color Color { get; }
-        private Vector4 Size { get; }
-        private Vector4 Tiling { get; }
-        private Vector4[] Points { get; }
-        private float ScratchDensity { get; }
-        private Vector4 ScratchTiling { get; }
-        private float VoidDensity { get; }
-        private Vector4 VoidTiling { get; }
+        private readonly Vector3 position;
+        private readonly Color color;
+        private readonly Vector4 size;
+        private readonly Vector4 tiling;
+        private readonly Vector4[] points;
+        private readonly float cracksDensity;
+        private readonly Vector4 cracksTiling;
+        private readonly float voidDensity;
+        private readonly Vector4 voidTiling;
+        private readonly float texture;
 
-        public DecalData(MarkingLOD lod, Vector3 position, Color32 color, Vector3 size, Vector2 tiling, float scratchDensity, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling, params Vector2[] points)
+        public DecalData(MarkingLOD lod, Vector3 position, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
         {
             LOD = lod;
-            Position = position;
-            Color = color.ToX3Vector();
+            this.position = position;
+            this.color = color.ToX3Vector();
             size.y = 5f;
-            Size = size;
-            Tiling = new Vector4(tiling.x, 0, tiling.y, 0);
-            ScratchDensity = scratchDensity;
-            ScratchTiling = new Vector4(scratchTiling.x, 0, scratchTiling.y, 0);
-            VoidDensity = voidDensity;
-            VoidTiling = new Vector4(voidTiling.x, 0, voidTiling.y, 0);
+            this.size = size;
+            this.tiling = new Vector4(tiling.x, 0f, tiling.y, 0f);
+            this.cracksDensity = cracksDensity;
+            this.cracksTiling = new Vector4(cracksTiling.x, 0f, cracksTiling.y, 0f);
+            this.voidDensity = voidDensity;
+            this.voidTiling = new Vector4(voidTiling.x, 0f, voidTiling.y, 0f);
+            this.texture = texture;
 
             var count = (points.Length + 3) / 4;
-            Points = new Vector4[count * 2];
+            this.points = new Vector4[count * 2];
             for (var i = 0; i < count * 4; i += 1)
             {
                 var point = i < points.Length ? points[i] : points[points.Length - 1];
                 if (i % 2 == 0)
-                    Points[i / 2] += new Vector4(point.x, point.y, 0f, 0f);
+                    this.points[i / 2] += new Vector4(point.x, point.y, 0f, 0f);
                 else
-                    Points[i / 2] += new Vector4(0f, 0f, point.x, point.y);
+                    this.points[i / 2] += new Vector4(0f, 0f, point.x, point.y);
             }
         }
-        public DecalData(MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float scratchDensity, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling)
+        public DecalData(MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
         {
             var min = points[0];
             var max = points[0];
@@ -70,9 +83,9 @@ namespace IMT.Utilities
                 pointUVs[i] = new Vector2(x, y);
             }
 
-            this = new DecalData(lod, position, color, size, tiling, scratchDensity, scratchTiling, voidDensity, voidTiling, pointUVs);
+            this = new DecalData(lod, position, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
-        public DecalData(MarkingLOD lod, Area area, Color32 color, Vector2 tiling, float scratchDensity, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling)
+        public DecalData(MarkingLOD lod, Area area, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
         {
             var min = area.Min;
             var max = area.Max;
@@ -88,11 +101,11 @@ namespace IMT.Utilities
                 pointUVs[i] = new Vector2(x, y);
             }
 
-            this = new DecalData(lod, position, color, size, tiling, scratchDensity, scratchTiling, voidDensity, voidTiling, pointUVs);
+            this = new DecalData(lod, position, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
         public IEnumerable<IDrawData> GetDrawData() { yield return this; }
 
-        public static List<DecalData> GetData(MarkingLOD lod, ITrajectory[] trajectories, float minAngle, float minLength, float maxLength, Color32 color, Vector2 tiling, float scratch, Vector2 scratchTiling, float voidDensity, Vector2 voidTiling)
+        public static List<DecalData> GetData(MarkingLOD lod, ITrajectory[] trajectories, float minAngle, float minLength, float maxLength, Color32 color, Vector2 tiling, float cracks, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
         {
             var result = new List<DecalData>();
 
@@ -103,7 +116,7 @@ namespace IMT.Utilities
             {
                 if (points.Length <= 16)
                 {
-                    result.Add(new DecalData(lod, points, color, tiling, scratch, scratchTiling, voidDensity, voidTiling));
+                    result.Add(new DecalData(lod, points, color, tiling, cracks, cracksTiling, voidDensity, voidTiling, texture));
                 }
                 else
                 {
@@ -111,7 +124,7 @@ namespace IMT.Utilities
                     polygon.Arange(8, 3f);
 
                     foreach (var area in polygon)
-                        result.Add(new DecalData(lod, area, color, tiling, scratch, scratchTiling, voidDensity, voidTiling));
+                        result.Add(new DecalData(lod, area, color, tiling, cracks, cracksTiling, voidDensity, voidTiling, texture));
                 }
             }
 
@@ -133,18 +146,19 @@ namespace IMT.Utilities
             var instance = Singleton<PropManager>.instance;
             var materialBlock = instance.m_materialBlock;
             materialBlock.Clear();
-            var material = RenderHelper.GetMaterial(Points.Length * 2);
+            var material = RenderHelper.GetMaterial(points.Length * 2);
 
-            materialBlock.SetVector("_Color", Color);
-            materialBlock.SetVector("_Size", Size);
-            materialBlock.SetVector("_Tiling", Tiling);
-            materialBlock.SetVectorArray("_Points", Points);
-            materialBlock.SetFloat("_ScratchDensity", ScratchDensity);
-            materialBlock.SetVector("_ScratchTiling", ScratchTiling);
-            materialBlock.SetFloat("_VoidDensity", VoidDensity);
-            materialBlock.SetVector("_VoidTiling", VoidTiling);
+            materialBlock.SetVector(colorId, color);
+            materialBlock.SetVector(sizeId, size);
+            materialBlock.SetVector(tilingId, tiling);
+            materialBlock.SetVectorArray(pointsId, points);
+            materialBlock.SetFloat(cracksDensityId, cracksDensity);
+            materialBlock.SetVector(cracksTilingId, cracksTiling);
+            materialBlock.SetFloat(voidDensityId, voidDensity);
+            materialBlock.SetVector(voidTilingId, voidTiling);
+            materialBlock.SetFloat(textureDensityId, texture);
 
-            Graphics.DrawMesh(RenderHelper.DecalMesh, Position, Quaternion.identity, material, RenderHelper.RoadLayer, null, 0, materialBlock);
+            Graphics.DrawMesh(RenderHelper.DecalMesh, position, Quaternion.identity, material, RenderHelper.RoadLayer, null, 0, materialBlock);
         }
     }
 }

@@ -817,8 +817,8 @@ namespace IMT.Manager
                 return new MarkingPartGroupData(lod);
 
             var borders = line.Borders;
-            var coef = Mathf.Cos(Angle * Mathf.Deg2Rad);
-            return new MarkingPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, Base / coef, Space / coef, CalculateDashes));
+            var ratio = Mathf.Cos(Angle * Mathf.Deg2Rad);
+            return new MarkingPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, Base / ratio, Space / ratio, CalculateDashes));
 
             IEnumerable<MarkingPartData> CalculateDashes(ITrajectory trajectory, float startT, float endT)
             {

@@ -23,10 +23,11 @@ namespace IMT.Manager
     {
         PropertyStructValue<float> Width { get; }
     }
-    public interface ITexture : IStyle
+    public interface IEffectStyle : IStyle
     {
-        public PropertyVector2Value Scratches { get; }
+        public PropertyVector2Value Cracks { get; }
         public PropertyVector2Value Voids { get; }
+        public PropertyStructValue<float> Texture { get; }   
     }
 
     public abstract class Style : IToXml
@@ -71,6 +72,7 @@ namespace IMT.Manager
         public static Color32 DefaultColor => new Color32(136, 136, 136, 224);
         public static float DefaultWidth => 0.15f;
         protected static Vector2 DefaultEffect => new Vector2(0f, 1f);
+        protected static float DefaultTexture => 0f;
 
         protected virtual float WidthWheelStep => 0.01f;
         protected virtual float WidthMinValue => 0.05f;
@@ -105,11 +107,12 @@ namespace IMT.Manager
 
         public PropertyColorValue Color { get; }
         public PropertyStructValue<float> Width { get; }
-        public PropertyVector2Value Scratches { get; }
+        public PropertyVector2Value Cracks { get; }
         public PropertyVector2Value Voids { get; }
+        public PropertyStructValue<float> Texture { get; }
 
-        protected float ScratchDensity => Scratches.Value.x;
-        protected Vector2 ScratchTiling => new Vector2(1f / Scratches.Value.y, 1f / Scratches.Value.y);
+        protected float CracksDensity => Cracks.Value.x;
+        protected Vector2 CracksTiling => new Vector2(1f / Cracks.Value.y, 1f / Cracks.Value.y);
         protected float VoidDensity => Voids.Value.x;
         protected Vector2 VoidTiling => new Vector2(1f / Voids.Value.y, 1f / Voids.Value.y);
 
@@ -125,14 +128,15 @@ namespace IMT.Manager
             return dic;
         }
 
-        public Style(Color32 color, float width, Vector2 scratches, Vector2 voids)
+        public Style(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture)
         {
             Color = GetColorProperty(color);
             Width = GetWidthProperty(width);
-            Scratches = new PropertyVector2Value(StyleChanged, scratches, "ST", "SS");
+            Cracks = new PropertyVector2Value(StyleChanged, cracks, "ST", "SS");
             Voids = new PropertyVector2Value(StyleChanged, voids, "VT", "VS");
+            Texture = new PropertyStructValue<float>("TEX", StyleChanged, texture);
         }
-        public Style(Color32 color, float width) : this(color, width, DefaultEffect, DefaultEffect) { }
+        public Style(Color32 color, float width) : this(color, width, DefaultEffect, DefaultEffect, DefaultTexture) { }
 
         public abstract Style Copy();
         protected void CopyTo(Style target)
@@ -141,10 +145,11 @@ namespace IMT.Manager
                 widthTarget.Width.Value = widthSource.Width;
             if (this is IColorStyle colorSource && target is IColorStyle colorTarget)
                 colorTarget.Color.Value = colorSource.Color;
-            if (this is ITexture textureSource && target is ITexture textureTarget)
+            if (this is IEffectStyle textureSource && target is IEffectStyle textureTarget)
             {
-                textureTarget.Scratches.Value = textureSource.Scratches.Value;
+                textureTarget.Cracks.Value = textureSource.Cracks.Value;
                 textureTarget.Voids.Value = textureSource.Voids.Value;
+                textureTarget.Texture.Value = textureSource.Texture.Value;
             }
         }
 
@@ -156,10 +161,11 @@ namespace IMT.Manager
                 components.Add(AddColorProperty(parent, false));
             if (this is IWidthStyle)
                 components.Add(AddWidthProperty(parent, false));
-            if (this is ITexture)
+            if (this is IEffectStyle)
             {
-                components.Add(GetScratches(parent, true));
+                components.Add(GetCracks(parent, true));
                 components.Add(GetVoids(parent, true));
+                components.Add(GetTexture(parent, true));
             }
 
             return components;
@@ -200,28 +206,28 @@ namespace IMT.Manager
 
             return widthProperty;
         }
-        private Vector2PropertyPanel GetScratches(UIComponent parent, bool canCollapse)
+        private Vector2PropertyPanel GetCracks(UIComponent parent, bool canCollapse)
         {
-            var scratchProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Scratches));
-            scratchProperty.Text = Localize.StyleOption_Scratches;
-            scratchProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
-            scratchProperty.Format = Localize.NumberFormat_Percent;
-            scratchProperty.FieldsWidth = 50f;
-            scratchProperty.CanCollapse = canCollapse;
-            scratchProperty.CheckMax = true;
-            scratchProperty.CheckMin = true;
-            scratchProperty.MinValue = new Vector2(0f, 10f);
-            scratchProperty.MaxValue = new Vector2(100f, 1000f);
-            scratchProperty.WheelStep = new Vector2(10f, 10f);
-            scratchProperty.UseWheel = true;
-            scratchProperty.Init(0, 1);
-            scratchProperty.Value = Scratches.Value * 100f;
-            scratchProperty.OnValueChanged += (Vector2 value) => Scratches.Value = value * 0.01f;
-            return scratchProperty;
+            var cracksProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Cracks));
+            cracksProperty.Text = Localize.StyleOption_Cracks;
+            cracksProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
+            cracksProperty.Format = Localize.NumberFormat_Percent;
+            cracksProperty.FieldsWidth = 50f;
+            cracksProperty.CanCollapse = canCollapse;
+            cracksProperty.CheckMax = true;
+            cracksProperty.CheckMin = true;
+            cracksProperty.MinValue = new Vector2(0f, 10f);
+            cracksProperty.MaxValue = new Vector2(100f, 1000f);
+            cracksProperty.WheelStep = new Vector2(10f, 10f);
+            cracksProperty.UseWheel = true;
+            cracksProperty.Init(0, 1);
+            cracksProperty.Value = Cracks.Value * 100f;
+            cracksProperty.OnValueChanged += (Vector2 value) => Cracks.Value = value * 0.01f;
+            return cracksProperty;
         }
         private Vector2PropertyPanel GetVoids(UIComponent parent, bool canCollapse)
         {
-            var voidProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Scratches));
+            var voidProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Cracks));
             voidProperty.Text = Localize.StyleOption_Voids;
             voidProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
             voidProperty.Format = Localize.NumberFormat_Percent;
@@ -237,6 +243,23 @@ namespace IMT.Manager
             voidProperty.Value = Voids.Value * 100f;
             voidProperty.OnValueChanged += (Vector2 value) => Voids.Value = value * 0.01f;
             return voidProperty;
+        }
+        private FloatPropertyPanel GetTexture(UIComponent parent, bool canCollapse)
+        {
+            var textureProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Texture));
+            textureProperty.Text = Localize.StyleOption_Texture;
+            textureProperty.Format = Localize.NumberFormat_Percent;
+            textureProperty.CanCollapse = canCollapse;
+            textureProperty.CheckMax = true;
+            textureProperty.CheckMin = true;
+            textureProperty.MinValue = 0f;
+            textureProperty.MaxValue = 100f;
+            textureProperty.WheelStep = 10f;
+            textureProperty.UseWheel = true;
+            textureProperty.Init();
+            textureProperty.Value = Texture.Value * 100f;
+            textureProperty.OnValueChanged += (float value) => Texture.Value = value / 100f;
+            return textureProperty;
         }
 
         protected Vector2PropertyPanel AddLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
@@ -315,9 +338,9 @@ namespace IMT.Manager
             var config = BaseToXml();
             Color.ToXml(config);
             Width.ToXml(config);
-            if (this is ITexture)
+            if (this is IEffectStyle)
             {
-                Scratches.ToXml(config);
+                Cracks.ToXml(config);
                 Voids.ToXml(config);
             }
             return config;
@@ -326,9 +349,9 @@ namespace IMT.Manager
         {
             Color.FromXml(config, DefaultColor);
             Width.FromXml(config, DefaultWidth);
-            if (this is ITexture)
+            if (this is IEffectStyle)
             {
-                Scratches.FromXml(config, DefaultEffect);
+                Cracks.FromXml(config, DefaultEffect);
                 Voids.FromXml(config, DefaultEffect);
             }
         }
@@ -646,7 +669,7 @@ namespace IMT.Manager
     public abstract class Style<StyleType> : Style
         where StyleType : Style<StyleType>
     {
-        public Style(Color32 color, float width, Vector2 scratches, Vector2 voids) : base(color, width, scratches, voids) { }
+        public Style(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture) : base(color, width, cracks, voids, texture) { }
         public Style(Color32 color, float width) : base(color, width) { }
 
         public virtual void CopyTo(StyleType target) => base.CopyTo(target);

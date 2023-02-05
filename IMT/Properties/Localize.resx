@@ -1864,10 +1864,13 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_Scale" xml:space="preserve">
     <value>Scale</value>
   </data>
-  <data name="StyleOption_Scratches" xml:space="preserve">
-    <value>Scratches</value>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Cracks</value>
   </data>
   <data name="StyleOption_Voids" xml:space="preserve">
     <value>Voids</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Texture density</value>
   </data>
 </root>

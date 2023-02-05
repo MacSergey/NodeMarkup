@@ -61,10 +61,10 @@ namespace IMT.Manager
 
         private static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
         {
-            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset, DefaultEffect, DefaultEffect,  DefaultFollowGuides)},
-            {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset, DefaultEffect, DefaultEffect)},
-            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultOffset, DefaultOffset, DefaultEffect, DefaultEffect)},
-            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe, DefaultEffect, DefaultEffect)},
+            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset,  DefaultFollowGuides)},
+            {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
+            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultOffset)},
+            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
             {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
             {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
             {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
@@ -82,7 +82,7 @@ namespace IMT.Manager
         public PropertyValue<float> MedianOffset { get; }
         public PropertyValue<float> LineOffset { get; }
 
-        public FillerStyle(Color32 color, float width, float lineOffset, float medianOffset, Vector2 scratches, Vector2 voids) : base(color, width, scratches, voids)
+        public FillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float lineOffset, float medianOffset) : base(color, width, cracks, voids, texture)
         {
             MedianOffset = GetMedianOffsetProperty(medianOffset);
             LineOffset = GetLineOffsetProperty(lineOffset);

@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class StripeFillerStyle : GuideFillerStyle, IFollowGuideFiller, IRotateFiller, IWidthStyle, IColorStyle, ITexture
+    public class StripeFillerStyle : GuideFillerStyle, IFollowGuideFiller, IRotateFiller, IWidthStyle, IColorStyle, IEffectStyle
     {
         public override StyleType Type => StyleType.FillerStripe;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
@@ -32,7 +32,8 @@ namespace IMT.Manager
                 yield return nameof(Angle);
                 yield return nameof(Offset);
                 yield return nameof(Guide);
-                yield return nameof(Scratches);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
                 yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(RenderOnly);
@@ -62,12 +63,12 @@ namespace IMT.Manager
             }
         }
 
-        public StripeFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float angle, float step, Vector2 scratches, Vector2 voids, bool followGuides = false) : base(color, width, step, lineOffset, medianOffset, scratches, voids)
+        public StripeFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float lineOffset, float medianOffset, float angle, float step, bool followGuides = false) : base(color, width, cracks, voids, texture, step, lineOffset, medianOffset)
         {
             Angle = GetAngleProperty(angle);
             FollowGuides = GetFollowGuidesProperty(followGuides);
         }
-        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, LineOffset, DefaultOffset, DefaultAngle, Step, Scratches, Voids, FollowGuides);
+        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, Cracks, Voids, Texture, LineOffset, DefaultOffset, DefaultAngle, Step, FollowGuides);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);
@@ -103,8 +104,8 @@ namespace IMT.Manager
 #endif
         {
             var angle = FollowGuides ? 90f - Angle : 90f;
-            var coef = Math.Max(Mathf.Sin(Mathf.Abs(angle) * Mathf.Deg2Rad), 0.01f);
-            var width = Width.Value / coef;
+            var ratio = Math.Max(Mathf.Sin(Mathf.Abs(angle) * Mathf.Deg2Rad), 0.01f);
+            var width = Width.Value / ratio;
 
             var limits = contours.GetLimits();
             var trajectories = GetPartTrajectories(guide, limits, width, width * (Step - 1));

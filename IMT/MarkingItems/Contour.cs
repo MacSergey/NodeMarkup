@@ -346,8 +346,8 @@ namespace IMT.Manager
                 if (newEdge.TrajectoryType == TrajectoryType.Line)
                 {
                     var length = newEdge.Length;
-                    var coef = 100f / length;
-                    newEdge = newEdge.Cut(-coef, 1f + coef);
+                    var ratio = 100f / length;
+                    newEdge = newEdge.Cut(-ratio, 1f + ratio);
                     minT[i] = 100f / newEdge.Length;
                     maxT[i] = (100f + length) / newEdge.Length;
 

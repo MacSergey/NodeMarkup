@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class ZebraCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk, IParallel, ITexture
+    public class ZebraCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk, IParallel, IEffectStyle
     {
         public override StyleType Type => StyleType.CrosswalkZebra;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -41,7 +41,8 @@ namespace IMT.Manager
                 yield return nameof(Offset);
                 yield return nameof(Parallel);
                 yield return nameof(Gap);
-                yield return nameof(Scratches);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
                 yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(RenderOnly);
@@ -72,10 +73,11 @@ namespace IMT.Manager
             }
         }
 
-        protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetLengthCoef(Width, crosswalk);
-        protected float GetLengthCoef(float length, MarkingCrosswalk crosswalk) => length / (Parallel ? 1 : Mathf.Sin(crosswalk.CornerAndNormalAngle));
+        protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetAbsoluteWidth(Width, crosswalk);
+        protected override float GetAbsoluteWidth(float length, MarkingCrosswalk crosswalk) =>  Parallel ? length : length / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+        protected float GetRelativeWidth(float length, MarkingCrosswalk crosswalk) => Parallel ? length / Mathf.Sin(crosswalk.CornerAndNormalAngle) : length;
 
-        public ZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 scratches, Vector2 voids, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel) : base(color, width, scratches, voids, offsetBefore, offsetAfter)
+        public ZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter)
         {
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
@@ -88,7 +90,7 @@ namespace IMT.Manager
             GapLength = GetGapLengthProperty(gapLength);
             GapPeriod = GetGapPeriodProperty(gapPeriod);
         }
-        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Scratches, Voids, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel);
+        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
@@ -116,18 +118,18 @@ namespace IMT.Manager
         protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData)
         {
             var offset = GetVisibleWidth(crosswalk) * 0.5f + OffsetBefore;
+            var width = GetAbsoluteWidth(Width, crosswalk);
 
-            var coef = Mathf.Sin(crosswalk.CornerAndNormalAngle);
             var index = 0;
             var direction = Parallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
             var trajectory = crosswalk.GetFullTrajectory(offset, direction);
 
             if (!UseGap)
             {
-                if (GetContour(crosswalk, offset, Width, out var contour))
+                if (GetContour(crosswalk, offset, width, out var contour))
                 {
-                    var dashLength = Parallel ? DashLength / coef : DashLength;
-                    var spaceLength = Parallel ? SpaceLength / coef : SpaceLength;
+                    var dashLength = GetRelativeWidth(DashLength, crosswalk);
+                    var spaceLength = GetRelativeWidth(SpaceLength, crosswalk);
 
                     var dashes = StyleHelper.CalculateDashesStraightT(trajectory, dashLength, spaceLength);
                     for (int i = 0; i < dashes.Count; i += 1)
@@ -143,14 +145,14 @@ namespace IMT.Manager
             }
             else
             {
-                if (GetContour(crosswalk, offset, Width, out var contour))
+                if (GetContour(crosswalk, offset , width, out var contour))
                 {
-                    var groupLength = (DashLength * GapPeriod + SpaceLength * (GapPeriod - 1));
+                    var groupLength = DashLength * GapPeriod + SpaceLength * (GapPeriod - 1);
                     var dashT = DashLength / groupLength;
                     var spaceT = SpaceLength / groupLength;
 
-                    groupLength /= (Parallel ? coef : 1f);
-                    var gapLength = GapLength / (Parallel ? coef : 1f);
+                    groupLength = GetRelativeWidth(groupLength, crosswalk);
+                    var gapLength = GetRelativeWidth(GapLength, crosswalk);
 
                     foreach (var part in StyleHelper.CalculateDashesStraightT(trajectory, groupLength, gapLength))
                     {

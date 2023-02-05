@@ -23,7 +23,7 @@ namespace IMT.Manager
         public PropertyValue<int> LeftGuideB { get; }
         public PropertyValue<int> RightGuideB { get; }
 
-        public GuideFillerStyle(Color32 color, float width, float step, float lineOffset, float medianOffset, Vector2 scratches, Vector2 voids) : base(color, width, step, lineOffset, medianOffset, scratches, voids)
+        public GuideFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float step, float lineOffset, float medianOffset) : base(color, width, cracks, voids, texture, step, lineOffset, medianOffset)
         {
             LeftGuideA = GetLeftGuideAProperty(0);
             LeftGuideB = GetLeftGuideBProperty(1);

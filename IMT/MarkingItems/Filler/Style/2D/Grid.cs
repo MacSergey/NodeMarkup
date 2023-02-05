@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class GridFillerStyle : PeriodicFillerStyle, IPeriodicFiller, IRotateFiller, IWidthStyle, IColorStyle, ITexture
+    public class GridFillerStyle : PeriodicFillerStyle, IPeriodicFiller, IRotateFiller, IWidthStyle, IColorStyle, IEffectStyle
     {
         public override StyleType Type => StyleType.FillerGrid;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
@@ -31,7 +31,8 @@ namespace IMT.Manager
                 yield return nameof(Step);
                 yield return nameof(Angle);
                 yield return nameof(Offset);
-                yield return nameof(Scratches);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
                 yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(RenderOnly);
@@ -56,12 +57,12 @@ namespace IMT.Manager
             }
         }
 
-        public GridFillerStyle(Color32 color, float width, float angle, float step, float lineOffset, float medianOffset, Vector2 scratches, Vector2 voids) : base(color, width, step, lineOffset, medianOffset, scratches, voids)
+        public GridFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float angle, float step, float lineOffset, float medianOffset) : base(color, width, cracks, voids, texture, step, lineOffset, medianOffset)
         {
             Angle = GetAngleProperty(angle);
         }
 
-        public override FillerStyle CopyStyle() => new GridFillerStyle(Color, Width, DefaultAngle, Step, LineOffset, DefaultOffset, Scratches, Voids);
+        public override FillerStyle CopyStyle() => new GridFillerStyle(Color, Width, Cracks, Voids, Texture, DefaultAngle, Step, LineOffset, DefaultOffset);
         public override void CopyTo(FillerStyle target)
         {
             base.CopyTo(target);

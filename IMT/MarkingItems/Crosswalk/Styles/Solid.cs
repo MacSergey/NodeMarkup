@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class SolidCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, ITexture
+    public class SolidCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, IEffectStyle
     {
         public override StyleType Type => StyleType.CrosswalkSolid;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -27,8 +27,16 @@ namespace IMT.Manager
                 yield return nameof(Color);
                 yield return nameof(Width);
                 yield return nameof(Offset);
-                yield return nameof(Scratches);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
                 yield return nameof(Voids);
+#if DEBUG
+                yield return nameof(RenderOnly);
+                yield return nameof(Start);
+                yield return nameof(End);
+                yield return nameof(StartBorder);
+                yield return nameof(EndBorder);
+#endif
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -43,19 +51,20 @@ namespace IMT.Manager
             }
         }
 
-        public SolidCrosswalkStyle(Color32 color, float width, Vector2 scratches, Vector2 voids, float offsetBefore, float offsetAfter) : base(color, width, scratches, voids, offsetBefore, offsetAfter) { }
+        public SolidCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter) { }
 
-        public override CrosswalkStyle CopyStyle() => new SolidCrosswalkStyle(Color, Width, Scratches, Voids, OffsetBefore, OffsetAfter);
+        public override CrosswalkStyle CopyStyle() => new SolidCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter);
         protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
 
         protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData)
         {
-            var offset = Width * 0.5f + OffsetBefore;
+            var width = GetAbsoluteWidth(Width, crosswalk);
+            var offset = width * 0.5f + OffsetBefore;
 
-            if (GetContour(crosswalk, offset, Width, out var contour))
+            if (GetContour(crosswalk, offset, width, out var contour))
             {
                 var trajectories = contour.Select(c => c.trajectory).ToArray();
-                foreach (var data in DecalData.GetData(lod, trajectories, StyleHelper.MinAngle, StyleHelper.MinLength, StyleHelper.MaxLength, Color, Vector2.one, ScratchDensity, ScratchTiling, VoidDensity, VoidTiling))
+                foreach (var data in DecalData.GetData(lod, trajectories, StyleHelper.MinAngle, StyleHelper.MinLength, StyleHelper.MaxLength, Color, Vector2.one, CracksDensity, CracksTiling, VoidDensity, VoidTiling, Texture))
                 {
                     addData(data);
                 }
