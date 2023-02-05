@@ -1,5 +1,4 @@
 ﻿using ColossalFramework.UI;
-using IMT.Manager;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
@@ -9,7 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 
-namespace IMT.MarkingItems.Crosswalk.Styles.Base
+namespace IMT.Manager
 {
     public abstract class CrosswalkStyle : Style<CrosswalkStyle>
     {

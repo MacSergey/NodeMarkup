@@ -4,6 +4,7 @@ using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
@@ -28,7 +29,7 @@ namespace IMT.Manager
                 line3DTarget.Elevation.Value = Elevation;
         }
 
-        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod)
+        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             if (trajectory is CombinedTrajectory combined)
             {
@@ -36,10 +37,10 @@ namespace IMT.Manager
                 for (var i = 0; i < data.Length; i += 1)
                     data[i] = new MarkingLineMeshData(lod, combined[i], Width, Elevation, MaterialType.Pavement);
 
-                return new RenderGroupData(lod, MarkingLODType.Mesh, data);
+                addData(new RenderGroupData(lod, MarkingLODType.Mesh, data));
             }
             else
-                return new MarkingLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement);
+                addData(new MarkingLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement));
         }
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)

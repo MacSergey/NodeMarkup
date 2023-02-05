@@ -4,11 +4,10 @@ using ModsCommon;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using static IMT.MarkingItems.Crosswalk.Styles.Base.CrosswalkStyle;
+using static IMT.Manager.CrosswalkStyle;
 using static IMT.Manager.FillerStyle;
 using static IMT.Manager.RegularLineStyle;
 using static IMT.Manager.StopLineStyle;
-using IMT.MarkingItems.Crosswalk.Styles.Base;
 
 namespace IMT.Utilities.API
 {

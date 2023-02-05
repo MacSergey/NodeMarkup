@@ -99,8 +99,8 @@ namespace IMT.Manager
             EnterFillerVertexBase otherE when Point.Lines.Intersect(otherE.Point.Lines).FirstOrDefault() is MarkingLine line => line,
             EnterFillerVertexBase otherE when Enter.Marking.EntersCount > 2 && ((Enter.Next == otherE.Enter && Point.IsLast && otherE.Point.IsFirst) || (Enter.Prev == otherE.Enter && Point.IsFirst && otherE.Point.IsLast)) => new MarkingEnterLine(Point.Marking, Point, otherE.Point, Alignment, otherE.Alignment),
             EnterFillerVertexBase otherE => new MarkingFillerTempLine(Point.Marking, Point, otherE.Point, alignment: Point.IsSplit ? Alignment : (otherE.Point.IsSplit ? otherE.Alignment.Invert() : Alignment.Centre)),
-            IntersectFillerVertex otherI when otherI.LinePair.First.ContainsPoint(Point) => otherI.LinePair.First,
-            IntersectFillerVertex otherI when otherI.LinePair.Second.ContainsPoint(Point) => otherI.LinePair.Second,
+            IntersectFillerVertex otherI when otherI.LinePair.first.ContainsPoint(Point) => otherI.LinePair.first,
+            IntersectFillerVertex otherI when otherI.LinePair.second.ContainsPoint(Point) => otherI.LinePair.second,
             _ => null,
         };
 
@@ -289,8 +289,8 @@ namespace IMT.Manager
         {
             return other switch
             {
-                IntersectFillerVertex otherI when LinePair.ContainLine(otherI.LinePair.First) => otherI.LinePair.First,
-                IntersectFillerVertex otherI when LinePair.ContainLine(otherI.LinePair.Second) => otherI.LinePair.Second,
+                IntersectFillerVertex otherI when LinePair.ContainLine(otherI.LinePair.first) => otherI.LinePair.first,
+                IntersectFillerVertex otherI when LinePair.ContainLine(otherI.LinePair.second) => otherI.LinePair.second,
                 EnterFillerVertexBase otherE when First.ContainsPoint(otherE.Point) && First.GetAlignment(otherE.Point) == otherE.Alignment => First,
                 EnterFillerVertexBase otherE when Second.ContainsPoint(otherE.Point) && Second.GetAlignment(otherE.Point) == otherE.Alignment => Second,
                 _ => null,

@@ -5,6 +5,7 @@ using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
@@ -91,10 +92,10 @@ namespace IMT.Manager
                 networkTarget.RepeatDistance.Value = RepeatDistance;
             }
         }
-        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod)
+        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             if (!IsValid)
-                return new MarkingPartGroupData(lod);
+                return;
 
             var shift = Shift.Value;
             if (shift != 0)
@@ -104,7 +105,7 @@ namespace IMT.Manager
 
             var length = trajectory.Length;
             if (OffsetBefore + OffsetAfter >= length)
-                return new MarkingPartGroupData(lod);
+                return;
 
             var startT = OffsetBefore == 0f ? 0f : trajectory.Travel(OffsetBefore);
             var endT = OffsetAfter == 0f ? 1f : 1f - trajectory.Invert().Travel(OffsetAfter);
@@ -124,7 +125,7 @@ namespace IMT.Manager
                     trajectories[i] = trajectory.Cut(1f / count * i, 1f / count * (i + 1));
             }
 
-            return new MarkingNetworkData(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, Elevation);
+            addData(new MarkingNetworkData(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, Elevation));
         }
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
@@ -151,7 +152,7 @@ namespace IMT.Manager
             prefabProperty.CanCollapse = canCollapse;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
-            prefabProperty.OnValueChanged += (NetInfo value) =>
+            prefabProperty.OnValueChanged += (value) =>
             {
                 Prefab.Value = value;
                 PrefabChanged(parent, value);
@@ -186,7 +187,7 @@ namespace IMT.Manager
             shiftProperty.CanCollapse = canCollapse;
             shiftProperty.Init();
             shiftProperty.Value = Shift;
-            shiftProperty.OnValueChanged += (float value) => Shift.Value = value;
+            shiftProperty.OnValueChanged += (value) => Shift.Value = value;
 
             return shiftProperty;
         }
@@ -205,7 +206,7 @@ namespace IMT.Manager
             elevationProperty.CanCollapse = canCollapse;
             elevationProperty.Init();
             elevationProperty.Value = Elevation;
-            elevationProperty.OnValueChanged += (float value) => Elevation.Value = value;
+            elevationProperty.OnValueChanged += (value) => Elevation.Value = value;
 
             return elevationProperty;
         }
@@ -224,7 +225,7 @@ namespace IMT.Manager
             scaleProperty.CanCollapse = canCollapse;
             scaleProperty.Init();
             scaleProperty.Value = Scale.Value * 100f;
-            scaleProperty.OnValueChanged += (float value) => Scale.Value = value * 0.01f;
+            scaleProperty.OnValueChanged += (value) => Scale.Value = value * 0.01f;
 
             return scaleProperty;
         }
@@ -243,7 +244,7 @@ namespace IMT.Manager
             repeatDistanceProperty.CanCollapse = canCollapse;
             repeatDistanceProperty.Init();
             repeatDistanceProperty.Value = RepeatDistance.Value;
-            repeatDistanceProperty.OnValueChanged += (int value) => RepeatDistance.Value = value;
+            repeatDistanceProperty.OnValueChanged += (value) => RepeatDistance.Value = value;
 
             return repeatDistanceProperty;
         }
@@ -262,7 +263,7 @@ namespace IMT.Manager
             offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init(0, 1);
             offsetProperty.Value = new Vector2(OffsetBefore, OffsetAfter);
-            offsetProperty.OnValueChanged += (Vector2 value) =>
+            offsetProperty.OnValueChanged += (value) =>
             {
                 OffsetBefore.Value = value.x;
                 OffsetAfter.Value = value.y;

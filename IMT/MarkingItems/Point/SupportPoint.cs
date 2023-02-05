@@ -97,8 +97,8 @@ namespace IMT.Manager
     {
         public override SupportType Type { get; } = SupportType.LinesIntersect;
         public MarkingLinePair LinePair { get; set; }
-        public MarkingLine First => LinePair.First;
-        public MarkingLine Second => LinePair.Second;
+        public MarkingLine First => LinePair.first;
+        public MarkingLine Second => LinePair.second;
 
         public IntersectSupportPoint(MarkingLinePair linePair)
         {

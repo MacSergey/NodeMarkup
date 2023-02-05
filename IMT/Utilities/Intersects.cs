@@ -12,7 +12,7 @@ namespace IMT.Utilities
         public float FirstT => intersection.firstT;
         public float SecondT => intersection.secondT;
         public bool IsIntersect => intersection.isIntersect;
-        public Vector3 Position => (pair.First.Trajectory.Position(FirstT) + pair.Second.Trajectory.Position(SecondT)) / 2;
+        public Vector3 Position => (pair.first.Trajectory.Position(FirstT) + pair.second.Trajectory.Position(SecondT)) / 2;
         private MarkingLinesIntersect(MarkingLinePair pair, Intersection intersection)
         {
             this.pair = pair;
@@ -26,8 +26,8 @@ namespace IMT.Utilities
 
             if (pair.MustIntersect != false)
             {
-                var firstTrajectory = GetTrajectory(pair.First, mustIntersect);
-                var secondTrajectory = GetTrajectory(pair.Second, mustIntersect);
+                var firstTrajectory = GetTrajectory(pair.first, mustIntersect);
+                var secondTrajectory = GetTrajectory(pair.second, mustIntersect);
 
                 var intersect = Intersection.CalculateSingle(firstTrajectory, secondTrajectory);
                 if (intersect.isIntersect)
@@ -42,7 +42,7 @@ namespace IMT.Utilities
             }
         }
 
-        public float this[MarkingLine line] => pair.First == line ? FirstT : (pair.Second == line ? SecondT : -1);
+        public float this[MarkingLine line] => pair.first == line ? FirstT : (pair.second == line ? SecondT : -1);
     }
 
     public class MarkupIntersectComparer : IComparer<Intersection>

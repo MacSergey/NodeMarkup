@@ -105,7 +105,7 @@ namespace IMT.Manager
             probabilityProperty.CanCollapse = canCollapse;
             probabilityProperty.Init();
             probabilityProperty.Value = Probability;
-            probabilityProperty.OnValueChanged += (int value) => Probability.Value = value;
+            probabilityProperty.OnValueChanged += (value) => Probability.Value = value;
 
             return probabilityProperty;
         }
@@ -128,7 +128,7 @@ namespace IMT.Manager
             else
                 stepProperty.SetAuto();
 
-            stepProperty.OnValueChanged += (float value) => Step.Value = value;
+            stepProperty.OnValueChanged += (value) => Step.Value = value;
             stepProperty.OnAutoValue += () =>
             {
                 Step.Value = null;
@@ -157,7 +157,7 @@ namespace IMT.Manager
             angleProperty.CanCollapse = canCollapse;
             angleProperty.Init();
             angleProperty.SetValues(Angle.Value.x, Angle.Value.y);
-            angleProperty.OnValueChanged += (float valueA, float valueB) => Angle.Value = new Vector2(valueA, valueB);
+            angleProperty.OnValueChanged += (valueA, valueB) => Angle.Value = new Vector2(valueA, valueB);
 
             return angleProperty;
         }
@@ -179,7 +179,7 @@ namespace IMT.Manager
             tiltProperty.CanCollapse = canCollapse;
             tiltProperty.Init();
             tiltProperty.SetValues(Tilt.Value.x, Tilt.Value.y);
-            tiltProperty.OnValueChanged += (float valueA, float valueB) => Tilt.Value = new Vector2(valueA, valueB);
+            tiltProperty.OnValueChanged += (valueA, valueB) => Tilt.Value = new Vector2(valueA, valueB);
 
             return tiltProperty;
         }
@@ -206,7 +206,7 @@ namespace IMT.Manager
             else
                 slopeProperty.SetAuto();
 
-            slopeProperty.OnValueChanged += (float valueA, float valueB) => Slope.Value = new Vector2(valueA, valueB);
+            slopeProperty.OnValueChanged += (valueA, valueB) => Slope.Value = new Vector2(valueA, valueB);
             slopeProperty.OnAutoValue += () => Slope.Value = null;
 
             return slopeProperty;
@@ -229,7 +229,7 @@ namespace IMT.Manager
             shiftProperty.CanCollapse = canCollapse;
             shiftProperty.Init();
             shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
-            shiftProperty.OnValueChanged += (float valueA, float valueB) => Shift.Value = new Vector2(valueA, valueB);
+            shiftProperty.OnValueChanged += (valueA, valueB) => Shift.Value = new Vector2(valueA, valueB);
 
             return shiftProperty;
         }
@@ -251,7 +251,7 @@ namespace IMT.Manager
             scaleProperty.CanCollapse = canCollapse;
             scaleProperty.Init();
             scaleProperty.SetValues(Scale.Value.x * 100f, Scale.Value.y * 100f);
-            scaleProperty.OnValueChanged += (float valueA, float valueB) => Scale.Value = new Vector2(valueA, valueB) * 0.01f;
+            scaleProperty.OnValueChanged += (valueA, valueB) => Scale.Value = new Vector2(valueA, valueB) * 0.01f;
 
             return scaleProperty;
         }
@@ -273,7 +273,7 @@ namespace IMT.Manager
             elevationProperty.CanCollapse = canCollapse;
             elevationProperty.Init();
             elevationProperty.SetValues(Elevation.Value.x, Elevation.Value.y);
-            elevationProperty.OnValueChanged += (float valueA, float valueB) => Elevation.Value = new Vector2(valueA, valueB);
+            elevationProperty.OnValueChanged += (valueA, valueB) => Elevation.Value = new Vector2(valueA, valueB);
 
             return elevationProperty;
         }
@@ -292,7 +292,7 @@ namespace IMT.Manager
             offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init(0, 1);
             offsetProperty.Value = new Vector2(OffsetBefore, OffsetAfter);
-            offsetProperty.OnValueChanged += (Vector2 value) =>
+            offsetProperty.OnValueChanged += (value) =>
             {
                 OffsetBefore.Value = value.x;
                 OffsetAfter.Value = value.y;
@@ -310,7 +310,7 @@ namespace IMT.Manager
             distributionProperty.CanCollapse = canCollapse;
             distributionProperty.Init();
             distributionProperty.SelectedObject = Distribution;
-            distributionProperty.OnSelectObjectChanged += (DistributionType value) => Distribution.Value = value;
+            distributionProperty.OnSelectObjectChanged += (value) => Distribution.Value = value;
 
             return distributionProperty;
         }
@@ -389,10 +389,10 @@ namespace IMT.Manager
             }
         }
 
-        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod)
+        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             if (Prefab.Value is not PrefabType prefab)
-                return new MarkingPartGroupData(lod);
+                return;
 
             var shift = (Shift.Value.x + Shift.Value.y) * 0.5f;
 
@@ -403,7 +403,7 @@ namespace IMT.Manager
 
             var length = trajectory.Length;
             if (OffsetBefore + OffsetAfter >= length)
-                return new MarkingPartGroupData(lod);
+                return;
 
             var startT = OffsetBefore == 0f ? 0f : trajectory.Travel(OffsetBefore);
             var endT = OffsetAfter == 0f ? 1f : 1f - trajectory.Invert().Travel(OffsetAfter);
@@ -460,7 +460,7 @@ namespace IMT.Manager
                         break;
                     }
                 default:
-                    return new MarkingPartGroupData(lod);
+                    return;
             }
 
             for (int i = 0; i < count; i += 1)
@@ -480,7 +480,7 @@ namespace IMT.Manager
                 CalculateItem(trajectory, t, prefab, ref items[i + startIndex]);
             }
 
-            return GetParts(prefab, items);
+            CalculateParts(prefab, items, lod, addData);
         }
         private void CalculateItem(ITrajectory trajectory, float t, PrefabType prefab, ref MarkingPropItemData item)
         {
@@ -526,7 +526,7 @@ namespace IMT.Manager
             CalculateItem(prefab, ref item);
         }
         protected virtual void CalculateItem(PrefabType prefab, ref MarkingPropItemData item) { }
-        protected abstract IStyleData GetParts(PrefabType prefab, MarkingPropItemData[] items);
+        protected abstract void CalculateParts(PrefabType prefab, MarkingPropItemData[] items, MarkingLOD lod, Action<IStyleData> addData);
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {
@@ -542,7 +542,7 @@ namespace IMT.Manager
             prefabProperty.CanCollapse = canCollapse;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
-            prefabProperty.OnValueChanged += (PrefabType value) =>
+            prefabProperty.OnValueChanged += (value) =>
             {
                 Prefab.Value = value;
                 PrefabChanged(parent, IsValid);
@@ -603,245 +603,6 @@ namespace IMT.Manager
             base.FromXml(config, map, invert, typeChanged);
             Prefab.FromXml(config, null);
         }
-    }
-    public class PropLineStyle : BaseObjectLineStyle<PropInfo, SelectPropProperty>
-    {
-        public static new Color32 DefaultColor => new Color32();
-        public static ColorOptionEnum DefaultColorOption => ColorOptionEnum.Random;
-
-        public override StyleType Type => StyleType.LineProp;
-        public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
-        protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
-        protected override string AssetPropertyName => Localize.StyleOption_AssetProp;
-
-        public override bool CanElevate => Prefab.Value is PropInfo prop && !prop.m_isDecal;
-        public override bool CanSlope => Prefab.Value is PropInfo prop && !prop.m_isDecal;
-
-        PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
-
-        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
-        private static IEnumerable<string> PropertyIndicesList
-        {
-            get
-            {
-                yield return nameof(Prefab);
-                yield return nameof(ColorOption);
-                yield return nameof(Color);
-                yield return nameof(Distribution);
-                yield return nameof(Probability);
-                yield return nameof(Step);
-                yield return nameof(Angle);
-                yield return nameof(Tilt);
-                yield return nameof(Slope);
-                yield return nameof(Shift);
-                yield return nameof(Elevation);
-                yield return nameof(Scale);
-                yield return nameof(Offset);
-            }
-        }
-        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<PropInfo>(nameof(Prefab), Prefab);
-                yield return new StylePropertyDataProvider<ColorOptionEnum>(nameof(ColorOption), ColorOption);
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<DistributionType>(nameof(Distribution), Distribution);
-                yield return new StylePropertyDataProvider<int>(nameof(Probability), Probability);
-                yield return new StylePropertyDataProvider<float?>(nameof(Step), Step);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Angle), Angle);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Tilt), Tilt);
-                yield return new StylePropertyDataProvider<Vector2?>(nameof(Slope), Slope);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Shift), Shift);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Elevation), Elevation);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Scale), Scale);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-            }
-        }
-
-        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution)
-        {
-            Color.Value = color;
-            ColorOption = new PropertyEnumValue<ColorOptionEnum>("CO", StyleChanged, colorOption);
-        }
-
-        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution);
-
-        protected override void CalculateItem(PropInfo prop, ref MarkingPropItemData item)
-        {
-            switch (ColorOption.Value)
-            {
-                case ColorOptionEnum.Color1:
-                    item.Color = prop.m_color0;
-                    break;
-                case ColorOptionEnum.Color2:
-                    item.Color = prop.m_color1;
-                    break;
-                case ColorOptionEnum.Color3:
-                    item.Color = prop.m_color2;
-                    break;
-                case ColorOptionEnum.Color4:
-                    item.Color = prop.m_color3;
-                    break;
-                case ColorOptionEnum.Random:
-                    item.Color = prop.GetColor(ref SimulationManager.instance.m_randomizer);
-                    break;
-                case ColorOptionEnum.Custom:
-                    item.Color = Color;
-                    break;
-            }
-        }
-        protected override IStyleData GetParts(PropInfo prop, MarkingPropItemData[] items)
-        {
-            return new MarkingPropData(prop, items);
-        }
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
-        {
-            components.Add(AddColorOptionProperty(parent, true));
-            components.Add(AddColorProperty(parent, true));
-            base.GetUIComponents(line, components, parent, isTemplate);
-        }
-        protected override void PrefabChanged(UIComponent parent, bool valid)
-        {
-            base.PrefabChanged(parent, valid);
-
-            if (parent.Find(nameof(ColorOption)) is EditorPropertyPanel colorOption)
-                colorOption.IsHidden = !valid;
-
-            ColorOptionChanged(parent, valid, ColorOption);
-        }
-        protected void ColorOptionChanged(UIComponent parent, bool valid, ColorOptionEnum value)
-        {
-            if (parent.Find(nameof(Color)) is EditorPropertyPanel color)
-                color.IsHidden = !valid || !(value == ColorOptionEnum.Custom);
-        }
-
-        protected PropColorPropertyPanel AddColorOptionProperty(UIComponent parent, bool canCollapse)
-        {
-            var colorOptionProperty = ComponentPool.Get<PropColorPropertyPanel>(parent, nameof(ColorOption));
-            colorOptionProperty.Text = Localize.StyleOption_ColorOption;
-            colorOptionProperty.UseWheel = true;
-            colorOptionProperty.CanCollapse = canCollapse;
-            colorOptionProperty.Init();
-            colorOptionProperty.SelectedObject = ColorOption;
-            colorOptionProperty.OnSelectObjectChanged += (value) =>
-            {
-                ColorOption.Value = value;
-                ColorOptionChanged(parent, IsValid, value);
-            };
-            return colorOptionProperty;
-        }
-        protected ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent, bool canCollapse)
-        {
-            var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(Color));
-            colorProperty.Text = Localize.StyleOption_Color;
-            colorProperty.WheelTip = Settings.ShowToolTip;
-            colorProperty.CanCollapse = canCollapse;
-            colorProperty.Init(GetDefault()?.Color);
-            colorProperty.Value = Color;
-            colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
-
-            return colorProperty;
-        }
-
-        protected override bool IsValidPrefab(PropInfo info) => info != null && !info.m_isMarker;
-        protected override Func<PropInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
-
-        public override XElement ToXml()
-        {
-            var config = base.ToXml();
-            ColorOption.ToXml(config);
-            return config;
-        }
-        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
-        {
-            base.FromXml(config, map, invert, typeChanged);
-            ColorOption.FromXml(config, DefaultColorOption);
-        }
-
-        public enum ColorOptionEnum
-        {
-            [Description(nameof(Localize.StyleOption_Color1))]
-            Color1,
-
-            [Description(nameof(Localize.StyleOption_Color2))]
-            Color2,
-
-            [Description(nameof(Localize.StyleOption_Color3))]
-            Color3,
-
-            [Description(nameof(Localize.StyleOption_Color4))]
-            Color4,
-
-            [Description(nameof(Localize.StyleOption_ColorRandom))]
-            Random,
-
-            [Description(nameof(Localize.StyleOption_ColorCustom))]
-            Custom,
-        }
-    }
-
-    public class TreeLineStyle : BaseObjectLineStyle<TreeInfo, SelectTreeProperty>
-    {
-        public override StyleType Type => StyleType.LineTree;
-        public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
-        protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
-        protected override string AssetPropertyName => Localize.StyleOption_AssetTree;
-        public override bool CanSlope => true;
-        public override bool CanElevate => true;
-
-        private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
-        private static IEnumerable<string> PropertyIndicesList
-        {
-            get
-            {
-                yield return nameof(Prefab);
-                yield return nameof(Distribution);
-                yield return nameof(Probability);
-                yield return nameof(Step);
-                yield return nameof(Angle);
-                yield return nameof(Tilt);
-                yield return nameof(Slope);
-                yield return nameof(Shift);
-                yield return nameof(Elevation);
-                yield return nameof(Scale);
-                yield return nameof(Offset);
-            }
-        }
-        public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
-        public override IEnumerable<IStylePropertyData> Properties
-        {
-            get
-            {
-                yield return new StylePropertyDataProvider<TreeInfo>(nameof(Prefab), Prefab);
-                yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<DistributionType>(nameof(Distribution), Distribution);
-                yield return new StylePropertyDataProvider<int>(nameof(Probability), Probability);
-                yield return new StylePropertyDataProvider<float?>(nameof(Step), Step);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Angle), Angle);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Tilt), Tilt);
-                yield return new StylePropertyDataProvider<Vector2?>(nameof(Slope), Slope);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Shift), Shift);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Elevation), Elevation);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Scale), Scale);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
-                yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-            }
-        }
-
-        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution) { }
-
-        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution);
-
-        protected override IStyleData GetParts(TreeInfo tree, MarkingPropItemData[] items)
-        {
-            return new MarkingTreeData(tree, items);
-        }
-
-        protected override bool IsValidPrefab(TreeInfo info) => info != null;
-        protected override Func<TreeInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
     }
 
     public enum DistributionType

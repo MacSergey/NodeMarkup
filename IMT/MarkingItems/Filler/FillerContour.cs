@@ -278,11 +278,11 @@ namespace IMT.Manager
         }
         static LineEndFillerVertex FixVertex(EnterFillerVertexBase enterVertex, IntersectFillerVertex intersectVertex)
         {
-            if (intersectVertex.LinePair.First.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.First.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
-                return FixVertexByLine(enterVertex, intersectVertex.LinePair.First as MarkingRegularLine);
+            if (intersectVertex.LinePair.first.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.first.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
+                return FixVertexByLine(enterVertex, intersectVertex.LinePair.first as MarkingRegularLine);
 
-            else if (intersectVertex.LinePair.Second.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.Second.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
-                return FixVertexByLine(enterVertex, intersectVertex.LinePair.Second as MarkingRegularLine);
+            else if (intersectVertex.LinePair.second.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.second.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
+                return FixVertexByLine(enterVertex, intersectVertex.LinePair.second as MarkingRegularLine);
 
             else
                 return FixVertexByLine(enterVertex, intersectVertex.LinePair.GetLine(enterVertex.Point) as MarkingRegularLine);

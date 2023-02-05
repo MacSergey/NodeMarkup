@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.Manager;
 using IMT.UI;
 using IMT.Utilities;
 using IMT.Utilities.API;
@@ -15,7 +16,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class RegularLineStyleText : RegularLineStyle, IColorStyle
+    public class RegularLineStyleText : RegularLineStyle, IColorStyle, IEffectStyle
     {
         private static Dictionary<TextureId, TextureData> TextTextures { get; } = new Dictionary<TextureId, TextureData>(TextureComparer.Instance);
         private static Dictionary<TextureId, int> TextTextureCount { get; } = new Dictionary<TextureId, int>();
@@ -56,6 +57,9 @@ namespace IMT.Manager
                 yield return nameof(Alignment);
                 yield return nameof(Shift);
                 yield return nameof(Angle);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
 #if DEBUG
                 yield return nameof(Ratio);
 #endif
@@ -78,7 +82,7 @@ namespace IMT.Manager
             }
         }
 
-        public RegularLineStyleText(Color32 color, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing, TextAlignment alignment) : base(color, default)
+        public RegularLineStyleText(Color32 color, Vector2 cracks, Vector2 voids, float texture, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing, TextAlignment alignment) : base(color, default, cracks, voids, texture)
         {
             Text = new PropertyStringValue("TX", StyleChanged, text);
             Font = new PropertyStringValue("F", StyleChanged, font);
@@ -145,12 +149,12 @@ namespace IMT.Manager
             }
         }
 
-        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Font, Text, Scale, Angle, Shift, Direction, Spacing, Alignment);
+        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Cracks, Voids, Texture, Font, Text, Scale, Angle, Shift, Direction, Spacing, Alignment);
 
-        protected override IStyleData CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod)
+        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             if (string.IsNullOrEmpty(Text))
-                return new MarkingPartGroupData(lod);
+                return;
 
             var text = Text.Value;
             if (Direction == TextDirection.TopToBottom)
@@ -202,7 +206,7 @@ namespace IMT.Manager
             var data = new MarkingPartData(position, angle, width, height, Color, material);
 
             var groupData = new MarkingPartGroupData(lod, new MarkingPartData[] { data });
-            return groupData;
+            addData(groupData);
         }
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
@@ -227,7 +231,7 @@ namespace IMT.Manager
             fontProperty.CanCollapse = canCollapse;
             fontProperty.Init();
             fontProperty.Font = string.IsNullOrEmpty(Font.Value) ? null : Font.Value;
-            fontProperty.OnValueChanged += (string value) => Font.Value = value;
+            fontProperty.OnValueChanged += (value) => Font.Value = value;
             return fontProperty;
         }
         protected StringPropertyPanel AddTextProperty(UIComponent parent, bool canCollapse)
@@ -238,7 +242,7 @@ namespace IMT.Manager
             textProperty.CanCollapse = canCollapse;
             textProperty.Init();
             textProperty.Value = Text;
-            textProperty.OnValueChanged += (string value) => Text.Value = value;
+            textProperty.OnValueChanged += (value) => Text.Value = value;
 
             return textProperty;
         }
@@ -256,7 +260,7 @@ namespace IMT.Manager
             sizeProperty.CanCollapse = canCollapse;
             sizeProperty.Init();
             sizeProperty.Value = Scale;
-            sizeProperty.OnValueChanged += (float value) => Scale.Value = value;
+            sizeProperty.OnValueChanged += (value) => Scale.Value = value;
 
             return sizeProperty;
         }
@@ -276,7 +280,7 @@ namespace IMT.Manager
             angleProperty.CanCollapse = canCollapse;
             angleProperty.Init();
             angleProperty.Value = Angle;
-            angleProperty.OnValueChanged += (float value) => Angle.Value = value;
+            angleProperty.OnValueChanged += (value) => Angle.Value = value;
 
             return angleProperty;
         }
@@ -296,7 +300,7 @@ namespace IMT.Manager
             shiftProperty.CanCollapse = canCollapse;
             shiftProperty.Init();
             shiftProperty.Value = Shift;
-            shiftProperty.OnValueChanged += (float value) => Shift.Value = value;
+            shiftProperty.OnValueChanged += (value) => Shift.Value = value;
 
             return shiftProperty;
         }
@@ -340,7 +344,7 @@ namespace IMT.Manager
             spacingProperty.FieldsWidth = 50f;
             spacingProperty.Init(0, 1);
             spacingProperty.Value = Spacing;
-            spacingProperty.OnValueChanged += (Vector2 value) => Spacing.Value = value;
+            spacingProperty.OnValueChanged += (value) => Spacing.Value = value;
 
             return spacingProperty;
         }
@@ -359,7 +363,7 @@ namespace IMT.Manager
             sizeProperty.CanCollapse = canCollapse;
             sizeProperty.Init();
             sizeProperty.Value = Ratio;
-            sizeProperty.OnValueChanged += (float value) => Ratio.Value = value;
+            sizeProperty.OnValueChanged += (value) => Ratio.Value = value;
 
             return sizeProperty;
         }

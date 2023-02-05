@@ -1,5 +1,4 @@
 ﻿using ColossalFramework.Math;
-using IMT.MarkingItems.Crosswalk.Styles.Base;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
