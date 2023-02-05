@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using static ColossalFramework.UI.UIDynamicFont;
@@ -35,17 +36,6 @@ namespace IMT.Utilities
                 DefaultFont.size = DefaultFont.baseFont.fontSize;
                 DefaultFont.baseline = 18;
                 DefaultFont.lineHeight = 22;
-
-                //var baseFont = new Font(font.name);
-                //baseFont.fontNames = font.baseFont.fontNames;
-                //baseFont.material = new Material(Shader.Find("UI/Dynamic Font Shader"));
-                //baseFont.material.renderQueue = 4000;
-                //baseFont.material.name = "IMT font";
-                //baseFont.material.mainTexture = TextureHelper.CreateTexture(256, 256, new Color(0, 0, 0, 0));
-                //DefaultFont = ScriptableObject.CreateInstance<UIDynamicFont>();
-                //DefaultFont.baseFont = baseFont;
-                //DefaultFont.baseline = font.baseline;
-
             }
             public TextRenderer(string fontName)
             {
@@ -113,6 +103,10 @@ namespace IMT.Utilities
                 }
 
                 texture.Apply();
+//#if DEBUG
+//                var data = texture.EncodeToPNG();
+//                File.WriteAllBytes(@"C:\Users\MacSergey\OneDrive\Рабочий стол\Text.PNG", data);
+//#endif
                 return texture;
             }
             private void RenderLine(Texture2D texture, Vector2 position, LineToken line, List<Token> tokens, Texture2D fontTexture)

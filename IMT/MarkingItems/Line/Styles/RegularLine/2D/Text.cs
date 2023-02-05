@@ -20,7 +20,7 @@ namespace IMT.Manager
     {
         private static Dictionary<TextureId, TextureData> TextTextures { get; } = new Dictionary<TextureId, TextureData>(TextureComparer.Instance);
         private static Dictionary<TextureId, int> TextTextureCount { get; } = new Dictionary<TextureId, int>();
-        private static Dictionary<int, Texture2D> MainTextures { get; } = new Dictionary<int, Texture2D>();
+        //private static Dictionary<int, Texture2D> MainTextures { get; } = new Dictionary<int, Texture2D>();
 
         public override StyleType Type => StyleType.LineText;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -162,29 +162,20 @@ namespace IMT.Manager
             else if (Direction == TextDirection.BottomToTop)
                 text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
-            var aciTextureId = new TextureId(Font, text, lod == MarkingLOD.LOD0 ? Scale : Scale * 0.2f, Spacing);
-            if (!TextTextures.TryGetValue(aciTextureId, out var textureData))
+            var textureId = new TextureId(Font, text, lod == MarkingLOD.LOD0 ? Scale : Scale * 0.2f, Spacing);
+            if (!TextTextures.TryGetValue(textureId, out var textureData))
             {
-                var textTexture = RenderHelper.CreateTextTexture(aciTextureId.font, aciTextureId.text, aciTextureId.scale, aciTextureId.spacing, out var textWidth, out var textHeight);
+                var textTexture = RenderHelper.CreateTextTexture(textureId.font, textureId.text, textureId.scale, textureId.spacing, out var textWidth, out var textHeight);
                 textureData = new TextureData(textTexture, textWidth, textHeight);
-                TextTextures[aciTextureId] = textureData;
+                TextTextures[textureId] = textureData;
             }
 
-            if (!TextureComparer.Instance.Equals(aciTextureId, PrevTextureId))
+            if (!TextureComparer.Instance.Equals(textureId, PrevTextureId))
             {
                 RemoveTexture(PrevTextureId);
-                AddTexture(aciTextureId);
-                PrevTextureId = aciTextureId;
+                AddTexture(textureId);
+                PrevTextureId = textureId;
             }
-
-            var mainTextureId = (textureData.texture.height << 16) + textureData.texture.width;
-            if (!MainTextures.TryGetValue(mainTextureId, out var mainTexture))
-            {
-                mainTexture = TextureHelper.CreateTexture(textureData.texture.width, textureData.texture.height, UnityEngine.Color.white);
-                MainTextures[mainTextureId] = mainTexture;
-            }
-
-            Material material = RenderHelper.CreateDecalMaterial(mainTexture, textureData.texture);
 
             var ratio = lod == MarkingLOD.LOD0 ? Ratio : Ratio * 5f;
             var offset = 0.5f * (textureData.width * ratio * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * Angle)) + textureData.height * ratio * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * Angle)));
@@ -203,10 +194,9 @@ namespace IMT.Manager
             var angle = direction.AbsoluteAngle() + (Angle.Value + (line.Marking.Type == MarkingType.Node ? -90 : 90)) * Mathf.Deg2Rad;
             var width = textureData.texture.width * ratio;
             var height = textureData.texture.height * ratio;
-            var data = new MarkingPartData(position, angle, width, height, Color, material);
 
-            var groupData = new MarkingPartGroupData(lod, new MarkingPartData[] { data });
-            addData(groupData);
+            var data = new DecalData(lod, null, textureData.texture, position, angle, Color, new Vector3(width, 0f, height), Vector2.one, CracksDensity, CracksTiling, VoidDensity, VoidTiling, Texture);
+            addData(data);
         }
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)

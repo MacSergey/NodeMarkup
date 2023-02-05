@@ -10,6 +10,8 @@ namespace IMT.Utilities
 {
     public readonly struct DecalData : IStyleData, IDrawData
     {
+        private static int mainTexId = Shader.PropertyToID("_MainTex");
+        private static int alphaTexId = Shader.PropertyToID("_Alpha");
         private static int colorId = Shader.PropertyToID("_Color");
         private static int sizeId = Shader.PropertyToID("_Size");
         private static int tilingId = Shader.PropertyToID("_Tiling");
@@ -24,7 +26,10 @@ namespace IMT.Utilities
         public MarkingLOD LOD { get; }
         public MarkingLODType LODType => MarkingLODType.Dash;
 
+        private readonly Texture2D mainTexture;
+        private readonly Texture2D alphaTexture;
         private readonly Vector3 position;
+        private readonly Quaternion rotation;
         private readonly Color color;
         private readonly Vector4 size;
         private readonly Vector4 tiling;
@@ -35,10 +40,13 @@ namespace IMT.Utilities
         private readonly Vector4 voidTiling;
         private readonly float texture;
 
-        public DecalData(MarkingLOD lod, Vector3 position, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
+        public DecalData(MarkingLOD lod, Texture2D mainTexture, Texture2D alphaTexture, Vector3 position, float angle, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
         {
             LOD = lod;
+            this.mainTexture = mainTexture;
+            this.alphaTexture = alphaTexture;
             this.position = position;
+            this.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down);
             this.color = color.ToX3Vector();
             size.y = 5f;
             this.size = size;
@@ -59,6 +67,10 @@ namespace IMT.Utilities
                 else
                     this.points[i / 2] += new Vector4(0f, 0f, point.x, point.y);
             }
+        }
+        public DecalData(MarkingLOD lod, Vector3 position, float angle, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
+        {
+            this = new DecalData(lod, null, null, position, angle, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, points);
         }
         public DecalData(MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
         {
@@ -83,7 +95,7 @@ namespace IMT.Utilities
                 pointUVs[i] = new Vector2(x, y);
             }
 
-            this = new DecalData(lod, position, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
+            this = new DecalData(lod, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
         public DecalData(MarkingLOD lod, Area area, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
         {
@@ -101,7 +113,7 @@ namespace IMT.Utilities
                 pointUVs[i] = new Vector2(x, y);
             }
 
-            this = new DecalData(lod, position, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
+            this = new DecalData(lod, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
         public IEnumerable<IDrawData> GetDrawData() { yield return this; }
 
@@ -148,17 +160,25 @@ namespace IMT.Utilities
             materialBlock.Clear();
             var material = RenderHelper.GetMaterial(points.Length * 2);
 
+            if (mainTexture != null)
+                materialBlock.SetTexture(mainTexId, mainTexture);
+
+            if (alphaTexture != null)
+                materialBlock.SetTexture(alphaTexId, alphaTexture);
+
+            if(points != null && points.Length > 0)
+                materialBlock.SetVectorArray(pointsId, points);
+
             materialBlock.SetVector(colorId, color);
             materialBlock.SetVector(sizeId, size);
             materialBlock.SetVector(tilingId, tiling);
-            materialBlock.SetVectorArray(pointsId, points);
             materialBlock.SetFloat(cracksDensityId, cracksDensity);
             materialBlock.SetVector(cracksTilingId, cracksTiling);
             materialBlock.SetFloat(voidDensityId, voidDensity);
             materialBlock.SetVector(voidTilingId, voidTiling);
             materialBlock.SetFloat(textureDensityId, texture);
 
-            Graphics.DrawMesh(RenderHelper.DecalMesh, position, Quaternion.identity, material, RenderHelper.RoadLayer, null, 0, materialBlock);
+            Graphics.DrawMesh(RenderHelper.DecalMesh, position, rotation, material, RenderHelper.RoadLayer, null, 0, materialBlock);
         }
     }
 }

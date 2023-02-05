@@ -226,7 +226,7 @@ namespace IMT.Manager
         }
         private Vector2PropertyPanel GetVoids(UIComponent parent, bool canCollapse)
         {
-            var voidProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Cracks));
+            var voidProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Voids));
             voidProperty.Text = Localize.StyleOption_Voids;
             voidProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
             voidProperty.Format = Localize.NumberFormat_Percent;
