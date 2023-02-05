@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class SharkTeethLineStyle : RegularLineStyle, IColorStyle, IAsymLine, ISharkLine
+    public class SharkTeethLineStyle : RegularLineStyle, IColorStyle, IAsymLine, ISharkLine, IEffectStyle
     {
         public override StyleType Type => StyleType.LineSharkTeeth;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -34,6 +34,9 @@ namespace IMT.Manager
                 yield return nameof(Space);
                 yield return nameof(Angle);
                 yield return nameof(Invert);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -51,7 +54,7 @@ namespace IMT.Manager
             }
         }
 
-        public SharkTeethLineStyle(Color32 color, float baseValue, float height, float space, float angle) : base(color, 0)
+        public SharkTeethLineStyle(Color32 color, Vector2 cracks, Vector2 voids, float texture, float baseValue, float height, float space, float angle) : base(color, 0f, cracks, voids, texture)
         {
             Base = GetBaseProperty(baseValue);
             Height = GetHeightProperty(height);
@@ -65,21 +68,21 @@ namespace IMT.Manager
             {
                 var borders = line.Borders;
                 var ratio = Mathf.Cos(Angle * Mathf.Deg2Rad);
-                addData(new MarkingPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, Base / ratio, Space / ratio, CalculateDashes)));
-
-                IEnumerable<MarkingPartData> CalculateDashes(ITrajectory trajectory, float startT, float endT)
+                var parts = StyleHelper.CalculateDashed(trajectory, Base / ratio, Space / ratio);
+                var offset = Height / (Invert ? 2 : -2);
+                foreach (var part in parts)
                 {
-                    if (StyleHelper.CalculateDashedParts(borders, trajectory, Invert ? endT : startT, Invert ? startT : endT, Base, Height / (Invert ? 2 : -2), Height, Color, out MarkingPartData dash))
+                    StyleHelper.GetPartParams(trajectory, Invert ? part.Invert : part, offset, out var pos, out var dir);
+                    if (StyleHelper.CheckBorders(borders, pos, dir, Base, Height))
                     {
-                        dash.Material = RenderHelper.MaterialLib[MaterialType.Triangle];
-                        dash.Angle -= Angle * Mathf.Deg2Rad;
-                        yield return dash;
+                        var data = new DecalData(this, MaterialType.Triangle, lod, pos, dir, Base, Height, Color);
+                        addData(data);
                     }
                 }
             }
         }
 
-        public override RegularLineStyle CopyLineStyle() => new SharkTeethLineStyle(Color, Base, Height, Space, Angle);
+        public override RegularLineStyle CopyLineStyle() => new SharkTeethLineStyle(Color, Cracks, Voids, Texture, Base, Height, Space, Angle);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);

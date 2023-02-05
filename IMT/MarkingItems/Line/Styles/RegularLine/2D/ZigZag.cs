@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class ZigZagLineStyle : RegularLineStyle, IRegularLine
+    public class ZigZagLineStyle : RegularLineStyle, IRegularLine, IEffectStyle
     {
         public override StyleType Type => StyleType.LineZigZag;
 
@@ -28,6 +28,9 @@ namespace IMT.Manager
                 yield return nameof(Offset);
                 yield return nameof(Side);
                 yield return nameof(StartFrom);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -49,7 +52,7 @@ namespace IMT.Manager
         public PropertyBoolValue Side { get; }
         public PropertyBoolValue StartFrom { get; }
 
-        public ZigZagLineStyle(Color32 color, float width, float step, float offset, bool side, bool startFrom) : base(color, width)
+        public ZigZagLineStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float step, float offset, bool side, bool startFrom) : base(color, width, cracks, voids, texture)
         {
             Step = new PropertyStructValue<float>("S", StyleChanged, step);
             Offset = new PropertyStructValue<float>("O", StyleChanged, offset);
@@ -57,7 +60,7 @@ namespace IMT.Manager
             StartFrom = new PropertyBoolValue("SF", StyleChanged, startFrom);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new ZigZagLineStyle(Color, Width, Step, Offset, Side, StartFrom);
+        public override RegularLineStyle CopyLineStyle() => new ZigZagLineStyle(Color, Width, Cracks, Voids, Texture, Step, Offset, Side, StartFrom);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -76,8 +79,6 @@ namespace IMT.Manager
             var count = Mathf.FloorToInt(trajectory.Length / Step.Value);
             var startOffset = (trajectory.Length - Step.Value * count) * 0.5f;
 
-            var dashes = new MarkingPartData[StartFrom ? count * 2 : count * 2 + 2];
-
             for (int i = 0; i < count; i += 1)
             {
                 var startDistance = startOffset + Step.Value * i;
@@ -93,8 +94,8 @@ namespace IMT.Manager
                     var middlePos = trajectory.Position(middleT) + trajectory.Tangent(middleT).MakeFlatNormalized().Turn90(!Side) * Offset;
                     var endPos = trajectory.Position(endT);
 
-                    dashes[2 * i] = new MarkingPartData(startPos, middlePos, Width, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
-                    dashes[2 * i + 1] = new MarkingPartData(middlePos, endPos, Width, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
+                    addData(new DecalData(this, MaterialType.RectangleLines, lod, startPos, middlePos, Width, Color));
+                    addData(new DecalData(this, MaterialType.RectangleLines, lod, middlePos, endPos, Width, Color));
                 }
                 else
                 {
@@ -102,8 +103,8 @@ namespace IMT.Manager
                     var middlePos = trajectory.Position(middleT);
                     var endPos = trajectory.Position(endT) + trajectory.Tangent(endT).MakeFlatNormalized().Turn90(!Side) * Offset;
 
-                    dashes[2 * i] = new MarkingPartData(startPos, middlePos, Width, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
-                    dashes[2 * i + 1] = new MarkingPartData(middlePos, endPos, Width, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
+                    addData(new DecalData(this, MaterialType.RectangleLines, lod, startPos, middlePos, Width, Color));
+                    addData(new DecalData(this, MaterialType.RectangleLines, lod, middlePos, endPos, Width, Color));
                 }
             }
 
@@ -117,11 +118,10 @@ namespace IMT.Manager
                 var endPos = trajectory.Position(endT);
                 var endDir = trajectory.Tangent(endT).MakeFlatNormalized().Turn90(!Side);
 
-                dashes[count * 2] = new MarkingPartData(startPos, startPos + startDir * Offset, Width, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
-                dashes[count * 2 + 1] = new MarkingPartData(endPos, endPos + endDir * Offset, Width, Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
-            }
 
-            addData(new MarkingPartGroupData(lod, dashes));
+                addData(new DecalData(this, MaterialType.RectangleLines, lod, startPos, startPos + startDir * Offset, Width, Color));
+                addData(new DecalData(this, MaterialType.RectangleLines, lod, endPos, endPos + endDir * Offset, Width, Color));
+            }
         }
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)

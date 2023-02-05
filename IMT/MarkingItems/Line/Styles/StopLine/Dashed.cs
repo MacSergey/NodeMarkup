@@ -6,12 +6,13 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Xml.Linq;
 using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class DashedStopLineStyle : StopLineStyle, IStopLine, IDashedLine
+    public class DashedStopLineStyle : StopLineStyle, IStopLine, IDashedLine, IEffectStyle
     {
         public override StyleType Type { get; } = StyleType.StopLineDashed;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -27,6 +28,9 @@ namespace IMT.Manager
                 yield return nameof(Color);
                 yield return nameof(Width);
                 yield return nameof(Length);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -41,7 +45,7 @@ namespace IMT.Manager
             }
         }
 
-        public DashedStopLineStyle(Color32 color, float width, float dashLength, float spaceLength) : base(color, width)
+        public DashedStopLineStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float dashLength, float spaceLength) : base(color, width, cracks, voids, texture)
         {
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
@@ -52,16 +56,17 @@ namespace IMT.Manager
             if (CheckDashedLod(lod, Width, DashLength))
             {
                 var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
-                addData(new MarkingPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes)));
-
-                IEnumerable<MarkingPartData> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
+                var parts = StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength);
+                foreach (var part in parts)
                 {
-                    yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offset, offset, Width, Color);
+                    StyleHelper.GetPartParams(trajectory, part, offset, offset, out var pos, out var dir);
+                    var data = new DecalData(this, MaterialType.RectangleLines, lod, pos, dir, DashLength, Width, Color);
+                    addData(data);
                 }
             }
         }
 
-        public override StopLineStyle CopyLineStyle() => new DashedStopLineStyle(Color, Width, DashLength, SpaceLength);
+        public override StopLineStyle CopyLineStyle() => new DashedStopLineStyle(Color, Width, Cracks, Voids, Texture, DashLength, SpaceLength);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);

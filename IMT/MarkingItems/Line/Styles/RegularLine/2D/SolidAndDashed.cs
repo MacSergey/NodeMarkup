@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class SolidAndDashedLineStyle : RegularLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine, IDashedLine, IAsymLine
+    public class SolidAndDashedLineStyle : RegularLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine, IDashedLine, IAsymLine, IEffectStyle
     {
         public override StyleType Type => StyleType.LineSolidAndDashed;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -40,6 +40,9 @@ namespace IMT.Manager
                 yield return nameof(CenterSolid);
                 yield return nameof(Alignment);
                 yield return nameof(Invert);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -60,7 +63,7 @@ namespace IMT.Manager
             }
         }
 
-        public SolidAndDashedLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLength, float spaceLength, float offset) : base(color, width)
+        public SolidAndDashedLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float dashLength, float spaceLength, float offset) : base(color, width, cracks, voids, texture)
         {
             TwoColors = GetTwoColorsProperty(useSecondColor);
             SecondColor = GetSecondColorProperty(TwoColors ? secondColor : color);
@@ -84,27 +87,32 @@ namespace IMT.Manager
             var dashedOffset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
             var borders = line.Borders;
 
-            var dashes = new List<MarkingPartData>();
-
-            dashes.AddRange(StyleHelper.CalculateSolid(trajectory, lod, CalculateSolidDash));
-            if (CheckDashedLod(lod, Width, DashLength))
-                dashes.AddRange(StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashedDash));
-
-            addData(new MarkingPartGroupData(lod, dashes));
-
-            IEnumerable<MarkingPartData> CalculateSolidDash(ITrajectory lineTrajectory)
+            var solidParts = StyleHelper.CalculateSolid(trajectory, lod);
+            foreach (var part in solidParts)
             {
-                if (StyleHelper.CalculateSolidPart(borders, lineTrajectory, solidOffset, Width, Color, out MarkingPartData dash))
-                    yield return dash;
+                StyleHelper.GetPartParams(trajectory, part, solidOffset, out var startPos, out var endPos, out var dir);
+                if (StyleHelper.CheckBorders(borders, ref startPos, ref endPos, dir, Width))
+                {
+                    var data = new DecalData(this, MaterialType.RectangleLines, lod, startPos, endPos, Width, Color);
+                    addData(data);
+                }
             }
 
-            IEnumerable<MarkingPartData> CalculateDashedDash(ITrajectory lineTrajectory, float startT, float endT)
+            if (CheckDashedLod(lod, Width, DashLength))
             {
-                if (StyleHelper.CalculateDashedParts(borders, lineTrajectory, startT, endT, DashLength, dashedOffset, Width, TwoColors ? SecondColor : Color, out MarkingPartData dash))
-                    yield return dash;
+                var dashedParts = StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength);
+                foreach (var part in dashedParts)
+                {
+                    StyleHelper.GetPartParams(trajectory, part, dashedOffset, out var pos, out var dir);
+                    if (StyleHelper.CheckBorders(borders, pos, dir, DashLength, Width))
+                    {
+                        var data = new DecalData(this, MaterialType.RectangleLines, lod, pos, dir, DashLength, Width, TwoColors ? SecondColor : Color);
+                        addData(data);
+                    }
+                }
             }
         }
-        public override RegularLineStyle CopyLineStyle() => new SolidAndDashedLineStyle(Color, SecondColor, TwoColors, Width, DashLength, SpaceLength, Offset);
+        public override RegularLineStyle CopyLineStyle() => new SolidAndDashedLineStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, DashLength, SpaceLength, Offset);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);

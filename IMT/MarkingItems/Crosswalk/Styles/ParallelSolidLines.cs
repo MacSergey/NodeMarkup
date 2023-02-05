@@ -64,17 +64,22 @@ namespace IMT.Manager
             var firstTrajectory = crosswalk.GetTrajectory(middleOffset - deltaOffset);
             var secondTrajectory = crosswalk.GetTrajectory(middleOffset + deltaOffset);
 
-            var dashes = new List<MarkingPartData>();
 
-            foreach (var dash in StyleHelper.CalculateSolid(firstTrajectory, lod, CalculateDashes))
-                dashes.Add(dash);
+            var firstParts = StyleHelper.CalculateSolid(firstTrajectory, lod);
+            foreach (var part in firstParts)
+            {
+                StyleHelper.GetPartParams(firstTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out var dir);
+                var data = new DecalData(this, MaterialType.RectangleLines, lod, startPos, endPos, LineWidth, Color);
+                addData(data);
+            }
 
-            foreach (var dash in StyleHelper.CalculateSolid(secondTrajectory, lod, CalculateDashes))
-                dashes.Add(dash);
-
-            addData(new MarkingPartGroupData(lod, dashes));
-
-            MarkingPartData CalculateDashes(ITrajectory dashTrajectory) => StyleHelper.CalculateSolidPart(dashTrajectory, 0, LineWidth, Color);
+            var secondParts = StyleHelper.CalculateSolid(secondTrajectory, lod);
+            foreach (var part in secondParts)
+            {
+                StyleHelper.GetPartParams(secondTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out var dir);
+                var data = new DecalData(this, MaterialType.RectangleLines, lod, startPos, endPos, LineWidth, Color);
+                addData(data);
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class SolidLineStyle : RegularLineStyle, IRegularLine
+    public class SolidLineStyle : RegularLineStyle, IRegularLine, IEffectStyle
     {
         public override StyleType Type => StyleType.LineSolid;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -23,6 +23,9 @@ namespace IMT.Manager
             {
                 yield return nameof(Color);
                 yield return nameof(Width);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -35,21 +38,23 @@ namespace IMT.Manager
             }
         }
 
-        public SolidLineStyle(Color32 color, float width) : base(color, width) { }
+        public SolidLineStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture) : base(color, width, cracks, voids, texture) { }
 
-        public override RegularLineStyle CopyLineStyle() => new SolidLineStyle(Color, Width);
+        public override RegularLineStyle CopyLineStyle() => new SolidLineStyle(Color, Width, Cracks, Voids, Texture);
 
         protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             var borders = line.Borders;
-            addData(new MarkingPartGroupData(lod, StyleHelper.CalculateSolid(trajectory, lod, GetDashes)));
-
-            IEnumerable<MarkingPartData> GetDashes(ITrajectory trajectory) => CalculateDashes(trajectory, borders);
-        }
-        protected virtual IEnumerable<MarkingPartData> CalculateDashes(ITrajectory trajectory, LineBorders borders)
-        {
-            if (StyleHelper.CalculateSolidPart(borders, trajectory, 0f, Width, Color, out MarkingPartData dash))
-                yield return dash;
+            var parts = StyleHelper.CalculateSolid(trajectory, lod);
+            foreach (var part in parts)
+            {
+                StyleHelper.GetPartParams(trajectory, part, 0f, out var startPos, out var endPos, out var dir);
+                if(StyleHelper.CheckBorders(borders, ref startPos, ref endPos, dir, Width))
+                {
+                    var data = new DecalData(this, MaterialType.RectangleLines, lod, startPos, endPos, Width, Color);
+                    addData(data);
+                }
+            }
         }
     }
 }

@@ -113,7 +113,7 @@ namespace IMT.Manager
             foreach (var contour in cutContours)
             {
                 var trajectories = contour.Select(e => e.trajectory).ToArray();
-                var datas = DecalData.GetData(lod, trajectories, StyleHelper.MinAngle, StyleHelper.MinLength, StyleHelper.MaxLength, color, Vector2.one, CracksDensity, CracksTiling, VoidDensity, VoidTiling, Texture);
+                var datas = DecalData.GetData(this as IEffectStyle, lod, trajectories, StyleHelper.MinAngle, StyleHelper.MinLength, StyleHelper.MaxLength, color);
 
                 foreach (var data in datas)
                     addData(data);

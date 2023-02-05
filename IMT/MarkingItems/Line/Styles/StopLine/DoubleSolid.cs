@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class DoubleSolidStopLineStyle : SolidStopLineStyle, IStopLine, IDoubleLine
+    public class DoubleSolidStopLineStyle : SolidStopLineStyle, IStopLine, IDoubleLine, IEffectStyle
     {
         public override StyleType Type => StyleType.StopLineDoubleSolid;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -30,6 +30,9 @@ namespace IMT.Manager
                 yield return nameof(SecondColor);
                 yield return nameof(Width);
                 yield return nameof(Offset);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -45,7 +48,7 @@ namespace IMT.Manager
             }
         }
 
-        public DoubleSolidStopLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offset) : base(color, width)
+        public DoubleSolidStopLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offset) : base(color, width, cracks, voids, texture)
         {
             TwoColors = GetTwoColorsProperty(useSecondColor);
             SecondColor = GetSecondColorProperty(TwoColors ? secondColor : color);
@@ -57,16 +60,20 @@ namespace IMT.Manager
             var offsetLeft = offsetNormal * (Width / 2);
             var offsetRight = offsetNormal * (Width / 2 + 2 * Offset);
 
-            addData(new MarkingPartGroupData(lod, StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes)));
-
-            IEnumerable<MarkingPartData> CalculateDashes(ITrajectory dashTrajectory)
+            var parts = StyleHelper.CalculateSolid(trajectory, lod);
+            foreach (var part in parts)
             {
-                yield return StyleHelper.CalculateSolidPart(dashTrajectory, offsetLeft, offsetLeft, Width, Color);
-                yield return StyleHelper.CalculateSolidPart(dashTrajectory, offsetRight, offsetRight, Width, TwoColors ? SecondColor : Color);
+                StyleHelper.GetPartParams(trajectory, part, offsetLeft, offsetLeft, out var leftStartPos, out var leftEndPos, out var leftDir);
+                var left = new DecalData(this, MaterialType.RectangleLines, lod, leftStartPos, leftEndPos, Width, Color);
+                addData(left);
+
+                StyleHelper.GetPartParams(trajectory, part, offsetRight, offsetRight, out var rightStartPos, out var rightEndPos, out var rightDir);
+                var right = new DecalData(this, MaterialType.RectangleLines, lod, rightStartPos, rightEndPos, Width, TwoColors ? SecondColor : Color);
+                addData(right);
             }
         }
 
-        public override StopLineStyle CopyLineStyle() => new DoubleSolidStopLineStyle(Color, SecondColor, TwoColors, Width, Offset);
+        public override StopLineStyle CopyLineStyle() => new DoubleSolidStopLineStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, Offset);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);

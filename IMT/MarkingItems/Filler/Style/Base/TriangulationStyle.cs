@@ -65,7 +65,7 @@ namespace IMT.Manager
                     //if ((Settings.ShowFillerTriangulation & 2) != 0)
                     //    yield return GetTriangulationLines(topPoints, topTriangles, UnityEngine.Color.red, MaterialType.RectangleFillers);
                     if ((Settings.ShowFillerTriangulation & 1) != 0)
-                        addData(GetTriangulationLines(points, triangles, UnityEngine.Color.green, MaterialType.RectangleLines));
+                        GetTriangulationLines(points, triangles, UnityEngine.Color.green, MaterialType.RectangleLines, addData);
 #endif
                 }
             }
@@ -89,32 +89,42 @@ namespace IMT.Manager
         }
         private List<List<ITrajectory>> GetParts(List<ITrajectory> trajectories, MarkingLOD lod)
         {
-            var parts = trajectories.Select(t => StyleHelper.CalculateSolid(t, lod, (tr) => tr, MinAngle, MinLength, MaxLength)).ToList();
-            for (var i = 0; i < parts.Count; i += 1)
-            {
-                var xm = (i - 1 + parts.Count) % parts.Count;
-                var x = i;
-                var y = (i + 1) % parts.Count;
-                var yp = (i + 2) % parts.Count;
+            var allParts = new List<List<ITrajectory>>();
 
-                if (FindIntersects(parts[x], parts[y], true, 1))
+            foreach (var trajectory in trajectories)
+            {
+                var partsT = StyleHelper.CalculateSolid(trajectory, lod, MinAngle, MinLength, MaxLength);
+                var parts = new List<ITrajectory>();
+                foreach (var partT in partsT)
+                    parts.Add(trajectory.Cut(partT.start, partT.end));
+                allParts.Add(parts);
+            }
+
+            for (var i = 0; i < allParts.Count; i += 1)
+            {
+                var xm = (i - 1 + allParts.Count) % allParts.Count;
+                var x = i;
+                var y = (i + 1) % allParts.Count;
+                var yp = (i + 2) % allParts.Count;
+
+                if (FindIntersects(allParts[x], allParts[y], true, 1))
                     continue;
-                if (parts.Count > 3 && parts[y].Count == 1 && FindIntersects(parts[x], parts[yp], true, 0))
+                if (allParts.Count > 3 && allParts[y].Count == 1 && FindIntersects(allParts[x], allParts[yp], true, 0))
                 {
-                    parts.RemoveAt(y);
+                    allParts.RemoveAt(y);
                     continue;
                 }
-                if (FindIntersects(parts[y], parts[x], false, 1))
+                if (FindIntersects(allParts[y], allParts[x], false, 1))
                     continue;
-                if (parts.Count > 3 && parts[x].Count == 1 && FindIntersects(parts[y], parts[xm], false, 0))
+                if (allParts.Count > 3 && allParts[x].Count == 1 && FindIntersects(allParts[y], allParts[xm], false, 0))
                 {
-                    parts.RemoveAt(x);
+                    allParts.RemoveAt(x);
                     i -= 1;
                     continue;
                 }
             }
 
-            return parts;
+            return allParts;
         }
         //private void SplitTriangles(List<FillerContour.Part> contour, Vector3[] points, int[] triangles, float maxLenght, out Vector3[] pointsResult, out int[] trianglesResult)
         //{
@@ -257,23 +267,18 @@ namespace IMT.Manager
         //    triangles.Add(index2);
         //}
 #if DEBUG
-        private IStyleData GetTriangulationLines(Vector3[] points, int[] triangles, Color32 color, MaterialType materialType)
+        private void GetTriangulationLines(Vector3[] points, int[] triangles, Color32 color, MaterialType materialType, Action<IStyleData> addData)
         {
-            var dashes = new List<MarkingPartData>();
-            var material = RenderHelper.MaterialLib[materialType];
-
             for (int i = 0; i < triangles.Length; i += 3)
             {
                 var point1 = points[triangles[i + 0]];
                 var point2 = points[triangles[i + 1]];
                 var point3 = points[triangles[i + 2]];
 
-                dashes.Add(new MarkingPartData(point1, point2, 0.05f, color, material));
-                dashes.Add(new MarkingPartData(point2, point3, 0.05f, color, material));
-                dashes.Add(new MarkingPartData(point3, point1, 0.05f, color, material));
+                addData(new DecalData(null, materialType, MarkingLOD.NoLOD, point1, point2, 0.05f, color));
+                addData(new DecalData(null, materialType, MarkingLOD.NoLOD, point2, point3, 0.05f, color));
+                addData(new DecalData(null, materialType, MarkingLOD.NoLOD, point3, point1, 0.05f, color));
             }
-
-            return new MarkingPartGroupData(MarkingLOD.NoLOD, dashes);
         }
 #endif
 

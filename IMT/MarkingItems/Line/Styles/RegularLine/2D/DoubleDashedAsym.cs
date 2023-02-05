@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class DoubleDashedAsymLineStyle : RegularLineStyle, IRegularLine, IDashedLine, IDoubleLine, IDoubleAlignmentLine, IAsymLine
+    public class DoubleDashedAsymLineStyle : RegularLineStyle, IRegularLine, IDashedLine, IDoubleLine, IDoubleAlignmentLine, IAsymLine, IEffectStyle
     {
         public override StyleType Type => StyleType.LineDoubleDashedAsym;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -61,6 +61,9 @@ namespace IMT.Manager
                 yield return nameof(Offset);
                 yield return nameof(Alignment);
                 yield return nameof(Invert);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -80,7 +83,7 @@ namespace IMT.Manager
             }
         }
 
-        public DoubleDashedAsymLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLengthA, float dashLengthB, float spaceLength, float offset) : base(color, width)
+        public DoubleDashedAsymLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float dashLengthA, float dashLengthB, float spaceLength, float offset) : base(color, width, cracks, voids, texture)
         {
             DashLengthA = new PropertyStructValue<float>("DLA", StyleChanged, dashLengthA);
             DashLengthB = new PropertyStructValue<float>("DLB", StyleChanged, dashLengthB);
@@ -94,7 +97,7 @@ namespace IMT.Manager
             Invert = GetInvertProperty(false);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new DoubleDashedAsymLineStyle(Color, SecondColor, TwoColors, Width, DashLengthB, DashLengthA, DashLengthB, Offset);
+        public override RegularLineStyle CopyLineStyle() => new DoubleDashedAsymLineStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, DashLengthB, DashLengthA, DashLengthB, Offset);
 
         public override void CopyTo(LineStyle target)
         {
@@ -119,41 +122,39 @@ namespace IMT.Manager
             if (CheckDashedLod(lod, Width, DashLengthValue))
             {
                 var borders = line.Borders;
-                addData(new MarkingPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, DashLengthValue, SpaceLength, GetDashes)));
+                var parts = StyleHelper.CalculateDashed(trajectory, DashLengthValue, SpaceLength);
+                foreach (var part in parts)
+                {
+                    var offsetA = Alignment.Value switch
+                    {
+                        Manager.Alignment.Left => 2 * Offset,
+                        Manager.Alignment.Centre => Offset,
+                        Manager.Alignment.Right => 0,
+                        _ => 0,
+                    };
+                    var offsetB = Alignment.Value switch
+                    {
+                        Manager.Alignment.Left => 0,
+                        Manager.Alignment.Centre => -Offset,
+                        Manager.Alignment.Right => -2 * Offset,
+                        _ => 0,
+                    };
 
-                IEnumerable<MarkingPartData> GetDashes(ITrajectory trajectory, float startT, float endT)
-                    => CalculateDashes(trajectory, startT, endT, borders);
+                    StyleHelper.GetPartParams(trajectory, part, Invert ? -offsetA : offsetA, out var firstPos, out var firstDir);
+                    if (StyleHelper.CheckBorders(borders, firstPos, firstDir, DashLengthA, Width))
+                    {
+                        var data = new DecalData(this, MaterialType.RectangleLines, lod, firstPos, firstDir, DashLengthA, Width, Color);
+                        addData(data);
+                    }
+
+                    StyleHelper.GetPartParams(trajectory, part, Invert ? -offsetB : offsetB, out var secondPos, out var secondDir);
+                    if (StyleHelper.CheckBorders(borders, secondPos, secondDir, DashLengthB, Width))
+                    {
+                        var data = new DecalData(this, MaterialType.RectangleLines, lod, secondPos, secondDir, DashLengthB, Width, TwoColors ? SecondColor : Color);
+                        addData(data);
+                    }
+                }
             }
-        }
-
-        protected IEnumerable<MarkingPartData> CalculateDashes(ITrajectory trajectory, float startT, float endT, LineBorders borders)
-        {
-            var offsetA = Alignment.Value switch
-            {
-                Manager.Alignment.Left => 2 * Offset,
-                Manager.Alignment.Centre => Offset,
-                Manager.Alignment.Right => 0,
-                _ => 0,
-            };
-            var offsetB = Alignment.Value switch
-            {
-                Manager.Alignment.Left => 0,
-                Manager.Alignment.Centre => -Offset,
-                Manager.Alignment.Right => -2 * Offset,
-                _ => 0,
-            };
-
-            if (Invert)
-            {
-                offsetA = -offsetA;
-                offsetB = -offsetB;
-            }
-
-            if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLengthA, offsetA, Width, Color, out MarkingPartData firstDash))
-                yield return firstDash;
-
-            if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLengthB, offsetB, Width, TwoColors ? SecondColor : Color, out MarkingPartData secondDash))
-                yield return secondDash;
         }
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)

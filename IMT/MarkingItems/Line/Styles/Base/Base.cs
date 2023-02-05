@@ -81,7 +81,7 @@ namespace IMT.Manager
         protected FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, bool canCollapse)
         {
             var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(doubleStyle.Offset));
-            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Text = Localize.StyleOption_OffsetBetween;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;

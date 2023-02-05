@@ -75,7 +75,7 @@ namespace IMT.Manager
                 foreach (var contour in contours)
                 {
                     var trajectories = contour.Select(c => c.trajectory).ToArray();
-                    foreach (var data in DecalData.GetData(lod, trajectories, MinAngle, MinLength, MaxLength, Color, Vector2.one, CracksDensity, CracksTiling, VoidDensity, VoidTiling, Texture))
+                    foreach (var data in DecalData.GetData(this, lod, trajectories, MinAngle, MinLength, MaxLength, Color))
                     {
                         addData(data);
                     }

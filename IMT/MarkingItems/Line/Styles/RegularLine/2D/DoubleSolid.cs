@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class DoubleSolidLineStyle : SolidLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine
+    public class DoubleSolidLineStyle : SolidLineStyle, IRegularLine, IDoubleLine, IDoubleAlignmentLine, IEffectStyle
     {
         public override StyleType Type => StyleType.LineDoubleSolid;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -32,6 +32,9 @@ namespace IMT.Manager
                 yield return nameof(Width);
                 yield return nameof(Offset);
                 yield return nameof(Alignment);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -48,7 +51,7 @@ namespace IMT.Manager
             }
         }
 
-        public DoubleSolidLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float offset) : base(color, width)
+        public DoubleSolidLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offset) : base(color, width, cracks, voids, texture)
         {
             TwoColors = GetTwoColorsProperty(useSecondColor);
             SecondColor = GetSecondColorProperty(TwoColors ? secondColor : color);
@@ -56,7 +59,7 @@ namespace IMT.Manager
             Alignment = GetAlignmentProperty(Manager.Alignment.Centre);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, SecondColor, TwoColors, Width, Offset);
+        public override RegularLineStyle CopyLineStyle() => new DoubleSolidLineStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, Offset);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -70,28 +73,41 @@ namespace IMT.Manager
                 doubleAlignmentTarget.Alignment.Value = Alignment;
         }
 
-        protected override IEnumerable<MarkingPartData> CalculateDashes(ITrajectory trajectory, LineBorders borders)
+        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
-            var firstOffset = Alignment.Value switch
+            var borders = line.Borders;
+            var parts = StyleHelper.CalculateSolid(trajectory, lod);
+            foreach (var part in parts)
             {
-                Manager.Alignment.Left => 2 * Offset,
-                Manager.Alignment.Centre => Offset,
-                Manager.Alignment.Right => 0,
-                _ => 0,
-            };
-            var secondOffset = Alignment.Value switch
-            {
-                Manager.Alignment.Left => 0,
-                Manager.Alignment.Centre => -Offset,
-                Manager.Alignment.Right => -2 * Offset,
-                _ => 0,
-            };
+                var firstOffset = Alignment.Value switch
+                {
+                    Manager.Alignment.Left => 2 * Offset,
+                    Manager.Alignment.Centre => Offset,
+                    Manager.Alignment.Right => 0,
+                    _ => 0,
+                };
+                var secondOffset = Alignment.Value switch
+                {
+                    Manager.Alignment.Left => 0,
+                    Manager.Alignment.Centre => -Offset,
+                    Manager.Alignment.Right => -2 * Offset,
+                    _ => 0,
+                };
 
-            if (StyleHelper.CalculateSolidPart(borders, trajectory, firstOffset, Width, Color, out MarkingPartData firstDash))
-                yield return firstDash;
+                StyleHelper.GetPartParams(trajectory, part, firstOffset, out var firstStartPos, out var firstEndPos, out var firstDir);
+                if (StyleHelper.CheckBorders(borders, ref firstStartPos, ref firstEndPos, firstDir, Width))
+                {
+                    var data = new DecalData(this, MaterialType.RectangleLines, lod, firstStartPos, firstEndPos, Width, Color);
+                    addData(data);
+                }
 
-            if (StyleHelper.CalculateSolidPart(borders, trajectory, secondOffset, Width, TwoColors ? SecondColor : Color, out MarkingPartData secondDash))
-                yield return secondDash;
+                StyleHelper.GetPartParams(trajectory, part, secondOffset, out var secondStartPos, out var secondEndPos, out var secondDir);
+                if (StyleHelper.CheckBorders(borders, ref secondStartPos, ref secondEndPos, secondDir, Width))
+                {
+                    var data = new DecalData(this, MaterialType.RectangleLines, lod, secondStartPos, secondEndPos, Width, TwoColors ? SecondColor : Color);
+                    addData(data);
+                }
+            }
         }
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
         {

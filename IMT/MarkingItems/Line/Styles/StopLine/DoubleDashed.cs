@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class DoubleDashedStopLineStyle : DashedStopLineStyle, IStopLine, IDoubleLine
+    public class DoubleDashedStopLineStyle : DashedStopLineStyle, IStopLine, IDoubleLine, IEffectStyle
     {
         public override StyleType Type { get; } = StyleType.StopLineDoubleDashed;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -30,6 +30,9 @@ namespace IMT.Manager
                 yield return nameof(SecondColor);
                 yield return nameof(Width);
                 yield return nameof(Offset);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -47,13 +50,13 @@ namespace IMT.Manager
             }
         }
 
-        public DoubleDashedStopLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, float dashLength, float spaceLength, float offset) : base(color, width, dashLength, spaceLength)
+        public DoubleDashedStopLineStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float dashLength, float spaceLength, float offset) : base(color, width, cracks, voids, texture, dashLength, spaceLength)
         {
             TwoColors = GetTwoColorsProperty(useSecondColor);
             SecondColor = GetSecondColorProperty(TwoColors ? secondColor : color);
             Offset = GetOffsetProperty(offset);
         }
-        public override StopLineStyle CopyLineStyle() => new DoubleDashedStopLineStyle(Color, SecondColor, TwoColors, Width, DashLength, SpaceLength, Offset);
+        public override StopLineStyle CopyLineStyle() => new DoubleDashedStopLineStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, DashLength, SpaceLength, Offset);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -73,12 +76,17 @@ namespace IMT.Manager
                 var offsetLeft = offsetNormal * (Width / 2);
                 var offsetRight = offsetNormal * (Width / 2 + 2 * Offset);
 
-                addData(new MarkingPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, CalculateDashes)));
-
-                IEnumerable<MarkingPartData> CalculateDashes(ITrajectory dashTrajectory, float startT, float endT)
+                var parts = StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength);
+                foreach (var part in parts)
                 {
-                    yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offsetLeft, offsetLeft, Width, Color);
-                    yield return StyleHelper.CalculateDashedPart(dashTrajectory, startT, endT, DashLength, offsetRight, offsetRight, Width, TwoColors ? SecondColor : Color);
+                    StyleHelper.GetPartParams(trajectory, part, offsetLeft, offsetLeft, out var leftPos, out var leftDir);
+                    var left = new DecalData(this, MaterialType.RectangleLines, lod, leftPos, leftDir, DashLength, Width, Color);
+
+                    StyleHelper.GetPartParams(trajectory, part, offsetRight, offsetRight, out var rightPos, out var rightDir);
+                    var right = new DecalData(this, MaterialType.RectangleLines, lod, rightPos, rightDir, DashLength, Width, Color);
+
+                    addData(left);
+                    addData(right);
                 }
             }
         }

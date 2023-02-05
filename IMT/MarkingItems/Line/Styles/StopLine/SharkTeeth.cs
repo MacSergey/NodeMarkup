@@ -6,12 +6,13 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Security.Policy;
 using System.Xml.Linq;
 using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class SharkTeethStopLineStyle : StopLineStyle, IColorStyle, ISharkLine
+    public class SharkTeethStopLineStyle : StopLineStyle, IColorStyle, ISharkLine, IEffectStyle
     {
         public override StyleType Type { get; } = StyleType.StopLineSharkTeeth;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -29,6 +30,9 @@ namespace IMT.Manager
                 yield return nameof(Color);
                 yield return nameof(Triangle);
                 yield return nameof(Space);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -44,7 +48,7 @@ namespace IMT.Manager
             }
         }
 
-        public SharkTeethStopLineStyle(Color32 color, float baseValue, float height, float space) : base(color, 0)
+        public SharkTeethStopLineStyle(Color32 color, Vector2 cracks, Vector2 voids, float texture, float baseValue, float height, float space) : base(color, 0f, cracks, voids, texture)
         {
             Base = GetBaseProperty(baseValue);
             Height = GetHeightProperty(height);
@@ -54,20 +58,17 @@ namespace IMT.Manager
         {
             if (!CheckDashedLod(lod, Base, Height))
             {
-                var styleData = new MarkingPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, Base, Space, CalculateDashes));
-                foreach (var dash in styleData)
-                    dash.Material = RenderHelper.MaterialLib[MaterialType.Triangle];
-
-                addData(styleData);
+                var parts = StyleHelper.CalculateDashed(trajectory, Base, Space);
+                foreach (var part in parts)
+                {
+                    StyleHelper.GetPartParams(trajectory, part, Height / -2, out var pos, out var angle);
+                    var data = new DecalData(this, MaterialType.Triangle, lod, pos, angle, Base, Height, Color);
+                    addData(data);
+                }
             }
         }
 
-        private IEnumerable<MarkingPartData> CalculateDashes(ITrajectory lineTrajectory, float startT, float endT)
-        {
-            yield return StyleHelper.CalculateDashedPart(lineTrajectory, startT, endT, Base, Height / -2, Height, Color);
-        }
-
-        public override StopLineStyle CopyLineStyle() => new SharkTeethStopLineStyle(Color, Base, Height, Space);
+        public override StopLineStyle CopyLineStyle() => new SharkTeethStopLineStyle(Color, Cracks, Voids, Texture, Base, Height, Space);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);

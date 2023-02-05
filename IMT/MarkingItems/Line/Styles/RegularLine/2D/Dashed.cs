@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class DashedLineStyle : RegularLineStyle, IRegularLine, IDashedLine
+    public class DashedLineStyle : RegularLineStyle, IRegularLine, IDashedLine, IEffectStyle
     {
         public override StyleType Type => StyleType.LineDashed;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -27,6 +27,9 @@ namespace IMT.Manager
                 yield return nameof(Color);
                 yield return nameof(Width);
                 yield return nameof(Length);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -41,13 +44,13 @@ namespace IMT.Manager
             }
         }
 
-        public DashedLineStyle(Color32 color, float width, float dashLength, float spaceLength) : base(color, width)
+        public DashedLineStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float dashLength, float spaceLength) : base(color, width, cracks, voids, texture)
         {
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new DashedLineStyle(Color, Width, DashLength, SpaceLength);
+        public override RegularLineStyle CopyLineStyle() => new DashedLineStyle(Color, Width, Cracks, Voids, Texture, DashLength, SpaceLength);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);
@@ -63,16 +66,23 @@ namespace IMT.Manager
             if (CheckDashedLod(lod, Width, DashLength))
             {
                 var borders = line.Borders;
-                addData(new MarkingPartGroupData(lod, StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength, GetDashes)));
-
-                IEnumerable<MarkingPartData> GetDashes(ITrajectory trajectory, float startT, float endT) => CalculateDashes(trajectory, startT, endT, borders);
+                var parts = StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength);
+                foreach (var part in parts)
+                {
+                    var partTrajectory = trajectory.Cut(part.start, part.end);
+                    CalculateDashes(trajectory, part, borders, lod, addData);
+                }
             }
         }
 
-        protected virtual IEnumerable<MarkingPartData> CalculateDashes(ITrajectory trajectory, float startT, float endT, LineBorders borders)
+        protected virtual void CalculateDashes(ITrajectory trajectory, StyleHelper.PartT partT, LineBorders borders, MarkingLOD lod, Action<IStyleData> addData)
         {
-            if (StyleHelper.CalculateDashedParts(borders, trajectory, startT, endT, DashLength, 0, Width, Color, out MarkingPartData dash))
-                yield return dash;
+            StyleHelper.GetPartParams(trajectory, partT, 0f, out var pos, out var dir);
+            if(StyleHelper.CheckBorders(borders, pos, dir, DashLength, Width))
+            {
+                var data = new DecalData(this, MaterialType.RectangleLines, lod, pos, dir, DashLength, Width, Color);
+                addData(data);
+            }
         }
 
         public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)

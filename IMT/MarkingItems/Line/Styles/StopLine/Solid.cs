@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class SolidStopLineStyle : StopLineStyle, IStopLine
+    public class SolidStopLineStyle : StopLineStyle, IStopLine, IEffectStyle
     {
         public override StyleType Type => StyleType.StopLineSolid;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -23,6 +23,9 @@ namespace IMT.Manager
             {
                 yield return nameof(Color);
                 yield return nameof(Width);
+                yield return nameof(Texture);
+                yield return nameof(Cracks);
+                yield return nameof(Voids);
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -35,16 +38,20 @@ namespace IMT.Manager
             }
         }
 
-        public SolidStopLineStyle(Color32 color, float width) : base(color, width) { }
+        public SolidStopLineStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture) : base(color, width, cracks, voids, texture) { }
 
         protected override void CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
-            addData(new MarkingPartGroupData(lod, StyleHelper.CalculateSolid(trajectory, lod, CalculateDashes)));
-
-            MarkingPartData CalculateDashes(ITrajectory dashTrajectory) => StyleHelper.CalculateSolidPart(dashTrajectory, offset, offset, Width, Color);
+            var parts = StyleHelper.CalculateSolid(trajectory, lod);
+            foreach (var part in parts)
+            {
+                StyleHelper.GetPartParams(trajectory, part, offset, offset, out var startPos, out var endPos, out var dir);
+                var data = new DecalData(this, MaterialType.RectangleLines, lod, startPos, endPos, Width, Color);
+                addData(data);
+            }
         }
 
-        public override StopLineStyle CopyLineStyle() => new SolidStopLineStyle(Color, Width);
+        public override StopLineStyle CopyLineStyle() => new SolidStopLineStyle(Color, Width, Cracks, Voids, Texture);
     }
 }

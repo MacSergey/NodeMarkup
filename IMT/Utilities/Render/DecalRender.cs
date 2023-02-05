@@ -5,6 +5,7 @@ using IMT.Manager;
 using ModsCommon.Utilities;
 using System;
 using System.Linq;
+using static PathUnit;
 
 namespace IMT.Utilities
 {
@@ -28,10 +29,10 @@ namespace IMT.Utilities
 
         private readonly Texture2D mainTexture;
         private readonly Texture2D alphaTexture;
-        private readonly Vector3 position;
-        private readonly Quaternion rotation;
-        private readonly Color color;
-        private readonly Vector4 size;
+        public readonly Vector3 position;
+        public readonly Quaternion rotation;
+        public readonly Color color;
+        public readonly Vector4 size;
         private readonly Vector4 tiling;
         private readonly Vector4[] points;
         private readonly float cracksDensity;
@@ -39,6 +40,10 @@ namespace IMT.Utilities
         private readonly float voidDensity;
         private readonly Vector4 voidTiling;
         private readonly float texture;
+
+        public float Length => size.x;
+        public float Width => size.z;
+        public float Angle => rotation.eulerAngles.z * Mathf.Deg2Rad;
 
         public DecalData(MarkingLOD lod, Texture2D mainTexture, Texture2D alphaTexture, Vector3 position, float angle, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
         {
@@ -68,10 +73,19 @@ namespace IMT.Utilities
                     this.points[i / 2] += new Vector4(0f, 0f, point.x, point.y);
             }
         }
-        public DecalData(MarkingLOD lod, Vector3 position, float angle, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
+
+        public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Vector3 pos, Vector3 dir, float length, float width, Color32 color)
         {
-            this = new DecalData(lod, null, null, position, angle, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, points);
+            this = new DecalData(lod, null, null, pos, dir.AbsoluteAngle(), color, new Vector3(length, 0f, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
         }
+        public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Vector3 startPos, Vector3 endPos, float width, Color32 color)
+        {
+            var pos = (startPos + endPos) * 0.5f;
+            var angle = (endPos - startPos).AbsoluteAngle();
+            var length = (endPos - startPos).magnitude;
+            this = new DecalData(lod, null, null, pos, angle, color, new Vector3(length, 0f, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
+        }
+
         public DecalData(MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
         {
             var min = points[0];
@@ -95,7 +109,7 @@ namespace IMT.Utilities
                 pointUVs[i] = new Vector2(x, y);
             }
 
-            this = new DecalData(lod, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
+            this = new DecalData(lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
         public DecalData(MarkingLOD lod, Area area, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
         {
@@ -113,11 +127,12 @@ namespace IMT.Utilities
                 pointUVs[i] = new Vector2(x, y);
             }
 
-            this = new DecalData(lod, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
+            this = new DecalData(lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
+
         public IEnumerable<IDrawData> GetDrawData() { yield return this; }
 
-        public static List<DecalData> GetData(MarkingLOD lod, ITrajectory[] trajectories, float minAngle, float minLength, float maxLength, Color32 color, Vector2 tiling, float cracks, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
+        public static List<DecalData> GetData(IEffectStyle effectStyle, MarkingLOD lod, ITrajectory[] trajectories, float minAngle, float minLength, float maxLength, Color32 color)
         {
             var result = new List<DecalData>();
 
@@ -128,7 +143,10 @@ namespace IMT.Utilities
             {
                 if (points.Length <= 16)
                 {
-                    result.Add(new DecalData(lod, points, color, tiling, cracks, cracksTiling, voidDensity, voidTiling, texture));
+                    if(effectStyle != null)
+                        result.Add(new DecalData(lod, points, color, Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity));
+                    else
+                        result.Add(new DecalData(lod, points, color, Vector3.one, 0f, Vector3.one, 0f, Vector3.one, 0f));
                 }
                 else
                 {
@@ -136,18 +154,27 @@ namespace IMT.Utilities
                     polygon.Arange(8, 3f);
 
                     foreach (var area in polygon)
-                        result.Add(new DecalData(lod, area, color, tiling, cracks, cracksTiling, voidDensity, voidTiling, texture));
+                    {
+                        if (effectStyle != null)
+                            result.Add(new DecalData(lod, area, color, Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity));
+                        else
+                            result.Add(new DecalData(lod, area, color, Vector3.one, 0f, Vector3.one, 0f, Vector3.one, 0f));
+                    }
                 }
             }
 
             return result;
         }
+
         private static IEnumerable<Vector3> GetPoints(ITrajectory trajectory, MarkingLOD lod, float minAngle, float minLength, float maxLength)
         {
             if (trajectory is StraightTrajectory straight)
                 return new Vector3[] { trajectory.StartPosition };
             else
-                return StyleHelper.CalculateSolid(trajectory, lod, (tr) => tr.StartPosition, minAngle, minLength, maxLength);
+            {
+                var parts = StyleHelper.CalculateSolid(trajectory, lod, minAngle, minLength, maxLength);
+                return parts.Select(p => trajectory.Position(p.start));
+            }
         }
 
         public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
@@ -166,7 +193,7 @@ namespace IMT.Utilities
             if (alphaTexture != null)
                 materialBlock.SetTexture(alphaTexId, alphaTexture);
 
-            if(points != null && points.Length > 0)
+            if (points != null && points.Length > 0)
                 materialBlock.SetVectorArray(pointsId, points);
 
             materialBlock.SetVector(colorId, color);

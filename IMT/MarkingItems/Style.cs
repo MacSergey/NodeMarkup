@@ -26,7 +26,13 @@ namespace IMT.Manager
     {
         public PropertyVector2Value Cracks { get; }
         public PropertyVector2Value Voids { get; }
-        public PropertyStructValue<float> Texture { get; }   
+        public PropertyStructValue<float> Texture { get; }
+
+        public float CracksDensity { get; }
+        public Vector2 CracksTiling { get; }
+        public float VoidDensity { get; }
+        public Vector2 VoidTiling { get; }
+        public float TextureDensity { get; }
     }
 
     public abstract class Style : IToXml
@@ -110,10 +116,11 @@ namespace IMT.Manager
         public PropertyVector2Value Voids { get; }
         public PropertyStructValue<float> Texture { get; }
 
-        protected float CracksDensity => Cracks.Value.x;
-        protected Vector2 CracksTiling => new Vector2(1f / Cracks.Value.y, 1f / Cracks.Value.y);
-        protected float VoidDensity => Voids.Value.x;
-        protected Vector2 VoidTiling => new Vector2(1f / Voids.Value.y, 1f / Voids.Value.y);
+        public float CracksDensity => Cracks.Value.x;
+        public Vector2 CracksTiling => new Vector2(1f / Cracks.Value.y, 1f / Cracks.Value.y);
+        public float VoidDensity => Voids.Value.x;
+        public Vector2 VoidTiling => new Vector2(1f / Voids.Value.y, 1f / Voids.Value.y);
+        public float TextureDensity => Texture.Value;
 
         public abstract IEnumerable<IStylePropertyData> Properties { get; }
         public abstract Dictionary<string, int> PropertyIndices { get; }

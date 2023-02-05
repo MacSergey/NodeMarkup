@@ -190,7 +190,7 @@ namespace IMT.Manager
         public IEnumerator<ITrajectory> GetEnumerator() => Borders.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public StraightTrajectory[] GetVertex(MarkingPartData dash)
+        public StraightTrajectory[] GetVertex(DecalData dash)
         {
             var dirX = dash.Angle.Direction();
             var dirY = dirX.Turn90(true);
@@ -200,10 +200,26 @@ namespace IMT.Manager
 
             return new StraightTrajectory[]
             {
-                new StraightTrajectory(Center, dash.Position + dirX + dirY),
-                new StraightTrajectory(Center, dash.Position - dirX + dirY),
-                new StraightTrajectory(Center, dash.Position + dirX - dirY),
-                new StraightTrajectory(Center, dash.Position - dirX - dirY),
+                new StraightTrajectory(Center, dash.position + dirX + dirY),
+                new StraightTrajectory(Center, dash.position - dirX + dirY),
+                new StraightTrajectory(Center, dash.position + dirX - dirY),
+                new StraightTrajectory(Center, dash.position - dirX - dirY),
+            };
+        }
+        public StraightTrajectory[] GetVertex(Vector3 pos, Vector3 dir, float length, float width)
+        {
+            var dirX = dir;
+            var dirY = dirX.Turn90(true);
+
+            dirX *= length * 0.5f;
+            dirY *= width * 0.5f;
+
+            return new StraightTrajectory[]
+            {
+                new StraightTrajectory(Center, pos + dirX + dirY),
+                new StraightTrajectory(Center, pos - dirX + dirY),
+                new StraightTrajectory(Center, pos + dirX - dirY),
+                new StraightTrajectory(Center, pos - dirX - dirY),
             };
         }
     }
