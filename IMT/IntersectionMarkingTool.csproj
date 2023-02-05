@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.13.0.424</AssemblyVersion>
+    <AssemblyVersion>1.13.0.427</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -145,7 +145,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\imt" />
     <EmbeddedResource Include="Resources\ListItem\ListItemBackground.png" />
-    <EmbeddedResource Include="Resources\SharkTooth.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineDoubleDashedAsym.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineText.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineZigZag.png" />

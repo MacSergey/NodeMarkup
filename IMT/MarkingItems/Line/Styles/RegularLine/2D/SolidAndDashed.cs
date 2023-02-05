@@ -93,7 +93,7 @@ namespace IMT.Manager
                 StyleHelper.GetPartParams(trajectory, part, solidOffset, out var startPos, out var endPos, out var dir);
                 if (StyleHelper.CheckBorders(borders, ref startPos, ref endPos, dir, Width))
                 {
-                    var data = new DecalData(this, MaterialType.RectangleLines, lod, startPos, endPos, Width, Color);
+                    var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, Width, Color);
                     addData(data);
                 }
             }
@@ -106,7 +106,7 @@ namespace IMT.Manager
                     StyleHelper.GetPartParams(trajectory, part, dashedOffset, out var pos, out var dir);
                     if (StyleHelper.CheckBorders(borders, pos, dir, DashLength, Width))
                     {
-                        var data = new DecalData(this, MaterialType.RectangleLines, lod, pos, dir, DashLength, Width, TwoColors ? SecondColor : Color);
+                        var data = new DecalData(this, MaterialType.Dash, lod, pos, dir, DashLength, Width, TwoColors ? SecondColor : Color);
                         addData(data);
                     }
                 }

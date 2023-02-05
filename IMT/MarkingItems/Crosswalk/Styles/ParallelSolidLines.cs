@@ -69,7 +69,7 @@ namespace IMT.Manager
             foreach (var part in firstParts)
             {
                 StyleHelper.GetPartParams(firstTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out var dir);
-                var data = new DecalData(this, MaterialType.RectangleLines, lod, startPos, endPos, LineWidth, Color);
+                var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, LineWidth, Color);
                 addData(data);
             }
 
@@ -77,7 +77,7 @@ namespace IMT.Manager
             foreach (var part in secondParts)
             {
                 StyleHelper.GetPartParams(secondTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out var dir);
-                var data = new DecalData(this, MaterialType.RectangleLines, lod, startPos, endPos, LineWidth, Color);
+                var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, LineWidth, Color);
                 addData(data);
             }
         }

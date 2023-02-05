@@ -80,10 +80,10 @@ namespace IMT.Manager
                 foreach (var part in parts)
                 {
                     StyleHelper.GetPartParams(trajectory, part, offsetLeft, offsetLeft, out var leftPos, out var leftDir);
-                    var left = new DecalData(this, MaterialType.RectangleLines, lod, leftPos, leftDir, DashLength, Width, Color);
+                    var left = new DecalData(this, MaterialType.Dash, lod, leftPos, leftDir, DashLength, Width, Color);
 
                     StyleHelper.GetPartParams(trajectory, part, offsetRight, offsetRight, out var rightPos, out var rightDir);
-                    var right = new DecalData(this, MaterialType.RectangleLines, lod, rightPos, rightDir, DashLength, Width, Color);
+                    var right = new DecalData(this, MaterialType.Dash, lod, rightPos, rightDir, DashLength, Width, Color);
 
                     addData(left);
                     addData(right);

@@ -6,6 +6,7 @@ using ModsCommon.Utilities;
 using System;
 using System.Linq;
 using static PathUnit;
+using static EffectItem;
 
 namespace IMT.Utilities
 {
@@ -27,6 +28,7 @@ namespace IMT.Utilities
         public MarkingLOD LOD { get; }
         public MarkingLODType LODType => MarkingLODType.Dash;
 
+        private readonly Material material;
         private readonly Texture2D mainTexture;
         private readonly Texture2D alphaTexture;
         public readonly Vector3 position;
@@ -45,9 +47,10 @@ namespace IMT.Utilities
         public float Width => size.z;
         public float Angle => rotation.eulerAngles.z * Mathf.Deg2Rad;
 
-        public DecalData(MarkingLOD lod, Texture2D mainTexture, Texture2D alphaTexture, Vector3 position, float angle, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
+        public DecalData(MaterialType materialType, MarkingLOD lod, Texture2D mainTexture, Texture2D alphaTexture, Vector3 position, float angle, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
         {
             LOD = lod;
+            this.material = RenderHelper.MaterialLib[materialType];
             this.mainTexture = mainTexture;
             this.alphaTexture = alphaTexture;
             this.position = position;
@@ -74,16 +77,20 @@ namespace IMT.Utilities
             }
         }
 
+        public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Texture2D mainTexture, Texture2D alphaTexture, Vector3 position, float angle, float length, float width, Color32 color)
+        {
+            this = new DecalData(materialType, lod, mainTexture, alphaTexture, position, angle, color, new Vector3(length, 0f, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
+        }
         public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Vector3 pos, Vector3 dir, float length, float width, Color32 color)
         {
-            this = new DecalData(lod, null, null, pos, dir.AbsoluteAngle(), color, new Vector3(length, 0f, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
+            this = new DecalData(materialType, lod, null, null, pos, dir.AbsoluteAngle(), color, new Vector3(length, 0f, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
         }
         public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Vector3 startPos, Vector3 endPos, float width, Color32 color)
         {
             var pos = (startPos + endPos) * 0.5f;
             var angle = (endPos - startPos).AbsoluteAngle();
             var length = (endPos - startPos).magnitude;
-            this = new DecalData(lod, null, null, pos, angle, color, new Vector3(length, 0f, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
+            this = new DecalData(materialType, lod, null, null, pos, angle, color, new Vector3(length, 0f, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
         }
 
         public DecalData(MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
@@ -108,8 +115,9 @@ namespace IMT.Utilities
                 var y = (pos.z - min.z) / size.z;
                 pointUVs[i] = new Vector2(x, y);
             }
+            var materialType = GetAreaMaterial(points.Length);
 
-            this = new DecalData(lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
+            this = new DecalData(materialType, lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
         public DecalData(MarkingLOD lod, Area area, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
         {
@@ -126,12 +134,26 @@ namespace IMT.Utilities
                 var y = (pos.z - min.z) / size.z;
                 pointUVs[i] = new Vector2(x, y);
             }
+            var materialType = GetAreaMaterial(area.Count);
 
-            this = new DecalData(lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
+            this = new DecalData(materialType, lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
 
         public IEnumerable<IDrawData> GetDrawData() { yield return this; }
 
+        public static MaterialType GetAreaMaterial(int points)
+        {
+            if (points == 0)
+                return MaterialType.AreaZero;
+            else if (points <= 4)
+                return MaterialType.AreaUpTo4;
+            else if (points <= 8)
+                return MaterialType.AreaUpTo8;
+            else if (points <= 12)
+                return MaterialType.AreaUpTo12;
+            else
+                return MaterialType.AreaUpTo16;
+        }
         public static List<DecalData> GetData(IEffectStyle effectStyle, MarkingLOD lod, ITrajectory[] trajectories, float minAngle, float minLength, float maxLength, Color32 color)
         {
             var result = new List<DecalData>();
@@ -185,7 +207,6 @@ namespace IMT.Utilities
             var instance = Singleton<PropManager>.instance;
             var materialBlock = instance.m_materialBlock;
             materialBlock.Clear();
-            var material = RenderHelper.GetMaterial(points.Length * 2);
 
             if (mainTexture != null)
                 materialBlock.SetTexture(mainTexId, mainTexture);

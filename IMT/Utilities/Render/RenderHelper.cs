@@ -17,37 +17,12 @@ namespace IMT.Utilities
         public static Dictionary<MaterialType, Material> MaterialLib { get; }
         public static Dictionary<MaterialType, Texture2D> SurfaceALib { get; }
         public static Dictionary<MaterialType, Texture2D> SurfaceBLib { get; }
-        public static int ID_DecalSize { get; } = Shader.PropertyToID("_DecalSize");
         public static int RoadLayer => 9;
-
-        private static int[] VerticesIdxs { get; } = new int[]
-{
-            1,3,2,0,// Bottom
-            5,7,4,6,// Top
-            1,4,0,5,// Front
-            0,7,3,4,// Left
-            3,6,2,7,// Back
-            2,5,1,6, // Right
-};
-        private static int[] TrianglesIdxs { get; } = new int[]
-        {
-                0,1,2,      1,0,3,      // Bottom
-                4,5,6,      5,4,7,      // Top
-                8,9,10,     9,8,11,     // Front
-                12,13,14,   13,12,15,   // Left 
-                16,17,18,   17,16,19,   // Back
-                20,21,22,   21,20,23,    // Right
-        };
-        private static int VCount { get; } = 24;
-        private static int TCount { get; } = 36;
 
         static RenderHelper()
         {
             MaterialLib = new Dictionary<MaterialType, Material>()
             {
-            { MaterialType.RectangleLines, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white))},
-            { MaterialType.RectangleFillers, CreateDecalMaterial(TextureHelper.CreateTexture(1,1,Color.white), renderQueue: 2459)},
-            { MaterialType.Triangle, CreateDecalMaterial(TextureHelper.CreateTexture(64,64,Color.white), Assembly.GetExecutingAssembly().LoadTextureFromAssembly("SharkTooth"))},
             { MaterialType.Pavement, CreateRoadMaterial(MaterialType.Pavement, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black)) },
             { MaterialType.Grass, CreateRoadMaterial(MaterialType.Grass, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(255, 0, 0, 255)))},
             { MaterialType.Gravel, CreateRoadMaterial(MaterialType.Gravel, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
@@ -89,13 +64,25 @@ namespace IMT.Utilities
                 var data = ResourceUtility.LoadResource($"{nameof(IMT)}.Resources.imt");
                 Bundle = AssetBundle.LoadFromMemory(data);
 
-                var materials = new Material[5];
-                materials[0] = Bundle.LoadAsset<Material>("MarkingZero.mat");
-                materials[1] = Bundle.LoadAsset<Material>("MarkingUpTo4.mat");
-                materials[2] = Bundle.LoadAsset<Material>("MarkingUpTo8.mat");
-                materials[3] = Bundle.LoadAsset<Material>("MarkingUpTo12.mat");
-                materials[4] = Bundle.LoadAsset<Material>("MarkingUpTo16.mat");
+                var materials = new Material[]
+                {
+                    Bundle.LoadAsset<Material>("AreaZero.mat"),
+                    Bundle.LoadAsset<Material>("AreaUpTo4.mat"),
+                    Bundle.LoadAsset<Material>("AreaUpTo8.mat"),
+                    Bundle.LoadAsset<Material>("AreaUpTo12.mat"),
+                    Bundle.LoadAsset<Material>("AreaUpTo16.mat"),
+                    Bundle.LoadAsset<Material>("Dash.mat"),
+                    Bundle.LoadAsset<Material>("Triangle.mat"),
+                };
                 DecalMaterials = materials;
+
+                MaterialLib[MaterialType.AreaZero] = materials[0];
+                MaterialLib[MaterialType.AreaUpTo4] = materials[1];
+                MaterialLib[MaterialType.AreaUpTo8] = materials[2];
+                MaterialLib[MaterialType.AreaUpTo12] = materials[3];
+                MaterialLib[MaterialType.AreaUpTo16] = materials[4];
+                MaterialLib[MaterialType.Dash] = materials[5];
+                MaterialLib[MaterialType.Triangle] = materials[6];
 
                 DecalMesh = Bundle.LoadAsset<Mesh>("Cube.fbx");
                 DecalMesh.bounds = new Bounds(DecalMesh.bounds.center, Vector3.one * 100f);
@@ -121,105 +108,10 @@ namespace IMT.Utilities
 
                 SingletonMod<Mod>.Logger.Debug("Bundle unloaded");
             }
-            catch(Exception error) 
+            catch (Exception error)
             {
                 SingletonMod<Mod>.Logger.Error("Can't unload bundle", error);
             }
-        }
-        public static Material GetMaterial(int points)
-        {
-            return DecalMaterials[(Math.Min(points, 16) + 3) / 4];
-        }
-
-        public static Mesh CreateMesh(int count, Vector3 size)
-        {
-            var vertices = new Vector3[VCount * count];
-            var triangles = new int[TCount * count];
-            var colors32 = new Color32[VCount * count];
-            var uv = new Vector2[VCount * count];
-
-            CreateTemp(size.x, size.y, size.z, out Vector3[] tempV, out int[] tempT);
-
-            for (var i = 0; i < count; i += 1)
-            {
-                var tempColor = VerticesColor(i);
-
-                for (var j = 0; j < VCount; j += 1)
-                {
-                    vertices[i * VCount + j] = tempV[j];
-                    colors32[i * VCount + j] = tempColor;
-                    uv[i * VCount + j] = Vector2.zero;
-                }
-                for (var j = 0; j < TCount; j += 1)
-                {
-                    triangles[i * TCount + j] = tempT[j] + (VCount * i);
-                }
-            }
-
-            Bounds bounds = default;
-            bounds.SetMinMax(new Vector3(-100000f, -100000f, -100000f), new Vector3(100000f, 100000f, 100000f));
-
-            var mesh = new Mesh();
-            mesh.Clear();
-
-            mesh.vertices = vertices;
-            mesh.triangles = triangles;
-            mesh.colors32 = colors32;
-            mesh.bounds = bounds;
-            mesh.uv = uv;
-
-            return mesh;
-        }
-        private static void CreateTemp(float length, float height, float width, out Vector3[] vertices, out int[] triangles)
-        {
-            Vector3[] c = new Vector3[8];
-
-            c[0] = new Vector3(-length * .5f, -height * .5f, width * .5f); //0 --+
-            c[1] = new Vector3(length * .5f, -height * .5f, width * .5f);  //1 +-+
-            c[2] = new Vector3(length * .5f, -height * .5f, -width * .5f); //2 +--
-            c[3] = new Vector3(-length * .5f, -height * .5f, -width * .5f);//3 ---
-
-            c[4] = new Vector3(-length * .5f, height * .5f, width * .5f);  //4 -++
-            c[5] = new Vector3(length * .5f, height * .5f, width * .5f);   //5 +++
-            c[6] = new Vector3(length * .5f, height * .5f, -width * .5f);  //6 ++-
-            c[7] = new Vector3(-length * .5f, height * .5f, -width * .5f); //7 -+-
-
-            vertices = new Vector3[24];
-            triangles = new int[36];
-
-            for (var j = 0; j < 24; j += 1)
-            {
-                vertices[j] = c[VerticesIdxs[j]];
-            }
-            for (var j = 0; j < 36; j += 1)
-            {
-                triangles[j] = TrianglesIdxs[j];
-            }
-        }
-        public static Color32 VerticesColor(int i) => new Color32(byte.MaxValue, byte.MaxValue, byte.MaxValue, (byte)(16 * i));
-
-        public static Material CreateDecalMaterial(Texture2D texture, Texture2D aci = null, int renderQueue = 2460, bool multiInstance = true)
-        {
-            var material = new Material(Shader.Find("Custom/Props/Decal/Blend"))
-            {
-                mainTexture = texture,
-                name = "IntersectionMarkingToolDecal",
-                color = new Color(1f, 1f, 1f, 1f),
-                doubleSidedGI = false,
-                enableInstancing = false,
-                globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack,
-                renderQueue = renderQueue,
-            };
-            if (aci != null)
-                material.SetTexture("_ACIMap", aci);
-
-            if (multiInstance)
-                material.EnableKeyword("MULTI_INSTANCE");
-
-            var tiling = new Vector4(1f, 0f, 1f, 0f);
-            material.SetVector("_DecalTiling", tiling);
-
-            return material;
         }
 
         public static Material CreateRoadMaterial(MaterialType type, Texture2D texture, Texture2D apr = null, int renderQueue = 2461)
@@ -240,28 +132,6 @@ namespace IMT.Utilities
             return material;
         }
 
-        public static Texture2D CreateChessBoardTexture()
-        {
-            var height = 256;
-            var width = 256;
-            var texture = new Texture2D(height, width)
-            {
-                name = "Marking",
-            };
-            for (var i = 0; i < height * width; i += 1)
-            {
-                var row = i / height;
-                var column = i % width;
-
-                var colorRow = row / (height / 4);
-                var colorColumn = column / (width / 4);
-                var color = (colorColumn + colorRow) % 2 == 0 ? 0f : 1f;
-                texture.SetPixel(row, column, new Color(color, color, color, 1));
-            }
-
-            texture.Apply();
-            return texture;
-        }
         public static Texture2D CreateTextTexture(string font, string text, float scale, Vector2 spacing, out float textWidth, out float textHeight)
         {
             var renderer = new TextRenderHelper.TextRenderer(font)
@@ -277,9 +147,13 @@ namespace IMT.Utilities
 
     public enum MaterialType
     {
-        RectangleLines,
-        RectangleFillers,
+        Dash,
         Triangle,
+        AreaZero,
+        AreaUpTo4,
+        AreaUpTo8,
+        AreaUpTo12,
+        AreaUpTo16,
         Pavement,
         Grass,
         Gravel,

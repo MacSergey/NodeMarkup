@@ -65,7 +65,7 @@ namespace IMT.Manager
                     //if ((Settings.ShowFillerTriangulation & 2) != 0)
                     //    yield return GetTriangulationLines(topPoints, topTriangles, UnityEngine.Color.red, MaterialType.RectangleFillers);
                     if ((Settings.ShowFillerTriangulation & 1) != 0)
-                        GetTriangulationLines(points, triangles, UnityEngine.Color.green, MaterialType.RectangleLines, addData);
+                        GetTriangulationLines(points, triangles, UnityEngine.Color.green, MaterialType.Dash, addData);
 #endif
                 }
             }

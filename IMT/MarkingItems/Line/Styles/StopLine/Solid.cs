@@ -47,7 +47,7 @@ namespace IMT.Manager
             foreach (var part in parts)
             {
                 StyleHelper.GetPartParams(trajectory, part, offset, offset, out var startPos, out var endPos, out var dir);
-                var data = new DecalData(this, MaterialType.RectangleLines, lod, startPos, endPos, Width, Color);
+                var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, Width, Color);
                 addData(data);
             }
         }

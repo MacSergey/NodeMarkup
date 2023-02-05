@@ -97,14 +97,14 @@ namespace IMT.Manager
                 StyleHelper.GetPartParams(trajectory, part, firstOffset, out var firstStartPos, out var firstEndPos, out var firstDir);
                 if (StyleHelper.CheckBorders(borders, ref firstStartPos, ref firstEndPos, firstDir, Width))
                 {
-                    var data = new DecalData(this, MaterialType.RectangleLines, lod, firstStartPos, firstEndPos, Width, Color);
+                    var data = new DecalData(this, MaterialType.Dash, lod, firstStartPos, firstEndPos, Width, Color);
                     addData(data);
                 }
 
                 StyleHelper.GetPartParams(trajectory, part, secondOffset, out var secondStartPos, out var secondEndPos, out var secondDir);
                 if (StyleHelper.CheckBorders(borders, ref secondStartPos, ref secondEndPos, secondDir, Width))
                 {
-                    var data = new DecalData(this, MaterialType.RectangleLines, lod, secondStartPos, secondEndPos, Width, TwoColors ? SecondColor : Color);
+                    var data = new DecalData(this, MaterialType.Dash, lod, secondStartPos, secondEndPos, Width, TwoColors ? SecondColor : Color);
                     addData(data);
                 }
             }

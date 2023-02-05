@@ -195,7 +195,7 @@ namespace IMT.Manager
             var width = textureData.texture.width * ratio;
             var height = textureData.texture.height * ratio;
 
-            var data = new DecalData(lod, null, textureData.texture, position, angle, Color, new Vector3(width, 0f, height), Vector2.one, CracksDensity, CracksTiling, VoidDensity, VoidTiling, Texture);
+            var data = new DecalData(this, MaterialType.Dash, lod, null, textureData.texture, position, angle, width, height, Color);
             addData(data);
         }
 
