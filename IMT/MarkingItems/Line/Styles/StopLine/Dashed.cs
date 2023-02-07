@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -76,10 +77,11 @@ namespace IMT.Manager
                 dashedTarget.SpaceLength.Value = SpaceLength;
             }
         }
-        public override void GetUIComponents(MarkingStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+
+        protected override void GetUIComponents(MarkingStopLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddLengthProperty(this, parent, false));
+            base.GetUIComponents(line, provider);
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), false, AddLengthProperty));
         }
 
         public override XElement ToXml()

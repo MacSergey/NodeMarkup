@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -28,10 +29,25 @@ namespace IMT.Manager
             if (target is ILinedCrosswalk linedTarget)
                 linedTarget.LineWidth.Value = LineWidth;
         }
-        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+
+        protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
-            base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddLineWidthProperty(this, parent, false));
+            base.GetUIComponents(crosswalk, provider);
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(LineWidth), false, AddLineWidthProperty));
+        }
+
+        protected void AddLineWidthProperty(FloatPropertyPanel widthProperty, EditorProvider provider)
+        {
+            widthProperty.Text = Localize.StyleOption_LineWidth;
+            widthProperty.Format = Localize.NumberFormat_Meter;
+            widthProperty.UseWheel = true;
+            widthProperty.WheelStep = 0.1f;
+            widthProperty.WheelTip = Settings.ShowToolTip;
+            widthProperty.CheckMin = true;
+            widthProperty.MinValue = 0.05f;
+            widthProperty.Init();
+            widthProperty.Value = LineWidth;
+            widthProperty.OnValueChanged += (float value) => LineWidth.Value = value;
         }
 
         public override XElement ToXml()

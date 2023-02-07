@@ -1,13 +1,13 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
@@ -44,22 +44,26 @@ namespace IMT.Manager
             if (target is IPeriodicFiller periodicTarget)
                 periodicTarget.Step.Value = Step;
         }
-        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+
+        protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
-            base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddStepProperty(this, parent, false));
+            base.GetUIComponents(filler, provider);
+
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Step), false, AddStepProperty));
 #if DEBUG
-            components.Add(GetRenderOnlyProperty(parent));
-            components.Add(AddStartProperty(parent));
-            components.Add(AddEndProperty(parent));
-            components.Add(AddStartBorderProperty(parent));
-            components.Add(AddEndBorderProperty(parent));
+            if (!provider.isTemplate && Settings.ShowDebugProperties)
+            {
+                provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RenderOnly), true, GetRenderOnlyProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Start), true, AddStartProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(End), true, AddEndProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StartBorder), true, AddStartBorderProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(EndBorder), true, AddEndBorderProperty));
+            }
 #endif
         }
 #if DEBUG
-        private IntPropertyPanel GetRenderOnlyProperty(UIComponent parent)
+        private void GetRenderOnlyProperty(IntPropertyPanel property, EditorProvider provider)
         {
-            var property = ComponentPool.Get<IntPropertyPanel>(parent, nameof(RenderOnly));
             property.Text = "Render only";
             property.UseWheel = true;
             property.WheelStep = 1;
@@ -69,46 +73,48 @@ namespace IMT.Manager
             property.Init();
             property.Value = RenderOnly;
             property.OnValueChanged += (int value) => RenderOnly.Value = value;
-
-            return property;
         }
-        protected BoolListPropertyPanel AddStartProperty(UIComponent parent)
+        protected void AddStartProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            var property = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Start));
             property.Text = "Start";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = Start;
             property.OnSelectObjectChanged += (value) => Start.Value = value;
-            return property;
         }
-        protected BoolListPropertyPanel AddEndProperty(UIComponent parent)
+        protected void AddEndProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            var property = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(End));
             property.Text = "End";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = End;
             property.OnSelectObjectChanged += (value) => End.Value = value;
-            return property;
         }
-        protected BoolListPropertyPanel AddStartBorderProperty(UIComponent parent)
+        protected void AddStartBorderProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            var property = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(StartBorder));
             property.Text = "Start border";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = StartBorder;
             property.OnSelectObjectChanged += (value) => StartBorder.Value = value;
-            return property;
         }
-        protected BoolListPropertyPanel AddEndBorderProperty(UIComponent parent)
+        protected void AddEndBorderProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            var property = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(EndBorder));
             property.Text = "End border";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = EndBorder;
             property.OnSelectObjectChanged += (value) => EndBorder.Value = value;
-            return property;
         }
 #endif
+        protected void AddStepProperty(FloatPropertyPanel stepProperty, EditorProvider provider)
+        {
+            stepProperty.Text = Localize.StyleOption_Step;
+            stepProperty.UseWheel = true;
+            stepProperty.WheelStep = 0.1f;
+            stepProperty.WheelTip = Settings.ShowToolTip;
+            stepProperty.CheckMin = true;
+            stepProperty.MinValue = 1.5f;
+            stepProperty.Init();
+            stepProperty.Value = Step;
+            stepProperty.OnValueChanged += (float value) => Step.Value = value;
+        }
 
         protected sealed override void CalculateImpl(MarkingFiller filler, ContourGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {

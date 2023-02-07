@@ -330,6 +330,7 @@ namespace IMT
 
         #region DEBUG
 #if DEBUG
+        public static SavedBool ShowDebugProperties { get; } = new SavedBool(nameof(ShowDebugProperties), SettingsFile, false);
         public static SavedBool ShowNodeContour { get; } = new SavedBool(nameof(ShowNodeContour), string.Empty, false);
         public static SavedFloat IlluminationDelta { get; } = new SavedFloat(nameof(IlluminationDelta), SettingsFile, 1f, true);
         public static SavedInt ShowFillerTriangulation { get; } = new SavedInt(nameof(ShowFillerTriangulation), SettingsFile, 0, true);
@@ -344,6 +345,7 @@ namespace IMT
             Selection.AddBorderOverlayWidth(overlayGroup);
 
             var groupOther = helper.AddGroup("Nodes");
+            AddCheckBox(groupOther, "Show debug properties", ShowDebugProperties);
             AddCheckBox(groupOther, "Show node contour", ShowNodeContour);
             AddFloatField(groupOther, "Delta", IlluminationDelta, 1f);
 

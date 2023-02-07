@@ -1,4 +1,6 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.DataBinding;
+using ColossalFramework.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -48,16 +51,13 @@ namespace IMT.Manager
         public CrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture) : base(color, width, cracks, voids, texture) { }
         public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
-        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
+        public sealed override void GetUIComponents(EditorProvider provider)
         {
-            var components = base.GetUIComponents(editObject, parent, isTemplate);
-            if (editObject is MarkingCrosswalk crosswalk)
-                GetUIComponents(crosswalk, components, parent, isTemplate);
-            else if (isTemplate)
-                GetUIComponents(null, components, parent, isTemplate);
-            return components;
+            base.GetUIComponents(provider);
+            if (provider.editObject is MarkingCrosswalk crosswalk)
+                GetUIComponents(crosswalk, provider);
         }
-        public virtual void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
+        protected virtual void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider) { }
 
         public void Calculate(MarkingCrosswalk crosswalk, Action<IStyleData> addData)
         {
@@ -69,28 +69,29 @@ namespace IMT.Manager
         }
         protected abstract void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData);
 
-        protected Vector2PropertyPanel AddLengthProperty(IDashedCrosswalk dashedStyle, UIComponent parent, bool canCollapse)
+        new protected void AddLengthProperty(Vector2PropertyPanel lengthProperty, EditorProvider provider)
         {
-            var lengthProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Length));
-            lengthProperty.Text = Localize.StyleOption_Length;
-            lengthProperty.FieldsWidth = 50f;
-            lengthProperty.SetLabels(Localize.StyleOption_Dash, Localize.StyleOption_Space);
-            lengthProperty.Format = Localize.NumberFormat_Meter;
-            lengthProperty.UseWheel = true;
-            lengthProperty.WheelStep = new Vector2(0.1f, 0.1f);
-            lengthProperty.WheelTip = Settings.ShowToolTip;
-            lengthProperty.CheckMin = true;
-            lengthProperty.MinValue = new Vector2(0.1f, 0.1f);
-            lengthProperty.CanCollapse = canCollapse;
-            lengthProperty.Init(0, 1);
-            lengthProperty.Value = new Vector2(dashedStyle.DashLength, dashedStyle.SpaceLength);
-            lengthProperty.OnValueChanged += (value) =>
-                {
-                    dashedStyle.DashLength.Value = value.x;
-                    dashedStyle.SpaceLength.Value = value.y;
-                };
-
-            return lengthProperty;
+            if (this is IDashedCrosswalk dashedStyle)
+            {
+                lengthProperty.Text = Localize.StyleOption_Length;
+                lengthProperty.FieldsWidth = 50f;
+                lengthProperty.SetLabels(Localize.StyleOption_Dash, Localize.StyleOption_Space);
+                lengthProperty.Format = Localize.NumberFormat_Meter;
+                lengthProperty.UseWheel = true;
+                lengthProperty.WheelStep = new Vector2(0.1f, 0.1f);
+                lengthProperty.WheelTip = Settings.ShowToolTip;
+                lengthProperty.CheckMin = true;
+                lengthProperty.MinValue = new Vector2(0.1f, 0.1f);
+                lengthProperty.Init(0, 1);
+                lengthProperty.Value = new Vector2(dashedStyle.DashLength, dashedStyle.SpaceLength);
+                lengthProperty.OnValueChanged += (value) =>
+                    {
+                        dashedStyle.DashLength.Value = value.x;
+                        dashedStyle.SpaceLength.Value = value.y;
+                    };
+            }
+            else
+                throw new NotSupportedException();
         }
 
         protected void CalculateCrosswalkPart(ITrajectory trajectory, StyleHelper.PartT part, Vector3 direction, Contour crosswalkContour, Color32 color, MarkingLOD lod, Action<IStyleData> addData)

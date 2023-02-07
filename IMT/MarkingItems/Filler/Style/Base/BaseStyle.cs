@@ -1,5 +1,7 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.DataBinding;
+using ColossalFramework.UI;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
@@ -7,8 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -103,23 +107,20 @@ namespace IMT.Manager
             }
         }
 
-        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
+        public sealed override void GetUIComponents(EditorProvider provider)
         {
-            var components = base.GetUIComponents(editObject, parent, isTemplate);
-            if (editObject is MarkingFiller filler)
-                GetUIComponents(filler, components, parent, isTemplate);
-            else if (isTemplate)
-                GetUIComponents(null, components, parent, isTemplate);
-            return components;
+            base.GetUIComponents(provider);
+            if (provider.editObject is MarkingFiller filler)
+                GetUIComponents(filler, provider);
         }
-        public virtual void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected virtual void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
-            if (!isTemplate)
+            if (!provider.isTemplate)
             {
                 if (!filler.IsMedian)
-                    components.Add(AddLineOffsetProperty(parent, false));
+                    provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), false, AddLineOffsetProperty));
                 else
-                    components.Add(AddMedianOffsetProperty(parent, false));
+                    provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), false, AddMedianOffsetProperty));
             }
         }
 
@@ -155,9 +156,8 @@ namespace IMT.Manager
             MedianOffset.FromXml(config, DefaultOffset);
         }
 
-        protected FloatPropertyPanel AddLineOffsetProperty(UIComponent parent, bool canCollapse)
+        protected void AddLineOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, "Offset");
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
@@ -165,16 +165,12 @@ namespace IMT.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0f;
-            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init();
             offsetProperty.Value = LineOffset;
             offsetProperty.OnValueChanged += (float value) => LineOffset.Value = value;
-
-            return offsetProperty;
         }
-        private Vector2PropertyPanel AddMedianOffsetProperty(UIComponent parent, bool canCollapse)
+        private void AddMedianOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
-            var offsetProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, "Offset");
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.FieldsWidth = 50f;
             offsetProperty.SetLabels(Localize.StyleOption_LineOffsetAbrv, Localize.StyleOption_MedianOffsetAbrv);
@@ -184,7 +180,6 @@ namespace IMT.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = new Vector2(0f, 0f);
-            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init(0, 1);
             offsetProperty.Value = new Vector2(LineOffset, MedianOffset);
             offsetProperty.OnValueChanged += (Vector2 value) =>
@@ -192,44 +187,27 @@ namespace IMT.Manager
                 LineOffset.Value = value.x;
                 MedianOffset.Value = value.y;
             };
-
-            return offsetProperty;
         }
-        protected FloatPropertyPanel AddAngleProperty(IRotateFiller rotateStyle, UIComponent parent, bool canCollapse)
+        protected void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(rotateStyle.Angle));
-            angleProperty.Text = Localize.StyleOption_Angle;
-            angleProperty.Format = Localize.NumberFormat_Degree;
-            angleProperty.UseWheel = true;
-            angleProperty.WheelStep = 1f;
-            angleProperty.WheelTip = Settings.ShowToolTip;
-            angleProperty.CheckMin = true;
-            angleProperty.MinValue = -90;
-            angleProperty.CheckMax = true;
-            angleProperty.MaxValue = 90;
-            angleProperty.CyclicalValue = true;
-            angleProperty.CanCollapse = canCollapse;
-            angleProperty.Init();
-            angleProperty.Value = rotateStyle.Angle;
-            angleProperty.OnValueChanged += (float value) => rotateStyle.Angle.Value = value;
-
-            return angleProperty;
-        }
-        protected FloatPropertyPanel AddStepProperty(IPeriodicFiller periodicStyle, UIComponent parent, bool canCollapse)
-        {
-            var stepProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(periodicStyle.Step));
-            stepProperty.Text = Localize.StyleOption_Step;
-            stepProperty.UseWheel = true;
-            stepProperty.WheelStep = 0.1f;
-            stepProperty.WheelTip = Settings.ShowToolTip;
-            stepProperty.CheckMin = true;
-            stepProperty.MinValue = 1.5f;
-            stepProperty.CanCollapse = canCollapse;
-            stepProperty.Init();
-            stepProperty.Value = periodicStyle.Step;
-            stepProperty.OnValueChanged += (float value) => periodicStyle.Step.Value = value;
-
-            return stepProperty;
+            if (this is IRotateFiller rotateStyle)
+            {
+                angleProperty.Text = Localize.StyleOption_Angle;
+                angleProperty.Format = Localize.NumberFormat_Degree;
+                angleProperty.UseWheel = true;
+                angleProperty.WheelStep = 1f;
+                angleProperty.WheelTip = Settings.ShowToolTip;
+                angleProperty.CheckMin = true;
+                angleProperty.MinValue = -90;
+                angleProperty.CheckMax = true;
+                angleProperty.MaxValue = 90;
+                angleProperty.CyclicalValue = true;
+                angleProperty.Init();
+                angleProperty.Value = rotateStyle.Angle;
+                angleProperty.OnValueChanged += (float value) => rotateStyle.Angle.Value = value;
+            }
+            else
+                throw new NotSupportedException();
         }
 
         public enum FillerType

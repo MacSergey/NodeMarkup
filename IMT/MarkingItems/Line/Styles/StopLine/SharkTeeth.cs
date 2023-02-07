@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -79,11 +80,12 @@ namespace IMT.Manager
                 sharkTeethTarget.Space.Value = Space;
             }
         }
-        public override void GetUIComponents(MarkingStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+
+        protected override void GetUIComponents(MarkingStopLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddTriangleProperty(this, parent, false));
-            components.Add(AddSpaceProperty(this, parent, false));
+            base.GetUIComponents(line, provider);
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Triangle), false, AddTriangleProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Space), false, AddSpaceProperty));
         }
 
         public override XElement ToXml()

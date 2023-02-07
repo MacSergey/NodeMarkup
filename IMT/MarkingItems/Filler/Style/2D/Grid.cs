@@ -2,6 +2,7 @@
 using ColossalFramework.UI;
 using IMT.API;
 using IMT.Manager;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -73,12 +75,13 @@ namespace IMT.Manager
             if (target is IPeriodicFiller periodicTarget)
                 periodicTarget.Step.Value = Step;
         }
-        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+
+        protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
-            base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddStepProperty(this, parent, false));
-            if (!isTemplate)
-                components.Add(AddAngleProperty(this, parent, false));
+            base.GetUIComponents(filler, provider);
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Step), false, AddStepProperty));
+            if (!provider.isTemplate)
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), false, AddAngleProperty));
         }
 
         protected override ITrajectory[] GetGuides(MarkingFiller filler, ContourGroup contours)

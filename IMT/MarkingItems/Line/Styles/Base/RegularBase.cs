@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
@@ -49,16 +50,14 @@ namespace IMT.Manager
         }
         protected abstract void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData);
 
-        public sealed override List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
+        public sealed override void GetUIComponents(EditorProvider provider)
         {
-            var components = base.GetUIComponents(editObject, parent, isTemplate);
-            if (editObject is MarkingRegularLine line)
-                GetUIComponents(line, components, parent, isTemplate);
-            else if (isTemplate)
-                GetUIComponents(null, components, parent, isTemplate);
-            return components;
+            base.GetUIComponents(provider);
+
+            if (provider.editObject is MarkingRegularLine line)
+                GetUIComponents(line, provider);
         }
-        public virtual void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false) { }
+        protected virtual void GetUIComponents(MarkingRegularLine line, EditorProvider provider) { }
 
         public enum RegularLineType
         {

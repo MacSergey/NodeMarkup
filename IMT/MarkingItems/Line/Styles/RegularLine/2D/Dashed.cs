@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -78,17 +79,17 @@ namespace IMT.Manager
         protected virtual void CalculateDashes(ITrajectory trajectory, StyleHelper.PartT partT, LineBorders borders, MarkingLOD lod, Action<IStyleData> addData)
         {
             StyleHelper.GetPartParams(trajectory, partT, 0f, out var pos, out var dir);
-            if(StyleHelper.CheckBorders(borders, pos, dir, DashLength, Width))
+            if (StyleHelper.CheckBorders(borders, pos, dir, DashLength, Width))
             {
                 var data = new DecalData(this, MaterialType.Dash, lod, pos, dir, DashLength, Width, Color);
                 addData(data);
             }
         }
 
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddLengthProperty(this, parent, false));
+            base.GetUIComponents(line, provider);
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), false, AddLengthProperty));
         }
 
         public override XElement ToXml()

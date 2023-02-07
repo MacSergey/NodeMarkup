@@ -28,7 +28,7 @@ namespace IMT.UI.Editors
         private MoreOptionsPanel MoreOptionsButton { get; set; }
         private bool ShowMoreOptions { get; set; }
 
-        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
+        private List<IPropertyInfo> StyleProperties { get; set; } = new List<IPropertyInfo>();
 
         public RulePanel() { }
         public void Init(LinesEditor editor, MarkingLineRawRule rule)
@@ -182,23 +182,42 @@ namespace IMT.UI.Editors
         {
             MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {IMT.Localize.Editor_LessOptions} ▲" : $"▼ {IMT.Localize.Editor_MoreOptions} ▼";
 
+            StopLayout();
             foreach (var option in StyleProperties)
                 option.IsCollapsed = !ShowMoreOptions;
+            StartLayout();
         }
 
         private void AddStyleProperties()
         {
             var startIndex = childCount;
             var style = Rule.Style.Value;
-            StyleProperties = style.GetUIComponents(Rule.Line, this);
-            StyleProperties.Sort((x, y) => style.GetUIComponentSortIndex(x) - style.GetUIComponentSortIndex(y));
-            for (int i = 0; i < StyleProperties.Count; i += 1)
-                StyleProperties[i].zOrder = startIndex + i;
+
+            StyleProperties.Clear();
+            var provider = new EditorProvider(Rule.Line, this, StyleProperties.Add, RefreshStyleProperties, false);
+            style.GetUIComponents(provider);
+            StyleProperties.Sort(PropertyInfoComparer.Instance);
+
+            StopLayout();
+            foreach (var propertyInfo in StyleProperties)
+                propertyInfo.Create(provider);
+            StartLayout();
 
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
 
-            if (Settings.CollapseOptions && StyleProperties.Count(p => p.CanCollapse) >= 2)
+            RefreshStyleProperties();
+        }
+        private void RefreshStyleProperties()
+        {
+            var provider = new EditorProvider(Rule.Line, this, null, null, true);
+
+            StopLayout();
+            foreach (var propertyInfo in StyleProperties)
+                propertyInfo.Refresh(provider);
+            StartLayout();
+
+            if (Settings.CollapseOptions && StyleProperties.Count(p => !p.IsHidden && p.CanCollapse) >= 2)
             {
                 MoreOptionsButton.isVisible = true;
                 MoreOptionsButton.BringToFront();
@@ -210,8 +229,12 @@ namespace IMT.UI.Editors
 
         private void ClearStyleProperties()
         {
+            var provider = new EditorProvider(Rule.Line, this, null, null, true);
+
+            StopLayout();
             foreach (var property in StyleProperties)
-                ComponentPool.Free(property);
+                property.Destroy(provider);
+            StartLayout();
 
             StyleProperties.Clear();
         }

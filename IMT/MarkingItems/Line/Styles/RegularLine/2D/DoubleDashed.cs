@@ -1,5 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -8,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -107,16 +110,20 @@ namespace IMT.Manager
                 addData(data);
             }
         }
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
-        {
-            base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddUseSecondColorProperty(this, parent, true));
-            components.Add(AddSecondColorProperty(this, parent, true));
-            components.Add(AddOffsetProperty(this, parent, false));
-            if (!isTemplate)
-                components.Add(AddAlignmentProperty(this, parent, false));
 
-            UseSecondColorChanged(this, parent, TwoColors);
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
+        {
+            base.GetUIComponents(line, provider);
+
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), true, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), true, AddSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), false, AddOffsetProperty));
+            if(!provider.isTemplate)
+            {
+                provider.AddProperty(new PropertyInfo<LineAlignmentPropertyPanel>(this, nameof(Alignment), false, AddAlignmentProperty));
+            }
+
+            //UseSecondColorChanged(this, parent, TwoColors);
         }
 
         public override XElement ToXml()

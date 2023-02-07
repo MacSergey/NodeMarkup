@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -93,20 +95,23 @@ namespace IMT.Manager
                 sharkTeethTarget.Space.Value = Space;
             }
         }
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
-        {
-            base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddTriangleProperty(this, parent, false));
-            components.Add(AddSpaceProperty(this, parent, false));
-            components.Add(AddAngleProperty(parent, true));
 
-            if (!isTemplate)
-                components.Add(AddInvertProperty(parent, false));
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
+        {
+            base.GetUIComponents(line, provider);
+
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Triangle), false, AddTriangleProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Space), false, AddSpaceProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), true, AddAngleProperty, RefreshAngleProperty));
+
+            if (!provider.isTemplate)
+            {
+                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), false, AddInvertProperty));
+            }
         }
 
-        protected FloatPropertyPanel AddAngleProperty(UIComponent parent, bool canCollapse)
+        protected void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Angle));
             angleProperty.Text = Localize.StyleOption_SharkToothAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
@@ -115,29 +120,26 @@ namespace IMT.Manager
             angleProperty.MinValue = -60f;
             angleProperty.CheckMax = true;
             angleProperty.MaxValue = 60f;
-            angleProperty.CanCollapse = canCollapse;
             angleProperty.Init();
             angleProperty.Value = Angle;
             angleProperty.OnValueChanged += (value) => Angle.Value = value;
-
-            return angleProperty;
         }
-        protected ButtonPanel AddInvertProperty(UIComponent parent, bool canCollapse)
+        protected virtual void RefreshAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            var invertButton = ComponentPool.Get<ButtonPanel>(parent, nameof(Invert));
+            angleProperty.Value = Angle;
+        }
+
+        new protected void AddInvertProperty(ButtonPanel invertButton, EditorProvider provider)
+        {
             invertButton.Text = Localize.StyleOption_Invert;
-            invertButton.CanCollapse = canCollapse;
             invertButton.Init();
 
             invertButton.OnButtonClick += () =>
             {
                 Invert.Value = !Invert;
                 Angle.Value = -Angle;
-                if (parent.Find<FloatPropertyPanel>(nameof(Angle)) is FloatPropertyPanel angleProperty)
-                    angleProperty.Value = Angle;
+                provider.Refresh();
             };
-
-            return invertButton;
         }
 
         public override XElement ToXml()

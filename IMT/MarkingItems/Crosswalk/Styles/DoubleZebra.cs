@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -154,15 +155,14 @@ namespace IMT.Manager
             }
         }
 
-        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
-            base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddOffsetBetweenProperty(parent, false));
+            base.GetUIComponents(crosswalk, provider);
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(OffsetBetween), false, AddOffsetBetweenProperty));
         }
 
-        protected FloatPropertyPanel AddOffsetBetweenProperty(UIComponent parent, bool canCollapse)
+        protected void AddOffsetBetweenProperty(FloatPropertyPanel offsetBetweenProperty, EditorProvider provider)
         {
-            var offsetBetweenProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(OffsetBetween));
             offsetBetweenProperty.Text = Localize.StyleOption_OffsetBetween;
             offsetBetweenProperty.Format = Localize.NumberFormat_Meter;
             offsetBetweenProperty.UseWheel = true;
@@ -170,12 +170,9 @@ namespace IMT.Manager
             offsetBetweenProperty.CheckMin = true;
             offsetBetweenProperty.MinValue = 0.1f;
             offsetBetweenProperty.WheelTip = Settings.ShowToolTip;
-            offsetBetweenProperty.CanCollapse = canCollapse;
             offsetBetweenProperty.Init();
             offsetBetweenProperty.Value = OffsetBetween;
             offsetBetweenProperty.OnValueChanged += (float value) => OffsetBetween.Value = value;
-
-            return offsetBetweenProperty;
         }
 
         public override XElement ToXml()

@@ -5,6 +5,7 @@ using IMT.UI.Panel;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -257,5 +258,29 @@ namespace IMT.UI.Editors
             base.OnClear();
             PropertiesPanel = null;
         }
+    }
+
+    public readonly struct EditorProvider
+    {
+        public readonly object editObject;
+        public readonly UIComponent parent;
+        private readonly Action refresh;
+        private readonly Action<IPropertyInfo> addProperty;
+        public readonly bool isTemplate;
+
+        public EditorProvider(object editObject, UIComponent parent, Action<IPropertyInfo> addProperty, Action refresh, bool isTemplate)
+        {
+            this.editObject = editObject;
+            this.parent = parent;
+            this.addProperty = addProperty;
+            this.refresh = refresh;
+            this.isTemplate = isTemplate;
+        }
+
+        public void AddProperty(IPropertyInfo property) => addProperty?.Invoke(property);
+        public void Refresh() => refresh?.Invoke();
+
+        public T GetItem<T>(string name) where T : EditorItem, IReusable => ComponentPool.Get<T>(parent, name);
+        public void DestroyItem<T>(T item) where T : EditorItem, IReusable => ComponentPool.Free(item);
     }
 }

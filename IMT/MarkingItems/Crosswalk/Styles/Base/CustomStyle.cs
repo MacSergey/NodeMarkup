@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -81,22 +83,24 @@ namespace IMT.Manager
             return true;
         }
 
-        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
-            base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddOffsetProperty(parent, false));
+            base.GetUIComponents(crosswalk, provider);
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), false, AddOffsetProperty));
 #if DEBUG
-            components.Add(GetRenderOnlyProperty(parent));
-            components.Add(AddStartProperty(parent));
-            components.Add(AddEndProperty(parent));
-            components.Add(AddStartBorderProperty(parent));
-            components.Add(AddEndBorderProperty(parent));
+            if (!provider.isTemplate && Settings.ShowDebugProperties)
+            {
+                provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RenderOnly), true, GetRenderOnlyProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Start), true, AddStartProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(End), true, AddEndProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StartBorder), true, AddStartBorderProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(EndBorder), true, AddEndBorderProperty));
+            }
 #endif
         }
 #if DEBUG
-        private IntPropertyPanel GetRenderOnlyProperty(UIComponent parent)
+        private void GetRenderOnlyProperty(IntPropertyPanel property, EditorProvider provider)
         {
-            var property = ComponentPool.Get<IntPropertyPanel>(parent, nameof(RenderOnly));
             property.Text = "Render only";
             property.UseWheel = true;
             property.WheelStep = 1;
@@ -106,50 +110,39 @@ namespace IMT.Manager
             property.Init();
             property.Value = RenderOnly;
             property.OnValueChanged += (int value) => RenderOnly.Value = value;
-
-            return property;
         }
-        protected BoolListPropertyPanel AddStartProperty(UIComponent parent)
+        protected void AddStartProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            var property = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Start));
             property.Text = "Start";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = Start;
             property.OnSelectObjectChanged += (value) => Start.Value = value;
-            return property;
         }
-        protected BoolListPropertyPanel AddEndProperty(UIComponent parent)
+        protected void AddEndProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            var property = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(End));
             property.Text = "End";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = End;
             property.OnSelectObjectChanged += (value) => End.Value = value;
-            return property;
         }
-        protected BoolListPropertyPanel AddStartBorderProperty(UIComponent parent)
+        protected void AddStartBorderProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            var property = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(StartBorder));
             property.Text = "Start border";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = StartBorder;
             property.OnSelectObjectChanged += (value) => StartBorder.Value = value;
-            return property;
         }
-        protected BoolListPropertyPanel AddEndBorderProperty(UIComponent parent)
+        protected void AddEndBorderProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            var property = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(EndBorder));
             property.Text = "End border";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = EndBorder;
             property.OnSelectObjectChanged += (value) => EndBorder.Value = value;
-            return property;
         }
 #endif
 
-        protected Vector2PropertyPanel AddOffsetProperty(UIComponent parent, bool canCollapse)
+        protected void AddOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
-            var offsetProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Offset));
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.FieldsWidth = 50f;
             offsetProperty.SetLabels(Localize.StyleOption_OffsetBeforeAbrv, Localize.StyleOption_OffsetAfterAbrv);
@@ -158,7 +151,6 @@ namespace IMT.Manager
             offsetProperty.WheelStep = new Vector2(0.1f, 0.1f);
             offsetProperty.CheckMin = true;
             offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init(0, 1);
             offsetProperty.Value = new Vector2(OffsetBefore, OffsetAfter);
             offsetProperty.OnValueChanged += (Vector2 value) =>
@@ -166,26 +158,6 @@ namespace IMT.Manager
                 OffsetBefore.Value = value.x;
                 OffsetAfter.Value = value.y;
             };
-
-            return offsetProperty;
-        }
-
-        protected FloatPropertyPanel AddLineWidthProperty(ILinedCrosswalk linedStyle, UIComponent parent, bool canCollapse)
-        {
-            var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(linedStyle.LineWidth));
-            widthProperty.Text = Localize.StyleOption_LineWidth;
-            widthProperty.Format = Localize.NumberFormat_Meter;
-            widthProperty.UseWheel = true;
-            widthProperty.WheelStep = 0.1f;
-            widthProperty.WheelTip = Settings.ShowToolTip;
-            widthProperty.CheckMin = true;
-            widthProperty.MinValue = 0.05f;
-            widthProperty.CanCollapse = canCollapse;
-            widthProperty.Init();
-            widthProperty.Value = linedStyle.LineWidth;
-            widthProperty.OnValueChanged += (float value) => linedStyle.LineWidth.Value = value;
-
-            return widthProperty;
         }
 
         public override XElement ToXml()

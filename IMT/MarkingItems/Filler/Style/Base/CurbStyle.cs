@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -7,8 +8,10 @@ using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -164,22 +167,21 @@ namespace IMT.Manager
             }
         }
 
-        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
-            base.GetUIComponents(filler, components, parent, isTemplate);
+            base.GetUIComponents(filler, provider);
 
-            if (!isTemplate)
+            if (!provider.isTemplate)
             {
                 if (!filler.IsMedian)
-                    components.Add(AddCurbSizeProperty(this, parent, false));
+                    provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(CurbSize), false, AddCurbSizeProperty));
                 else
-                    components.Add(AddMedianCurbSizeProperty(this, parent, true));
+                    provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(CurbSize), false, AddMedianCurbSizeProperty));
             }
         }
 
-        private static FloatPropertyPanel AddCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent, bool canCollapse)
+        private void AddCurbSizeProperty(FloatPropertyPanel curbSizeProperty, EditorProvider provider)
         {
-            var curbSizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CurbSize));
             curbSizeProperty.Text = Localize.FillerStyle_CurbSize;
             curbSizeProperty.Format = Localize.NumberFormat_Meter;
             curbSizeProperty.UseWheel = true;
@@ -189,16 +191,12 @@ namespace IMT.Manager
             curbSizeProperty.MinValue = 0f;
             curbSizeProperty.CheckMax = true;
             curbSizeProperty.MaxValue = 10f;
-            curbSizeProperty.CanCollapse = canCollapse;
             curbSizeProperty.Init();
-            curbSizeProperty.Value = curbStyle.CurbSize;
-            curbSizeProperty.OnValueChanged += (float value) => curbStyle.CurbSize.Value = value;
-
-            return curbSizeProperty;
+            curbSizeProperty.Value = CurbSize.Value;
+            curbSizeProperty.OnValueChanged += (float value) => CurbSize.Value = value;
         }
-        private static Vector2PropertyPanel AddMedianCurbSizeProperty(CurbTriangulationFillerStyle curbStyle, UIComponent parent, bool canCollapse)
+        private void AddMedianCurbSizeProperty(Vector2PropertyPanel curbSizeProperty, EditorProvider provider)
         {
-            var curbSizeProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(CurbSize));
             curbSizeProperty.Text = Localize.FillerStyle_CurbSize;
             curbSizeProperty.FieldsWidth = 50f;
             curbSizeProperty.SetLabels(Localize.FillerStyle_CurbSizeAbrv, Localize.FillerStyle_CurbSizeMedianAbrv);
@@ -210,16 +208,13 @@ namespace IMT.Manager
             curbSizeProperty.MinValue = new Vector2(0f, 0f);
             curbSizeProperty.CheckMax = true;
             curbSizeProperty.MaxValue = new Vector2(10f, 10f);
-            curbSizeProperty.CanCollapse = canCollapse;
             curbSizeProperty.Init(0, 1);
-            curbSizeProperty.Value = new Vector2(curbStyle.CurbSize, curbStyle.MedianCurbSize);
+            curbSizeProperty.Value = new Vector2(CurbSize, MedianCurbSize);
             curbSizeProperty.OnValueChanged += (Vector2 value) =>
             {
-                curbStyle.CurbSize.Value = value.x;
-                curbStyle.MedianCurbSize.Value = value.y;
+                CurbSize.Value = value.x;
+                MedianCurbSize.Value = value.y;
             };
-
-            return curbSizeProperty;
         }
 
         public override XElement ToXml()

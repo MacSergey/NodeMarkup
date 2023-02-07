@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -8,8 +9,10 @@ using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -107,53 +110,41 @@ namespace IMT.Manager
             addData(new MarkingPropData(prop, items));
         }
 
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
-            components.Add(AddColorOptionProperty(parent, true));
-            components.Add(AddColorProperty(parent, true));
-            base.GetUIComponents(line, components, parent, isTemplate);
-        }
-        protected override void PrefabChanged(UIComponent parent, bool valid)
-        {
-            base.PrefabChanged(parent, valid);
-
-            if (parent.Find(nameof(ColorOption)) is EditorPropertyPanel colorOption)
-                colorOption.IsHidden = !valid;
-
-            ColorOptionChanged(parent, valid, ColorOption);
-        }
-        protected void ColorOptionChanged(UIComponent parent, bool valid, ColorOptionEnum value)
-        {
-            if (parent.Find(nameof(Color)) is EditorPropertyPanel color)
-                color.IsHidden = !valid || !(value == ColorOptionEnum.Custom);
+            base.GetUIComponents(line, provider);
+            provider.AddProperty(new PropertyInfo<PropColorPropertyPanel>(this, nameof(ColorOption), true, AddColorOptionProperty, RefreshColorOptionProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(Color), true, AddColorProperty, RefreshColorProperty));
         }
 
-        protected PropColorPropertyPanel AddColorOptionProperty(UIComponent parent, bool canCollapse)
+        private void AddColorOptionProperty(PropColorPropertyPanel colorOptionProperty, EditorProvider provider)
         {
-            var colorOptionProperty = ComponentPool.Get<PropColorPropertyPanel>(parent, nameof(ColorOption));
             colorOptionProperty.Text = Localize.StyleOption_ColorOption;
             colorOptionProperty.UseWheel = true;
-            colorOptionProperty.CanCollapse = canCollapse;
             colorOptionProperty.Init();
             colorOptionProperty.SelectedObject = ColorOption;
             colorOptionProperty.OnSelectObjectChanged += (value) =>
             {
                 ColorOption.Value = value;
-                ColorOptionChanged(parent, IsValid, value);
+                provider.Refresh();
             };
-            return colorOptionProperty;
         }
-        protected ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent, bool canCollapse)
+        private void RefreshColorOptionProperty(PropColorPropertyPanel colorOptionProperty, EditorProvider provider)
         {
-            var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(Color));
+            colorOptionProperty.IsHidden = !IsValid;
+        }
+
+        private void AddColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        {
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
-            colorProperty.CanCollapse = canCollapse;
             colorProperty.Init(GetDefault()?.Color);
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (color) => Color.Value = color;
-
-            return colorProperty;
+        }
+        private void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        {
+            colorProperty.IsHidden = !IsValid || !(ColorOption == ColorOptionEnum.Custom);
         }
 
         protected override bool IsValidPrefab(PropInfo info) => info != null && !info.m_isMarker;

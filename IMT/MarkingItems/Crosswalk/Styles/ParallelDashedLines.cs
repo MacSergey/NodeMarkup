@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -75,10 +76,10 @@ namespace IMT.Manager
                 dashedTarget.SpaceLength.Value = SpaceLength;
             }
         }
-        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
-            base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddLengthProperty(this, parent, false));
+            base.GetUIComponents(crosswalk, provider);
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), false, AddLengthProperty));
         }
 
         protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData)

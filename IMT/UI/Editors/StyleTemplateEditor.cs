@@ -4,6 +4,7 @@ using ModsCommon;
 using ModsCommon.UI;
 using System.Collections.Generic;
 using System.Linq;
+using UnifiedUI.Helpers;
 using UnityEngine;
 
 namespace IMT.UI.Editors
@@ -22,7 +23,6 @@ namespace IMT.UI.Editors
         protected override string IsWorkshopWarningMessage => IMT.Localize.TemplateEditor_IsWorkshopWarningMessage;
 
         private Style EditStyle { get; set; }
-        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
 
         protected override IEnumerable<StyleTemplate> GetObjects() => SingletonManager<StyleTemplateManager>.Instance.Templates;
 
@@ -31,24 +31,11 @@ namespace IMT.UI.Editors
             CopyStyle();
             base.OnFillPropertiesPanel(template);
         }
-        protected override void OnClear()
-        {
-            base.OnClear();
-            StyleProperties.Clear();
-        }
 
         private void CopyStyle()
         {
             EditStyle = EditObject.Style.Copy();
             EditStyle.OnStyleChanged = OnChanged;
-        }
-        protected override IEnumerable<EditorItem> AddAditionalProperties()
-        {
-            AddStyleProperties();
-            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
-
-            return StyleProperties;
         }
 
         protected override void AddHeader()
@@ -57,9 +44,18 @@ namespace IMT.UI.Editors
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
             HeaderPanel.OnDuplicate += Duplicate;
         }
-        private void AddStyleProperties()
+
+        protected override void AddAditionalProperties()
         {
-            StyleProperties = EditStyle.GetUIComponents(EditObject, PropertiesPanel, true);
+            AdditionalProperties.Clear();
+            var provider = new EditorProvider(EditObject, PropertiesPanel, AdditionalProperties.Add, RefreshAdditionalProperties, false);
+            EditStyle.GetUIComponents(provider);
+            AdditionalProperties.Sort(PropertyInfoComparer.Instance);
+
+            PropertiesPanel.StopLayout();
+            foreach (var propertyInfo in AdditionalProperties)
+                propertyInfo.Create(provider);
+            PropertiesPanel.StartLayout();
         }
 
         private void ToggleAsDefault()

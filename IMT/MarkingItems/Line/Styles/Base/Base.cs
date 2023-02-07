@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.Manager;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -78,166 +80,143 @@ namespace IMT.Manager
 
         protected bool CheckDashedLod(MarkingLOD lod, float width, float length) => lod != MarkingLOD.LOD1 || width > LodWidth || length > LodLength;
 
-        protected FloatPropertyPanel AddOffsetProperty(IDoubleLine doubleStyle, UIComponent parent, bool canCollapse)
+        protected void AddOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(doubleStyle.Offset));
-            offsetProperty.Text = Localize.StyleOption_OffsetBetween;
-            offsetProperty.Format = Localize.NumberFormat_Meter;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0.05f;
-            offsetProperty.CanCollapse = canCollapse;
-            offsetProperty.Init();
-            offsetProperty.Value = doubleStyle.Offset;
-            offsetProperty.OnValueChanged += (value) => doubleStyle.Offset.Value = value;
-
-            return offsetProperty;
-        }
-        protected Vector2PropertyPanel AddTriangleProperty(ISharkLine sharkTeethStyle, UIComponent parent, bool canCollapse)
-        {
-            var triangleProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Triangle));
-            triangleProperty.Text = Localize.StyleOption_Triangle;
-            triangleProperty.FieldsWidth = 50f;
-            triangleProperty.SetLabels(Localize.StyleOption_SharkToothBaseAbrv, Localize.StyleOption_SharkToothHeightAbrv);
-            triangleProperty.Format = Localize.NumberFormat_Meter;
-            triangleProperty.UseWheel = true;
-            triangleProperty.WheelStep = new Vector2(0.1f, 0.1f);
-            triangleProperty.WheelTip = Settings.ShowToolTip;
-            triangleProperty.CheckMin = true;
-            triangleProperty.MinValue = new Vector2(0.3f, 0.3f);
-            triangleProperty.CanCollapse = canCollapse;
-            triangleProperty.Init(0, 1);
-            triangleProperty.Value = new Vector2(sharkTeethStyle.Base, sharkTeethStyle.Height);
-            triangleProperty.OnValueChanged += (value) =>
+            if (this is IDoubleLine doubleStyle)
             {
-                sharkTeethStyle.Base.Value = value.x;
-                sharkTeethStyle.Height.Value = value.y;
-            };
-
-            return triangleProperty;
+                offsetProperty.Text = Localize.StyleOption_OffsetBetween;
+                offsetProperty.Format = Localize.NumberFormat_Meter;
+                offsetProperty.UseWheel = true;
+                offsetProperty.WheelStep = 0.1f;
+                offsetProperty.WheelTip = Settings.ShowToolTip;
+                offsetProperty.CheckMin = true;
+                offsetProperty.MinValue = 0.05f;
+                offsetProperty.Init();
+                offsetProperty.Value = doubleStyle.Offset;
+                offsetProperty.OnValueChanged += (value) => doubleStyle.Offset.Value = value;
+            }
+            else
+                throw new NotSupportedException();
         }
-        protected FloatPropertyPanel AddBaseProperty(ISharkLine sharkTeethStyle, UIComponent parent, bool canCollapse)
+        protected void AddTriangleProperty(Vector2PropertyPanel triangleProperty, EditorProvider provider)
         {
-            var baseProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Base));
-            baseProperty.Text = Localize.StyleOption_SharkToothBase;
-            baseProperty.Format = Localize.NumberFormat_Meter;
-            baseProperty.UseWheel = true;
-            baseProperty.WheelStep = 0.1f;
-            baseProperty.WheelTip = Settings.ShowToolTip;
-            baseProperty.CheckMin = true;
-            baseProperty.MinValue = 0.3f;
-            baseProperty.CanCollapse = canCollapse;
-            baseProperty.Init();
-            baseProperty.Value = sharkTeethStyle.Base;
-            baseProperty.OnValueChanged += (value) => sharkTeethStyle.Base.Value = value;
-
-            return baseProperty;
-        }
-        protected FloatPropertyPanel AddHeightProperty(ISharkLine sharkTeethStyle, UIComponent parent, bool canCollapse)
-        {
-            var heightProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Height));
-            heightProperty.Text = Localize.StyleOption_SharkToothHeight;
-            heightProperty.Format = Localize.NumberFormat_Meter;
-            heightProperty.UseWheel = true;
-            heightProperty.WheelStep = 0.1f;
-            heightProperty.WheelTip = Settings.ShowToolTip;
-            heightProperty.CheckMin = true;
-            heightProperty.MinValue = 0.3f;
-            heightProperty.CanCollapse = canCollapse;
-            heightProperty.Init();
-            heightProperty.Value = sharkTeethStyle.Height;
-            heightProperty.OnValueChanged += (value) => sharkTeethStyle.Height.Value = value;
-
-            return heightProperty;
-        }
-        protected FloatPropertyPanel AddSpaceProperty(ISharkLine sharkTeethStyle, UIComponent parent, bool canCollapse)
-        {
-            var spaceProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(sharkTeethStyle.Space));
-            spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
-            spaceProperty.Format = Localize.NumberFormat_Meter;
-            spaceProperty.UseWheel = true;
-            spaceProperty.WheelStep = 0.1f;
-            spaceProperty.WheelTip = Settings.ShowToolTip;
-            spaceProperty.CheckMin = true;
-            spaceProperty.MinValue = 0.1f;
-            spaceProperty.CanCollapse = canCollapse;
-            spaceProperty.Init();
-            spaceProperty.Value = sharkTeethStyle.Space;
-            spaceProperty.OnValueChanged += (value) => sharkTeethStyle.Space.Value = value;
-
-            return spaceProperty;
-        }
-        protected LineAlignmentPropertyPanel AddAlignmentProperty(IDoubleAlignmentLine alignmentStyle, UIComponent parent, bool canCollapse)
-        {
-            var alignmentProperty = ComponentPool.Get<LineAlignmentPropertyPanel>(parent, nameof(alignmentStyle.Alignment));
-            alignmentProperty.Text = Localize.StyleOption_Alignment;
-            alignmentProperty.CanCollapse = canCollapse;
-            alignmentProperty.Init();
-            alignmentProperty.SelectedObject = alignmentStyle.Alignment;
-            alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment.Value = value;
-            return alignmentProperty;
-        }
-        protected FloatPropertyPanel AddElevationProperty(I3DLine line3DStyle, UIComponent parent, bool canCollapse)
-        {
-            var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(line3DStyle.Elevation));
-            elevationProperty.Text = Localize.LineStyle_Elevation;
-            elevationProperty.Format = Localize.NumberFormat_Meter;
-            elevationProperty.UseWheel = true;
-            elevationProperty.WheelStep = 0.1f;
-            elevationProperty.CheckMin = true;
-            elevationProperty.MinValue = 0f;
-            elevationProperty.CheckMax = true;
-            elevationProperty.MaxValue = 1f;
-            elevationProperty.CanCollapse = canCollapse;
-            elevationProperty.Init();
-            elevationProperty.Value = line3DStyle.Elevation;
-            elevationProperty.OnValueChanged += (value) => line3DStyle.Elevation.Value = value;
-
-            return elevationProperty;
-        }
-
-        protected BoolListPropertyPanel AddUseSecondColorProperty(IDoubleLine doubleLine, UIComponent parent, bool canCollapse)
-        {
-            var useSecondColorProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(doubleLine.TwoColors));
-            useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
-            useSecondColorProperty.CanCollapse = canCollapse;
-            useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
-            useSecondColorProperty.SelectedObject = doubleLine.TwoColors;
-            useSecondColorProperty.OnSelectObjectChanged += (value) =>
+            if (this is ISharkLine sharkTeethStyle)
+            {
+                triangleProperty.Text = Localize.StyleOption_Triangle;
+                triangleProperty.FieldsWidth = 50f;
+                triangleProperty.SetLabels(Localize.StyleOption_SharkToothBaseAbrv, Localize.StyleOption_SharkToothHeightAbrv);
+                triangleProperty.Format = Localize.NumberFormat_Meter;
+                triangleProperty.UseWheel = true;
+                triangleProperty.WheelStep = new Vector2(0.1f, 0.1f);
+                triangleProperty.WheelTip = Settings.ShowToolTip;
+                triangleProperty.CheckMin = true;
+                triangleProperty.MinValue = new Vector2(0.3f, 0.3f);
+                triangleProperty.Init(0, 1);
+                triangleProperty.Value = new Vector2(sharkTeethStyle.Base, sharkTeethStyle.Height);
+                triangleProperty.OnValueChanged += (value) =>
                 {
-                    doubleLine.TwoColors.Value = value;
-                    UseSecondColorChanged(doubleLine, parent, value);
+                    sharkTeethStyle.Base.Value = value.x;
+                    sharkTeethStyle.Height.Value = value.y;
                 };
-
-            return useSecondColorProperty;
-        }
-        protected void UseSecondColorChanged(IDoubleLine doubleLine, UIComponent parent, bool value)
-        {
-            if (parent.Find<ColorAdvancedPropertyPanel>(nameof(Color)) is ColorAdvancedPropertyPanel mainColorProperty)
-            {
-                mainColorProperty.Text = value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
             }
-
-            if (parent.Find<ColorAdvancedPropertyPanel>(nameof(doubleLine.SecondColor)) is ColorAdvancedPropertyPanel secondColorProperty)
+            else
+                throw new NotSupportedException();
+        }
+        protected void AddSpaceProperty(FloatPropertyPanel spaceProperty, EditorProvider provider)
+        {
+            if (this is ISharkLine sharkTeethStyle)
             {
-                secondColorProperty.IsHidden = !value;
-                secondColorProperty.Text = value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
+                spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
+                spaceProperty.Format = Localize.NumberFormat_Meter;
+                spaceProperty.UseWheel = true;
+                spaceProperty.WheelStep = 0.1f;
+                spaceProperty.WheelTip = Settings.ShowToolTip;
+                spaceProperty.CheckMin = true;
+                spaceProperty.MinValue = 0.1f;
+                spaceProperty.Init();
+                spaceProperty.Value = sharkTeethStyle.Space;
+                spaceProperty.OnValueChanged += (value) => sharkTeethStyle.Space.Value = value;
+            }
+            else
+                throw new NotSupportedException();
+        }
+        protected void AddAlignmentProperty(LineAlignmentPropertyPanel alignmentProperty, EditorProvider provider)
+        {
+            if (this is IDoubleAlignmentLine alignmentStyle)
+            {
+                alignmentProperty.Text = Localize.StyleOption_Alignment;
+                alignmentProperty.Init();
+                alignmentProperty.SelectedObject = alignmentStyle.Alignment;
+                alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment.Value = value;
+            }
+            else
+                throw new NotSupportedException();
+        }
+        protected void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
+        {
+            if (this is I3DLine line3DStyle)
+            {
+                elevationProperty.Text = Localize.LineStyle_Elevation;
+                elevationProperty.Format = Localize.NumberFormat_Meter;
+                elevationProperty.UseWheel = true;
+                elevationProperty.WheelStep = 0.1f;
+                elevationProperty.CheckMin = true;
+                elevationProperty.MinValue = 0f;
+                elevationProperty.CheckMax = true;
+                elevationProperty.MaxValue = 1f;
+                elevationProperty.Init();
+                elevationProperty.Value = line3DStyle.Elevation;
+                elevationProperty.OnValueChanged += (value) => line3DStyle.Elevation.Value = value;
+            }
+            else
+                throw new NotSupportedException();
+        }
+
+        protected void AddUseSecondColorProperty(BoolListPropertyPanel useSecondColorProperty, EditorProvider provider)
+        {
+            if (this is IDoubleLine doubleLine)
+            {
+                useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
+                useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
+                useSecondColorProperty.SelectedObject = doubleLine.TwoColors;
+                useSecondColorProperty.OnSelectObjectChanged += (value) =>
+                    {
+                        doubleLine.TwoColors.Value = value;
+                        provider.Refresh();
+                    };
+            }
+            else
+                throw new NotSupportedException();
+        }
+
+        protected void AddSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        {
+            if (this is IDoubleLine doubleLine)
+            {
+                colorProperty.Text = Localize.StyleOption_Color;
+                colorProperty.WheelTip = Settings.ShowToolTip;
+                colorProperty.Init((GetDefault() as IDoubleLine)?.SecondColor);
+                colorProperty.Value = doubleLine.SecondColor;
+                colorProperty.OnValueChanged += (color) => doubleLine.SecondColor.Value = color;
+            }
+            else
+                throw new NotSupportedException();
+        }
+        protected void RefreshSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        {
+            if (this is IDoubleLine doubleLine)
+            {
+                colorProperty.IsHidden = !doubleLine.TwoColors;
+                colorProperty.Text = doubleLine.TwoColors ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
             }
         }
 
-        protected ColorAdvancedPropertyPanel AddSecondColorProperty(IDoubleLine doubleLine, UIComponent parent, bool canCollapse)
+        protected void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(doubleLine.SecondColor));
-            colorProperty.Text = Localize.StyleOption_Color;
-            colorProperty.WheelTip = Settings.ShowToolTip;
-            colorProperty.CanCollapse = canCollapse;
-            colorProperty.Init((GetDefault() as IDoubleLine)?.SecondColor);
-            colorProperty.Value = doubleLine.SecondColor;
-            colorProperty.OnValueChanged += (color) => doubleLine.SecondColor.Value = color;
-
-            return colorProperty;
+            if (this is IDoubleLine doubleLine)
+            {
+                colorProperty.Text = doubleLine.TwoColors ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
+            }
         }
     }
     public abstract class LineStyle<StyleType> : LineStyle

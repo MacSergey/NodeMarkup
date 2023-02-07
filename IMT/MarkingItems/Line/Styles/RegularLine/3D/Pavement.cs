@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -43,10 +44,10 @@ namespace IMT.Manager
                 addData(new MarkingLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement));
         }
 
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddElevationProperty(this, parent, false));
+            base.GetUIComponents(line, provider);
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), false, AddElevationProperty));
         }
 
         public override XElement ToXml()

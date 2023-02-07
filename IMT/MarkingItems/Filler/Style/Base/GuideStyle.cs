@@ -2,6 +2,7 @@
 using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -131,35 +132,36 @@ namespace IMT.Manager
             right = contour.GetGuide(RightGuideA, RightGuideB, LeftGuideA, LeftGuideB);
         }
 
-        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
-            base.GetUIComponents(filler, components, parent, isTemplate);
+            base.GetUIComponents(filler, provider);
 
-            if (!isTemplate)
+            if (!provider.isTemplate)
             {
-                components.Add(AddGuideProperty(filler.Contour, parent, false));
+                provider.AddProperty(new PropertyInfo<FillerGuidePropertyPanel>(this, nameof(Guide), false, AddGuideProperty));
             }
         }
-        protected FillerGuidePropertyPanel AddGuideProperty(FillerContour contour, UIComponent parent, bool canCollapse)
+        protected void AddGuideProperty(FillerGuidePropertyPanel guideProperty, EditorProvider provider)
         {
-            var guideProperty = ComponentPool.Get<FillerGuidePropertyPanel>(parent, Guide);
-            guideProperty.Text = Localize.StyleOption_Rails;
-            guideProperty.CanCollapse = canCollapse;
-            guideProperty.Init(contour.ProcessedCount);
-            guideProperty.LeftGuide = new FillerGuide(contour.GetCorrectIndex(LeftGuideA), contour.GetCorrectIndex(LeftGuideB));
-            guideProperty.RightGuide = new FillerGuide(contour.GetCorrectIndex(RightGuideA), contour.GetCorrectIndex(RightGuideB));
-            guideProperty.Follow = (this as IFollowGuideFiller)?.FollowGuides.Value;
-            guideProperty.OnValueChanged += (bool follow, FillerGuide left, FillerGuide right) =>
+            if (provider.editObject is MarkingFiller filler)
             {
-                if (this is IFollowGuideFiller followGuideStyle)
-                    followGuideStyle.FollowGuides.Value = follow;
+                var contour = filler.Contour;
+                guideProperty.Text = Localize.StyleOption_Rails;
+                guideProperty.Init(contour.ProcessedCount);
+                guideProperty.LeftGuide = new FillerGuide(contour.GetCorrectIndex(LeftGuideA), contour.GetCorrectIndex(LeftGuideB));
+                guideProperty.RightGuide = new FillerGuide(contour.GetCorrectIndex(RightGuideA), contour.GetCorrectIndex(RightGuideB));
+                guideProperty.Follow = (this as IFollowGuideFiller)?.FollowGuides.Value;
+                guideProperty.OnValueChanged += (bool follow, FillerGuide left, FillerGuide right) =>
+                {
+                    if (this is IFollowGuideFiller followGuideStyle)
+                        followGuideStyle.FollowGuides.Value = follow;
 
-                LeftGuideA.Value = left.a;
-                LeftGuideB.Value = left.b;
-                RightGuideA.Value = right.a;
-                RightGuideB.Value = right.b;
-            };
-            return guideProperty;
+                    LeftGuideA.Value = left.a;
+                    LeftGuideB.Value = left.b;
+                    RightGuideA.Value = right.a;
+                    RightGuideB.Value = right.b;
+                };
+            }
         }
 
         public override void Render(MarkingFiller filler, OverlayData data)

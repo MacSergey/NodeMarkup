@@ -1,5 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -8,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -157,27 +160,25 @@ namespace IMT.Manager
             }
         }
 
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
+            base.GetUIComponents(line, provider);
 
-            components.Add(AddDashLengthProperty(parent, false));
-            components.Add(AddSpaceLengthProperty(this, parent, false));
-
-            components.Add(AddUseSecondColorProperty(this, parent, true));
-            components.Add(AddSecondColorProperty(this, parent, true));
-            components.Add(AddOffsetProperty(this, parent, false));
-            if (!isTemplate)
+            provider.AddProperty(new PropertyInfo<FloatRangePropertyPanel>(this, nameof(DashLength), false, AddDashLengthProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(SpaceLength), false, AddSpaceLengthProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), true, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), true, AddSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), false, AddOffsetProperty));
+            if (!provider.isTemplate)
             {
-                components.Add(AddAlignmentProperty(this, parent, false));
-                components.Add(AddInvertProperty(this, parent, false));
+                provider.AddProperty(new PropertyInfo<LineAlignmentPropertyPanel>(this, nameof(Alignment), false, AddAlignmentProperty));
+                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), false, AddInvertProperty));
             }
 
-            UseSecondColorChanged(this, parent, TwoColors);
+            //UseSecondColorChanged(this, parent, TwoColors);
         }
-        protected FloatRangePropertyPanel AddDashLengthProperty(UIComponent parent, bool canCollapse)
+        protected void AddDashLengthProperty(FloatRangePropertyPanel dashLengthProperty, EditorProvider provider)
         {
-            var dashLengthProperty = ComponentPool.Get<FloatRangePropertyPanel>(parent, nameof(DashLength));
             dashLengthProperty.Text = Localize.StyleOption_DashedLength;
             dashLengthProperty.Format = Localize.NumberFormat_Meter;
             dashLengthProperty.UseWheel = true;
@@ -185,7 +186,6 @@ namespace IMT.Manager
             dashLengthProperty.WheelTip = Settings.ShowToolTip;
             dashLengthProperty.CheckMin = true;
             dashLengthProperty.MinValue = 0.1f;
-            dashLengthProperty.CanCollapse = canCollapse;
             dashLengthProperty.FieldWidth = 70f;
             dashLengthProperty.Init();
             dashLengthProperty.SetValues(DashLengthA, DashLengthB);
@@ -194,8 +194,6 @@ namespace IMT.Manager
                 DashLengthA.Value = valueA;
                 DashLengthB.Value = valueB;
             };
-
-            return dashLengthProperty;
         }
 
         public override XElement ToXml()

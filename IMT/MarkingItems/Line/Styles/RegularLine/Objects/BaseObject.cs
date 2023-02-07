@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -10,6 +11,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Linq;
 using UnityEngine;
+using static ColossalFramework.IO.EncodedArray;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -71,28 +74,24 @@ namespace IMT.Manager
             }
         }
 
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddPrefabProperty(parent, false));
+            base.GetUIComponents(line, provider);
 
-            components.Add(AddProbabilityProperty(parent, true));
-            components.Add(AddStepProperty(parent, false));
-            components.Add(AddShiftProperty(parent, false));
-            components.Add(AddAngleRangeProperty(parent, false));
-            components.Add(AddScaleRangeProperty(parent, true));
-            components.Add(AddOffsetProperty(parent, true));
-            components.Add(AddDistributionProperty(parent, true));
-            components.Add(AddElevationProperty(parent, false));
-            components.Add(AddTiltRangeProperty(parent, true));
-            components.Add(AddSlopeRangeProperty(parent, true));
+            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(Probability), true, AddProbabilityProperty, RefreshProbabilityProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticAutoProperty>(this, nameof(Step), false, AddStepProperty, RefreshStepProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Shift), false, AddShiftProperty, RefreshShiftProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Angle), false, AddAngleRangeProperty, RefreshAngleRangeProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Scale), true, AddScaleRangeProperty, RefreshScaleRangeProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), true, AddOffsetProperty, RefreshOffsetProperty));
+            provider.AddProperty(new PropertyInfo<DistributionTypePanel>(this, nameof(Distribution), true, AddDistributionProperty, RefreshDistributionProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Elevation), false, AddElevationProperty, RefreshElevationProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Tilt), true, AddTiltRangeProperty, RefreshTiltRangeProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeAutoProperty>(this, nameof(Slope), true, AddSlopeRangeProperty, RefreshSlopeRangeProperty));
         }
 
-        protected abstract EditorItem AddPrefabProperty(UIComponent parent, bool canCollapse);
-
-        protected IntPropertyPanel AddProbabilityProperty(UIComponent parent, bool canCollapse)
+        private void AddProbabilityProperty(IntPropertyPanel probabilityProperty, EditorProvider provider)
         {
-            var probabilityProperty = ComponentPool.Get<IntPropertyPanel>(parent, nameof(Probability));
             probabilityProperty.Text = Localize.StyleOption_ObjectProbability;
             probabilityProperty.Format = Localize.NumberFormat_Percent;
             probabilityProperty.UseWheel = true;
@@ -102,17 +101,17 @@ namespace IMT.Manager
             probabilityProperty.MinValue = 0;
             probabilityProperty.CheckMax = true;
             probabilityProperty.MaxValue = 100;
-            probabilityProperty.CanCollapse = canCollapse;
             probabilityProperty.Init();
             probabilityProperty.Value = Probability;
             probabilityProperty.OnValueChanged += (value) => Probability.Value = value;
-
-            return probabilityProperty;
+        }
+        private void RefreshProbabilityProperty(IntPropertyPanel probabilityProperty, EditorProvider provider)
+        {
+            probabilityProperty.IsHidden = !IsValid;
         }
 
-        protected FloatStaticAutoProperty AddStepProperty(UIComponent parent, bool canCollapse)
+        private void AddStepProperty(FloatStaticAutoProperty stepProperty, EditorProvider provider)
         {
-            var stepProperty = ComponentPool.Get<FloatStaticAutoProperty>(parent, nameof(Step));
             stepProperty.Text = Localize.StyleOption_ObjectStep;
             stepProperty.Format = Localize.NumberFormat_Meter;
             stepProperty.UseWheel = true;
@@ -120,7 +119,6 @@ namespace IMT.Manager
             stepProperty.WheelTip = Settings.ShowToolTip;
             stepProperty.CheckMin = true;
             stepProperty.MinValue = 0.1f;
-            stepProperty.CanCollapse = canCollapse;
             stepProperty.Init();
 
             if (Step.HasValue)
@@ -136,13 +134,18 @@ namespace IMT.Manager
                 if (IsValid)
                     stepProperty.Value = PrefabSize.x;
             };
-
-            return stepProperty;
+        }
+        private void RefreshStepProperty(FloatStaticAutoProperty stepProperty, EditorProvider provider)
+        {
+            stepProperty.IsHidden = !IsValid;
+            if (Step.HasValue)
+                stepProperty.SetValue(Step.Value.Value);
+            else
+                stepProperty.SetAuto();
         }
 
-        protected FloatStaticRangeProperty AddAngleRangeProperty(UIComponent parent, bool canCollapse)
+        private void AddAngleRangeProperty(FloatStaticRangeProperty angleProperty, EditorProvider provider)
         {
-            var angleProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Angle));
             angleProperty.Text = Localize.StyleOption_ObjectAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
@@ -154,17 +157,17 @@ namespace IMT.Manager
             angleProperty.MaxValue = 180;
             angleProperty.AllowInvert = true;
             angleProperty.CyclicalValue = true;
-            angleProperty.CanCollapse = canCollapse;
             angleProperty.Init();
             angleProperty.SetValues(Angle.Value.x, Angle.Value.y);
             angleProperty.OnValueChanged += (valueA, valueB) => Angle.Value = new Vector2(valueA, valueB);
-
-            return angleProperty;
+        }
+        private void RefreshAngleRangeProperty(FloatStaticRangeProperty angleProperty, EditorProvider provider)
+        {
+            angleProperty.IsHidden = !IsValid;
         }
 
-        protected FloatStaticRangeProperty AddTiltRangeProperty(UIComponent parent, bool canCollapse)
+        private void AddTiltRangeProperty(FloatStaticRangeProperty tiltProperty, EditorProvider provider)
         {
-            var tiltProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Tilt));
             tiltProperty.Text = Localize.StyleOption_Tilt;
             tiltProperty.Format = Localize.NumberFormat_Degree;
             tiltProperty.UseWheel = true;
@@ -176,17 +179,17 @@ namespace IMT.Manager
             tiltProperty.MaxValue = 90;
             tiltProperty.AllowInvert = false;
             tiltProperty.CyclicalValue = false;
-            tiltProperty.CanCollapse = canCollapse;
             tiltProperty.Init();
             tiltProperty.SetValues(Tilt.Value.x, Tilt.Value.y);
             tiltProperty.OnValueChanged += (valueA, valueB) => Tilt.Value = new Vector2(valueA, valueB);
-
-            return tiltProperty;
+        }
+        private void RefreshTiltRangeProperty(FloatStaticRangeProperty tiltProperty, EditorProvider provider)
+        {
+            tiltProperty.IsHidden = !IsValid || !CanSlope;
         }
 
-        protected FloatStaticRangeAutoProperty AddSlopeRangeProperty(UIComponent parent, bool canCollapse)
+        private void AddSlopeRangeProperty(FloatStaticRangeAutoProperty slopeProperty, EditorProvider provider)
         {
-            var slopeProperty = ComponentPool.Get<FloatStaticRangeAutoProperty>(parent, nameof(Slope));
             slopeProperty.Text = Localize.StyleOption_Slope;
             slopeProperty.Format = Localize.NumberFormat_Degree;
             slopeProperty.UseWheel = true;
@@ -198,7 +201,6 @@ namespace IMT.Manager
             slopeProperty.MaxValue = 90;
             slopeProperty.AllowInvert = false;
             slopeProperty.CyclicalValue = false;
-            slopeProperty.CanCollapse = canCollapse;
             slopeProperty.Init();
 
             if (Slope.HasValue)
@@ -208,13 +210,14 @@ namespace IMT.Manager
 
             slopeProperty.OnValueChanged += (valueA, valueB) => Slope.Value = new Vector2(valueA, valueB);
             slopeProperty.OnAutoValue += () => Slope.Value = null;
-
-            return slopeProperty;
+        }
+        private void RefreshSlopeRangeProperty(FloatStaticRangeAutoProperty slopeProperty, EditorProvider provider)
+        {
+            slopeProperty.IsHidden = !IsValid || !CanSlope;
         }
 
-        protected FloatStaticRangeProperty AddShiftProperty(UIComponent parent, bool canCollapse)
+        private void AddShiftProperty(FloatStaticRangeProperty shiftProperty, EditorProvider provider)
         {
-            var shiftProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Shift));
             shiftProperty.Text = Localize.StyleOption_ObjectShift;
             shiftProperty.Format = Localize.NumberFormat_Meter;
             shiftProperty.UseWheel = true;
@@ -226,17 +229,17 @@ namespace IMT.Manager
             shiftProperty.MaxValue = 50;
             shiftProperty.AllowInvert = false;
             shiftProperty.CyclicalValue = false;
-            shiftProperty.CanCollapse = canCollapse;
             shiftProperty.Init();
             shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
             shiftProperty.OnValueChanged += (valueA, valueB) => Shift.Value = new Vector2(valueA, valueB);
-
-            return shiftProperty;
+        }
+        private void RefreshShiftProperty(FloatStaticRangeProperty shiftProperty, EditorProvider provider)
+        {
+            shiftProperty.IsHidden = !IsValid;
         }
 
-        protected FloatStaticRangeProperty AddScaleRangeProperty(UIComponent parent, bool canCollapse)
+        private void AddScaleRangeProperty(FloatStaticRangeProperty scaleProperty, EditorProvider provider)
         {
-            var scaleProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Scale));
             scaleProperty.Text = Localize.StyleOption_ObjectScale;
             scaleProperty.Format = Localize.NumberFormat_Percent;
             scaleProperty.UseWheel = true;
@@ -248,17 +251,17 @@ namespace IMT.Manager
             scaleProperty.MaxValue = 500f;
             scaleProperty.AllowInvert = false;
             scaleProperty.CyclicalValue = false;
-            scaleProperty.CanCollapse = canCollapse;
             scaleProperty.Init();
             scaleProperty.SetValues(Scale.Value.x * 100f, Scale.Value.y * 100f);
             scaleProperty.OnValueChanged += (valueA, valueB) => Scale.Value = new Vector2(valueA, valueB) * 0.01f;
-
-            return scaleProperty;
+        }
+        private void RefreshScaleRangeProperty(FloatStaticRangeProperty scaleProperty, EditorProvider provider)
+        {
+            scaleProperty.IsHidden = !IsValid;
         }
 
-        protected FloatStaticRangeProperty AddElevationProperty(UIComponent parent, bool canCollapse)
+        private void AddElevationProperty(FloatStaticRangeProperty elevationProperty, EditorProvider provider)
         {
-            var elevationProperty = ComponentPool.Get<FloatStaticRangeProperty>(parent, nameof(Elevation));
             elevationProperty.Text = Localize.LineStyle_Elevation;
             elevationProperty.Format = Localize.NumberFormat_Meter;
             elevationProperty.UseWheel = true;
@@ -270,16 +273,17 @@ namespace IMT.Manager
             elevationProperty.MaxValue = 10;
             elevationProperty.AllowInvert = false;
             elevationProperty.CyclicalValue = false;
-            elevationProperty.CanCollapse = canCollapse;
             elevationProperty.Init();
             elevationProperty.SetValues(Elevation.Value.x, Elevation.Value.y);
             elevationProperty.OnValueChanged += (valueA, valueB) => Elevation.Value = new Vector2(valueA, valueB);
-
-            return elevationProperty;
         }
-        protected Vector2PropertyPanel AddOffsetProperty(UIComponent parent, bool canCollapse)
+        private void RefreshElevationProperty(FloatStaticRangeProperty elevationProperty, EditorProvider provider)
         {
-            var offsetProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Offset));
+            elevationProperty.IsHidden = !IsValid || !CanElevate;
+        }
+
+        private void AddOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
+        {
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.SetLabels(Localize.StyleOption_OffsetBeforeAbrv, Localize.StyleOption_OffsetAfterAbrv);
             offsetProperty.FieldsWidth = 50f;
@@ -289,7 +293,6 @@ namespace IMT.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = Vector2.zero;
-            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init(0, 1);
             offsetProperty.Value = new Vector2(OffsetBefore, OffsetAfter);
             offsetProperty.OnValueChanged += (value) =>
@@ -297,22 +300,25 @@ namespace IMT.Manager
                 OffsetBefore.Value = value.x;
                 OffsetAfter.Value = value.y;
             };
-
-            return offsetProperty;
         }
-        protected DistributionTypePanel AddDistributionProperty(UIComponent parent, bool canCollapse)
+        private void RefreshOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
-            var distributionProperty = ComponentPool.Get<DistributionTypePanel>(parent, nameof(Distribution));
+            offsetProperty.IsHidden = !IsValid;
+        }
+
+        private void AddDistributionProperty(DistributionTypePanel distributionProperty, EditorProvider provider)
+        {
             distributionProperty.Text = Localize.StyleOption_Distribution;
             distributionProperty.Selector.AutoButtonSize = false;
             distributionProperty.Selector.ButtonWidth = 57f;
             distributionProperty.Selector.atlas = IMTTextures.Atlas;
-            distributionProperty.CanCollapse = canCollapse;
             distributionProperty.Init();
             distributionProperty.SelectedObject = Distribution;
             distributionProperty.OnSelectObjectChanged += (value) => Distribution.Value = value;
-
-            return distributionProperty;
+        }
+        private void RefreshDistributionProperty(DistributionTypePanel distributionProperty, EditorProvider provider)
+        {
+            distributionProperty.IsHidden = !IsValid;
         }
 
         public override XElement ToXml()
@@ -528,65 +534,28 @@ namespace IMT.Manager
         protected virtual void CalculateItem(PrefabType prefab, ref MarkingPropItemData item) { }
         protected abstract void CalculateParts(PrefabType prefab, MarkingPropItemData[] items, MarkingLOD lod, Action<IStyleData> addData);
 
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
-            PrefabChanged(parent, IsValid);
+            base.GetUIComponents(line, provider);
+            provider.AddProperty(new PropertyInfo<SelectPrefabType>(this, nameof(Prefab), false, AddPrefabProperty));
         }
-        protected sealed override EditorItem AddPrefabProperty(UIComponent parent, bool canCollapse)
+
+        protected void AddPrefabProperty(SelectPrefabType prefabProperty, EditorProvider provider)
         {
-            var prefabProperty = ComponentPool.Get<SelectPrefabType>(parent, nameof(Prefab));
             prefabProperty.Text = AssetPropertyName;
             prefabProperty.PrefabSelectPredicate = IsValidPrefab;
             prefabProperty.PrefabSortPredicate = GetSortPredicate();
-            prefabProperty.CanCollapse = canCollapse;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
             prefabProperty.OnValueChanged += (value) =>
             {
                 Prefab.Value = value;
-                PrefabChanged(parent, IsValid);
 
                 if (!Step.HasValue)
-                {
-                    if (parent.Find(nameof(Step)) is FloatStaticAutoProperty stepProperty)
-                        stepProperty.SimulateEnterValue(IsValid ? PrefabSize.x : DefaultObjectStep);
-                }
+                    Step.Value = IsValid ? PrefabSize.x : DefaultObjectStep;
+
+                provider.Refresh();
             };
-
-            return prefabProperty;
-        }
-        protected virtual void PrefabChanged(UIComponent parent, bool valid)
-        {
-            if (parent.Find(nameof(Probability)) is EditorPropertyPanel probability)
-                probability.IsHidden = !valid;
-
-            if (parent.Find(nameof(Step)) is EditorPropertyPanel step)
-                step.IsHidden = !valid;
-
-            if (parent.Find(nameof(Shift)) is EditorPropertyPanel shift)
-                shift.IsHidden = !valid;
-
-            if (parent.Find(nameof(Angle)) is EditorPropertyPanel angle)
-                angle.IsHidden = !valid;
-
-            if (parent.Find(nameof(Scale)) is EditorPropertyPanel scale)
-                scale.IsHidden = !valid;
-
-            if (parent.Find(nameof(Offset)) is EditorPropertyPanel offset)
-                offset.IsHidden = !valid;
-
-            if (parent.Find(nameof(Distribution)) is EditorPropertyPanel distribution)
-                distribution.IsHidden = !valid;
-
-            if (parent.Find(nameof(Elevation)) is EditorPropertyPanel elevation)
-                elevation.IsHidden = !valid || !CanElevate;
-
-            if (parent.Find(nameof(Tilt)) is EditorPropertyPanel tilt)
-                tilt.IsHidden = !valid || !CanSlope;
-
-            if (parent.Find(nameof(Slope)) is EditorPropertyPanel slope)
-                slope.IsHidden = !valid || !CanSlope;
         }
 
         protected abstract bool IsValidPrefab(PrefabType info);

@@ -1,6 +1,8 @@
-﻿using ColossalFramework.Math;
+﻿using ColossalFramework.DataBinding;
+using ColossalFramework.Math;
 using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon;
@@ -13,6 +15,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -83,19 +86,22 @@ namespace IMT.Manager
             }
         }
 
-        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
-            base.GetUIComponents(filler, components, parent, isTemplate);
+            base.GetUIComponents(filler, provider);
 #if DEBUG
-            components.Add(GetMinAngle(parent));
-            components.Add(GetMinLength(parent));
-            components.Add(GetMaxLength(parent));
+            if (!provider.isTemplate && Settings.ShowDebugProperties)
+            {
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MinAngle), true, GetMinAngle));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MinLength), true, GetMinLength));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MaxLength), true, GetMaxLength));
+            }
 #endif
         }
+
 #if DEBUG
-        private FloatPropertyPanel GetMinAngle(UIComponent parent)
+        private void GetMinAngle(FloatPropertyPanel minAngleProperty, EditorProvider provider)
         {
-            var minAngleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MinAngle));
             minAngleProperty.Text = "Min angle";
             minAngleProperty.CanCollapse = true;
             minAngleProperty.CheckMax = true;
@@ -107,11 +113,9 @@ namespace IMT.Manager
             minAngleProperty.Init();
             minAngleProperty.Value = MinAngle;
             minAngleProperty.OnValueChanged += (float value) => MinAngle.Value = value;
-            return minAngleProperty;
         }
-        private FloatPropertyPanel GetMinLength(UIComponent parent)
+        private void GetMinLength(FloatPropertyPanel minLengthProperty, EditorProvider provider)
         {
-            var minLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MinLength));
             minLengthProperty.Text = "Min length";
             minLengthProperty.CanCollapse = true;
             minLengthProperty.CheckMax = true;
@@ -123,11 +127,9 @@ namespace IMT.Manager
             minLengthProperty.Init();
             minLengthProperty.Value = MinLength;
             minLengthProperty.OnValueChanged += (float value) => MinLength.Value = value;
-            return minLengthProperty;
         }
-        private FloatPropertyPanel GetMaxLength(UIComponent parent)
+        private void GetMaxLength(FloatPropertyPanel maxLengthProperty, EditorProvider provider)
         {
-            var maxLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(MaxLength));
             maxLengthProperty.Text = "Max length";
             maxLengthProperty.CanCollapse = true;
             maxLengthProperty.CheckMax = true;
@@ -139,7 +141,6 @@ namespace IMT.Manager
             maxLengthProperty.Init();
             maxLengthProperty.Value = MaxLength;
             maxLengthProperty.OnValueChanged += (float value) => MaxLength.Value = value;
-            return maxLengthProperty;
         }
 #endif
         public override XElement ToXml()

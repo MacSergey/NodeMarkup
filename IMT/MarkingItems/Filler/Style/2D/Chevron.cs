@@ -1,6 +1,8 @@
-﻿using ColossalFramework.Math;
+﻿using ColossalFramework.DataBinding;
+using ColossalFramework.Math;
 using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon;
@@ -13,6 +15,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -92,19 +95,19 @@ namespace IMT.Manager
             if (target is IFollowGuideFiller followGuideTarget)
                 followGuideTarget.FollowGuides.Value = true;
         }
-        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+
+        protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
-            base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddAngleBetweenProperty(parent, false));
-            if (!isTemplate)
+            base.GetUIComponents(filler, provider);
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(AngleBetween), false, AddAngleBetweenProperty));
+            if (!provider.isTemplate)
             {
-                components.Add(AddInvertProperty(parent, false));
+                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), false, AddInvertProperty));
             }
         }
 
-        protected FloatPropertyPanel AddAngleBetweenProperty(UIComponent parent, bool canCollapse)
+        protected void AddAngleBetweenProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(AngleBetween));
             angleProperty.Text = Localize.StyleOption_AngleBetween;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
@@ -114,24 +117,17 @@ namespace IMT.Manager
             angleProperty.MinValue = 30;
             angleProperty.CheckMax = true;
             angleProperty.MaxValue = 150;
-            angleProperty.CanCollapse = canCollapse;
             angleProperty.Init();
             angleProperty.Value = AngleBetween;
             angleProperty.OnValueChanged += (float value) => AngleBetween.Value = value;
-
-            return angleProperty;
         }
-        protected ButtonPanel AddInvertProperty(UIComponent parent, bool canCollapse)
+        new protected void AddInvertProperty(ButtonPanel buttonsPanel, EditorProvider provider)
         {
-            var buttonsPanel = ComponentPool.Get<ButtonPanel>(parent, nameof(Invert));
             buttonsPanel.Text = Localize.StyleOption_Invert;
-            buttonsPanel.CanCollapse = canCollapse;
             buttonsPanel.Init();
             buttonsPanel.OnButtonClick += OnButtonClick;
 
             void OnButtonClick() => Invert.Value = !Invert;
-
-            return buttonsPanel;
         }
 
 #if DEBUG_PERIODIC_FILLER

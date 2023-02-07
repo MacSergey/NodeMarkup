@@ -1,5 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -8,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -91,16 +94,17 @@ namespace IMT.Manager
             }
         }
 
-        public override void GetUIComponents(MarkingStopLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingStopLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
+            base.GetUIComponents(line, provider);
 
-            components.Add(AddUseSecondColorProperty(this, parent, true));
-            components.Add(AddSecondColorProperty(this, parent, true));
-            UseSecondColorChanged(this, parent, TwoColors);
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), true, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), true, AddSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), false, AddOffsetProperty));
 
-            components.Add(AddOffsetProperty(this, parent, false));
+            //UseSecondColorChanged(this, parent, TwoColors);
         }
+
         public override XElement ToXml()
         {
             var config = base.ToXml();

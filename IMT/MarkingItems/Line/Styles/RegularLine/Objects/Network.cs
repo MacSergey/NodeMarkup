@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -128,52 +130,35 @@ namespace IMT.Manager
             addData(new MarkingNetworkData(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, Elevation));
         }
 
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
+            base.GetUIComponents(line, provider);
 
-            components.Add(AddPrefabProperty(parent, false));
-            components.Add(AddShiftProperty(parent, false));
-            components.Add(AddElevationProperty(parent, false));
-            components.Add(AddScaleProperty(parent, true));
-            components.Add(AddRepeatDistanceProperty(parent, true));
-            components.Add(AddOffsetProperty(parent, true));
-            components.Add(AddInvertProperty(parent, false));
-
-            PrefabChanged(parent, Prefab);
+            provider.AddProperty(new PropertyInfo<SelectNetworkProperty>(this, nameof(Prefab), false, AddPrefabProperty));
+            provider.AddProperty(new PropertyInfo<FloatInvertedPropertyPanel>(this, nameof(Shift), false, AddShiftProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), false, AddElevationProperty, RefreshElevationProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), true, AddScaleProperty));
+            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RepeatDistance), true, AddRepeatDistanceProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), true, AddOffsetProperty));
+            provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), false, AddInvertProperty));
         }
 
-        private SelectNetworkProperty AddPrefabProperty(UIComponent parent, bool canCollapse)
+        private void AddPrefabProperty(SelectNetworkProperty prefabProperty, EditorProvider provider)
         {
-            var prefabProperty = ComponentPool.Get<SelectNetworkProperty>(parent, nameof(Prefab));
             prefabProperty.Text = Localize.StyleOption_AssetNetwork;
             prefabProperty.PrefabSelectPredicate = IsValidNetwork;
             prefabProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
-            prefabProperty.CanCollapse = canCollapse;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
             prefabProperty.OnValueChanged += (value) =>
             {
                 Prefab.Value = value;
-                PrefabChanged(parent, value);
+                provider.Refresh();
             };
-
-            return prefabProperty;
-        }
-        private void PrefabChanged(UIComponent parent, NetInfo value)
-        {
-            if (parent.Find<FloatPropertyPanel>(nameof(Elevation)) is FloatPropertyPanel elevationProperty)
-            {
-                if (IsValidNetwork(value))
-                    elevationProperty.isVisible = Prefab.Value.m_segments[0].m_segmentMaterial.shader.name != "Custom/Net/Fence";
-                else
-                    elevationProperty.isVisible = true;
-            }
         }
 
-        protected FloatInvertedPropertyPanel AddShiftProperty(UIComponent parent, bool canCollapse)
+        private void AddShiftProperty(FloatInvertedPropertyPanel shiftProperty, EditorProvider provider)
         {
-            var shiftProperty = ComponentPool.Get<FloatInvertedPropertyPanel>(parent, nameof(Shift));
             shiftProperty.Text = Localize.StyleOption_ObjectShift;
             shiftProperty.FieldWidth = 100f;
             shiftProperty.Format = Localize.NumberFormat_Meter;
@@ -184,16 +169,12 @@ namespace IMT.Manager
             shiftProperty.CheckMax = true;
             shiftProperty.MinValue = -50;
             shiftProperty.MaxValue = 50;
-            shiftProperty.CanCollapse = canCollapse;
             shiftProperty.Init();
             shiftProperty.Value = Shift;
             shiftProperty.OnValueChanged += (value) => Shift.Value = value;
-
-            return shiftProperty;
         }
-        protected FloatPropertyPanel AddElevationProperty(UIComponent parent, bool canCollapse)
+        new private void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
-            var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Elevation));
             elevationProperty.Text = Localize.LineStyle_Elevation;
             elevationProperty.Format = Localize.NumberFormat_Meter;
             elevationProperty.UseWheel = true;
@@ -203,16 +184,20 @@ namespace IMT.Manager
             elevationProperty.CheckMax = true;
             elevationProperty.MinValue = -10;
             elevationProperty.MaxValue = 10;
-            elevationProperty.CanCollapse = canCollapse;
             elevationProperty.Init();
             elevationProperty.Value = Elevation;
             elevationProperty.OnValueChanged += (value) => Elevation.Value = value;
-
-            return elevationProperty;
         }
-        protected FloatPropertyPanel AddScaleProperty(UIComponent parent, bool canCollapse)
+        private void RefreshElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
-            var scaleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Scale));
+            if (IsValidNetwork(Prefab.Value))
+                elevationProperty.isVisible = Prefab.Value.m_segments[0].m_segmentMaterial.shader.name != "Custom/Net/Fence";
+            else
+                elevationProperty.isVisible = true;
+        }
+
+        private void AddScaleProperty(FloatPropertyPanel scaleProperty, EditorProvider provider)
+        {
             scaleProperty.Text = Localize.StyleOption_NetWidthScale;
             scaleProperty.Format = Localize.NumberFormat_Percent;
             scaleProperty.UseWheel = true;
@@ -222,16 +207,12 @@ namespace IMT.Manager
             scaleProperty.CheckMax = true;
             scaleProperty.MinValue = 1f;
             scaleProperty.MaxValue = 1000f;
-            scaleProperty.CanCollapse = canCollapse;
             scaleProperty.Init();
             scaleProperty.Value = Scale.Value * 100f;
             scaleProperty.OnValueChanged += (value) => Scale.Value = value * 0.01f;
-
-            return scaleProperty;
         }
-        protected IntPropertyPanel AddRepeatDistanceProperty(UIComponent parent, bool canCollapse)
+        private void AddRepeatDistanceProperty(IntPropertyPanel repeatDistanceProperty, EditorProvider provider)
         {
-            var repeatDistanceProperty = ComponentPool.Get<IntPropertyPanel>(parent, nameof(RepeatDistance));
             repeatDistanceProperty.Text = Localize.StyleOption_NetRepeatDistance;
             repeatDistanceProperty.Format = Localize.NumberFormat_Meter;
             repeatDistanceProperty.UseWheel = true;
@@ -241,16 +222,12 @@ namespace IMT.Manager
             repeatDistanceProperty.CheckMax = true;
             repeatDistanceProperty.MinValue = 1;
             repeatDistanceProperty.MaxValue = 100;
-            repeatDistanceProperty.CanCollapse = canCollapse;
             repeatDistanceProperty.Init();
             repeatDistanceProperty.Value = RepeatDistance.Value;
             repeatDistanceProperty.OnValueChanged += (value) => RepeatDistance.Value = value;
-
-            return repeatDistanceProperty;
         }
-        protected Vector2PropertyPanel AddOffsetProperty(UIComponent parent, bool canCollapse)
+        private void AddOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
-            var offsetProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Offset));
             offsetProperty.Text = Localize.StyleOption_Offset;
             offsetProperty.FieldsWidth = 50f;
             offsetProperty.SetLabels(Localize.StyleOption_OffsetBeforeAbrv, Localize.StyleOption_OffsetAfterAbrv);
@@ -260,7 +237,6 @@ namespace IMT.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = Vector2.zero;
-            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init(0, 1);
             offsetProperty.Value = new Vector2(OffsetBefore, OffsetAfter);
             offsetProperty.OnValueChanged += (value) =>
@@ -268,21 +244,15 @@ namespace IMT.Manager
                 OffsetBefore.Value = value.x;
                 OffsetAfter.Value = value.y;
             };
-
-            return offsetProperty;
         }
-        protected ButtonPanel AddInvertProperty(UIComponent parent, bool canCollapse)
+        new private void AddInvertProperty(ButtonPanel buttonsPanel, EditorProvider provider)
         {
-            var buttonsPanel = ComponentPool.Get<ButtonPanel>(parent, nameof(Invert));
             buttonsPanel.Text = Localize.StyleOption_Invert;
-            buttonsPanel.CanCollapse = canCollapse;
             buttonsPanel.Init();
             buttonsPanel.OnButtonClick += () =>
             {
                 Invert.Value = !Invert;
             };
-
-            return buttonsPanel;
         }
 
         public override XElement ToXml()

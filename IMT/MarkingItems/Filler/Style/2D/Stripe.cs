@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.Math;
 using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -79,13 +81,13 @@ namespace IMT.Manager
             if (target is IFollowGuideFiller followGuideTarget)
                 followGuideTarget.FollowGuides.Value = FollowGuides;
         }
-        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
-        {
-            base.GetUIComponents(filler, components, parent, isTemplate);
 
-            if (!isTemplate)
+        protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
+        {
+            base.GetUIComponents(filler, provider);
+            if (!provider.isTemplate)
             {
-                components.Add(AddAngleProperty(this, parent, false));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), false, AddAngleProperty));
             }
         }
 

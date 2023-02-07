@@ -18,7 +18,7 @@ namespace IMT.UI.Editors
         public override string EmptyMessage => string.Format(IMT.Localize.CrosswalkEditor_EmptyMessage, LocalizeExtension.Shift);
         public override Marking.SupportType Support { get; } = Marking.SupportType.Croswalks;
 
-        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
+        private List<IPropertyInfo> StyleProperties { get; set; } = new List<IPropertyInfo>();
         private CrosswalkBorderSelectPropertyPanel RightBorder { get; set; }
         private CrosswalkBorderSelectPropertyPanel LeftBorder { get; set; }
         private WarningTextProperty Warning { get; set; }
@@ -150,8 +150,10 @@ namespace IMT.UI.Editors
         {
             MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {IMT.Localize.Editor_LessOptions} ▲" : $"▼ {IMT.Localize.Editor_MoreOptions} ▼";
 
+            PropertiesPanel.StopLayout();
             foreach (var option in StyleProperties)
                 option.IsCollapsed = !ShowMoreOptions;
+            PropertiesPanel.StartLayout();
         }
 
         private CrosswalkBorderSelectPropertyPanel AddBorderProperty(BorderPosition position, string name, string text)
@@ -184,15 +186,32 @@ namespace IMT.UI.Editors
         {
             var startIndex = PropertiesPanel.childCount;
             var style = EditObject.Style.Value;
-            StyleProperties = style.GetUIComponents(EditObject, PropertiesPanel);
-            StyleProperties.Sort((x, y) => style.GetUIComponentSortIndex(x) - style.GetUIComponentSortIndex(y));
-            for (int i = 0; i < StyleProperties.Count; i += 1)
-                StyleProperties[i].zOrder = startIndex + i;
+
+            StyleProperties.Clear();
+            var provider = new EditorProvider(EditObject, PropertiesPanel, StyleProperties.Add, RefreshStyleProperties, false);
+            style.GetUIComponents(provider);
+            StyleProperties.Sort(PropertyInfoComparer.Instance);
+
+            PropertiesPanel.StopLayout();
+            foreach (var propertyInfo in StyleProperties)
+                propertyInfo.Create(provider);
+            PropertiesPanel.StartLayout();
 
             if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
                 colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
 
-            if (Settings.CollapseOptions && StyleProperties.Count(p => p.CanCollapse) >= 2)
+            RefreshStyleProperties();
+        }
+        private void RefreshStyleProperties()
+        {
+            var provider = new EditorProvider(EditObject, PropertiesPanel, null, null, true);
+
+            PropertiesPanel.StopLayout();
+            foreach (var propertyInfo in StyleProperties)
+                propertyInfo.Refresh(provider);
+            PropertiesPanel.StartLayout();
+
+            if (Settings.CollapseOptions && StyleProperties.Count(p => !p.IsHidden && p.CanCollapse) >= 2)
             {
                 MoreOptionsButton.isVisible = true;
                 MoreOptionsButton.BringToFront();
@@ -204,8 +223,12 @@ namespace IMT.UI.Editors
 
         private void ClearStyleProperties()
         {
+            var provider = new EditorProvider(EditObject, PropertiesPanel, null, null, true);
+
+            PropertiesPanel.StopLayout();
             foreach (var property in StyleProperties)
-                ComponentPool.Free(property);
+                property.Destroy(provider);
+            PropertiesPanel.StartLayout();
 
             StyleProperties.Clear();
         }

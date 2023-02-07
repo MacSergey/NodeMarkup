@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -7,8 +8,10 @@ using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -314,17 +317,18 @@ namespace IMT.Manager
             return false;
         }
 
-        public override void GetUIComponents(MarkingFiller filler, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
-            base.GetUIComponents(filler, components, parent, isTemplate);
-            components.Add(AddElevationProperty(this, parent, false));
+            base.GetUIComponents(filler, provider);
 
-            if (!isTemplate)
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), false, AddElevationProperty));
+            if (!provider.isTemplate)
             {
                 if (!filler.IsMedian)
-                    components.Add(AddCornerRadiusProperty(this, parent, false));
+                    provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(CornerRadius), false, AddCornerRadiusProperty));
                 else
-                    components.Add(AddMedianCornerRadiusProperty(this, parent, false));
+                    provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(CornerRadius), false, AddMedianCornerRadiusProperty));
+
             }
 #if DEBUG
             //var material = GetVectorProperty(parent, "Material");
@@ -365,10 +369,8 @@ namespace IMT.Manager
             //}
 #endif
         }
-
-        private static FloatPropertyPanel AddElevationProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, bool canCollapse)
+        private void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
-            var elevationProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Elevation));
             elevationProperty.Text = Localize.FillerStyle_Elevation;
             elevationProperty.Format = Localize.NumberFormat_Meter;
             elevationProperty.UseWheel = true;
@@ -378,16 +380,12 @@ namespace IMT.Manager
             elevationProperty.MinValue = 0f;
             elevationProperty.CheckMax = true;
             elevationProperty.MaxValue = 10f;
-            elevationProperty.CanCollapse = canCollapse;
             elevationProperty.Init();
-            elevationProperty.Value = triangulationStyle.Elevation;
-            elevationProperty.OnValueChanged += (float value) => triangulationStyle.Elevation.Value = value;
-
-            return elevationProperty;
+            elevationProperty.Value = Elevation;
+            elevationProperty.OnValueChanged += (float value) => Elevation.Value = value;
         }
-        private static FloatPropertyPanel AddCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, bool canCollapse)
+        private void AddCornerRadiusProperty(FloatPropertyPanel cornerRadiusProperty, EditorProvider provider)
         {
-            var cornerRadiusProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(CornerRadius));
             cornerRadiusProperty.Text = Localize.FillerStyle_CornerRadius;
             cornerRadiusProperty.Format = Localize.NumberFormat_Meter;
             cornerRadiusProperty.UseWheel = true;
@@ -397,16 +395,12 @@ namespace IMT.Manager
             cornerRadiusProperty.MinValue = 0f;
             cornerRadiusProperty.CheckMax = true;
             cornerRadiusProperty.MaxValue = 10f;
-            cornerRadiusProperty.CanCollapse = canCollapse;
             cornerRadiusProperty.Init();
-            cornerRadiusProperty.Value = triangulationStyle.CornerRadius;
-            cornerRadiusProperty.OnValueChanged += (float value) => triangulationStyle.CornerRadius.Value = value;
-
-            return cornerRadiusProperty;
+            cornerRadiusProperty.Value = CornerRadius;
+            cornerRadiusProperty.OnValueChanged += (float value) => CornerRadius.Value = value;
         }
-        private static Vector2PropertyPanel AddMedianCornerRadiusProperty(TriangulationFillerStyle triangulationStyle, UIComponent parent, bool canCollapse)
+        private void AddMedianCornerRadiusProperty(Vector2PropertyPanel cornerRadiusProperty, EditorProvider provider)
         {
-            var cornerRadiusProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(CornerRadius));
             cornerRadiusProperty.Text = Localize.FillerStyle_CornerRadius;
             cornerRadiusProperty.FieldsWidth = 50f;
             cornerRadiusProperty.SetLabels(Localize.FillerStyle_CornerRadiusAbrv, Localize.FillerStyle_CornerRadiusMedianAbrv);
@@ -418,16 +412,13 @@ namespace IMT.Manager
             cornerRadiusProperty.MinValue = new Vector2(0f, 0f);
             cornerRadiusProperty.CheckMax = true;
             cornerRadiusProperty.MaxValue = new Vector2(10f, 10f);
-            cornerRadiusProperty.CanCollapse = canCollapse;
             cornerRadiusProperty.Init(0, 1);
-            cornerRadiusProperty.Value = new Vector2(triangulationStyle.CornerRadius, triangulationStyle.MedianCornerRadius);
+            cornerRadiusProperty.Value = new Vector2(CornerRadius, MedianCornerRadius);
             cornerRadiusProperty.OnValueChanged += (Vector2 value) =>
             {
-                triangulationStyle.CornerRadius.Value = value.x;
-                triangulationStyle.MedianCornerRadius.Value = value.y;
+                CornerRadius.Value = value.x;
+                MedianCornerRadius.Value = value.y;
             };
-
-            return cornerRadiusProperty;
         }
 
         public override XElement ToXml()

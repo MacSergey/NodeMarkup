@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -167,79 +168,61 @@ namespace IMT.Manager
         }
         protected Color32 GetColor(int index) => TwoColors && index % 2 != 0 ? SecondColor : Color;
 
-        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
-            base.GetUIComponents(crosswalk, components, parent, isTemplate);
+            base.GetUIComponents(crosswalk, provider);
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), true, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), true, AddSecondColorProperty, RefreshSecondColorProperty));
+            //TwoColorsChanged(parent, TwoColors);
 
-            components.Add(AddUseSecondColorProperty(parent, true));
-            components.Add(AddSecondColorProperty(parent, true));
-            TwoColorsChanged(parent, TwoColors);
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), false, AddLengthProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Parallel), true, AddParallelProperty));
 
-            components.Add(AddLengthProperty(this, parent, false));
-            components.Add(AddParallelProperty(parent, true));
-
-            components.Add(AddGapProperty(parent, true));
+            provider.AddProperty(new PropertyInfo<GapProperty>(this, nameof(Gap), true, AddGapProperty));
         }
 
-        protected BoolListPropertyPanel AddUseSecondColorProperty(UIComponent parent, bool canCollapse)
+        protected override void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            var useSecondColorProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(TwoColors));
+            base.RefreshColorProperty(colorProperty, provider);
+            colorProperty.Text = TwoColors.Value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
+        }
+
+        protected void AddUseSecondColorProperty(BoolListPropertyPanel useSecondColorProperty, EditorProvider provider)
+        {
             useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
-            useSecondColorProperty.CanCollapse = canCollapse;
             useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
             useSecondColorProperty.SelectedObject = TwoColors;
             useSecondColorProperty.OnSelectObjectChanged += (value) =>
             {
                 TwoColors.Value = value;
-                TwoColorsChanged(parent, value);
+                provider.Refresh();
             };
-
-
-            return useSecondColorProperty;
-        }
-        protected void TwoColorsChanged(UIComponent parent, bool value)
-        {
-            if (parent.Find<ColorAdvancedPropertyPanel>(nameof(Color)) is ColorAdvancedPropertyPanel mainColorProperty)
-            {
-                mainColorProperty.Text = value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
-            }
-
-            if (parent.Find<ColorAdvancedPropertyPanel>(nameof(SecondColor)) is ColorAdvancedPropertyPanel secondColorProperty)
-            {
-                secondColorProperty.IsHidden = !value;
-                secondColorProperty.Text = value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
-            }
         }
 
-
-        protected ColorAdvancedPropertyPanel AddSecondColorProperty(UIComponent parent, bool canCollapse)
+        protected void AddSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(SecondColor));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
-            colorProperty.CanCollapse = canCollapse;
             colorProperty.Init((GetDefault() as ZebraCrosswalkStyle)?.SecondColor);
             colorProperty.Value = SecondColor;
             colorProperty.OnValueChanged += (Color32 color) => SecondColor.Value = color;
-
-            return colorProperty;
         }
-        protected BoolListPropertyPanel AddParallelProperty(UIComponent parent, bool canCollapse)
+        protected virtual void RefreshSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            var parallelProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Parallel));
+            colorProperty.IsHidden = !TwoColors.Value;
+            colorProperty.Text = TwoColors.Value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
+        }
+
+        protected void AddParallelProperty(BoolListPropertyPanel parallelProperty, EditorProvider provider)
+        {
             parallelProperty.Text = Localize.StyleOption_ParallelToLanes;
-            parallelProperty.CanCollapse = canCollapse;
             parallelProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             parallelProperty.SelectedObject = Parallel;
             parallelProperty.OnSelectObjectChanged += (value) => Parallel.Value = value;
-
-            return parallelProperty;
         }
-        protected GapProperty AddGapProperty(UIComponent parent, bool canCollapse)
+        protected void AddGapProperty(GapProperty gapProperty, EditorProvider provider)
         {
-            var gapProperty = ComponentPool.Get<GapProperty>(parent, nameof(Gap));
             gapProperty.Text = Localize.StyleOption_CrosswalkGap;
-            gapProperty.CanCollapse = canCollapse;
             gapProperty.Init();
             gapProperty.UseWheel = true;
             gapProperty.WheelTip = Settings.ShowToolTip;
@@ -258,8 +241,6 @@ namespace IMT.Manager
                 GapLength.Value = length;
                 GapPeriod.Value = period;
             };
-
-            return gapProperty;
         }
 
         public override XElement ToXml()

@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -124,17 +126,18 @@ namespace IMT.Manager
             }
         }
 
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddStepProperty(parent, false));
-            components.Add(AddOffsetProperty(parent, false));
-            components.Add(AddSideProperty(parent, false));
-            components.Add(AddStartFromProperty(parent, false));
+            base.GetUIComponents(line, provider);
+
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Step), false, AddStepProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), false, AddOffsetProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Side), false, AddSideProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StartFrom), false, AddStartFromProperty));
         }
-        protected FloatPropertyPanel AddStepProperty(UIComponent parent, bool canCollapse)
+
+        protected void AddStepProperty(FloatPropertyPanel stepProperty, EditorProvider provider)
         {
-            var stepProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Step));
             stepProperty.Text = Localize.StyleOption_ZigzagStep;
             stepProperty.Format = Localize.NumberFormat_Meter;
             stepProperty.UseWheel = true;
@@ -142,16 +145,12 @@ namespace IMT.Manager
             stepProperty.WheelTip = Settings.ShowToolTip;
             stepProperty.CheckMin = true;
             stepProperty.MinValue = 0.3f;
-            stepProperty.CanCollapse = canCollapse;
             stepProperty.Init();
             stepProperty.Value = Step;
             stepProperty.OnValueChanged += (value) => Step.Value = value;
-
-            return stepProperty;
         }
-        protected FloatPropertyPanel AddOffsetProperty(UIComponent parent, bool canCollapse)
+        new protected void AddOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
-            var offsetProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Offset));
             offsetProperty.Text = Localize.StyleOption_ZigzagOffset;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
@@ -159,32 +158,23 @@ namespace IMT.Manager
             offsetProperty.WheelTip = Settings.ShowToolTip;
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = 0.1f;
-            offsetProperty.CanCollapse = canCollapse;
             offsetProperty.Init();
             offsetProperty.Value = Offset;
             offsetProperty.OnValueChanged += (value) => Offset.Value = value;
-
-            return offsetProperty;
         }
-        protected BoolListPropertyPanel AddSideProperty(UIComponent parent, bool canCollapse)
+        protected void AddSideProperty(BoolListPropertyPanel sideProperty, EditorProvider provider)
         {
-            var sideProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Side));
             sideProperty.Text = Localize.StyleOption_ZigzagSide;
-            sideProperty.CanCollapse = canCollapse;
             sideProperty.Init(Localize.StyleOption_SideLeft, Localize.StyleOption_SideRight);
             sideProperty.SelectedObject = Side;
             sideProperty.OnSelectObjectChanged += (value) => Side.Value = value;
-            return sideProperty;
         }
-        protected BoolListPropertyPanel AddStartFromProperty(UIComponent parent, bool canCollapse)
+        protected void AddStartFromProperty(BoolListPropertyPanel startFromProperty, EditorProvider provider)
         {
-            var startFromProperty = ComponentPool.Get<BoolListPropertyPanel>(parent, nameof(Side));
             startFromProperty.Text = Localize.StyleOption_ZigzagStartFrom;
-            startFromProperty.CanCollapse = canCollapse;
             startFromProperty.Init(Localize.StyleOption_ZigzagStartFromOutside, Localize.StyleOption_ZigzagStartFromLine);
             startFromProperty.SelectedObject = StartFrom;
             startFromProperty.OnSelectObjectChanged += (value) => StartFrom.Value = value;
-            return startFromProperty;
         }
 
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)

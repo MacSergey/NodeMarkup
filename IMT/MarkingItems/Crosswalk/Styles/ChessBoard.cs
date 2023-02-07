@@ -1,6 +1,7 @@
 ﻿using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.UI;
@@ -104,18 +105,19 @@ namespace IMT.Manager
         }
         protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetAbsoluteWidth(SquareSide * LineCount, crosswalk);
 
-        public override void GetUIComponents(MarkingCrosswalk crosswalk, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+        protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
-            base.GetUIComponents(crosswalk, components, parent, isTemplate);
-            components.Add(AddSquareSideProperty(parent, false));
-            components.Add(AddLineCountProperty(parent, false));
-            if (!isTemplate)
-                components.Add(AddInvertProperty(this, parent, false));
+            base.GetUIComponents(crosswalk, provider);
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(SquareSide), false, AddSquareSideProperty));
+            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(LineCount), false, AddLineCountProperty));
+            if (!provider.isTemplate)
+            {
+                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), true, AddInvertProperty));
+            }
         }
 
-        protected FloatPropertyPanel AddSquareSideProperty(UIComponent parent, bool canCollapse)
+        protected void AddSquareSideProperty(FloatPropertyPanel squareSideProperty, EditorProvider provider)
         {
-            var squareSideProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(SquareSide));
             squareSideProperty.Text = Localize.StyleOption_SquareSide;
             squareSideProperty.Format = Localize.NumberFormat_Meter;
             squareSideProperty.UseWheel = true;
@@ -123,28 +125,21 @@ namespace IMT.Manager
             squareSideProperty.WheelTip = Settings.ShowToolTip;
             squareSideProperty.CheckMin = true;
             squareSideProperty.MinValue = 0.1f;
-            squareSideProperty.CanCollapse = canCollapse;
             squareSideProperty.Init();
             squareSideProperty.Value = SquareSide;
             squareSideProperty.OnValueChanged += (float value) => SquareSide.Value = value;
-
-            return squareSideProperty;
         }
-        protected IntPropertyPanel AddLineCountProperty(UIComponent parent, bool canCollapse)
+        protected void AddLineCountProperty(IntPropertyPanel lineCountProperty, EditorProvider provider)
         {
-            var lineCountProperty = ComponentPool.Get<IntPropertyPanel>(parent, nameof(LineCount));
             lineCountProperty.Text = Localize.StyleOption_LineCount;
             lineCountProperty.UseWheel = true;
             lineCountProperty.WheelStep = 1;
             lineCountProperty.WheelTip = Settings.ShowToolTip;
             lineCountProperty.CheckMin = true;
             lineCountProperty.MinValue = DefaultCrosswalkLineCount;
-            lineCountProperty.CanCollapse = canCollapse;
             lineCountProperty.Init();
             lineCountProperty.Value = LineCount;
             lineCountProperty.OnValueChanged += (int value) => LineCount.Value = value;
-
-            return lineCountProperty;
         }
 
         public override XElement ToXml()

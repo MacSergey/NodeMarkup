@@ -1,7 +1,9 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.DataBinding;
+using ColossalFramework.UI;
 using IMT.API;
 using IMT.Manager;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon;
@@ -13,6 +15,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -199,46 +202,44 @@ namespace IMT.Manager
             addData(data);
         }
 
-        public override void GetUIComponents(MarkingRegularLine line, List<EditorItem> components, UIComponent parent, bool isTemplate = false)
+
+        protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
-            base.GetUIComponents(line, components, parent, isTemplate);
-            components.Add(AddFontProperty(parent, false));
-            components.Add(AddTextProperty(parent, false));
-            components.Add(AddScaleProperty(parent, false));
-            components.Add(AddAngleProperty(parent, true));
-            components.Add(AddShiftProperty(parent, true));
-            components.Add(AddDirectionProperty(parent, true));
-            components.Add(AddSpacingProperty(parent, true));
-            components.Add(AddAlignmentProperty(parent, true));
+            base.GetUIComponents(line, provider);
+
+            provider.AddProperty(new PropertyInfo<FontPtopertyPanel>(this, nameof(Font), false, AddFontProperty));
+            provider.AddProperty(new PropertyInfo<StringPropertyPanel>(this, nameof(Text), false, AddTextProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), false, AddScaleProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), true, AddAngleProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Shift), true, AddShiftProperty));
+            provider.AddProperty(new PropertyInfo<TextDirectionPanel>(this, nameof(Direction), true, AddDirectionProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Spacing), true, AddSpacingProperty));
+            provider.AddProperty(new PropertyInfo<TextAlignmentPanel>(this, nameof(Alignment), true, AddAlignmentProperty));
 #if DEBUG
-            components.Add(AddRatioProperty(parent, true));
+            if (!provider.isTemplate && Settings.ShowDebugProperties)
+            {
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Ratio), true, AddRatioProperty));
+            }
 #endif
         }
-        protected FontPtopertyPanel AddFontProperty(UIComponent parent, bool canCollapse)
+
+        protected void AddFontProperty(FontPtopertyPanel fontProperty, EditorProvider provider)
         {
-            var fontProperty = ComponentPool.Get<FontPtopertyPanel>(parent, nameof(Font));
             fontProperty.Text = Localize.StyleOption_Font;
-            fontProperty.CanCollapse = canCollapse;
             fontProperty.Init();
             fontProperty.Font = string.IsNullOrEmpty(Font.Value) ? null : Font.Value;
             fontProperty.OnValueChanged += (value) => Font.Value = value;
-            return fontProperty;
         }
-        protected StringPropertyPanel AddTextProperty(UIComponent parent, bool canCollapse)
+        protected void AddTextProperty(StringPropertyPanel textProperty, EditorProvider provider)
         {
-            var textProperty = ComponentPool.Get<StringPropertyPanel>(parent, nameof(Text));
             textProperty.Text = Localize.StyleOption_Text;
             textProperty.FieldWidth = 230f;
-            textProperty.CanCollapse = canCollapse;
             textProperty.Init();
             textProperty.Value = Text;
             textProperty.OnValueChanged += (value) => Text.Value = value;
-
-            return textProperty;
         }
-        protected FloatPropertyPanel AddScaleProperty(UIComponent parent, bool canCollapse)
-        {
-            var sizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Scale));
+        protected void AddScaleProperty(FloatPropertyPanel sizeProperty, EditorProvider provider)
+        {;
             sizeProperty.Text = Localize.StyleOption_ObjectScale;
             sizeProperty.UseWheel = true;
             sizeProperty.WheelStep = 0.1f;
@@ -247,16 +248,12 @@ namespace IMT.Manager
             sizeProperty.MinValue = 1f;
             sizeProperty.CheckMax = true;
             sizeProperty.MaxValue = 10f;
-            sizeProperty.CanCollapse = canCollapse;
             sizeProperty.Init();
             sizeProperty.Value = Scale;
             sizeProperty.OnValueChanged += (value) => Scale.Value = value;
-
-            return sizeProperty;
         }
-        protected FloatPropertyPanel AddAngleProperty(UIComponent parent, bool canCollapse)
+        protected void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            var angleProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Angle));
             angleProperty.Text = Localize.StyleOption_ObjectAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
@@ -267,16 +264,12 @@ namespace IMT.Manager
             angleProperty.MinValue = -180;
             angleProperty.MaxValue = 180;
             angleProperty.CyclicalValue = true;
-            angleProperty.CanCollapse = canCollapse;
             angleProperty.Init();
             angleProperty.Value = Angle;
             angleProperty.OnValueChanged += (value) => Angle.Value = value;
-
-            return angleProperty;
         }
-        protected FloatPropertyPanel AddShiftProperty(UIComponent parent, bool canCollapse)
+        protected void AddShiftProperty(FloatPropertyPanel shiftProperty, EditorProvider provider)
         {
-            var shiftProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Shift));
             shiftProperty.Text = Localize.StyleOption_ObjectShift;
             shiftProperty.Format = Localize.NumberFormat_Meter;
             shiftProperty.UseWheel = true;
@@ -287,40 +280,28 @@ namespace IMT.Manager
             shiftProperty.MinValue = -50;
             shiftProperty.MaxValue = 50;
             shiftProperty.CyclicalValue = false;
-            shiftProperty.CanCollapse = canCollapse;
             shiftProperty.Init();
             shiftProperty.Value = Shift;
             shiftProperty.OnValueChanged += (value) => Shift.Value = value;
-
-            return shiftProperty;
         }
-        protected TextDirectionPanel AddDirectionProperty(UIComponent parent, bool canCollapse)
+        protected void AddDirectionProperty(TextDirectionPanel directionProperty, EditorProvider provider)
         {
-            var directionProperty = ComponentPool.Get<TextDirectionPanel>(parent, nameof(Direction));
             directionProperty.Text = Localize.StyleOption_TextDirection;
-            directionProperty.CanCollapse = canCollapse;
             directionProperty.Selector.AutoButtonSize = false;
             directionProperty.Selector.ButtonWidth = 33f;
             directionProperty.Init();
             directionProperty.SelectedObject = Direction;
             directionProperty.OnSelectObjectChanged += (value) => Direction.Value = value;
-
-            return directionProperty;
         }
-        protected TextAlignmentPanel AddAlignmentProperty(UIComponent parent, bool canCollapse)
+        protected void AddAlignmentProperty(TextAlignmentPanel alignmentProperty, EditorProvider provider)
         {
-            var directionProperty = ComponentPool.Get<TextAlignmentPanel>(parent, nameof(Alignment));
-            directionProperty.Text = Localize.StyleOption_TextAlignment;
-            directionProperty.CanCollapse = canCollapse;
-            directionProperty.Init();
-            directionProperty.SelectedObject = Alignment;
-            directionProperty.OnSelectObjectChanged += (value) => Alignment.Value = value;
-
-            return directionProperty;
+            alignmentProperty.Text = Localize.StyleOption_TextAlignment;
+            alignmentProperty.Init();
+            alignmentProperty.SelectedObject = Alignment;
+            alignmentProperty.OnSelectObjectChanged += (value) => Alignment.Value = value;
         }
-        protected Vector2PropertyPanel AddSpacingProperty(UIComponent parent, bool canCollapse)
+        protected void AddSpacingProperty(Vector2PropertyPanel spacingProperty, EditorProvider provider)
         {
-            var spacingProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Spacing));
             spacingProperty.Text = Localize.StyleOption_Spacing;
             spacingProperty.SetLabels(Localize.StyleOption_SpacingChar, Localize.StyleOption_SpacingLine);
             spacingProperty.UseWheel = true;
@@ -330,19 +311,15 @@ namespace IMT.Manager
             spacingProperty.MinValue = new Vector2(-10f, -10f);
             spacingProperty.CheckMax = true;
             spacingProperty.MaxValue = new Vector2(10f, 10f);
-            spacingProperty.CanCollapse = canCollapse;
             spacingProperty.FieldsWidth = 50f;
             spacingProperty.Init(0, 1);
             spacingProperty.Value = Spacing;
             spacingProperty.OnValueChanged += (value) => Spacing.Value = value;
-
-            return spacingProperty;
         }
 
 #if DEBUG
-        protected FloatPropertyPanel AddRatioProperty(UIComponent parent, bool canCollapse)
+        protected void AddRatioProperty(FloatPropertyPanel sizeProperty, EditorProvider provider)
         {
-            var sizeProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Ratio));
             sizeProperty.Text = "Pixel ratio";
             sizeProperty.Format = Localize.NumberFormat_Meter;
             sizeProperty.UseWheel = true;
@@ -350,12 +327,9 @@ namespace IMT.Manager
             sizeProperty.WheelTip = Settings.ShowToolTip;
             sizeProperty.CheckMin = true;
             sizeProperty.MinValue = 0.005f;
-            sizeProperty.CanCollapse = canCollapse;
             sizeProperty.Init();
             sizeProperty.Value = Ratio;
             sizeProperty.OnValueChanged += (value) => Ratio.Value = value;
-
-            return sizeProperty;
         }
 #endif
 
