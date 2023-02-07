@@ -59,9 +59,17 @@ namespace IMT.Utilities
 
             try
             {
-                SingletonMod<Mod>.Logger.Debug("Start loading bundle");
+                SingletonMod<Mod>.Logger.Debug($"Start loading bundle for {Application.platform}");
 
-                var data = ResourceUtility.LoadResource($"{nameof(IMT)}.Resources.imt");
+                var file = Application.platform switch
+                {
+                    RuntimePlatform.WindowsPlayer => "imt-win",
+                    RuntimePlatform.OSXPlayer => "imt-macos",
+                    RuntimePlatform.LinuxPlayer => "imt-linux",
+                    _ => throw new PlatformNotSupportedException()
+                };
+
+                var data = ResourceUtility.LoadResource($"{nameof(IMT)}.Resources.{file}");
                 Bundle = AssetBundle.LoadFromMemory(data);
 
                 var materials = new Material[]
