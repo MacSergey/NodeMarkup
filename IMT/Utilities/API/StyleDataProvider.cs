@@ -127,6 +127,9 @@ namespace IMT.Utilities.API
         public float MedianCornerRadius { get => (float)GetValue(nameof(MedianCornerRadius)); set => SetValue(nameof(MedianCornerRadius), value); }
         public float CurbSize { get => (float)GetValue(nameof(CurbSize)); set => SetValue(nameof(CurbSize), value); }
         public float MedianCurbSize { get => (float)GetValue(nameof(MedianCurbSize)); set => SetValue(nameof(MedianCurbSize), value); }
+        public float Texture { get => (float)GetValue(nameof(Texture)); set => SetValue(nameof(Texture), value); }
+        public Vector2 Cracks { get => (Vector2)GetValue(nameof(Cracks)); set => SetValue(nameof(Cracks), value); }
+        public Vector2 Voids { get => (Vector2)GetValue(nameof(Voids)); set => SetValue(nameof(Voids), value); }
     }
     public struct StylePropertyDataProvider<T> : IStylePropertyData
     {
