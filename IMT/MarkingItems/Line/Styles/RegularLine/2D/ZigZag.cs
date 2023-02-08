@@ -130,10 +130,10 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Step), false, AddStepProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), false, AddOffsetProperty));
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Side), false, AddSideProperty));
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StartFrom), false, AddStartFromProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Step), MainCategory, AddStepProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), MainCategory, AddOffsetProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Side), MainCategory, AddSideProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StartFrom), MainCategory, AddStartFromProperty));
         }
 
         protected void AddStepProperty(FloatPropertyPanel stepProperty, EditorProvider provider)

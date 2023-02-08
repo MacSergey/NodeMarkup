@@ -321,13 +321,13 @@ namespace IMT.Manager
         {
             base.GetUIComponents(filler, provider);
 
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), false, AddElevationProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), MainCategory, AddElevationProperty));
             if (!provider.isTemplate)
             {
                 if (!filler.IsMedian)
-                    provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(CornerRadius), false, AddCornerRadiusProperty));
+                    provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(CornerRadius), MainCategory, AddCornerRadiusProperty));
                 else
-                    provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(CornerRadius), false, AddMedianCornerRadiusProperty));
+                    provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(CornerRadius), MainCategory, AddMedianCornerRadiusProperty));
 
             }
 #if DEBUG

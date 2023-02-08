@@ -171,14 +171,14 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
             base.GetUIComponents(crosswalk, provider);
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), true, AddUseSecondColorProperty));
-            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), true, AddSecondColorProperty, RefreshSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), MainCategory, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), MainCategory, AddSecondColorProperty, RefreshSecondColorProperty));
             //TwoColorsChanged(parent, TwoColors);
 
-            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), false, AddLengthProperty));
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Parallel), true, AddParallelProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), MainCategory, AddCrosswalkLengthProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Parallel), AdditionalCategory, AddParallelProperty));
 
-            provider.AddProperty(new PropertyInfo<GapProperty>(this, nameof(Gap), true, AddGapProperty));
+            provider.AddProperty(new PropertyInfo<GapProperty>(this, nameof(Gap), AdditionalCategory, AddGapProperty));
         }
 
         protected override void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)

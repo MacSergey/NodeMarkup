@@ -108,11 +108,11 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
             base.GetUIComponents(crosswalk, provider);
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(SquareSide), false, AddSquareSideProperty));
-            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(LineCount), false, AddLineCountProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(SquareSide), MainCategory, AddSquareSideProperty));
+            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(LineCount), MainCategory, AddLineCountProperty));
             if (!provider.isTemplate)
             {
-                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), true, AddInvertProperty));
+                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), MainCategory, AddInvertProperty));
             }
         }
 

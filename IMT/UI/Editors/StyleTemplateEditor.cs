@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItemsPanel, StyleTemplate, StyleTemplateHeaderPanel, EditStyleTemplateMode>
+    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItemsPanel, StyleTemplate, StyleTemplateHeaderPanel, EditStyleTemplateMode>, IPropertyEditor
     {
         public override string Name => IMT.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(IMT.Localize.TemplateEditor_EmptyMessage, IMT.Localize.HeaderPanel_SaveAsTemplate);
@@ -24,6 +24,16 @@ namespace IMT.UI.Editors
 
         private Style EditStyle { get; set; }
 
+        UIAutoLayoutPanel IPropertyEditor.MainPanel => PropertiesPanel;
+        object IPropertyEditor.EditObject => EditObject;
+        Style IPropertyEditor.Style => EditStyle;
+        bool IPropertyEditor.IsTemplate => true;
+
+        Dictionary<string, PropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, PropertyCategoryInfo>();
+        Dictionary<string, List<IPropertyInfo>> IPropertyEditor.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
+        Dictionary<string, CategoryItem> IPropertyEditor.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
+        List<EditorItem> IPropertyEditor.StyleProperties { get; } = new List<EditorItem>();
+
         protected override IEnumerable<StyleTemplate> GetObjects() => SingletonManager<StyleTemplateManager>.Instance.Templates;
 
         protected override void OnFillPropertiesPanel(StyleTemplate template)
@@ -31,6 +41,10 @@ namespace IMT.UI.Editors
             CopyStyle();
             base.OnFillPropertiesPanel(template);
         }
+
+        protected override void AddAditionalProperties() => this.AddProperties();
+        protected override void ClearAdditionalProperties() => this.ClearProperties();
+        protected override void RefreshAdditionalProperties() => this.RefreshProperties();
 
         private void CopyStyle()
         {
@@ -45,19 +59,13 @@ namespace IMT.UI.Editors
             HeaderPanel.OnDuplicate += Duplicate;
         }
 
-        protected override void AddAditionalProperties()
+        protected override void SetEditable(EditMode mode)
         {
-            AdditionalProperties.Clear();
-            var provider = new EditorProvider(EditObject, PropertiesPanel, AdditionalProperties.Add, RefreshAdditionalProperties, false);
-            EditStyle.GetUIComponents(provider);
-            AdditionalProperties.Sort(PropertyInfoComparer.Instance);
+            base.SetEditable(mode);
 
-            PropertiesPanel.StopLayout();
-            foreach (var propertyInfo in AdditionalProperties)
-                propertyInfo.Create(provider);
-            PropertiesPanel.StartLayout();
+            foreach (var property in (this as IPropertyEditor).StyleProperties)
+                property.EnableControl = EditMode;
         }
-
         private void ToggleAsDefault()
         {
             SingletonManager<StyleTemplateManager>.Instance.ToggleAsDefaultTemplate(EditObject);

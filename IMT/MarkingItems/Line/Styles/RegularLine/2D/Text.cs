@@ -207,18 +207,18 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<FontPtopertyPanel>(this, nameof(Font), false, AddFontProperty));
-            provider.AddProperty(new PropertyInfo<StringPropertyPanel>(this, nameof(Text), false, AddTextProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), false, AddScaleProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), true, AddAngleProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Shift), true, AddShiftProperty));
-            provider.AddProperty(new PropertyInfo<TextDirectionPanel>(this, nameof(Direction), true, AddDirectionProperty));
-            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Spacing), true, AddSpacingProperty));
-            provider.AddProperty(new PropertyInfo<TextAlignmentPanel>(this, nameof(Alignment), true, AddAlignmentProperty));
+            provider.AddProperty(new PropertyInfo<FontPtopertyPanel>(this, nameof(Font), MainCategory, AddFontProperty));
+            provider.AddProperty(new PropertyInfo<StringPropertyPanel>(this, nameof(Text), MainCategory, AddTextProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), MainCategory, AddScaleProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), AdditionalCategory, AddAngleProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Shift), AdditionalCategory, AddShiftProperty));
+            provider.AddProperty(new PropertyInfo<TextDirectionPanel>(this, nameof(Direction), AdditionalCategory, AddDirectionProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Spacing), AdditionalCategory, AddSpacingProperty));
+            provider.AddProperty(new PropertyInfo<TextAlignmentPanel>(this, nameof(Alignment), AdditionalCategory, AddAlignmentProperty));
 #if DEBUG
             if (!provider.isTemplate && Settings.ShowDebugProperties)
             {
-                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Ratio), true, AddRatioProperty));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Ratio), AdditionalCategory, AddRatioProperty));
             }
 #endif
         }

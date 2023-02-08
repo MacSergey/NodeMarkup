@@ -2594,5 +2594,20 @@ namespace IMT
 		/// Texture density
 		/// </summary>
 		public static string StyleOption_Texture => LocaleManager.GetString("StyleOption_Texture", Culture);
+
+		/// <summary>
+		/// Additional
+		/// </summary>
+		public static string StyleOptionCategory_Additional => LocaleManager.GetString("StyleOptionCategory_Additional", Culture);
+
+		/// <summary>
+		/// Graphic effects
+		/// </summary>
+		public static string StyleOptionCategory_Effect => LocaleManager.GetString("StyleOptionCategory_Effect", Culture);
+
+		/// <summary>
+		/// Main
+		/// </summary>
+		public static string StyleOptionCategory_Main => LocaleManager.GetString("StyleOptionCategory_Main", Culture);
 	}
 }

@@ -87,7 +87,7 @@ namespace IMT.Manager
             base.GetUIComponents(filler, provider);
             if (!provider.isTemplate)
             {
-                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), false, AddAngleProperty));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), MainCategory, AddAngleProperty));
             }
         }
 

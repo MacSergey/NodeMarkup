@@ -113,8 +113,8 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
             base.GetUIComponents(line, provider);
-            provider.AddProperty(new PropertyInfo<PropColorPropertyPanel>(this, nameof(ColorOption), true, AddColorOptionProperty, RefreshColorOptionProperty));
-            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(Color), true, AddColorProperty, RefreshColorProperty));
+            provider.AddProperty(new PropertyInfo<PropColorPropertyPanel>(this, nameof(ColorOption), AdditionalCategory, AddColorOptionProperty, RefreshColorOptionProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(Color), AdditionalCategory, AddColorProperty, RefreshColorProperty));
         }
 
         private void AddColorOptionProperty(PropColorPropertyPanel colorOptionProperty, EditorProvider provider)

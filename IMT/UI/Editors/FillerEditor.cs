@@ -5,13 +5,14 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using UnifiedUI.Helpers;
 using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class FillerEditor : SimpleEditor<FillerItemsPanel, MarkingFiller>
+    public class FillerEditor : SimpleEditor<FillerItemsPanel, MarkingFiller>, IPropertyEditor
     {
         #region PROPERTIES
 
@@ -20,13 +21,20 @@ namespace IMT.UI.Editors
         public override Marking.SupportType Support { get; } = Marking.SupportType.Fillers;
 
         public StylePropertyPanel Style { get; private set; }
-        private List<IPropertyInfo> StyleProperties { get; set; } = new List<IPropertyInfo>();
-        private MoreOptionsPanel MoreOptionsButton { get; set; }
-        private bool ShowMoreOptions { get; set; }
 
         private FillerGuideToolMode FillerGuideToolMode { get; }
 
         public FillerGuidePropertyPanel.SelectGuideButton HoverGuideSelectButton { get; private set; }
+
+        UIAutoLayoutPanel IPropertyEditor.MainPanel => PropertiesPanel;
+        object IPropertyEditor.EditObject => EditObject;
+        Style IPropertyEditor.Style => EditObject.Style.Value;
+        bool IPropertyEditor.IsTemplate => false;
+
+        Dictionary<string, PropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, PropertyCategoryInfo>();
+        Dictionary<string, List<IPropertyInfo>> IPropertyEditor.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
+        Dictionary<string, CategoryItem> IPropertyEditor.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
+        List<EditorItem> IPropertyEditor.StyleProperties { get; } = new List<EditorItem>();
 
         #endregion
 
@@ -43,7 +51,6 @@ namespace IMT.UI.Editors
         {
             AddHeader();
             AddStyleTypeProperty();
-            AddMoreOptions();
             AddStyleProperties();
         }
         protected override void OnObjectDelete(MarkingFiller filler)
@@ -56,9 +63,6 @@ namespace IMT.UI.Editors
             base.OnClear();
 
             Style = null;
-            MoreOptionsButton = null;
-            ShowMoreOptions = false;
-            StyleProperties.Clear();
         }
 
         private void AddHeader()
@@ -80,44 +84,14 @@ namespace IMT.UI.Editors
             Style.SelectedObject = EditObject.Style.Value.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
-        private void AddMoreOptions()
-        {
-            MoreOptionsButton = ComponentPool.Get<MoreOptionsPanel>(PropertiesPanel, nameof(MoreOptionsButton));
-            MoreOptionsButton.Init();
-            MoreOptionsButton.OnButtonClick += () =>
-            {
-                ShowMoreOptions = !ShowMoreOptions;
-                SetOptionsCollapse();
-            };
-        }
-        private void SetOptionsCollapse()
-        {
-            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {IMT.Localize.Editor_LessOptions} ▲" : $"▼ {IMT.Localize.Editor_MoreOptions} ▼";
-
-            PropertiesPanel.StopLayout();
-            foreach (var option in StyleProperties)
-                option.IsCollapsed = !ShowMoreOptions;
-            PropertiesPanel.StartLayout();
-        }
 
         private void AddStyleProperties()
         {
-            var startIndex = PropertiesPanel.childCount;
-            var style = EditObject.Style.Value;
+            this.AddProperties();
 
-            StyleProperties.Clear();
-            var provider = new EditorProvider(EditObject, PropertiesPanel, StyleProperties.Add, RefreshStyleProperties, false);
-            style.GetUIComponents(provider);
-            StyleProperties.Sort(PropertyInfoComparer.Instance);
-
-            PropertiesPanel.StopLayout();
-            foreach (var propertyInfo in StyleProperties)
-                propertyInfo.Create(provider);
-            PropertiesPanel.StartLayout();
-
-            foreach (var property in StyleProperties)
+            foreach (var property in (this as IPropertyEditor).StyleProperties)
             {
-                if (property is ColorPropertyPanel colorProperty)
+                if (property is ColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
                     colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
                 else if (property is FillerGuidePropertyPanel guideProperty)
                 {
@@ -126,37 +100,6 @@ namespace IMT.UI.Editors
                     guideProperty.OnLeave += LeaveGuide;
                 }
             }
-
-            RefreshStyleProperties();
-        }
-        private void RefreshStyleProperties()
-        {
-            var provider = new EditorProvider(EditObject, PropertiesPanel, null, null, true);
-
-            PropertiesPanel.StopLayout();
-            foreach (var propertyInfo in StyleProperties)
-                propertyInfo.Refresh(provider);
-            PropertiesPanel.StartLayout();
-
-            if (Settings.CollapseOptions && StyleProperties.Count(p => !p.IsHidden && p.CanCollapse) >= 2)
-            {
-                MoreOptionsButton.isVisible = true;
-                MoreOptionsButton.BringToFront();
-                SetOptionsCollapse();
-            }
-            else
-                MoreOptionsButton.isVisible = false;
-        }
-        private void ClearStyleProperties()
-        {
-            var provider = new EditorProvider(EditObject, PropertiesPanel, null, null, true);
-
-            PropertiesPanel.StopLayout();
-            foreach (var property in StyleProperties)
-                property.Destroy(provider);
-            PropertiesPanel.StartLayout();
-
-            StyleProperties.Clear();
         }
 
         #endregion
@@ -178,7 +121,7 @@ namespace IMT.UI.Editors
         {
             RefreshSelectedItem();
             PropertiesPanel.StopLayout();
-            ClearStyleProperties();
+            this.ClearProperties();
             AddStyleProperties();
             PropertiesPanel.StartLayout();
         }

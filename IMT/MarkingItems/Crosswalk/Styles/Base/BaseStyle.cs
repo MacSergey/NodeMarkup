@@ -69,7 +69,7 @@ namespace IMT.Manager
         }
         protected abstract void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData);
 
-        new protected void AddLengthProperty(Vector2PropertyPanel lengthProperty, EditorProvider provider)
+        protected void AddCrosswalkLengthProperty(Vector2PropertyPanel lengthProperty, EditorProvider provider)
         {
             if (this is IDashedCrosswalk dashedStyle)
             {

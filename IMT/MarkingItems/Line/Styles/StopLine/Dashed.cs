@@ -81,7 +81,7 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingStopLine line, EditorProvider provider)
         {
             base.GetUIComponents(line, provider);
-            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), false, AddLengthProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), MainCategory, AddLengthProperty));
         }
 
         public override XElement ToXml()

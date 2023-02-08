@@ -164,15 +164,15 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<FloatRangePropertyPanel>(this, nameof(DashLength), false, AddDashLengthProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(SpaceLength), false, AddSpaceLengthProperty));
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), true, AddUseSecondColorProperty));
-            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), true, AddSecondColorProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), false, AddOffsetProperty));
+            provider.AddProperty(new PropertyInfo<FloatRangePropertyPanel>(this, nameof(DashLength), MainCategory, AddDashLengthProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(SpaceLength), MainCategory, AddSpaceLengthProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), AdditionalCategory, AddSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), MainCategory, AddOffsetProperty));
             if (!provider.isTemplate)
             {
-                provider.AddProperty(new PropertyInfo<LineAlignmentPropertyPanel>(this, nameof(Alignment), false, AddAlignmentProperty));
-                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), false, AddInvertProperty));
+                provider.AddProperty(new PropertyInfo<LineAlignmentPropertyPanel>(this, nameof(Alignment), MainCategory, AddAlignmentProperty));
+                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), MainCategory, AddInvertProperty));
             }
 
             //UseSecondColorChanged(this, parent, TwoColors);

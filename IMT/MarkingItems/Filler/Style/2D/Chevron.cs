@@ -99,10 +99,10 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
             base.GetUIComponents(filler, provider);
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(AngleBetween), false, AddAngleBetweenProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(AngleBetween), MainCategory, AddAngleBetweenProperty));
             if (!provider.isTemplate)
             {
-                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), false, AddInvertProperty));
+                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), MainCategory, AddInvertProperty));
             }
         }
 

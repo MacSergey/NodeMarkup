@@ -100,13 +100,13 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Triangle), false, AddTriangleProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Space), false, AddSpaceProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), true, AddAngleProperty, RefreshAngleProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Triangle), MainCategory, AddTriangleProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Space), MainCategory, AddSpaceProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), AdditionalCategory, AddAngleProperty, RefreshAngleProperty));
 
             if (!provider.isTemplate)
             {
-                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), false, AddInvertProperty));
+                provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), MainCategory, AddInvertProperty));
             }
         }
 

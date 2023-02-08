@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class RulePanel : PropertyGroupPanel
+    public class RulePanel : PropertyGroupPanel, IPropertyEditor
     {
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
         public event Action<RulePanel, UIMouseEventParameter> OnLeave;
@@ -25,10 +25,16 @@ namespace IMT.UI.Editors
         public RuleEdgeSelectPropertyPanel From { get; private set; }
         public RuleEdgeSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
-        private MoreOptionsPanel MoreOptionsButton { get; set; }
-        private bool ShowMoreOptions { get; set; }
 
-        private List<IPropertyInfo> StyleProperties { get; set; } = new List<IPropertyInfo>();
+        UIAutoLayoutPanel IPropertyEditor.MainPanel => this;
+        object IPropertyEditor.EditObject => Rule.Line;
+        Style IPropertyEditor.Style => Rule.Style;
+        bool IPropertyEditor.IsTemplate => false;
+
+        Dictionary<string, PropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, PropertyCategoryInfo>();
+        Dictionary<string, List<IPropertyInfo>> IPropertyEditor.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
+        Dictionary<string, CategoryItem> IPropertyEditor.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
+        List<EditorItem> IPropertyEditor.StyleProperties { get; } = new List<EditorItem>();
 
         public RulePanel() { }
         public void Init(LinesEditor editor, MarkingLineRawRule rule)
@@ -48,7 +54,6 @@ namespace IMT.UI.Editors
             Refresh();
 
             AddStyleTypeProperty();
-            AddMoreOptions();
             AddStyleProperties();
 
             StartLayout();
@@ -65,9 +70,6 @@ namespace IMT.UI.Editors
             From = null;
             To = null;
             Style = null;
-            MoreOptionsButton = null;
-            ShowMoreOptions = false;
-            StyleProperties.Clear();
 
             Editor = null;
             Rule = null;
@@ -168,75 +170,16 @@ namespace IMT.UI.Editors
             var lineType = styleType.GetLineType();
             return (Line.PointPair.NetworkType & networkType) != 0 && (Line.PointPair.LineType & lineType) != 0;
         }
-        private void AddMoreOptions()
-        {
-            MoreOptionsButton = ComponentPool.Get<MoreOptionsPanel>(this, nameof(MoreOptionsButton));
-            MoreOptionsButton.Init();
-            MoreOptionsButton.OnButtonClick += () =>
-            {
-                ShowMoreOptions = !ShowMoreOptions;
-                SetOptionsCollapse();
-            };
-        }
-        private void SetOptionsCollapse()
-        {
-            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {IMT.Localize.Editor_LessOptions} ▲" : $"▼ {IMT.Localize.Editor_MoreOptions} ▼";
-
-            StopLayout();
-            foreach (var option in StyleProperties)
-                option.IsCollapsed = !ShowMoreOptions;
-            StartLayout();
-        }
 
         private void AddStyleProperties()
         {
-            var startIndex = childCount;
-            var style = Rule.Style.Value;
+            this.AddProperties();
 
-            StyleProperties.Clear();
-            var provider = new EditorProvider(Rule.Line, this, StyleProperties.Add, RefreshStyleProperties, false);
-            style.GetUIComponents(provider);
-            StyleProperties.Sort(PropertyInfoComparer.Instance);
-
-            StopLayout();
-            foreach (var propertyInfo in StyleProperties)
-                propertyInfo.Create(provider);
-            StartLayout();
-
-            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
-
-            RefreshStyleProperties();
-        }
-        private void RefreshStyleProperties()
-        {
-            var provider = new EditorProvider(Rule.Line, this, null, null, true);
-
-            StopLayout();
-            foreach (var propertyInfo in StyleProperties)
-                propertyInfo.Refresh(provider);
-            StartLayout();
-
-            if (Settings.CollapseOptions && StyleProperties.Count(p => !p.IsHidden && p.CanCollapse) >= 2)
+            foreach (var property in (this as IPropertyEditor).StyleProperties)
             {
-                MoreOptionsButton.isVisible = true;
-                MoreOptionsButton.BringToFront();
-                SetOptionsCollapse();
+                if (property is ColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
+                    colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
             }
-            else
-                MoreOptionsButton.isVisible = false;
-        }
-
-        private void ClearStyleProperties()
-        {
-            var provider = new EditorProvider(Rule.Line, this, null, null, true);
-
-            StopLayout();
-            foreach (var property in StyleProperties)
-                property.Destroy(provider);
-            StartLayout();
-
-            StyleProperties.Clear();
         }
 
         private void OnSaveTemplate()
@@ -280,10 +223,8 @@ namespace IMT.UI.Editors
         private void AfterStyleChanged()
         {
             Editor.RefreshEditor();
-            StopLayout();
-            ClearStyleProperties();
+            this.ClearProperties();
             AddStyleProperties();
-            StartLayout();
         }
         public void Refresh()
         {

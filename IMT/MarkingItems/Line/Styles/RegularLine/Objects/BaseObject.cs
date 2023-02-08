@@ -78,16 +78,16 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(Probability), true, AddProbabilityProperty, RefreshProbabilityProperty));
-            provider.AddProperty(new PropertyInfo<FloatStaticAutoProperty>(this, nameof(Step), false, AddStepProperty, RefreshStepProperty));
-            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Shift), false, AddShiftProperty, RefreshShiftProperty));
-            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Angle), false, AddAngleRangeProperty, RefreshAngleRangeProperty));
-            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Scale), true, AddScaleRangeProperty, RefreshScaleRangeProperty));
-            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), true, AddOffsetProperty, RefreshOffsetProperty));
-            provider.AddProperty(new PropertyInfo<DistributionTypePanel>(this, nameof(Distribution), true, AddDistributionProperty, RefreshDistributionProperty));
-            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Elevation), false, AddElevationProperty, RefreshElevationProperty));
-            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Tilt), true, AddTiltRangeProperty, RefreshTiltRangeProperty));
-            provider.AddProperty(new PropertyInfo<FloatStaticRangeAutoProperty>(this, nameof(Slope), true, AddSlopeRangeProperty, RefreshSlopeRangeProperty));
+            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(Probability), AdditionalCategory, AddProbabilityProperty, RefreshProbabilityProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticAutoProperty>(this, nameof(Step), MainCategory, AddStepProperty, RefreshStepProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Shift), MainCategory, AddShiftProperty, RefreshShiftProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Angle), MainCategory, AddAngleRangeProperty, RefreshAngleRangeProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Scale), AdditionalCategory, AddScaleRangeProperty, RefreshScaleRangeProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), AdditionalCategory, AddOffsetProperty, RefreshOffsetProperty));
+            provider.AddProperty(new PropertyInfo<DistributionTypePanel>(this, nameof(Distribution), AdditionalCategory, AddDistributionProperty, RefreshDistributionProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Tilt), AdditionalCategory, AddTiltRangeProperty, RefreshTiltRangeProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeAutoProperty>(this, nameof(Slope), AdditionalCategory, AddSlopeRangeProperty, RefreshSlopeRangeProperty));
         }
 
         private void AddProbabilityProperty(IntPropertyPanel probabilityProperty, EditorProvider provider)
@@ -537,7 +537,7 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
         {
             base.GetUIComponents(line, provider);
-            provider.AddProperty(new PropertyInfo<SelectPrefabType>(this, nameof(Prefab), false, AddPrefabProperty));
+            provider.AddProperty(new PropertyInfo<SelectPrefabType>(this, nameof(Prefab), MainCategory, AddPrefabProperty));
         }
 
         protected void AddPrefabProperty(SelectPrefabType prefabProperty, EditorProvider provider)

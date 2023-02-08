@@ -49,15 +49,15 @@ namespace IMT.Manager
         {
             base.GetUIComponents(filler, provider);
 
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Step), false, AddStepProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Step), MainCategory, AddStepProperty));
 #if DEBUG
             if (!provider.isTemplate && Settings.ShowDebugProperties)
             {
-                provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RenderOnly), true, GetRenderOnlyProperty));
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Start), true, AddStartProperty));
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(End), true, AddEndProperty));
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StartBorder), true, AddStartBorderProperty));
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(EndBorder), true, AddEndBorderProperty));
+                provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RenderOnly), DebugCategory, GetRenderOnlyProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Start), DebugCategory, AddStartProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(End), DebugCategory, AddEndProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StartBorder), DebugCategory, AddStartBorderProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(EndBorder), DebugCategory, AddEndBorderProperty));
             }
 #endif
         }

@@ -1873,4 +1873,13 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_Texture" xml:space="preserve">
     <value>Texture density</value>
   </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Additional</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Graphic effects</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Main</value>
+  </data>
 </root>

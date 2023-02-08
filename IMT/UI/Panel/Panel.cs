@@ -36,7 +36,7 @@ namespace IMT.UI.Panel
             }
         }
 
-        private float Width => 550f;
+        private float Width => 580f;
 
         public Marking Marking { get; private set; }
         private bool NeedRefreshOnVisible { get; set; }

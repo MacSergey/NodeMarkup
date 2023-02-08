@@ -138,6 +138,13 @@ namespace IMT.Manager
             return dic;
         }
 
+        protected PropertyCategoryInfo MainCategory { get; } = new PropertyCategoryInfo("Main", Localize.StyleOptionCategory_Main, true);
+        protected PropertyCategoryInfo AdditionalCategory { get; } = new PropertyCategoryInfo("Additional", Localize.StyleOptionCategory_Additional, false);
+        protected PropertyCategoryInfo EffectCategory { get; } = new PropertyCategoryInfo("Effect", Localize.StyleOptionCategory_Effect, false);
+#if DEBUG
+        protected PropertyCategoryInfo DebugCategory { get; } = new PropertyCategoryInfo("Debug", "Debug", false);
+#endif
+
         public Style(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture)
         {
             Color = GetColorProperty(color);
@@ -166,15 +173,24 @@ namespace IMT.Manager
         public virtual void GetUIComponents(EditorProvider provider)
         {
             if (this is IColorStyle)
-                provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(Color), false, AddColorProperty, RefreshColorProperty));
+                provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(Color), MainCategory, AddColorProperty, RefreshColorProperty));
             if (this is IWidthStyle)
-                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Width), false, AddWidthProperty, RefreshWidthProperty));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Width), MainCategory, AddWidthProperty, RefreshWidthProperty));
             if (this is IEffectStyle)
             {
-                provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Cracks), false, AddCracksProperty, RefreshCracksProperty));
-                provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Voids), false, AddVoidsProperty, RefreshVoidsProperty));
-                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Texture), false, AddTextureProperty, RefreshTextureProperty));
+                provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Cracks), EffectCategory, AddCracksProperty, RefreshCracksProperty));
+                provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Voids), EffectCategory, AddVoidsProperty, RefreshVoidsProperty));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Texture), EffectCategory, AddTextureProperty, RefreshTextureProperty));
             }
+        }
+        public virtual void GetUICategories(EditorProvider provider)
+        {
+            provider.AddCategory(MainCategory);
+            provider.AddCategory(AdditionalCategory);
+            provider.AddCategory(EffectCategory);
+#if DEBUG
+            provider.AddCategory(DebugCategory);
+#endif
         }
 
         public int GetPropertyIndex(string name)
@@ -350,10 +366,7 @@ namespace IMT.Manager
         }
         protected virtual void RefreshInvertProperty(ButtonPanel buttonsPanel, EditorProvider provider)
         {
-            if (this is IAsymLine asymStyle)
-                ;
-            else
-                buttonsPanel.IsHidden = true;
+            buttonsPanel.IsHidden = this is not IAsymLine;
         }
 
         protected XElement BaseToXml() => new XElement(XmlSection, new XAttribute("T", TypeToInt(Type)));
@@ -379,6 +392,8 @@ namespace IMT.Manager
                 Voids.FromXml(config, DefaultEffect);
             }
         }
+
+        public override string ToString() => Type.ToString();
 
         protected enum PropertyNames
         {
@@ -707,7 +722,7 @@ namespace IMT.Manager
     public interface IPropertyInfo
     {
         string Name { get; }
-        bool CanCollapse { get; }
+        PropertyCategoryInfo Category { get; }
         int SortIndex { get; }
 
         bool IsCollapsed { get; set; }
@@ -726,7 +741,7 @@ namespace IMT.Manager
         public delegate void RefreshItem(PropertyType property, EditorProvider editorProvider);
 
         public string Name { get; }
-        public bool CanCollapse { get; }
+        public PropertyCategoryInfo Category { get; }
         public int SortIndex { get; }
 
         public bool IsCollapsed
@@ -744,7 +759,7 @@ namespace IMT.Manager
             get => instance == null || instance.IsHidden;
             set
             {
-                if(instance != null)
+                if (instance != null)
                     instance.IsHidden = value;
             }
         }
@@ -753,7 +768,7 @@ namespace IMT.Manager
             get => instance != null && instance.EnableControl;
             set
             {
-                if(instance != null)
+                if (instance != null)
                     instance.EnableControl = value;
             }
         }
@@ -763,11 +778,11 @@ namespace IMT.Manager
         private readonly RefreshItem refresh;
         private PropertyType instance;
 
-        public PropertyInfo(Style style, string propertyName, bool canCollapse, InitItem init, RefreshItem refresh = null)
+        public PropertyInfo(Style style, string propertyName, PropertyCategoryInfo categoryInfo, InitItem init, RefreshItem refresh = null)
         {
             Name = propertyName;
+            Category = categoryInfo;
             SortIndex = style.GetPropertyIndex(Name);
-            CanCollapse = canCollapse;
             this.init = init;
             this.refresh = refresh;
             this.instance = null;
@@ -778,7 +793,6 @@ namespace IMT.Manager
             if (instance == null)
             {
                 var property = editorProvider.GetItem<PropertyType>(Name);
-                property.CanCollapse = CanCollapse;
                 init(property, editorProvider);
                 instance = property;
             }
@@ -807,5 +821,19 @@ namespace IMT.Manager
     {
         public static PropertyInfoComparer Instance { get; } = new PropertyInfoComparer();
         public int Compare(IPropertyInfo x, IPropertyInfo y) => x.SortIndex - y.SortIndex;
+    }
+
+    public readonly struct PropertyCategoryInfo
+    {
+        public readonly string name;
+        public readonly string text;
+        public readonly bool isExpand;
+
+        public PropertyCategoryInfo(string name, string text, bool isExpand)
+        {
+            this.name = name;
+            this.text = text;
+            this.isExpand = isExpand;
+        }
     }
 }

@@ -92,9 +92,9 @@ namespace IMT.Manager
 #if DEBUG
             if (!provider.isTemplate && Settings.ShowDebugProperties)
             {
-                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MinAngle), true, GetMinAngle));
-                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MinLength), true, GetMinLength));
-                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MaxLength), true, GetMaxLength));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MinAngle), DebugCategory, GetMinAngle));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MinLength), DebugCategory, GetMinLength));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MaxLength), DebugCategory, GetMaxLength));
             }
 #endif
         }

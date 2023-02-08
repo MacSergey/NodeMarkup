@@ -138,7 +138,7 @@ namespace IMT.Manager
 
             if (!provider.isTemplate)
             {
-                provider.AddProperty(new PropertyInfo<FillerGuidePropertyPanel>(this, nameof(Guide), false, AddGuideProperty));
+                provider.AddProperty(new PropertyInfo<FillerGuidePropertyPanel>(this, nameof(Guide), MainCategory, AddGuideProperty));
             }
         }
         protected void AddGuideProperty(FillerGuidePropertyPanel guideProperty, EditorProvider provider)

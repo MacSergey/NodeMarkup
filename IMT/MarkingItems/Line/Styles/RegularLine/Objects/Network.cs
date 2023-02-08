@@ -134,13 +134,13 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<SelectNetworkProperty>(this, nameof(Prefab), false, AddPrefabProperty));
-            provider.AddProperty(new PropertyInfo<FloatInvertedPropertyPanel>(this, nameof(Shift), false, AddShiftProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), false, AddElevationProperty, RefreshElevationProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), true, AddScaleProperty));
-            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RepeatDistance), true, AddRepeatDistanceProperty));
-            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), true, AddOffsetProperty));
-            provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), false, AddInvertProperty));
+            provider.AddProperty(new PropertyInfo<SelectNetworkProperty>(this, nameof(Prefab), MainCategory, AddPrefabProperty));
+            provider.AddProperty(new PropertyInfo<FloatInvertedPropertyPanel>(this, nameof(Shift), MainCategory, AddShiftProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), AdditionalCategory, AddScaleProperty));
+            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RepeatDistance), AdditionalCategory, AddRepeatDistanceProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), AdditionalCategory, AddOffsetProperty));
+            provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), MainCategory, AddInvertProperty));
         }
 
         private void AddPrefabProperty(SelectNetworkProperty prefabProperty, EditorProvider provider)

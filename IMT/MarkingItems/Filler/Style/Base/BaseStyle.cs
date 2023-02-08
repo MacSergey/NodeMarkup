@@ -118,9 +118,9 @@ namespace IMT.Manager
             if (!provider.isTemplate)
             {
                 if (!filler.IsMedian)
-                    provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), false, AddLineOffsetProperty));
+                    provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), MainCategory, AddLineOffsetProperty));
                 else
-                    provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), false, AddMedianOffsetProperty));
+                    provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), MainCategory, AddMedianOffsetProperty));
             }
         }
 

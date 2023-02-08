@@ -78,6 +78,8 @@ namespace IMT.Utilities
 
         public static string RotateButtonIcon { get; } = nameof(RotateButtonIcon);
 
+        public static string ButtonWhiteBorder { get; } = nameof(ButtonWhiteBorder);
+
         static IMTTextures()
         {
             var spriteParams = new Dictionary<string, RectOffset>();
@@ -126,6 +128,7 @@ namespace IMT.Utilities
             spriteParams[ApplyOrderButton] = new RectOffset();
             spriteParams[NotApplyOrderButton] = new RectOffset();
             spriteParams[ResetOrderButton] = new RectOffset();
+            spriteParams[ButtonWhiteBorder] = new RectOffset(6, 6, 6, 6);
 
             //ButtonIcons
             spriteParams[AutoButtonIcon] = new RectOffset();

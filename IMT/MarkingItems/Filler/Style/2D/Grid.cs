@@ -79,9 +79,9 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
             base.GetUIComponents(filler, provider);
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Step), false, AddStepProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Step), MainCategory, AddStepProperty));
             if (!provider.isTemplate)
-                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), false, AddAngleProperty));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), MainCategory, AddAngleProperty));
         }
 
         protected override ITrajectory[] GetGuides(MarkingFiller filler, ContourGroup contours)

@@ -36,7 +36,7 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingStopLine line, EditorProvider provider)
         {
             base.GetUIComponents(line, provider);
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), false, AddElevationProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), MainCategory, AddElevationProperty));
         }
 
         public override XElement ToXml()

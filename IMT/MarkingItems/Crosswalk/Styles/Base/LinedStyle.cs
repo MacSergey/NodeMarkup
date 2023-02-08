@@ -33,7 +33,7 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
             base.GetUIComponents(crosswalk, provider);
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(LineWidth), false, AddLineWidthProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(LineWidth), MainCategory, AddLineWidthProperty));
         }
 
         protected void AddLineWidthProperty(FloatPropertyPanel widthProperty, EditorProvider provider)

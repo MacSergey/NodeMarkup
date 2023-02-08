@@ -86,15 +86,15 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
             base.GetUIComponents(crosswalk, provider);
-            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), false, AddOffsetProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), MainCategory, AddOffsetProperty));
 #if DEBUG
             if (!provider.isTemplate && Settings.ShowDebugProperties)
             {
-                provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RenderOnly), true, GetRenderOnlyProperty));
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Start), true, AddStartProperty));
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(End), true, AddEndProperty));
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StartBorder), true, AddStartBorderProperty));
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(EndBorder), true, AddEndBorderProperty));
+                provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RenderOnly), DebugCategory, GetRenderOnlyProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Start), DebugCategory, AddStartProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(End), DebugCategory, AddEndProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StartBorder), DebugCategory, AddStartBorderProperty));
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(EndBorder), DebugCategory, AddEndBorderProperty));
             }
 #endif
         }

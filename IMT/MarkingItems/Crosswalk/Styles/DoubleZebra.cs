@@ -158,7 +158,7 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
             base.GetUIComponents(crosswalk, provider);
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(OffsetBetween), false, AddOffsetBetweenProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(OffsetBetween), MainCategory, AddOffsetBetweenProperty));
         }
 
         protected void AddOffsetBetweenProperty(FloatPropertyPanel offsetBetweenProperty, EditorProvider provider)

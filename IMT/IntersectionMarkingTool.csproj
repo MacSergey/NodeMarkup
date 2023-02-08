@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.13.0.432</AssemblyVersion>
+    <AssemblyVersion>1.13.0.471</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -78,6 +78,7 @@
 
   <ItemGroup>
     <None Remove="Properties\launchSettings.json" />
+    <None Remove="Resources\ButtonBorder.png" />
     <None Remove="Resources\ButtonIcons\AutoButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\AutoButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\BoldButtonIcon.png" />
@@ -105,6 +106,8 @@
     <None Remove="Resources\ButtonIcons\SingleButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\TopToBottomButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\TopToBottomButtonIcons.png" />
+    <None Remove="Resources\ButtonWhite.png" />
+    <None Remove="Resources\ButtonWhiteBorder.png" />
     <None Remove="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\LinkHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\ResetHeaderButton.png" />
@@ -137,6 +140,7 @@
     <EmbeddedResource Include="Resources\ButtonIcons\RotateButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\SingleButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\TopToBottomButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonWhiteBorder.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\LinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

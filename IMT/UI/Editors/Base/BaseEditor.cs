@@ -89,11 +89,15 @@ namespace IMT.UI.Editors
         {
             clipChildren = true;
             atlas = TextureHelper.InGameAtlas;
-            backgroundSprite = "UnlockingItemBackground";
+            //backgroundSprite = "UnlockingItemBackground";
+            backgroundSprite = "TextFieldPanel";
+            color = new Color32(68, 68, 75, 255);
 
             ItemsPanel = AddUIComponent<ItemsPanelType>();
             ItemsPanel.atlas = TextureHelper.InGameAtlas;
-            ItemsPanel.backgroundSprite = "ScrollbarTrack";
+            //ItemsPanel.backgroundSprite = "ScrollbarTrack";
+            ItemsPanel.backgroundSprite = "TextFieldPanel";
+            ItemsPanel.color = new Color32(142, 142, 142, 255);
             ItemsPanel.name = nameof(ItemsPanel);
             ItemsPanel.Init(this);
             ItemsPanel.OnSelectClick += OnItemSelect;
@@ -102,7 +106,9 @@ namespace IMT.UI.Editors
             ContentPanel = AddUIComponent<AdvancedScrollablePanel>();
             ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
             ContentPanel.atlas = TextureHelper.InGameAtlas;
-            ContentPanel.backgroundSprite = "UnlockingItemBackground";
+            //ContentPanel.backgroundSprite = "UnlockingItemBackground";
+            ContentPanel.backgroundSprite = "TextFieldPanel";
+            ContentPanel.color = new Color32(68, 68, 75, 255);
             ContentPanel.name = nameof(ContentPanel);
 
             AddEmptyLabel();
@@ -266,17 +272,21 @@ namespace IMT.UI.Editors
         public readonly UIComponent parent;
         private readonly Action refresh;
         private readonly Action<IPropertyInfo> addProperty;
+        private readonly Action<PropertyCategoryInfo> addCategory;
         public readonly bool isTemplate;
 
-        public EditorProvider(object editObject, UIComponent parent, Action<IPropertyInfo> addProperty, Action refresh, bool isTemplate)
+        public EditorProvider(object editObject, UIComponent parent, Action<PropertyCategoryInfo> addCategory, Action<IPropertyInfo> addProperty, Action refresh, bool isTemplate)
         {
             this.editObject = editObject;
             this.parent = parent;
+            this.addCategory = addCategory;
             this.addProperty = addProperty;
             this.refresh = refresh;
             this.isTemplate = isTemplate;
         }
+        public EditorProvider(object editObject, UIComponent parent, bool isTemplate, Action<PropertyCategoryInfo> addCategory = null, Action<IPropertyInfo> addProperty = null, Action refresh = null) : this(editObject, parent, addCategory, addProperty, refresh, isTemplate) { }
 
+        public void AddCategory(PropertyCategoryInfo category) => addCategory?.Invoke(category);
         public void AddProperty(IPropertyInfo property) => addProperty?.Invoke(property);
         public void Refresh() => refresh?.Invoke();
 

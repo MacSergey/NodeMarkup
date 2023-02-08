@@ -36,7 +36,6 @@ namespace IMT.UI.Editors
         protected abstract string IsAssetWarningMessage { get; }
         protected abstract string IsWorkshopWarningMessage { get; }
 
-        protected List<IPropertyInfo> AdditionalProperties { get; set; } = new List<IPropertyInfo>();
         private EditToolMode ToolMode { get; }
 
         #endregion
@@ -55,7 +54,7 @@ namespace IMT.UI.Editors
             AddAuthor();
             AddTemplateName();
 
-            ReloadAdditionalProperties();
+            AddAditionalProperties();
 
             SetEditable(Editors.EditMode.Default);
         }
@@ -66,7 +65,6 @@ namespace IMT.UI.Editors
             HeaderPanel = null;
             Warning = null;
             NameProperty = null;
-            AdditionalProperties.Clear();
         }
         protected override void OnObjectDelete(TemplateType template)
         {
@@ -120,32 +118,10 @@ namespace IMT.UI.Editors
             NameProperty.Value = EditObject.Name;
             NameProperty.OnValueChanged += (name) => OnChanged();
         }
-        private void ReloadAdditionalProperties()
-        {
-            ClearAdditionalProperties();
-            AddAditionalProperties();
-        }
+
         protected virtual void AddAditionalProperties() { }
-        protected virtual void RefreshAdditionalProperties()
-        {
-            var provider = new EditorProvider(EditObject, PropertiesPanel, null, null, true);
-
-            PropertiesPanel.StopLayout();
-            foreach (var propertyInfo in AdditionalProperties)
-                propertyInfo.Refresh(provider);
-            PropertiesPanel.StartLayout();
-        }
-        protected virtual void ClearAdditionalProperties()
-        {
-            var provider = new EditorProvider(EditObject, PropertiesPanel, null, null, true);
-
-            PropertiesPanel.StopLayout();
-            foreach (var property in AdditionalProperties)
-                property.Destroy(provider);
-            PropertiesPanel.StartLayout();
-
-            AdditionalProperties.Clear();
-        }
+        protected virtual void RefreshAdditionalProperties() { }
+        protected virtual void ClearAdditionalProperties() { }
 
         #endregion
 
@@ -190,9 +166,6 @@ namespace IMT.UI.Editors
             NameProperty.EnableControl = mode != Editors.EditMode.Default;
             HeaderPanel.EditMode = mode;
             Warning.isVisible = Settings.ShowPanelTip && EditObject.IsAsset && mode == Editors.EditMode.Default;
-
-            foreach (var additional in AdditionalProperties)
-                additional.EnableControl = EditMode;
         }
 
         public void EditName()
@@ -260,7 +233,7 @@ namespace IMT.UI.Editors
         private void NotSaveChanges()
         {
             OnNotApplyChanges();
-            ReloadAdditionalProperties();
+            AddAditionalProperties();
             EndEditTemplate();
         }
         protected virtual void OnNotApplyChanges() => NameProperty.Value = EditObject.Name;

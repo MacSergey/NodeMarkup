@@ -174,9 +174,9 @@ namespace IMT.Manager
             if (!provider.isTemplate)
             {
                 if (!filler.IsMedian)
-                    provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(CurbSize), false, AddCurbSizeProperty));
+                    provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(CurbSize), MainCategory, AddCurbSizeProperty));
                 else
-                    provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(CurbSize), false, AddMedianCurbSizeProperty));
+                    provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(CurbSize), MainCategory, AddMedianCurbSizeProperty));
             }
         }
 
