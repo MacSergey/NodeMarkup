@@ -46,6 +46,9 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<float>(nameof(Offset), Offset);
                 yield return new StylePropertyDataProvider<bool>(nameof(Side), Side);
                 yield return new StylePropertyDataProvider<bool>(nameof(StartFrom), StartFrom);
+                yield return new StylePropertyDataProvider<float>(nameof(Texture), Texture);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Cracks), Cracks);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Voids), Voids);
             }
         }
 

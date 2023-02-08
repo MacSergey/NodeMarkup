@@ -62,6 +62,9 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<int>(nameof(RightGuideA), RightGuideA);
                 yield return new StylePropertyDataProvider<int>(nameof(RightGuideB), RightGuideB);
                 yield return new StylePropertyDataProvider<bool>(nameof(FollowGuides), FollowGuides);
+                yield return new StylePropertyDataProvider<float>(nameof(Texture), Texture);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Cracks), Cracks);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Voids), Voids);
             }
         }
 

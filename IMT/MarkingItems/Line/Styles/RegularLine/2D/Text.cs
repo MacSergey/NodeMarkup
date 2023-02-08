@@ -83,6 +83,9 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<TextAlignment>(nameof(Alignment), Alignment);
                 yield return new StylePropertyDataProvider<float>(nameof(Shift), Shift);
                 yield return new StylePropertyDataProvider<float>(nameof(Angle), Angle);
+                yield return new StylePropertyDataProvider<float>(nameof(Texture), Texture);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Cracks), Cracks);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Voids), Voids);
             }
         }
 
