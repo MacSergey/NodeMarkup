@@ -17,12 +17,8 @@ namespace IMT.UI.Editors
 
         public CategoryItem()
         {
-            //atlas = TextureHelper.InGameAtlas;
-            //backgroundSprite = "ButtonWhite";
-            //color = new Color32(93, 115, 133, 255);
-
             autoLayoutDirection = LayoutDirection.Vertical;
-            autoLayoutPadding = new RectOffset(5, 5, 3, 3);
+            autoLayoutPadding = new RectOffset(3, 3, 3, 3);
             verticalSpacing = 3;
             autoFitChildrenVertically = true;
         }
@@ -55,9 +51,6 @@ namespace IMT.UI.Editors
         where TypeHeader : BaseCategoryHeaderPanel
     {
         private static Dictionary<string, bool> ExpandList { get; } = new Dictionary<string, bool>();
-        //protected override Color32 Color => new Color32(102, 128, 64, 255);
-        protected override Color32 Color => new Color32(82, 101, 117, 255);
-        //protected override Color32 Color => new Color32(122, 153, 77, 255);
         protected override UITextureAtlas Atlas => IMTTextures.Atlas;
         protected override string BackgroundSprite => IMTTextures.ButtonWhiteBorder;
 
@@ -93,6 +86,13 @@ namespace IMT.UI.Editors
         }
 
         public PropertyCategoryInfo Category { get; private set; }
+
+        public PropertyCategoryPanel()
+        {
+            verticalSpacing = 3;
+            padding = new RectOffset(0, 0, 2, 0);
+            autoLayoutPadding = new RectOffset(2, 2, 0, 0);
+        }
 
         public void Init(PropertyCategoryInfo category)
         {

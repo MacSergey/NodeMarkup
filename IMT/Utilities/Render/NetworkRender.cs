@@ -32,7 +32,7 @@ namespace IMT.Utilities
 
             for (int i = 0; i < trajectories.Length; i += 1)
             {
-                var position = (trajectories[i].StartPosition + trajectories[i].EndPosition) / 2;
+                var position = (trajectories[i].StartPosition + trajectories[i].EndPosition) * 0.5f;
                 CalculateMatrix(trajectories[i], width * 0.5f * scale, position, out var left, out var right);
                 position += Vector3.up * elevation;
 

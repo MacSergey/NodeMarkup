@@ -186,7 +186,7 @@ namespace IMT.Utilities
 
     public interface IDrawData
     {
-        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
+        void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
     }
 
     public abstract class EnumDictionary<EnumType, Type> : Dictionary<EnumType, Type>

@@ -8,13 +8,13 @@ namespace IMT.Utilities
 {
     public struct MarkingPropItemData
     {
-        public Vector3 Position;
-        public float AbsoluteAngle;
-        public float Angle;
-        public float Tilt;
-        public float Slope;
-        public float Scale;
-        public Color32 Color;
+        public Vector3 position;
+        public float absoluteAngle;
+        public float angle;
+        public float tilt;
+        public float slope;
+        public float scale;
+        public Color32 color;
     }
     public abstract class BaseMarkingPrefabData<PrefabType> : IStyleData, IDrawData
         where PrefabType : PrefabInfo
@@ -48,7 +48,7 @@ namespace IMT.Utilities
             var instance = new InstanceID() { };
 
             foreach (var item in Items)
-                RenderInstance(cameraInfo, Info, instance, item.Position, item.Scale, item.AbsoluteAngle, item.Angle, item.Tilt, item.Slope, item.Color, new Vector4(), true);
+                RenderInstance(cameraInfo, Info, instance, item.position, item.scale, item.absoluteAngle, item.angle, item.tilt, item.slope, item.color, new Vector4(), true);
         }
 
         public static void RenderInstance(RenderManager.CameraInfo cameraInfo, PropInfo info, InstanceID id, Vector3 position, float scale, float absoluteAngle, float angle, float tilt, float slope, Color color, Vector4 objectIndex, bool active)
@@ -160,7 +160,7 @@ namespace IMT.Utilities
         public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
             foreach (var item in Items)
-                RenderInstance(cameraInfo, Info, item.Position, item.Scale, item.AbsoluteAngle, item.Angle, item.Tilt, item.Slope, 1f, new Vector4());
+                RenderInstance(cameraInfo, Info, item.position, item.scale, item.absoluteAngle, item.angle, item.tilt, item.slope, 1f, new Vector4());
         }
 
         public static void RenderInstance(RenderManager.CameraInfo cameraInfo, TreeInfo info, Vector3 position, float scale, float absoluteAngle, float angle, float tilt, float slope, float brightness, Vector4 objectIndex)

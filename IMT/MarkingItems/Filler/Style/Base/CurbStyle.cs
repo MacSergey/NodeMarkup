@@ -91,7 +91,7 @@ namespace IMT.Manager
                     var sidePoints = GetContourPoints(contour.side, lod, out var sideGroups);
                     if (Triangulate(sidePoints, out var triangles))
                     {
-                        meshParts.Add(MarkingFillerMeshData.RawData.SetSide(sideGroups, sidePoints, MaterialType.Pavement));
+                        meshParts.Add(MarkingFillerMeshData.RawData.GetSide(sideGroups, sidePoints, MaterialType.Pavement));
 
                         if (contour.center != null)
                         {
@@ -99,7 +99,7 @@ namespace IMT.Manager
                             if (Triangulate(holePoints, out var holeTriangles))
                             {
                                 holePoints = holePoints.Select(p => p += new Vector3(0f, 0.03f, 0f)).ToArray();
-                                meshParts.Add(MarkingFillerMeshData.RawData.SetTop(holePoints, holeTriangles, MaterialType));
+                                meshParts.Add(MarkingFillerMeshData.RawData.GetTop(holePoints, holeTriangles, MaterialType));
                                 //var sideStartI = 0;
                                 //var sideHalfI = contour._side.Count / 2;
 
@@ -159,7 +159,7 @@ namespace IMT.Manager
                             }
                         }
 
-                        meshParts.Add(MarkingFillerMeshData.RawData.SetTop(sidePoints, triangles, MaterialType.Pavement));
+                        meshParts.Add(MarkingFillerMeshData.RawData.GetTop(sidePoints, triangles, MaterialType.Pavement));
                     }
 
                     addData(new MarkingFillerMeshData(lod, Elevation, meshParts.ToArray()));

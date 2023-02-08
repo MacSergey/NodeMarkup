@@ -86,22 +86,22 @@ namespace IMT.Manager
             switch (ColorOption.Value)
             {
                 case ColorOptionEnum.Color1:
-                    item.Color = prop.m_color0;
+                    item.color = prop.m_color0;
                     break;
                 case ColorOptionEnum.Color2:
-                    item.Color = prop.m_color1;
+                    item.color = prop.m_color1;
                     break;
                 case ColorOptionEnum.Color3:
-                    item.Color = prop.m_color2;
+                    item.color = prop.m_color2;
                     break;
                 case ColorOptionEnum.Color4:
-                    item.Color = prop.m_color3;
+                    item.color = prop.m_color3;
                     break;
                 case ColorOptionEnum.Random:
-                    item.Color = prop.GetColor(ref SimulationManager.instance.m_randomizer);
+                    item.color = prop.GetColor(ref SimulationManager.instance.m_randomizer);
                     break;
                 case ColorOptionEnum.Custom:
-                    item.Color = Color;
+                    item.color = Color;
                     break;
             }
         }

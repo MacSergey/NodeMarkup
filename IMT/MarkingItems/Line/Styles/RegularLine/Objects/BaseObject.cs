@@ -490,44 +490,44 @@ namespace IMT.Manager
         }
         private void CalculateItem(ITrajectory trajectory, float t, PrefabType prefab, ref MarkingPropItemData item)
         {
-            item.Position = trajectory.Position(t);
+            item.position = trajectory.Position(t);
 
             var randomShift = SimulationManager.instance.m_randomizer.UInt32((uint)((Shift.Value.y - Shift.Value.x) * 1000f)) * 0.001f;
-            item.Position += trajectory.Tangent(t).Turn90(true).MakeFlatNormalized() * (randomShift - (Shift.Value.y - Shift.Value.x) * 0.5f);
+            item.position += trajectory.Tangent(t).Turn90(true).MakeFlatNormalized() * (randomShift - (Shift.Value.y - Shift.Value.x) * 0.5f);
 
             if (CanElevate)
             {
                 var randomElevation = SimulationManager.instance.m_randomizer.UInt32((uint)((Elevation.Value.y - Elevation.Value.x) * 1000f)) * 0.001f;
-                item.Position.y += Elevation.Value.x + randomElevation;
+                item.position.y += Elevation.Value.x + randomElevation;
             }
 
             var minAngle = Mathf.Min(Angle.Value.x, Angle.Value.y);
             var maxAngle = Mathf.Max(Angle.Value.x, Angle.Value.y);
             var randomAngle = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(maxAngle - minAngle));
-            item.AbsoluteAngle = trajectory.Tangent(t).AbsoluteAngle();
-            item.Angle = (minAngle + randomAngle) * Mathf.Deg2Rad;
+            item.absoluteAngle = trajectory.Tangent(t).AbsoluteAngle();
+            item.angle = (minAngle + randomAngle) * Mathf.Deg2Rad;
 
             if (CanSlope)
             {
                 var randomTilt = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Tilt.Value.y - Tilt.Value.x));
-                item.Tilt += (Tilt.Value.x + randomTilt) * Mathf.Deg2Rad;
+                item.tilt += (Tilt.Value.x + randomTilt) * Mathf.Deg2Rad;
 
                 if (Slope.HasValue)
                 {
                     var slopeValue = Slope.Value.Value;
                     var randomSlope = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(slopeValue.y - slopeValue.x));
-                    item.Slope += (slopeValue.x + randomSlope) * Mathf.Deg2Rad;
+                    item.slope += (slopeValue.x + randomSlope) * Mathf.Deg2Rad;
                 }
                 else
                 {
                     var direction = trajectory.Tangent(t);
                     var flatDirection = direction.MakeFlat();
-                    item.Slope = Mathf.Sign(direction.y) * Vector3.Angle(flatDirection, direction) * Mathf.Deg2Rad;
+                    item.slope = Mathf.Sign(direction.y) * Vector3.Angle(flatDirection, direction) * Mathf.Deg2Rad;
                 }
             }
 
             var randomScale = SimulationManager.instance.m_randomizer.UInt32((uint)((Scale.Value.y - Scale.Value.x) * 1000f)) * 0.001f;
-            item.Scale = Scale.Value.x + randomScale;
+            item.scale = Scale.Value.x + randomScale;
 
             CalculateItem(prefab, ref item);
         }

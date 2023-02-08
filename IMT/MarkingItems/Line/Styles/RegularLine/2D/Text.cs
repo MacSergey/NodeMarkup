@@ -1,7 +1,4 @@
-﻿using ColossalFramework.DataBinding;
-using ColossalFramework.UI;
-using IMT.API;
-using IMT.Manager;
+﻿using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -15,7 +12,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
+using Object = UnityEngine.Object;
 
 namespace IMT.Manager
 {
@@ -23,7 +20,6 @@ namespace IMT.Manager
     {
         private static Dictionary<TextureId, TextureData> TextTextures { get; } = new Dictionary<TextureId, TextureData>(TextureComparer.Instance);
         private static Dictionary<TextureId, int> TextTextureCount { get; } = new Dictionary<TextureId, int>();
-        //private static Dictionary<int, Texture2D> MainTextures { get; } = new Dictionary<int, Texture2D>();
 
         public override StyleType Type => StyleType.LineText;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -38,7 +34,12 @@ namespace IMT.Manager
         private PropertyVector2Value Spacing { get; }
         private PropertyEnumValue<TextAlignment> Alignment { get; }
 
-        private TextureId PrevTextureId { get; set; }
+        private Dictionary<MarkingLOD, TextureId> PrevTextureId { get; } = new Dictionary<MarkingLOD, TextureId>()
+        {
+            { MarkingLOD.NoLOD, default },
+            { MarkingLOD.LOD0, default },
+            { MarkingLOD.LOD1, default },
+        };
 
 #if DEBUG
         private PropertyStructValue<float> Ratio { get; }
@@ -102,12 +103,16 @@ namespace IMT.Manager
         }
         ~RegularLineStyleText()
         {
-            RemoveTexture(PrevTextureId);
+            foreach (var lod in EnumExtension.GetEnumValues<MarkingLOD>())
+                RemoveTexture(PrevTextureId[lod]);
         }
         protected override void StyleChanged()
         {
-            RemoveTexture(PrevTextureId);
-            PrevTextureId = default;
+            foreach (var lod in EnumExtension.GetEnumValues<MarkingLOD>())
+            {
+                RemoveTexture(PrevTextureId[lod]);
+                PrevTextureId[lod] = default;
+            }
             base.StyleChanged();
         }
         private static void RemoveTexture(TextureId textureId)
@@ -120,15 +125,29 @@ namespace IMT.Manager
                 if (TextTextureCount.TryGetValue(textureId, out var count))
                 {
                     count -= 1;
+#if DEBUG
+                    var destroyed = false;
+#endif
                     if (count <= 0)
                     {
                         TextTextureCount.Remove(textureId);
-                        TextTextures.Remove(textureId);
+                        if (TextTextures.TryGetValue(textureId, out var textureData))
+                        {
+                            if (textureData.texture != null)
+                            {
+                                Object.Destroy(textureData.texture);
+#if DEBUG
+                                destroyed = true;
+#endif
+                            }
+
+                            TextTextures.Remove(textureId);
+                        }
                     }
                     else
                         TextTextureCount[textureId] = count;
 #if DEBUG
-                    SingletonMod<Mod>.Logger.Debug($"Removed ({count}) {textureId}");
+                    SingletonMod<Mod>.Logger.Debug($"Removed({destroyed}) ({count}) {textureId}");
 #endif
                 }
             }
@@ -169,15 +188,17 @@ namespace IMT.Manager
             if (!TextTextures.TryGetValue(textureId, out var textureData))
             {
                 var textTexture = RenderHelper.CreateTextTexture(textureId.font, textureId.text, textureId.scale, textureId.spacing, out var textWidth, out var textHeight);
+                textTexture.name = textureId.ToString();
                 textureData = new TextureData(textTexture, textWidth, textHeight);
                 TextTextures[textureId] = textureData;
             }
 
-            if (!TextureComparer.Instance.Equals(textureId, PrevTextureId))
+            var prevTextureId = PrevTextureId[lod];
+            if (!TextureComparer.Instance.Equals(textureId, prevTextureId))
             {
-                RemoveTexture(PrevTextureId);
+                RemoveTexture(prevTextureId);
                 AddTexture(textureId);
-                PrevTextureId = textureId;
+                PrevTextureId[lod] = textureId;
             }
 
             var ratio = lod == MarkingLOD.LOD0 ? Ratio : Ratio * 5f;
@@ -239,7 +260,8 @@ namespace IMT.Manager
             textProperty.OnValueChanged += (value) => Text.Value = value;
         }
         protected void AddScaleProperty(FloatPropertyPanel sizeProperty, EditorProvider provider)
-        {;
+        {
+            ;
             sizeProperty.Text = Localize.StyleOption_ObjectScale;
             sizeProperty.UseWheel = true;
             sizeProperty.WheelStep = 0.1f;

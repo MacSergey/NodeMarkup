@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using IMT.Manager;
 using ModsCommon.Utilities;
-using System;
 using System.Linq;
-using static PathUnit;
-using static EffectItem;
 
 namespace IMT.Utilities
 {
@@ -139,6 +136,7 @@ namespace IMT.Utilities
             this = new DecalData(materialType, lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
 
+        public void OnDestroy() { }
         public IEnumerable<IDrawData> GetDrawData() { yield return this; }
 
         public static MaterialType GetAreaMaterial(int points)

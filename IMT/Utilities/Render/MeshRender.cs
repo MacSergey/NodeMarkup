@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using IMT.Manager;
+using ModsCommon;
 using ModsCommon.Utilities;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,8 @@ namespace IMT.Utilities
         protected Mesh[] Meshes { get; private set; }
         protected MaterialType[] MaterialTypes { get; private set; }
 
+        protected abstract bool DestroyMeshes {get;}
+
         public MarkingMeshData(MarkingLOD lod, float meshWidth, float meshLength) : base(lod, meshWidth, meshLength) { }
 
         protected void Init(Vector3 position, Matrix4x4 left, Matrix4x4 right, params MaterialType[] materialTypes)
@@ -70,6 +73,23 @@ namespace IMT.Utilities
             MaterialTypes = materialTypes;
         }
 
+        ~MarkingMeshData()
+        {
+            if(DestroyMeshes && Meshes != null) 
+            {
+                for(var i = 0; i < Meshes.Length; i+=1) 
+                {
+                    if (Meshes[i] != null)
+                    {
+                        Object.Destroy(Meshes[i]);
+                        Meshes[i] = null;
+#if DEBUG
+                        SingletonMod<Mod>.Logger.Debug("Destroy mesh");
+#endif
+                    }
+                }
+            }
+        }
         public override IEnumerable<IDrawData> GetDrawData()
         {
             if (Meshes == null)
@@ -107,45 +127,44 @@ namespace IMT.Utilities
     }
     public class MarkingFillerMeshData : MarkingMeshData
     {
+        protected override bool DestroyMeshes => true;
+
         public enum MeshType
         {
             Side,
             Top,
         }
-        public struct RawData
+        public readonly struct RawData
         {
-            public MeshType _meshType;
-            public MaterialType _materialType;
-            public int[] _groups;
-            public Vector3[] _points;
-            public int[] _polygons;
+            public readonly MeshType meshType;
+            public readonly MaterialType materialType;
+            public readonly int[] groups;
+            public readonly Vector3[] points;
+            public readonly int[] polygons;
 
-            public static RawData SetSide(int[] groups, Vector3[] points, MaterialType materialType)
+            private RawData(MeshType meshType, MaterialType materialType, int[] groups, Vector3[] points, int[] polygons)
             {
-                return new RawData()
-                {
-                    _meshType = MeshType.Side,
-                    _groups = groups.ToArray(),
-                    _points = points.ToArray(),
-                    _materialType = materialType,
-                };
+                this.meshType = meshType;
+                this.materialType = materialType;
+                this.groups = groups;
+                this.points = points;
+                this.polygons = polygons;
             }
-            public static RawData SetTop(Vector3[] points, int[] polygons, MaterialType materialType)
+
+            public static RawData GetSide(int[] groups, Vector3[] points, MaterialType materialType)
             {
-                return new RawData()
-                {
-                    _meshType = MeshType.Top,
-                    _points = points.ToArray(),
-                    _polygons = polygons.ToArray(),
-                    _materialType = materialType,
-                };
+                return new RawData(MeshType.Side, materialType, groups.ToArray(), points.ToArray(), null);
+            }
+            public static RawData GetTop(Vector3[] points, int[] polygons, MaterialType materialType)
+            {
+                return new RawData(MeshType.Top, materialType, null, points.ToArray(), polygons.ToArray());
             }
         }
         public struct RenderData
         {
-            public MeshType _meshType;
-            public Vector3[] _vertixes;
-            public int[] _triangles;
+            public MeshType meshType;
+            public Vector3[] vertixes;
+            public int[] triangles;
         }
 
         public override MarkingLODType LODType => MarkingLODType.Mesh;
@@ -161,19 +180,19 @@ namespace IMT.Utilities
             for (var i = 0; i < datas.Length; i += 1)
             {
                 var data = datas[i];
-                Data[i]._meshType = data._meshType;
+                Data[i].meshType = data.meshType;
 
-                if (data._meshType == MeshType.Side)
+                if (data.meshType == MeshType.Side)
                 {
                     var vertices = new List<Vector3>();
                     var triangles = new List<int>();
 
                     var index = 0;
-                    for (var j = 0; j < data._groups.Length; j += 1)
+                    for (var j = 0; j < data.groups.Length; j += 1)
                     {
-                        for (var k = 0; k <= data._groups[j]; k += 1)
+                        for (var k = 0; k <= data.groups[j]; k += 1)
                         {
-                            var point = data._points[index % data._points.Length];
+                            var point = data.points[index % data.points.Length];
 
                             vertices.Add(point);
                             vertices.Add(point - new Vector3(0f, elevation + 0.5f, 0f));
@@ -194,17 +213,17 @@ namespace IMT.Utilities
                     }
 
 
-                    Data[i]._vertixes = vertices.ToArray();
-                    Data[i]._triangles = triangles.ToArray();
+                    Data[i].vertixes = vertices.ToArray();
+                    Data[i].triangles = triangles.ToArray();
                 }
                 else
                 {
-                    Data[i]._vertixes = data._points;
-                    Data[i]._triangles = data._polygons;
+                    Data[i].vertixes = data.points;
+                    Data[i].triangles = data.polygons;
                 }
             }
 
-            var vertixes = Data.SelectMany(i => i._vertixes).ToArray();
+            var vertixes = Data.SelectMany(i => i.vertixes).ToArray();
             var minMax = GetMinMax(vertixes);
 
             var xRatio = MeshHalfWidth / minMax.size.x;
@@ -212,17 +231,17 @@ namespace IMT.Utilities
 
             for (var i = 0; i < Data.Length; i += 1)
             {
-                for (var j = 0; j < Data[i]._vertixes.Length; j += 1)
+                for (var j = 0; j < Data[i].vertixes.Length; j += 1)
                 {
-                    var vertex = Data[i]._vertixes[j];
-                    Data[i]._vertixes[j] = new Vector3((vertex.x - minMax.center.x) * xRatio, vertex.y - minMax.min.y, (vertex.z - minMax.center.z) * yRatio);
+                    var vertex = Data[i].vertixes[j];
+                    Data[i].vertixes[j] = new Vector3((vertex.x - minMax.center.x) * xRatio, vertex.y - minMax.min.y, (vertex.z - minMax.center.z) * yRatio);
                 }
             }
 
             CalculateMatrix(minMax.size.x, minMax.size.z, out Matrix4x4 left, out Matrix4x4 right);
             var position = new Vector3(minMax.center.x, minMax.min.y + elevation, minMax.center.z);
 
-            Init(position, left, right, datas.Select(i => i._materialType).ToArray());
+            Init(position, left, right, datas.Select(i => i.materialType).ToArray());
         }
 
         private void CalculateMatrix(float width, float height, out Matrix4x4 left, out Matrix4x4 right)
@@ -258,12 +277,12 @@ namespace IMT.Utilities
                 var mesh = new Mesh
                 {
                     name = "MarkingStyleFillerMesh",
-                    vertices = data._vertixes,
-                    triangles = data._triangles,
+                    vertices = data.vertixes,
+                    triangles = data.triangles,
                     bounds = new Bounds(new Vector3(0f, 0f, 0f), new Vector3(128, 57, 128)),
                 };
                 mesh.RecalculateNormals();
-                if (data._meshType == MeshType.Top)
+                if (data.meshType == MeshType.Top)
                     mesh.normals = mesh.normals.Select(n => -n).ToArray();
                 mesh.RecalculateTangents();
                 mesh.UploadMeshData(false);
@@ -274,6 +293,8 @@ namespace IMT.Utilities
     }
     public class MarkingLineMeshData : MarkingMeshData
     {
+        protected override bool DestroyMeshes => false;
+
         private static int Split => 22;
         private static float HalfWidth => 10f;
         private static float HalfLength => 11f;
@@ -357,7 +378,6 @@ namespace IMT.Utilities
 
             static float GetZ(int i) => (2f / Split * i - 1) * HalfLength;
         }
-
         private static IEnumerable<int> GetTriangles()
         {
             var triangles = new List<int>();

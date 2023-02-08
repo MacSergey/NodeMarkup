@@ -62,7 +62,7 @@ namespace IMT.Manager
                 {
                     //SplitTriangles(contour, points, triangles, 2f, out var topPoints, out var topTriangles);
 
-                    var data = new MarkingFillerMeshData(lod, Elevation, MarkingFillerMeshData.RawData.SetSide(groups, points, MaterialType.Pavement), MarkingFillerMeshData.RawData.SetTop(points, triangles, MaterialType));
+                    var data = new MarkingFillerMeshData(lod, Elevation, MarkingFillerMeshData.RawData.GetSide(groups, points, MaterialType.Pavement), MarkingFillerMeshData.RawData.GetTop(points, triangles, MaterialType));
                     addData(data);
 #if DEBUG
                     //if ((Settings.ShowFillerTriangulation & 2) != 0)
