@@ -1,6 +1,7 @@
 ﻿using IMT.Manager;
 using ModsCommon.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace IMT.UI.Editors
 {
@@ -33,34 +34,40 @@ namespace IMT.UI.Editors
                 {
                     category.Value.Sort(PropertyInfoComparer.Instance);
 
-                    if (!editor.CategoryInfos.TryGetValue(category.Key, out var categoryInfo))
-                        categoryInfo = new PropertyCategoryInfo(category.Key, category.Key, false);
+                    if(!editor.CategoryInfos.ContainsKey(category.Key))
+                        editor.CategoryInfos[category.Key] = new PropertyCategoryInfo(category.Key, category.Key, false);
+                }
 
-                    if (string.IsNullOrEmpty(category.Key))
+                foreach (var categoryInfo in editor.CategoryInfos.Values)
+                {
+                    if (editor.PropertyInfos.TryGetValue(categoryInfo.name, out var propertyInfos))
                     {
-                        var categoryProvider = new EditorProvider(editor.EditObject, editor.MainPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
-
-                        foreach (var propertyInfo in category.Value)
-                            propertyInfo.Create(categoryProvider);
-                    }
-                    else
-                    {
-                        var categoryItem = ComponentPool.Get<CategoryItem>(editor.MainPanel, "CategoryItem");
-                        var categoryPanel = categoryItem.Init<DefaultPropertyCategoryPanel>(category.Key);
-                        categoryPanel.Init(categoryInfo);
-                        editor.CategoryItems[category.Key] = categoryItem;
-
-                        var categoryProvider = new EditorProvider(editor.EditObject, categoryPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
-
-                        categoryPanel.StopLayout();
+                        if (string.IsNullOrEmpty(categoryInfo.name))
                         {
-                            foreach (var propertyInfo in category.Value)
-                            {
-                                var protertyItem = propertyInfo.Create(categoryProvider);
-                                editor.StyleProperties.Add(protertyItem);
-                            }
+                            var categoryProvider = new EditorProvider(editor.EditObject, editor.MainPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
+
+                            foreach (var propertyInfo in propertyInfos)
+                                propertyInfo.Create(categoryProvider);
                         }
-                        categoryPanel.StartLayout();
+                        else
+                        {
+                            var categoryItem = ComponentPool.Get<CategoryItem>(editor.MainPanel, "CategoryItem");
+                            var categoryPanel = categoryItem.Init<DefaultPropertyCategoryPanel>(categoryInfo.name);
+                            categoryPanel.Init(categoryInfo);
+                            editor.CategoryItems[categoryInfo.name] = categoryItem;
+
+                            var categoryProvider = new EditorProvider(editor.EditObject, categoryPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
+
+                            categoryPanel.StopLayout();
+                            {
+                                foreach (var propertyInfo in propertyInfos)
+                                {
+                                    var protertyItem = propertyInfo.Create(categoryProvider);
+                                    editor.StyleProperties.Add(protertyItem);
+                                }
+                            }
+                            categoryPanel.StartLayout();
+                        }
                     }
                 }
             }
@@ -100,8 +107,16 @@ namespace IMT.UI.Editors
                         var categoryProvider = new EditorProvider(editor.EditObject, categoryPanel, editor.IsTemplate);
 
                         categoryPanel.StopLayout();
-                        foreach (var propertyInfo in category.Value)
-                            propertyInfo.Refresh(categoryProvider);
+                        {
+                            var visibleCount = 0;
+                            foreach (var propertyInfo in category.Value)
+                            {
+                                propertyInfo.Refresh(categoryProvider);
+                                if (!propertyInfo.IsHidden)
+                                    visibleCount += 1;
+                            }
+                            categoryPanel.isVisible = visibleCount > 0;
+                        }
                         categoryPanel.StartLayout();
                     }
                 }
@@ -128,8 +143,10 @@ namespace IMT.UI.Editors
                         var categoryProvider = new EditorProvider(editor.EditObject, categoryPanel, editor.IsTemplate);
 
                         categoryPanel.StopLayout();
-                        foreach (var propertyInfo in category.Value)
-                            propertyInfo.Destroy(categoryProvider);
+                        {
+                            foreach (var propertyInfo in category.Value)
+                                propertyInfo.Destroy(categoryProvider);
+                        }
                         categoryPanel.StartLayout();
                     }
                 }

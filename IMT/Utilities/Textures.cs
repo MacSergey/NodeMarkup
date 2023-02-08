@@ -77,6 +77,8 @@ namespace IMT.Utilities
         public static string FixedFreeButtonIcon { get; } = nameof(FixedFreeButtonIcon);
 
         public static string RotateButtonIcon { get; } = nameof(RotateButtonIcon);
+        public static string CopyButtonIcon { get; } = nameof(CopyButtonIcon);
+        public static string PasteButtonIcon { get; } = nameof(PasteButtonIcon);
 
         public static string ButtonWhiteBorder { get; } = nameof(ButtonWhiteBorder);
 
@@ -148,6 +150,8 @@ namespace IMT.Utilities
             spriteParams[FixedFreeButtonIcon] = new RectOffset();
 
             spriteParams[RotateButtonIcon] = new RectOffset();
+            spriteParams[CopyButtonIcon] = new RectOffset();
+            spriteParams[PasteButtonIcon] = new RectOffset();
 
             //ListItem
             spriteParams[ListItemBackground] = new RectOffset(4, 4, 4, 4);

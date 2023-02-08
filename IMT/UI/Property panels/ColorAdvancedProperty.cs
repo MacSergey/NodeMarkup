@@ -29,7 +29,7 @@ namespace IMT.UI
             CopyButton.SetDefaultStyle();
             CopyButton.width = 20;
             CopyButton.atlasForeground = IMTTextures.Atlas;
-            CopyButton.normalFgSprite = IMTTextures.CopyHeaderButton;
+            CopyButton.normalFgSprite = IMTTextures.CopyButtonIcon;
             CopyButton.tooltip = IMT.Localize.Editor_ColorCopy;
             CopyButton.eventClick += Copy;
 
@@ -37,7 +37,7 @@ namespace IMT.UI
             PasteButton.SetDefaultStyle();
             PasteButton.width = 20;
             PasteButton.atlasForeground = IMTTextures.Atlas;
-            PasteButton.normalFgSprite = IMTTextures.PasteHeaderButton;
+            PasteButton.normalFgSprite = IMTTextures.PasteButtonIcon;
             PasteButton.tooltip = IMT.Localize.Editor_ColorPaste;
             PasteButton.eventClick += Paste;
         }
