@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItemsPanel, StyleTemplate, StyleTemplateHeaderPanel, EditStyleTemplateMode>, IPropertyEditor
+    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItemsPanel, StyleTemplate, StyleTemplateHeaderPanel, EditStyleTemplateMode>, IPropertyContainer
     {
         public override string Name => IMT.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(IMT.Localize.TemplateEditor_EmptyMessage, IMT.Localize.HeaderPanel_SaveAsTemplate);
@@ -24,15 +24,15 @@ namespace IMT.UI.Editors
 
         private Style EditStyle { get; set; }
 
-        UIAutoLayoutPanel IPropertyEditor.MainPanel => PropertiesPanel;
+        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
         object IPropertyEditor.EditObject => EditObject;
-        Style IPropertyEditor.Style => EditStyle;
+        Style IPropertyContainer.Style => EditStyle;
         bool IPropertyEditor.IsTemplate => true;
 
-        Dictionary<string, IPropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
-        Dictionary<string, List<IPropertyInfo>> IPropertyEditor.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
-        Dictionary<string, CategoryItem> IPropertyEditor.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
-        List<EditorItem> IPropertyEditor.StyleProperties { get; } = new List<EditorItem>();
+        Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
+        Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
+        Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
+        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
 
         protected override IEnumerable<StyleTemplate> GetObjects() => SingletonManager<StyleTemplateManager>.Instance.Templates;
 
@@ -41,6 +41,7 @@ namespace IMT.UI.Editors
             CopyStyle();
             base.OnFillPropertiesPanel(template);
         }
+        void IPropertyEditor.RefreshProperties() => PropertyEditorHelper.RefreshProperties(this);
 
         protected override void AddAditionalProperties() => this.AddProperties();
         protected override void ClearAdditionalProperties() => this.ClearProperties();
@@ -63,7 +64,7 @@ namespace IMT.UI.Editors
         {
             base.SetEditable(mode);
 
-            foreach (var property in (this as IPropertyEditor).StyleProperties)
+            foreach (var property in (this as IPropertyContainer).StyleProperties)
                 property.EnableControl = EditMode;
         }
         private void ToggleAsDefault()

@@ -48,7 +48,7 @@ namespace IMT.UI.Editors
     }
     public interface IPropertyCategoryPanel
     {
-        void Init(IPropertyCategoryInfo category, object editObject);
+        void Init(IPropertyCategoryInfo category, IPropertyEditor editor);
     }
 
     public abstract class BasePropertyCategoryPanel<TypeHeader> : PropertyGroupPanel, IPropertyCategoryPanel
@@ -58,7 +58,7 @@ namespace IMT.UI.Editors
         protected override UITextureAtlas Atlas => IMTTextures.Atlas;
         protected override string BackgroundSprite => IMTTextures.ButtonWhiteBorder;
 
-        protected object EditObject { get; private set; }
+        protected IPropertyEditor Editor { get; private set; }
         protected TypeHeader Header { get; private set; }
 
         public bool? IsExpand
@@ -99,17 +99,17 @@ namespace IMT.UI.Editors
             autoLayoutPadding = new RectOffset(2, 2, 0, 0);
         }
 
-        public virtual void Init(IPropertyCategoryInfo category, object editObject)
+        public virtual void Init(IPropertyCategoryInfo category, IPropertyEditor editor)
         {
             Category = category;
-            EditObject = editObject;
+            Editor = editor;
 
             Header = ComponentPool.Get<TypeHeader>(this, nameof(Header));
-            Header.Init(editObject);
-            Header.eventClick += HeaderClick;
             Header.Category = category.Text;
+            Header.Init(editor);
+            Header.eventClick += HeaderClick;
 
-            IsExpand ??= category.IsExpand;
+            IsExpand = IsExpand ?? category.IsExpand;
 
             base.Init();
         }
@@ -118,6 +118,7 @@ namespace IMT.UI.Editors
         {
             base.DeInit();
             Header = null;
+            Editor = null;
         }
 
         private void HeaderClick(UIComponent component, UIMouseEventParameter eventParam)
@@ -136,27 +137,81 @@ namespace IMT.UI.Editors
     public class DefaultPropertyCategoryPanel : BasePropertyCategoryPanel<DefaultCategoryHeaderPanel> { }
     public class EffectPropertyCategoryPanel : BasePropertyCategoryPanel<EffectCategoryHeaderPanel>
     {
-        public override void Init(IPropertyCategoryInfo category, object editObject)
-        {
-            base.Init(category, editObject);
+        private static EffectData Buffer { get; set; }
 
+        public override void Init(IPropertyCategoryInfo category, IPropertyEditor editor)
+        {
+            base.Init(category, editor);
+
+            Header.OnCopy += CopyEffects;
+            Header.OnPaste += PasteEffects;
+            Header.OnApplyAllRules += ApplyAllRules;
             Header.OnApplySameType += ApplySameType;
             Header.OnApplySameStyle += ApplySameStyle;
             Header.OnApplyAll += OnApplyAll;
-
-            Header.Init(editObject);
         }
 
-        private void ApplySameStyle()
+        private void CopyEffects()
         {
-            switch (EditObject)
+            switch (Editor.EditObject)
+            {
+                case MarkingLineRawRule editRule:
+                    Buffer = editRule.Style.Value.Effects;
+                    break;
+                case MarkingCrosswalk editCrosswalk:
+                    Buffer = editCrosswalk.Style.Value.Effects;
+                    break;
+                case MarkingFiller editFiller:
+                    Buffer = editFiller.Style.Value.Effects;
+                    break;
+            }
+        }
+        private void PasteEffects()
+        {
+            switch (Editor.EditObject)
+            {
+                case MarkingLineRawRule editRule:
+                    editRule.Style.Value.Effects = Buffer;
+                    Editor.RefreshProperties();
+                    break;
+                case MarkingCrosswalk editCrosswalk:
+                    editCrosswalk.Style.Value.Effects = Buffer;
+                    Editor.RefreshProperties();
+                    break;
+                case MarkingFiller editFiller:
+                    editFiller.Style.Value.Effects = Buffer;
+                    Editor.RefreshProperties();
+                    break;
+            }
+        }
+        private void ApplyAllRules()
+        {
+            switch (Editor.EditObject)
             {
                 case MarkingLineRawRule editRule:
                     foreach (var rule in editRule.Line.Rules)
                     {
-                        if (rule != editRule && rule.Style.Value.Type == editRule.Style.Value.Type)
+                        if (rule != editRule)
                             editRule.Style.Value.CopyEffectsTo(rule.Style.Value);
                     }
+                    Editor.RefreshProperties();
+                    break;
+            }
+        }
+        private void ApplySameStyle()
+        {
+            switch (Editor.EditObject)
+            {
+                case MarkingLineRawRule editRule:
+                    foreach (var line in editRule.Line.Marking.Lines)
+                    {
+                        foreach (var rule in line.Rules)
+                        {
+                            if (rule != editRule && rule.Style.Value.Type == editRule.Style.Value.Type)
+                                editRule.Style.Value.CopyEffectsTo(rule.Style.Value);
+                        }
+                    }
+                    Editor.RefreshProperties();
                     break;
                 case MarkingCrosswalk editCrosswalk:
                     foreach (var crosswalk in editCrosswalk.Marking.Crosswalks)
@@ -176,14 +231,18 @@ namespace IMT.UI.Editors
         }
         private void ApplySameType()
         {
-            switch (EditObject)
+            switch (Editor.EditObject)
             {
                 case MarkingLineRawRule editRule:
-                    foreach (var rule in editRule.Line.Rules)
+                    foreach (var line in editRule.Line.Marking.Lines)
                     {
-                        if (rule != editRule)
-                            editRule.Style.Value.CopyEffectsTo(rule.Style.Value);
+                        foreach (var rule in line.Rules)
+                        {
+                            if (rule != editRule)
+                                editRule.Style.Value.CopyEffectsTo(rule.Style.Value);
+                        }
                     }
+                    Editor.RefreshProperties();
                     break;
                 case MarkingCrosswalk editCrosswalk:
                     foreach (var crosswalk in editCrosswalk.Marking.Crosswalks)
@@ -205,7 +264,7 @@ namespace IMT.UI.Editors
         {
             Style source;
             Marking marking;
-            switch (EditObject)
+            switch (Editor.EditObject)
             {
                 case MarkingLineRawRule editRule:
                     source = editRule.Style.Value;
@@ -238,6 +297,8 @@ namespace IMT.UI.Editors
             {
                 source.CopyEffectsTo(filler.Style.Value);
             }
+
+            Editor.RefreshProperties();
         }
     }
 
@@ -251,7 +312,7 @@ namespace IMT.UI.Editors
         protected CustomUIButton ExpandButton { get; set; }
         protected CustomUILabel NameLabel { get; set; }
 
-        protected object EditObject { get; private set; }
+        protected IPropertyEditor Editor { get; private set; }
         public string Category
         {
             get => NameLabel.text;
@@ -286,9 +347,9 @@ namespace IMT.UI.Editors
             NameLabel.zOrder = 1;
         }
 
-        public void Init(object editObject)
+        public void Init(IPropertyEditor editor)
         {
-            EditObject = editObject;
+            Editor = editor;
             base.Init();
         }
         public override void Refresh()
@@ -309,7 +370,7 @@ namespace IMT.UI.Editors
         }
         public override void DeInit()
         {
-            EditObject = null;
+            Editor = null;
             IsExpand = false;
             Category = string.Empty;
         }
@@ -317,39 +378,47 @@ namespace IMT.UI.Editors
     public class DefaultCategoryHeaderPanel : BaseCategoryHeaderPanel { }
     public class EffectCategoryHeaderPanel : BaseCategoryHeaderPanel
     {
-        private static EffectData Buffer { get; set; }
-
+        public event Action OnCopy;
+        public event Action OnPaste;
+        public event Action OnApplyAllRules;
         public event Action OnApplySameStyle;
         public event Action OnApplySameType;
         public event Action OnApplyAll;
 
         private HeaderButtonInfo<HeaderButton> Copy { get; set; }
         private HeaderButtonInfo<HeaderButton> Paste { get; set; }
+        private HeaderButtonInfo<HeaderButton> ApplyAllRules { get; set; }
         private HeaderButtonInfo<HeaderButton> ApplySameStyle { get; set; }
         private HeaderButtonInfo<HeaderButton> ApplySameType { get; set; }
         private HeaderButtonInfo<HeaderButton> ApplyAll { get; set; }
 
         public EffectCategoryHeaderPanel()
         {
-            Copy = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyButtonIcon, "Copy effects", CopyEffects);
+            Copy = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyButtonIcon, "Copy effects", CopyClick);
             Content.AddButton(Copy);
 
-            Paste = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.PasteButtonIcon, "Paste effects", PasteEffects);
+            Paste = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.PasteButtonIcon, "Paste effects", PasteClick);
             Content.AddButton(Paste);
 
-            ApplySameStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyHeaderButton, "Apply to same style", ApplySameStyleClick);
+            ApplyAllRules = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, "Apply to all rules", ApplyAllRulesClick);
+            Content.AddButton(ApplyAllRules);
+
+            ApplySameStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, "Apply to same style", ApplySameStyleClick);
             Content.AddButton(ApplySameStyle);
 
-            ApplySameType = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyHeaderButton, "Apply to same type", ApplySameTypeClick);
+            ApplySameType = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, "Apply to same type", ApplySameTypeClick);
             Content.AddButton(ApplySameType);
 
-            ApplyAll = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyHeaderButton, "Apply to all items", ApplyAllClick);
+            ApplyAll = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, "Apply to all items", ApplyAllClick);
             Content.AddButton(ApplyAll);
         }
 
         public override void DeInit()
         {
             base.DeInit();
+            OnCopy = null;
+            OnPaste = null;
+            OnApplyAllRules = null;
             OnApplySameStyle = null;
             OnApplySameType = null;
             OnApplyAll = null;
@@ -357,10 +426,11 @@ namespace IMT.UI.Editors
 
         public override void Refresh()
         {
-            switch (EditObject)
+            switch (Editor.EditObject)
             {
                 case MarkingLineRawRule editRule:
                     {
+                        ApplyAllRules.Visible = editRule.Line.IsSupportRules;
                         ApplySameStyle.Text = $"Apply to all \"{editRule.Style.Value.Type.Description()}\" lines";
                         ApplySameType.Text = $"Apply to all lines";
 
@@ -371,6 +441,7 @@ namespace IMT.UI.Editors
                     break;
                 case MarkingCrosswalk editCrosswalk:
                     {
+                        ApplyAllRules.Visible = false;
                         ApplySameStyle.Text = $"Apply to all \"{editCrosswalk.Style.Value.Type.Description()}\" crosswalks";
                         ApplySameType.Text = $"Apply to all crosswalks";
 
@@ -381,6 +452,7 @@ namespace IMT.UI.Editors
                     break;
                 case MarkingFiller editFiller:
                     {
+                        ApplyAllRules.Visible = false;
                         ApplySameStyle.Text = $"Apply to all \"{editFiller.Style.Value.Type.Description()}\" fillers";
                         ApplySameType.Text = $"Apply to all fillers";
 
@@ -394,36 +466,9 @@ namespace IMT.UI.Editors
             base.Refresh();
         }
 
-        private void CopyEffects()
-        {
-            switch (EditObject)
-            {
-                case MarkingLineRawRule editRule:
-                    Buffer = editRule.Style.Value.Effects;
-                    break;
-                case MarkingCrosswalk editCrosswalk:
-                    Buffer = editCrosswalk.Style.Value.Effects;
-                    break;
-                case MarkingFiller editFiller:
-                    Buffer = editFiller.Style.Value.Effects;
-                    break;
-            }
-        }
-        private void PasteEffects()
-        {
-            switch (EditObject)
-            {
-                case MarkingLineRawRule editRule:
-                    editRule.Style.Value.Effects = Buffer;
-                    break;
-                case MarkingCrosswalk editCrosswalk:
-                    editCrosswalk.Style.Value.Effects = Buffer;
-                    break;
-                case MarkingFiller editFiller:
-                    editFiller.Style.Value.Effects = Buffer;
-                    break;
-            }
-        }
+        private void CopyClick() => OnCopy?.Invoke();
+        private void PasteClick() => OnPaste?.Invoke();
+        private void ApplyAllRulesClick() => OnApplyAllRules?.Invoke();
         private void ApplySameStyleClick() => OnApplySameStyle?.Invoke();
         private void ApplySameTypeClick() => OnApplySameType?.Invoke();
         private void ApplyAllClick() => OnApplyAll?.Invoke();
@@ -433,6 +478,10 @@ namespace IMT.UI.Editors
     {
         protected override int MainButtonSize => 20;
         protected override int MainIconPadding => 0;
+
+        protected override int AdditionalButtonSize => 24;
+        protected override UITextureAtlas AdditionalButtonAtlas => IMTTextures.Atlas;
+        protected override string AdditionalButtonSprite => IMTTextures.AdditionalButtonIcon;
 
         protected override Color32 ButtonHoveredColor => new Color32(32, 32, 32, 255);
         protected override Color32 ButtonPressedColor => Color.black;

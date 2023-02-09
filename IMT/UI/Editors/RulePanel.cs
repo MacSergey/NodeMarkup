@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using IMT.Manager;
+using IMT.UI.Panel;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
@@ -10,31 +11,32 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class RulePanel : PropertyGroupPanel, IPropertyEditor
+    public class RulePanel : PropertyGroupPanel, IPropertyContainer
     {
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
         public event Action<RulePanel, UIMouseEventParameter> OnLeave;
 
         private LinesEditor Editor { get; set; }
+        public IntersectionMarkingToolPanel Panel => Editor.Panel;
         private MarkingLine Line => Editor.EditObject;
         public MarkingLineRawRule Rule { get; private set; }
 
-        private StyleHeaderPanel Header { get; set; }
+        private RuleHeaderPanel Header { get; set; }
         private ErrorTextProperty Error { get; set; }
         private WarningTextProperty Warning { get; set; }
         public RuleEdgeSelectPropertyPanel From { get; private set; }
         public RuleEdgeSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
 
-        UIAutoLayoutPanel IPropertyEditor.MainPanel => this;
+        UIAutoLayoutPanel IPropertyContainer.MainPanel => this;
         object IPropertyEditor.EditObject => Rule;
-        Style IPropertyEditor.Style => Rule.Style;
+        Style IPropertyContainer.Style => Rule.Style;
         bool IPropertyEditor.IsTemplate => false;
 
-        Dictionary<string, IPropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
-        Dictionary<string, List<IPropertyInfo>> IPropertyEditor.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
-        Dictionary<string, CategoryItem> IPropertyEditor.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
-        List<EditorItem> IPropertyEditor.StyleProperties { get; } = new List<EditorItem>();
+        Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
+        Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
+        Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
+        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
 
         public RulePanel() { }
         public void Init(LinesEditor editor, MarkingLineRawRule rule)
@@ -79,13 +81,14 @@ namespace IMT.UI.Editors
         }
         private void AddHeader()
         {
-            Header = ComponentPool.Get<StyleHeaderPanel>(this, nameof(Header));
-            Header.Init(Rule.Style.Value.Type, OnSelectTemplate, Line.IsSupportRules);
+            Header = ComponentPool.Get<RuleHeaderPanel>(this, nameof(Header));
+            Header.Init(this, Rule.Style.Value.Type, OnSelectTemplate, Line.IsSupportRules);
             Header.OnDelete += () => Editor.DeleteRule(this);
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnCopy += CopyStyle;
             Header.OnPaste += PasteStyle;
             Header.OnReset += ResetStyle;
+            Header.OnApplyStyle += ApplyStyleToAllRules;
         }
 
         private void AddError()
@@ -175,7 +178,7 @@ namespace IMT.UI.Editors
         {
             this.AddProperties();
 
-            foreach (var property in (this as IPropertyEditor).StyleProperties)
+            foreach (var property in (this as IPropertyContainer).StyleProperties)
             {
                 if (property is ColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
                     colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
@@ -206,6 +209,16 @@ namespace IMT.UI.Editors
                 ApplyStyle(style);
         }
         private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<LineStyle>(Rule.Style.Value.Type));
+        private void ApplyStyleToAllRules()
+        {
+            foreach(var rule in Line.Rules)
+            {
+                if(rule != Rule)
+                    rule.Style.Value = Rule.Style.Value.CopyStyle();
+            }
+
+            Editor.RefreshEditor();
+        }
 
         private void FromChanged(ILinePartEdge from) => Rule.From = from;
         private void ToChanged(ILinePartEdge to) => Rule.To = to;
@@ -223,14 +236,15 @@ namespace IMT.UI.Editors
         private void AfterStyleChanged()
         {
             Editor.RefreshEditor();
-            this.ClearProperties();
             AddStyleProperties();
         }
         public void Refresh()
         {
             Error.isVisible = Rule.IsOverlapped;
             FillEdges();
+            PropertyEditorHelper.RefreshProperties(this);
         }
+        void IPropertyEditor.RefreshProperties() => (Editor as IPropertyEditor).RefreshProperties();
         protected override void OnMouseEnter(UIMouseEventParameter p)
         {
             base.OnMouseEnter(p);

@@ -270,7 +270,6 @@ namespace IMT.Manager
             cracksProperty.WheelStep = new Vector2(10f, 10f);
             cracksProperty.UseWheel = true;
             cracksProperty.Init(0, 1);
-            cracksProperty.Value = Cracks.Value * 100f;
             cracksProperty.OnValueChanged += (Vector2 value) => Cracks.Value = value * 0.01f;
         }
         protected virtual void RefreshCracksProperty(Vector2PropertyPanel cracksProperty, EditorProvider provider)
@@ -291,7 +290,6 @@ namespace IMT.Manager
             voidProperty.WheelStep = new Vector2(10f, 10f);
             voidProperty.UseWheel = true;
             voidProperty.Init(0, 1);
-            voidProperty.Value = Voids.Value * 100f;
             voidProperty.OnValueChanged += (Vector2 value) => Voids.Value = value * 0.01f;
         }
         protected virtual void RefreshVoidsProperty(Vector2PropertyPanel voidProperty, EditorProvider provider)
@@ -310,7 +308,6 @@ namespace IMT.Manager
             textureProperty.WheelStep = 10f;
             textureProperty.UseWheel = true;
             textureProperty.Init();
-            textureProperty.Value = Texture.Value * 100f;
             textureProperty.OnValueChanged += (float value) => Texture.Value = value / 100f;
         }
         protected virtual void RefreshTextureProperty(FloatPropertyPanel textureProperty, EditorProvider provider)
@@ -870,7 +867,7 @@ namespace IMT.Manager
         {
             var categoryItem = editorProvider.GetItem<CategoryItem>("CategoryItem");
             var categoryPanel = categoryItem.Init<CategoryType>(Name);
-            categoryPanel.Init(this, editorProvider.editObject);
+            categoryPanel.Init(this, editorProvider.editor);
             return categoryItem;
         }
     }

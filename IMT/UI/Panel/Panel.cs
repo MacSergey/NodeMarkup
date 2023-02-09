@@ -167,6 +167,7 @@ namespace IMT.UI.Panel
             SelectEditor<LinesEditor>();
         }
         public void RefreshHeader() => Header.Refresh();
+        public void RefreshProperties() => CurrentEditor?.RefreshEditor();
 
         #endregion
 

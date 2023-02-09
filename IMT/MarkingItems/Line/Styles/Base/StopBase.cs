@@ -50,7 +50,7 @@ namespace IMT.Manager
         public sealed override void GetUIComponents(EditorProvider provider)
         {
             base.GetUIComponents(provider);
-            if (provider.editObject is MarkingLineRawRule rule && rule.Line is MarkingStopLine line)
+            if (provider.editor is MarkingLineRawRule rule && rule.Line is MarkingStopLine line)
                 GetUIComponents(line, provider);
         }
         protected virtual void GetUIComponents(MarkingStopLine line, EditorProvider provider) { }

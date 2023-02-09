@@ -268,23 +268,23 @@ namespace IMT.UI.Editors
 
     public readonly struct EditorProvider
     {
-        public readonly object editObject;
+        public readonly IPropertyEditor editor;
         public readonly UIComponent parent;
         private readonly Action refresh;
         private readonly Action<IPropertyInfo> addProperty;
         private readonly Action<IPropertyCategoryInfo> addCategory;
         public readonly bool isTemplate;
 
-        public EditorProvider(object editObject, UIComponent parent, Action<IPropertyCategoryInfo> addCategory, Action<IPropertyInfo> addProperty, Action refresh, bool isTemplate)
+        public EditorProvider(IPropertyEditor editor, UIComponent parent, Action<IPropertyCategoryInfo> addCategory, Action<IPropertyInfo> addProperty, Action refresh, bool isTemplate)
         {
-            this.editObject = editObject;
+            this.editor = editor;
             this.parent = parent;
             this.addCategory = addCategory;
             this.addProperty = addProperty;
             this.refresh = refresh;
             this.isTemplate = isTemplate;
         }
-        public EditorProvider(object editObject, UIComponent parent, bool isTemplate, Action<IPropertyCategoryInfo> addCategory = null, Action<IPropertyInfo> addProperty = null, Action refresh = null) : this(editObject, parent, addCategory, addProperty, refresh, isTemplate) { }
+        public EditorProvider(IPropertyEditor editor, UIComponent parent, bool isTemplate, Action<IPropertyCategoryInfo> addCategory = null, Action<IPropertyInfo> addProperty = null, Action refresh = null) : this(editor, parent, addCategory, addProperty, refresh, isTemplate) { }
 
         public void AddCategory(IPropertyCategoryInfo category) => addCategory?.Invoke(category);
         public void AddProperty(IPropertyInfo property) => addProperty?.Invoke(property);

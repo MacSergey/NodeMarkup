@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.13.0.512</AssemblyVersion>
+    <AssemblyVersion>1.13.0.528</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -79,6 +79,8 @@
   <ItemGroup>
     <None Remove="Properties\launchSettings.json" />
     <None Remove="Resources\ButtonBorder.png" />
+    <None Remove="Resources\ButtonIcons\AdditionalButtonIcon.png" />
+    <None Remove="Resources\ButtonIcons\ApplyButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\AutoButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\AutoButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\BoldButtonIcon.png" />
@@ -112,6 +114,7 @@
     <None Remove="Resources\ButtonWhite.png" />
     <None Remove="Resources\ButtonWhiteBorder.png" />
     <None Remove="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
+    <None Remove="Resources\HeaderButtons\ApplyStyleHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\LinkHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\ResetHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\UnlinkHeaderButton.png" />
@@ -128,6 +131,8 @@
     <EmbeddedResource Include="Properties\launchSettings.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ButtonIcons\AdditionalButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\ApplyButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\AutoButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\BoldButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\BoldItalicButtonIcon.png" />
@@ -147,6 +152,7 @@
     <EmbeddedResource Include="Resources\ButtonIcons\TopToBottomButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonWhiteBorder.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\ApplyStyleHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\LinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>

@@ -45,6 +45,7 @@ namespace IMT.Utilities
         public static string LinkHeaderButton => nameof(LinkHeaderButton);
         public static string UnlinkHeaderButton => nameof(UnlinkHeaderButton);
         public static string ResetHeaderButton => nameof(ResetHeaderButton);
+        public static string ApplyStyleHeaderButton => nameof(ApplyStyleHeaderButton);
 
         public static string TurnLeftOrderButton => nameof(TurnLeftOrderButton);
         public static string FlipOrderButton => nameof(FlipOrderButton);
@@ -79,6 +80,8 @@ namespace IMT.Utilities
         public static string RotateButtonIcon { get; } = nameof(RotateButtonIcon);
         public static string CopyButtonIcon { get; } = nameof(CopyButtonIcon);
         public static string PasteButtonIcon { get; } = nameof(PasteButtonIcon);
+        public static string AdditionalButtonIcon { get; } = nameof(AdditionalButtonIcon);
+        public static string ApplyButtonIcon { get; } = nameof(ApplyButtonIcon);
 
         public static string ButtonWhiteBorder { get; } = nameof(ButtonWhiteBorder);
 
@@ -122,6 +125,7 @@ namespace IMT.Utilities
             spriteParams[LinkHeaderButton] = new RectOffset();
             spriteParams[UnlinkHeaderButton] = new RectOffset();
             spriteParams[ResetHeaderButton] = new RectOffset();
+            spriteParams[ApplyStyleHeaderButton] = new RectOffset();           
 
             //OrderButtons
             spriteParams[TurnLeftOrderButton] = new RectOffset();
@@ -152,6 +156,8 @@ namespace IMT.Utilities
             spriteParams[RotateButtonIcon] = new RectOffset();
             spriteParams[CopyButtonIcon] = new RectOffset();
             spriteParams[PasteButtonIcon] = new RectOffset();
+            spriteParams[AdditionalButtonIcon] = new RectOffset();
+            spriteParams[ApplyButtonIcon] = new RectOffset();
 
             //ListItem
             spriteParams[ListItemBackground] = new RectOffset(4, 4, 4, 4);

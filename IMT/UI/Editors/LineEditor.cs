@@ -6,12 +6,13 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class LinesEditor : Editor<LineItemsPanel, MarkingLine>
+    public class LinesEditor : Editor<LineItemsPanel, MarkingLine>, IPropertyEditor
     {
         #region PROPERTIES
 
@@ -34,13 +35,17 @@ namespace IMT.UI.Editors
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool SupportRules => EditObject is MarkingRegularLine;
         public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
-        private bool AddRuleAvailable => EditObject.IsSupportRules/*CanDivide || EditObject?.Rules.Any() == false*/;
+        private bool AddRuleAvailable => EditObject.IsSupportRules;
         public bool IsSplit => EditObject.PointPair.IsSplit;
+        private IEnumerable<RulePanel> RulePanels => ContentPanel.Content.components.OfType<RulePanel>();
 
         private RuleEdgeSelectPropertyPanel.RuleEdgeSelectButton HoverPartEdgeButton { get; set; }
         private RulePanel HoverRulePanel { get; set; }
-
+        Action LinePropertiesVisibleAction { get; set; }
         private PartEdgeToolMode PartEdgeToolMode { get; }
+
+        object IPropertyEditor.EditObject => EditObject;
+        bool IPropertyEditor.IsTemplate => false;
 
         #endregion
 
@@ -98,7 +103,6 @@ namespace IMT.UI.Editors
             SupportPoints.Clear();
             SupportPoints.AddRange(editObject.RulesEdges);
         }
-        Action LinePropertiesVisibleAction { get; set; }
         private void AddLineProperties(MarkingLine editObject)
         {
             LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
@@ -219,6 +223,13 @@ namespace IMT.UI.Editors
             {
                 if (!rulePanels.Any(r => r.Rule == rule))
                     AddRulePanel(rule);
+            }
+        }
+        void IPropertyEditor.RefreshProperties()
+        {
+            foreach(var rulePanel in RulePanels)
+            {
+                rulePanel.RefreshProperties();
             }
         }
 

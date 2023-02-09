@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class CrosswalksEditor : SimpleEditor<CrosswalkItemsPanel, MarkingCrosswalk>, IPropertyEditor
+    public class CrosswalksEditor : SimpleEditor<CrosswalkItemsPanel, MarkingCrosswalk>, IPropertyContainer
     {
         #region PROPERTIES
 
@@ -27,15 +27,15 @@ namespace IMT.UI.Editors
 
         public CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton HoverBorderButton { get; private set; }
 
-        UIAutoLayoutPanel IPropertyEditor.MainPanel => PropertiesPanel;
+        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
         object IPropertyEditor.EditObject => EditObject;
-        Style IPropertyEditor.Style => EditObject.Style.Value;
+        Style IPropertyContainer.Style => EditObject.Style.Value;
         bool IPropertyEditor.IsTemplate => false;
 
-        Dictionary<string, IPropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
-        Dictionary<string, List<IPropertyInfo>> IPropertyEditor.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
-        Dictionary<string, CategoryItem> IPropertyEditor.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
-        List<EditorItem> IPropertyEditor.StyleProperties { get; } = new List<EditorItem>();
+        Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
+        Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
+        Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
+        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
 
         #endregion
 
@@ -75,7 +75,12 @@ namespace IMT.UI.Editors
             Warning = null;
             Style = null;
         }
-        protected override void OnObjectUpdate(MarkingCrosswalk editObject) => FillBorders();
+        protected override void OnObjectUpdate(MarkingCrosswalk editObject)
+        {
+            FillBorders();
+            (this as IPropertyEditor).RefreshProperties();
+        }
+        void IPropertyEditor.RefreshProperties() => PropertyEditorHelper.RefreshProperties(this);
 
         #endregion
 
@@ -84,7 +89,7 @@ namespace IMT.UI.Editors
         private void AddHeader()
         {
             var header = ComponentPool.Get<CrosswalkHeaderPanel>(PropertiesPanel, "Header");
-            header.Init(EditObject.Style.Value.Type, SelectTemplate, false);
+            header.Init(this, EditObject.Style.Value.Type, SelectTemplate, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
@@ -170,7 +175,7 @@ namespace IMT.UI.Editors
         {
             this.AddProperties();
 
-            foreach (var property in (this as IPropertyEditor).StyleProperties)
+            foreach (var property in (this as IPropertyContainer).StyleProperties)
             {
                 if (property is ColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
                     colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();

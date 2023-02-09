@@ -7,7 +7,6 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Security.Policy;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -60,12 +59,12 @@ namespace IMT.Manager
         }
         protected override void CalculateImpl(MarkingStopLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
-            if (!CheckDashedLod(lod, Base, Height))
+            if (CheckDashedLod(lod, Base, Height))
             {
                 var parts = StyleHelper.CalculateDashed(trajectory, Base, Space);
                 foreach (var part in parts)
                 {
-                    StyleHelper.GetPartParams(trajectory, part, Height / -2, out var pos, out var angle);
+                    StyleHelper.GetPartParams(trajectory, part, Height * -0.5f, out var pos, out var angle);
                     var data = new DecalData(this, MaterialType.Triangle, lod, pos, angle, Base, Height, Color);
                     addData(data);
                 }

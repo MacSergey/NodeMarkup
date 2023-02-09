@@ -54,7 +54,7 @@ namespace IMT.Manager
         public sealed override void GetUIComponents(EditorProvider provider)
         {
             base.GetUIComponents(provider);
-            if (provider.editObject is MarkingCrosswalk crosswalk)
+            if (provider.editor is MarkingCrosswalk crosswalk)
                 GetUIComponents(crosswalk, provider);
         }
         protected virtual void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider) { }

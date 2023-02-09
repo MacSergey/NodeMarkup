@@ -5,6 +5,7 @@ using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
+using UnityEngine;
 
 namespace IMT.UI.Editors
 {
@@ -16,6 +17,7 @@ namespace IMT.UI.Editors
         public event Action OnPaste;
         public event Action OnReset;
 
+        protected IPropertyEditor Editor { get; private set; }
         private Style.StyleType StyleGroup { get; set; }
         private HeaderButtonInfo<HeaderButton> PasteButton { get; set; }
         private HeaderButtonInfo<ApplyTemplateHeaderButton> ApplyTemplate { get; }
@@ -35,8 +37,9 @@ namespace IMT.UI.Editors
             Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ResetHeaderButton, IMT.Localize.HeaderPanel_StyleReset, ResetClick));
         }
 
-        public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
+        public void Init(IPropertyEditor editor, Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
         {
+            Editor = editor;
             StyleGroup = styleGroup.GetGroup();
             ApplyTemplate.Button.Init(StyleGroup, onSelectTemplate);
 
@@ -60,13 +63,37 @@ namespace IMT.UI.Editors
             OnSaveTemplate = null;
             OnCopy = null;
             OnPaste = null;
+            OnReset = null;
 
             SingletonTool<IntersectionMarkingTool>.Instance.OnStyleToBuffer -= StyleToBuffer;
         }
+
         private void SaveTemplateClick() => OnSaveTemplate?.Invoke();
         private void CopyClick() => OnCopy?.Invoke();
         private void PasteClick() => OnPaste?.Invoke();
         private void ResetClick() => OnReset?.Invoke();
+    }
+    public class RuleHeaderPanel : StyleHeaderPanel
+    {
+        public event Action OnApplyStyle;
+        HeaderButtonInfo<HeaderButton> ApplyStyle { get; }
+
+        public RuleHeaderPanel()
+        {
+            ApplyStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyStyleHeaderButton, "Apply to all rules", ApplyStyleClick);
+            Content.AddButton(ApplyStyle);
+        }
+        public override void DeInit()
+        {
+            base.DeInit();
+            OnApplyStyle = null;
+        }
+        public override void Refresh()
+        {
+            ApplyStyle.Visible = Editor.EditObject is MarkingLineRawRule editRule && editRule.Line.IsSupportRules;
+            base.Refresh();
+        }
+        private void ApplyStyleClick() => OnApplyStyle?.Invoke();
     }
     public class CrosswalkHeaderPanel : StyleHeaderPanel
     {
@@ -79,7 +106,6 @@ namespace IMT.UI.Editors
         public override void DeInit()
         {
             base.DeInit();
-
             OnCut = null;
         }
 

@@ -1,30 +1,36 @@
 ﻿using IMT.Manager;
+using IMT.UI.Panel;
 using ModsCommon.UI;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace IMT.UI.Editors
 {
     public interface IPropertyEditor
     {
+        IntersectionMarkingToolPanel Panel { get; }
+        object EditObject { get; }
+        bool IsTemplate { get; }
+
+        void RefreshProperties();
+    }
+    public interface IPropertyContainer : IPropertyEditor
+    {
+        UIAutoLayoutPanel MainPanel { get; }
+        Style Style { get; }
+
         Dictionary<string, List<IPropertyInfo>> PropertyInfos { get; }
         Dictionary<string, IPropertyCategoryInfo> CategoryInfos { get; }
         Dictionary<string, CategoryItem> CategoryItems { get; }
         List<EditorItem> StyleProperties { get; }
-
-        UIAutoLayoutPanel MainPanel { get; }
-        object EditObject { get; }
-        Style Style { get; }
-        bool IsTemplate { get; }
     }
 
     public static class PropertyEditorHelper
     {
-        public static void AddProperties(this IPropertyEditor editor)
+        public static void AddProperties(this IPropertyContainer editor)
         {
             editor.ClearProperties();
 
-            var provider = new EditorProvider(editor.EditObject, editor.MainPanel, AddCategoty, AddProperty, editor.RefreshProperties, editor.IsTemplate);
+            var provider = new EditorProvider(editor, editor.MainPanel, AddCategoty, AddProperty, editor.RefreshProperties, editor.IsTemplate);
             editor.Style.GetUIComponents(provider);
             editor.Style.GetUICategories(provider);
 
@@ -44,7 +50,7 @@ namespace IMT.UI.Editors
                     {
                         if (string.IsNullOrEmpty(categoryInfo.Name))
                         {
-                            var categoryProvider = new EditorProvider(editor.EditObject, editor.MainPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
+                            var categoryProvider = new EditorProvider(editor, editor.MainPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
 
                             foreach (var propertyInfo in propertyInfos)
                                 propertyInfo.Create(categoryProvider);
@@ -55,7 +61,7 @@ namespace IMT.UI.Editors
                             var categoryPanel = categoryItem.CategoryPanel;
                             editor.CategoryItems[categoryInfo.Name] = categoryItem;
 
-                            var categoryProvider = new EditorProvider(editor.EditObject, categoryPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
+                            var categoryProvider = new EditorProvider(editor, categoryPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
 
                             categoryPanel.StopLayout();
                             {
@@ -88,7 +94,7 @@ namespace IMT.UI.Editors
                 editor.CategoryInfos[categoryInfo.Name] = categoryInfo;
             }
         }
-        public static void RefreshProperties(this IPropertyEditor editor)
+        public static void RefreshProperties(this IPropertyContainer editor)
         {
             editor.MainPanel.StopLayout();
             {
@@ -96,14 +102,14 @@ namespace IMT.UI.Editors
                 {
                     if (string.IsNullOrEmpty(category.Key))
                     {
-                        var categoryProvider = new EditorProvider(editor.EditObject, editor.MainPanel, editor.IsTemplate);
+                        var categoryProvider = new EditorProvider(editor, editor.MainPanel, editor.IsTemplate);
 
                         foreach (var propertyInfo in category.Value)
                             propertyInfo.Refresh(categoryProvider);
                     }
                     else if (editor.CategoryItems.TryGetValue(category.Key, out var categoryItem) && categoryItem.CategoryPanel is PropertyGroupPanel categoryPanel)
                     {
-                        var categoryProvider = new EditorProvider(editor.EditObject, categoryPanel, editor.IsTemplate);
+                        var categoryProvider = new EditorProvider(editor, categoryPanel, editor.IsTemplate);
 
                         categoryPanel.StopLayout();
                         {
@@ -123,9 +129,9 @@ namespace IMT.UI.Editors
             editor.MainPanel.StartLayout();
         }
 
-        public static void ClearProperties(this IPropertyEditor editor)
+        public static void ClearProperties(this IPropertyContainer editor)
         {
-            var provider = new EditorProvider(editor.EditObject, editor.MainPanel, true);
+            var provider = new EditorProvider(editor, editor.MainPanel, true);
 
             editor.MainPanel.StopLayout();
             {
@@ -133,13 +139,13 @@ namespace IMT.UI.Editors
                 {
                     if (string.IsNullOrEmpty(category.Key))
                     {
-                        var categoryProvider = new EditorProvider(editor.EditObject, editor.MainPanel, editor.IsTemplate);
+                        var categoryProvider = new EditorProvider(editor, editor.MainPanel, editor.IsTemplate);
                         foreach (var propertyInfo in category.Value)
                             propertyInfo.Destroy(categoryProvider);
                     }
                     else if(editor.CategoryItems.TryGetValue(category.Key, out var categoryItem) && categoryItem.CategoryPanel is PropertyGroupPanel categoryPanel)
                     {
-                        var categoryProvider = new EditorProvider(editor.EditObject, categoryPanel, editor.IsTemplate);
+                        var categoryProvider = new EditorProvider(editor, categoryPanel, editor.IsTemplate);
 
                         categoryPanel.StopLayout();
                         {
