@@ -11,7 +11,7 @@ namespace IMT.UI.Editors
     {
         public override string Name => IMT.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
-        public override Marking.SupportType Support { get; } = Marking.SupportType.Points;
+        public override Marking.SupportType Support => Marking.SupportType.Points;
 
         protected PropertyGroupPanel TemplatePanel { get; private set; }
 #if DEBUG

@@ -126,6 +126,26 @@ namespace IMT.Manager
         public Vector2 VoidTiling => new Vector2(1f / Voids.Value.y, 1f / Voids.Value.y);
         public float TextureDensity => Texture.Value;
 
+        public EffectData Effects
+        {
+            get
+            {
+                if (this is IEffectStyle)
+                    return new EffectData(Texture, Cracks, Voids);
+                else
+                    return new EffectData(DefaultTexture, DefaultEffect, DefaultEffect);
+            }
+            set
+            {
+                if(this is IEffectStyle)
+                {
+                    Texture.Value = value.texture;
+                    Cracks.Value = value.cracks;
+                    Voids.Value = value.voids;
+                }
+            }
+        }
+
         public abstract IEnumerable<IStylePropertyData> Properties { get; }
         public abstract Dictionary<string, int> PropertyIndices { get; }
         protected static Dictionary<string, int> CreatePropertyIndices(IEnumerable<string> names)
@@ -138,11 +158,11 @@ namespace IMT.Manager
             return dic;
         }
 
-        protected PropertyCategoryInfo MainCategory { get; } = new PropertyCategoryInfo("Main", Localize.StyleOptionCategory_Main, true);
-        protected PropertyCategoryInfo AdditionalCategory { get; } = new PropertyCategoryInfo("Additional", Localize.StyleOptionCategory_Additional, false);
-        protected PropertyCategoryInfo EffectCategory { get; } = new PropertyCategoryInfo("Effect", Localize.StyleOptionCategory_Effect, false);
+        protected IPropertyCategoryInfo MainCategory { get; } = new PropertyCategoryInfo<DefaultPropertyCategoryPanel>("Main", Localize.StyleOptionCategory_Main, true);
+        protected IPropertyCategoryInfo AdditionalCategory { get; } = new PropertyCategoryInfo<DefaultPropertyCategoryPanel>("Additional", Localize.StyleOptionCategory_Additional, false);
+        protected IPropertyCategoryInfo EffectCategory { get; } = new PropertyCategoryInfo<EffectPropertyCategoryPanel>("Effect", Localize.StyleOptionCategory_Effect, false);
 #if DEBUG
-        protected PropertyCategoryInfo DebugCategory { get; } = new PropertyCategoryInfo("Debug", "Debug", false);
+        protected IPropertyCategoryInfo DebugCategory { get; } = new PropertyCategoryInfo<DefaultPropertyCategoryPanel>("Debug", "Debug", false);
 #endif
 
         public Style(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture)
@@ -162,6 +182,11 @@ namespace IMT.Manager
                 widthTarget.Width.Value = widthSource.Width;
             if (this is IColorStyle colorSource && target is IColorStyle colorTarget)
                 colorTarget.Color.Value = colorSource.Color;
+
+            CopyEffectsTo(target);
+        }
+        public void CopyEffectsTo(Style target)
+        {
             if (this is IEffectStyle textureSource && target is IEffectStyle textureTarget)
             {
                 textureTarget.Cracks.Value = textureSource.Cracks.Value;
@@ -722,7 +747,7 @@ namespace IMT.Manager
     public interface IPropertyInfo
     {
         string Name { get; }
-        PropertyCategoryInfo Category { get; }
+        IPropertyCategoryInfo Category { get; }
         int SortIndex { get; }
 
         bool IsCollapsed { get; set; }
@@ -734,6 +759,15 @@ namespace IMT.Manager
         void Refresh(EditorProvider editorProvider);
         void Destroy(EditorProvider editorProvider);
     }
+    public interface IPropertyCategoryInfo
+    {
+        string Name { get; }
+        string Text { get; }
+        bool IsExpand { get; }
+
+        CategoryItem Create(EditorProvider editorProvider);
+    }
+
     public struct PropertyInfo<PropertyType> : IPropertyInfo
         where PropertyType : EditorItem, IReusable
     {
@@ -741,7 +775,7 @@ namespace IMT.Manager
         public delegate void RefreshItem(PropertyType property, EditorProvider editorProvider);
 
         public string Name { get; }
-        public PropertyCategoryInfo Category { get; }
+        public IPropertyCategoryInfo Category { get; }
         public int SortIndex { get; }
 
         public bool IsCollapsed
@@ -778,7 +812,7 @@ namespace IMT.Manager
         private readonly RefreshItem refresh;
         private PropertyType instance;
 
-        public PropertyInfo(Style style, string propertyName, PropertyCategoryInfo categoryInfo, InitItem init, RefreshItem refresh = null)
+        public PropertyInfo(Style style, string propertyName, IPropertyCategoryInfo categoryInfo, InitItem init, RefreshItem refresh = null)
         {
             Name = propertyName;
             Category = categoryInfo;
@@ -817,23 +851,46 @@ namespace IMT.Manager
         public static int SortPredicate(IPropertyInfo x, IPropertyInfo y) => x.SortIndex - y.SortIndex;
         public override string ToString() => Name;
     }
+
+    public readonly struct PropertyCategoryInfo<CategoryType> : IPropertyCategoryInfo
+        where CategoryType : PropertyGroupPanel, IPropertyCategoryPanel, IReusable
+    {
+        public string Name { get; }
+        public string Text { get; }
+        public bool IsExpand { get; }
+
+        public PropertyCategoryInfo(string name, string text, bool isExpand)
+        {
+            Name = name;
+            Text = text;
+            IsExpand = isExpand;
+        }
+
+        public CategoryItem Create(EditorProvider editorProvider)
+        {
+            var categoryItem = editorProvider.GetItem<CategoryItem>("CategoryItem");
+            var categoryPanel = categoryItem.Init<CategoryType>(Name);
+            categoryPanel.Init(this, editorProvider.editObject);
+            return categoryItem;
+        }
+    }
+
     public class PropertyInfoComparer : IComparer<IPropertyInfo>
     {
         public static PropertyInfoComparer Instance { get; } = new PropertyInfoComparer();
         public int Compare(IPropertyInfo x, IPropertyInfo y) => x.SortIndex - y.SortIndex;
     }
-
-    public readonly struct PropertyCategoryInfo
+    public readonly struct EffectData
     {
-        public readonly string name;
-        public readonly string text;
-        public readonly bool isExpand;
+        public readonly float texture;
+        public readonly Vector2 cracks;
+        public readonly Vector2 voids;
 
-        public PropertyCategoryInfo(string name, string text, bool isExpand)
+        public EffectData(float texture, Vector2 cracks, Vector2 voids)
         {
-            this.name = name;
-            this.text = text;
-            this.isExpand = isExpand;
+            this.texture = texture;
+            this.cracks = cracks;
+            this.voids = voids;
         }
     }
 }

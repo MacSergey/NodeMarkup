@@ -27,11 +27,11 @@ namespace IMT.UI.Editors
         public StylePropertyPanel Style { get; private set; }
 
         UIAutoLayoutPanel IPropertyEditor.MainPanel => this;
-        object IPropertyEditor.EditObject => Rule.Line;
+        object IPropertyEditor.EditObject => Rule;
         Style IPropertyEditor.Style => Rule.Style;
         bool IPropertyEditor.IsTemplate => false;
 
-        Dictionary<string, PropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, PropertyCategoryInfo>();
+        Dictionary<string, IPropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyEditor.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
         Dictionary<string, CategoryItem> IPropertyEditor.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
         List<EditorItem> IPropertyEditor.StyleProperties { get; } = new List<EditorItem>();

@@ -13,7 +13,7 @@ namespace IMT.UI.Editors
     {
         public override string Name => IMT.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(IMT.Localize.TemplateEditor_EmptyMessage, IMT.Localize.HeaderPanel_SaveAsTemplate);
-        public override Marking.SupportType Support { get; } = Marking.SupportType.StyleTemplates;
+        public override Marking.SupportType Support => Marking.SupportType.StyleTemplates;
         protected override string IsAssetMessage => IMT.Localize.TemplateEditor_TemplateIsAsset;
         protected override string RewriteCaption => IMT.Localize.TemplateEditor_RewriteCaption;
         protected override string RewriteMessage => IMT.Localize.TemplateEditor_RewriteMessage;
@@ -29,7 +29,7 @@ namespace IMT.UI.Editors
         Style IPropertyEditor.Style => EditStyle;
         bool IPropertyEditor.IsTemplate => true;
 
-        Dictionary<string, PropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, PropertyCategoryInfo>();
+        Dictionary<string, IPropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyEditor.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
         Dictionary<string, CategoryItem> IPropertyEditor.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
         List<EditorItem> IPropertyEditor.StyleProperties { get; } = new List<EditorItem>();

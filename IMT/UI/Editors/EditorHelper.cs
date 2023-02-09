@@ -8,7 +8,7 @@ namespace IMT.UI.Editors
     public interface IPropertyEditor
     {
         Dictionary<string, List<IPropertyInfo>> PropertyInfos { get; }
-        Dictionary<string, PropertyCategoryInfo> CategoryInfos { get; }
+        Dictionary<string, IPropertyCategoryInfo> CategoryInfos { get; }
         Dictionary<string, CategoryItem> CategoryItems { get; }
         List<EditorItem> StyleProperties { get; }
 
@@ -35,14 +35,14 @@ namespace IMT.UI.Editors
                     category.Value.Sort(PropertyInfoComparer.Instance);
 
                     if(!editor.CategoryInfos.ContainsKey(category.Key))
-                        editor.CategoryInfos[category.Key] = new PropertyCategoryInfo(category.Key, category.Key, false);
+                        editor.CategoryInfos[category.Key] = new PropertyCategoryInfo<DefaultPropertyCategoryPanel>(category.Key, category.Key, false);
                 }
 
                 foreach (var categoryInfo in editor.CategoryInfos.Values)
                 {
-                    if (editor.PropertyInfos.TryGetValue(categoryInfo.name, out var propertyInfos))
+                    if (editor.PropertyInfos.TryGetValue(categoryInfo.Name, out var propertyInfos))
                     {
-                        if (string.IsNullOrEmpty(categoryInfo.name))
+                        if (string.IsNullOrEmpty(categoryInfo.Name))
                         {
                             var categoryProvider = new EditorProvider(editor.EditObject, editor.MainPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
 
@@ -51,10 +51,9 @@ namespace IMT.UI.Editors
                         }
                         else
                         {
-                            var categoryItem = ComponentPool.Get<CategoryItem>(editor.MainPanel, "CategoryItem");
-                            var categoryPanel = categoryItem.Init<DefaultPropertyCategoryPanel>(categoryInfo.name);
-                            categoryPanel.Init(categoryInfo);
-                            editor.CategoryItems[categoryInfo.name] = categoryItem;
+                            var categoryItem = categoryInfo.Create(provider);
+                            var categoryPanel = categoryItem.CategoryPanel;
+                            editor.CategoryItems[categoryInfo.Name] = categoryItem;
 
                             var categoryProvider = new EditorProvider(editor.EditObject, categoryPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
 
@@ -77,16 +76,16 @@ namespace IMT.UI.Editors
 
             void AddProperty(IPropertyInfo propertyInfo)
             {
-                if (!editor.PropertyInfos.TryGetValue(propertyInfo.Category.name, out var list))
+                if (!editor.PropertyInfos.TryGetValue(propertyInfo.Category.Name, out var list))
                 {
                     list = new List<IPropertyInfo>();
-                    editor.PropertyInfos[propertyInfo.Category.name] = list;
+                    editor.PropertyInfos[propertyInfo.Category.Name] = list;
                 }
                 list.Add(propertyInfo);
             }
-            void AddCategoty(PropertyCategoryInfo categoryInfo)
+            void AddCategoty(IPropertyCategoryInfo categoryInfo)
             {
-                editor.CategoryInfos[categoryInfo.name] = categoryInfo;
+                editor.CategoryInfos[categoryInfo.Name] = categoryInfo;
             }
         }
         public static void RefreshProperties(this IPropertyEditor editor)

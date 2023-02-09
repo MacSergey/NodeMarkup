@@ -18,7 +18,7 @@ namespace IMT.UI.Editors
 
         public override string Name => IMT.Localize.FillerEditor_Fillers;
         public override string EmptyMessage => string.Format(IMT.Localize.FillerEditor_EmptyMessage, LocalizeExtension.Alt, IntersectionMarkingTool.AddFillerShortcut);
-        public override Marking.SupportType Support { get; } = Marking.SupportType.Fillers;
+        public override Marking.SupportType Support => Marking.SupportType.Fillers;
 
         public StylePropertyPanel Style { get; private set; }
 
@@ -31,7 +31,7 @@ namespace IMT.UI.Editors
         Style IPropertyEditor.Style => EditObject.Style.Value;
         bool IPropertyEditor.IsTemplate => false;
 
-        Dictionary<string, PropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, PropertyCategoryInfo>();
+        Dictionary<string, IPropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyEditor.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
         Dictionary<string, CategoryItem> IPropertyEditor.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
         List<EditorItem> IPropertyEditor.StyleProperties { get; } = new List<EditorItem>();

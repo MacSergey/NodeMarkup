@@ -272,10 +272,10 @@ namespace IMT.UI.Editors
         public readonly UIComponent parent;
         private readonly Action refresh;
         private readonly Action<IPropertyInfo> addProperty;
-        private readonly Action<PropertyCategoryInfo> addCategory;
+        private readonly Action<IPropertyCategoryInfo> addCategory;
         public readonly bool isTemplate;
 
-        public EditorProvider(object editObject, UIComponent parent, Action<PropertyCategoryInfo> addCategory, Action<IPropertyInfo> addProperty, Action refresh, bool isTemplate)
+        public EditorProvider(object editObject, UIComponent parent, Action<IPropertyCategoryInfo> addCategory, Action<IPropertyInfo> addProperty, Action refresh, bool isTemplate)
         {
             this.editObject = editObject;
             this.parent = parent;
@@ -284,13 +284,13 @@ namespace IMT.UI.Editors
             this.refresh = refresh;
             this.isTemplate = isTemplate;
         }
-        public EditorProvider(object editObject, UIComponent parent, bool isTemplate, Action<PropertyCategoryInfo> addCategory = null, Action<IPropertyInfo> addProperty = null, Action refresh = null) : this(editObject, parent, addCategory, addProperty, refresh, isTemplate) { }
+        public EditorProvider(object editObject, UIComponent parent, bool isTemplate, Action<IPropertyCategoryInfo> addCategory = null, Action<IPropertyInfo> addProperty = null, Action refresh = null) : this(editObject, parent, addCategory, addProperty, refresh, isTemplate) { }
 
-        public void AddCategory(PropertyCategoryInfo category) => addCategory?.Invoke(category);
+        public void AddCategory(IPropertyCategoryInfo category) => addCategory?.Invoke(category);
         public void AddProperty(IPropertyInfo property) => addProperty?.Invoke(property);
         public void Refresh() => refresh?.Invoke();
 
-        public T GetItem<T>(string name) where T : EditorItem, IReusable => ComponentPool.Get<T>(parent, name);
-        public void DestroyItem<T>(T item) where T : EditorItem, IReusable => ComponentPool.Free(item);
+        public T GetItem<T>(string name) where T : UIComponent, IReusable => ComponentPool.Get<T>(parent, name);
+        public void DestroyItem<T>(T item) where T : UIComponent, IReusable => ComponentPool.Free(item);
     }
 }

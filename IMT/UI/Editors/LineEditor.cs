@@ -26,7 +26,7 @@ namespace IMT.UI.Editors
         }
         public override string Name => IMT.Localize.LineEditor_Lines;
         public override string EmptyMessage => IMT.Localize.LineEditor_EmptyMessage;
-        public override Marking.SupportType Support { get; } = Marking.SupportType.Lines;
+        public override Marking.SupportType Support => Marking.SupportType.Lines;
 
         private PropertyGroupPanel LineProperties { get; set; }
         private AddRuleButton AddButton { get; set; }

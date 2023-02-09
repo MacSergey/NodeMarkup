@@ -17,9 +17,8 @@ namespace IMT.UI.Editors
 
         public override string Name => IMT.Localize.CrosswalkEditor_Crosswalks;
         public override string EmptyMessage => string.Format(IMT.Localize.CrosswalkEditor_EmptyMessage, LocalizeExtension.Shift);
-        public override Marking.SupportType Support { get; } = Marking.SupportType.Croswalks;
+        public override Marking.SupportType Support => Marking.SupportType.Croswalks;
 
-        private List<IPropertyInfo> StyleProperties { get; set; } = new List<IPropertyInfo>();
         private CrosswalkBorderSelectPropertyPanel RightBorder { get; set; }
         private CrosswalkBorderSelectPropertyPanel LeftBorder { get; set; }
         private WarningTextProperty Warning { get; set; }
@@ -33,7 +32,7 @@ namespace IMT.UI.Editors
         Style IPropertyEditor.Style => EditObject.Style.Value;
         bool IPropertyEditor.IsTemplate => false;
 
-        Dictionary<string, PropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, PropertyCategoryInfo>();
+        Dictionary<string, IPropertyCategoryInfo> IPropertyEditor.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyEditor.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
         Dictionary<string, CategoryItem> IPropertyEditor.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
         List<EditorItem> IPropertyEditor.StyleProperties { get; } = new List<EditorItem>();
