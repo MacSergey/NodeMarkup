@@ -297,12 +297,12 @@ namespace IMT.UI.Editors
             switch(Template.Style)
             {
                 case RegularLineStyle:
-                    ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyStopType, Template.Style.Type.Description());
+                    ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyRegularType, Template.Style.Type.Description());
                     ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyRegularAll;
                     break;
                 case StopLineStyle:
                     ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyStopType, Template.Style.Type.Description());
-                    ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyStopAll; ;
+                    ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyStopAll;
                     break;
                 case CrosswalkStyle:
                     ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyCrosswalkType, Template.Style.Type.Description());
