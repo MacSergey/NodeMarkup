@@ -2609,5 +2609,65 @@ namespace IMT
 		/// Main
 		/// </summary>
 		public static string StyleOptionCategory_Main => LocaleManager.GetString("StyleOptionCategory_Main", Culture);
+
+		/// <summary>
+		/// Apply to all items
+		/// </summary>
+		public static string HeaderPanel_ApplyAll => LocaleManager.GetString("HeaderPanel_ApplyAll", Culture);
+
+		/// <summary>
+		/// Apply to all rules
+		/// </summary>
+		public static string HeaderPanel_ApplyAllRules => LocaleManager.GetString("HeaderPanel_ApplyAllRules", Culture);
+
+		/// <summary>
+		/// Apply to all crosswalks
+		/// </summary>
+		public static string HeaderPanel_ApplyCrosswalkAll => LocaleManager.GetString("HeaderPanel_ApplyCrosswalkAll", Culture);
+
+		/// <summary>
+		/// Apply to all "{0}" crosswalks
+		/// </summary>
+		public static string HeaderPanel_ApplyCrosswalkType => LocaleManager.GetString("HeaderPanel_ApplyCrosswalkType", Culture);
+
+		/// <summary>
+		/// Apply to all fillers
+		/// </summary>
+		public static string HeaderPanel_ApplyFillerAll => LocaleManager.GetString("HeaderPanel_ApplyFillerAll", Culture);
+
+		/// <summary>
+		/// Apply to all "{0}" fillers
+		/// </summary>
+		public static string HeaderPanel_ApplyFillerType => LocaleManager.GetString("HeaderPanel_ApplyFillerType", Culture);
+
+		/// <summary>
+		/// Apply to all lines
+		/// </summary>
+		public static string HeaderPanel_ApplyRegularAll => LocaleManager.GetString("HeaderPanel_ApplyRegularAll", Culture);
+
+		/// <summary>
+		/// Apply to all "{0}" lines
+		/// </summary>
+		public static string HeaderPanel_ApplyRegularType => LocaleManager.GetString("HeaderPanel_ApplyRegularType", Culture);
+
+		/// <summary>
+		/// Apply to all stop lines
+		/// </summary>
+		public static string HeaderPanel_ApplyStopAll => LocaleManager.GetString("HeaderPanel_ApplyStopAll", Culture);
+
+		/// <summary>
+		/// Apply to all "{0}" stop lines
+		/// </summary>
+		public static string HeaderPanel_ApplyStopType => LocaleManager.GetString("HeaderPanel_ApplyStopType", Culture);
+
+		/// <summary>
+		/// Copy effects
+		/// </summary>
+		public static string HeaderPanel_CopyEffects => LocaleManager.GetString("HeaderPanel_CopyEffects", Culture);
+
+		/// <summary>
+		/// Paste effects
+		/// </summary>
+		public static string HeaderPanel_PasteEffects => LocaleManager.GetString("HeaderPanel_PasteEffects", Culture);
 	}
 }

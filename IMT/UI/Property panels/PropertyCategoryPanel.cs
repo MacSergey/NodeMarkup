@@ -5,6 +5,7 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 using UnityEngine;
 
 namespace IMT.UI.Editors
@@ -48,37 +49,37 @@ namespace IMT.UI.Editors
     }
     public interface IPropertyCategoryPanel
     {
-        void Init(IPropertyCategoryInfo category, IPropertyEditor editor);
+        void Init(IPropertyCategoryInfo category, IPropertyContainer editor);
     }
 
     public abstract class BasePropertyCategoryPanel<TypeHeader> : PropertyGroupPanel, IPropertyCategoryPanel
         where TypeHeader : BaseCategoryHeaderPanel
     {
-        private static Dictionary<string, bool> ExpandList { get; } = new Dictionary<string, bool>();
+        //private static Dictionary<string, bool> ExpandList { get; } = new Dictionary<string, bool>();
+
         protected override UITextureAtlas Atlas => IMTTextures.Atlas;
         protected override string BackgroundSprite => IMTTextures.ButtonWhiteBorder;
 
-        protected IPropertyEditor Editor { get; private set; }
+        protected IPropertyContainer Editor { get; private set; }
         protected TypeHeader Header { get; private set; }
 
         public bool? IsExpand
         {
             get
             {
-                if (ExpandList.TryGetValue(Category.Name, out var isExpand))
+                if (Editor.ExpandList.TryGetValue(Category.Name, out var isExpand))
                     return isExpand;
+                //else if(ExpandList.TryGetValue(Category.Name, out isExpand))
+                //    return isExpand;
                 else
                     return null;
             }
             set
             {
-                if (value == null)
+                if (value != null)
                 {
-                    ExpandList.Remove(Category.Name);
-                }
-                else
-                {
-                    ExpandList[Category.Name] = value.Value;
+                    Editor.ExpandList[Category.Name] = value.Value;
+                    //ExpandList[Category.Name] = value.Value;
                     Header.IsExpand = value.Value;
 
                     foreach (var item in components)
@@ -99,7 +100,7 @@ namespace IMT.UI.Editors
             autoLayoutPadding = new RectOffset(2, 2, 0, 0);
         }
 
-        public virtual void Init(IPropertyCategoryInfo category, IPropertyEditor editor)
+        public virtual void Init(IPropertyCategoryInfo category, IPropertyContainer editor)
         {
             Category = category;
             Editor = editor;
@@ -139,7 +140,7 @@ namespace IMT.UI.Editors
     {
         private static EffectData Buffer { get; set; }
 
-        public override void Init(IPropertyCategoryInfo category, IPropertyEditor editor)
+        public override void Init(IPropertyCategoryInfo category, IPropertyContainer editor)
         {
             base.Init(category, editor);
 
@@ -394,22 +395,22 @@ namespace IMT.UI.Editors
 
         public EffectCategoryHeaderPanel()
         {
-            Copy = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyButtonIcon, "Copy effects", CopyClick);
+            Copy = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyButtonIcon, IMT.Localize.HeaderPanel_CopyEffects, CopyClick);
             Content.AddButton(Copy);
 
-            Paste = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.PasteButtonIcon, "Paste effects", PasteClick);
+            Paste = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.PasteButtonIcon, IMT.Localize.HeaderPanel_PasteEffects, PasteClick);
             Content.AddButton(Paste);
 
-            ApplyAllRules = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, "Apply to all rules", ApplyAllRulesClick);
+            ApplyAllRules = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, IMT.Localize.HeaderPanel_ApplyAllRules, ApplyAllRulesClick);
             Content.AddButton(ApplyAllRules);
 
-            ApplySameStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, "Apply to same style", ApplySameStyleClick);
+            ApplySameStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToSameButtonIcon, string.Empty, ApplySameStyleClick);
             Content.AddButton(ApplySameStyle);
 
-            ApplySameType = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, "Apply to same type", ApplySameTypeClick);
+            ApplySameType = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToAllButtonIcon, string.Empty, ApplySameTypeClick);
             Content.AddButton(ApplySameType);
 
-            ApplyAll = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, "Apply to all items", ApplyAllClick);
+            ApplyAll = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.ApplyAllButtonIcon, IMT.Localize.HeaderPanel_ApplyAll, ApplyAllClick);
             Content.AddButton(ApplyAll);
         }
 
@@ -430,9 +431,21 @@ namespace IMT.UI.Editors
             {
                 case MarkingLineRawRule editRule:
                     {
+                        ApplySameStyle.Visible = true;
+                        ApplySameType.Visible = true;
+                        ApplyAll.Visible = true;
+
                         ApplyAllRules.Visible = editRule.Line.IsSupportRules;
-                        ApplySameStyle.Text = $"Apply to all \"{editRule.Style.Value.Type.Description()}\" lines";
-                        ApplySameType.Text = $"Apply to all lines";
+                        if (editRule.Line.Type == LineType.Stop)
+                        {
+                            ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyStopType, editRule.Style.Value.Type.Description());
+                            ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyStopAll;
+                        }
+                        else
+                        {
+                            ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyRegularType, editRule.Style.Value.Type.Description());
+                            ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyRegularAll;
+                        }
 
                         var isEffect = editRule.Style.Value is IEffectStyle;
                         Copy.Visible = isEffect;
@@ -441,9 +454,13 @@ namespace IMT.UI.Editors
                     break;
                 case MarkingCrosswalk editCrosswalk:
                     {
+                        ApplySameStyle.Visible = true;
+                        ApplySameType.Visible = true;
+                        ApplyAll.Visible = true;
+
                         ApplyAllRules.Visible = false;
-                        ApplySameStyle.Text = $"Apply to all \"{editCrosswalk.Style.Value.Type.Description()}\" crosswalks";
-                        ApplySameType.Text = $"Apply to all crosswalks";
+                        ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyCrosswalkType, editCrosswalk.Style.Value.Type.Description());
+                        ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyCrosswalkAll;
 
                         var isEffect = editCrosswalk.Style.Value is IEffectStyle;
                         Copy.Visible = isEffect;
@@ -452,13 +469,27 @@ namespace IMT.UI.Editors
                     break;
                 case MarkingFiller editFiller:
                     {
+                        ApplySameStyle.Visible = true;
+                        ApplySameType.Visible = true;
+                        ApplyAll.Visible = true;
+
                         ApplyAllRules.Visible = false;
-                        ApplySameStyle.Text = $"Apply to all \"{editFiller.Style.Value.Type.Description()}\" fillers";
-                        ApplySameType.Text = $"Apply to all fillers";
+                        ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyFillerType, editFiller.Style.Value.Type.Description());
+                        ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyFillerAll;
 
                         var isEffect = editFiller.Style.Value is IEffectStyle;
                         Copy.Visible = isEffect;
                         Paste.Visible = isEffect;
+                    }
+                    break;
+                default:
+                    {
+                        Copy.Visible = false;
+                        Paste.Visible = false;
+                        ApplyAllRules.Visible = false;
+                        ApplySameStyle.Visible = false;
+                        ApplySameType.Visible = false;
+                        ApplyAll.Visible = false;
                     }
                     break;
             }

@@ -46,6 +46,8 @@ namespace IMT.Utilities
         public static string UnlinkHeaderButton => nameof(UnlinkHeaderButton);
         public static string ResetHeaderButton => nameof(ResetHeaderButton);
         public static string ApplyStyleHeaderButton => nameof(ApplyStyleHeaderButton);
+        public static string CopyToAllHeaderButton => nameof(CopyToAllHeaderButton);
+        public static string CopyToSameHeaderButton => nameof(CopyToSameHeaderButton);
 
         public static string TurnLeftOrderButton => nameof(TurnLeftOrderButton);
         public static string FlipOrderButton => nameof(FlipOrderButton);
@@ -82,6 +84,9 @@ namespace IMT.Utilities
         public static string PasteButtonIcon { get; } = nameof(PasteButtonIcon);
         public static string AdditionalButtonIcon { get; } = nameof(AdditionalButtonIcon);
         public static string ApplyButtonIcon { get; } = nameof(ApplyButtonIcon);
+        public static string ApplyAllButtonIcon { get; } = nameof(ApplyAllButtonIcon);
+        public static string CopyToAllButtonIcon { get; } = nameof(CopyToAllButtonIcon);
+        public static string CopyToSameButtonIcon { get; } = nameof(CopyToSameButtonIcon);
 
         public static string ButtonWhiteBorder { get; } = nameof(ButtonWhiteBorder);
 
@@ -125,7 +130,9 @@ namespace IMT.Utilities
             spriteParams[LinkHeaderButton] = new RectOffset();
             spriteParams[UnlinkHeaderButton] = new RectOffset();
             spriteParams[ResetHeaderButton] = new RectOffset();
-            spriteParams[ApplyStyleHeaderButton] = new RectOffset();           
+            spriteParams[ApplyStyleHeaderButton] = new RectOffset();
+            spriteParams[CopyToSameHeaderButton] = new RectOffset();
+            spriteParams[CopyToAllHeaderButton] = new RectOffset();
 
             //OrderButtons
             spriteParams[TurnLeftOrderButton] = new RectOffset();
@@ -158,6 +165,9 @@ namespace IMT.Utilities
             spriteParams[PasteButtonIcon] = new RectOffset();
             spriteParams[AdditionalButtonIcon] = new RectOffset();
             spriteParams[ApplyButtonIcon] = new RectOffset();
+            spriteParams[ApplyAllButtonIcon] = new RectOffset();
+            spriteParams[CopyToAllButtonIcon] = new RectOffset();
+            spriteParams[CopyToSameButtonIcon] = new RectOffset();
 
             //ListItem
             spriteParams[ListItemBackground] = new RectOffset(4, 4, 4, 4);

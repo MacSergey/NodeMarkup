@@ -26,10 +26,11 @@ namespace IMT.UI.Editors
 
         public FillerGuidePropertyPanel.SelectGuideButton HoverGuideSelectButton { get; private set; }
 
-        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
         object IPropertyEditor.EditObject => EditObject;
-        Style IPropertyContainer.Style => EditObject.Style.Value;
         bool IPropertyEditor.IsTemplate => false;
+        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
+        Style IPropertyContainer.Style => EditObject.Style.Value;
+        Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
 
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
@@ -74,6 +75,8 @@ namespace IMT.UI.Editors
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
             header.OnReset += ResetStyle;
+            header.OnApplySameStyle += ApplyStyleSameStyle;
+            header.OnApplySameType += ApplyStyleSameType;
         }
         private void AddStyleTypeProperty()
         {
@@ -156,6 +159,28 @@ namespace IMT.UI.Editors
                 ApplyStyle(style);
         }
         private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<FillerStyle>(EditObject.Style.Value.Type));
+        private void ApplyStyleSameStyle()
+        {
+            foreach (var filler in Marking.Fillers)
+            {
+                if (filler != EditObject && filler.Style.Value.Type == EditObject.Style.Value.Type)
+                    filler.Style.Value = EditObject.Style.Value.CopyStyle();
+            }
+
+            RefreshEditor();
+            ItemsPanel.RefreshItems();
+        }
+        private void ApplyStyleSameType()
+        {
+            foreach (var filler in Marking.Fillers)
+            {
+                if (filler != EditObject)
+                    filler.Style.Value = EditObject.Style.Value.CopyStyle();
+            }
+
+            RefreshEditor();
+            ItemsPanel.RefreshItems();
+        }
 
         public void HoverGuide(FillerGuidePropertyPanel.SelectGuideButton selectButton) => HoverGuideSelectButton = selectButton;
         public void LeaveGuide(FillerGuidePropertyPanel.SelectGuideButton selectButton) => HoverGuideSelectButton = null;

@@ -28,10 +28,11 @@ namespace IMT.UI.Editors
         public RuleEdgeSelectPropertyPanel To { get; private set; }
         public StylePropertyPanel Style { get; private set; }
 
-        UIAutoLayoutPanel IPropertyContainer.MainPanel => this;
         object IPropertyEditor.EditObject => Rule;
-        Style IPropertyContainer.Style => Rule.Style;
         bool IPropertyEditor.IsTemplate => false;
+        UIAutoLayoutPanel IPropertyContainer.MainPanel => this;
+        Style IPropertyContainer.Style => Rule.Style;
+        Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
 
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
@@ -78,6 +79,8 @@ namespace IMT.UI.Editors
 
             OnEnter = null;
             OnLeave = null;
+
+            (this as IPropertyContainer).ExpandList.Clear();
         }
         private void AddHeader()
         {
@@ -88,7 +91,9 @@ namespace IMT.UI.Editors
             Header.OnCopy += CopyStyle;
             Header.OnPaste += PasteStyle;
             Header.OnReset += ResetStyle;
-            Header.OnApplyStyle += ApplyStyleToAllRules;
+            Header.OnApplyAllRules += ApplyStyleToAllRules;
+            Header.OnApplySameStyle += ApplyStyleSameStyle;
+            Header.OnApplySameType += ApplyStyleSameType;
         }
 
         private void AddError()
@@ -211,13 +216,59 @@ namespace IMT.UI.Editors
         private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<LineStyle>(Rule.Style.Value.Type));
         private void ApplyStyleToAllRules()
         {
-            foreach(var rule in Line.Rules)
+            foreach (var rulePanel in Editor.RulePanels)
             {
-                if(rule != Rule)
-                    rule.Style.Value = Rule.Style.Value.CopyStyle();
+                if (rulePanel != this)
+                    rulePanel.ApplyStyle(Rule.Style.Value);
+            }
+        }
+        private void ApplyStyleSameStyle()
+        {
+            var group = Rule.Style.Value.Type.GetGroup();
+            foreach(var line in Editor.Marking.Lines)
+            {
+                if (line == Line)
+                    continue;
+
+                foreach(var rule in line.Rules)
+                {
+                    if (rule.Style.Value.Type == Rule.Style.Value.Type)
+                        rule.Style.Value = Rule.Style.Value.CopyStyle();
+                }
+            }
+
+            foreach (var rulePanel in Editor.RulePanels)
+            {
+                if (rulePanel != this && rulePanel.Rule.Style.Value.Type == Rule.Style.Value.Type)
+                    rulePanel.ApplyStyle(Rule.Style.Value);
             }
 
             Editor.RefreshEditor();
+            Editor.ItemsPanel.RefreshItems();
+        }
+        private void ApplyStyleSameType()
+        {
+            var group = Rule.Style.Value.Type.GetGroup();
+            foreach (var line in Editor.Marking.Lines)
+            {
+                if (line == Line)
+                    continue;
+
+                foreach (var rule in line.Rules)
+                {
+                    if (rule.Style.Value.Type.GetGroup() == group)
+                        rule.Style.Value = Rule.Style.Value.CopyStyle();
+                }
+            }
+
+            foreach (var rulePanel in Editor.RulePanels)
+            {
+                if (rulePanel != this)
+                    rulePanel.ApplyStyle(Rule.Style.Value);
+            }
+
+            Editor.RefreshEditor();
+            Editor.ItemsPanel.RefreshItems();
         }
 
         private void FromChanged(ILinePartEdge from) => Rule.From = from;

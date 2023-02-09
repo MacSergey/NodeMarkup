@@ -66,8 +66,8 @@ namespace IMT.UI.Editors
         protected bool NeedUpdate { get; set; }
         public ObjectType EditObject => ItemsPanel.SelectedObject;
 
-        protected ItemsPanelType ItemsPanel { get; set; }
-        protected AdvancedScrollablePanel ContentPanel { get; set; }
+        public ItemsPanelType ItemsPanel { get; protected set; }
+        public AdvancedScrollablePanel ContentPanel { get; protected set; }
         protected CustomUILabel EmptyLabel { get; set; }
 
         public sealed override bool AvailableItems
@@ -268,14 +268,14 @@ namespace IMT.UI.Editors
 
     public readonly struct EditorProvider
     {
-        public readonly IPropertyEditor editor;
+        public readonly IPropertyContainer editor;
         public readonly UIComponent parent;
         private readonly Action refresh;
         private readonly Action<IPropertyInfo> addProperty;
         private readonly Action<IPropertyCategoryInfo> addCategory;
         public readonly bool isTemplate;
 
-        public EditorProvider(IPropertyEditor editor, UIComponent parent, Action<IPropertyCategoryInfo> addCategory, Action<IPropertyInfo> addProperty, Action refresh, bool isTemplate)
+        public EditorProvider(IPropertyContainer editor, UIComponent parent, Action<IPropertyCategoryInfo> addCategory, Action<IPropertyInfo> addProperty, Action refresh, bool isTemplate)
         {
             this.editor = editor;
             this.parent = parent;
@@ -284,7 +284,7 @@ namespace IMT.UI.Editors
             this.refresh = refresh;
             this.isTemplate = isTemplate;
         }
-        public EditorProvider(IPropertyEditor editor, UIComponent parent, bool isTemplate, Action<IPropertyCategoryInfo> addCategory = null, Action<IPropertyInfo> addProperty = null, Action refresh = null) : this(editor, parent, addCategory, addProperty, refresh, isTemplate) { }
+        public EditorProvider(IPropertyContainer editor, UIComponent parent, bool isTemplate, Action<IPropertyCategoryInfo> addCategory = null, Action<IPropertyInfo> addProperty = null, Action refresh = null) : this(editor, parent, addCategory, addProperty, refresh, isTemplate) { }
 
         public void AddCategory(IPropertyCategoryInfo category) => addCategory?.Invoke(category);
         public void AddProperty(IPropertyInfo property) => addProperty?.Invoke(property);

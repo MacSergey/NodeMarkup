@@ -110,7 +110,7 @@ namespace IMT.Manager
         public sealed override void GetUIComponents(EditorProvider provider)
         {
             base.GetUIComponents(provider);
-            if (provider.editor is MarkingFiller filler)
+            if (provider.editor.EditObject is MarkingFiller filler)
                 GetUIComponents(filler, provider);
         }
         protected virtual void GetUIComponents(MarkingFiller filler, EditorProvider provider)

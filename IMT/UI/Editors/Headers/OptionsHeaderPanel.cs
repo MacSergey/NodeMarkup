@@ -5,6 +5,7 @@ using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
+using System.Security.AccessControl;
 using UnityEngine;
 
 namespace IMT.UI.Editors
@@ -16,11 +17,15 @@ namespace IMT.UI.Editors
         public event Action OnCopy;
         public event Action OnPaste;
         public event Action OnReset;
+        public event Action OnApplySameStyle;
+        public event Action OnApplySameType;
 
         protected IPropertyEditor Editor { get; private set; }
         private Style.StyleType StyleGroup { get; set; }
         private HeaderButtonInfo<HeaderButton> PasteButton { get; set; }
         private HeaderButtonInfo<ApplyTemplateHeaderButton> ApplyTemplate { get; }
+        private HeaderButtonInfo<HeaderButton> ApplySameStyle { get; set; }
+        private HeaderButtonInfo<HeaderButton> ApplySameType { get; set; }
 
         public StyleHeaderPanel()
         {
@@ -35,6 +40,12 @@ namespace IMT.UI.Editors
             Content.AddButton(PasteButton);
 
             Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ResetHeaderButton, IMT.Localize.HeaderPanel_StyleReset, ResetClick));
+
+            ApplySameStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToSameHeaderButton, "Apply to same style", ApplySameStyleClick);
+            Content.AddButton(ApplySameStyle);
+
+            ApplySameType = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToAllHeaderButton, "Apply to same type", ApplySameTypeClick);
+            Content.AddButton(ApplySameType);
         }
 
         public void Init(IPropertyEditor editor, Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
@@ -64,36 +75,67 @@ namespace IMT.UI.Editors
             OnCopy = null;
             OnPaste = null;
             OnReset = null;
+            OnApplySameStyle = null;
+            OnApplySameType = null;
 
             SingletonTool<IntersectionMarkingTool>.Instance.OnStyleToBuffer -= StyleToBuffer;
+        }
+
+        public override void Refresh()
+        {
+            switch (Editor.EditObject)
+            {
+                case MarkingLineRawRule editRule:
+                    {
+                        ApplySameStyle.Text = $"Apply to all \"{editRule.Style.Value.Type.Description()}\" lines";
+                        ApplySameType.Text = $"Apply to all lines";
+                    }
+                    break;
+                case MarkingCrosswalk editCrosswalk:
+                    {
+                        ApplySameStyle.Text = $"Apply to all \"{editCrosswalk.Style.Value.Type.Description()}\" crosswalks";
+                        ApplySameType.Text = $"Apply to all crosswalks";
+                    }
+                    break;
+                case MarkingFiller editFiller:
+                    {
+                        ApplySameStyle.Text = $"Apply to all \"{editFiller.Style.Value.Type.Description()}\" fillers";
+                        ApplySameType.Text = $"Apply to all fillers";
+                    }
+                    break;
+            }
+
+            base.Refresh();
         }
 
         private void SaveTemplateClick() => OnSaveTemplate?.Invoke();
         private void CopyClick() => OnCopy?.Invoke();
         private void PasteClick() => OnPaste?.Invoke();
         private void ResetClick() => OnReset?.Invoke();
+        private void ApplySameStyleClick() => OnApplySameStyle?.Invoke();
+        private void ApplySameTypeClick() => OnApplySameType?.Invoke();
     }
     public class RuleHeaderPanel : StyleHeaderPanel
     {
-        public event Action OnApplyStyle;
-        HeaderButtonInfo<HeaderButton> ApplyStyle { get; }
+        public event Action OnApplyAllRules;
+        HeaderButtonInfo<HeaderButton> ApplyAllRules { get; }
 
         public RuleHeaderPanel()
         {
-            ApplyStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyStyleHeaderButton, "Apply to all rules", ApplyStyleClick);
-            Content.AddButton(ApplyStyle);
+            ApplyAllRules = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyStyleHeaderButton, "Apply to all rules", ApplyAllRulesClick);
+            Content.AddButton(ApplyAllRules);
         }
         public override void DeInit()
         {
             base.DeInit();
-            OnApplyStyle = null;
+            OnApplyAllRules = null;
         }
         public override void Refresh()
         {
-            ApplyStyle.Visible = Editor.EditObject is MarkingLineRawRule editRule && editRule.Line.IsSupportRules;
+            ApplyAllRules.Visible = Editor.EditObject is MarkingLineRawRule editRule && editRule.Line.IsSupportRules;
             base.Refresh();
         }
-        private void ApplyStyleClick() => OnApplyStyle?.Invoke();
+        private void ApplyAllRulesClick() => OnApplyAllRules?.Invoke();
     }
     public class CrosswalkHeaderPanel : StyleHeaderPanel
     {
@@ -206,10 +248,14 @@ namespace IMT.UI.Editors
     {
         public event Action OnSetAsDefault;
         public event Action OnDuplicate;
+        public event Action OnApplySameStyle;
+        public event Action OnApplySameType;
 
         private HeaderButtonInfo<HeaderButton> SetAsDefaultButton { get; set; }
         private HeaderButtonInfo<HeaderButton> UnsetAsDefaultButton { get; set; }
         private HeaderButtonInfo<HeaderButton> Duplicate { get; set; }
+        private HeaderButtonInfo<HeaderButton> ApplySameStyle { get; set; }
+        private HeaderButtonInfo<HeaderButton> ApplySameType { get; set; }
 
         private bool IsDefault => Template.IsDefault;
 
@@ -224,6 +270,12 @@ namespace IMT.UI.Editors
             Duplicate = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.DuplicateHeaderButton, IMT.Localize.HeaderPanel_Duplicate, DuplicateClick);
             Content.AddButton(Duplicate);
 
+            ApplySameStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyToSameHeaderButton, string.Empty, ApplySameStyleClick);
+            Content.AddButton(ApplySameStyle);
+
+            ApplySameType = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyToAllHeaderButton, string.Empty, ApplySameTypeClick);
+            Content.AddButton(ApplySameType);
+
             base.AddButtons();
         }
         public override void DeInit()
@@ -232,6 +284,8 @@ namespace IMT.UI.Editors
 
             OnSetAsDefault = null;
             OnDuplicate = null;
+            OnApplySameStyle = null;
+            OnApplySameType = null;
         }
 
         public override void Refresh()
@@ -239,11 +293,34 @@ namespace IMT.UI.Editors
             SetAsDefaultButton.Visible = !IsDefault && EditMode == EditMode.Default;
             UnsetAsDefaultButton.Visible = IsDefault && EditMode == EditMode.Default;
             Duplicate.Visible = EditMode == EditMode.Default;
+
+            switch(Template.Style)
+            {
+                case RegularLineStyle:
+                    ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyStopType, Template.Style.Type.Description());
+                    ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyRegularAll;
+                    break;
+                case StopLineStyle:
+                    ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyStopType, Template.Style.Type.Description());
+                    ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyStopAll; ;
+                    break;
+                case CrosswalkStyle:
+                    ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyCrosswalkType, Template.Style.Type.Description());
+                    ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyCrosswalkAll;
+                    break;
+                case FillerStyle:
+                    ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyFillerType, Template.Style.Type.Description());
+                    ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyFillerAll;
+                    break;
+            }
+
             base.Refresh();
         }
 
         private void SetAsDefaultClick() => OnSetAsDefault?.Invoke();
         private void DuplicateClick() => OnDuplicate?.Invoke();
+        private void ApplySameStyleClick() => OnApplySameStyle?.Invoke();
+        private void ApplySameTypeClick() => OnApplySameType?.Invoke();
     }
     public class IntersectionTemplateHeaderPanel : TemplateHeaderPanel<IntersectionTemplate>
     {

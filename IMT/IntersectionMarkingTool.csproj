@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.13.0.528</AssemblyVersion>
+    <AssemblyVersion>1.13.0.537</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -80,6 +80,7 @@
     <None Remove="Properties\launchSettings.json" />
     <None Remove="Resources\ButtonBorder.png" />
     <None Remove="Resources\ButtonIcons\AdditionalButtonIcon.png" />
+    <None Remove="Resources\ButtonIcons\ApplyAllButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\ApplyButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\AutoButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\AutoButtonIcons.png" />
@@ -91,6 +92,8 @@
     <None Remove="Resources\ButtonIcons\BottomToTopButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\CopyButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\CopyButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\CopyToAllButtonIcon.png" />
+    <None Remove="Resources\ButtonIcons\CopyToSameButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\DynamicFixedButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\DynamicFixedButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\DynamicFreeButtonIcon.png" />
@@ -115,6 +118,8 @@
     <None Remove="Resources\ButtonWhiteBorder.png" />
     <None Remove="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\ApplyStyleHeaderButton.png" />
+    <None Remove="Resources\HeaderButtons\CopyToAllHeaderButton.png" />
+    <None Remove="Resources\HeaderButtons\CopyToSameHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\LinkHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\ResetHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\UnlinkHeaderButton.png" />
@@ -132,12 +137,15 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ButtonIcons\AdditionalButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\ApplyAllButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\ApplyButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\AutoButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\BoldButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\BoldItalicButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\BottomToTopButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\CopyButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\CopyToAllButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\CopyToSameButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\DynamicFixedButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\DynamicFreeButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\FixedFixedButtonIcon.png" />
@@ -153,6 +161,8 @@
     <EmbeddedResource Include="Resources\ButtonWhiteBorder.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyStyleHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\CopyToAllHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\CopyToSameHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\LinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>

@@ -37,7 +37,7 @@ namespace IMT.UI.Editors
         public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
         private bool AddRuleAvailable => EditObject.IsSupportRules;
         public bool IsSplit => EditObject.PointPair.IsSplit;
-        private IEnumerable<RulePanel> RulePanels => ContentPanel.Content.components.OfType<RulePanel>();
+        public IEnumerable<RulePanel> RulePanels => ContentPanel.Content.components.OfType<RulePanel>();
 
         private RuleEdgeSelectPropertyPanel.RuleEdgeSelectButton HoverPartEdgeButton { get; set; }
         private RulePanel HoverRulePanel { get; set; }
@@ -210,7 +210,7 @@ namespace IMT.UI.Editors
         }
         private void RefreshRulePanels()
         {
-            var rulePanels = ContentPanel.Content.components.OfType<RulePanel>().ToArray();
+            var rulePanels = RulePanels.ToArray();
 
             foreach (var rulePanel in rulePanels)
             {

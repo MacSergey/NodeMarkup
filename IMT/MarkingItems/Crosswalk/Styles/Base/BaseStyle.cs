@@ -1,6 +1,4 @@
-﻿using ColossalFramework.DataBinding;
-using ColossalFramework.UI;
-using IMT.UI.Editors;
+﻿using IMT.UI.Editors;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
@@ -9,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -54,7 +51,7 @@ namespace IMT.Manager
         public sealed override void GetUIComponents(EditorProvider provider)
         {
             base.GetUIComponents(provider);
-            if (provider.editor is MarkingCrosswalk crosswalk)
+            if (provider.editor.EditObject is MarkingCrosswalk crosswalk)
                 GetUIComponents(crosswalk, provider);
         }
         protected virtual void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider) { }

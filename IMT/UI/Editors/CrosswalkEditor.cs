@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 namespace IMT.UI.Editors
@@ -27,10 +28,11 @@ namespace IMT.UI.Editors
 
         public CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton HoverBorderButton { get; private set; }
 
-        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
         object IPropertyEditor.EditObject => EditObject;
-        Style IPropertyContainer.Style => EditObject.Style.Value;
         bool IPropertyEditor.IsTemplate => false;
+        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
+        Style IPropertyContainer.Style => EditObject.Style.Value;
+        Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
 
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
@@ -95,6 +97,8 @@ namespace IMT.UI.Editors
             header.OnPaste += PasteStyle;
             header.OnReset += ResetStyle;
             header.OnCut += CutLines;
+            header.OnApplySameStyle += ApplyStyleSameStyle;
+            header.OnApplySameType += ApplyStyleSameType;
         }
         private void AddWarning()
         {
@@ -235,6 +239,28 @@ namespace IMT.UI.Editors
         }
         private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<CrosswalkStyle>(EditObject.Style.Value.Type));
         private void CutLines() => Marking.CutLinesByCrosswalk(EditObject);
+        private void ApplyStyleSameStyle()
+        {
+            foreach (var crosswalk in Marking.Crosswalks)
+            {
+                if (crosswalk != EditObject && crosswalk.Style.Value.Type == EditObject.Style.Value.Type)
+                    crosswalk.Style.Value = EditObject.Style.Value.CopyStyle();
+            }
+
+            RefreshEditor();
+            ItemsPanel.RefreshItems();
+        }
+        private void ApplyStyleSameType()
+        {
+            foreach (var crosswalk in Marking.Crosswalks)
+            {
+                if (crosswalk != EditObject)
+                    crosswalk.Style.Value = EditObject.Style.Value.CopyStyle();
+            }
+
+            RefreshEditor();
+            ItemsPanel.RefreshItems();
+        }
 
         public void HoverBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton) => HoverBorderButton = selectButton;
         public void LeaveBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton) => HoverBorderButton = null;

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnifiedUI.Helpers;
 using UnityEngine;
+using static IMT.Manager.CrosswalkStyle;
 
 namespace IMT.UI.Editors
 {
@@ -24,10 +25,11 @@ namespace IMT.UI.Editors
 
         private Style EditStyle { get; set; }
 
-        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
         object IPropertyEditor.EditObject => EditObject;
-        Style IPropertyContainer.Style => EditStyle;
         bool IPropertyEditor.IsTemplate => true;
+        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
+        Style IPropertyContainer.Style => EditStyle;
+        Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
 
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
@@ -58,6 +60,8 @@ namespace IMT.UI.Editors
             base.AddHeader();
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
             HeaderPanel.OnDuplicate += Duplicate;
+            HeaderPanel.OnApplySameStyle += ApplyStyleSameStyle;
+            HeaderPanel.OnApplySameType += ApplyStyleSameType;
         }
 
         protected override void SetEditable(EditMode mode)
@@ -78,6 +82,87 @@ namespace IMT.UI.Editors
             if (SingletonManager<StyleTemplateManager>.Instance.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
                 Panel.EditStyleTemplate(duplicate, false);
         }
+        private void ApplyStyleSameStyle()
+        {
+            switch (EditStyle)
+            {
+                case RegularLineStyle regularStyle:
+                    foreach (var line in Marking.Lines)
+                    {
+                        foreach (var rule in line.Rules)
+                        {
+                            if (rule.Style.Value.Type == regularStyle.Type)
+                                rule.Style.Value = regularStyle.CopyStyle();
+                        }
+                    }
+                    break;
+                case StopLineStyle stopStyle:
+                    foreach (var line in Marking.Lines)
+                    {
+                        foreach (var rule in line.Rules)
+                        {
+                            if (rule.Style.Value.Type == stopStyle.Type)
+                                rule.Style.Value = stopStyle.CopyStyle();
+                        }
+                    }
+                    break;
+                case CrosswalkStyle crosswalkStyle:
+                    foreach (var crosswalk in Marking.Crosswalks)
+                    {
+                        if (crosswalk.Style.Value.Type == crosswalkStyle.Type)
+                            crosswalk.Style.Value = crosswalkStyle.CopyStyle();
+                    }
+                    break;
+                case FillerStyle fillerStyle:
+                    foreach (var filler in Marking.Fillers)
+                    {
+                        if (filler.Style.Value.Type == fillerStyle.Type)
+                            filler.Style.Value = fillerStyle.CopyStyle();
+                    }
+                    break;
+            }
+
+            Panel.UpdatePanel();
+        }
+        private void ApplyStyleSameType()
+        {
+            switch (EditStyle)
+            {
+                case RegularLineStyle regularStyle:
+                    foreach (var line in Marking.Lines)
+                    {
+                        if ((regularStyle.Type.GetLineType() & line.Type) == 0 || (regularStyle.Type.GetNetworkType() & line.PointPair.NetworkType) == 0)
+                            continue;
+
+                        foreach (var rule in line.Rules)
+                            rule.Style.Value = regularStyle.CopyStyle();
+                    }
+                    break;
+                case StopLineStyle stopStyle:
+                    foreach (var line in Marking.Lines)
+                    {
+                        if ((stopStyle.Type.GetLineType() & line.Type) == 0 || (stopStyle.Type.GetNetworkType() & line.PointPair.NetworkType) == 0)
+                            continue;
+
+                        foreach (var rule in line.Rules)
+                            rule.Style.Value = stopStyle.CopyStyle();
+                    }
+                    break;
+                case CrosswalkStyle crosswalkStyle:
+                    foreach (var crosswalk in Marking.Crosswalks)
+                        crosswalk.Style.Value = crosswalkStyle.CopyStyle();
+                    break;
+                case FillerStyle fillerStyle:
+                    foreach (var filler in Marking.Fillers)
+                    {
+                        filler.Style.Value = fillerStyle.CopyStyle();
+                    }
+                    break;
+            }
+
+            Panel.UpdatePanel();
+        }
+
         protected override void OnApplyChanges()
         {
             base.OnApplyChanges();
