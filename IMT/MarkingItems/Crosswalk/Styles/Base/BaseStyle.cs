@@ -53,6 +53,8 @@ namespace IMT.Manager
             base.GetUIComponents(provider);
             if (provider.editor.EditObject is MarkingCrosswalk crosswalk)
                 GetUIComponents(crosswalk, provider);
+            else
+                GetUIComponents(null, provider);
         }
         protected virtual void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider) { }
 

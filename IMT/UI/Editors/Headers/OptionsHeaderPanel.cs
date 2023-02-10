@@ -293,8 +293,10 @@ namespace IMT.UI.Editors
             SetAsDefaultButton.Visible = !IsDefault && EditMode == EditMode.Default;
             UnsetAsDefaultButton.Visible = IsDefault && EditMode == EditMode.Default;
             Duplicate.Visible = EditMode == EditMode.Default;
+            ApplySameStyle.Visible = EditMode == EditMode.Default;
+            ApplySameType.Visible = EditMode == EditMode.Default;
 
-            switch(Template.Style)
+            switch (Template.Style)
             {
                 case RegularLineStyle:
                     ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyRegularType, Template.Style.Type.Description());

@@ -56,6 +56,8 @@ namespace IMT.Manager
 
             if (provider.editor.EditObject is MarkingLineRawRule rule && rule.Line is MarkingRegularLine line)
                 GetUIComponents(line, provider);
+            else
+                GetUIComponents(null, provider);
         }
         protected virtual void GetUIComponents(MarkingRegularLine line, EditorProvider provider) { }
 

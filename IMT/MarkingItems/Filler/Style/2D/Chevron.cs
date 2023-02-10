@@ -40,7 +40,6 @@ namespace IMT.Manager
                 yield return nameof(AngleBetween);
                 yield return nameof(Offset);
                 yield return nameof(Guide);
-                yield return nameof(Cracks);
                 yield return nameof(Texture);
                 yield return nameof(Cracks);
                 yield return nameof(Voids);

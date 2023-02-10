@@ -315,7 +315,7 @@ namespace IMT.UI
                 }
             }
         }
-        private CustomUIPanel Screenshot { get; set; }
+        private CustomUISprite Screenshot { get; set; }
         private CustomUILabel Title { get; set; }
 
         protected abstract string LocalizedTitle { get; }
@@ -324,7 +324,7 @@ namespace IMT.UI
         {
             autoLayout = true;
 
-            Screenshot = AddUIComponent<CustomUIPanel>();
+            Screenshot = AddUIComponent<CustomUISprite>();
             Screenshot.size = new Vector2(90f, 90f);
 
             Title = AddUIComponent<CustomUILabel>();
@@ -340,7 +340,7 @@ namespace IMT.UI
         {
             Title.text = IMT.Localize.StyleOption_AssetNotSet;
             Screenshot.atlas = null;
-            Screenshot.backgroundSprite = string.Empty;
+            Screenshot.spriteName = string.Empty;
         }
 
         private void Set()
@@ -348,7 +348,7 @@ namespace IMT.UI
             if (Prefab is PrefabType prefab)
             {
                 Screenshot.atlas = prefab.m_Atlas;
-                Screenshot.backgroundSprite = prefab.m_Thumbnail;
+                Screenshot.spriteName = prefab.m_Thumbnail;
                 Screenshot.isVisible = true;
                 autoLayoutPadding = new RectOffset(5, 5, 5, 5);
                 Title.text = LocalizedTitle;
@@ -356,7 +356,7 @@ namespace IMT.UI
             else
             {
                 Screenshot.atlas = null;
-                Screenshot.backgroundSprite = string.Empty;
+                Screenshot.spriteName = string.Empty;
                 Screenshot.isVisible = false;
                 autoLayoutPadding = new RectOffset(8, 8, 5, 5);
                 Title.text = IMT.Localize.StyleOption_AssetNotSet;

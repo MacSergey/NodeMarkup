@@ -52,6 +52,8 @@ namespace IMT.Manager
             base.GetUIComponents(provider);
             if (provider.editor.EditObject is MarkingLineRawRule rule && rule.Line is MarkingStopLine line)
                 GetUIComponents(line, provider);
+            else
+                GetUIComponents(null, provider);
         }
         protected virtual void GetUIComponents(MarkingStopLine line, EditorProvider provider) { }
 

@@ -47,16 +47,19 @@ namespace IMT.UI.Editors
             ToolMode = Tool.CreateToolMode<EditToolMode>();
             ToolMode.Init(this);
         }
-        protected override void OnFillPropertiesPanel(TemplateType template)
+        protected sealed override void OnFillPropertiesPanel(TemplateType template)
+        {
+            FillProperties();
+            AddAditionalProperties();
+
+            SetEditable(Editors.EditMode.Default);
+        }
+        protected virtual void FillProperties()
         {
             AddHeader();
             AddWarning();
             AddAuthor();
             AddTemplateName();
-
-            AddAditionalProperties();
-
-            SetEditable(Editors.EditMode.Default);
         }
         protected override void OnClear()
         {

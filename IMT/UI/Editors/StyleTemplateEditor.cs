@@ -3,10 +3,7 @@ using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
 using System.Collections.Generic;
-using System.Linq;
-using UnifiedUI.Helpers;
 using UnityEngine;
-using static IMT.Manager.CrosswalkStyle;
 
 namespace IMT.UI.Editors
 {
@@ -38,11 +35,23 @@ namespace IMT.UI.Editors
 
         protected override IEnumerable<StyleTemplate> GetObjects() => SingletonManager<StyleTemplateManager>.Instance.Templates;
 
-        protected override void OnFillPropertiesPanel(StyleTemplate template)
+        protected override void FillProperties()
         {
             CopyStyle();
-            base.OnFillPropertiesPanel(template);
+            base.FillProperties();
+            AddStyleType();
         }
+
+        private void AddStyleType()
+        {
+            var styleProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Style");
+            styleProperty.Text = IMT.Localize.Editor_Style;
+            styleProperty.FieldWidth = 230;
+            styleProperty.EnableControl = false;
+            styleProperty.Init();
+            styleProperty.Value = EditStyle.Type.Description();
+        }
+
         void IPropertyEditor.RefreshProperties() => PropertyEditorHelper.RefreshProperties(this);
 
         protected override void AddAditionalProperties() => this.AddProperties();

@@ -112,6 +112,8 @@ namespace IMT.Manager
             base.GetUIComponents(provider);
             if (provider.editor.EditObject is MarkingFiller filler)
                 GetUIComponents(filler, provider);
+            else
+                GetUIComponents(null, provider);
         }
         protected virtual void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
