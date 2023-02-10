@@ -1918,4 +1918,16 @@ It can take time if there are a lot of segments.</value>
   <data name="HeaderPanel_PasteEffects" xml:space="preserve">
     <value>Paste effects</value>
   </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>Both</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Fixed end</value>
+  </data>
 </root>

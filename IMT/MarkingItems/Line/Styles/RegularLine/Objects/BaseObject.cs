@@ -37,11 +37,12 @@ namespace IMT.Manager
         public PropertyStructValue<float> OffsetAfter { get; }
 
         public PropertyEnumValue<DistributionType> Distribution { get; }
+        public PropertyEnumValue<FixedEndType> FixedEnd { get; }
 
         public abstract bool CanElevate { get; }
         public abstract bool CanSlope { get; }
 
-        public BaseObjectLineStyle(int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(new Color32(), 0f)
+        public BaseObjectLineStyle(int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd) : base(new Color32(), 0f)
         {
             Probability = new PropertyStructValue<int>("P", StyleChanged, probability);
             Step = new PropertyNullableStructValue<float, PropertyStructValue<float>>(new PropertyStructValue<float>("S", null), "S", StyleChanged, step);
@@ -54,6 +55,7 @@ namespace IMT.Manager
             OffsetBefore = new PropertyStructValue<float>("OB", StyleChanged, offsetBefore);
             OffsetAfter = new PropertyStructValue<float>("OA", StyleChanged, offsetAfter);
             Distribution = new PropertyEnumValue<DistributionType>("PT", StyleChanged, distribution);
+            FixedEnd = new PropertyEnumValue<FixedEndType>("FE", StyleChanged, fixedEnd);
         }
 
         public override void CopyTo(LineStyle target)
@@ -71,6 +73,8 @@ namespace IMT.Manager
                 objectTarget.Elevation.Value = Elevation;
                 objectTarget.OffsetBefore.Value = OffsetBefore;
                 objectTarget.OffsetAfter.Value = OffsetAfter;
+                objectTarget.Distribution.Value = Distribution;
+                objectTarget.FixedEnd.Value = FixedEnd;
             }
         }
 
@@ -85,6 +89,7 @@ namespace IMT.Manager
             provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Scale), AdditionalCategory, AddScaleRangeProperty, RefreshScaleRangeProperty));
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), AdditionalCategory, AddOffsetProperty, RefreshOffsetProperty));
             provider.AddProperty(new PropertyInfo<DistributionTypePanel>(this, nameof(Distribution), AdditionalCategory, AddDistributionProperty, RefreshDistributionProperty));
+            provider.AddProperty(new PropertyInfo<FixedEndTypePanel>(this, nameof(FixedEnd), AdditionalCategory, AddFixedEndProperty, RefreshFixedEndProperty));
             provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
             provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Tilt), AdditionalCategory, AddTiltRangeProperty, RefreshTiltRangeProperty));
             provider.AddProperty(new PropertyInfo<FloatStaticRangeAutoProperty>(this, nameof(Slope), AdditionalCategory, AddSlopeRangeProperty, RefreshSlopeRangeProperty));
@@ -314,11 +319,29 @@ namespace IMT.Manager
             distributionProperty.Selector.atlas = IMTTextures.Atlas;
             distributionProperty.Init();
             distributionProperty.SelectedObject = Distribution;
-            distributionProperty.OnSelectObjectChanged += (value) => Distribution.Value = value;
+            distributionProperty.OnSelectObjectChanged += (value) =>
+            {
+                Distribution.Value = value;
+                provider.Refresh();
+            };
         }
         private void RefreshDistributionProperty(DistributionTypePanel distributionProperty, EditorProvider provider)
         {
             distributionProperty.IsHidden = !IsValid;
+        }
+
+        private void AddFixedEndProperty(FixedEndTypePanel fixedEndProperty, EditorProvider provider)
+        {
+            fixedEndProperty.Text = Localize.StyleOption_FixedEnd;
+            fixedEndProperty.Selector.AutoButtonSize = true;
+            fixedEndProperty.Selector.atlas = IMTTextures.Atlas;
+            fixedEndProperty.Init();
+            fixedEndProperty.SelectedObject = FixedEnd;
+            fixedEndProperty.OnSelectObjectChanged += (value) => FixedEnd.Value = value;
+        }
+        private void RefreshFixedEndProperty(FixedEndTypePanel fixedEndProperty, EditorProvider provider)
+        {
+            fixedEndProperty.IsHidden = !IsValid || Distribution.Value == DistributionType.DynamicSpaceFreeEnd || Distribution.Value == DistributionType.FixedSpaceFreeEnd;
         }
 
         public override XElement ToXml()
@@ -335,6 +358,7 @@ namespace IMT.Manager
             OffsetBefore.ToXml(config);
             OffsetAfter.ToXml(config);
             Distribution.ToXml(config);
+            FixedEnd.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
@@ -355,6 +379,7 @@ namespace IMT.Manager
             OffsetBefore.FromXml(config, DefaultObjectOffsetBefore);
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
             Distribution.FromXml(config, DistributionType.FixedSpaceFreeEnd);
+            FixedEnd.FromXml(config, FixedEndType.Both);
 
             if (invert)
             {
@@ -381,7 +406,7 @@ namespace IMT.Manager
         protected override bool IsValid => IsValidPrefab(Prefab.Value);
         protected abstract string AssetPropertyName { get; }
 
-        public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution)
+        public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd)
         {
             Prefab = new PropertyPrefabValue<PrefabType>("PRF", StyleChanged, prefab);
         }
@@ -440,8 +465,10 @@ namespace IMT.Manager
                         startOffset = (length - (count - 1) * stepValue) * 0.5f;
                         items = new MarkingPropItemData[count + 2];
 
-                        CalculateItem(trajectory, 0f, prefab, ref items[0]);
-                        CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
+                        if(FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.Start)
+                            CalculateItem(trajectory, 0f, prefab, ref items[0]);
+                        if (FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.End)
+                            CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
                         break;
                     }
                 case DistributionType.DynamicSpaceFreeEnd:
@@ -461,8 +488,10 @@ namespace IMT.Manager
                         startOffset = stepValue;
                         items = new MarkingPropItemData[count + 2];
 
-                        CalculateItem(trajectory, 0f, prefab, ref items[0]);
-                        CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
+                        if (FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.Start)
+                            CalculateItem(trajectory, 0f, prefab, ref items[0]);
+                        if (FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.End)
+                            CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
                         break;
                     }
                 default:
@@ -615,5 +644,24 @@ namespace IMT.Manager
         }
 
         public class DistributionTypeSegmented : UIOnceSegmented<DistributionType> { }
+    }
+
+    public enum FixedEndType
+    {
+        [Description(nameof(Localize.StyleOption_FixedEndBoth))]
+        Both,
+
+        [Description(nameof(Localize.StyleOption_FixedEndStart))]
+        Start,
+
+        [Description(nameof(Localize.StyleOption_FixedEndEnd))]
+        End,
+    }
+    public class FixedEndTypePanel : EnumOncePropertyPanel<FixedEndType, FixedEndTypePanel.FixedEndTypeSegmented>
+    {
+        protected override string GetDescription(FixedEndType value) => value.Description();
+        protected override bool IsEqual(FixedEndType first, FixedEndType second) => first == second;
+
+        public class FixedEndTypeSegmented : UIOnceSegmented<FixedEndType> { }
     }
 }

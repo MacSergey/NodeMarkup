@@ -2669,5 +2669,25 @@ namespace IMT
 		/// Paste effects
 		/// </summary>
 		public static string HeaderPanel_PasteEffects => LocaleManager.GetString("HeaderPanel_PasteEffects", Culture);
+
+		/// <summary>
+		/// Both
+		/// </summary>
+		public static string StyleOption_FixedEndBoth => LocaleManager.GetString("StyleOption_FixedEndBoth", Culture);
+
+		/// <summary>
+		/// End
+		/// </summary>
+		public static string StyleOption_FixedEndEnd => LocaleManager.GetString("StyleOption_FixedEndEnd", Culture);
+
+		/// <summary>
+		/// Start
+		/// </summary>
+		public static string StyleOption_FixedEndStart => LocaleManager.GetString("StyleOption_FixedEndStart", Culture);
+
+		/// <summary>
+		/// Fixed end
+		/// </summary>
+		public static string StyleOption_FixedEnd => LocaleManager.GetString("StyleOption_FixedEnd", Culture);
 	}
 }
