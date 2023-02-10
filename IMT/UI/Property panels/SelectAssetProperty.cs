@@ -133,6 +133,7 @@ namespace IMT.UI
             Popup.SelectedObject = Prefab;
 
             Popup.eventKeyDown += OnPopupKeyDown;
+            Popup.eventLeaveFocus += OnPopupLeaveFocus;
             Popup.OnSelectedChanged += OnSelectedChanged;
 
             SetPopupPosition();

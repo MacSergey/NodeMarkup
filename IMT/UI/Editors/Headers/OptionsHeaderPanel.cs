@@ -5,8 +5,6 @@ using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
-using System.Security.AccessControl;
-using UnityEngine;
 
 namespace IMT.UI.Editors
 {
