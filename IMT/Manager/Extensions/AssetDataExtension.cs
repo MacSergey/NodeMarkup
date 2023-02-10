@@ -128,7 +128,7 @@ namespace IMT
                 return false;
             }
         }
-        public override void OnPlaceAsset(NetInfo networkInfo, ushort segmentId, ushort startNodeId, ushort endNodeId)
+        public override bool OnPlaceAsset(NetInfo networkInfo, ushort segmentId, ushort startNodeId, ushort endNodeId)
         {
             if (AssetDatas.TryGetValue(networkInfo, out var assetData))
             {
@@ -145,10 +145,14 @@ namespace IMT
 
                     var marking = SingletonManager<SegmentMarkingManager>.Instance[segmentId];
                     marking.FromXml(version, config, map);
+
+                    return true;
                 }
             }
+
+            return false;
         }
-        protected override void PlaceAsset(XElement config, ObjectsMap map)
+        protected override bool PlaceAsset(XElement config, ObjectsMap map)
         {
             throw new NotImplementedException();
         }

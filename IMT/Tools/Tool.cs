@@ -464,14 +464,14 @@ namespace IMT.Tools
         }
         public static void ApplyDefaultMarking(NetInfo info, ushort segmentId, ushort startNode, ushort endNode)
         {
-            if (SegmentMarkingManager.RemovedMarking is IntersectionTemplate removed && ApplyRemovedMarking(removed, segmentId, startNode, endNode))
-                return;
-
             if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var presetId, out var flip, out var invert) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset) && ApplyLinkedMarking(preset, segmentId, startNode, endNode, flip, invert))
                 return;
 
-            if (Settings.ApplyMarkingFromAssets)
-                SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segmentId, startNode, endNode);
+            if (Settings.ApplyMarkingFromAssets && SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segmentId, startNode, endNode))
+                return;
+
+            if (SegmentMarkingManager.RemovedMarking is IntersectionTemplate removed && ApplyRemovedMarking(removed, segmentId, startNode, endNode))
+                return;
         }
         private static bool ApplyRemovedMarking(IntersectionTemplate removed, ushort segmentId, ushort startNode, ushort endNode)
         {
