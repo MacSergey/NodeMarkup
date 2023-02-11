@@ -8,11 +8,8 @@ using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
