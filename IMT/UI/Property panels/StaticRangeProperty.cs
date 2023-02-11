@@ -1,5 +1,7 @@
-﻿using IMT.Utilities;
+﻿using ColossalFramework.UI;
+using IMT.Utilities;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using System;
 
 namespace IMT.UI
@@ -251,6 +253,7 @@ namespace IMT.UI
             else if (SelectedObject == RangeIndex)
                 OnValueChanged?.Invoke(FieldA.Value, value);
         }
+        protected void ValueChanged(ValueType valueA, ValueType valueB) => OnValueChanged?.Invoke(valueA, valueB);
 
         protected override void RefreshImpl()
         {
@@ -506,6 +509,93 @@ namespace IMT.UI
 
         public void SimulateEnterValue(ValueType value) => Field.SimulateEnterValue(value);
     }
-
     public class FloatStaticAutoProperty : StaticAutoProperty<float, FloatUITextField> { }
+
+    public abstract class SingleDoubleInvertedProperty<ValueType, FieldType> : StaticRangeProperty<ValueType, FieldType>
+        where FieldType : ComparableUITextField<ValueType>
+        where ValueType : IComparable<ValueType>
+    {
+        protected MultyAtlasUIButton Invert { get; }
+        protected virtual int SingleIndex => 0;
+        protected virtual int DoubleIndex => 1;
+
+        public SingleDoubleInvertedProperty()
+        {
+            Invert = Content.AddUIComponent<MultyAtlasUIButton>();
+            Invert.SetDefaultStyle();
+            Invert.width = 20;
+            Invert.atlasForeground = CommonTextures.Atlas;
+            Invert.normalFgSprite = CommonTextures.PlusMinusButton;
+            Invert.eventClick += InvertClick;
+        }
+
+        private void InvertClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            FieldA.Value = InvertValue(FieldA.Value);
+            FieldB.Value = InvertValue(FieldB.Value);
+
+            Refresh();
+            if (SelectedObject == SingleIndex)
+                ValueChanged(FieldA.Value, FieldA.Value);
+            else if (SelectedObject == DoubleIndex)
+                ValueChanged(FieldA.Value, FieldB.Value);
+        }
+        protected abstract ValueType InvertValue(ValueType value);
+
+        protected override void AddSelectorItems()
+        {
+            AddItem(SingleIndex, IMT.Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcon);
+            AddItem(DoubleIndex, IMT.Localize.StyleOption_ObjectTwoDifferent, IMTTextures.Atlas, IMTTextures.RangeButtonIcon);
+        }
+        protected override void RefreshImpl()
+        {
+            if (SelectedObject == SingleIndex)
+            {
+                FieldB.isVisible = false;
+                FieldA.width = FieldWidth;
+
+                FieldA.CheckMin = CheckMin;
+                FieldA.CheckMax = CheckMax;
+                FieldA.MinValue = MinValue;
+                FieldA.MaxValue = MaxValue;
+                FieldA.CyclicalValue = CyclicalValue;
+                FieldA.Value = FieldA.Value;
+            }
+            else if (SelectedObject == DoubleIndex)
+            {
+                FieldB.isVisible = true;
+                FieldA.width = (FieldWidth - Content.autoLayoutPadding.horizontal) * 0.5f;
+                FieldB.width = (FieldWidth - Content.autoLayoutPadding.horizontal) * 0.5f;
+
+                FieldA.CheckMin = CheckMin;
+                FieldA.CheckMax = CheckMax;
+                FieldA.MinValue = MinValue;
+                FieldA.MaxValue = MaxValue;
+                FieldA.CyclicalValue = CyclicalValue;
+                FieldA.Value = FieldA.Value;
+
+                FieldB.CheckMin = CheckMin;
+                FieldB.CheckMax = CheckMax;
+                FieldB.MinValue = MinValue;
+                FieldB.MaxValue = MaxValue;
+                FieldB.CyclicalValue = CyclicalValue;
+                FieldB.Value = FieldB.Value;
+            }
+        }
+
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            SetSize();
+        }
+        protected virtual void SetSize()
+        {
+            if (Invert != null)
+                Invert.height = Content.height - ItemsPadding * 2;
+        }
+    }
+    public class FloatSingleDoubleInvertedProperty : SingleDoubleInvertedProperty<float, FloatUITextField>
+    {
+        protected override float InvertValue(float value) => -value;
+    }
 }

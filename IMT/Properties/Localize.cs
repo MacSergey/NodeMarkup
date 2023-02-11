@@ -2719,5 +2719,15 @@ namespace IMT
 		/// Dashes type
 		/// </summary>
 		public static string StyleOption_ZebraDashesType => LocaleManager.GetString("StyleOption_ZebraDashesType", Culture);
+
+		/// <summary>
+		/// Invert network
+		/// </summary>
+		public static string StyleOption_InvertNetwork => LocaleManager.GetString("StyleOption_InvertNetwork", Culture);
+
+		/// <summary>
+		/// Two different
+		/// </summary>
+		public static string StyleOption_ObjectTwoDifferent => LocaleManager.GetString("StyleOption_ObjectTwoDifferent", Culture);
 	}
 }

@@ -23,7 +23,7 @@ namespace IMT.Manager
 
         public PropertyPrefabValue<NetInfo> Prefab { get; }
         public PropertyNullableStructValue<Color32, PropertyColorValue> NetworkColor { get; }
-        public PropertyValue<float> Shift { get; }
+        public PropertyVector2Value Shift { get; }
         public PropertyValue<float> Elevation { get; }
         public PropertyValue<float> OffsetBefore { get; }
         public PropertyValue<float> OffsetAfter { get; }
@@ -52,7 +52,7 @@ namespace IMT.Manager
             get
             {
                 yield return new StylePropertyDataProvider<NetInfo>(nameof(Prefab), Prefab);
-                yield return new StylePropertyDataProvider<float>(nameof(Shift), Shift);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Shift), Shift);
                 yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
                 yield return new StylePropertyDataProvider<float>(nameof(Scale), Scale);
                 yield return new StylePropertyDataProvider<int>(nameof(RepeatDistance), RepeatDistance);
@@ -62,11 +62,11 @@ namespace IMT.Manager
             }
         }
 
-        public NetworkLineStyle(NetInfo prefab, Color32? color, float shift, float elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(default, 0f)
+        public NetworkLineStyle(NetInfo prefab, Color32? color, Vector2 shift, float elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(default, 0f)
         {
             Prefab = new PropertyPrefabValue<NetInfo>("PRF", StyleChanged, prefab);
             NetworkColor = new PropertyNullableStructValue<Color32, PropertyColorValue>(new PropertyColorValue("NC", null), "NC", StyleChanged, color);
-            Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
+            Shift = new PropertyVector2Value(StyleChanged, shift, "SFA", "SFB");
             Elevation = new PropertyStructValue<float>("E", StyleChanged, elevation);
             OffsetBefore = new PropertyStructValue<float>("OB", StyleChanged, offsetBefore);
             OffsetAfter = new PropertyStructValue<float>("OA", StyleChanged, offsetAfter);
@@ -101,9 +101,9 @@ namespace IMT.Manager
                 return;
 
             var shift = Shift.Value;
-            if (shift != 0)
+            if (shift != Vector2.zero)
             {
-                trajectory = trajectory.Shift(shift, shift);
+                trajectory = trajectory.Shift(shift.x, shift.y);
             }
 
             var length = trajectory.Length;
@@ -137,7 +137,7 @@ namespace IMT.Manager
 
             provider.AddProperty(new PropertyInfo<SelectNetworkProperty>(this, nameof(Prefab), MainCategory, AddPrefabProperty));
             provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(NetworkColor), AdditionalCategory, AddNetworkColorProperty, RefreshNetworkColorProperty));
-            provider.AddProperty(new PropertyInfo<FloatInvertedPropertyPanel>(this, nameof(Shift), MainCategory, AddShiftProperty));
+            provider.AddProperty(new PropertyInfo<FloatSingleDoubleInvertedProperty>(this, nameof(Shift), MainCategory, AddShiftProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), AdditionalCategory, AddScaleProperty));
             provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RepeatDistance), AdditionalCategory, AddRepeatDistanceProperty));
@@ -176,7 +176,7 @@ namespace IMT.Manager
                 colorProperty.DefaultColor = Prefab.Value.m_color;
         }
 
-        private void AddShiftProperty(FloatInvertedPropertyPanel shiftProperty, EditorProvider provider)
+        private void AddShiftProperty(FloatSingleDoubleInvertedProperty shiftProperty, EditorProvider provider)
         {
             shiftProperty.Text = Localize.StyleOption_ObjectShift;
             shiftProperty.FieldWidth = 100f;
@@ -189,8 +189,8 @@ namespace IMT.Manager
             shiftProperty.MinValue = -50;
             shiftProperty.MaxValue = 50;
             shiftProperty.Init();
-            shiftProperty.Value = Shift;
-            shiftProperty.OnValueChanged += (value) => Shift.Value = value;
+            shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
+            shiftProperty.OnValueChanged += (valueA, valueB) => Shift.Value = new Vector2(valueA, valueB);
         }
         new private void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
@@ -266,7 +266,7 @@ namespace IMT.Manager
         }
         new private void AddInvertProperty(ButtonPanel buttonsPanel, EditorProvider provider)
         {
-            buttonsPanel.Text = Localize.StyleOption_Invert;
+            buttonsPanel.Text = Localize.StyleOption_InvertNetwork;
             buttonsPanel.Init();
             buttonsPanel.OnButtonClick += () =>
             {
@@ -293,7 +293,9 @@ namespace IMT.Manager
             base.FromXml(config, map, invert, typeChanged);
             Prefab.FromXml(config, null);
             NetworkColor.FromXml(config, Prefab.Value?.m_color);
-            Shift.FromXml(config, DefaultObjectShift);
+            Shift.FromXml(config, new Vector2(DefaultObjectShift, DefaultObjectShift));
+            if (config.TryGetAttrValue<float>("SF", out var shift))
+                Shift.Value = new Vector2(shift, shift);
             Elevation.FromXml(config, DefaultObjectElevation);
             Scale.FromXml(config, DefaultNetworkScale);
             RepeatDistance.FromXml(config, DefaultRepeatDistance);

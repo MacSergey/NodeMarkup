@@ -1,13 +1,9 @@
-﻿using ColossalFramework.UI;
-using IMT.Manager;
-using IMT.UI;
+﻿using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 
 namespace IMT.Manager

@@ -1948,4 +1948,10 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_ZebraDashesType" xml:space="preserve">
     <value>Dashes type</value>
   </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Invert network</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Two different</value>
+  </data>
 </root>
