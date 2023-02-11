@@ -166,7 +166,7 @@ namespace IMT.Manager
 
         public bool CanIntersect(in StraightTrajectory line, bool precise) => precise ? Intersection.CanIntersect(Points, line, out _) : Intersection.CanIntersect(Limits, line, out _);
 
-        public ContourGroup Cut(in StraightTrajectory line, Intersection.Side cutSide)
+        public ContourGroup Cut(ITrajectory line, Intersection.Side cutSide)
         {
             if (Count <= 1)
                 return new ContourGroup();
@@ -188,7 +188,7 @@ namespace IMT.Manager
             }
             else
             {
-                var pairs = GetCutPairs(in line, cutSide, intersections);
+                var pairs = GetCutPairs(line, cutSide, intersections);
                 return ConnectEdges(this, pairs);
             }
         }
@@ -207,7 +207,7 @@ namespace IMT.Manager
             }
         }
 
-        private List<IntersectionPairEdge> GetCutPairs(in StraightTrajectory line, Intersection.Side cutSide, HashSet<Intersection> intersections)
+        private List<IntersectionPairEdge> GetCutPairs(ITrajectory line, Intersection.Side cutSide, HashSet<Intersection> intersections)
         {
             var linePoints = intersections.OrderBy(i => i, Intersection.FirstComparer).ToArray();
             var setPoints = intersections.OrderBy(i => i, Intersection.SecondComparer).ToArray();
@@ -462,7 +462,7 @@ namespace IMT.Manager
             return pairs;
         }
 
-        public HashSet<Intersection> GetIntersections(in StraightTrajectory line)
+        public HashSet<Intersection> GetIntersections(ITrajectory line)
         {
             HashSet<Intersection> intersections = new HashSet<Intersection>();
             for (int i = 0; i < Count; i += 1)
@@ -551,7 +551,7 @@ namespace IMT.Manager
 
             return points;
         }
-        public static void Process(this Queue<Contour> contours, in StraightTrajectory line, Intersection.Side side)
+        public static void Process(this Queue<Contour> contours, ITrajectory line, Intersection.Side side)
         {
             var count = contours.Count;
             for (var i = 0; i < count; i += 1)

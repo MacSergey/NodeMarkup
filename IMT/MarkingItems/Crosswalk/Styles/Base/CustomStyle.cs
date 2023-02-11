@@ -63,7 +63,7 @@ namespace IMT.Manager
             if (beforeOffset >= 0.05f)
             {
                 var before = crosswalk.GetOffsetTrajectory(offset - width * 0.5f);
-                cutContours.Process(in before, Intersection.Side.Right);
+                cutContours.Process(before, Intersection.Side.Right);
                 if (cutContours.Count == 0)
                 {
                     result = null;
@@ -72,7 +72,7 @@ namespace IMT.Manager
             }
 
             var after = crosswalk.GetOffsetTrajectory(offset + width * 0.5f);
-            cutContours.Process(in after, Intersection.Side.Left);
+            cutContours.Process(after, Intersection.Side.Left);
             if (cutContours.Count == 0)
             {
                 result = null;

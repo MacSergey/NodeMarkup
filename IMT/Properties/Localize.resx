@@ -1939,4 +1939,13 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_ObjectLimits" xml:space="preserve">
     <value>Limits</value>
   </data>
+  <data name="StyleOption_StraightEnds" xml:space="preserve">
+    <value>Ends</value>
+  </data>
+  <data name="StyleOption_StraightEndsSlope" xml:space="preserve">
+    <value>Slope</value>
+  </data>
+  <data name="StyleOption_StraightEndsStraight" xml:space="preserve">
+    <value>Straight</value>
+  </data>
 </root>

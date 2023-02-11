@@ -2704,5 +2704,20 @@ namespace IMT
 		/// Limits
 		/// </summary>
 		public static string StyleOption_ObjectLimits => LocaleManager.GetString("StyleOption_ObjectLimits", Culture);
+
+		/// <summary>
+		/// Ends
+		/// </summary>
+		public static string StyleOption_StraightEnds => LocaleManager.GetString("StyleOption_StraightEnds", Culture);
+
+		/// <summary>
+		/// Slope
+		/// </summary>
+		public static string StyleOption_StraightEndsSlope => LocaleManager.GetString("StyleOption_StraightEndsSlope", Culture);
+
+		/// <summary>
+		/// Straight
+		/// </summary>
+		public static string StyleOption_StraightEndsStraight => LocaleManager.GetString("StyleOption_StraightEndsStraight", Culture);
 	}
 }

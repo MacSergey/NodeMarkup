@@ -1,5 +1,4 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -27,6 +26,7 @@ namespace IMT.Manager
         public PropertyValue<bool> UseGap { get; }
         public PropertyValue<float> GapLength { get; }
         public PropertyValue<int> GapPeriod { get; }
+        public PropertyValue<bool> StraightEnds { get; }
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -40,6 +40,7 @@ namespace IMT.Manager
                 yield return nameof(Length);
                 yield return nameof(Offset);
                 yield return nameof(Parallel);
+                yield return nameof(StraightEnds);
                 yield return nameof(Gap);
                 yield return nameof(Texture);
                 yield return nameof(Cracks);
@@ -80,7 +81,7 @@ namespace IMT.Manager
         protected override float GetAbsoluteWidth(float length, MarkingCrosswalk crosswalk) =>  Parallel ? length : length / Mathf.Sin(crosswalk.CornerAndNormalAngle);
         protected float GetRelativeWidth(float length, MarkingCrosswalk crosswalk) => Parallel ? length / Mathf.Sin(crosswalk.CornerAndNormalAngle) : length;
 
-        public ZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter)
+        public ZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel, bool straightEnds) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter)
         {
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
@@ -92,8 +93,10 @@ namespace IMT.Manager
             UseGap = GetUseGapProperty(useGap);
             GapLength = GetGapLengthProperty(gapLength);
             GapPeriod = GetGapPeriodProperty(gapPeriod);
+
+            StraightEnds = new PropertyBoolValue("STE", StyleChanged, straightEnds);
         }
-        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel);
+        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel, StraightEnds);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
@@ -102,6 +105,8 @@ namespace IMT.Manager
             {
                 zebraTarget.TwoColors.Value = TwoColors;
                 zebraTarget.SecondColor.Value = SecondColor;
+
+                zebraTarget.StraightEnds.Value = StraightEnds;
 
                 zebraTarget.UseGap.Value = UseGap;
                 zebraTarget.GapLength.Value = GapLength;
@@ -123,52 +128,92 @@ namespace IMT.Manager
             var offset = GetVisibleWidth(crosswalk) * 0.5f + OffsetBefore;
             var width = GetAbsoluteWidth(Width, crosswalk);
 
-            var index = 0;
             var direction = Parallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
             var trajectory = crosswalk.GetFullTrajectory(offset, direction);
 
-            if (!UseGap)
+            if(Parallel && StraightEnds)
             {
-                if (GetContour(crosswalk, offset, width, out var contour))
+                var dashes = GetDashes(crosswalk, trajectory);
+                for (int i = 0; i < dashes.Count; i += 1)
                 {
-                    var dashLength = GetRelativeWidth(DashLength, crosswalk);
-                    var spaceLength = GetRelativeWidth(SpaceLength, crosswalk);
-
-                    var dashes = StyleHelper.CalculateDashesStraightT(trajectory, dashLength, spaceLength);
-                    for (int i = 0; i < dashes.Count; i += 1)
-                    {
 #if DEBUG
-                        bool renderOnly = RenderOnly != -1 && i != RenderOnly;
-                        if (renderOnly)
-                            continue;
+                    bool renderOnly = RenderOnly != -1 && i != RenderOnly;
+                    if (renderOnly)
+                        continue;
 #endif
-                        CalculateCrosswalkPart(trajectory, dashes[i], direction, contour, GetColor(index++), lod, addData);
-                    }
+                    var dashContour = GetDashContour(trajectory, direction, dashes[i]);
+                    var color = GetColor(UseGap ? i / GapPeriod : i);
+                    CalculateCrosswalkPart(dashContour, crosswalk.RightBorderTrajectory, crosswalk.LeftBorderTrajectory,  color, lod, addData);
                 }
             }
-            else
+            else if (GetContour(crosswalk, offset, width, out var contour))
             {
-                if (GetContour(crosswalk, offset , width, out var contour))
+                var dashes = GetDashes(crosswalk, trajectory);
+                for (int i = 0; i < dashes.Count; i += 1)
                 {
-                    var groupLength = DashLength * GapPeriod + SpaceLength * (GapPeriod - 1);
-                    var dashT = DashLength / groupLength;
-                    var spaceT = SpaceLength / groupLength;
-
-                    groupLength = GetRelativeWidth(groupLength, crosswalk);
-                    var gapLength = GetRelativeWidth(GapLength, crosswalk);
-
-                    foreach (var part in StyleHelper.CalculateDashesStraightT(trajectory, groupLength, gapLength))
-                    {
-                        for (var i = 0; i < GapPeriod; i += 1)
-                        {
-                            var startT = part.start + (part.end - part.start) * (dashT + spaceT) * i;
-                            var endT = startT + (part.end - part.start) * dashT;
-                            CalculateCrosswalkPart(trajectory, new StyleHelper.PartT(startT, endT), direction, contour, GetColor(index++), lod, addData);
-                        }
-                    }
+#if DEBUG
+                    bool renderOnly = RenderOnly != -1 && i != RenderOnly;
+                    if (renderOnly)
+                        continue;
+#endif
+                    var color = GetColor(UseGap ? i / GapPeriod : i);
+                    CalculateCrosswalkPart(trajectory, dashes[i], direction, contour, color, lod, addData);
                 }
             }
         }
+        protected List<StyleHelper.PartT> GetDashes(MarkingCrosswalk crosswalk, StraightTrajectory trajectory)
+        {
+            if (!UseGap)
+            {
+                var dashLength = GetRelativeWidth(DashLength, crosswalk);
+                var spaceLength = GetRelativeWidth(SpaceLength, crosswalk);
+
+                var dashes = StyleHelper.CalculateDashesStraightT(trajectory, dashLength, spaceLength);
+                return dashes;
+            }
+            else
+            {
+                var groupLength = DashLength * GapPeriod + SpaceLength * (GapPeriod - 1);
+                var dashT = DashLength / groupLength;
+                var spaceT = SpaceLength / groupLength;
+
+                groupLength = GetRelativeWidth(groupLength, crosswalk);
+                var gapLength = GetRelativeWidth(GapLength, crosswalk);
+
+                var rawDashes = StyleHelper.CalculateDashesStraightT(trajectory, groupLength, gapLength);
+                var dashes = new List<StyleHelper.PartT>();
+                foreach (var dash in rawDashes)
+                {
+                    for (var i = 0; i < GapPeriod; i += 1)
+                    {
+                        var startT = dash.start + (dash.end - dash.start) * (dashT + spaceT) * i;
+                        var endT = startT + (dash.end - dash.start) * dashT;
+                        dashes.Add(new StyleHelper.PartT(startT, endT));
+                    }
+                }
+                return dashes;
+            }
+        }
+        protected Contour GetDashContour(StraightTrajectory trajectory, Vector3 direction, StyleHelper.PartT partT)
+        {
+            var position = trajectory.Position((partT.start + partT.end) * 0.5f);
+            var normal = direction.Turn90(true);
+            var topLeft = position + normal * DashLength * 0.5f + direction * Width * 0.5f;
+            var topRight = position - normal * DashLength * 0.5f + direction * Width * 0.5f;
+            var bottomRight = position - normal * DashLength * 0.5f - direction * Width * 0.5f;
+            var bottomLeft = position + normal * DashLength * 0.5f - direction * Width * 0.5f;
+
+            var dashContour = new Contour
+                    {
+                        new ContourEdge(new StraightTrajectory(topLeft, topRight)),
+                        new ContourEdge(new StraightTrajectory(topRight, bottomRight)),
+                        new ContourEdge(new StraightTrajectory(bottomRight, bottomLeft)),
+                        new ContourEdge(new StraightTrajectory(bottomLeft, topLeft)),
+                    };
+
+            return dashContour;
+        }
+
         protected Color32 GetColor(int index) => TwoColors && index % 2 != 0 ? SecondColor : Color;
 
         protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
@@ -176,10 +221,10 @@ namespace IMT.Manager
             base.GetUIComponents(crosswalk, provider);
             provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), MainCategory, AddUseSecondColorProperty));
             provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), MainCategory, AddSecondColorProperty, RefreshSecondColorProperty));
-            //TwoColorsChanged(parent, TwoColors);
 
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), MainCategory, AddCrosswalkLengthProperty));
             provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Parallel), AdditionalCategory, AddParallelProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StraightEnds), AdditionalCategory, AddStraightEndsProperty, RefreshStraightEndsProperty));
 
             provider.AddProperty(new PropertyInfo<GapProperty>(this, nameof(Gap), AdditionalCategory, AddGapProperty));
         }
@@ -221,8 +266,24 @@ namespace IMT.Manager
             parallelProperty.Text = Localize.StyleOption_ParallelToLanes;
             parallelProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             parallelProperty.SelectedObject = Parallel;
-            parallelProperty.OnSelectObjectChanged += (value) => Parallel.Value = value;
+            parallelProperty.OnSelectObjectChanged += (value) =>
+            {
+                Parallel.Value = value;
+                provider.Refresh();
+            };
         }
+        protected void AddStraightEndsProperty(BoolListPropertyPanel straightEndsProperty, EditorProvider provider)
+        {
+            straightEndsProperty.Text = Localize.StyleOption_StraightEnds;
+            straightEndsProperty.Init(Localize.StyleOption_StraightEndsSlope, Localize.StyleOption_StraightEndsStraight);
+            straightEndsProperty.SelectedObject = StraightEnds;
+            straightEndsProperty.OnSelectObjectChanged += (value) => StraightEnds.Value = value;
+        }
+        protected void RefreshStraightEndsProperty(BoolListPropertyPanel straightEndsProperty, EditorProvider provider)
+        {
+            straightEndsProperty.IsHidden = !Parallel.Value;
+        }
+
         protected void AddGapProperty(GapProperty gapProperty, EditorProvider provider)
         {
             gapProperty.Text = Localize.StyleOption_CrosswalkGap;
@@ -246,6 +307,7 @@ namespace IMT.Manager
             };
         }
 
+
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -257,6 +319,7 @@ namespace IMT.Manager
             UseGap.ToXml(config);
             GapLength.ToXml(config);
             GapPeriod.ToXml(config);
+            StraightEnds.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
@@ -270,6 +333,7 @@ namespace IMT.Manager
             UseGap.FromXml(config, false);
             GapLength.FromXml(config, DefaultSpaceLength);
             GapPeriod.FromXml(config, DefaulCrosswalkGapPeriod);
+            StraightEnds.FromXml(config, true);
         }
     }
 }

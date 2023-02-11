@@ -34,6 +34,7 @@ namespace IMT.Manager
                 yield return nameof(OffsetBetween);
                 yield return nameof(Offset);
                 yield return nameof(Parallel);
+                yield return nameof(StraightEnds);
                 yield return nameof(Gap);
                 yield return nameof(Texture);
                 yield return nameof(Cracks);
@@ -71,12 +72,12 @@ namespace IMT.Manager
             }
         }
 
-        public DoubleZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel, float offset) : base(color, secondColor, useSecondColor, width, cracks, voids, texture, offsetBefore, offsetAfter, dashLength, spaceLength, useGap, gapLength, gapPeriod, parallel)
+        public DoubleZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel, bool straightEnds, float offset) : base(color, secondColor, useSecondColor, width, cracks, voids, texture, offsetBefore, offsetAfter, dashLength, spaceLength, useGap, gapLength, gapPeriod, parallel,  straightEnds)
         {
             OffsetBetween = GetOffsetProperty(offset);
         }
         protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetAbsoluteWidth(Width * 2f + OffsetBetween, crosswalk);
-        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel, OffsetBetween);
+        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel, StraightEnds, OffsetBetween);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
@@ -91,68 +92,68 @@ namespace IMT.Manager
 
             var width = GetAbsoluteWidth(Width, crosswalk);
             var direction = Parallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
-            var index = 0;
 
             var trajectoryFirst = crosswalk.GetFullTrajectory(middleOffset - deltaOffset, direction);
             var trajectorySecond = crosswalk.GetFullTrajectory(middleOffset + deltaOffset, direction);
 
-            if (!UseGap)
+            if (Parallel && StraightEnds)
             {
-                var dashLength = GetRelativeWidth(DashLength, crosswalk);
-                var spaceLength = GetRelativeWidth(SpaceLength, crosswalk);
-
-                if (GetContour(crosswalk, middleOffset - deltaOffset, width, out var firstContour))
+                var firstDashes = GetDashes(crosswalk, trajectoryFirst);
+                for (int i = 0; i < firstDashes.Count; i += 1)
                 {
-                    foreach (var part in StyleHelper.CalculateDashesStraightT(trajectoryFirst, dashLength, spaceLength))
-                    {
-                        CalculateCrosswalkPart(trajectoryFirst, part, direction, firstContour, GetColor(index++), lod, addData);
-                    }
+#if DEBUG
+                    bool renderOnly = RenderOnly != -1 && i != RenderOnly;
+                    if (renderOnly)
+                        continue;
+#endif
+                    var dashContour = GetDashContour(trajectoryFirst, direction, firstDashes[i]);
+                    var color = GetColor(UseGap ? i / GapPeriod : i);
+                    CalculateCrosswalkPart(dashContour, crosswalk.RightBorderTrajectory, crosswalk.LeftBorderTrajectory, color, lod, addData);
                 }
 
-                index = 0;
-
-                if (GetContour(crosswalk, middleOffset + deltaOffset, width, out var secondContour))
+                var secondDashes = GetDashes(crosswalk, trajectorySecond);
+                for (int i = 0; i < secondDashes.Count; i += 1)
                 {
-                    foreach (var part in StyleHelper.CalculateDashesStraightT(trajectorySecond, dashLength, spaceLength))
-                    {
-                        CalculateCrosswalkPart(trajectorySecond, part, direction, secondContour, GetColor(index++), lod, addData);
-                    }
+#if DEBUG
+                    bool renderOnly = RenderOnly != -1 && i != RenderOnly;
+                    if (renderOnly)
+                        continue;
+#endif
+                    var dashContour = GetDashContour(trajectorySecond, direction, secondDashes[i]);
+                    var color = GetColor(UseGap ? i / GapPeriod : i);
+                    CalculateCrosswalkPart(dashContour, crosswalk.RightBorderTrajectory, crosswalk.LeftBorderTrajectory, color, lod, addData);
                 }
             }
             else
             {
-                var groupLength = DashLength * GapPeriod + SpaceLength * (GapPeriod - 1);
-                var dashT = DashLength / groupLength;
-                var spaceT = SpaceLength / groupLength;
-
-                groupLength = GetRelativeWidth(groupLength, crosswalk);
-                var gapLength = GetRelativeWidth(GapLength, crosswalk);
-
                 if (GetContour(crosswalk, middleOffset - deltaOffset, width, out var firstContour))
                 {
-                    foreach (var part in StyleHelper.CalculateDashesStraightT(trajectoryFirst, groupLength, gapLength))
+                    var firstDashes = GetDashes(crosswalk, trajectoryFirst);
+
+                    for (int i = 0; i < firstDashes.Count; i += 1)
                     {
-                        for (var i = 0; i < GapPeriod; i += 1)
-                        {
-                            var startT = part.start + (part.end - part.start) * (dashT + spaceT) * i;
-                            var endT = startT + (part.end - part.start) * dashT;
-                            CalculateCrosswalkPart(trajectoryFirst, new StyleHelper.PartT(startT, endT), direction, firstContour, GetColor(index++), lod, addData);
-                        }
+#if DEBUG
+                        bool renderOnly = RenderOnly != -1 && i != RenderOnly;
+                        if (renderOnly)
+                            continue;
+#endif
+                        var color = GetColor(UseGap ? i / GapPeriod : i);
+                        CalculateCrosswalkPart(trajectoryFirst, firstDashes[i], direction, firstContour, color, lod, addData);
                     }
                 }
 
-                index = 0;
-
                 if (GetContour(crosswalk, middleOffset + deltaOffset, width, out var secondContour))
                 {
-                    foreach (var part in StyleHelper.CalculateDashesStraightT(trajectorySecond, groupLength, gapLength))
+                    var secondDashes = GetDashes(crosswalk, trajectorySecond);
+                    for (int i = 0; i < secondDashes.Count; i += 1)
                     {
-                        for (var i = 0; i < GapPeriod; i += 1)
-                        {
-                            var startT = part.start + (part.end - part.start) * (dashT + spaceT) * i;
-                            var endT = startT + (part.end - part.start) * dashT;
-                            CalculateCrosswalkPart(trajectorySecond, new StyleHelper.PartT(startT, endT), direction, secondContour, GetColor(index++), lod, addData);
-                        }
+#if DEBUG
+                        bool renderOnly = RenderOnly != -1 && i != RenderOnly;
+                        if (renderOnly)
+                            continue;
+#endif
+                        var color = GetColor(UseGap ? i / GapPeriod : i);
+                        CalculateCrosswalkPart(trajectorySecond, secondDashes[i], direction, secondContour, color, lod, addData);
                     }
                 }
             }
