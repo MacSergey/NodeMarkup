@@ -202,7 +202,7 @@ namespace IMT.Manager
             }
         }
 
-        protected void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        protected override void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
             if (this is IDoubleLine doubleLine)
             {

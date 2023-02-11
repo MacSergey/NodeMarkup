@@ -1,5 +1,4 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -10,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -109,7 +107,7 @@ namespace IMT.Manager
             StyleHelper.GetPartParams(trajectory, partT, secondOffset, out var secondPos, out var secondDir);
             if (StyleHelper.CheckBorders(borders, secondPos, secondDir, DashLength, Width))
             {
-                var data = new DecalData(this, MaterialType.Dash, lod, secondPos, secondDir, DashLength, Width, Color);
+                var data = new DecalData(this, MaterialType.Dash, lod, secondPos, secondDir, DashLength, Width, TwoColors ? SecondColor : Color);
                 addData(data);
             }
         }
@@ -119,14 +117,12 @@ namespace IMT.Manager
             base.GetUIComponents(line, provider);
 
             provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), MainCategory, AddUseSecondColorProperty));
-            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), MainCategory, AddSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), MainCategory, AddSecondColorProperty, RefreshSecondColorProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), MainCategory, AddOffsetProperty));
             if(!provider.isTemplate)
             {
                 provider.AddProperty(new PropertyInfo<LineAlignmentPropertyPanel>(this, nameof(Alignment), MainCategory, AddAlignmentProperty));
             }
-
-            //UseSecondColorChanged(this, parent, TwoColors);
         }
 
         public override XElement ToXml()
