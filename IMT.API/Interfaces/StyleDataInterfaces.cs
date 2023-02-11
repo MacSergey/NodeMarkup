@@ -32,12 +32,12 @@ namespace IMT.API
     public interface IFillerStyleProvider : IStripeFillerStyle, IGridFillerStyle, ISolidFillerStyle, IChevronFillerStyle, IPavementFillerStyle, IGrassFillerStyle, IGravelFillerStyle, IRuinedFillerStyle, ICliffFillerStyle { }
 
 
-    public interface ISolidLineStyle : IRegularLineStyleData, INormalLineStyleData
+    public interface ISolidLineStyle : IRegularLineStyleData, INormalLineStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
     }
-    public interface IDoubleSolidLineStyle : IRegularLineStyleData, INormalLineStyleData
+    public interface IDoubleSolidLineStyle : IRegularLineStyleData, INormalLineStyleData, IEffectStyleData
     {
         bool TwoColors { get; set; }
         Color32 Color { get; set; }
@@ -46,14 +46,14 @@ namespace IMT.API
         float Offset { get; set; }
         Alignment Alignment { get; set; }
     }
-    public interface IDashedLineStyle : IRegularLineStyleData, INormalLineStyleData
+    public interface IDashedLineStyle : IRegularLineStyleData, INormalLineStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
         float DashLength { get; set; }
         float SpaceLength { get; set; }
     }
-    public interface IDoubleDashedLineStyle : IRegularLineStyleData, INormalLineStyleData
+    public interface IDoubleDashedLineStyle : IRegularLineStyleData, INormalLineStyleData, IEffectStyleData
     {
         bool TwoColors { get; set; }
         Color32 Color { get; set; }
@@ -64,7 +64,7 @@ namespace IMT.API
         float Offset { get; set; }
         Alignment Alignment { get; set; }
     }
-    public interface IDoubleDashedAsymLineStyle : IRegularLineStyleData, INormalLineStyleData
+    public interface IDoubleDashedAsymLineStyle : IRegularLineStyleData, INormalLineStyleData, IEffectStyleData
     {
         bool TwoColors { get; set; }
         Color32 Color { get; set; }
@@ -76,7 +76,7 @@ namespace IMT.API
         Alignment Alignment { get; set; }
         bool Invert { get; set; }
     }
-    public interface ISolidAndDashedLineStyle : IRegularLineStyleData, INormalLineStyleData
+    public interface ISolidAndDashedLineStyle : IRegularLineStyleData, INormalLineStyleData, IEffectStyleData
     {
         bool TwoColors { get; set; }
         Color32 Color { get; set; }
@@ -89,7 +89,7 @@ namespace IMT.API
         Alignment Alignment { get; set; }
         bool Invert { get; set; }
     }
-    public interface ISharkTeethLineStyle : IRegularLineStyleData, INormalLineStyleData
+    public interface ISharkTeethLineStyle : IRegularLineStyleData, INormalLineStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
@@ -99,7 +99,7 @@ namespace IMT.API
         float Angle { get; set; }
         bool Invert { get; set; }
     }
-    public interface IZigZagLineStyle : IRegularLineStyleData, INormalLineStyleData
+    public interface IZigZagLineStyle : IRegularLineStyleData, INormalLineStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
@@ -148,7 +148,7 @@ namespace IMT.API
         float OffsetBefore { get; set; }
         float OffsetAfter { get; set; }
     }
-    public interface ITextLineStyle : IRegularLineStyleData, INormalLineStyleData, ILaneLineStyleData
+    public interface ITextLineStyle : IRegularLineStyleData, INormalLineStyleData, ILaneLineStyleData, IEffectStyleData
     {
         string Text { get; set; }
         string Font { get; set; }
@@ -163,7 +163,8 @@ namespace IMT.API
     public interface INetworkLineStyle : IRegularLineStyleData, INormalLineStyleData, ILaneLineStyleData
     {
         NetInfo Prefab { get; set; }
-        float Shift { get; set; }
+        Color32? NetworkColor { get; set; }
+        Vector2 Shift { get; set; }
         float Elevation { get; set; }
         float Scale { get; set; }
         int RepeatDistance { get; set; }
@@ -173,12 +174,12 @@ namespace IMT.API
     }
 
 
-    public interface ISolidStopLineStyle : IStopLineStyleData
+    public interface ISolidStopLineStyle : IStopLineStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
     }
-    public interface IDoubleSolidStopLineStyle : IStopLineStyleData
+    public interface IDoubleSolidStopLineStyle : IStopLineStyleData, IEffectStyleData
     {
         bool TwoColors { get; set; }
         Color32 Color { get; set; }
@@ -186,24 +187,14 @@ namespace IMT.API
         float Width { get; set; }
         float Offset { get; set; }
     }
-    public interface IDashedStopLineStyle : IStopLineStyleData
+    public interface IDashedStopLineStyle : IStopLineStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
         float DashLength { get; set; }
         float SpaceLength { get; set; }
     }
-    public interface IDoubleDashedStopLineStyle : IStopLineStyleData
-    {
-        bool TwoColors { get; set; }
-        Color32 Color { get; set; }
-        Color32 SecondColor { get; set; }
-        float Width { get; set; }
-        float DashLength { get; set; }
-        float SpaceLength { get; set; }
-        float Offset { get; set; }
-    }
-    public interface ISolidAndDashedStopLineStyle : IStopLineStyleData
+    public interface IDoubleDashedStopLineStyle : IStopLineStyleData, IEffectStyleData
     {
         bool TwoColors { get; set; }
         Color32 Color { get; set; }
@@ -213,7 +204,17 @@ namespace IMT.API
         float SpaceLength { get; set; }
         float Offset { get; set; }
     }
-    public interface ISharkTeethStopLineStyle : IStopLineStyleData
+    public interface ISolidAndDashedStopLineStyle : IStopLineStyleData, IEffectStyleData
+    {
+        bool TwoColors { get; set; }
+        Color32 Color { get; set; }
+        Color32 SecondColor { get; set; }
+        float Width { get; set; }
+        float DashLength { get; set; }
+        float SpaceLength { get; set; }
+        float Offset { get; set; }
+    }
+    public interface ISharkTeethStopLineStyle : IStopLineStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
@@ -232,11 +233,12 @@ namespace IMT.API
     {
         float Width { get; set; }
     }
-    public interface IZebraCrosswalkStyle : ICrosswalkStyleData
+    public interface IZebraCrosswalkStyle : ICrosswalkStyleData, IEffectStyleData
     {
         bool TwoColors { get; set; }
         Color32 Color { get; set; }
         Color32 SecondColor { get; set; }
+        DashEnd DashEnd { get; set; }
         float Width { get; set; }
         float DashLength { get; set; }
         float SpaceLength { get; set; }
@@ -247,11 +249,12 @@ namespace IMT.API
         float GapLength { get; set; }
         int GapPeriod { get; set; }
     }
-    public interface IDoubleZebraCrosswalkStyle : ICrosswalkStyleData
+    public interface IDoubleZebraCrosswalkStyle : ICrosswalkStyleData, IEffectStyleData
     {
         bool TwoColors { get; set; }
         Color32 Color { get; set; }
         Color32 SecondColor { get; set; }
+        DashEnd DashEnd { get; set; }
         float Width { get; set; }
         float DashLength { get; set; }
         float SpaceLength { get; set; }
@@ -263,7 +266,7 @@ namespace IMT.API
         float GapLength { get; set; }
         int GapPeriod { get; set; }
     }
-    public interface IParallelSolidLinesCrosswalkStyle : ICrosswalkStyleData
+    public interface IParallelSolidLinesCrosswalkStyle : ICrosswalkStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
@@ -271,17 +274,7 @@ namespace IMT.API
         float OffsetBefore { get; set; }
         float OffsetAfter { get; set; }
     }
-    public interface IParallelDashedLinesCrosswalkStyle : ICrosswalkStyleData
-    {
-        Color32 Color { get; set; }
-        float Width { get; set; }
-        float LineWidth { get; set; }
-        float DashLength { get; set; }
-        float SpaceLength { get; set; }
-        float OffsetBefore { get; set; }
-        float OffsetAfter { get; set; }
-    }
-    public interface ILadderCrosswalkStyle : ICrosswalkStyleData
+    public interface IParallelDashedLinesCrosswalkStyle : ICrosswalkStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
@@ -291,14 +284,24 @@ namespace IMT.API
         float OffsetBefore { get; set; }
         float OffsetAfter { get; set; }
     }
-    public interface ISolidCrosswalkStyle : ICrosswalkStyleData
+    public interface ILadderCrosswalkStyle : ICrosswalkStyleData, IEffectStyleData
+    {
+        Color32 Color { get; set; }
+        float Width { get; set; }
+        float LineWidth { get; set; }
+        float DashLength { get; set; }
+        float SpaceLength { get; set; }
+        float OffsetBefore { get; set; }
+        float OffsetAfter { get; set; }
+    }
+    public interface ISolidCrosswalkStyle : ICrosswalkStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
         float OffsetBefore { get; set; }
         float OffsetAfter { get; set; }
     }
-    public interface IChessBoardCrosswalkStyle : ICrosswalkStyleData
+    public interface IChessBoardCrosswalkStyle : ICrosswalkStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
@@ -310,8 +313,8 @@ namespace IMT.API
     }
 
 
-    public interface IStripeFillerStyle : IFillerStyleData, IGuidedFillerStyleData
-	{
+    public interface IStripeFillerStyle : IFillerStyleData, IGuidedFillerStyleData, IEffectStyleData
+    {
         Color32 Color { get; set; }
         float Width { get; set; }
         float Step { get; set; }
@@ -320,7 +323,7 @@ namespace IMT.API
         float MedianOffset { get; set; }
         bool FollowGuides { get; set; }
     }
-    public interface IGridFillerStyle : IFillerStyleData
+    public interface IGridFillerStyle : IFillerStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float Width { get; set; }
@@ -329,15 +332,14 @@ namespace IMT.API
         float LineOffset { get; set; }
         float MedianOffset { get; set; }
     }
-    public interface ISolidFillerStyle : IFillerStyleData, IGuidedFillerStyleData
-	{
+    public interface ISolidFillerStyle : IFillerStyleData, IEffectStyleData
+    {
         Color32 Color { get; set; }
         float LineOffset { get; set; }
         float MedianOffset { get; set; }
-        bool FollowGuides { get; set; }
     }
-    public interface IChevronFillerStyle : IFillerStyleData, IGuidedFillerStyleData
-	{
+    public interface IChevronFillerStyle : IFillerStyleData, IGuidedFillerStyleData, IEffectStyleData
+    {
         Color32 Color { get; set; }
         float Width { get; set; }
         float Step { get; set; }
@@ -383,22 +385,29 @@ namespace IMT.API
         float MedianCurbSize { get; set; }
         float LineOffset { get; set; }
         float MedianOffset { get; set; }
-	}
-	public interface ICliffFillerStyle : IFillerStyleData
-	{
-		float Elevation { get; set; }
-		float CornerRadius { get; set; }
-		float MedianCornerRadius { get; set; }
-		float CurbSize { get; set; }
-		float MedianCurbSize { get; set; }
-		float LineOffset { get; set; }
-		float MedianOffset { get; set; }
-	}
-	public interface IGuidedFillerStyleData
-	{
-		int LeftGuideA { get; set; }
-		int LeftGuideB { get; set; }
-		int RightGuideA { get; set; }
-		int RightGuideB { get; set; }
-	}
+    }
+    public interface ICliffFillerStyle : IFillerStyleData
+    {
+        float Elevation { get; set; }
+        float CornerRadius { get; set; }
+        float MedianCornerRadius { get; set; }
+        float CurbSize { get; set; }
+        float MedianCurbSize { get; set; }
+        float LineOffset { get; set; }
+        float MedianOffset { get; set; }
+    }
+    public interface IGuidedFillerStyleData
+    {
+        int LeftGuideA { get; set; }
+        int LeftGuideB { get; set; }
+        int RightGuideA { get; set; }
+        int RightGuideB { get; set; }
+    }
+
+    public interface IEffectStyleData
+    {
+        float Texture { get; set; }
+        Vector2 Cracks { get; set; }
+        Vector2 Voids { get; set; }
+    }
 }

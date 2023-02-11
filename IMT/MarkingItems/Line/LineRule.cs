@@ -114,7 +114,7 @@ namespace IMT.Manager
                     }
                     else if (newRule.Start < rule.Start && newRule.End < rule.End && rule.Start <= newRule.End)
                     {
-                        var middle = (rule.Start + newRule.End) / 2;
+                        var middle = (rule.Start + newRule.End) * 0.5f;
                         rule.Start = middle;
                         newRule.End = middle;
                         rules.Insert(i, newRule);
@@ -136,7 +136,7 @@ namespace IMT.Manager
                     }
                     else if (rule.Start < newRule.Start && rule.End < newRule.End && newRule.Start <= rule.End)
                     {
-                        var middle = (newRule.Start + rule.End) / 2;
+                        var middle = (newRule.Start + rule.End) * 0.5f;
                         rule.End = middle;
                         newRule.Start = middle;
                         i += 1;

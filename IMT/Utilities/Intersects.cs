@@ -5,17 +5,18 @@ using UnityEngine;
 
 namespace IMT.Utilities
 {
-    public class MarkingLinesIntersect : Intersection
+    public readonly struct MarkingLinesIntersect
     {
-        public MarkingLinePair Pair { get; private set; }
-        public Vector3 Position => (Pair.First.Trajectory.Position(FirstT) + Pair.Second.Trajectory.Position(SecondT)) / 2;
-        protected MarkingLinesIntersect(MarkingLinePair pair, float firstT, float secondT) : base(firstT, secondT)
+        public readonly MarkingLinePair pair;
+        public readonly Intersection intersection;
+        public float FirstT => intersection.firstT;
+        public float SecondT => intersection.secondT;
+        public bool IsIntersect => intersection.isIntersect;
+        public Vector3 Position => (pair.first.Trajectory.Position(FirstT) + pair.second.Trajectory.Position(SecondT)) * 0.5f;
+        private MarkingLinesIntersect(MarkingLinePair pair, Intersection intersection)
         {
-            Pair = pair;
-        }
-        protected MarkingLinesIntersect(MarkingLinePair pair) : base()
-        {
-            Pair = pair;
+            this.pair = pair;
+            this.intersection = intersection;
         }
 
         public static MarkingLinesIntersect Calculate(MarkingLine first, MarkingLine second) => Calculate(new MarkingLinePair(first, second));
@@ -25,30 +26,32 @@ namespace IMT.Utilities
 
             if (pair.MustIntersect != false)
             {
-                var firstTrajectory = GetTrajectory(pair.First, mustIntersect);
-                var secondTrajectory = GetTrajectory(pair.Second, mustIntersect);
+                var firstTrajectory = GetTrajectory(pair.first, mustIntersect);
+                var secondTrajectory = GetTrajectory(pair.second, mustIntersect);
 
-                var intersect = CalculateSingle(firstTrajectory, secondTrajectory);
-                if (intersect.IsIntersect)
-                    return new MarkingLinesIntersect(pair, intersect.FirstT, intersect.SecondT);
+                var intersect = Intersection.CalculateSingle(firstTrajectory, secondTrajectory);
+                if (intersect.isIntersect)
+                    return new MarkingLinesIntersect(pair, intersect);
             }
 
-            return new MarkingLinesIntersect(pair);
+            return new MarkingLinesIntersect(pair, Intersection.NotIntersect);
 
             static ITrajectory GetTrajectory(MarkingLine line, bool? mustIntersect)
-                    => mustIntersect == true && line.Trajectory is StraightTrajectory straight ? new StraightTrajectory(straight.Trajectory, false) : line.Trajectory;
+            {
+                return mustIntersect == true && line.Trajectory is StraightTrajectory straight ? new StraightTrajectory(straight.Trajectory, false) : line.Trajectory;
+            }
         }
 
-        public float this[MarkingLine line] => Pair.First == line ? FirstT : (Pair.Second == line ? SecondT : -1);
+        public float this[MarkingLine line] => pair.first == line ? FirstT : (pair.second == line ? SecondT : -1);
     }
 
     public class MarkupIntersectComparer : IComparer<Intersection>
     {
-        private readonly bool _isFirst;
+        private readonly bool isFirst;
         public MarkupIntersectComparer(bool isFirst = true)
         {
-            _isFirst = isFirst;
+            this.isFirst = isFirst;
         }
-        public int Compare(Intersection x, Intersection y) => _isFirst ? x.FirstT.CompareTo(y.FirstT) : x.SecondT.CompareTo(y.SecondT);
+        public int Compare(Intersection x, Intersection y) => isFirst ? x.firstT.CompareTo(y.firstT) : x.secondT.CompareTo(y.secondT);
     }
 }

@@ -464,14 +464,14 @@ namespace IMT.Tools
         }
         public static void ApplyDefaultMarking(NetInfo info, ushort segmentId, ushort startNode, ushort endNode)
         {
-            if (SegmentMarkingManager.RemovedMarking is IntersectionTemplate removed && ApplyRemovedMarking(removed, segmentId, startNode, endNode))
-                return;
-
             if (SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var presetId, out var flip, out var invert) && SingletonManager<IntersectionTemplateManager>.Instance.TryGetTemplate(presetId, out var preset) && ApplyLinkedMarking(preset, segmentId, startNode, endNode, flip, invert))
                 return;
 
-            if (Settings.ApplyMarkingFromAssets)
-                SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segmentId, startNode, endNode);
+            if (Settings.ApplyMarkingFromAssets && SingletonItem<NetworkAssetDataExtension>.Instance.OnPlaceAsset(info, segmentId, startNode, endNode))
+                return;
+
+            if (SegmentMarkingManager.RemovedMarking is IntersectionTemplate removed && ApplyRemovedMarking(removed, segmentId, startNode, endNode))
+                return;
         }
         private static bool ApplyRemovedMarking(IntersectionTemplate removed, ushort segmentId, ushort startNode, ushort endNode)
         {
@@ -712,7 +712,7 @@ namespace IMT.Tools
 
             yield return new WaitForEndOfFrame();
 
-            camera.transform.position = position + new Vector3(0, Math.Max(size * 1.1f, size + 5f) / 2 / Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad / 2), 0);
+            camera.transform.position = position + new Vector3(0, Math.Max(size * 1.1f, size + 5f) * 0.5f / Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad * 0.5f), 0);
             camera.transform.rotation = Quaternion.Euler(90, (2 * Mathf.PI - angle - Vector3.forward.AbsoluteAngle()) * Mathf.Rad2Deg, 0);
             camera.cullingMask = LayerMask.GetMask("Road") | (3 << 24);
             camera.rect = new Rect(0f, 0f, 1f, 1f);
@@ -785,7 +785,7 @@ namespace IMT.Tools
                         }
                     }
 
-                    return (selectEnters[first].NormalAngle + selectEnters[second].NormalAngle) / 2;
+                    return (selectEnters[first].NormalAngle + selectEnters[second].NormalAngle) * 0.5f;
             }
         }
         private void GetCameraPorition(float angle, out Vector3 position, out float size)

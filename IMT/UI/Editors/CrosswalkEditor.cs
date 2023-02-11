@@ -5,29 +5,39 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class CrosswalksEditor : SimpleEditor<CrosswalkItemsPanel, MarkingCrosswalk>
+    public class CrosswalksEditor : SimpleEditor<CrosswalkItemsPanel, MarkingCrosswalk>, IPropertyContainer
     {
         #region PROPERTIES
 
         public override string Name => IMT.Localize.CrosswalkEditor_Crosswalks;
         public override string EmptyMessage => string.Format(IMT.Localize.CrosswalkEditor_EmptyMessage, LocalizeExtension.Shift);
-        public override Marking.SupportType Support { get; } = Marking.SupportType.Croswalks;
+        public override Marking.SupportType Support => Marking.SupportType.Croswalks;
 
-        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
         private CrosswalkBorderSelectPropertyPanel RightBorder { get; set; }
         private CrosswalkBorderSelectPropertyPanel LeftBorder { get; set; }
         private WarningTextProperty Warning { get; set; }
         private StylePropertyPanel Style { get; set; }
-        private MoreOptionsPanel MoreOptionsButton { get; set; }
         private CrosswalkBorderToolMode CrosswalkBorderToolMode { get; }
-        private bool ShowMoreOptions { get; set; }
 
         public CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton HoverBorderButton { get; private set; }
+
+        object IPropertyEditor.EditObject => EditObject;
+        bool IPropertyEditor.IsTemplate => false;
+        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
+        Style IPropertyContainer.Style => EditObject.Style.Value;
+        Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
+
+        Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
+        Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
+        Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
+        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
 
         #endregion
 
@@ -48,7 +58,6 @@ namespace IMT.UI.Editors
 
             AddBordersProperties();
             AddStyleTypeProperty();
-            AddMoreOptions();
             AddStyleProperties();
 
             FillBorders();
@@ -67,12 +76,13 @@ namespace IMT.UI.Editors
             LeftBorder = null;
             Warning = null;
             Style = null;
-            MoreOptionsButton = null;
-            ShowMoreOptions = false;
-
-            StyleProperties.Clear();
         }
-        protected override void OnObjectUpdate(MarkingCrosswalk editObject) => FillBorders();
+        protected override void OnObjectUpdate(MarkingCrosswalk editObject)
+        {
+            FillBorders();
+            (this as IPropertyEditor).RefreshProperties();
+        }
+        void IPropertyEditor.RefreshProperties() => PropertyEditorHelper.RefreshProperties(this);
 
         #endregion
 
@@ -81,12 +91,14 @@ namespace IMT.UI.Editors
         private void AddHeader()
         {
             var header = ComponentPool.Get<CrosswalkHeaderPanel>(PropertiesPanel, "Header");
-            header.Init(EditObject.Style.Value.Type, SelectTemplate, false);
+            header.Init(this, EditObject.Style.Value.Type, SelectTemplate, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
             header.OnReset += ResetStyle;
             header.OnCut += CutLines;
+            header.OnApplySameStyle += ApplyStyleSameStyle;
+            header.OnApplySameType += ApplyStyleSameType;
         }
         private void AddWarning()
         {
@@ -136,23 +148,6 @@ namespace IMT.UI.Editors
 
             panel.OnValueChanged += action;
         }
-        private void AddMoreOptions()
-        {
-            MoreOptionsButton = ComponentPool.Get<MoreOptionsPanel>(PropertiesPanel, nameof(MoreOptionsButton));
-            MoreOptionsButton.Init();
-            MoreOptionsButton.OnButtonClick += () =>
-            {
-                ShowMoreOptions = !ShowMoreOptions;
-                SetOptionsCollapse();
-            };
-        }
-        private void SetOptionsCollapse()
-        {
-            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {IMT.Localize.Editor_LessOptions} ▲" : $"▼ {IMT.Localize.Editor_MoreOptions} ▼";
-
-            foreach (var option in StyleProperties)
-                option.IsCollapsed = !ShowMoreOptions;
-        }
 
         private CrosswalkBorderSelectPropertyPanel AddBorderProperty(BorderPosition position, string name, string text)
         {
@@ -182,32 +177,13 @@ namespace IMT.UI.Editors
         }
         private void AddStyleProperties()
         {
-            var startIndex = PropertiesPanel.childCount;
-            var style = EditObject.Style.Value;
-            StyleProperties = style.GetUIComponents(EditObject, PropertiesPanel);
-            StyleProperties.Sort((x, y) => style.GetUIComponentSortIndex(x) - style.GetUIComponentSortIndex(y));
-            for (int i = 0; i < StyleProperties.Count; i += 1)
-                StyleProperties[i].zOrder = startIndex + i;
+            this.AddProperties();
 
-            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
-
-            if (Settings.CollapseOptions && StyleProperties.Count(p => p.CanCollapse) >= 2)
+            foreach (var property in (this as IPropertyContainer).StyleProperties)
             {
-                MoreOptionsButton.isVisible = true;
-                MoreOptionsButton.BringToFront();
-                SetOptionsCollapse();
+                if (property is ColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
+                    colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
             }
-            else
-                MoreOptionsButton.isVisible = false;
-        }
-
-        private void ClearStyleProperties()
-        {
-            foreach (var property in StyleProperties)
-                ComponentPool.Free(property);
-
-            StyleProperties.Clear();
         }
 
         #endregion
@@ -229,7 +205,7 @@ namespace IMT.UI.Editors
         {
             RefreshSelectedItem();
             PropertiesPanel.StopLayout();
-            ClearStyleProperties();
+            this.AddProperties();
             AddStyleProperties();
             PropertiesPanel.StartLayout();
         }
@@ -263,6 +239,28 @@ namespace IMT.UI.Editors
         }
         private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<CrosswalkStyle>(EditObject.Style.Value.Type));
         private void CutLines() => Marking.CutLinesByCrosswalk(EditObject);
+        private void ApplyStyleSameStyle()
+        {
+            foreach (var crosswalk in Marking.Crosswalks)
+            {
+                if (crosswalk != EditObject && crosswalk.Style.Value.Type == EditObject.Style.Value.Type)
+                    crosswalk.Style.Value = EditObject.Style.Value.CopyStyle();
+            }
+
+            RefreshEditor();
+            ItemsPanel.RefreshItems();
+        }
+        private void ApplyStyleSameType()
+        {
+            foreach (var crosswalk in Marking.Crosswalks)
+            {
+                if (crosswalk != EditObject)
+                    crosswalk.Style.Value = EditObject.Style.Value.CopyStyle();
+            }
+
+            RefreshEditor();
+            ItemsPanel.RefreshItems();
+        }
 
         public void HoverBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton) => HoverBorderButton = selectButton;
         public void LeaveBorder(CrosswalkBorderSelectPropertyPanel.CrosswalkBorderSelectButton selectButton) => HoverBorderButton = null;

@@ -6,12 +6,13 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class LinesEditor : Editor<LineItemsPanel, MarkingLine>
+    public class LinesEditor : Editor<LineItemsPanel, MarkingLine>, IPropertyEditor
     {
         #region PROPERTIES
 
@@ -26,7 +27,7 @@ namespace IMT.UI.Editors
         }
         public override string Name => IMT.Localize.LineEditor_Lines;
         public override string EmptyMessage => IMT.Localize.LineEditor_EmptyMessage;
-        public override Marking.SupportType Support { get; } = Marking.SupportType.Lines;
+        public override Marking.SupportType Support => Marking.SupportType.Lines;
 
         private PropertyGroupPanel LineProperties { get; set; }
         private AddRuleButton AddButton { get; set; }
@@ -34,13 +35,17 @@ namespace IMT.UI.Editors
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool SupportRules => EditObject is MarkingRegularLine;
         public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
-        private bool AddRuleAvailable => EditObject.IsSupportRules/*CanDivide || EditObject?.Rules.Any() == false*/;
+        private bool AddRuleAvailable => EditObject.IsSupportRules;
         public bool IsSplit => EditObject.PointPair.IsSplit;
+        public IEnumerable<RulePanel> RulePanels => ContentPanel.Content.components.OfType<RulePanel>();
 
         private RuleEdgeSelectPropertyPanel.RuleEdgeSelectButton HoverPartEdgeButton { get; set; }
         private RulePanel HoverRulePanel { get; set; }
-
+        Action LinePropertiesVisibleAction { get; set; }
         private PartEdgeToolMode PartEdgeToolMode { get; }
+
+        object IPropertyEditor.EditObject => EditObject;
+        bool IPropertyEditor.IsTemplate => false;
 
         #endregion
 
@@ -98,7 +103,6 @@ namespace IMT.UI.Editors
             SupportPoints.Clear();
             SupportPoints.AddRange(editObject.RulesEdges);
         }
-        Action LinePropertiesVisibleAction { get; set; }
         private void AddLineProperties(MarkingLine editObject)
         {
             LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
@@ -153,14 +157,15 @@ namespace IMT.UI.Editors
         }
         private void AddRulePanels(MarkingLine editObject)
         {
+            var isExpand = !Settings.CollapseRules || editObject.RuleCount <= 1;
             foreach (var rule in editObject.Rules)
-                AddRulePanel(rule);
+                AddRulePanel(rule, isExpand);
         }
 
-        private RulePanel AddRulePanel(MarkingLineRawRule rule)
+        private RulePanel AddRulePanel(MarkingLineRawRule rule, bool isExpand)
         {
             var rulePanel = ComponentPool.Get<RulePanel>(ContentPanel.Content);
-            rulePanel.Init(this, rule);
+            rulePanel.Init(this, rule, isExpand);
             rulePanel.OnEnter += RuleMouseEnter;
             rulePanel.OnLeave += RuleMouseLeave;
             return rulePanel;
@@ -194,7 +199,7 @@ namespace IMT.UI.Editors
                 return;
 
             var newRule = regularLine.AddRule(CanDivide);
-            var rulePanel = AddRulePanel(newRule);
+            var rulePanel = AddRulePanel(newRule, true);
             SetAddButtonVisible();
 
             ContentPanel.Content.ScrollToBottom();
@@ -206,7 +211,7 @@ namespace IMT.UI.Editors
         }
         private void RefreshRulePanels()
         {
-            var rulePanels = ContentPanel.Content.components.OfType<RulePanel>().ToArray();
+            var rulePanels = RulePanels.ToArray();
 
             foreach (var rulePanel in rulePanels)
             {
@@ -215,10 +220,25 @@ namespace IMT.UI.Editors
                 else
                     RemoveRulePanel(rulePanel);
             }
+            var isExpand = !Settings.CollapseRules || EditObject.RuleCount <= 1;
             foreach (var rule in EditObject.Rules)
             {
                 if (!rulePanels.Any(r => r.Rule == rule))
-                    AddRulePanel(rule);
+                    AddRulePanel(rule, isExpand);
+            }
+        }
+        public void ExpandRules(bool isExpand)
+        {
+            foreach (var rulePanel in RulePanels)
+            {
+                rulePanel.IsExpand = isExpand;
+            }
+        }
+        void IPropertyEditor.RefreshProperties()
+        {
+            foreach(var rulePanel in RulePanels)
+            {
+                rulePanel.RefreshProperties();
             }
         }
 

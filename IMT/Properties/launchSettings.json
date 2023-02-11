@@ -3,12 +3,12 @@
     "Normal": {
       "commandName": "Executable",
       "executablePath": "C:\\Program Files (x86)\\Steam\\steam.exe",
-      "commandLineArgs": "-applaunch 255710"
+      "commandLineArgs": "-applaunch 255710 --enable-dev-ui"
     },
     "No Workshop": {
       "commandName": "Executable",
       "executablePath": "C:\\Program Files (x86)\\Steam\\steam.exe",
-      "commandLineArgs": "-applaunch 255710 --noWorkshop"
+      "commandLineArgs": "-applaunch 255710 --noWorkshop --enable-dev-ui"
     },
     "Release": {
       "commandName": "Executable",
@@ -18,7 +18,7 @@
     "Debug": {
       "commandName": "Executable",
       "executablePath": "C:\\Users\\MacSergey\\AppData\\Local\\Colossal Order\\Cities_Skylines\\LoadOrder\\Launch.bat",
-      "commandLineArgs": "Debug debug --noWorkshop"
+      "commandLineArgs": "Debug debug --noWorkshop --enable-dev-ui"
     }
   }
 }

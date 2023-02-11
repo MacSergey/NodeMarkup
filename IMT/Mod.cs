@@ -5,11 +5,13 @@ using ICities;
 using IMT.Manager;
 using IMT.Tools;
 using IMT.UI;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -29,6 +31,7 @@ namespace IMT
         protected override string IdRaw => "IntersectionMarkingTool";
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version("1.13"), new DateTime(2023, 2, 12)),
             new ModVersion(new Version("1.12"), new DateTime(2023, 1, 7)),
             new ModVersion(new Version("1.11"), new DateTime(2022, 12, 23)),
             new ModVersion(new Version("1.10.2"), new DateTime(2022, 9, 14)),

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
+using static IMT.Utilities.MarkingFillerMeshData;
 using ObjectId = IMT.Utilities.ObjectId;
 
 namespace IMT.Manager
@@ -310,8 +311,8 @@ namespace IMT.Manager
             {
                 foreach (var intersect in GetExistIntersects(line).ToArray())
                 {
-                    LineIntersects.Remove(intersect.Pair);
-                    var otherLine = intersect.Pair.GetOther(line);
+                    LineIntersects.Remove(intersect.pair);
+                    var otherLine = intersect.pair.GetOther(line);
                     otherLine.Update();
                     toRecalculate.Add(otherLine);
                 }
@@ -416,32 +417,20 @@ namespace IMT.Manager
                 foreach (var item in RecalculateList)
                     item.RecalculateStyleData();
 
-                var dashesLOD0 = new List<MarkingPartData>();
-                var dashesLOD1 = new List<MarkingPartData>();
-
-                Seporate(Lines.SelectMany(l => l.StyleData));
-                Seporate(Fillers.SelectMany(f => f.StyleData));
-                Seporate(Crosswalks.SelectMany(c => c.StyleData));
-
-                DrawData[MarkingLODType.Dash][MarkingLOD.LOD0].AddRange(MarkingPartsBatchData.FromDashes(dashesLOD0));
-                DrawData[MarkingLODType.Dash][MarkingLOD.LOD1].AddRange(MarkingPartsBatchData.FromDashes(dashesLOD1));
-
-                void Seporate(IEnumerable<IStyleData> stylesData)
+                foreach(var line in Lines)
                 {
-                    foreach (var styleData in stylesData)
-                    {
-                        if (styleData is IEnumerable<MarkingPartData> styleDashes)
-                        {
-                            if (styleData.LOD == MarkingLOD.LOD0)
-                                dashesLOD0.AddRange(styleDashes);
-                            else if (styleData.LOD == MarkingLOD.LOD1)
-                                dashesLOD1.AddRange(styleDashes);
-                        }
-                        else if (styleData != null)
-                        {
-                            DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
-                        }
-                    }
+                    foreach(var styleData in line.StyleData)
+                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
+                }
+                foreach (var fillers in Fillers)
+                {
+                    foreach (var styleData in fillers.StyleData)
+                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
+                }
+                foreach (var crosswalk in Crosswalks)
+                {
+                    foreach (var styleData in crosswalk.StyleData)
+                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
                 }
 
                 RecalculateList.Clear();
@@ -507,13 +496,13 @@ namespace IMT.Manager
 
             foreach (var intersect in GetExistIntersects(line).ToArray())
             {
-                if (intersect.Pair.GetOther(line) is MarkingRegularLine regularLine)
+                if (intersect.pair.GetOther(line) is MarkingRegularLine regularLine)
                 {
                     if (regularLine.RemoveRules(line))
                         toRecalculate.Add(regularLine);
                 }
 
-                LineIntersects.Remove(intersect.Pair);
+                LineIntersects.Remove(intersect.pair);
             }
             foreach (var filler in GetLineFillers(line).ToArray())
                 FillersList.Remove(filler);
@@ -543,7 +532,7 @@ namespace IMT.Manager
             };
             foreach (var intersect in GetExistIntersects(line).ToArray())
             {
-                if (intersect.Pair.GetOther(line) is MarkingRegularLine regularLine)
+                if (intersect.pair.GetOther(line) is MarkingRegularLine regularLine)
                     dependences.Rules += regularLine.GetLineDependences(line);
             }
 
@@ -562,7 +551,7 @@ namespace IMT.Manager
         public MarkingFiller AddFiller(FillerContour contour, FillerStyle style, out List<MarkingRegularLine> lines)
         {
             lines = new List<MarkingRegularLine>();
-            foreach (var part in contour.RawParts)
+            foreach (var part in contour.RawEdges)
             {
                 if (part.Line is MarkingFillerTempLine line)
                 {
@@ -624,9 +613,9 @@ namespace IMT.Manager
                         continue;
 
                     if ((line.End.Type == MarkingPoint.PointType.Enter && line.End.Enter == enter) ^ fromT < toT)
-                        rule.From = new LinesIntersectEdge(intersect.Pair);
+                        rule.From = new LinesIntersectEdge(intersect.pair);
                     else
-                        rule.To = new LinesIntersectEdge(intersect.Pair);
+                        rule.To = new LinesIntersectEdge(intersect.pair);
                 }
             }
         }
@@ -677,7 +666,7 @@ namespace IMT.Manager
         public bool ContainsLine(MarkingPointPair pointPair) => LinesDictionary.ContainsKey(pointPair.Hash);
 
         public IEnumerable<MarkingLinesIntersect> GetExistIntersects(MarkingLine line, bool onlyIntersect = false)
-            => LineIntersects.Values.Where(i => i.Pair.ContainLine(line) && (!onlyIntersect || i.IsIntersect));
+            => LineIntersects.Values.Where(i => i.pair.ContainLine(line) && (!onlyIntersect || i.IsIntersect));
         public IEnumerable<MarkingLinesIntersect> GetIntersects(MarkingLine line)
         {
             foreach (var otherLine in Lines)
@@ -835,8 +824,8 @@ namespace IMT.Manager
         }
         private void GetCircle2Points(Vector3[] points, int i, int j, ref Vector3 centre, ref float radius)
         {
-            var newCentre = (points[i] + points[j]) / 2;
-            var newRadius = (points[i] - points[j]).magnitude / 2;
+            var newCentre = (points[i] + points[j]) * 0.5f;
+            var newRadius = (points[i] - points[j]).magnitude * 0.5f;
 
             if (newRadius >= radius)
                 return;
@@ -849,8 +838,8 @@ namespace IMT.Manager
         }
         private void GetCircle3Points(Vector3[] points, int i, int j, int k, ref Vector3 centre, ref float radius)
         {
-            var pos1 = (points[i] + points[j]) / 2;
-            var pos2 = (points[j] + points[k]) / 2;
+            var pos1 = (points[i] + points[j]) * 0.5f;
+            var pos2 = (points[j] + points[k]) * 0.5f;
 
             var dir1 = (points[i] - points[j]).Turn90(true).normalized;
             var dir2 = (points[j] - points[k]).Turn90(true).normalized;

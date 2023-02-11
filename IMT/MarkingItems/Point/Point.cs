@@ -115,7 +115,7 @@ namespace IMT.Manager
         {
             if (IsSplit && alignment != Alignment.Centre)
             {
-                var direction = -Enter.CornerDir / Enter.TranformCoef;
+                var direction = -Enter.CornerDir / Enter.TranformRatio;
                 var shift = SplitOffsetValue * alignment.Sign();
                 return Position + direction * shift;
             }
@@ -230,7 +230,7 @@ namespace IMT.Manager
 
             if (Split && data.SplitPoint)
             {
-                var normal = -Enter.CornerDir / Enter.TranformCoef;
+                var normal = -Enter.CornerDir / Enter.TranformRatio;
 
                 var leftPos = Position - normal * SplitOffset + Direction;
                 var rightPos = Position + normal * SplitOffset + Direction;
@@ -280,7 +280,7 @@ namespace IMT.Manager
         private void SourcePointUpdate(MarkingPoint point) => UpdateProcess();
         public override void UpdateProcess()
         {
-            Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Enter.TranformCoef);
+            Position = SourcePoint.Position + SourcePoint.Direction * (Shift / Enter.TranformRatio);
             Direction = SourcePoint.Direction;
         }
         public override void Render(OverlayData data)
@@ -316,7 +316,7 @@ namespace IMT.Manager
 
             var line = new StraightTrajectory(SourcePoint.Position, SourcePoint.Position + SourcePoint.Direction, false);
             foreach (var contour in Marking.Contour)
-                tSet.AddRange(Intersection.Calculate(line, contour).Where(i => i.IsIntersect).Select(i => i.FirstT));
+                tSet.AddRange(Intersection.Calculate(line, contour).Where(i => i.isIntersect).Select(i => i.firstT));
 
             var tSetSort = tSet.OrderBy(i => i).ToArray();
 
@@ -337,8 +337,8 @@ namespace IMT.Manager
         public new NetLanePointSource Source => (NetLanePointSource)base.Source;
         public override Vector3 Position
         {
-            get => MarkerPosition + Direction * (1.5f / Enter.TranformCoef);
-            protected set => MarkerPosition = value - Direction * (1.5f / Enter.TranformCoef);
+            get => MarkerPosition + Direction * (1.5f / Enter.TranformRatio);
+            protected set => MarkerPosition = value - Direction * (1.5f / Enter.TranformRatio);
         }
         public override Vector3 MarkerPosition
         {
@@ -406,10 +406,10 @@ namespace IMT.Manager
                 var dy = 0.15f + (DefaultWidth - data.Width.Value) * 0.5f;
                 var area = new Quad3()
                 {
-                    a = SourcePointA.Position + dir * dy - SourcePointA.Direction * ((1.5f - dx) / Enter.TranformCoef),
-                    b = SourcePointA.Position + dir * dy - SourcePointA.Direction * ((1.5f + dx) / Enter.TranformCoef),
-                    c = SourcePointB.Position - dir * dy - SourcePointB.Direction * ((1.5f + dx) / Enter.TranformCoef),
-                    d = SourcePointB.Position - dir * dy - SourcePointB.Direction * ((1.5f - dx) / Enter.TranformCoef),
+                    a = SourcePointA.Position + dir * dy - SourcePointA.Direction * ((1.5f - dx) / Enter.TranformRatio),
+                    b = SourcePointA.Position + dir * dy - SourcePointA.Direction * ((1.5f + dx) / Enter.TranformRatio),
+                    c = SourcePointB.Position - dir * dy - SourcePointB.Direction * ((1.5f + dx) / Enter.TranformRatio),
+                    d = SourcePointB.Position - dir * dy - SourcePointB.Direction * ((1.5f - dx) / Enter.TranformRatio),
                 };
                 area.RenderQuad(data);
             }

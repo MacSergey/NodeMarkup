@@ -122,9 +122,9 @@ namespace IMT.UI
         {
             if (Screenshot != null && Titles != null && Values != null)
             {
-                var space = Mathf.Max(width - Screenshot.width - Screenshot.relativePosition.x - Titles.width - Values.width, 0f) / 2;
-                Values.relativePosition = new Vector2(width - Values.width - space, (height - Values.height) / 2);
-                Titles.relativePosition = new Vector2(Values.relativePosition.x - Titles.width, (height - Titles.height) / 2);
+                var space = Mathf.Max(width - Screenshot.width - Screenshot.relativePosition.x - Titles.width - Values.width, 0f) * 0.5f;
+                Values.relativePosition = new Vector2(width - Values.width - space, (height - Values.height) * 0.5f);
+                Titles.relativePosition = new Vector2(Values.relativePosition.x - Titles.width, (height - Titles.height) * 0.5f);
 
             }
         }

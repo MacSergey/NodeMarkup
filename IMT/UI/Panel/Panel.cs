@@ -36,7 +36,7 @@ namespace IMT.UI.Panel
             }
         }
 
-        private float Width => 550f;
+        private float Width => 580f;
 
         public Marking Marking { get; private set; }
         private bool NeedRefreshOnVisible { get; set; }
@@ -167,6 +167,7 @@ namespace IMT.UI.Panel
             SelectEditor<LinesEditor>();
         }
         public void RefreshHeader() => Header.Refresh();
+        public void RefreshProperties() => CurrentEditor?.RefreshEditor();
 
         #endregion
 

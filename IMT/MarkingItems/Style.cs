@@ -1,6 +1,8 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.DataBinding;
+using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
@@ -8,8 +10,10 @@ using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using System.Xml.Linq;
 using UnityEngine;
+using static RenderManager;
 
 namespace IMT.Manager
 {
@@ -22,6 +26,19 @@ namespace IMT.Manager
     {
         PropertyStructValue<float> Width { get; }
     }
+    public interface IEffectStyle : IStyle
+    {
+        public PropertyVector2Value Cracks { get; }
+        public PropertyVector2Value Voids { get; }
+        public PropertyStructValue<float> Texture { get; }
+
+        public float CracksDensity { get; }
+        public Vector2 CracksTiling { get; }
+        public float VoidDensity { get; }
+        public Vector2 VoidTiling { get; }
+        public float TextureDensity { get; }
+    }
+
     public abstract class Style : IToXml
     {
         public static float DefaultDashLength => 1.5f;
@@ -61,11 +78,13 @@ namespace IMT.Manager
             return rawType;
         }
 
-        public static Color32 DefaultColor { get; } = new Color32(136, 136, 136, 224);
-        public static float DefaultWidth { get; } = 0.15f;
+        public static Color32 DefaultColor => new Color32(136, 136, 136, 224);
+        public static float DefaultWidth => 0.15f;
+        protected static Vector2 DefaultEffect => new Vector2(0f, 1f);
+        protected static float DefaultTexture => 0f;
 
-        protected virtual float WidthWheelStep { get; } = 0.01f;
-        protected virtual float WidthMinValue { get; } = 0.05f;
+        protected virtual float WidthWheelStep => 0.01f;
+        protected virtual float WidthMinValue => 0.05f;
 
         protected abstract Style GetDefault();
         public static T GetDefault<T>(StyleType type) where T : Style
@@ -97,6 +116,35 @@ namespace IMT.Manager
 
         public PropertyColorValue Color { get; }
         public PropertyStructValue<float> Width { get; }
+        public PropertyVector2Value Cracks { get; }
+        public PropertyVector2Value Voids { get; }
+        public PropertyStructValue<float> Texture { get; }
+
+        public float CracksDensity => Cracks.Value.x;
+        public Vector2 CracksTiling => new Vector2(1f / Cracks.Value.y, 1f / Cracks.Value.y);
+        public float VoidDensity => Voids.Value.x;
+        public Vector2 VoidTiling => new Vector2(1f / Voids.Value.y, 1f / Voids.Value.y);
+        public float TextureDensity => Texture.Value;
+
+        public EffectData Effects
+        {
+            get
+            {
+                if (this is IEffectStyle)
+                    return new EffectData(Texture, Cracks, Voids);
+                else
+                    return new EffectData(DefaultTexture, DefaultEffect, DefaultEffect);
+            }
+            set
+            {
+                if(this is IEffectStyle)
+                {
+                    Texture.Value = value.texture;
+                    Cracks.Value = value.cracks;
+                    Voids.Value = value.voids;
+                }
+            }
+        }
 
         public abstract IEnumerable<IStylePropertyData> Properties { get; }
         public abstract Dictionary<string, int> PropertyIndices { get; }
@@ -110,24 +158,22 @@ namespace IMT.Manager
             return dic;
         }
 
-        public Style(Color32 color, float width)
+        protected IPropertyCategoryInfo MainCategory { get; } = new PropertyCategoryInfo<DefaultPropertyCategoryPanel>("Main", Localize.StyleOptionCategory_Main, true);
+        protected IPropertyCategoryInfo AdditionalCategory { get; } = new PropertyCategoryInfo<DefaultPropertyCategoryPanel>("Additional", Localize.StyleOptionCategory_Additional, false);
+        protected IPropertyCategoryInfo EffectCategory { get; } = new PropertyCategoryInfo<EffectPropertyCategoryPanel>("Effect", Localize.StyleOptionCategory_Effect, false);
+#if DEBUG
+        protected IPropertyCategoryInfo DebugCategory { get; } = new PropertyCategoryInfo<DefaultPropertyCategoryPanel>("Debug", "Debug", false);
+#endif
+
+        public Style(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture)
         {
             Color = GetColorProperty(color);
             Width = GetWidthProperty(width);
+            Cracks = new PropertyVector2Value(StyleChanged, cracks, "ST", "SS");
+            Voids = new PropertyVector2Value(StyleChanged, voids, "VT", "VS");
+            Texture = new PropertyStructValue<float>("TEX", StyleChanged, texture);
         }
-        protected XElement BaseToXml() => new XElement(XmlSection, new XAttribute("T", TypeToInt(Type)));
-        public virtual XElement ToXml()
-        {
-            var config = BaseToXml();
-            Color.ToXml(config);
-            Width.ToXml(config);
-            return config;
-        }
-        public virtual void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
-        {
-            Color.FromXml(config, DefaultColor);
-            Width.FromXml(config, DefaultWidth);
-        }
+        public Style(Color32 color, float width) : this(color, width, DefaultEffect, DefaultEffect, DefaultTexture) { }
 
         public abstract Style Copy();
         protected void CopyTo(Style target)
@@ -136,41 +182,65 @@ namespace IMT.Manager
                 widthTarget.Width.Value = widthSource.Width;
             if (this is IColorStyle colorSource && target is IColorStyle colorTarget)
                 colorTarget.Color.Value = colorSource.Color;
+
+            CopyEffectsTo(target);
+        }
+        public void CopyEffectsTo(Style target)
+        {
+            if (this is IEffectStyle textureSource && target is IEffectStyle textureTarget)
+            {
+                textureTarget.Cracks.Value = textureSource.Cracks.Value;
+                textureTarget.Voids.Value = textureSource.Voids.Value;
+                textureTarget.Texture.Value = textureSource.Texture.Value;
+            }
         }
 
-        public virtual List<EditorItem> GetUIComponents(object editObject, UIComponent parent, bool isTemplate = false)
+        public virtual void GetUIComponents(EditorProvider provider)
         {
-            var components = new List<EditorItem>();
-
             if (this is IColorStyle)
-                components.Add(AddColorProperty(parent, false));
+                provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(Color), MainCategory, AddColorProperty, RefreshColorProperty));
             if (this is IWidthStyle)
-                components.Add(AddWidthProperty(parent, false));
-
-            return components;
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Width), MainCategory, AddWidthProperty, RefreshWidthProperty));
+            if (this is IEffectStyle)
+            {
+                provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Cracks), EffectCategory, AddCracksProperty, RefreshCracksProperty));
+                provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Voids), EffectCategory, AddVoidsProperty, RefreshVoidsProperty));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Texture), EffectCategory, AddTextureProperty, RefreshTextureProperty));
+            }
         }
-        public int GetUIComponentSortIndex(EditorItem item)
+        public virtual void GetUICategories(EditorProvider provider)
         {
-            if (PropertyIndices.TryGetValue(item.name, out var index))
+            provider.AddCategory(MainCategory);
+            provider.AddCategory(AdditionalCategory);
+            provider.AddCategory(EffectCategory);
+#if DEBUG
+            provider.AddCategory(DebugCategory);
+#endif
+        }
+
+        public int GetPropertyIndex(string name)
+        {
+            if (PropertyIndices.TryGetValue(name, out var index))
                 return index;
             else
                 return int.MaxValue;
         }
-        private ColorAdvancedPropertyPanel AddColorProperty(UIComponent parent, bool canCollapse)
+
+        private void AddColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            var colorProperty = ComponentPool.Get<ColorAdvancedPropertyPanel>(parent, nameof(Color));
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
-            colorProperty.CanCollapse = canCollapse;
             colorProperty.Init(GetDefault()?.Color);
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
-
-            return colorProperty;
         }
-        private FloatPropertyPanel AddWidthProperty(UIComponent parent, bool canCollapse)
+        protected virtual void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            var widthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(Width));
+            colorProperty.Value = Color;
+        }
+
+        private void AddWidthProperty(FloatPropertyPanel widthProperty, EditorProvider provider)
+        {
             widthProperty.Text = Localize.StyleOption_Width;
             widthProperty.Format = Localize.NumberFormat_Meter;
             widthProperty.UseWheel = true;
@@ -178,82 +248,174 @@ namespace IMT.Manager
             widthProperty.WheelTip = Settings.ShowToolTip;
             widthProperty.CheckMin = true;
             widthProperty.MinValue = WidthMinValue;
-            widthProperty.CanCollapse = canCollapse;
             widthProperty.Init();
             widthProperty.Value = Width;
             widthProperty.OnValueChanged += (float value) => Width.Value = value;
-
-            return widthProperty;
         }
-        protected Vector2PropertyPanel AddLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
+        protected virtual void RefreshWidthProperty(FloatPropertyPanel widthProperty, EditorProvider provider)
         {
-            var lengthProperty = ComponentPool.Get<Vector2PropertyPanel>(parent, nameof(Length));
-            lengthProperty.Text = Localize.StyleOption_Length;
-            lengthProperty.FieldsWidth = 50f;
-            lengthProperty.SetLabels(Localize.StyleOption_Dash, Localize.StyleOption_Space);
-            lengthProperty.Format = Localize.NumberFormat_Meter;
-            lengthProperty.UseWheel = true;
-            lengthProperty.WheelStep = new Vector2(0.1f, 0.1f);
-            lengthProperty.WheelTip = Settings.ShowToolTip;
-            lengthProperty.CheckMin = true;
-            lengthProperty.MinValue = new Vector2(0.1f, 0.1f);
-            lengthProperty.CanCollapse = canCollapse;
-            lengthProperty.Init(0, 1);
-            lengthProperty.Value = new Vector2(dashedStyle.DashLength, dashedStyle.SpaceLength);
-            lengthProperty.OnValueChanged += (Vector2 value) =>
+            widthProperty.Value = Width;
+        }
+
+        private void AddCracksProperty(Vector2PropertyPanel cracksProperty, EditorProvider provider)
+        {
+            cracksProperty.Text = Localize.StyleOption_Cracks;
+            cracksProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
+            cracksProperty.Format = Localize.NumberFormat_Percent;
+            cracksProperty.FieldsWidth = 50f;
+            cracksProperty.CheckMax = true;
+            cracksProperty.CheckMin = true;
+            cracksProperty.MinValue = new Vector2(0f, 10f);
+            cracksProperty.MaxValue = new Vector2(100f, 1000f);
+            cracksProperty.WheelStep = new Vector2(10f, 10f);
+            cracksProperty.UseWheel = true;
+            cracksProperty.Init(0, 1);
+            cracksProperty.OnValueChanged += (Vector2 value) => Cracks.Value = value * 0.01f;
+        }
+        protected virtual void RefreshCracksProperty(Vector2PropertyPanel cracksProperty, EditorProvider provider)
+        {
+            cracksProperty.Value = Cracks.Value * 100f;
+        }
+
+        private void AddVoidsProperty(Vector2PropertyPanel voidProperty, EditorProvider provider)
+        {
+            voidProperty.Text = Localize.StyleOption_Voids;
+            voidProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
+            voidProperty.Format = Localize.NumberFormat_Percent;
+            voidProperty.FieldsWidth = 50f;
+            voidProperty.CheckMax = true;
+            voidProperty.CheckMin = true;
+            voidProperty.MinValue = new Vector2(0f, 10f);
+            voidProperty.MaxValue = new Vector2(100f, 1000f);
+            voidProperty.WheelStep = new Vector2(10f, 10f);
+            voidProperty.UseWheel = true;
+            voidProperty.Init(0, 1);
+            voidProperty.OnValueChanged += (Vector2 value) => Voids.Value = value * 0.01f;
+        }
+        protected virtual void RefreshVoidsProperty(Vector2PropertyPanel voidProperty, EditorProvider provider)
+        {
+            voidProperty.Value = Voids.Value * 100f;
+        }
+
+        private void AddTextureProperty(FloatPropertyPanel textureProperty, EditorProvider provider)
+        {
+            textureProperty.Text = Localize.StyleOption_Texture;
+            textureProperty.Format = Localize.NumberFormat_Percent;
+            textureProperty.CheckMax = true;
+            textureProperty.CheckMin = true;
+            textureProperty.MinValue = 0f;
+            textureProperty.MaxValue = 100f;
+            textureProperty.WheelStep = 10f;
+            textureProperty.UseWheel = true;
+            textureProperty.Init();
+            textureProperty.OnValueChanged += (float value) => Texture.Value = value / 100f;
+        }
+        protected virtual void RefreshTextureProperty(FloatPropertyPanel textureProperty, EditorProvider provider)
+        {
+            textureProperty.Value = Texture.Value * 100f;
+        }
+
+        protected void AddLengthProperty(Vector2PropertyPanel lengthProperty, EditorProvider provider)
+        {
+            if (this is IDashedLine dashedStyle)
             {
-                dashedStyle.DashLength.Value = value.x;
-                dashedStyle.SpaceLength.Value = value.y;
-            };
-
-            return lengthProperty;
+                lengthProperty.Text = Localize.StyleOption_Length;
+                lengthProperty.FieldsWidth = 50f;
+                lengthProperty.SetLabels(Localize.StyleOption_Dash, Localize.StyleOption_Space);
+                lengthProperty.Format = Localize.NumberFormat_Meter;
+                lengthProperty.UseWheel = true;
+                lengthProperty.WheelStep = new Vector2(0.1f, 0.1f);
+                lengthProperty.WheelTip = Settings.ShowToolTip;
+                lengthProperty.CheckMin = true;
+                lengthProperty.MinValue = new Vector2(0.1f, 0.1f);
+                lengthProperty.Init(0, 1);
+                lengthProperty.Value = new Vector2(dashedStyle.DashLength, dashedStyle.SpaceLength);
+                lengthProperty.OnValueChanged += (Vector2 value) =>
+                {
+                    dashedStyle.DashLength.Value = value.x;
+                    dashedStyle.SpaceLength.Value = value.y;
+                };
+            }
+            else
+                throw new NotSupportedException();
         }
-        protected FloatPropertyPanel AddDashLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
+        protected virtual void RefreshLengthProperty(Vector2PropertyPanel lengthProperty, EditorProvider provider)
         {
-            var dashLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.DashLength));
-            dashLengthProperty.Text = Localize.StyleOption_DashedLength;
-            dashLengthProperty.Format = Localize.NumberFormat_Meter;
-            dashLengthProperty.UseWheel = true;
-            dashLengthProperty.WheelStep = 0.1f;
-            dashLengthProperty.WheelTip = Settings.ShowToolTip;
-            dashLengthProperty.CheckMin = true;
-            dashLengthProperty.MinValue = 0.1f;
-            dashLengthProperty.CanCollapse = canCollapse;
-            dashLengthProperty.Init();
-            dashLengthProperty.Value = dashedStyle.DashLength;
-            dashLengthProperty.OnValueChanged += (float value) => dashedStyle.DashLength.Value = value;
-
-            return dashLengthProperty;
+            if (this is IDashedLine dashedStyle)
+                lengthProperty.Value = new Vector2(dashedStyle.DashLength, dashedStyle.SpaceLength);
+            else
+                lengthProperty.IsHidden = true;
         }
-        protected FloatPropertyPanel AddSpaceLengthProperty(IDashedLine dashedStyle, UIComponent parent, bool canCollapse)
+
+        protected void AddSpaceLengthProperty(FloatPropertyPanel spaceLengthProperty, EditorProvider provider)
         {
-            var spaceLengthProperty = ComponentPool.Get<FloatPropertyPanel>(parent, nameof(dashedStyle.SpaceLength));
-            spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
-            spaceLengthProperty.Format = Localize.NumberFormat_Meter;
-            spaceLengthProperty.UseWheel = true;
-            spaceLengthProperty.WheelStep = 0.1f;
-            spaceLengthProperty.WheelTip = Settings.ShowToolTip;
-            spaceLengthProperty.CheckMin = true;
-            spaceLengthProperty.MinValue = 0.1f;
-            spaceLengthProperty.CanCollapse = canCollapse;
-            spaceLengthProperty.Init();
-            spaceLengthProperty.Value = dashedStyle.SpaceLength;
-            spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength.Value = value;
-
-            return spaceLengthProperty;
+            if (this is IDashedLine dashedStyle)
+            {
+                spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
+                spaceLengthProperty.Format = Localize.NumberFormat_Meter;
+                spaceLengthProperty.UseWheel = true;
+                spaceLengthProperty.WheelStep = 0.1f;
+                spaceLengthProperty.WheelTip = Settings.ShowToolTip;
+                spaceLengthProperty.CheckMin = true;
+                spaceLengthProperty.MinValue = 0.1f;
+                spaceLengthProperty.Init();
+                spaceLengthProperty.Value = dashedStyle.SpaceLength;
+                spaceLengthProperty.OnValueChanged += (float value) => dashedStyle.SpaceLength.Value = value;
+            }
+            else
+                throw new NotSupportedException();
         }
-        protected ButtonPanel AddInvertProperty(IAsymLine asymStyle, UIComponent parent, bool canCollapse)
+        protected virtual void RefreshSpaceLengthProperty(FloatPropertyPanel spaceLengthProperty, EditorProvider provider)
         {
-            var buttonsPanel = ComponentPool.Get<ButtonPanel>(parent, nameof(asymStyle.Invert));
-            buttonsPanel.Text = Localize.StyleOption_Invert;
-            buttonsPanel.CanCollapse = canCollapse;
-            buttonsPanel.Init();
-            buttonsPanel.OnButtonClick += OnButtonClick;
-
-            void OnButtonClick() => asymStyle.Invert.Value = !asymStyle.Invert;
-
-            return buttonsPanel;
+            if (this is IDashedLine dashedStyle)
+                spaceLengthProperty.Value = dashedStyle.SpaceLength;
+            else
+                spaceLengthProperty.IsHidden = true;
         }
+
+        protected void AddInvertProperty(ButtonPanel buttonsPanel, EditorProvider provider)
+        {
+            if (this is IAsymLine asymStyle)
+            {
+                buttonsPanel.Text = Localize.StyleOption_Invert;
+                buttonsPanel.Init();
+                buttonsPanel.OnButtonClick += OnButtonClick;
+
+                void OnButtonClick() => asymStyle.Invert.Value = !asymStyle.Invert;
+            }
+            else
+                throw new NotSupportedException();
+        }
+        protected virtual void RefreshInvertProperty(ButtonPanel buttonsPanel, EditorProvider provider)
+        {
+            buttonsPanel.IsHidden = this is not IAsymLine;
+        }
+
+        protected XElement BaseToXml() => new XElement(XmlSection, new XAttribute("T", TypeToInt(Type)));
+        public virtual XElement ToXml()
+        {
+            var config = BaseToXml();
+            Color.ToXml(config);
+            Width.ToXml(config);
+            if (this is IEffectStyle)
+            {
+                Cracks.ToXml(config);
+                Voids.ToXml(config);
+            }
+            return config;
+        }
+        public virtual void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
+        {
+            Color.FromXml(config, DefaultColor);
+            Width.FromXml(config, DefaultWidth);
+            if (this is IEffectStyle)
+            {
+                Cracks.FromXml(config, DefaultEffect);
+                Voids.FromXml(config, DefaultEffect);
+            }
+        }
+
+        public override string ToString() => Type.ToString();
 
         protected enum PropertyNames
         {
@@ -568,6 +730,7 @@ namespace IMT.Manager
     public abstract class Style<StyleType> : Style
         where StyleType : Style<StyleType>
     {
+        public Style(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture) : base(color, width, cracks, voids, texture) { }
         public Style(Color32 color, float width) : base(color, width) { }
 
         public virtual void CopyTo(StyleType target) => base.CopyTo(target);
@@ -578,4 +741,153 @@ namespace IMT.Manager
         protected StyleType GetDefaultStyle() => SingletonManager<StyleTemplateManager>.Instance.GetDefault<StyleType>(Type);
     }
 
+    public interface IPropertyInfo
+    {
+        string Name { get; }
+        IPropertyCategoryInfo Category { get; }
+        int SortIndex { get; }
+
+        bool IsCollapsed { get; set; }
+        bool IsHidden { get; set; }
+
+        bool EnableControl { get; set; }
+
+        EditorItem Create(EditorProvider editorProvider);
+        void Refresh(EditorProvider editorProvider);
+        void Destroy(EditorProvider editorProvider);
+    }
+    public interface IPropertyCategoryInfo
+    {
+        string Name { get; }
+        string Text { get; }
+        bool IsExpand { get; }
+
+        CategoryItem Create(EditorProvider editorProvider);
+    }
+
+    public struct PropertyInfo<PropertyType> : IPropertyInfo
+        where PropertyType : EditorItem, IReusable
+    {
+        public delegate void InitItem(PropertyType property, EditorProvider editorProvider);
+        public delegate void RefreshItem(PropertyType property, EditorProvider editorProvider);
+
+        public string Name { get; }
+        public IPropertyCategoryInfo Category { get; }
+        public int SortIndex { get; }
+
+        public bool IsCollapsed
+        {
+            get => instance == null || instance.IsCollapsed;
+            set
+            {
+                if (instance != null)
+                    instance.IsCollapsed = value;
+            }
+        }
+
+        public bool IsHidden
+        {
+            get => instance == null || instance.IsHidden;
+            set
+            {
+                if (instance != null)
+                    instance.IsHidden = value;
+            }
+        }
+        public bool EnableControl
+        {
+            get => instance != null && instance.EnableControl;
+            set
+            {
+                if (instance != null)
+                    instance.EnableControl = value;
+            }
+        }
+
+
+        private readonly InitItem init;
+        private readonly RefreshItem refresh;
+        private PropertyType instance;
+
+        public PropertyInfo(Style style, string propertyName, IPropertyCategoryInfo categoryInfo, InitItem init, RefreshItem refresh = null)
+        {
+            Name = propertyName;
+            Category = categoryInfo;
+            SortIndex = style.GetPropertyIndex(Name);
+            this.init = init;
+            this.refresh = refresh;
+            this.instance = null;
+        }
+
+        public EditorItem Create(EditorProvider editorProvider)
+        {
+            if (instance == null)
+            {
+                var property = editorProvider.GetItem<PropertyType>(Name);
+                init(property, editorProvider);
+                instance = property;
+            }
+            return instance;
+        }
+        public void Destroy(EditorProvider editorProvider)
+        {
+            if (instance != null)
+            {
+                editorProvider.DestroyItem(instance);
+                instance = null;
+            }
+        }
+        public void Refresh(EditorProvider editorProvider)
+        {
+            if (instance != null && refresh != null)
+            {
+                refresh.Invoke(instance, editorProvider);
+            }
+        }
+
+        public static int SortPredicate(IPropertyInfo x, IPropertyInfo y) => x.SortIndex - y.SortIndex;
+        public override string ToString() => Name;
+    }
+
+    public readonly struct PropertyCategoryInfo<CategoryType> : IPropertyCategoryInfo
+        where CategoryType : PropertyGroupPanel, IPropertyCategoryPanel, IReusable
+    {
+        public string Name { get; }
+        public string Text { get; }
+        public bool IsExpand { get; }
+
+        public PropertyCategoryInfo(string name, string text, bool isExpand)
+        {
+            Name = name;
+            Text = text;
+            IsExpand = isExpand;
+        }
+
+        public CategoryItem Create(EditorProvider editorProvider)
+        {
+            var categoryItem = editorProvider.GetItem<CategoryItem>("CategoryItem");
+            var categoryPanel = categoryItem.Init<CategoryType>(Name);
+            categoryPanel.Init(this, editorProvider.editor);
+            return categoryItem;
+        }
+    }
+
+    public class PropertyInfoComparer : IComparer<IPropertyInfo>
+    {
+        public static PropertyInfoComparer Instance { get; } = new PropertyInfoComparer();
+        public int Compare(IPropertyInfo x, IPropertyInfo y) => x.SortIndex - y.SortIndex;
+    }
+    public readonly struct EffectData
+    {
+        public readonly float texture;
+        public readonly Vector2 cracks;
+        public readonly Vector2 voids;
+
+        public EffectData(float texture, Vector2 cracks, Vector2 voids)
+        {
+            this.texture = texture;
+            this.cracks = cracks;
+            this.voids = voids;
+        }
+    }
 }

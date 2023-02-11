@@ -1,4 +1,5 @@
-﻿using IMT.Utilities;
+﻿using ColossalFramework.Math;
+using IMT.Utilities;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace IMT.Manager
             var points = new List<IFillerVertex>();
 
             foreach (var intersect in marking.Intersects)
-                points.Add(new IntersectFillerVertex(intersect.Pair));
+                points.Add(new IntersectFillerVertex(intersect.pair));
 
             foreach (var enter in marking.Enters)
             {
@@ -33,7 +34,7 @@ namespace IMT.Manager
             return points;
         }
 
-        public Marking Markup { get; }
+        public Marking Marking { get; }
         public bool IsComplite { get; private set; }
 
         private List<IFillerVertex> SupportPoints { get; } = new List<IFillerVertex>();
@@ -49,34 +50,42 @@ namespace IMT.Manager
         public bool IsEmpty => VertexCount == 0;
         public bool PossibleComplite => VertexCount >= 3;
 
-        public FillerLinePart[] RawParts { get; private set; } = new FillerLinePart[0];
-        public FillerLinePart[] ProcessedParts { get; private set; } = new FillerLinePart[0];
-        public int RawCount => RawParts.Length;
-        public int ProcessedCount => ProcessedParts.Length;
+        private FillerLinePart[] RawPartsArray { get; set; } = new FillerLinePart[0];
+        private FillerLinePart[] ProcessedPartsArray { get; set; } = new FillerLinePart[0];
 
-        public List<ITrajectory> TrajectoriesRaw => GetTrajectories(RawParts);
-        public List<ITrajectory> TrajectoriesProcessed => GetTrajectories(ProcessedParts);
+        public IEnumerable<FillerLinePart> RawEdges => RawPartsArray;
+        public IEnumerable<FillerLinePart> ProcessedEdges => ProcessedPartsArray;
+
+        public int RawCount => RawPartsArray.Length;
+        public int ProcessedCount => ProcessedPartsArray.Length;
+
+        public List<ITrajectory> TrajectoriesRaw => GetTrajectories(RawPartsArray);
+        public List<ITrajectory> TrajectoriesProcessed => GetTrajectories(ProcessedPartsArray);
         public TrajectoryHelper.Direction Direction => TrajectoriesRaw.GetDirection();
 
-        public bool IsMedian => Parts.Any(p => p.IsEnter);
-        public IEnumerable<Part> Parts
+        public bool IsMedian => Edges.Any(p => p.isEnter);
+        public Contour Edges
         {
             get
             {
-                foreach (var part in RawParts)
+                var edges = new Contour();
+
+                foreach (var part in RawPartsArray)
                 {
                     if (part.Line is MarkingEnterLine enterLine && enterLine.IsDot)
                         continue;
 
                     if (part.GetTrajectory(out ITrajectory trajectory))
-                        yield return new Part(trajectory, part.Line is MarkingEnterLine);
+                        edges.Add(new ContourEdge(trajectory, part.Line is MarkingEnterLine));
                 }
+
+                return edges;
             }
         }
 
         public FillerContour(Marking marking, IEnumerable<IFillerVertex> vertices = null)
         {
-            Markup = marking;
+            Marking = marking;
 
             if (vertices != null)
             {
@@ -269,11 +278,11 @@ namespace IMT.Manager
         }
         static LineEndFillerVertex FixVertex(EnterFillerVertexBase enterVertex, IntersectFillerVertex intersectVertex)
         {
-            if (intersectVertex.LinePair.First.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.First.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
-                return FixVertexByLine(enterVertex, intersectVertex.LinePair.First as MarkingRegularLine);
+            if (intersectVertex.LinePair.first.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.first.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
+                return FixVertexByLine(enterVertex, intersectVertex.LinePair.first as MarkingRegularLine);
 
-            else if (intersectVertex.LinePair.Second.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.Second.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
-                return FixVertexByLine(enterVertex, intersectVertex.LinePair.Second as MarkingRegularLine);
+            else if (intersectVertex.LinePair.second.ContainsPoint(enterVertex.Point) && intersectVertex.LinePair.second.GetAlignment(enterVertex.Point) == enterVertex.Alignment)
+                return FixVertexByLine(enterVertex, intersectVertex.LinePair.second as MarkingRegularLine);
 
             else
                 return FixVertexByLine(enterVertex, intersectVertex.LinePair.GetLine(enterVertex.Point) as MarkingRegularLine);
@@ -314,7 +323,7 @@ namespace IMT.Manager
             var linePart = new FillerLinePart(line, first, second);
             return linePart;
         }
-        public List<IFillerVertex> GetNextСandidates() => Last is IFillerVertex last ? last.GetNextCandidates(this, Prev) : GetBeginCandidates(Markup);
+        public List<IFillerVertex> GetNextСandidates() => Last is IFillerVertex last ? last.GetNextCandidates(this, Prev) : GetBeginCandidates(Marking);
 
         public void GetMinMaxT(IFillerVertex fillerVertex, MarkingLine line, out float resultT, out float resultMinT, out float resultMaxT)
         {
@@ -322,7 +331,7 @@ namespace IMT.Manager
             var minT = -1f;
             var maxT = 2f;
 
-            foreach (var part in RawParts)
+            foreach (var part in RawPartsArray)
             {
                 part.GetFromT(out float fromT);
                 part.GetToT(out float toT);
@@ -332,7 +341,7 @@ namespace IMT.Manager
                     Set(fromT, false);
                     Set(toT, false);
                 }
-                else if (Markup.GetIntersect(new MarkingLinePair(line, part.Line)) is MarkingLinesIntersect intersect && intersect.IsIntersect)
+                else if (Marking.GetIntersect(new MarkingLinePair(line, part.Line)) is MarkingLinesIntersect intersect && intersect.IsIntersect)
                 {
                     var linePartT = intersect[part.Line];
 
@@ -478,7 +487,6 @@ namespace IMT.Manager
         }
         public int GetCorrectIndex(int value) => value >= 0 ? value % ProcessedCount : value % ProcessedCount + ProcessedCount;
 
-        public int IndexOfRaw(IFillerVertex vertex) => IndexOf(SupportPoints, vertex);
         public int IndexOfProcessed(IFillerVertex vertex) => IndexOf(ProcessedVertex, vertex.ProcessedVertex);
         private int IndexOf(IEnumerable<IFillerVertex> vertices, IFillerVertex vertex)
         {
@@ -498,8 +506,8 @@ namespace IMT.Manager
                 supportPoint.Update();
 
             ProcessedVertex = SupportPoints.Select(p => p.ProcessedVertex).Distinct(VertexComparer).ToArray();
-            RawParts = GetParts(true).ToArray();
-            ProcessedParts = GetParts(false).ToArray();
+            RawPartsArray = GetParts(true).ToArray();
+            ProcessedPartsArray = GetParts(false).ToArray();
         }
         private IEnumerable<FillerLinePart> GetParts(bool isRaw)
         {
@@ -523,8 +531,8 @@ namespace IMT.Manager
             }
             else
             {
-                foreach (var part in Parts)
-                    part.Trajectory.Render(data);
+                foreach (var part in Edges)
+                    part.trajectory.Render(data);
             }
         }
 
@@ -533,34 +541,38 @@ namespace IMT.Manager
             public bool Equals(IFillerVertex x, IFillerVertex y) => x.Equals(y);
             public int GetHashCode(IFillerVertex vertex) => vertex.GetHashCode();
         }
-        public struct Part
-        {
-            public ITrajectory Trajectory { get; set; }
-            public bool IsEnter { get; }
 
-            public Part(ITrajectory trajectory, bool isEnter = false)
+
+        public readonly struct EdgePart
+        {
+            public readonly ContourEdge part;
+            public readonly TrajectoryIntersect start;
+            public readonly TrajectoryIntersect end;
+            public ContourEdge Processed => new ContourEdge(part.trajectory.Cut(start.t, end.t), part.isEnter);
+            public EdgePart(ContourEdge part, TrajectoryIntersect start, TrajectoryIntersect end)
             {
-                Trajectory = trajectory;
-                IsEnter = isEnter;
+                this.part = part;
+                this.start = start;
+                this.end = end;
             }
 
-            public override string ToString() => $"{Trajectory} {IsEnter}";
+            public override string ToString() => $"{start} — {end}";
         }
     }
 
-    public class FillerGuide
+    public readonly struct FillerGuide
     {
-        public int A { get; }
-        public int B { get; }
+        public readonly int a;
+        public readonly int b;
 
         public FillerGuide(int a, int b)
         {
-            A = Math.Max(a, 0);
-            B = Math.Max(b, 0);
+            this.a = Math.Max(a, 0);
+            this.b = Math.Max(b, 0);
         }
-        public static FillerGuide operator +(FillerGuide guide, int delta) => new FillerGuide(guide.A + delta, guide.B + delta);
-        public static FillerGuide operator %(FillerGuide guide, int max) => new FillerGuide(guide.A % max, guide.B % max);
+        public static FillerGuide operator +(FillerGuide guide, int delta) => new FillerGuide(guide.a + delta, guide.b + delta);
+        public static FillerGuide operator %(FillerGuide guide, int max) => new FillerGuide(guide.a % max, guide.b % max);
 
-        public override string ToString() => $"{A + 1}-{B + 1}";
+        public override string ToString() => $"{a + 1}-{b + 1}";
     }
 }

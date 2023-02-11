@@ -123,4 +123,10 @@
         TopToBottom,
         BottomToTop,
     }
+    public enum DashEnd
+    {
+        NotParallel,
+        ParallelStraight,
+        ParallelSlope,
+    }
 }

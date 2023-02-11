@@ -36,7 +36,6 @@ namespace IMT.UI.Editors
         protected abstract string IsAssetWarningMessage { get; }
         protected abstract string IsWorkshopWarningMessage { get; }
 
-        private EditorItem[] Aditional { get; set; }
         private EditToolMode ToolMode { get; }
 
         #endregion
@@ -48,16 +47,19 @@ namespace IMT.UI.Editors
             ToolMode = Tool.CreateToolMode<EditToolMode>();
             ToolMode.Init(this);
         }
-        protected override void OnFillPropertiesPanel(TemplateType template)
+        protected sealed override void OnFillPropertiesPanel(TemplateType template)
+        {
+            FillProperties();
+            AddAditionalProperties();
+
+            SetEditable(Editors.EditMode.Default);
+        }
+        protected virtual void FillProperties()
         {
             AddHeader();
             AddWarning();
             AddAuthor();
             AddTemplateName();
-
-            ReloadAdditionalProperties();
-
-            SetEditable(Editors.EditMode.Default);
         }
         protected override void OnClear()
         {
@@ -66,7 +68,6 @@ namespace IMT.UI.Editors
             HeaderPanel = null;
             Warning = null;
             NameProperty = null;
-            Aditional = null;
         }
         protected override void OnObjectDelete(TemplateType template)
         {
@@ -120,17 +121,10 @@ namespace IMT.UI.Editors
             NameProperty.Value = EditObject.Name;
             NameProperty.OnValueChanged += (name) => OnChanged();
         }
-        private void ReloadAdditionalProperties()
-        {
-            if (Aditional != null)
-            {
-                foreach (var aditional in Aditional)
-                    ComponentPool.Free(aditional);
-            }
 
-            Aditional = AddAditionalProperties().ToArray();
-        }
-        protected virtual IEnumerable<EditorItem> AddAditionalProperties() { yield break; }
+        protected virtual void AddAditionalProperties() { }
+        protected virtual void RefreshAdditionalProperties() { }
+        protected virtual void ClearAdditionalProperties() { }
 
         #endregion
 
@@ -175,9 +169,6 @@ namespace IMT.UI.Editors
             NameProperty.EnableControl = mode != Editors.EditMode.Default;
             HeaderPanel.EditMode = mode;
             Warning.isVisible = Settings.ShowPanelTip && EditObject.IsAsset && mode == Editors.EditMode.Default;
-
-            foreach (var aditional in Aditional)
-                aditional.EnableControl = EditMode;
         }
 
         public void EditName()
@@ -198,10 +189,9 @@ namespace IMT.UI.Editors
         private void SaveChanges()
         {
             var name = NameProperty.Value;
-            var messageBox = default(YesNoMessageBox);
             if (!string.IsNullOrEmpty(name) && name != EditObject.Name && (EditObject.Manager as TemplateManager<TemplateType>).ContainsName(name, EditObject))
             {
-                messageBox = MessageBox.Show<YesNoMessageBox>();
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = IMT.Localize.TemplateEditor_NameExistCaption;
                 messageBox.MessageText = string.Format(NameExistMessage, name);
                 messageBox.OnButton1Click = AgreeExistName;
@@ -215,10 +205,11 @@ namespace IMT.UI.Editors
             {
                 if (EditObject.IsAsset)
                 {
-                    messageBox ??= MessageBox.Show<YesNoMessageBox>();
+                    var messageBox = MessageBox.Show<YesNoMessageBox>();
                     messageBox.CaptionText = RewriteCaption;
                     messageBox.MessageText = $"{IsAssetMessage} {RewriteMessage}";
                     messageBox.OnButton1Click = Save;
+                    messageBox.OnButton2Click = EditName;
                     return false;
                 }
                 else
@@ -245,7 +236,7 @@ namespace IMT.UI.Editors
         private void NotSaveChanges()
         {
             OnNotApplyChanges();
-            ReloadAdditionalProperties();
+            AddAditionalProperties();
             EndEditTemplate();
         }
         protected virtual void OnNotApplyChanges() => NameProperty.Value = EditObject.Name;

@@ -16,11 +16,11 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.13.0.48</AssemblyVersion>
+    <AssemblyVersion>1.13.0.579</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
-    <AssemblyVersion>1.12.0.2</AssemblyVersion>
+    <AssemblyVersion>1.13</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
@@ -78,6 +78,10 @@
 
   <ItemGroup>
     <None Remove="Properties\launchSettings.json" />
+    <None Remove="Resources\ButtonBorder.png" />
+    <None Remove="Resources\ButtonIcons\AdditionalButtonIcon.png" />
+    <None Remove="Resources\ButtonIcons\ApplyAllButtonIcon.png" />
+    <None Remove="Resources\ButtonIcons\ApplyButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\AutoButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\AutoButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\BoldButtonIcon.png" />
@@ -86,6 +90,10 @@
     <None Remove="Resources\ButtonIcons\BoldItalicButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\BottomToTopButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\BottomToTopButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\CopyButtonIcon.png" />
+    <None Remove="Resources\ButtonIcons\CopyButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\CopyToAllButtonIcon.png" />
+    <None Remove="Resources\ButtonIcons\CopyToSameButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\DynamicFixedButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\DynamicFixedButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\DynamicFreeButtonIcon.png" />
@@ -98,6 +106,7 @@
     <None Remove="Resources\ButtonIcons\ItalicButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\LeftToRightButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\LeftToRightButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\PasteButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\RangeButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\RegularButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\RegularButtonIcons.png" />
@@ -105,36 +114,58 @@
     <None Remove="Resources\ButtonIcons\SingleButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\TopToBottomButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\TopToBottomButtonIcons.png" />
+    <None Remove="Resources\ButtonWhite.png" />
+    <None Remove="Resources\ButtonWhiteBorder.png" />
     <None Remove="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
+    <None Remove="Resources\HeaderButtons\ApplyStyleHeaderButton.png" />
+    <None Remove="Resources\HeaderButtons\CopyToAllHeaderButton.png" />
+    <None Remove="Resources\HeaderButtons\CopyToSameHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\LinkHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\ResetHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\UnlinkHeaderButton.png" />
+    <None Remove="Resources\imt-linux" />
+    <None Remove="Resources\imt-macos" />
+    <None Remove="Resources\imt-win" />
     <None Remove="Resources\StylesLine\LineDoubleDashedAsym.png" />
     <None Remove="Resources\StylesLine\LineText.png" />
     <None Remove="Resources\StylesLine\LineZigZag.png" />
     <None Remove="Resources\StylesPreview\StylesPreviewLineDoubleDashedAsym.png" />
+    <None Remove="Resources\WideButtonIcons\DynamicFixedButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\DynamicFreeButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\FixedFixedButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\FixedFreeButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\NotParallelButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\SlopeButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\StraightButtonIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Properties\launchSettings.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ButtonIcons\AdditionalButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\ApplyAllButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\ApplyButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\AutoButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\BoldButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\BoldItalicButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\BottomToTopButtonIcon.png" />
-    <EmbeddedResource Include="Resources\ButtonIcons\DynamicFixedButtonIcon.png" />
-    <EmbeddedResource Include="Resources\ButtonIcons\DynamicFreeButtonIcon.png" />
-    <EmbeddedResource Include="Resources\ButtonIcons\FixedFixedButtonIcon.png" />
-    <EmbeddedResource Include="Resources\ButtonIcons\FixedFreeButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\CopyButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\CopyToAllButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\CopyToSameButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\ItalicButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\LeftToRightButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\PasteButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\RangeButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\RegularButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\RotateButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\SingleButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\TopToBottomButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonWhiteBorder.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\ApplyStyleHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\CopyToAllHeaderButton.png" />
+    <EmbeddedResource Include="Resources\HeaderButtons\CopyToSameHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\LinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -142,8 +173,10 @@
     <EmbeddedResource Include="Resources\HeaderButtons\UnlinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\imt-linux" />
+    <EmbeddedResource Include="Resources\imt-macos" />
+    <EmbeddedResource Include="Resources\imt-win" />
     <EmbeddedResource Include="Resources\ListItem\ListItemBackground.png" />
-    <EmbeddedResource Include="Resources\SharkTooth.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineDoubleDashedAsym.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineText.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineZigZag.png" />
@@ -261,6 +294,13 @@
     <EmbeddedResource Include="Resources\StylesFiller\FillerRuined.png" />
     <EmbeddedResource Include="Resources\StylesFiller\FillerSolid.png" />
     <EmbeddedResource Include="Resources\StylesFiller\FillerStripe.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\DynamicFixedButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\DynamicFreeButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\FixedFixedButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\FixedFreeButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\NotParallelButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\SlopeButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\StraightButtonIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -413,6 +453,7 @@
   <PropertyGroup>
     <LocalDir>$(LOCALAPPDATA)\Colossal Order\Cities_Skylines\Addons\Mods\$(MSBuildProjectName)$(Type)</LocalDir>
     <WorkshopDir>C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\$(WorkshopId)</WorkshopDir>
+    <RootNamespace>IMT</RootNamespace>
   </PropertyGroup>
 
   <Target Name="PdbToMdb" AfterTargets="Build">

@@ -60,11 +60,11 @@ namespace IMT.Manager
 
                 direction = ((rightDir + leftDir) / (Enter.SideSign * 2)).normalized;
 
-                var part = (RightLane.HalfWidth + SideDelta / 2) / CenterDelte;
+                var part = (RightLane.HalfWidth + SideDelta * 0.5f) / CenterDelte;
                 position = Vector3.Lerp(rightPos, leftPos, part);
             }
 
-            position += Enter.CornerDir * (offset / Enter.TranformCoef);
+            position += Enter.CornerDir * (offset / Enter.TranformRatio);
         }
         private void GetEdgePositionAndDirection(MarkingPoint.LocationType location, float offset, out Vector3 position, out Vector3 direction)
         {
@@ -84,7 +84,7 @@ namespace IMT.Manager
             }
             direction = (direction * Enter.SideSign).normalized;
 
-            var shift = (lineShift + offset) / Enter.TranformCoef;
+            var shift = (lineShift + offset) / Enter.TranformRatio;
 
             position += Enter.CornerDir * shift;
         }
@@ -125,7 +125,7 @@ namespace IMT.Manager
             {
                 yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkingPoint.LocationType.Between);
             }
-            else if (GetSideDelta(leftLane, rightLane) >= (leftLane.HalfWidth + rightLane.HalfWidth) / 2)
+            else if (GetSideDelta(leftLane, rightLane) >= (leftLane.HalfWidth + rightLane.HalfWidth) * 0.5f)
             {
                 yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkingPoint.LocationType.RightEdge);
                 yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkingPoint.LocationType.LeftEdge);
@@ -228,7 +228,7 @@ namespace IMT.Manager
             Index = index;
             LaneId = laneId;
             Position = info.m_position;
-            HalfWidth = Mathf.Abs(info.m_width) / 2;
+            HalfWidth = Mathf.Abs(info.m_width) * 0.5f;
             NetworkType = type;
         }
 

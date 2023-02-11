@@ -5,27 +5,37 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using UnifiedUI.Helpers;
 using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class FillerEditor : SimpleEditor<FillerItemsPanel, MarkingFiller>
+    public class FillerEditor : SimpleEditor<FillerItemsPanel, MarkingFiller>, IPropertyContainer
     {
         #region PROPERTIES
 
         public override string Name => IMT.Localize.FillerEditor_Fillers;
         public override string EmptyMessage => string.Format(IMT.Localize.FillerEditor_EmptyMessage, LocalizeExtension.Alt, IntersectionMarkingTool.AddFillerShortcut);
-        public override Marking.SupportType Support { get; } = Marking.SupportType.Fillers;
+        public override Marking.SupportType Support => Marking.SupportType.Fillers;
 
         public StylePropertyPanel Style { get; private set; }
-        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
-        private MoreOptionsPanel MoreOptionsButton { get; set; }
-        private bool ShowMoreOptions { get; set; }
 
         private FillerGuideToolMode FillerGuideToolMode { get; }
 
         public FillerGuidePropertyPanel.SelectGuideButton HoverGuideSelectButton { get; private set; }
+
+        object IPropertyEditor.EditObject => EditObject;
+        bool IPropertyEditor.IsTemplate => false;
+        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
+        Style IPropertyContainer.Style => EditObject.Style.Value;
+        Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
+
+        Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
+        Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
+        Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
+        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
 
         #endregion
 
@@ -42,7 +52,6 @@ namespace IMT.UI.Editors
         {
             AddHeader();
             AddStyleTypeProperty();
-            AddMoreOptions();
             AddStyleProperties();
         }
         protected override void OnObjectDelete(MarkingFiller filler)
@@ -53,21 +62,21 @@ namespace IMT.UI.Editors
         protected override void OnClear()
         {
             base.OnClear();
-
             Style = null;
-            MoreOptionsButton = null;
-            ShowMoreOptions = false;
-            StyleProperties.Clear();
         }
+        protected override void OnObjectUpdate(MarkingFiller editObject) => (this as IPropertyEditor).RefreshProperties();
+        void IPropertyEditor.RefreshProperties() => PropertyEditorHelper.RefreshProperties(this);
 
         private void AddHeader()
         {
             var header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel, "Header");
-            header.Init(Manager.Style.StyleType.Filler, SelectTemplate, false);
+            header.Init(this, Manager.Style.StyleType.Filler, SelectTemplate, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
             header.OnReset += ResetStyle;
+            header.OnApplySameStyle += ApplyStyleSameStyle;
+            header.OnApplySameType += ApplyStyleSameType;
         }
         private void AddStyleTypeProperty()
         {
@@ -79,36 +88,14 @@ namespace IMT.UI.Editors
             Style.SelectedObject = EditObject.Style.Value.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
-        private void AddMoreOptions()
-        {
-            MoreOptionsButton = ComponentPool.Get<MoreOptionsPanel>(PropertiesPanel, nameof(MoreOptionsButton));
-            MoreOptionsButton.Init();
-            MoreOptionsButton.OnButtonClick += () =>
-            {
-                ShowMoreOptions = !ShowMoreOptions;
-                SetOptionsCollapse();
-            };
-        }
-        private void SetOptionsCollapse()
-        {
-            MoreOptionsButton.Text = ShowMoreOptions ? $"▲ {IMT.Localize.Editor_LessOptions} ▲" : $"▼ {IMT.Localize.Editor_MoreOptions} ▼";
-
-            foreach (var option in StyleProperties)
-                option.IsCollapsed = !ShowMoreOptions;
-        }
 
         private void AddStyleProperties()
         {
-            var startIndex = PropertiesPanel.childCount;
-            var style = EditObject.Style.Value;
-            StyleProperties = style.GetUIComponents(EditObject, PropertiesPanel);
-            StyleProperties.Sort((x, y) => style.GetUIComponentSortIndex(x) - style.GetUIComponentSortIndex(y));
-            for (int i = 0; i < StyleProperties.Count; i += 1)
-                StyleProperties[i].zOrder = startIndex + i;
+            this.AddProperties();
 
-            foreach (var property in StyleProperties)
+            foreach (var property in (this as IPropertyContainer).StyleProperties)
             {
-                if (property is ColorPropertyPanel colorProperty)
+                if (property is ColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
                     colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
                 else if (property is FillerGuidePropertyPanel guideProperty)
                 {
@@ -117,22 +104,6 @@ namespace IMT.UI.Editors
                     guideProperty.OnLeave += LeaveGuide;
                 }
             }
-
-            if (Settings.CollapseOptions && StyleProperties.Count(p => p.CanCollapse) >= 2)
-            {
-                MoreOptionsButton.isVisible = true;
-                MoreOptionsButton.BringToFront();
-                SetOptionsCollapse();
-            }
-            else
-                MoreOptionsButton.isVisible = false;
-        }
-        private void ClearStyleProperties()
-        {
-            foreach (var property in StyleProperties)
-                ComponentPool.Free(property);
-
-            StyleProperties.Clear();
         }
 
         #endregion
@@ -154,7 +125,7 @@ namespace IMT.UI.Editors
         {
             RefreshSelectedItem();
             PropertiesPanel.StopLayout();
-            ClearStyleProperties();
+            this.ClearProperties();
             AddStyleProperties();
             PropertiesPanel.StartLayout();
         }
@@ -188,6 +159,28 @@ namespace IMT.UI.Editors
                 ApplyStyle(style);
         }
         private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<FillerStyle>(EditObject.Style.Value.Type));
+        private void ApplyStyleSameStyle()
+        {
+            foreach (var filler in Marking.Fillers)
+            {
+                if (filler != EditObject && filler.Style.Value.Type == EditObject.Style.Value.Type)
+                    filler.Style.Value = EditObject.Style.Value.CopyStyle();
+            }
+
+            RefreshEditor();
+            ItemsPanel.RefreshItems();
+        }
+        private void ApplyStyleSameType()
+        {
+            foreach (var filler in Marking.Fillers)
+            {
+                if (filler != EditObject)
+                    filler.Style.Value = EditObject.Style.Value.CopyStyle();
+            }
+
+            RefreshEditor();
+            ItemsPanel.RefreshItems();
+        }
 
         public void HoverGuide(FillerGuidePropertyPanel.SelectGuideButton selectButton) => HoverGuideSelectButton = selectButton;
         public void LeaveGuide(FillerGuidePropertyPanel.SelectGuideButton selectButton) => HoverGuideSelectButton = null;
@@ -216,7 +209,7 @@ namespace IMT.UI.Editors
 
             if (HoverGuideSelectButton != null)
             {
-                var guide = EditObject.Contour.GetGuide(HoverGuideSelectButton.Value.A, HoverGuideSelectButton.Value.B, HoverGuideSelectButton.Other.A, HoverGuideSelectButton.Other.B);
+                var guide = EditObject.Contour.GetGuide(HoverGuideSelectButton.Value.a, HoverGuideSelectButton.Value.b, HoverGuideSelectButton.Other.a, HoverGuideSelectButton.Other.b);
                 guide.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
             }
         }
@@ -309,7 +302,7 @@ namespace IMT.UI.Editors
             if (!IsFirstSelected)
             {
                 var overlayData = new OverlayData(cameraInfo) { Color = Colors.Hover };
-                foreach (var part in Contour.RawParts)
+                foreach (var part in Contour.RawEdges)
                 {
                     if (part.IsPoint)
                         part.Render(overlayData);

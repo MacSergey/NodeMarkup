@@ -5,6 +5,7 @@ using IMT.UI.Panel;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -65,8 +66,8 @@ namespace IMT.UI.Editors
         protected bool NeedUpdate { get; set; }
         public ObjectType EditObject => ItemsPanel.SelectedObject;
 
-        protected ItemsPanelType ItemsPanel { get; set; }
-        protected AdvancedScrollablePanel ContentPanel { get; set; }
+        public ItemsPanelType ItemsPanel { get; protected set; }
+        public AdvancedScrollablePanel ContentPanel { get; protected set; }
         protected CustomUILabel EmptyLabel { get; set; }
 
         public sealed override bool AvailableItems
@@ -88,11 +89,15 @@ namespace IMT.UI.Editors
         {
             clipChildren = true;
             atlas = TextureHelper.InGameAtlas;
-            backgroundSprite = "UnlockingItemBackground";
+            //backgroundSprite = "UnlockingItemBackground";
+            backgroundSprite = "TextFieldPanel";
+            color = new Color32(68, 68, 75, 255);
 
             ItemsPanel = AddUIComponent<ItemsPanelType>();
             ItemsPanel.atlas = TextureHelper.InGameAtlas;
-            ItemsPanel.backgroundSprite = "ScrollbarTrack";
+            //ItemsPanel.backgroundSprite = "ScrollbarTrack";
+            ItemsPanel.backgroundSprite = "TextFieldPanel";
+            ItemsPanel.color = new Color32(142, 142, 142, 255);
             ItemsPanel.name = nameof(ItemsPanel);
             ItemsPanel.Init(this);
             ItemsPanel.OnSelectClick += OnItemSelect;
@@ -101,7 +106,9 @@ namespace IMT.UI.Editors
             ContentPanel = AddUIComponent<AdvancedScrollablePanel>();
             ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
             ContentPanel.atlas = TextureHelper.InGameAtlas;
-            ContentPanel.backgroundSprite = "UnlockingItemBackground";
+            //ContentPanel.backgroundSprite = "UnlockingItemBackground";
+            ContentPanel.backgroundSprite = "TextFieldPanel";
+            ContentPanel.color = new Color32(68, 68, 75, 255);
             ContentPanel.name = nameof(ContentPanel);
 
             AddEmptyLabel();
@@ -188,7 +195,7 @@ namespace IMT.UI.Editors
             ContentPanel.size = new Vector2(size.x * ContentRatio, size.y);
             ContentPanel.relativePosition = new Vector2(size.x * ItemsRatio, 0);
 
-            EmptyLabel.size = new Vector2(size.x * ContentRatio, size.y / 2);
+            EmptyLabel.size = new Vector2(size.x * ContentRatio, size.y * 0.5f);
             EmptyLabel.relativePosition = ContentPanel.relativePosition;
         }
         protected void OnItemSelect(ObjectType editObject)
@@ -257,5 +264,33 @@ namespace IMT.UI.Editors
             base.OnClear();
             PropertiesPanel = null;
         }
+    }
+
+    public readonly struct EditorProvider
+    {
+        public readonly IPropertyContainer editor;
+        public readonly UIComponent parent;
+        private readonly Action refresh;
+        private readonly Action<IPropertyInfo> addProperty;
+        private readonly Action<IPropertyCategoryInfo> addCategory;
+        public readonly bool isTemplate;
+
+        public EditorProvider(IPropertyContainer editor, UIComponent parent, Action<IPropertyCategoryInfo> addCategory, Action<IPropertyInfo> addProperty, Action refresh, bool isTemplate)
+        {
+            this.editor = editor;
+            this.parent = parent;
+            this.addCategory = addCategory;
+            this.addProperty = addProperty;
+            this.refresh = refresh;
+            this.isTemplate = isTemplate;
+        }
+        public EditorProvider(IPropertyContainer editor, UIComponent parent, bool isTemplate, Action<IPropertyCategoryInfo> addCategory = null, Action<IPropertyInfo> addProperty = null, Action refresh = null) : this(editor, parent, addCategory, addProperty, refresh, isTemplate) { }
+
+        public void AddCategory(IPropertyCategoryInfo category) => addCategory?.Invoke(category);
+        public void AddProperty(IPropertyInfo property) => addProperty?.Invoke(property);
+        public void Refresh() => refresh?.Invoke();
+
+        public T GetItem<T>(string name) where T : UIComponent, IReusable => ComponentPool.Get<T>(parent, name);
+        public void DestroyItem<T>(T item) where T : UIComponent, IReusable => ComponentPool.Free(item);
     }
 }

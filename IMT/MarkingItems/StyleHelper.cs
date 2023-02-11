@@ -2,111 +2,94 @@
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using UnityEngine;
+using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
     public static class StyleHelper
     {
-        public delegate IEnumerable<MarkingPartData> SolidGetter(ITrajectory trajectory);
-        public delegate IEnumerable<MarkingPartData> DashedGetter(ITrajectory trajectory, float startT, float endT);
-        public static float MinAngleDelta { get; } = 5f;
+        public static float MinAngle { get; } = 5f;
         public static float MinLength { get; } = 1f;
         public static float MaxLength { get; } = 10f;
         private static int MaxDepth => 5;
 
-        public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkingLOD lod, Func<ITrajectory, Result> calculateParts, float? minAngle = null, float? minLength = null, float? maxLength = null)
-        {
-            return CalculateSolid<Result>(trajectory, lod, minAngle, minLength, maxLength, AddToResult);
-            void AddToResult(List<Result> result, ITrajectory trajectory) => result.Add(calculateParts(trajectory));
-        }
-        public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkingLOD lod, Func<ITrajectory, IEnumerable<Result>> calculateParts, float? minAngle = null, float? minLength = null, float? maxLength = null)
-        {
-            return CalculateSolid<Result>(trajectory, lod, minAngle, minLength, maxLength, AddToResult);
-            void AddToResult(List<Result> result, ITrajectory trajectory) => result.AddRange(calculateParts(trajectory));
-        }
+        #region SOLID
 
-        private static List<Result> CalculateSolid<Result>(ITrajectory trajectory, MarkingLOD lod, float? minAngle, float? minLength, float? maxLength, Action<List<Result>, ITrajectory> addToResult)
+        public static List<PartT> CalculateSolid(ITrajectory trajectory, MarkingLOD lod, float? minAngle = null, float? minLength = null, float? maxLength = null)
         {
-            var lodScale = lod == MarkingLOD.LOD0 ? 1f : 4f;
-            var result = new List<Result>();
+            var lodScale = lod switch
+            {
+                MarkingLOD.LOD0 or MarkingLOD.NoLOD => 1f,
+                MarkingLOD.LOD1 => 4f,
+            };
+            var parts = new List<PartT>();
 
-            CalculateSolid(0, trajectory, trajectory.DeltaAngle, (minAngle ?? MinAngleDelta) * lodScale, (minLength ?? MinLength) * lodScale, (maxLength ?? MaxLength) * lodScale, t => addToResult(result, t));
+            CalculateSolid(parts, 0, trajectory, 0, 1, trajectory.DeltaAngle, (minAngle ?? MinAngle) * lodScale, (minLength ?? MinLength) * lodScale, (maxLength ?? MaxLength) * lodScale);
 
-            return result;
+            return parts;
         }
-        public static List<ITrajectory> CalculateSolid(ITrajectory trajectory, float minAngle, float minLength, float maxLength)
+        public static List<PartT> CalculateSolid(ITrajectory trajectory, float minAngle, float minLength, float maxLength)
         {
-            var result = new List<ITrajectory>();
-            CalculateSolid(0, trajectory, trajectory.DeltaAngle, minAngle, minLength, maxLength, t => result.Add(t));
-            return result;
+            var parts = new List<PartT>();
+            CalculateSolid(parts, 0, trajectory, 0, 1, trajectory.DeltaAngle, minAngle, minLength, maxLength);
+            return parts;
         }
-        public static List<Result> CalculateSolid<Result>(ITrajectory trajectory, float minAngle, float minLength, float maxLength, Func<ITrajectory, Result> calculateParts)
+        private static void CalculateSolid(List<PartT> parts, int depth, ITrajectory trajectory, int index, int total, float deltaAngle, float minAngle, float minLength, float maxLength)
         {
-            var result = new List<Result>();
-            CalculateSolid(0, trajectory, trajectory.DeltaAngle, minAngle, minLength, maxLength, t => result.Add(calculateParts(t)));
-            return result;
-        }
-
-        private static void CalculateSolid(int depth, ITrajectory trajectory, float deltaAngle, float minAngle, float minLength, float maxLength, Action<ITrajectory> addToResult)
-        {
-            var length = trajectory.Magnitude;
+            var startT = 1f / total * index;
+            var endT = 1f / total * (index + 1);
+            var startPos = trajectory.Position(startT);
+            var endPos = trajectory.Position(endT);
+            var length = (endPos - startPos).magnitude;
 
             var needDivide = (deltaAngle > minAngle && length >= minLength) || length > maxLength;
             if (depth < MaxDepth && (needDivide || depth == 0))
             {
-                trajectory.Divide(out ITrajectory first, out ITrajectory second);
-                var firstDeltaAngle = first.DeltaAngle;
-                var secondDeltaAngle = second.DeltaAngle;
+                var middleT = (startT + endT) * 0.5f;
+
+                var startDir = trajectory.Tangent(startT);
+                var middleDir = trajectory.Tangent(middleT);
+                var endDir = trajectory.Tangent(endT);
+
+                var firstDeltaAngle = 180 - Vector3.Angle(startDir, -middleDir);
+                var secondDeltaAngle = 180 - Vector3.Angle(middleDir, -endDir);
 
                 if (needDivide || deltaAngle > minAngle || (firstDeltaAngle + secondDeltaAngle) > minAngle)
                 {
-                    CalculateSolid(depth + 1, first, firstDeltaAngle, minAngle, minLength, maxLength, addToResult);
-                    CalculateSolid(depth + 1, second, secondDeltaAngle, minAngle, minLength, maxLength, addToResult);
+                    CalculateSolid(parts, depth + 1, trajectory, index * 2, total * 2, firstDeltaAngle, minAngle, minLength, maxLength);
+                    CalculateSolid(parts, depth + 1, trajectory, index * 2 + 1, total * 2, secondDeltaAngle, minAngle, minLength, maxLength);
 
                     return;
                 }
             }
 
-            addToResult(trajectory);
+            parts.Add(new PartT(startT, endT));
         }
 
-        public static IEnumerable<MarkingPartData> CalculateDashed(ITrajectory trajectory, float dashLength, float spaceLength, DashedGetter calculateDashes)
+        #endregion
+
+        #region DASHED
+
+        public static List<PartT> CalculateDashed(ITrajectory trajectory, float dashLength, float spaceLength)
         {
-            List<PartT> partsT;
             switch (trajectory)
             {
                 case BezierTrajectory bezierTrajectory:
-                    partsT = CalculateDashesBezierT(bezierTrajectory, dashLength, spaceLength);
-                    break;
+                    return CalculateDashesBezierT(bezierTrajectory, dashLength, spaceLength);
                 case StraightTrajectory straightTrajectory:
-                    partsT = CalculateDashesStraightT(straightTrajectory, dashLength, spaceLength);
-                    break;
+                    return CalculateDashesStraightT(straightTrajectory, dashLength, spaceLength);
                 default:
-                    yield break;
-            }
-
-            foreach (var partT in partsT)
-            {
-                foreach (var part in calculateDashes(trajectory, partT.Start, partT.End))
-                    yield return part;
+                    return new List<PartT>();
             }
         }
-        public static List<PartT> CalculateDashesBezierT(BezierTrajectory trajectory, float dashLength, float spaceLength, uint iterations = 3)
+
+        public static List<PartT> CalculateDashesBezierT(ITrajectory trajectory, float dashLength, float spaceLength, uint iterations = 3)
         {
             var points = new TrajectoryPoints(trajectory);
-            return CalculateDashesBezierT(points, dashLength, spaceLength, iterations);
-        }
-        public static List<PartT> CalculateDashesBezierT(IEnumerable<ITrajectory> trajectories, float dashLength, float spaceLength, uint iterations = 3)
-        {
-            var points = new TrajectoryPoints(trajectories.ToArray());
-            return CalculateDashesBezierT(points, dashLength, spaceLength, iterations);
-        }
-
-        private static List<PartT> CalculateDashesBezierT(TrajectoryPoints points, float dashLength, float spaceLength, uint iterations)
-        {
-            var startSpace = spaceLength / 2;
+            var startSpace = spaceLength * 0.5f;
 
             for (var i = 0; ;)
             {
@@ -121,7 +104,7 @@ namespace IMT.Manager
                 while (nextI < points.Length)
                 {
                     if (isPart)
-                        parts.Add(new PartT() { Start = currentT, End = nextT });
+                        parts.Add(new PartT(currentT, nextT));
 
                     isPart = !isPart;
 
@@ -136,14 +119,14 @@ namespace IMT.Manager
                 if (i >= iterations || Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
                     return parts;
 
-                startSpace = (startSpace + endSpace) / 2;
+                startSpace = (startSpace + endSpace) * 0.5f;
             }
         }
-        private static List<PartT> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
+        public static List<PartT> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
         {
             var length = straightTrajectory.Length;
             var partCount = (int)(length / (dashLength + spaceLength));
-            var startSpace = (length + spaceLength - (dashLength + spaceLength) * partCount) / 2;
+            var startSpace = (length + spaceLength - (dashLength + spaceLength) * partCount) * 0.5f;
 
             var startT = startSpace / length;
             var partT = dashLength / length;
@@ -156,54 +139,66 @@ namespace IMT.Manager
                 var tStart = startT + (partT + spaceT) * i;
                 var tEnd = tStart + partT;
 
-                parts.Add(new PartT { Start = tStart, End = tEnd });
+                parts.Add(new PartT(tStart, tEnd));
             }
 
             return parts;
         }
-        public static bool CalculateDashedParts(LineBorders borders, ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color, out MarkingPartData part)
-        {
-            part = CalculateDashedPart(trajectory, startT, endT, dashLength, offset, width, color);
 
-            if (borders.IsEmpty)
-                return true;
+        #endregion
 
-            var vertex = borders.GetVertex(part);
-            return !borders.Any(c => vertex.Any(v => Intersection.CalculateSingle(c, v).IsIntersect));
-
-        }
-        public static MarkingPartData CalculateDashedPart(ITrajectory trajectory, float startT, float endT, float dashLength, float offset, float width, Color32 color)
+        public static void GetPartParams(ITrajectory trajectory, PartT partT, float offset, out Vector3 position, out Vector3 direction)
         {
             if (offset == 0)
-                return CalculateDashedPart(trajectory, startT, endT, dashLength, Vector3.zero, Vector3.zero, width, color);
+                GetPartParams(trajectory, partT, Vector3.zero, Vector3.zero, out position, out direction);
             else
             {
-                var startOffset = trajectory.Tangent(startT).Turn90(true).normalized * offset;
-                var endOffset = trajectory.Tangent(endT).Turn90(true).normalized * offset;
-                return CalculateDashedPart(trajectory, startT, endT, dashLength, startOffset, endOffset, width, color);
+                var startOffset = trajectory.Tangent(partT.start).Turn90(true).normalized * offset;
+                var endOffset = trajectory.Tangent(partT.end).Turn90(true).normalized * offset;
+                GetPartParams(trajectory, partT, startOffset, endOffset, out position, out direction);
             }
         }
-        public static MarkingPartData CalculateDashedPart(ITrajectory trajectory, float startT, float endT, float dashLength, Vector3 startOffset, Vector3 endOffset, float width, Color32 color, float? angle = null)
+        public static void GetPartParams(ITrajectory trajectory, PartT partT, float offset, out Vector3 startPosition, out Vector3 endPosition, out Vector3 direction)
         {
-            var startPosition = trajectory.Position(startT);
-            var endPosition = trajectory.Position(endT);
-
-            startPosition += startOffset;
-            endPosition += endOffset;
-
-            var dir = angle?.Direction() ?? (endPosition - startPosition);
-
-            return new MarkingPartData(startPosition, endPosition, dir, dashLength, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
+            if (offset == 0)
+                GetPartParams(trajectory, partT, Vector3.zero, Vector3.zero, out startPosition, out endPosition, out direction);
+            else
+            {
+                var startOffset = trajectory.Tangent(partT.start).Turn90(true).normalized * offset;
+                var endOffset = trajectory.Tangent(partT.end).Turn90(true).normalized * offset;
+                GetPartParams(trajectory, partT, startOffset, endOffset, out startPosition, out endPosition, out direction);
+            }
+        }
+        public static void GetPartParams(ITrajectory trajectory, PartT partT, Vector3 startOffset, Vector3 endOffset, out Vector3 position, out Vector3 direction)
+        {
+            var startPosition = trajectory.Position(partT.start) + startOffset;
+            var endPosition = trajectory.Position(partT.end) + endOffset;
+            position = (startPosition + endPosition) * 0.5f;
+            direction = (endPosition - startPosition).normalized;
+        }
+        public static void GetPartParams(ITrajectory trajectory, PartT partT, Vector3 startOffset, Vector3 endOffset, out Vector3 startPosition, out Vector3 endPosition, out Vector3 direction)
+        {
+            startPosition = trajectory.Position(partT.start) + startOffset;
+            endPosition = trajectory.Position(partT.end) + endOffset;
+            direction = (endPosition - startPosition).normalized;
         }
 
-        public static bool CalculateSolidPart(LineBorders borders, ITrajectory trajectory, float offset, float width, Color32 color, out MarkingPartData part)
+        public static bool CheckBorders(LineBorders borders, Vector3 pos, Vector3 dir, float length, float width)
         {
-            part = CalculateSolidPart(trajectory, offset, width, color);
-
             if (borders.IsEmpty)
                 return true;
 
-            var vertex = borders.GetVertex(part);
+            var vertex = borders.GetVertex(pos, dir, length, width);
+            return !borders.Any(c => vertex.Any(v => Intersection.CalculateSingle(c, v).isIntersect));
+        }
+        public static bool CheckBorders(LineBorders borders, ref Vector3 startPos, ref Vector3 endPos, Vector3 dir, float width)
+        {
+            if (borders.IsEmpty)
+                return true;
+
+            var pos = (startPos + endPos) * 0.5f;
+            var length = (endPos - startPos).magnitude;
+            var vertex = borders.GetVertex(pos, dir, length, width);
 
             var from = 0f;
             var to = 1f;
@@ -215,17 +210,17 @@ namespace IMT.Manager
                     var start = Intersection.CalculateSingle(border, vertex[i - 1]);
                     var end = Intersection.CalculateSingle(border, vertex[i]);
 
-                    if (start.IsIntersect && end.IsIntersect)
+                    if (start.isIntersect && end.isIntersect)
                         return false;
 
-                    if (!start.IsIntersect && !end.IsIntersect)
+                    if (!start.isIntersect && !end.isIntersect)
                         continue;
 
                     if (Intersection.CalculateSingle(border, new StraightTrajectory(vertex[i - 1].EndPosition, vertex[i].EndPosition), out _, out var t))
                     {
-                        if (start.IsIntersect)
+                        if (start.isIntersect)
                             from = Mathf.Max(from, t);
-                        else if (end.IsIntersect)
+                        else if (end.isIntersect)
                             to = Mathf.Min(to, t);
                     }
                 }
@@ -233,360 +228,70 @@ namespace IMT.Manager
 
             if (from != 0f || to != 1f)
             {
-                var dir = part.Angle.Direction() * (part.Length / 2);
-                var line = new StraightTrajectory(part.Position + dir, part.Position - dir).Cut(from, to);
-                part = new MarkingPartData(line.StartPosition, line.EndPosition, line.Direction, part.Width, part.Color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
+                var line = new StraightTrajectory(startPos, endPos).Cut(from, to);
+                startPos = line.StartPosition; 
+                endPos = line.EndPosition;
             }
             return true;
         }
-        public static MarkingPartData CalculateSolidPart(ITrajectory trajectory, float offset, float width, Color32 color)
-        {
-            if (offset == 0)
-                return CalculateSolidPart(trajectory, Vector3.zero, Vector3.zero, width, color);
-            else
-            {
-                var startOffset = trajectory.StartDirection.Turn90(true) * offset;
-                var endOffset = trajectory.EndDirection.Turn90(false) * offset;
-                return CalculateSolidPart(trajectory, startOffset, endOffset, width, color);
-            }
-        }
-        public static MarkingPartData CalculateSolidPart(ITrajectory trajectory, Vector3 startOffset, Vector3 endOffset, float width, Color32 color)
-        {
-            var startPosition = trajectory.StartPosition + startOffset;
-            var endPosition = trajectory.EndPosition + endOffset;
-            return new MarkingPartData(startPosition, endPosition, endPosition - startPosition, width, color, RenderHelper.MaterialLib[MaterialType.RectangleLines]);
-        }
-        private static Dictionary<MarkingLOD, float> LodMax { get; } = new Dictionary<MarkingLOD, float>
-        {
-            {MarkingLOD.LOD0, 0.2f},
-            {MarkingLOD.LOD1, 1f}
-        };
-        public static void GetParts(float width, float offset, MarkingLOD lod, out int count, out float partWidth)
-        {
-            var max = LodMax[lod];
 
-            if (width < max || offset != 0f)
-            {
-                count = 1;
-                partWidth = width;
-            }
-            else
-            {
-                var intWidth = (int)(width * 100);
-                var delta = (int)(max * 100);
-                var num = 0;
-                for (var i = (int)(max * 50); i < (int)(max * 100); i += 1)
-                {
-                    var iDelta = intWidth - (intWidth / i) * i;
-                    if (iDelta < delta)
-                    {
-                        delta = iDelta;
-                        num = i;
-                    }
+        public readonly struct PartT
+        {
+            public readonly float start;
+            public readonly float end;
 
-
-                }
-                count = intWidth / num;
-                partWidth = num / 100f;
+            public PartT(float start, float end)
+            {
+                this.start = start;
+                this.end = end;
             }
+
+            public PartT Invert => new PartT(end, start);
+
+            public override string ToString() => $"{start}:{end}";
         }
 
-        public struct PartT
+        public static Contour SetCornerRadius(this Contour originalEdges, float lineRadius, float medianRadius)
         {
-            public float Start;
-            public float End;
-
-            public override string ToString() => $"{Start}:{End}";
-        }
-
-        public static List<FillerContour.Part> RemoveSelfIntersections(List<FillerContour.Part> parts)
-        {
-            var result = new List<FillerContour.Part>(parts);
-
-            if (parts.Count > 3)
-            {
-                for (var i = 0; i < parts.Count; i += 1)
-                {
-                    for (var j = 2; j < parts.Count - 1; j += 1)
-                    {
-                        var x = i;
-                        var y = (i + j) % parts.Count;
-                        var intersect = Intersection.CalculateSingle(parts[x].Trajectory, parts[y].Trajectory);
-                        if (intersect.IsIntersect && (intersect.FirstT > 0.5f || intersect.SecondT < 0.5f))
-                        {
-                            var xPart = parts[x];
-                            var yPart = parts[y];
-                            xPart.Trajectory = xPart.Trajectory.Cut(0f, intersect.FirstT);
-                            yPart.Trajectory = yPart.Trajectory.Cut(intersect.SecondT, 1f);
-                            parts[x] = xPart;
-                            parts[y] = yPart;
-
-                            if (y > x)
-                            {
-                                var count = y - (x + 1);
-                                parts.RemoveRange(x + 1, count);
-                                j -= count;
-                            }
-                            else
-                            {
-                                parts.RemoveRange(x + 1, parts.Count - (x + 1));
-                                parts.RemoveRange(0, y);
-                                i -= y;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return result;
-        }
-        public static List<List<FillerContour.Part>> SetOffset(List<FillerContour.Part> originalParts, float lineOffset, float medianOffset)
-        {
-            var result = new List<List<FillerContour.Part>>();
-
-            if (lineOffset <= 0f && medianOffset <= 0f)
-                result.Add(new List<FillerContour.Part>(originalParts));
-            else
-            {
-                var direction = originalParts.Select(i => i.Trajectory).GetDirection();
-
-                var movedParts = Move(originalParts, direction, lineOffset, medianOffset);
-                Connect(movedParts, originalParts, lineOffset, medianOffset);
-                var intersections = GetIntersections(movedParts);
-                var partOfPart = GetParts(movedParts, intersections);
-                var contours = GetContours(partOfPart);
-
-                foreach (var contour in contours)
-                {
-                    if (contour.Direction == direction)
-                        result.Add(contour.Processed);
-                }
-            }
-            return result;
-        }
-        private static List<FillerContour.Part> Move(List<FillerContour.Part> originalParts, TrajectoryHelper.Direction direction, float lineOffset, float medianOffset)
-        {
-            var result = new List<FillerContour.Part>(originalParts.Count);
-
-            foreach (var part in originalParts)
-            {
-                var offset = (direction == TrajectoryHelper.Direction.ClockWise ? 1f : -1f) * (part.IsEnter ? medianOffset : lineOffset);
-
-                if (offset == 0f)
-                    result.Add(part);
-                else
-                {
-                    var movedTrajectory = part.Trajectory.Shift(offset, offset);
-                    var newPart = new FillerContour.Part(movedTrajectory, part.IsEnter);
-                    result.Add(newPart);
-                }
-            }
-
-            return result;
-        }
-        private static void Connect(List<FillerContour.Part> parts, List<FillerContour.Part> originalParts, float lineOffset, float medianOffset)
-        {
-            var count = 0;
-            for (var i = 0; i < parts.Count; i += 1)
-            {
-                var j = (i + 1) % parts.Count;
-                var first = parts[i];
-                var second = parts[j];
-
-                if ((first.IsEnter ? medianOffset : lineOffset) != 0)
-                {
-                    if ((second.IsEnter ? medianOffset : lineOffset) != 0)
-                    {
-                        if ((first.Trajectory.EndPosition - second.Trajectory.StartPosition).sqrMagnitude > 0.0001f)
-                        {
-                            var nextCount = (count + 1) % originalParts.Count;
-                            var firstTrajectory = new StraightTrajectory(first.Trajectory.EndPosition, originalParts[count].Trajectory.EndPosition);
-                            var secondTrajectory = new StraightTrajectory(originalParts[nextCount].Trajectory.StartPosition, second.Trajectory.StartPosition);
-
-                            AddToList(parts, i + 1, new FillerContour.Part(firstTrajectory));
-                            AddToList(parts, i + 2, new FillerContour.Part(secondTrajectory));
-                            i += 2;
-                        }
-                    }
-                    else if (Intersection.CalculateSingle(first.Trajectory, second.Trajectory, out var firstT, out var secondT))
-                    {
-                        if (first.Trajectory.Length * (1f - firstT) < 0.1f || second.Trajectory.Length * secondT < 0.1f)
-                        {
-                            first = new FillerContour.Part(first.Trajectory.Cut(0f, firstT), first.IsEnter);
-                            parts[i] = first;
-                            second = new FillerContour.Part(second.Trajectory.Cut(secondT, 1f), second.IsEnter);
-                            parts[j] = second;
-                        }
-                        else
-                            Add(parts, ref i, first.Trajectory.EndPosition, second.Trajectory.StartPosition);
-                    }
-                    else if (Intersection.CalculateSingle(new StraightTrajectory(first.Trajectory.EndPosition, first.Trajectory.EndPosition - first.Trajectory.EndDirection), second.Trajectory, out _, out var t))
-                    {
-                        second = new FillerContour.Part(second.Trajectory.Cut(t, 1f), second.IsEnter);
-                        parts[j] = second;
-
-                        Add(parts, ref i, first.Trajectory.EndPosition, second.Trajectory.StartPosition);
-                    }
-                    else
-                        Add(parts, ref i, first.Trajectory.EndPosition, second.Trajectory.StartPosition);
-                }
-                else if ((second.IsEnter ? medianOffset : lineOffset) != 0)
-                {
-                    if (Intersection.CalculateSingle(first.Trajectory, second.Trajectory, out var firstT, out var secondT))
-                    {
-                        if (first.Trajectory.Length * (1f - firstT) < 0.1f || second.Trajectory.Length * secondT < 0.1f)
-                        {
-                            first = new FillerContour.Part(first.Trajectory.Cut(0f, firstT), first.IsEnter);
-                            parts[i] = first;
-                            second = new FillerContour.Part(second.Trajectory.Cut(secondT, 1f), second.IsEnter);
-                            parts[j] = second;
-                        }
-                        else
-                            Add(parts, ref i, first.Trajectory.EndPosition, second.Trajectory.StartPosition);
-                    }
-                    else if (Intersection.CalculateSingle(first.Trajectory, new StraightTrajectory(second.Trajectory.StartPosition, second.Trajectory.StartPosition - second.Trajectory.StartDirection), out var t, out _))
-                    {
-                        var newTrajectory = first.Trajectory.Cut(0f, t);
-                        first = new FillerContour.Part(newTrajectory, first.IsEnter);
-                        parts[i] = first;
-
-                        Add(parts, ref i, first.Trajectory.EndPosition, second.Trajectory.StartPosition);
-                    }
-                    else
-                        Add(parts, ref i, first.Trajectory.EndPosition, second.Trajectory.StartPosition);
-                }
-
-                count += 1;
-            }
-
-            static void Add(List<FillerContour.Part> parts, ref int i, Vector3 start, Vector3 end)
-            {
-                var addTrajectory = new StraightTrajectory(start, end);
-                if (addTrajectory.Length >= 0.01f)
-                {
-                    AddToList(parts, i + 1, new FillerContour.Part(addTrajectory));
-                    i += 1;
-                }
-            }
-            static void AddToList(List<FillerContour.Part> parts, int i, FillerContour.Part value)
-            {
-                if (i >= parts.Count)
-                    parts.Add(value);
-                else
-                    parts.Insert(i, value);
-            }
-        }
-        private static List<TrajectoryIntersect>[] GetIntersections(List<FillerContour.Part> parts)
-        {
-            var partsIntersections = new List<TrajectoryIntersect>[parts.Count];
-
-            for (var i = 0; i < parts.Count; i += 1)
-                partsIntersections[i] = new List<TrajectoryIntersect>();
-
-            for (var i = 0; i < parts.Count; i += 1)
-            {
-                var j = (i + 1) % parts.Count;
-                TrajectoryIntersect.Create(i, j, 1f, 0f, out var iIntersect, out var jIntersect);
-                partsIntersections[i].Add(iIntersect);
-                partsIntersections[j].Add(jIntersect);
-
-                for (j = i + 2; j < (i == 0 ? parts.Count - 1 : parts.Count); j += 1)
-                {
-                    var intersections = Intersection.Calculate(parts[i].Trajectory, parts[j].Trajectory);
-                    foreach (var intersection in intersections)
-                    {
-                        TrajectoryIntersect.Create(i, j, intersection.FirstT, intersection.SecondT, out iIntersect, out jIntersect);
-                        partsIntersections[i].Add(iIntersect);
-                        partsIntersections[j].Add(jIntersect);
-                    }
-                }
-            }
-
-            for (var i = 0; i < parts.Count; i += 1)
-                partsIntersections[i].Sort(TrajectoryIntersect.Comparer);
-
-            return partsIntersections;
-        }
-        private static List<TrajectoryPart>[] GetParts(List<FillerContour.Part> parts, List<TrajectoryIntersect>[] intersections)
-        {
-            var partOfParts = new List<TrajectoryPart>[intersections.Length];
-
-            for (var i = 0; i < intersections.Length; i += 1)
-            {
-                partOfParts[i] = new List<TrajectoryPart>();
-                var intersection = intersections[i];
-                for (var j = 0; j < intersection.Count - 1; j += 1)
-                {
-                    var part = new TrajectoryPart(parts[i], intersection[j], intersection[j + 1]);
-                    partOfParts[i].Add(part);
-                }
-            }
-
-            return partOfParts;
-        }
-        private static List<TrajectoryContour> GetContours(List<TrajectoryPart>[] parts)
-        {
-            var process = new List<TrajectoryPart>(parts.Length);
-            foreach (var part in parts)
-                process.AddRange(part);
-
-            var countours = new List<TrajectoryContour>();
-
-            while (process.Count != 0)
-            {
-                var contour = new TrajectoryContour();
-                var part = process[0];
-                process.RemoveAt(0);
-                contour.Add(part);
-
-                while (process.Count != 0)
-                {
-                    var index = process.FindIndex(p => p.Start == part.End.Other);
-                    if (index < 0)
-                        break;
-
-                    part = process[index];
-                    process.RemoveAt(index);
-                    contour.Add(part);
-
-                    if (part.End.Other == contour.First().Start)
-                    {
-                        countours.Add(contour);
-                        break;
-                    }
-                }
-            }
-
-            return countours;
-        }
-        public static List<FillerContour.Part> SetCornerRadius(List<FillerContour.Part> originalParts, float lineRadius, float medianRadius)
-        {
-            var parts = new List<FillerContour.Part>(originalParts);
+            var edges = new Contour(originalEdges);
 
             if (lineRadius > 0f || medianRadius > 0f)
             {
-                for (var i = 0; i < parts.Count; i += 1)
+                for (var i = 0; i < edges.Count; i += 1)
                 {
-                    if (SetRadius(i, parts, lineRadius, medianRadius))
+                    if (SetRadius(i, edges, lineRadius, medianRadius))
                         i += 1;
                 }
             }
 
-            return parts;
+            return edges;
         }
-        private static bool SetRadius(int i, List<FillerContour.Part> parts, float lineRadius, float medianRadius)
+        private static bool SetRadius(int i, Contour parts, float lineRadius, float medianRadius)
         {
             var j = (i + 1) % parts.Count;
-            var radius = (parts[i].IsEnter || parts[j].IsEnter) ? medianRadius : lineRadius;
+            var radius = (parts[i].isEnter || parts[j].isEnter) ? medianRadius : lineRadius;
             if (radius <= 0f)
                 return false;
 
-            var iParts = CalculateSolid(parts[i].Trajectory, 5, 1f, 40f, Calculate);
-            var jParts = CalculateSolid(parts[j].Trajectory, 5, 1f, 40f, Calculate);
+            var iTrajectories = new List<StraightTrajectory>();
+            var iParts = CalculateSolid(parts[i].trajectory, 5, 1f, 40f);
+            foreach (var part in iParts)
+            {
+                var trajectory = new StraightTrajectory(parts[i].trajectory.Position(part.start), parts[i].trajectory.Position(part.end));
+                iTrajectories.Add(trajectory);
+            }
 
-            var width = Math.Max(iParts.Count, jParts.Count);
+            var jTrajectories = new List<StraightTrajectory>();
+            var jParts = CalculateSolid(parts[j].trajectory, 5, 1f, 40f);
+            foreach (var part in jParts)
+            {
+                var trajectory = new StraightTrajectory(parts[j].trajectory.Position(part.start), parts[j].trajectory.Position(part.end));
+                jTrajectories.Add(trajectory);
+            }
+
+            var width = Math.Max(iTrajectories.Count, jTrajectories.Count);
             width = (width % 2 == 0 ? width : width + 1) / 2;
-            var sum = iParts.Count + jParts.Count - 1;
+            var sum = iTrajectories.Count + jTrajectories.Count - 1;
             var center = Vector3.zero;
             var firstDir = Vector3.zero;
             var secondDir = Vector3.zero;
@@ -598,17 +303,17 @@ namespace IMT.Manager
                     var first = (l / 2) + k + (l % 2);
                     var second = (l / 2) - k;
 
-                    if (first < iParts.Count && second < jParts.Count)
+                    if (first < iTrajectories.Count && second < jTrajectories.Count)
                     {
-                        if (CheckRadius(iParts[iParts.Count - 1 - first], jParts[second], radius, ref center, ref firstDir, ref secondDir))
+                        if (CheckRadius(iTrajectories[iTrajectories.Count - 1 - first], jTrajectories[second], radius, ref center, ref firstDir, ref secondDir))
                         {
                             AddRadius(i, j, parts, center, firstDir, secondDir);
                             return true;
                         }
                     }
-                    if (first != second && first < jParts.Count && second < iParts.Count)
+                    if (first != second && first < jTrajectories.Count && second < iTrajectories.Count)
                     {
-                        if (CheckRadius(iParts[iParts.Count - 1 - second], jParts[first], radius, ref center, ref firstDir, ref secondDir))
+                        if (CheckRadius(iTrajectories[iTrajectories.Count - 1 - second], jTrajectories[first], radius, ref center, ref firstDir, ref secondDir))
                         {
                             AddRadius(i, j, parts, center, firstDir, secondDir);
                             return true;
@@ -618,14 +323,6 @@ namespace IMT.Manager
             }
 
             return false;
-
-            static StraightTrajectory Calculate(ITrajectory trajectory)
-            {
-                if (trajectory is StraightTrajectory straight)
-                    return straight;
-                else
-                    return new StraightTrajectory(trajectory.StartPosition, trajectory.EndPosition);
-            }
         }
         private static bool CheckRadius(StraightTrajectory first, StraightTrajectory second, float radius, ref Vector3 center, ref Vector3 firstDir, ref Vector3 secondDir)
         {
@@ -636,9 +333,9 @@ namespace IMT.Manager
             if (!Intersection.CalculateSingle(first, second, out var firstT, out var secondT))
                 return false;
 
-            var position = (first.Position(firstT) + second.Position(secondT)) / 2f;
+            var position = (first.Position(firstT) + second.Position(secondT)) * 0.5f;
             var direction = (first.Direction - second.Direction).normalized * (firstT < 0 ? 1f : -1f);
-            var distance = radius / Mathf.Cos(angleA / 2f * Mathf.Deg2Rad);
+            var distance = radius / Mathf.Cos(angleA * 0.5f * Mathf.Deg2Rad);
 
             center = position + direction * distance;
             firstDir = first.Direction.Turn90(true);
@@ -646,81 +343,52 @@ namespace IMT.Manager
 
             var firstInter = Intersection.CalculateSingle(first, new StraightTrajectory(center, center + firstDir, false));
             var secondInter = Intersection.CalculateSingle(second, new StraightTrajectory(center, center + secondDir, false));
-            return firstInter.IsIntersect && CorrectT(firstInter.FirstT, first.Length) && secondInter.IsIntersect && CorrectT(secondInter.FirstT, second.Length);
+            return firstInter.isIntersect && CorrectT(firstInter.firstT, first.Length) && secondInter.isIntersect && CorrectT(secondInter.firstT, second.Length);
 
             static bool CorrectT(float t, float length) => -0.05f / length < t && t < 1f + 0.05f / length;
         }
-        private static void AddRadius(int i, int j, List<FillerContour.Part> parts, Vector3 center, Vector3 firstDir, Vector3 secondDir)
+        private static void AddRadius(int i, int j, Contour parts, Vector3 center, Vector3 firstDir, Vector3 secondDir)
         {
-            var firstInter = Intersection.CalculateSingle(parts[i].Trajectory, new StraightTrajectory(center, center + firstDir, false), out var firstT, out _);
-            var secondInter = Intersection.CalculateSingle(new StraightTrajectory(center, center + secondDir, false), parts[j].Trajectory, out _, out var secondT);
+            var firstInter = Intersection.CalculateSingle(parts[i].trajectory, new StraightTrajectory(center, center + firstDir, false), out var firstT, out _);
+            var secondInter = Intersection.CalculateSingle(new StraightTrajectory(center, center + secondDir, false), parts[j].trajectory, out _, out var secondT);
             if (firstInter && secondInter)
             {
-                parts[i] = new FillerContour.Part(parts[i].Trajectory.Cut(0f, firstT), parts[i].IsEnter);
-                parts[j] = new FillerContour.Part(parts[j].Trajectory.Cut(secondT, 1f), parts[j].IsEnter);
+                parts[i] = new ContourEdge(parts[i].trajectory.Cut(0f, firstT), parts[i].isEnter);
+                parts[j] = new ContourEdge(parts[j].trajectory.Cut(secondT, 1f), parts[j].isEnter);
 
-                var corner = new BezierTrajectory(parts[i].Trajectory.EndPosition, -parts[i].Trajectory.EndDirection, parts[j].Trajectory.StartPosition, -parts[j].Trajectory.StartDirection);
+                var corner = new BezierTrajectory(parts[i].trajectory.EndPosition, -parts[i].trajectory.EndDirection, parts[j].trajectory.StartPosition, -parts[j].trajectory.StartDirection);
 
-                parts.Insert(j, new FillerContour.Part(corner));
+                parts.Insert(j, new ContourEdge(corner));
             }
         }
+    }
 
-        private class TrajectoryIntersect
+    public class TrajectoryIntersect
+    {
+        public static IntersectComparer Comparer { get; } = new IntersectComparer();
+        public readonly int index;
+        public readonly float t;
+        public TrajectoryIntersect Other { get; private set; }
+
+        public TrajectoryIntersect(int index, float t)
         {
-            public static IntersectComparer Comparer { get; } = new IntersectComparer();
-            public int Index { get; private set; }
-            public float T { get; private set; }
-            public TrajectoryIntersect Other { get; private set; }
-
-            public static void Create(int i, int j, float iT, float jT, out TrajectoryIntersect first, out TrajectoryIntersect second)
-            {
-                first = new TrajectoryIntersect()
-                {
-                    Index = i,
-                    T = iT,
-                };
-                second = new TrajectoryIntersect()
-                {
-                    Index = j,
-                    T = jT,
-                };
-
-                first.Other = second;
-                second.Other = first;
-            }
-            public override string ToString() => Other != null ? $"{Index}:{T} × {Other.Index}:{Other.T}" : $"{Index}:{T} × null";
-
-            public class IntersectComparer : IComparer<TrajectoryIntersect>
-            {
-                public int Compare(TrajectoryIntersect x, TrajectoryIntersect y) => x.T.CompareTo(y.T);
-            }
+            this.index = index;
+            this.t = t;
         }
-        private class TrajectoryPart
-        {
-            public FillerContour.Part Part { get; }
-            public TrajectoryIntersect Start { get; }
-            public TrajectoryIntersect End { get; }
-            public FillerContour.Part Processed => new FillerContour.Part(Part.Trajectory.Cut(Start.T, End.T), Part.IsEnter);
-            public TrajectoryPart(FillerContour.Part part, TrajectoryIntersect start, TrajectoryIntersect end)
-            {
-                Part = part;
-                Start = start;
-                End = end;
-            }
 
-            public override string ToString() => $"{Start} — {End}";
-        }
-        private class TrajectoryContour : List<TrajectoryPart>
+        public static void Create(int i, int j, float iT, float jT, out TrajectoryIntersect first, out TrajectoryIntersect second)
         {
-            public TrajectoryHelper.Direction Direction
-            {
-                get
-                {
-                    var processed = this.Select(i => i.Processed.Trajectory).ToArray();
-                    return processed.GetDirection();
-                }
-            }
-            public List<FillerContour.Part> Processed => this.Select(i => i.Processed).ToList();
+            first = new TrajectoryIntersect(i, iT);
+            second = new TrajectoryIntersect(j, jT);
+
+            first.Other = second;
+            second.Other = first;
+        }
+        public override string ToString() => Other != null ? $"{index}:{t} × {Other.index}:{Other.t}" : $"{index}:{t} × null";
+
+        public class IntersectComparer : IComparer<TrajectoryIntersect>
+        {
+            public int Compare(TrajectoryIntersect x, TrajectoryIntersect y) => x.t.CompareTo(y.t);
         }
     }
 }

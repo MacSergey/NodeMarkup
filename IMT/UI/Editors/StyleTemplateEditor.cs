@@ -3,16 +3,15 @@ using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItemsPanel, StyleTemplate, StyleTemplateHeaderPanel, EditStyleTemplateMode>
+    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItemsPanel, StyleTemplate, StyleTemplateHeaderPanel, EditStyleTemplateMode>, IPropertyContainer
     {
         public override string Name => IMT.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(IMT.Localize.TemplateEditor_EmptyMessage, IMT.Localize.HeaderPanel_SaveAsTemplate);
-        public override Marking.SupportType Support { get; } = Marking.SupportType.StyleTemplates;
+        public override Marking.SupportType Support => Marking.SupportType.StyleTemplates;
         protected override string IsAssetMessage => IMT.Localize.TemplateEditor_TemplateIsAsset;
         protected override string RewriteCaption => IMT.Localize.TemplateEditor_RewriteCaption;
         protected override string RewriteMessage => IMT.Localize.TemplateEditor_RewriteMessage;
@@ -22,33 +21,47 @@ namespace IMT.UI.Editors
         protected override string IsWorkshopWarningMessage => IMT.Localize.TemplateEditor_IsWorkshopWarningMessage;
 
         private Style EditStyle { get; set; }
-        private List<EditorItem> StyleProperties { get; set; } = new List<EditorItem>();
+
+        object IPropertyEditor.EditObject => EditObject;
+        bool IPropertyEditor.IsTemplate => true;
+        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
+        Style IPropertyContainer.Style => EditStyle;
+        Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
+
+        Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
+        Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
+        Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
+        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
 
         protected override IEnumerable<StyleTemplate> GetObjects() => SingletonManager<StyleTemplateManager>.Instance.Templates;
 
-        protected override void OnFillPropertiesPanel(StyleTemplate template)
+        protected override void FillProperties()
         {
             CopyStyle();
-            base.OnFillPropertiesPanel(template);
+            base.FillProperties();
+            AddStyleType();
         }
-        protected override void OnClear()
+
+        private void AddStyleType()
         {
-            base.OnClear();
-            StyleProperties.Clear();
+            var styleProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Style");
+            styleProperty.Text = IMT.Localize.Editor_Style;
+            styleProperty.FieldWidth = 230;
+            styleProperty.EnableControl = false;
+            styleProperty.Init();
+            styleProperty.Value = EditStyle.Type.Description();
         }
+
+        void IPropertyEditor.RefreshProperties() => PropertyEditorHelper.RefreshProperties(this);
+
+        protected override void AddAditionalProperties() => this.AddProperties();
+        protected override void ClearAdditionalProperties() => this.ClearProperties();
+        protected override void RefreshAdditionalProperties() => this.RefreshProperties();
 
         private void CopyStyle()
         {
             EditStyle = EditObject.Style.Copy();
             EditStyle.OnStyleChanged = OnChanged;
-        }
-        protected override IEnumerable<EditorItem> AddAditionalProperties()
-        {
-            AddStyleProperties();
-            if (StyleProperties.OfType<ColorPropertyPanel>().FirstOrDefault() is ColorPropertyPanel colorProperty)
-                colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
-
-            return StyleProperties;
         }
 
         protected override void AddHeader()
@@ -56,12 +69,17 @@ namespace IMT.UI.Editors
             base.AddHeader();
             HeaderPanel.OnSetAsDefault += ToggleAsDefault;
             HeaderPanel.OnDuplicate += Duplicate;
-        }
-        private void AddStyleProperties()
-        {
-            StyleProperties = EditStyle.GetUIComponents(EditObject, PropertiesPanel, true);
+            HeaderPanel.OnApplySameStyle += ApplyStyleSameStyle;
+            HeaderPanel.OnApplySameType += ApplyStyleSameType;
         }
 
+        protected override void SetEditable(EditMode mode)
+        {
+            base.SetEditable(mode);
+
+            foreach (var property in (this as IPropertyContainer).StyleProperties)
+                property.EnableControl = EditMode;
+        }
         private void ToggleAsDefault()
         {
             SingletonManager<StyleTemplateManager>.Instance.ToggleAsDefaultTemplate(EditObject);
@@ -73,6 +91,87 @@ namespace IMT.UI.Editors
             if (SingletonManager<StyleTemplateManager>.Instance.DuplicateTemplate(EditObject, out StyleTemplate duplicate))
                 Panel.EditStyleTemplate(duplicate, false);
         }
+        private void ApplyStyleSameStyle()
+        {
+            switch (EditStyle)
+            {
+                case RegularLineStyle regularStyle:
+                    foreach (var line in Marking.Lines)
+                    {
+                        foreach (var rule in line.Rules)
+                        {
+                            if (rule.Style.Value.Type == regularStyle.Type)
+                                rule.Style.Value = regularStyle.CopyStyle();
+                        }
+                    }
+                    break;
+                case StopLineStyle stopStyle:
+                    foreach (var line in Marking.Lines)
+                    {
+                        foreach (var rule in line.Rules)
+                        {
+                            if (rule.Style.Value.Type == stopStyle.Type)
+                                rule.Style.Value = stopStyle.CopyStyle();
+                        }
+                    }
+                    break;
+                case CrosswalkStyle crosswalkStyle:
+                    foreach (var crosswalk in Marking.Crosswalks)
+                    {
+                        if (crosswalk.Style.Value.Type == crosswalkStyle.Type)
+                            crosswalk.Style.Value = crosswalkStyle.CopyStyle();
+                    }
+                    break;
+                case FillerStyle fillerStyle:
+                    foreach (var filler in Marking.Fillers)
+                    {
+                        if (filler.Style.Value.Type == fillerStyle.Type)
+                            filler.Style.Value = fillerStyle.CopyStyle();
+                    }
+                    break;
+            }
+
+            Panel.UpdatePanel();
+        }
+        private void ApplyStyleSameType()
+        {
+            switch (EditStyle)
+            {
+                case RegularLineStyle regularStyle:
+                    foreach (var line in Marking.Lines)
+                    {
+                        if ((regularStyle.Type.GetLineType() & line.Type) == 0 || (regularStyle.Type.GetNetworkType() & line.PointPair.NetworkType) == 0)
+                            continue;
+
+                        foreach (var rule in line.Rules)
+                            rule.Style.Value = regularStyle.CopyStyle();
+                    }
+                    break;
+                case StopLineStyle stopStyle:
+                    foreach (var line in Marking.Lines)
+                    {
+                        if ((stopStyle.Type.GetLineType() & line.Type) == 0 || (stopStyle.Type.GetNetworkType() & line.PointPair.NetworkType) == 0)
+                            continue;
+
+                        foreach (var rule in line.Rules)
+                            rule.Style.Value = stopStyle.CopyStyle();
+                    }
+                    break;
+                case CrosswalkStyle crosswalkStyle:
+                    foreach (var crosswalk in Marking.Crosswalks)
+                        crosswalk.Style.Value = crosswalkStyle.CopyStyle();
+                    break;
+                case FillerStyle fillerStyle:
+                    foreach (var filler in Marking.Fillers)
+                    {
+                        filler.Style.Value = fillerStyle.CopyStyle();
+                    }
+                    break;
+            }
+
+            Panel.UpdatePanel();
+        }
+
         protected override void OnApplyChanges()
         {
             base.OnApplyChanges();

@@ -14,15 +14,15 @@ namespace IMT.Utilities.API
         public Style Style { get; }
         public string Name => Style.Type.ToString();
 
-        private Dictionary<string, IStylePropertyData> _properties;
+        private Dictionary<string, IStylePropertyData> properties;
         private Dictionary<string, IStylePropertyData> PropertiesDic
         {
             get
             {
-                if (_properties == null)
-                    _properties = Style.Properties.ToDictionary(i => i.Name, i => i);
+                if (properties == null)
+                    properties = Style.Properties.ToDictionary(i => i.Name, i => i);
 
-                return _properties;
+                return properties;
             }
         }
         public IEnumerable<IStylePropertyData> Properties => PropertiesDic.Values;
@@ -30,7 +30,7 @@ namespace IMT.Utilities.API
         public StyleDataProvider(Style style)
         {
             Style = style;
-            _properties = null;
+            properties = null;
         }
 
         public object GetValue(string name)
@@ -103,7 +103,7 @@ namespace IMT.Utilities.API
         IMT.API.TextAlignment ITextLineStyle.Alignment { get => (IMT.API.TextAlignment)GetValue(nameof(Alignment)); set => SetValue(nameof(Alignment), value); }
         float ITextLineStyle.Shift { get => (float)GetValue(nameof(Shift)); set => SetValue(nameof(Shift), value); }
         NetInfo INetworkLineStyle.Prefab { get => (NetInfo)GetValue(nameof(INetworkLineStyle.Prefab)); set => SetValue(nameof(INetworkLineStyle.Prefab), value); }
-        float INetworkLineStyle.Shift { get => (float)GetValue(nameof(Shift)); set => SetValue(nameof(Shift), value); }
+        Vector2 INetworkLineStyle.Shift { get => (Vector2)GetValue(nameof(Shift)); set => SetValue(nameof(Shift), value); }
         float INetworkLineStyle.Scale { get => (float)GetValue(nameof(Scale)); set => SetValue(nameof(Scale), value); }
         public int RepeatDistance { get => (int)GetValue(nameof(RepeatDistance)); set => SetValue(nameof(RepeatDistance), value); }
         float? IPropLineStyle.Step { get => (float?)GetValue(nameof(IPropLineStyle.Step)); set => SetValue(nameof(IPropLineStyle.Step), value); }
@@ -127,6 +127,11 @@ namespace IMT.Utilities.API
         public float MedianCornerRadius { get => (float)GetValue(nameof(MedianCornerRadius)); set => SetValue(nameof(MedianCornerRadius), value); }
         public float CurbSize { get => (float)GetValue(nameof(CurbSize)); set => SetValue(nameof(CurbSize), value); }
         public float MedianCurbSize { get => (float)GetValue(nameof(MedianCurbSize)); set => SetValue(nameof(MedianCurbSize), value); }
+        public float Texture { get => (float)GetValue(nameof(Texture)); set => SetValue(nameof(Texture), value); }
+        public Vector2 Cracks { get => (Vector2)GetValue(nameof(Cracks)); set => SetValue(nameof(Cracks), value); }
+        public Vector2 Voids { get => (Vector2)GetValue(nameof(Voids)); set => SetValue(nameof(Voids), value); }
+        public Color32? NetworkColor { get => (Color32?)GetValue(nameof(NetworkColor)); set => SetValue(nameof(NetworkColor), value); }
+        public DashEnd DashEnd { get => (DashEnd)GetValue(nameof(DashEnd)); set => SetValue(nameof(DashEnd), value); }
     }
     public struct StylePropertyDataProvider<T> : IStylePropertyData
     {

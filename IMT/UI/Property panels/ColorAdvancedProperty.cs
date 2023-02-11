@@ -11,11 +11,11 @@ namespace IMT.UI
     {
         private static Color32? Buffer { get; set; }
 
-        Color32? _defaultColor;
-        private Color32 DefaultColor
+        Color32? defaultColor;
+        public Color32 DefaultColor
         {
-            get => _defaultColor ?? Manager.Style.DefaultColor;
-            set => _defaultColor = value;
+            get => defaultColor ?? Manager.Style.DefaultColor;
+            set => defaultColor = value;
         }
 
         private MultyAtlasUIButton CopyButton { get; }
@@ -29,7 +29,7 @@ namespace IMT.UI
             CopyButton.SetDefaultStyle();
             CopyButton.width = 20;
             CopyButton.atlasForeground = IMTTextures.Atlas;
-            CopyButton.normalFgSprite = IMTTextures.CopyHeaderButton;
+            CopyButton.normalFgSprite = IMTTextures.CopyButtonIcon;
             CopyButton.tooltip = IMT.Localize.Editor_ColorCopy;
             CopyButton.eventClick += Copy;
 
@@ -37,7 +37,7 @@ namespace IMT.UI
             PasteButton.SetDefaultStyle();
             PasteButton.width = 20;
             PasteButton.atlasForeground = IMTTextures.Atlas;
-            PasteButton.normalFgSprite = IMTTextures.PasteHeaderButton;
+            PasteButton.normalFgSprite = IMTTextures.PasteButtonIcon;
             PasteButton.tooltip = IMT.Localize.Editor_ColorPaste;
             PasteButton.eventClick += Paste;
         }
@@ -48,13 +48,13 @@ namespace IMT.UI
         }
         public void Init(Color32? defaultColor = null)
         {
-            _defaultColor = defaultColor;
+            this.defaultColor = defaultColor;
             base.Init();
         }
         public override void DeInit()
         {
             base.DeInit();
-            _defaultColor = null;
+            defaultColor = null;
         }
 
         protected override void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
@@ -73,7 +73,7 @@ namespace IMT.UI
 
             var button = AddButton(parent);
             button.size = new Vector2(width, 20f);
-            button.relativePosition = new Vector2(10 * count + width * (count - 1), 283f);
+            button.relativePosition = new Vector2(10 * count + width * (count - 1), 253f);
             button.textPadding = new RectOffset(0, 0, 5, 0);
             button.textScale = 0.6f;
             button.text = text;

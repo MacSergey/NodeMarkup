@@ -606,11 +606,6 @@ namespace IMT
 		public static string StyleOption_LineWidth => LocaleManager.GetString("StyleOption_LineWidth", Culture);
 
 		/// <summary>
-		/// Parallel to lanes
-		/// </summary>
-		public static string StyleOption_ParallelToLanes => LocaleManager.GetString("StyleOption_ParallelToLanes", Culture);
-
-		/// <summary>
 		/// Parallel solid lines
 		/// </summary>
 		public static string CrosswalkStyle_ParallelSolidLines => LocaleManager.GetString("CrosswalkStyle_ParallelSolidLines", Culture);
@@ -2186,9 +2181,9 @@ namespace IMT
 		public static string Editor_MoreOptions => LocaleManager.GetString("Editor_MoreOptions", Culture);
 
 		/// <summary>
-		/// Collapse additional style options
+		/// Collapse line rule panels
 		/// </summary>
-		public static string Settings_CollapseOptions => LocaleManager.GetString("Settings_CollapseOptions", Culture);
+		public static string Settings_CollapseRules => LocaleManager.GetString("Settings_CollapseRules", Culture);
 
 		/// <summary>
 		/// Main color
@@ -2569,5 +2564,180 @@ namespace IMT
 		/// Do you want to apply marking?
 		/// </summary>
 		public static string Tool_EndPasteMArkingMessage => LocaleManager.GetString("Tool_EndPasteMArkingMessage", Culture);
+
+		/// <summary>
+		/// Density
+		/// </summary>
+		public static string StyleOption_Density => LocaleManager.GetString("StyleOption_Density", Culture);
+
+		/// <summary>
+		/// Scale
+		/// </summary>
+		public static string StyleOption_Scale => LocaleManager.GetString("StyleOption_Scale", Culture);
+
+		/// <summary>
+		/// Cracks
+		/// </summary>
+		public static string StyleOption_Cracks => LocaleManager.GetString("StyleOption_Cracks", Culture);
+
+		/// <summary>
+		/// Voids
+		/// </summary>
+		public static string StyleOption_Voids => LocaleManager.GetString("StyleOption_Voids", Culture);
+
+		/// <summary>
+		/// Texture density
+		/// </summary>
+		public static string StyleOption_Texture => LocaleManager.GetString("StyleOption_Texture", Culture);
+
+		/// <summary>
+		/// Additional
+		/// </summary>
+		public static string StyleOptionCategory_Additional => LocaleManager.GetString("StyleOptionCategory_Additional", Culture);
+
+		/// <summary>
+		/// Graphic effects
+		/// </summary>
+		public static string StyleOptionCategory_Effect => LocaleManager.GetString("StyleOptionCategory_Effect", Culture);
+
+		/// <summary>
+		/// Main
+		/// </summary>
+		public static string StyleOptionCategory_Main => LocaleManager.GetString("StyleOptionCategory_Main", Culture);
+
+		/// <summary>
+		/// Apply to all items
+		/// </summary>
+		public static string HeaderPanel_ApplyAll => LocaleManager.GetString("HeaderPanel_ApplyAll", Culture);
+
+		/// <summary>
+		/// Apply to all rules
+		/// </summary>
+		public static string HeaderPanel_ApplyAllRules => LocaleManager.GetString("HeaderPanel_ApplyAllRules", Culture);
+
+		/// <summary>
+		/// Apply to all crosswalks
+		/// </summary>
+		public static string HeaderPanel_ApplyCrosswalkAll => LocaleManager.GetString("HeaderPanel_ApplyCrosswalkAll", Culture);
+
+		/// <summary>
+		/// Apply to all "{0}" crosswalks
+		/// </summary>
+		public static string HeaderPanel_ApplyCrosswalkType => LocaleManager.GetString("HeaderPanel_ApplyCrosswalkType", Culture);
+
+		/// <summary>
+		/// Apply to all fillers
+		/// </summary>
+		public static string HeaderPanel_ApplyFillerAll => LocaleManager.GetString("HeaderPanel_ApplyFillerAll", Culture);
+
+		/// <summary>
+		/// Apply to all "{0}" fillers
+		/// </summary>
+		public static string HeaderPanel_ApplyFillerType => LocaleManager.GetString("HeaderPanel_ApplyFillerType", Culture);
+
+		/// <summary>
+		/// Apply to all lines
+		/// </summary>
+		public static string HeaderPanel_ApplyRegularAll => LocaleManager.GetString("HeaderPanel_ApplyRegularAll", Culture);
+
+		/// <summary>
+		/// Apply to all "{0}" lines
+		/// </summary>
+		public static string HeaderPanel_ApplyRegularType => LocaleManager.GetString("HeaderPanel_ApplyRegularType", Culture);
+
+		/// <summary>
+		/// Apply to all stop lines
+		/// </summary>
+		public static string HeaderPanel_ApplyStopAll => LocaleManager.GetString("HeaderPanel_ApplyStopAll", Culture);
+
+		/// <summary>
+		/// Apply to all "{0}" stop lines
+		/// </summary>
+		public static string HeaderPanel_ApplyStopType => LocaleManager.GetString("HeaderPanel_ApplyStopType", Culture);
+
+		/// <summary>
+		/// Copy effects
+		/// </summary>
+		public static string HeaderPanel_CopyEffects => LocaleManager.GetString("HeaderPanel_CopyEffects", Culture);
+
+		/// <summary>
+		/// Paste effects
+		/// </summary>
+		public static string HeaderPanel_PasteEffects => LocaleManager.GetString("HeaderPanel_PasteEffects", Culture);
+
+		/// <summary>
+		/// Both
+		/// </summary>
+		public static string StyleOption_FixedEndBoth => LocaleManager.GetString("StyleOption_FixedEndBoth", Culture);
+
+		/// <summary>
+		/// End
+		/// </summary>
+		public static string StyleOption_FixedEndEnd => LocaleManager.GetString("StyleOption_FixedEndEnd", Culture);
+
+		/// <summary>
+		/// Start
+		/// </summary>
+		public static string StyleOption_FixedEndStart => LocaleManager.GetString("StyleOption_FixedEndStart", Culture);
+
+		/// <summary>
+		/// Fixed end
+		/// </summary>
+		public static string StyleOption_FixedEnd => LocaleManager.GetString("StyleOption_FixedEnd", Culture);
+
+		/// <summary>
+		/// Max
+		/// </summary>
+		public static string StyleOption_Max => LocaleManager.GetString("StyleOption_Max", Culture);
+
+		/// <summary>
+		/// Min
+		/// </summary>
+		public static string StyleOption_Min => LocaleManager.GetString("StyleOption_Min", Culture);
+
+		/// <summary>
+		/// Limits
+		/// </summary>
+		public static string StyleOption_ObjectLimits => LocaleManager.GetString("StyleOption_ObjectLimits", Culture);
+
+		/// <summary>
+		/// Not parallel
+		/// </summary>
+		public static string StyleOption_NotParallel => LocaleManager.GetString("StyleOption_NotParallel", Culture);
+
+		/// <summary>
+		/// Parallel to lines and slope end
+		/// </summary>
+		public static string StyleOption_ParallelSlope => LocaleManager.GetString("StyleOption_ParallelSlope", Culture);
+
+		/// <summary>
+		/// Parallel to lines and straight ends
+		/// </summary>
+		public static string StyleOption_ParallelStraight => LocaleManager.GetString("StyleOption_ParallelStraight", Culture);
+
+		/// <summary>
+		/// Dashes type
+		/// </summary>
+		public static string StyleOption_ZebraDashesType => LocaleManager.GetString("StyleOption_ZebraDashesType", Culture);
+
+		/// <summary>
+		/// Invert network
+		/// </summary>
+		public static string StyleOption_InvertNetwork => LocaleManager.GetString("StyleOption_InvertNetwork", Culture);
+
+		/// <summary>
+		/// Two different
+		/// </summary>
+		public static string StyleOption_ObjectTwoDifferent => LocaleManager.GetString("StyleOption_ObjectTwoDifferent", Culture);
+
+		/// <summary>
+		/// Hold {0} to collapse/expand all rules
+		/// </summary>
+		public static string Header_ExpandTooltip => LocaleManager.GetString("Header_ExpandTooltip", Culture);
+
+		/// <summary>
+		/// [UPDATED] Improved resolution of rendering and shape of 2D fillers and crosswalks.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_13 => LocaleManager.GetString("Mod_WhatsNewMessage1_13", Culture);
 	}
 }
