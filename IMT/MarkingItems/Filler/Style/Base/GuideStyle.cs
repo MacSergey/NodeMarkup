@@ -143,7 +143,7 @@ namespace IMT.Manager
         }
         protected void AddGuideProperty(FillerGuidePropertyPanel guideProperty, EditorProvider provider)
         {
-            if (provider.editor is MarkingFiller filler)
+            if (provider.editor.EditObject is MarkingFiller filler)
             {
                 var contour = filler.Contour;
                 guideProperty.Text = Localize.StyleOption_Rails;

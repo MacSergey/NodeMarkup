@@ -1,5 +1,4 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -10,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -24,6 +22,7 @@ namespace IMT.Manager
         private bool IsValid => IsValidNetwork(Prefab.Value);
 
         public PropertyPrefabValue<NetInfo> Prefab { get; }
+        public PropertyNullableStructValue<Color32, PropertyColorValue> NetworkColor { get; }
         public PropertyValue<float> Shift { get; }
         public PropertyValue<float> Elevation { get; }
         public PropertyValue<float> OffsetBefore { get; }
@@ -31,7 +30,6 @@ namespace IMT.Manager
         public PropertyValue<float> Scale { get; }
         public PropertyValue<int> RepeatDistance { get; }
         public PropertyBoolValue Invert { get; }
-        //private bool InvertShift { get; set; }
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -39,6 +37,7 @@ namespace IMT.Manager
             get
             {
                 yield return nameof(Prefab);
+                yield return nameof(NetworkColor);
                 yield return nameof(Shift);
                 yield return nameof(Elevation);
                 yield return nameof(Scale);
@@ -63,9 +62,10 @@ namespace IMT.Manager
             }
         }
 
-        public NetworkLineStyle(NetInfo prefab, float shift, float elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(new Color32(), 0f)
+        public NetworkLineStyle(NetInfo prefab, Color32? color, float shift, float elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(default, 0f)
         {
             Prefab = new PropertyPrefabValue<NetInfo>("PRF", StyleChanged, prefab);
+            NetworkColor = new PropertyNullableStructValue<Color32, PropertyColorValue>(new PropertyColorValue("NC", null), "NC", StyleChanged, color);
             Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
             Elevation = new PropertyStructValue<float>("E", StyleChanged, elevation);
             OffsetBefore = new PropertyStructValue<float>("OB", StyleChanged, offsetBefore);
@@ -75,7 +75,7 @@ namespace IMT.Manager
             Invert = GetInvertProperty(invert);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new NetworkLineStyle(Prefab, Shift, Elevation, Scale, OffsetBefore, OffsetAfter, RepeatDistance, Invert);
+        public override RegularLineStyle CopyLineStyle() => new NetworkLineStyle(Prefab, NetworkColor, Shift, Elevation, Scale, OffsetBefore, OffsetAfter, RepeatDistance, Invert);
 
         public override void CopyTo(LineStyle target)
         {
@@ -87,6 +87,7 @@ namespace IMT.Manager
             if (target is NetworkLineStyle networkTarget)
             {
                 networkTarget.Prefab.Value = Prefab;
+                networkTarget.NetworkColor.Value = NetworkColor;
                 networkTarget.Shift.Value = Shift;
                 networkTarget.OffsetBefore.Value = OffsetBefore;
                 networkTarget.OffsetAfter.Value = OffsetAfter;
@@ -127,7 +128,7 @@ namespace IMT.Manager
                     trajectories[i] = trajectory.Cut(1f / count * i, 1f / count * (i + 1));
             }
 
-            addData(new MarkingNetworkData(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, Elevation));
+            addData(new MarkingNetworkData(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, Elevation, NetworkColor.Value ?? Prefab.Value.m_color));
         }
 
         protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
@@ -135,6 +136,7 @@ namespace IMT.Manager
             base.GetUIComponents(line, provider);
 
             provider.AddProperty(new PropertyInfo<SelectNetworkProperty>(this, nameof(Prefab), MainCategory, AddPrefabProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(NetworkColor), AdditionalCategory, AddNetworkColorProperty, RefreshNetworkColorProperty));
             provider.AddProperty(new PropertyInfo<FloatInvertedPropertyPanel>(this, nameof(Shift), MainCategory, AddShiftProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), AdditionalCategory, AddScaleProperty));
@@ -152,9 +154,26 @@ namespace IMT.Manager
             prefabProperty.Prefab = Prefab;
             prefabProperty.OnValueChanged += (value) =>
             {
+                var oldPrefab = Prefab.Value;
                 Prefab.Value = value;
+                if ((oldPrefab == null || NetworkColor.Value == null || NetworkColor.Value != oldPrefab.m_color) && value != null)
+                    NetworkColor.Value = value.m_color;
                 provider.Refresh();
             };
+        }
+
+        private void AddNetworkColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        {
+            colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.WheelTip = Settings.ShowToolTip;
+            colorProperty.Init(Prefab.Value?.m_color);
+            colorProperty.Value = Color;
+            colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
+        }
+        private void RefreshNetworkColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        {
+            if (Prefab.Value != null)
+                colorProperty.DefaultColor = Prefab.Value.m_color;
         }
 
         private void AddShiftProperty(FloatInvertedPropertyPanel shiftProperty, EditorProvider provider)
@@ -259,6 +278,7 @@ namespace IMT.Manager
         {
             var config = base.ToXml();
             Prefab.ToXml(config);
+            NetworkColor.ToXml(config);
             Shift.ToXml(config);
             Elevation.ToXml(config);
             Scale.ToXml(config);
@@ -272,6 +292,7 @@ namespace IMT.Manager
         {
             base.FromXml(config, map, invert, typeChanged);
             Prefab.FromXml(config, null);
+            NetworkColor.FromXml(config, Prefab.Value?.m_color);
             Shift.FromXml(config, DefaultObjectShift);
             Elevation.FromXml(config, DefaultObjectElevation);
             Scale.FromXml(config, DefaultNetworkScale);

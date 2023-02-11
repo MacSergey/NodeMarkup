@@ -25,7 +25,7 @@ namespace IMT.Utilities
         public override MarkingLODType LODType => MarkingLODType.Network;
         Data[] Datas { get; set; }
 
-        public MarkingNetworkData(NetInfo info, ITrajectory[] trajectories, float width, float length, float scale, float elevation) : base(MarkingLOD.NoLOD, width, length)
+        public MarkingNetworkData(NetInfo info, ITrajectory[] trajectories, float width, float length, float scale, float elevation, Color32 color) : base(MarkingLOD.NoLOD, width, length)
         {
             var count = info.m_segments.Count(s => s.CheckFlags(NetSegment.Flags.None, out _));
             Datas = new Data[trajectories.Length * count];
@@ -47,8 +47,7 @@ namespace IMT.Utilities
                         Datas[index].position = position;
                         Datas[index].left = left;
                         Datas[index].right = right;
-                        Datas[index].color = info.m_color;
-                        Datas[index].color.a = 0f;
+                        Datas[index].color = color;
 
                         if (segment.m_requireSurfaceMaps)
                             Singleton<TerrainManager>.instance.GetSurfaceMapping(Datas[index].position, out Datas[index].surfaceTexA, out Datas[i].surfaceTexB, out Datas[index].surfaceMapping);
