@@ -7,26 +7,26 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Xml.Linq;
 using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class ZebraCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk, IParallel, IEffectStyle
+    public class ZebraCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, IDashedCrosswalk, IEffectStyle
     {
         public override StyleType Type => StyleType.CrosswalkZebra;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
-        public PropertyBoolValue Parallel { get; }
+        public PropertyEnumValue<DashEnd> DashType { get; }
         public PropertyBoolValue TwoColors { get; }
         public PropertyColorValue SecondColor { get; }
 
         public PropertyValue<bool> UseGap { get; }
         public PropertyValue<float> GapLength { get; }
         public PropertyValue<int> GapPeriod { get; }
-        public PropertyValue<bool> StraightEnds { get; }
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -36,11 +36,10 @@ namespace IMT.Manager
                 yield return nameof(TwoColors);
                 yield return nameof(Color);
                 yield return nameof(SecondColor);
+                yield return nameof(DashType);
                 yield return nameof(Width);
                 yield return nameof(Length);
                 yield return nameof(Offset);
-                yield return nameof(Parallel);
-                yield return nameof(StraightEnds);
                 yield return nameof(Gap);
                 yield return nameof(Texture);
                 yield return nameof(Cracks);
@@ -67,7 +66,7 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<float>(nameof(SpaceLength), SpaceLength);
                 yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
                 yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-                yield return new StylePropertyDataProvider<bool>(nameof(Parallel), Parallel);
+                yield return new StylePropertyDataProvider<DashEnd>(nameof(DashType), DashType);
                 yield return new StylePropertyDataProvider<bool>(nameof(UseGap), UseGap);
                 yield return new StylePropertyDataProvider<float>(nameof(GapLength), GapLength);
                 yield return new StylePropertyDataProvider<int>(nameof(GapPeriod), GapPeriod);
@@ -78,14 +77,14 @@ namespace IMT.Manager
         }
 
         protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetAbsoluteWidth(Width, crosswalk);
-        protected override float GetAbsoluteWidth(float length, MarkingCrosswalk crosswalk) =>  Parallel ? length : length / Mathf.Sin(crosswalk.CornerAndNormalAngle);
-        protected float GetRelativeWidth(float length, MarkingCrosswalk crosswalk) => Parallel ? length / Mathf.Sin(crosswalk.CornerAndNormalAngle) : length;
+        protected override float GetAbsoluteWidth(float length, MarkingCrosswalk crosswalk) =>  DashType.Value != DashEnd.NotParallel ? length : length / Mathf.Sin(crosswalk.CornerAndNormalAngle);
+        protected float GetRelativeWidth(float length, MarkingCrosswalk crosswalk) => DashType.Value != DashEnd.NotParallel ? length / Mathf.Sin(crosswalk.CornerAndNormalAngle) : length;
 
-        public ZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel, bool straightEnds) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter)
+        public ZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, DashEnd dashEnd) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter)
         {
             DashLength = GetDashLengthProperty(dashLength);
             SpaceLength = GetSpaceLengthProperty(spaceLength);
-            Parallel = GetParallelProperty(parallel);
+            DashType = new PropertyEnumValue<DashEnd>("P", StyleChanged, dashEnd);
 
             TwoColors = GetTwoColorsProperty(useSecondColor);
             SecondColor = GetSecondColorProperty(TwoColors ? secondColor : color);
@@ -93,20 +92,17 @@ namespace IMT.Manager
             UseGap = GetUseGapProperty(useGap);
             GapLength = GetGapLengthProperty(gapLength);
             GapPeriod = GetGapPeriodProperty(gapPeriod);
-
-            StraightEnds = new PropertyBoolValue("STE", StyleChanged, straightEnds);
         }
-        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel, StraightEnds);
+        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, DashType);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
 
             if (target is ZebraCrosswalkStyle zebraTarget)
             {
+                zebraTarget.DashType.Value = DashType;
                 zebraTarget.TwoColors.Value = TwoColors;
                 zebraTarget.SecondColor.Value = SecondColor;
-
-                zebraTarget.StraightEnds.Value = StraightEnds;
 
                 zebraTarget.UseGap.Value = UseGap;
                 zebraTarget.GapLength.Value = GapLength;
@@ -118,9 +114,6 @@ namespace IMT.Manager
                 dashedTarget.DashLength.Value = DashLength;
                 dashedTarget.SpaceLength.Value = SpaceLength;
             }
-
-            if (target is IParallel parallelTarget)
-                parallelTarget.Parallel.Value = Parallel;
         }
 
         protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData)
@@ -128,10 +121,10 @@ namespace IMT.Manager
             var offset = GetVisibleWidth(crosswalk) * 0.5f + OffsetBefore;
             var width = GetAbsoluteWidth(Width, crosswalk);
 
-            var direction = Parallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
+            var direction = DashType.Value != DashEnd.NotParallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
             var trajectory = crosswalk.GetFullTrajectory(offset, direction);
 
-            if(Parallel && StraightEnds)
+            if(DashType.Value == DashEnd.ParallelStraight)
             {
                 var dashes = GetDashes(crosswalk, trajectory);
                 for (int i = 0; i < dashes.Count; i += 1)
@@ -223,8 +216,7 @@ namespace IMT.Manager
             provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), MainCategory, AddSecondColorProperty, RefreshSecondColorProperty));
 
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), MainCategory, AddCrosswalkLengthProperty));
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Parallel), AdditionalCategory, AddParallelProperty));
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(StraightEnds), AdditionalCategory, AddStraightEndsProperty, RefreshStraightEndsProperty));
+            provider.AddProperty(new PropertyInfo<DashEndPanel>(this, nameof(DashType), MainCategory, AddDashEndProperty));
 
             provider.AddProperty(new PropertyInfo<GapProperty>(this, nameof(Gap), AdditionalCategory, AddGapProperty));
         }
@@ -261,27 +253,15 @@ namespace IMT.Manager
             colorProperty.Text = TwoColors.Value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
         }
 
-        protected void AddParallelProperty(BoolListPropertyPanel parallelProperty, EditorProvider provider)
+        protected void AddDashEndProperty(DashEndPanel dashEndProperty, EditorProvider provider)
         {
-            parallelProperty.Text = Localize.StyleOption_ParallelToLanes;
-            parallelProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
-            parallelProperty.SelectedObject = Parallel;
-            parallelProperty.OnSelectObjectChanged += (value) =>
-            {
-                Parallel.Value = value;
-                provider.Refresh();
-            };
-        }
-        protected void AddStraightEndsProperty(BoolListPropertyPanel straightEndsProperty, EditorProvider provider)
-        {
-            straightEndsProperty.Text = Localize.StyleOption_StraightEnds;
-            straightEndsProperty.Init(Localize.StyleOption_StraightEndsSlope, Localize.StyleOption_StraightEndsStraight);
-            straightEndsProperty.SelectedObject = StraightEnds;
-            straightEndsProperty.OnSelectObjectChanged += (value) => StraightEnds.Value = value;
-        }
-        protected void RefreshStraightEndsProperty(BoolListPropertyPanel straightEndsProperty, EditorProvider provider)
-        {
-            straightEndsProperty.IsHidden = !Parallel.Value;
+            dashEndProperty.Text = Localize.StyleOption_ZebraDashesType;
+            dashEndProperty.Selector.AutoButtonSize = false;
+            dashEndProperty.Selector.ButtonWidth = 60f;
+            dashEndProperty.Selector.atlas = IMTTextures.Atlas;
+            dashEndProperty.Init();
+            dashEndProperty.SelectedObject = DashType;
+            dashEndProperty.OnSelectObjectChanged += (value) => DashType.Value = value;
         }
 
         protected void AddGapProperty(GapProperty gapProperty, EditorProvider provider)
@@ -313,13 +293,12 @@ namespace IMT.Manager
             var config = base.ToXml();
             DashLength.ToXml(config);
             SpaceLength.ToXml(config);
-            Parallel.ToXml(config);
+            DashType.ToXml(config);
             TwoColors.ToXml(config);
             SecondColor.ToXml(config);
             UseGap.ToXml(config);
             GapLength.ToXml(config);
             GapPeriod.ToXml(config);
-            StraightEnds.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
@@ -327,13 +306,52 @@ namespace IMT.Manager
             base.FromXml(config, map, invert, typeChanged);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);
-            Parallel.FromXml(config, true);
+            DashType.FromXml(config, DashEnd.ParallelStraight);
             TwoColors.FromXml(config, false);
             SecondColor.FromXml(config, DefaultColor);
             UseGap.FromXml(config, false);
             GapLength.FromXml(config, DefaultSpaceLength);
             GapPeriod.FromXml(config, DefaulCrosswalkGapPeriod);
-            StraightEnds.FromXml(config, true);
+        }
+
+        public enum DashEnd
+        {
+            [Description(nameof(Localize.StyleOption_NotParallel))]
+            [Sprite(nameof(IMTTextures.NotParallelButtonIcon))]
+            NotParallel,
+
+            [Description(nameof(Localize.StyleOption_ParallelStraight))]
+            [Sprite(nameof(IMTTextures.StraightButtonIcon))]
+            ParallelStraight,
+
+            [Description(nameof(Localize.StyleOption_ParallelSlope))]
+            [Sprite(nameof(IMTTextures.SlopeButtonIcon))]
+            ParallelSlope,
+        }
+
+        public class DashEndPanel : EnumOncePropertyPanel<DashEnd, DashEndPanel.DashEndSegmented>
+        {
+            protected override bool IsEqual(DashEnd first, DashEnd second) => first == second;
+            protected override string GetDescription(DashEnd value) => value.Description();
+
+            protected override void FillItems(Func<DashEnd, bool> selector)
+            {
+                Selector.StopLayout();
+                foreach (var value in GetValues())
+                {
+                    if (selector?.Invoke(value) != false)
+                    {
+                        var sprite = value.Sprite();
+                        if (string.IsNullOrEmpty(sprite))
+                            Selector.AddItem(value, GetDescription(value));
+                        else
+                            Selector.AddItem(value, GetDescription(value), IMTTextures.Atlas, sprite);
+                    }
+                }
+                Selector.StartLayout();
+            }
+
+            public class DashEndSegmented : UIOnceSegmented<DashEnd> { }
         }
     }
 }

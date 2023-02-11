@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.13.0.559</AssemblyVersion>
+    <AssemblyVersion>1.13.0.562</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -134,7 +134,7 @@
     <None Remove="Resources\WideButtonIcons\DynamicFreeButtonIcon.png" />
     <None Remove="Resources\WideButtonIcons\FixedFixedButtonIcon.png" />
     <None Remove="Resources\WideButtonIcons\FixedFreeButtonIcon.png" />
-    <None Remove="Resources\WideButtonIcons\ParallelButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\NotParallelButtonIcon.png" />
     <None Remove="Resources\WideButtonIcons\SlopeButtonIcon.png" />
     <None Remove="Resources\WideButtonIcons\StraightButtonIcon.png" />
   </ItemGroup>
@@ -298,7 +298,7 @@
     <EmbeddedResource Include="Resources\WideButtonIcons\DynamicFreeButtonIcon.png" />
     <EmbeddedResource Include="Resources\WideButtonIcons\FixedFixedButtonIcon.png" />
     <EmbeddedResource Include="Resources\WideButtonIcons\FixedFreeButtonIcon.png" />
-    <EmbeddedResource Include="Resources\WideButtonIcons\ParallelButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\NotParallelButtonIcon.png" />
     <EmbeddedResource Include="Resources\WideButtonIcons\SlopeButtonIcon.png" />
     <EmbeddedResource Include="Resources\WideButtonIcons\StraightButtonIcon.png" />
   </ItemGroup>

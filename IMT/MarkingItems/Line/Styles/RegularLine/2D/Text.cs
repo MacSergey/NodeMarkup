@@ -33,6 +33,7 @@ namespace IMT.Manager
         private PropertyEnumValue<TextDirection> Direction { get; }
         private PropertyVector2Value Spacing { get; }
         private PropertyEnumValue<TextAlignment> Alignment { get; }
+        private PropertyStructValue<float> Offset { get; }
 
         private Dictionary<MarkingLOD, TextureId> PrevTextureId { get; } = new Dictionary<MarkingLOD, TextureId>()
         {
@@ -59,6 +60,7 @@ namespace IMT.Manager
                 yield return nameof(Direction);
                 yield return nameof(Spacing);
                 yield return nameof(Alignment);
+                yield return nameof(Offset);
                 yield return nameof(Shift);
                 yield return nameof(Angle);
                 yield return nameof(Texture);
@@ -89,7 +91,7 @@ namespace IMT.Manager
             }
         }
 
-        public RegularLineStyleText(Color32 color, Vector2 cracks, Vector2 voids, float texture, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing, TextAlignment alignment) : base(color, default, cracks, voids, texture)
+        public RegularLineStyleText(Color32 color, Vector2 cracks, Vector2 voids, float texture, string font, string text, float scale, float angle, float shift, TextDirection direction, Vector2 spacing, TextAlignment alignment, float offset) : base(color, default, cracks, voids, texture)
         {
             Text = new PropertyStringValue("TX", StyleChanged, text);
             Font = new PropertyStringValue("F", StyleChanged, font);
@@ -98,8 +100,8 @@ namespace IMT.Manager
             Shift = new PropertyStructValue<float>("SF", StyleChanged, shift);
             Direction = new PropertyEnumValue<TextDirection>("V", StyleChanged, direction);
             Spacing = new PropertyVector2Value(StyleChanged, spacing, "SPC", "SPL");
-
             Alignment = new PropertyEnumValue<TextAlignment>("AL", StyleChanged, alignment);
+            Offset = GetOffsetProperty(offset);
 #if DEBUG
             Ratio = new PropertyStructValue<float>(StyleChanged, 0.05f);
 #endif
@@ -174,7 +176,7 @@ namespace IMT.Manager
             }
         }
 
-        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Cracks, Voids, Texture, Font, Text, Scale, Angle, Shift, Direction, Spacing, Alignment);
+        public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Cracks, Voids, Texture, Font, Text, Scale, Angle, Shift, Direction, Spacing, Alignment, Offset);
 
         protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
@@ -205,10 +207,11 @@ namespace IMT.Manager
             }
 
             var ratio = lod == MarkingLOD.LOD0 ? Ratio : Ratio * 5f;
-            var offset = 0.5f * (textureData.width * ratio * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * Angle)) + textureData.height * ratio * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * Angle)));
+            var offset = Offset + 0.5f * (textureData.width * ratio * Mathf.Abs(Mathf.Sin(Mathf.Deg2Rad * Angle)) + textureData.height * ratio * Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * Angle)));
 
             var t = Alignment.Value switch
             {
+                TextAlignment.Middle => trajectory.Travel(0.5f, Offset),
                 TextAlignment.Start when line.Marking.Type == MarkingType.Node => trajectory.Length >= offset ? trajectory.Travel(offset) : 0.5f,
                 TextAlignment.Start when line.Marking.Type == MarkingType.Segment => trajectory.Length >= offset ? 1f - trajectory.Invert().Travel(offset) : 0.5f,
                 TextAlignment.End when line.Marking.Type == MarkingType.Node => trajectory.Length >= offset ? 1f - trajectory.Invert().Travel(offset) : 0.5f,
@@ -216,6 +219,7 @@ namespace IMT.Manager
                 _ => 0.5f,
             };
 
+            t = Mathf.Clamp01(t);
             var direction = line.Trajectory.Tangent(t);
             var position = line.Trajectory.Position(t) + direction.MakeFlatNormalized().Turn90(true) * Shift;
             var angle = direction.AbsoluteAngle() + (Angle.Value + (line.Marking.Type == MarkingType.Node ? -90 : 90)) * Mathf.Deg2Rad;
@@ -239,6 +243,7 @@ namespace IMT.Manager
             provider.AddProperty(new PropertyInfo<TextDirectionPanel>(this, nameof(Direction), AdditionalCategory, AddDirectionProperty));
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Spacing), AdditionalCategory, AddSpacingProperty));
             provider.AddProperty(new PropertyInfo<TextAlignmentPanel>(this, nameof(Alignment), AdditionalCategory, AddAlignmentProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), AdditionalCategory, AddOffsetProperty, RefreshOffsetProperty));
 #if DEBUG
             if (!provider.isTemplate && Settings.ShowDebugProperties)
             {
@@ -293,21 +298,21 @@ namespace IMT.Manager
             angleProperty.Value = Angle;
             angleProperty.OnValueChanged += (value) => Angle.Value = value;
         }
-        protected void AddShiftProperty(FloatPropertyPanel shiftProperty, EditorProvider provider)
+        protected void AddShiftProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
-            shiftProperty.Text = Localize.StyleOption_ObjectShift;
-            shiftProperty.Format = Localize.NumberFormat_Meter;
-            shiftProperty.UseWheel = true;
-            shiftProperty.WheelStep = 0.1f;
-            shiftProperty.WheelTip = Settings.ShowToolTip;
-            shiftProperty.CheckMin = true;
-            shiftProperty.CheckMax = true;
-            shiftProperty.MinValue = -50;
-            shiftProperty.MaxValue = 50;
-            shiftProperty.CyclicalValue = false;
-            shiftProperty.Init();
-            shiftProperty.Value = Shift;
-            shiftProperty.OnValueChanged += (value) => Shift.Value = value;
+            offsetProperty.Text = Localize.StyleOption_ObjectShift;
+            offsetProperty.Format = Localize.NumberFormat_Meter;
+            offsetProperty.UseWheel = true;
+            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.WheelTip = Settings.ShowToolTip;
+            offsetProperty.CheckMin = true;
+            offsetProperty.CheckMax = true;
+            offsetProperty.MinValue = -50;
+            offsetProperty.MaxValue = 50;
+            offsetProperty.CyclicalValue = false;
+            offsetProperty.Init();
+            offsetProperty.Value = Shift;
+            offsetProperty.OnValueChanged += (value) => Shift.Value = value;
         }
         protected void AddDirectionProperty(TextDirectionPanel directionProperty, EditorProvider provider)
         {
@@ -323,8 +328,35 @@ namespace IMT.Manager
             alignmentProperty.Text = Localize.StyleOption_TextAlignment;
             alignmentProperty.Init();
             alignmentProperty.SelectedObject = Alignment;
-            alignmentProperty.OnSelectObjectChanged += (value) => Alignment.Value = value;
+            alignmentProperty.OnSelectObjectChanged += (value) =>
+            {
+                Alignment.Value = value;
+                provider.Refresh();
+            };
         }
+        private new void AddOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
+        {
+            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Format = Localize.NumberFormat_Meter;
+            offsetProperty.UseWheel = true;
+            offsetProperty.WheelStep = 0.1f;
+            offsetProperty.WheelTip = Settings.ShowToolTip;
+            offsetProperty.CheckMin = true;
+            offsetProperty.CheckMax = true;
+            offsetProperty.MinValue = -100;
+            offsetProperty.MaxValue = 100;
+            offsetProperty.CyclicalValue = false;
+            offsetProperty.Init();
+            offsetProperty.Value = Offset;
+            offsetProperty.OnValueChanged += (value) => Offset.Value = value;
+        }
+        private void RefreshOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
+        {
+            offsetProperty.MinValue = Alignment.Value == TextAlignment.Middle ? -50f : 0f;
+            offsetProperty.MaxValue = Alignment.Value == TextAlignment.Middle ? 50f : 100f;
+            offsetProperty.SimulateEnterValue(Offset);
+        }
+
         protected void AddSpacingProperty(Vector2PropertyPanel spacingProperty, EditorProvider provider)
         {
             spacingProperty.Text = Localize.StyleOption_Spacing;
@@ -369,6 +401,7 @@ namespace IMT.Manager
             Direction.ToXml(config);
             Spacing.ToXml(config);
             Alignment.ToXml(config);
+            Offset.ToXml(config);
             return config;
         }
 
@@ -383,6 +416,7 @@ namespace IMT.Manager
             Direction.FromXml(config, TextDirection.LeftToRight);
             Spacing.FromXml(config, Vector2.zero);
             Alignment.FromXml(config, TextAlignment.Middle);
+            Offset.FromXml(config, 0f);
 
             if (invert ^ typeChanged)
             {

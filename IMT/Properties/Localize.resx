@@ -502,9 +502,6 @@ To create a crosswalk hold {0}.</value>
   <data name="StyleOption_LineWidth" xml:space="preserve">
     <value>Line width</value>
   </data>
-  <data name="StyleOption_ParallelToLanes" xml:space="preserve">
-    <value>Parallel to lanes</value>
-  </data>
   <data name="CrosswalkStyle_ParallelSolidLines" xml:space="preserve">
     <value>Parallel solid lines</value>
   </data>
@@ -1939,13 +1936,16 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_ObjectLimits" xml:space="preserve">
     <value>Limits</value>
   </data>
-  <data name="StyleOption_StraightEnds" xml:space="preserve">
-    <value>Ends</value>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>Not parallel</value>
   </data>
-  <data name="StyleOption_StraightEndsSlope" xml:space="preserve">
-    <value>Slope</value>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>Parallel to lines and slope end</value>
   </data>
-  <data name="StyleOption_StraightEndsStraight" xml:space="preserve">
-    <value>Straight</value>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>Parallel to lines and straight ends</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Dashes type</value>
   </data>
 </root>

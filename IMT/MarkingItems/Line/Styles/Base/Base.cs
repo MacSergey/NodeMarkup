@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -41,10 +40,6 @@ namespace IMT.Manager
         PropertyValue<float> Base { get; }
         PropertyValue<float> Height { get; }
         PropertyValue<float> Space { get; }
-    }
-    public interface IParallel
-    {
-        PropertyBoolValue Parallel { get; }
     }
     public interface IDoubleCrosswalk
     {

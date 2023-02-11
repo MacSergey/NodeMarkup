@@ -606,11 +606,6 @@ namespace IMT
 		public static string StyleOption_LineWidth => LocaleManager.GetString("StyleOption_LineWidth", Culture);
 
 		/// <summary>
-		/// Parallel to lanes
-		/// </summary>
-		public static string StyleOption_ParallelToLanes => LocaleManager.GetString("StyleOption_ParallelToLanes", Culture);
-
-		/// <summary>
 		/// Parallel solid lines
 		/// </summary>
 		public static string CrosswalkStyle_ParallelSolidLines => LocaleManager.GetString("CrosswalkStyle_ParallelSolidLines", Culture);
@@ -2706,18 +2701,23 @@ namespace IMT
 		public static string StyleOption_ObjectLimits => LocaleManager.GetString("StyleOption_ObjectLimits", Culture);
 
 		/// <summary>
-		/// Ends
+		/// Not parallel
 		/// </summary>
-		public static string StyleOption_StraightEnds => LocaleManager.GetString("StyleOption_StraightEnds", Culture);
+		public static string StyleOption_NotParallel => LocaleManager.GetString("StyleOption_NotParallel", Culture);
 
 		/// <summary>
-		/// Slope
+		/// Parallel to lines and slope end
 		/// </summary>
-		public static string StyleOption_StraightEndsSlope => LocaleManager.GetString("StyleOption_StraightEndsSlope", Culture);
+		public static string StyleOption_ParallelSlope => LocaleManager.GetString("StyleOption_ParallelSlope", Culture);
 
 		/// <summary>
-		/// Straight
+		/// Parallel to lines and straight ends
 		/// </summary>
-		public static string StyleOption_StraightEndsStraight => LocaleManager.GetString("StyleOption_StraightEndsStraight", Culture);
+		public static string StyleOption_ParallelStraight => LocaleManager.GetString("StyleOption_ParallelStraight", Culture);
+
+		/// <summary>
+		/// Dashes type
+		/// </summary>
+		public static string StyleOption_ZebraDashesType => LocaleManager.GetString("StyleOption_ZebraDashesType", Culture);
 	}
 }

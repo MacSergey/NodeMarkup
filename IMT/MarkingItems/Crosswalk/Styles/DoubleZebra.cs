@@ -1,6 +1,4 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
-using IMT.UI;
+﻿using IMT.API;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
@@ -8,7 +6,6 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -29,12 +26,11 @@ namespace IMT.Manager
                 yield return nameof(TwoColors);
                 yield return nameof(Color);
                 yield return nameof(SecondColor);
+                yield return nameof(DashType);
                 yield return nameof(Width);
                 yield return nameof(Length);
                 yield return nameof(OffsetBetween);
                 yield return nameof(Offset);
-                yield return nameof(Parallel);
-                yield return nameof(StraightEnds);
                 yield return nameof(Gap);
                 yield return nameof(Texture);
                 yield return nameof(Cracks);
@@ -62,7 +58,7 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
                 yield return new StylePropertyDataProvider<float>(nameof(OffsetBetween), OffsetBetween);
                 yield return new StylePropertyDataProvider<float>(nameof(OffsetAfter), OffsetAfter);
-                yield return new StylePropertyDataProvider<bool>(nameof(Parallel), Parallel);
+                yield return new StylePropertyDataProvider<DashEnd>(nameof(DashType), DashType);
                 yield return new StylePropertyDataProvider<bool>(nameof(UseGap), UseGap);
                 yield return new StylePropertyDataProvider<float>(nameof(GapLength), GapLength);
                 yield return new StylePropertyDataProvider<int>(nameof(GapPeriod), GapPeriod);
@@ -72,12 +68,12 @@ namespace IMT.Manager
             }
         }
 
-        public DoubleZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, bool parallel, bool straightEnds, float offset) : base(color, secondColor, useSecondColor, width, cracks, voids, texture, offsetBefore, offsetAfter, dashLength, spaceLength, useGap, gapLength, gapPeriod, parallel,  straightEnds)
+        public DoubleZebraCrosswalkStyle(Color32 color, Color32 secondColor, bool useSecondColor, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float dashLength, float spaceLength, bool useGap, float gapLength, int gapPeriod, DashEnd dashEnd, float offset) : base(color, secondColor, useSecondColor, width, cracks, voids, texture, offsetBefore, offsetAfter, dashLength, spaceLength, useGap, gapLength, gapPeriod, dashEnd)
         {
             OffsetBetween = GetOffsetProperty(offset);
         }
         protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetAbsoluteWidth(Width * 2f + OffsetBetween, crosswalk);
-        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, Parallel, StraightEnds, OffsetBetween);
+        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, DashType, OffsetBetween);
         public override void CopyTo(CrosswalkStyle target)
         {
             base.CopyTo(target);
@@ -91,12 +87,12 @@ namespace IMT.Manager
             var deltaOffset = GetAbsoluteWidth((Width + OffsetBetween) * 0.5f, crosswalk);
 
             var width = GetAbsoluteWidth(Width, crosswalk);
-            var direction = Parallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
+            var direction = DashType.Value != DashEnd.NotParallel ? crosswalk.NormalDir : crosswalk.CornerDir.Turn90(true);
 
             var trajectoryFirst = crosswalk.GetFullTrajectory(middleOffset - deltaOffset, direction);
             var trajectorySecond = crosswalk.GetFullTrajectory(middleOffset + deltaOffset, direction);
 
-            if (Parallel && StraightEnds)
+            if (DashType.Value == DashEnd.ParallelStraight)
             {
                 var firstDashes = GetDashes(crosswalk, trajectoryFirst);
                 for (int i = 0; i < firstDashes.Count; i += 1)
