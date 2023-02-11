@@ -1930,4 +1930,13 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_FixedEnd" xml:space="preserve">
     <value>Fixed end</value>
   </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Limits</value>
+  </data>
 </root>

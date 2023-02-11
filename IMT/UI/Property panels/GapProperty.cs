@@ -13,7 +13,7 @@ namespace IMT.UI
         private FloatUITextField LengthField { get; }
         private IntUITextField PeriodField { get; }
 
-        public bool Use
+        public bool EnableGap
         {
             get => UseSegmented.SelectedObject;
             set
@@ -129,21 +129,21 @@ namespace IMT.UI
         private void UseChanged(bool value)
         {
             Refresh();
-            OnValueChanged?.Invoke(value, LengthField.Value, PeriodField.Value);
+            OnValueChanged?.Invoke(value, Length, Period);
         }
         private void LengthChanged(float value)
         {
-            OnValueChanged?.Invoke(UseSegmented.SelectedObject, value, PeriodField.Value);
+            OnValueChanged?.Invoke(EnableGap, value, Period);
         }
         private void PeriodChanged(int value)
         {
-            OnValueChanged?.Invoke(UseSegmented.SelectedObject, LengthField.Value, value);
+            OnValueChanged?.Invoke(EnableGap, Length, value);
         }
 
         private void Refresh()
         {
-            LengthField.isEnabled = UseSegmented.SelectedObject;
-            PeriodField.isEnabled = UseSegmented.SelectedObject;
+            LengthField.isEnabled = EnableGap;
+            PeriodField.isEnabled = EnableGap;
         }
     }
 }

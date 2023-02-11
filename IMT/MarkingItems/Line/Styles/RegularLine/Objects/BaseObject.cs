@@ -1,18 +1,12 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
-using IMT.UI;
+﻿using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
-using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Linq;
 using UnityEngine;
-using static ColossalFramework.IO.EncodedArray;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -39,10 +33,14 @@ namespace IMT.Manager
         public PropertyEnumValue<DistributionType> Distribution { get; }
         public PropertyEnumValue<FixedEndType> FixedEnd { get; }
 
+        public PropertyStructValue<int> MinCount { get; }
+        public PropertyStructValue<int> MaxCount { get; }
+        protected bool EnableCount => MinCount != -1 && MaxCount != -1;
+
         public abstract bool CanElevate { get; }
         public abstract bool CanSlope { get; }
 
-        public BaseObjectLineStyle(int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd) : base(new Color32(), 0f)
+        public BaseObjectLineStyle(int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(new Color32(), 0f)
         {
             Probability = new PropertyStructValue<int>("P", StyleChanged, probability);
             Step = new PropertyNullableStructValue<float, PropertyStructValue<float>>(new PropertyStructValue<float>("S", null), "S", StyleChanged, step);
@@ -56,6 +54,8 @@ namespace IMT.Manager
             OffsetAfter = new PropertyStructValue<float>("OA", StyleChanged, offsetAfter);
             Distribution = new PropertyEnumValue<DistributionType>("PT", StyleChanged, distribution);
             FixedEnd = new PropertyEnumValue<FixedEndType>("FE", StyleChanged, fixedEnd);
+            MinCount = new PropertyStructValue<int>("MNC", StyleChanged, minCount);
+            MaxCount = new PropertyStructValue<int>("MXC", StyleChanged, maxCount);
         }
 
         public override void CopyTo(LineStyle target)
@@ -75,6 +75,8 @@ namespace IMT.Manager
                 objectTarget.OffsetAfter.Value = OffsetAfter;
                 objectTarget.Distribution.Value = Distribution;
                 objectTarget.FixedEnd.Value = FixedEnd;
+                objectTarget.MinCount.Value = MinCount;
+                objectTarget.MaxCount.Value = MaxCount;
             }
         }
 
@@ -93,6 +95,7 @@ namespace IMT.Manager
             provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
             provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Tilt), AdditionalCategory, AddTiltRangeProperty, RefreshTiltRangeProperty));
             provider.AddProperty(new PropertyInfo<FloatStaticRangeAutoProperty>(this, nameof(Slope), AdditionalCategory, AddSlopeRangeProperty, RefreshSlopeRangeProperty));
+            provider.AddProperty(new PropertyInfo<MinMaxProperty>(this, nameof(EnableCount), AdditionalCategory, AddMinMaxCountProperty, RefreshMinMaxCountProperty));
         }
 
         private void AddProbabilityProperty(IntPropertyPanel probabilityProperty, EditorProvider provider)
@@ -344,6 +347,37 @@ namespace IMT.Manager
             fixedEndProperty.IsHidden = !IsValid || Distribution.Value == DistributionType.DynamicSpaceFreeEnd || Distribution.Value == DistributionType.FixedSpaceFreeEnd;
         }
 
+        private void AddMinMaxCountProperty(MinMaxProperty minMaxProperty, EditorProvider provider)
+        {
+            minMaxProperty.Text = Localize.StyleOption_ObjectLimits;
+            minMaxProperty.MinRange = 0;
+            minMaxProperty.MaxRange = 1000;
+            minMaxProperty.MinValue = MinCount;
+            minMaxProperty.MaxValue = MaxCount;
+            minMaxProperty.EnableCount = EnableCount;
+            minMaxProperty.UseWheel = true;
+            minMaxProperty.WheelStep = 1;
+            minMaxProperty.WheelTip = Settings.ShowToolTip;
+            minMaxProperty.Init();
+            minMaxProperty.OnValueChanged += (enable, min, max) =>
+            {
+                if (enable)
+                {
+                    MinCount.Value = min;
+                    MaxCount.Value = max;
+                }
+                else
+                {
+                    MinCount.Value = -1;
+                    MaxCount.Value = -1;
+                }
+            };
+        }
+        private void RefreshMinMaxCountProperty(MinMaxProperty minMaxProperty, EditorProvider provider)
+        {
+            minMaxProperty.IsHidden = !IsValid;
+        }
+
         public override XElement ToXml()
         {
             var config = base.ToXml();
@@ -359,6 +393,8 @@ namespace IMT.Manager
             OffsetAfter.ToXml(config);
             Distribution.ToXml(config);
             FixedEnd.ToXml(config);
+            MinCount.ToXml(config);
+            MaxCount.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
@@ -380,6 +416,8 @@ namespace IMT.Manager
             OffsetAfter.FromXml(config, DefaultObjectOffsetAfter);
             Distribution.FromXml(config, DistributionType.FixedSpaceFreeEnd);
             FixedEnd.FromXml(config, FixedEndType.Both);
+            MinCount.FromXml(config, -1);
+            MaxCount.FromXml(config, -1);
 
             if (invert)
             {
@@ -406,7 +444,7 @@ namespace IMT.Manager
         protected override bool IsValid => IsValidPrefab(Prefab.Value);
         protected abstract string AssetPropertyName { get; }
 
-        public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd)
+        public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount)
         {
             Prefab = new PropertyPrefabValue<PrefabType>("PRF", StyleChanged, prefab);
         }
@@ -454,6 +492,8 @@ namespace IMT.Manager
                     {
                         startIndex = 0;
                         count = Mathf.CeilToInt(length / stepValue);
+                        if(EnableCount)
+                            count = Mathf.Clamp(count, MinCount, MaxCount);
                         startOffset = (length - (count - 1) * stepValue) * 0.5f;
                         items = new MarkingPropItemData[count];
                         break;
@@ -462,10 +502,12 @@ namespace IMT.Manager
                     {
                         startIndex = 1;
                         count = Math.Max(Mathf.RoundToInt(length / stepValue - 1.5f), 0);
+                        if (EnableCount)
+                            count = Mathf.Clamp(count, MinCount, MaxCount);
                         startOffset = (length - (count - 1) * stepValue) * 0.5f;
                         items = new MarkingPropItemData[count + 2];
 
-                        if(FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.Start)
+                        if (FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.Start)
                             CalculateItem(trajectory, 0f, prefab, ref items[0]);
                         if (FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.End)
                             CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
@@ -475,6 +517,8 @@ namespace IMT.Manager
                     {
                         startIndex = 0;
                         count = Mathf.RoundToInt(length / stepValue);
+                        if (EnableCount)
+                            count = Mathf.Clamp(count, MinCount, MaxCount);
                         stepValue = length / count;
                         startOffset = (length - (count - 1) * stepValue) * 0.5f;
                         items = new MarkingPropItemData[count];
@@ -484,6 +528,8 @@ namespace IMT.Manager
                     {
                         startIndex = 1;
                         count = Math.Max(Mathf.RoundToInt(length / stepValue) - 1, 0);
+                        if (EnableCount)
+                            count = Mathf.Clamp(count, MinCount, MaxCount);
                         stepValue = length / (count + 1);
                         startOffset = stepValue;
                         items = new MarkingPropItemData[count + 2];

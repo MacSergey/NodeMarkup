@@ -235,7 +235,7 @@ namespace IMT.Manager
             gapProperty.WheelStepPeriod = 1;
             gapProperty.CheckMinPeriod = true;
             gapProperty.MinPeriod = DefaultCrosswalkLineCount;
-            gapProperty.Use = UseGap;
+            gapProperty.EnableGap = UseGap;
             gapProperty.Length = GapLength;
             gapProperty.Period = GapPeriod;
             gapProperty.OnValueChanged += (use, length, period) =>

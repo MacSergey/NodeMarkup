@@ -2689,5 +2689,20 @@ namespace IMT
 		/// Fixed end
 		/// </summary>
 		public static string StyleOption_FixedEnd => LocaleManager.GetString("StyleOption_FixedEnd", Culture);
+
+		/// <summary>
+		/// Max
+		/// </summary>
+		public static string StyleOption_Max => LocaleManager.GetString("StyleOption_Max", Culture);
+
+		/// <summary>
+		/// Min
+		/// </summary>
+		public static string StyleOption_Min => LocaleManager.GetString("StyleOption_Min", Culture);
+
+		/// <summary>
+		/// Limits
+		/// </summary>
+		public static string StyleOption_ObjectLimits => LocaleManager.GetString("StyleOption_ObjectLimits", Culture);
 	}
 }

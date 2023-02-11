@@ -23,6 +23,7 @@ namespace IMT.Manager
             get
             {
                 yield return nameof(Prefab);
+                yield return nameof(EnableCount);
                 yield return nameof(Distribution);
                 yield return nameof(FixedEnd);
                 yield return nameof(Probability);
@@ -57,9 +58,9 @@ namespace IMT.Manager
             }
         }
 
-        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd) { }
+        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount) { }
 
-        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution, FixedEnd);
+        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount);
 
         protected override void CalculateParts(TreeInfo tree, MarkingPropItemData[] items, MarkingLOD lod, Action<IStyleData> addData)
         {
