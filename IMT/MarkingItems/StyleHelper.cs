@@ -89,7 +89,7 @@ namespace IMT.Manager
         public static List<PartT> CalculateDashesBezierT(ITrajectory trajectory, float dashLength, float spaceLength, uint iterations = 3)
         {
             var points = new TrajectoryPoints(trajectory);
-            var startSpace = spaceLength / 2;
+            var startSpace = spaceLength * 0.5f;
 
             for (var i = 0; ;)
             {
@@ -119,14 +119,14 @@ namespace IMT.Manager
                 if (i >= iterations || Mathf.Abs(startSpace - endSpace) / (startSpace + endSpace) < 0.05)
                     return parts;
 
-                startSpace = (startSpace + endSpace) / 2;
+                startSpace = (startSpace + endSpace) * 0.5f;
             }
         }
         public static List<PartT> CalculateDashesStraightT(StraightTrajectory straightTrajectory, float dashLength, float spaceLength)
         {
             var length = straightTrajectory.Length;
             var partCount = (int)(length / (dashLength + spaceLength));
-            var startSpace = (length + spaceLength - (dashLength + spaceLength) * partCount) / 2;
+            var startSpace = (length + spaceLength - (dashLength + spaceLength) * partCount) * 0.5f;
 
             var startT = startSpace / length;
             var partT = dashLength / length;
@@ -174,13 +174,13 @@ namespace IMT.Manager
             var startPosition = trajectory.Position(partT.start) + startOffset;
             var endPosition = trajectory.Position(partT.end) + endOffset;
             position = (startPosition + endPosition) * 0.5f;
-            direction = endPosition - startPosition;
+            direction = (endPosition - startPosition).normalized;
         }
         public static void GetPartParams(ITrajectory trajectory, PartT partT, Vector3 startOffset, Vector3 endOffset, out Vector3 startPosition, out Vector3 endPosition, out Vector3 direction)
         {
             startPosition = trajectory.Position(partT.start) + startOffset;
             endPosition = trajectory.Position(partT.end) + endOffset;
-            direction = endPosition - startPosition;
+            direction = (endPosition - startPosition).normalized;
         }
 
         public static bool CheckBorders(LineBorders borders, Vector3 pos, Vector3 dir, float length, float width)
@@ -333,9 +333,9 @@ namespace IMT.Manager
             if (!Intersection.CalculateSingle(first, second, out var firstT, out var secondT))
                 return false;
 
-            var position = (first.Position(firstT) + second.Position(secondT)) / 2f;
+            var position = (first.Position(firstT) + second.Position(secondT)) * 0.5f;
             var direction = (first.Direction - second.Direction).normalized * (firstT < 0 ? 1f : -1f);
-            var distance = radius / Mathf.Cos(angleA / 2f * Mathf.Deg2Rad);
+            var distance = radius / Mathf.Cos(angleA * 0.5f * Mathf.Deg2Rad);
 
             center = position + direction * distance;
             firstDir = first.Direction.Turn90(true);

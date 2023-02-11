@@ -59,7 +59,7 @@ namespace IMT.Manager
         {
             if (CheckDashedLod(lod, Width, DashLength))
             {
-                var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
+                var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width * 0.5f);
                 var parts = StyleHelper.CalculateDashed(trajectory, DashLength, SpaceLength);
                 foreach (var part in parts)
                 {

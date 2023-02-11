@@ -45,7 +45,7 @@ namespace IMT.Manager
 
         protected override void CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
-            var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width / 2);
+            var offset = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized * (Width * 0.5f);
             var parts = StyleHelper.CalculateSolid(trajectory, lod);
             foreach (var part in parts)
             {

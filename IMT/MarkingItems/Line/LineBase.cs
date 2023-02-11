@@ -195,15 +195,15 @@ namespace IMT.Manager
             var dirX = dash.Angle.Direction();
             var dirY = dirX.Turn90(true);
 
-            dirX *= (dash.Length / 2);
-            dirY *= (dash.Width / 2);
+            dirX *= dash.Length * 0.5f;
+            dirY *= dash.Width * 0.5f;
 
             return new StraightTrajectory[]
             {
-                new StraightTrajectory(Center, dash.position + dirX + dirY),
                 new StraightTrajectory(Center, dash.position - dirX + dirY),
-                new StraightTrajectory(Center, dash.position + dirX - dirY),
+                new StraightTrajectory(Center, dash.position + dirX + dirY),
                 new StraightTrajectory(Center, dash.position - dirX - dirY),
+                new StraightTrajectory(Center, dash.position + dirX - dirY),
             };
         }
         public StraightTrajectory[] GetVertex(Vector3 pos, Vector3 dir, float length, float width)
@@ -216,10 +216,10 @@ namespace IMT.Manager
 
             return new StraightTrajectory[]
             {
-                new StraightTrajectory(Center, pos + dirX + dirY),
                 new StraightTrajectory(Center, pos - dirX + dirY),
-                new StraightTrajectory(Center, pos + dirX - dirY),
+                new StraightTrajectory(Center, pos + dirX + dirY),
                 new StraightTrajectory(Center, pos - dirX - dirY),
+                new StraightTrajectory(Center, pos + dirX - dirY),
             };
         }
     }

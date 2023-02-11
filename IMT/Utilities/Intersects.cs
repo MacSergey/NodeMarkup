@@ -12,7 +12,7 @@ namespace IMT.Utilities
         public float FirstT => intersection.firstT;
         public float SecondT => intersection.secondT;
         public bool IsIntersect => intersection.isIntersect;
-        public Vector3 Position => (pair.first.Trajectory.Position(FirstT) + pair.second.Trajectory.Position(SecondT)) / 2;
+        public Vector3 Position => (pair.first.Trajectory.Position(FirstT) + pair.second.Trajectory.Position(SecondT)) * 0.5f;
         private MarkingLinesIntersect(MarkingLinePair pair, Intersection intersection)
         {
             this.pair = pair;

@@ -41,7 +41,7 @@ namespace IMT.UI
         private Rect GetPosition(Vector2 centre, int iX, int ofX)
         {
             var sumX = ofX * Size + (ofX - 1) * Padding;
-            var x = centre.x - sumX / 2 + (iX - 1) * (Size + Padding);
+            var x = centre.x - sumX * 0.5f + (iX - 1) * (Size + Padding);
             var y = centre.y - Size - Padding;
             return new Rect(x, y, Size, Size);
         }

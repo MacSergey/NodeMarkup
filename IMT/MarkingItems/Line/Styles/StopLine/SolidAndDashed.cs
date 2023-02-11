@@ -70,8 +70,8 @@ namespace IMT.Manager
         protected override void CalculateImpl(MarkingStopLine stopLine, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             var offsetNormal = ((stopLine.Start.Direction + stopLine.End.Direction) / -2).normalized;
-            var solidOffset = offsetNormal * (Width / 2);
-            var dashedOffset = offsetNormal * (Width / 2 + 2 * Offset);
+            var solidOffset = offsetNormal * (Width * 0.5f);
+            var dashedOffset = offsetNormal * (Width * 0.5f + 2 * Offset);
 
             var solidParts = StyleHelper.CalculateSolid(trajectory, lod);
             foreach (var part in solidParts)

@@ -74,13 +74,13 @@ namespace IMT.Manager
             var leftRatio = leftLength / (leftLength + rightLength);
             var rightRatio = rightLength / (leftLength + rightLength);
 
-            var straight = new StraightTrajectory((right.EndPosition + left.StartPosition) / 2, (right.StartPosition + left.EndPosition) / 2);
+            var straight = new StraightTrajectory((right.EndPosition + left.StartPosition) * 0.5f, (right.StartPosition + left.EndPosition) * 0.5f);
             var middle = new Bezier3()
             {
-                a = (right.EndPosition + left.StartPosition) / 2,
+                a = (right.EndPosition + left.StartPosition) * 0.5f,
                 b = GetDirection(rightRatio * right.EndDirection, leftRatio * left.StartDirection, straight.StartDirection),
                 c = GetDirection(rightRatio * right.StartDirection, leftRatio * left.EndDirection, straight.EndDirection),
-                d = (right.StartPosition + left.EndPosition) / 2,
+                d = (right.StartPosition + left.EndPosition) * 0.5f,
             };
             NetSegment.CalculateMiddlePoints(middle.a, middle.b, middle.d, middle.c, true, true, out middle.b, out middle.c);
             return new BezierTrajectory(middle);

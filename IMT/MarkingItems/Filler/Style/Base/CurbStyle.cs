@@ -101,7 +101,7 @@ namespace IMT.Manager
                                 holePoints = holePoints.Select(p => p += new Vector3(0f, 0.03f, 0f)).ToArray();
                                 meshParts.Add(MarkingFillerMeshData.RawData.GetTop(holePoints, holeTriangles, MaterialType));
                                 //var sideStartI = 0;
-                                //var sideHalfI = contour._side.Count / 2;
+                                //var sideHalfI = contour._side.Count * 0.5f;
 
                                 //var holeStartI = 0;
                                 //var holeHalfI = 0;

@@ -712,7 +712,7 @@ namespace IMT.Tools
 
             yield return new WaitForEndOfFrame();
 
-            camera.transform.position = position + new Vector3(0, Math.Max(size * 1.1f, size + 5f) / 2 / Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad / 2), 0);
+            camera.transform.position = position + new Vector3(0, Math.Max(size * 1.1f, size + 5f) * 0.5f / Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad * 0.5f), 0);
             camera.transform.rotation = Quaternion.Euler(90, (2 * Mathf.PI - angle - Vector3.forward.AbsoluteAngle()) * Mathf.Rad2Deg, 0);
             camera.cullingMask = LayerMask.GetMask("Road") | (3 << 24);
             camera.rect = new Rect(0f, 0f, 1f, 1f);
@@ -785,7 +785,7 @@ namespace IMT.Tools
                         }
                     }
 
-                    return (selectEnters[first].NormalAngle + selectEnters[second].NormalAngle) / 2;
+                    return (selectEnters[first].NormalAngle + selectEnters[second].NormalAngle) * 0.5f;
             }
         }
         private void GetCameraPorition(float angle, out Vector3 position, out float size)

@@ -824,8 +824,8 @@ namespace IMT.Manager
         }
         private void GetCircle2Points(Vector3[] points, int i, int j, ref Vector3 centre, ref float radius)
         {
-            var newCentre = (points[i] + points[j]) / 2;
-            var newRadius = (points[i] - points[j]).magnitude / 2;
+            var newCentre = (points[i] + points[j]) * 0.5f;
+            var newRadius = (points[i] - points[j]).magnitude * 0.5f;
 
             if (newRadius >= radius)
                 return;
@@ -838,8 +838,8 @@ namespace IMT.Manager
         }
         private void GetCircle3Points(Vector3[] points, int i, int j, int k, ref Vector3 centre, ref float radius)
         {
-            var pos1 = (points[i] + points[j]) / 2;
-            var pos2 = (points[j] + points[k]) / 2;
+            var pos1 = (points[i] + points[j]) * 0.5f;
+            var pos2 = (points[j] + points[k]) * 0.5f;
 
             var dir1 = (points[i] - points[j]).Turn90(true).normalized;
             var dir2 = (points[j] - points[k]).Turn90(true).normalized;

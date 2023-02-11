@@ -311,7 +311,7 @@ namespace IMT.Tools
         private float Radius { get; }
         private float HalfWidthAngle { get; }
 
-        private float MiddleAngle => (FromAngle + ToAngle) / 2;
+        private float MiddleAngle => (FromAngle + ToAngle) * 0.5f;
 
         private float DeltaAngle => FromAngle - ToAngle;
         public EntersBasket(BaseEntersOrderToolMode toolMode, EntersBorders borders, IEnumerable<SourceEnter> items) : base(items)
@@ -324,12 +324,12 @@ namespace IMT.Tools
                 FromAngle += Mathf.PI * 2;
 
             var length = TargetEnter.Size * (Count - 1);
-            HalfWidthAngle = GetAngle(length) / 2;
+            HalfWidthAngle = GetAngle(length) * 0.5f;
         }
 
         public override void Render(RenderManager.CameraInfo cameraInfo, BaseOrderToolMode<SourceEnter> toolMode)
         {
-            var n = Mathf.CeilToInt(DeltaAngle / (Mathf.PI / 2));
+            var n = Mathf.CeilToInt(DeltaAngle / (Mathf.PI * 0.5f));
             var deltaAngle = (FromAngle - ToAngle) / n;
 
             for (var i = 0; i < n; i += 1)
@@ -400,7 +400,7 @@ namespace IMT.Tools
         public PointsBasket(PointsOrderToolMode toolMode, PointsBorders borders, IEnumerable<SourcePoint> items) : base(items)
         {
             Direction = toolMode.TargetEnter.Enter.CornerAngle.Direction().Turn90(false);
-            var middlePos = (borders.From.Position + borders.To.Position) / 2;
+            var middlePos = (borders.From.Position + borders.To.Position) * 0.5f;
             Position = middlePos + Direction * Shift;
             var length = TargetPoint.Size * (Count - 1);
             Line = new StraightTrajectory(Position, Position + Direction * length);

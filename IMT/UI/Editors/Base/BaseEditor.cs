@@ -195,7 +195,7 @@ namespace IMT.UI.Editors
             ContentPanel.size = new Vector2(size.x * ContentRatio, size.y);
             ContentPanel.relativePosition = new Vector2(size.x * ItemsRatio, 0);
 
-            EmptyLabel.size = new Vector2(size.x * ContentRatio, size.y / 2);
+            EmptyLabel.size = new Vector2(size.x * ContentRatio, size.y * 0.5f);
             EmptyLabel.relativePosition = ContentPanel.relativePosition;
         }
         protected void OnItemSelect(ObjectType editObject)

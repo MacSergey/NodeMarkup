@@ -123,7 +123,7 @@ namespace IMT.Tools
         protected override void Reset(IToolMode prevMode)
         {
             Centre = Marking.CenterPosition;
-            Radius = Marking.CenterRadius + TargetEnter.Size / 2;
+            Radius = Marking.CenterRadius + TargetEnter.Size * 0.5f;
 
             base.Reset(prevMode);
         }

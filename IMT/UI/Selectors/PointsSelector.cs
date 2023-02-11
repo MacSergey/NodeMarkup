@@ -149,7 +149,7 @@ namespace IMT.UI
 
         protected override void UpdateBounds()
         {
-            var r = Mathf.Max((Step / 2) / Mathf.Sin(180 / Points.Count * Mathf.Deg2Rad), Step);
+            var r = Mathf.Max((Step * 0.5f) / Mathf.Sin(180 / Points.Count * Mathf.Deg2Rad), Step);
             var dir = SingletonTool<IntersectionMarkingTool>.Instance.CameraDirection.Turn90(true);
 
             CircleLeaveBounds = new Bounds(Position, Vector3.one * (Points.Count > 1 ? (2 * r + PointSize + 3 * Space) : PointSize));

@@ -181,7 +181,7 @@ namespace IMT.Manager
 #endif
             return parts;
         }
-        protected override float GetAngle() => (Invert ? 360 - AngleBetween : AngleBetween) / 2;
+        protected override float GetAngle() => (Invert ? 360 - AngleBetween : AngleBetween) * 0.5f;
 
         public override XElement ToXml()
         {

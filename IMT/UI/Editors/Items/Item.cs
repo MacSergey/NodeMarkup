@@ -182,7 +182,7 @@ namespace IMT.UI.Editors
 
             Label.size = new Vector2(ShowIcon ? labelWidth : labelWidth - 3, size.y);
         }
-        protected override void LabelSizeChanged() => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) / 2);
+        protected override void LabelSizeChanged() => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) * 0.5f);
     }
 
     public class ColorIcon : CustomUIButton

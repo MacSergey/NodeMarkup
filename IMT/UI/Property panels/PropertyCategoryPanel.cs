@@ -364,8 +364,8 @@ namespace IMT.UI.Editors
         }
         protected override void SetSize()
         {
-            ExpandButton.relativePosition = new Vector2(ExpandButton.relativePosition.x, (height - ExpandButton.height) / 2);
-            NameLabel.relativePosition = new Vector2(NameLabel.relativePosition.x, (height - NameLabel.height) / 2);
+            ExpandButton.relativePosition = new Vector2(ExpandButton.relativePosition.x, (height - ExpandButton.height) * 0.5f);
+            NameLabel.relativePosition = new Vector2(NameLabel.relativePosition.x, (height - NameLabel.height) * 0.5f);
             Content.height = height;
             Content.relativePosition = new Vector2(width - Content.width - padding.right, 0);
         }

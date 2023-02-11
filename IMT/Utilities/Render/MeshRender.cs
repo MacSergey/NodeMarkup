@@ -305,7 +305,7 @@ namespace IMT.Utilities
 
         public MarkingLineMeshData(MarkingLOD lod, ITrajectory trajectory, float width, float elevation, MaterialType materialType) : base(lod, HalfWidth * 2f, HalfLength * 2f)
         {
-            var position = (trajectory.StartPosition + trajectory.EndPosition) / 2;
+            var position = (trajectory.StartPosition + trajectory.EndPosition) * 0.5f;
             CalculateMatrix(trajectory, width, position, out Matrix4x4 left, out Matrix4x4 right);
             position += Vector3.up * (elevation - Height);
             Init(position, left, right, materialType);
@@ -341,8 +341,8 @@ namespace IMT.Utilities
             var maxHeight = Height;
             var minHeight = 0f;
 
-            var maxWidth = HalfWidth / 2f;
-            var minWidth = -HalfWidth / 2f;
+            var maxWidth = HalfWidth * 0.5f;
+            var minWidth = -HalfWidth * 0.5f;
 
             var maxLength = HalfLength;
             var minLength = -HalfLength;

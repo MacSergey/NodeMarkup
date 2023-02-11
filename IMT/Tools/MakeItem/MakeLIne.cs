@@ -293,8 +293,8 @@ namespace IMT.Tools
                 a = SelectPoint.MarkerPosition + SelectPoint.Direction,
                 d = SelectPoint.MarkerPosition + normal
             };
-            normalBezier.b = normalBezier.a + normal / 2;
-            normalBezier.c = normalBezier.d + SelectPoint.Direction / 2;
+            normalBezier.b = normalBezier.a + normal * 0.5f;
+            normalBezier.c = normalBezier.d + SelectPoint.Direction * 0.5f;
             normalBezier.RenderBezier(new OverlayData(cameraInfo) { Color = color, Width = 2f, Cut = true });
         }
         private void RenderLaneConnectionLine(RenderManager.CameraInfo cameraInfo)

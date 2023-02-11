@@ -247,7 +247,7 @@ namespace IMT.Manager
             CornerAndNormalAngle = (angle > 90 ? 180 - angle : angle) * Mathf.Deg2Rad;
             TranformRatio = Mathf.Sin(CornerAndNormalAngle);
 
-            Position = (leftPos + rightPos) / 2f;
+            Position = (leftPos + rightPos) * 0.5f;
 
             RoadHalfWidth = segment.Info.m_halfWidth - segment.Info.m_pavementWidth;
             FirstPointSide = GetPosition(-RoadHalfWidth);

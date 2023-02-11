@@ -60,7 +60,7 @@ namespace IMT.Manager
 
                 direction = ((rightDir + leftDir) / (Enter.SideSign * 2)).normalized;
 
-                var part = (RightLane.HalfWidth + SideDelta / 2) / CenterDelte;
+                var part = (RightLane.HalfWidth + SideDelta * 0.5f) / CenterDelte;
                 position = Vector3.Lerp(rightPos, leftPos, part);
             }
 
@@ -125,7 +125,7 @@ namespace IMT.Manager
             {
                 yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkingPoint.LocationType.Between);
             }
-            else if (GetSideDelta(leftLane, rightLane) >= (leftLane.HalfWidth + rightLane.HalfWidth) / 2)
+            else if (GetSideDelta(leftLane, rightLane) >= (leftLane.HalfWidth + rightLane.HalfWidth) * 0.5f)
             {
                 yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkingPoint.LocationType.RightEdge);
                 yield return new NetInfoPointSource(enter, leftLane, rightLane, MarkingPoint.LocationType.LeftEdge);
@@ -228,7 +228,7 @@ namespace IMT.Manager
             Index = index;
             LaneId = laneId;
             Position = info.m_position;
-            HalfWidth = Mathf.Abs(info.m_width) / 2;
+            HalfWidth = Mathf.Abs(info.m_width) * 0.5f;
             NetworkType = type;
         }
 
