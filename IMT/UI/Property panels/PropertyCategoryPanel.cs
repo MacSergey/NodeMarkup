@@ -4,8 +4,6 @@ using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Security.AccessControl;
 using UnityEngine;
 
 namespace IMT.UI.Editors
@@ -55,8 +53,6 @@ namespace IMT.UI.Editors
     public abstract class BasePropertyCategoryPanel<TypeHeader> : PropertyGroupPanel, IPropertyCategoryPanel
         where TypeHeader : BaseCategoryHeaderPanel
     {
-        //private static Dictionary<string, bool> ExpandList { get; } = new Dictionary<string, bool>();
-
         protected override UITextureAtlas Atlas => IMTTextures.Atlas;
         protected override string BackgroundSprite => IMTTextures.ButtonWhiteBorder;
 
@@ -69,8 +65,6 @@ namespace IMT.UI.Editors
             {
                 if (Editor.ExpandList.TryGetValue(Category.Name, out var isExpand))
                     return isExpand;
-                //else if(ExpandList.TryGetValue(Category.Name, out isExpand))
-                //    return isExpand;
                 else
                     return null;
             }
@@ -79,7 +73,6 @@ namespace IMT.UI.Editors
                 if (value != null)
                 {
                     Editor.ExpandList[Category.Name] = value.Value;
-                    //ExpandList[Category.Name] = value.Value;
                     Header.IsExpand = value.Value;
 
                     foreach (var item in components)

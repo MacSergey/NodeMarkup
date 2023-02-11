@@ -4,9 +4,9 @@ using IMT.UI.Panel;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace IMT.UI.Editors
@@ -16,6 +16,16 @@ namespace IMT.UI.Editors
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
         public event Action<RulePanel, UIMouseEventParameter> OnLeave;
 
+        private bool isExpand;
+        public bool IsExpand
+        {
+            get => isExpand;
+            set
+            {
+                isExpand = value;
+                Refresh();
+            }
+        }
         private LinesEditor Editor { get; set; }
         public IntersectionMarkingToolPanel Panel => Editor.Panel;
         private MarkingLine Line => Editor.EditObject;
@@ -40,25 +50,26 @@ namespace IMT.UI.Editors
         List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
 
         public RulePanel() { }
-        public void Init(LinesEditor editor, MarkingLineRawRule rule)
+        public void Init(LinesEditor editor, MarkingLineRawRule rule, bool isExpand)
         {
             Editor = editor;
             Rule = rule;
+            this.isExpand = isExpand;
 
             StopLayout();
+            {
+                AddHeader();
+                AddError();
+                AddWarning();
 
-            AddHeader();
-            AddError();
-            AddWarning();
+                From = AddEdgeProperty(EdgePosition.Start, nameof(From), IMT.Localize.LineRule_From);
+                To = AddEdgeProperty(EdgePosition.End, nameof(To), IMT.Localize.LineRule_To);
 
-            From = AddEdgeProperty(EdgePosition.Start, nameof(From), IMT.Localize.LineRule_From);
-            To = AddEdgeProperty(EdgePosition.End, nameof(To), IMT.Localize.LineRule_To);
+                AddStyleTypeProperty();
+                AddStyleProperties();
 
-            Refresh();
-
-            AddStyleTypeProperty();
-            AddStyleProperties();
-
+                Refresh();
+            }
             StartLayout();
 
             base.Init();
@@ -80,6 +91,8 @@ namespace IMT.UI.Editors
             OnEnter = null;
             OnLeave = null;
 
+            this.isExpand = false;
+
             (this as IPropertyContainer).ExpandList.Clear();
         }
         private void AddHeader()
@@ -94,6 +107,15 @@ namespace IMT.UI.Editors
             Header.OnApplyAllRules += ApplyStyleToAllRules;
             Header.OnApplySameStyle += ApplyStyleSameStyle;
             Header.OnApplySameType += ApplyStyleSameType;
+            Header.OnExpand += Expand;
+        }
+
+        private void Expand()
+        {
+            if (Utility.ShiftIsPressed)
+                Editor.ExpandRules(!IsExpand);
+            else
+                IsExpand = !IsExpand;
         }
 
         private void AddError()
@@ -122,15 +144,9 @@ namespace IMT.UI.Editors
         }
         private void OnSelectPanel(RuleEdgeSelectPropertyPanel.RuleEdgeSelectButton button) => Editor.SelectRuleEdge(button);
 
-        private void FillEdges()
-        {
-            FillEdge(From, FromChanged, Rule.From);
-            FillEdge(To, ToChanged, Rule.To);
-            Warning.isVisible = Settings.ShowPanelTip && !Editor.CanDivide;
-        }
         private void FillEdge(RuleEdgeSelectPropertyPanel panel, Action<ILinePartEdge> action, ILinePartEdge value)
         {
-            if (panel == null)
+            if (panel == null || !panel.isVisible)
                 return;
 
             panel.OnValueChanged -= action;
@@ -205,15 +221,25 @@ namespace IMT.UI.Editors
         private void OnSelectTemplate(StyleTemplate template)
         {
             if (template.Style is LineStyle style)
+            {
                 ApplyStyle(style);
+                IsExpand = true;
+            }
         }
         private void CopyStyle() => Editor.Tool.ToStyleBuffer(Rule.Style.Value.Type.GetGroup(), Rule.Style.Value);
         private void PasteStyle()
         {
             if (Editor.Tool.FromStyleBuffer<LineStyle>(Rule.Style.Value.Type.GetGroup(), out var style))
+            {
                 ApplyStyle(style);
+                IsExpand = true;
+            }
         }
-        private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<LineStyle>(Rule.Style.Value.Type));
+        private void ResetStyle()
+        {
+            ApplyStyle(Manager.Style.GetDefault<LineStyle>(Rule.Style.Value.Type));
+            IsExpand = true;
+        }
         private void ApplyStyleToAllRules()
         {
             foreach (var rulePanel in Editor.RulePanels)
@@ -224,13 +250,12 @@ namespace IMT.UI.Editors
         }
         private void ApplyStyleSameStyle()
         {
-            var group = Rule.Style.Value.Type.GetGroup();
-            foreach(var line in Editor.Marking.Lines)
+            foreach (var line in Editor.Marking.Lines)
             {
                 if (line == Line)
                     continue;
 
-                foreach(var rule in line.Rules)
+                foreach (var rule in line.Rules)
                 {
                     if (rule.Style.Value.Type == Rule.Style.Value.Type)
                         rule.Style.Value = Rule.Style.Value.CopyStyle();
@@ -291,8 +316,23 @@ namespace IMT.UI.Editors
         }
         public void Refresh()
         {
-            Error.isVisible = Rule.IsOverlapped;
-            FillEdges();
+            StopLayout();
+            {
+                Header.IsExpand = IsExpand;
+                Error.isVisible = IsExpand && Rule.IsOverlapped;
+                Warning.isVisible = IsExpand && Settings.ShowPanelTip && !Editor.CanDivide;
+                From.isVisible = IsExpand;
+                To.isVisible = IsExpand;
+                Style.isVisible = IsExpand;
+
+                foreach (var category in (this as IPropertyContainer).CategoryItems.Values)
+                    category.isVisible = IsExpand;
+            }
+            StartLayout();
+
+            FillEdge(From, FromChanged, Rule.From);
+            FillEdge(To, ToChanged, Rule.To);
+
             PropertyEditorHelper.RefreshProperties(this);
         }
         void IPropertyEditor.RefreshProperties() => (Editor as IPropertyEditor).RefreshProperties();

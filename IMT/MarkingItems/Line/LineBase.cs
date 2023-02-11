@@ -39,6 +39,7 @@ namespace IMT.Manager
         public bool HasOverlapped => Rules.Any(r => r.IsOverlapped);
 
         public abstract IEnumerable<MarkingLineRawRule> Rules { get; }
+        public abstract int RuleCount { get; }
         public abstract IEnumerable<ILinePartEdge> RulesEdges { get; }
 
         public ITrajectory Trajectory { get; private set; }

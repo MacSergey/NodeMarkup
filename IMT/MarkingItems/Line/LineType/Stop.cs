@@ -18,6 +18,7 @@ namespace IMT.Manager
 
         public MarkingLineRawRule<StopLineStyle> Rule { get; set; }
         public override IEnumerable<MarkingLineRawRule> Rules { get { yield return Rule; } }
+        public override int RuleCount => 1;
         public override IEnumerable<ILinePartEdge> RulesEdges => RulesEnterPointEdge;
 
         public PropertyEnumValue<Alignment> RawStartAlignment { get; private set; }

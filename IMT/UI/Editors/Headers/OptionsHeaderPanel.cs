@@ -5,6 +5,7 @@ using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
+using UnityEngine;
 
 namespace IMT.UI.Editors
 {
@@ -39,10 +40,10 @@ namespace IMT.UI.Editors
 
             Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ResetHeaderButton, IMT.Localize.HeaderPanel_StyleReset, ResetClick));
 
-            ApplySameStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToSameHeaderButton, "Apply to same style", ApplySameStyleClick);
+            ApplySameStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToSameHeaderButton, string.Empty, ApplySameStyleClick);
             Content.AddButton(ApplySameStyle);
 
-            ApplySameType = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToAllHeaderButton, "Apply to same type", ApplySameTypeClick);
+            ApplySameType = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToAllHeaderButton, string.Empty, ApplySameTypeClick);
             Content.AddButton(ApplySameType);
         }
 
@@ -85,20 +86,20 @@ namespace IMT.UI.Editors
             {
                 case MarkingLineRawRule editRule:
                     {
-                        ApplySameStyle.Text = $"Apply to all \"{editRule.Style.Value.Type.Description()}\" lines";
-                        ApplySameType.Text = $"Apply to all lines";
+                        ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyRegularType, editRule.Style.Value.Type.Description());
+                        ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyRegularAll;
                     }
                     break;
                 case MarkingCrosswalk editCrosswalk:
                     {
-                        ApplySameStyle.Text = $"Apply to all \"{editCrosswalk.Style.Value.Type.Description()}\" crosswalks";
-                        ApplySameType.Text = $"Apply to all crosswalks";
+                        ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyCrosswalkType, editCrosswalk.Style.Value.Type.Description());
+                        ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyCrosswalkAll;
                     }
                     break;
                 case MarkingFiller editFiller:
                     {
-                        ApplySameStyle.Text = $"Apply to all \"{editFiller.Style.Value.Type.Description()}\" fillers";
-                        ApplySameType.Text = $"Apply to all fillers";
+                        ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyFillerType, editFiller.Style.Value.Type.Description());
+                        ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyFillerAll;
                     }
                     break;
             }
@@ -116,17 +117,38 @@ namespace IMT.UI.Editors
     public class RuleHeaderPanel : StyleHeaderPanel
     {
         public event Action OnApplyAllRules;
+        public event Action OnExpand;
+
+        protected CustomUIButton ExpandButton { get; set; }
         HeaderButtonInfo<HeaderButton> ApplyAllRules { get; }
+
+        public bool IsExpand { set => ExpandButton.normalBgSprite = value ? IMTTextures.ListItemCollapse : IMTTextures.ListItemExpand; }
 
         public RuleHeaderPanel()
         {
-            ApplyAllRules = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyStyleHeaderButton, "Apply to all rules", ApplyAllRulesClick);
+            ExpandButton = AddUIComponent<CustomUIButton>();
+            ExpandButton.tooltip = string.Format(IMT.Localize.Header_ExpandTooltip, LocalizeExtension.Shift);
+            ExpandButton.atlas = IMTTextures.Atlas;
+            ExpandButton.size = new Vector2(30, 30);
+            ExpandButton.zOrder = 0;
+            ExpandButton.eventClick += (_,_) => OnExpand?.Invoke();
+
+            ApplyAllRules = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyStyleHeaderButton, IMT.Localize.HeaderPanel_ApplyAllRules, ApplyAllRulesClick);
             Content.AddButton(ApplyAllRules);
         }
         public override void DeInit()
         {
             base.DeInit();
+            IsExpand = false;
             OnApplyAllRules = null;
+            OnExpand = null;
+        }
+        protected override void SetSize()
+        {
+            base.SetSize();
+            ExpandButton.relativePosition = new Vector3(ItemsPadding, (height - ExpandButton.height) * 0.5f);
+            Content.width -= ExpandButton.width + ItemsPadding;
+            Content.relativePosition = Content.relativePosition + new Vector3(ExpandButton.width + ItemsPadding, 0f);
         }
         public override void Refresh()
         {

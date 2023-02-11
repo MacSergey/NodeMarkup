@@ -30,7 +30,7 @@ namespace IMT
         public static SavedBool ApplyMarkingFromAssets { get; } = new SavedBool(nameof(ApplyMarkingFromAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool LevelCrossingUnderMarking { get; } = new SavedBool(nameof(LevelCrossingUnderMarking), SettingsFile, true, true);
-        public static SavedBool CollapseOptions { get; } = new SavedBool(nameof(CollapseOptions), SettingsFile, true, true);
+        public static SavedBool CollapseRules { get; } = new SavedBool(nameof(CollapseRules), SettingsFile, false, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool ShowPanelTip { get; } = new SavedBool(nameof(ShowPanelTip), SettingsFile, true, true);
         public static SavedBool DeleteWarnings { get; } = new SavedBool(nameof(DeleteWarnings), SettingsFile, true, true);
@@ -140,7 +140,7 @@ namespace IMT
             AddToolButton<IntersectionMarkingTool, NodeMarkingButton>(displayAndUsageGroup);
             undergroundOptions = AddCheckboxPanel(displayAndUsageGroup, Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, IntersectionMarkingTool.EnterUndergroundShortcut, IntersectionMarkingTool.ExitUndergroundShortcut) });
             AddCheckBox(displayAndUsageGroup, string.Format(Localize.Setting_HoldToMovePoint, LocalizeExtension.Ctrl), HoldCtrlToMovePoint);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_CollapseOptions, CollapseOptions);
+            AddCheckBox(displayAndUsageGroup, Localize.Settings_CollapseRules, CollapseRules);
             AddCheckBox(displayAndUsageGroup, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
             AddCheckBox(displayAndUsageGroup, Localize.Settings_ShowPaneltips, ShowPanelTip);
             AddCheckBox(displayAndUsageGroup, Localize.Settings_HideStreetName, HideStreetName);

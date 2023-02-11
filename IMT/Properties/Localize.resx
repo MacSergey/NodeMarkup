@@ -1589,8 +1589,8 @@ underground mode</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>More options</value>
   </data>
-  <data name="Settings_CollapseOptions" xml:space="preserve">
-    <value>Collapse additional style options</value>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Collapse line rule panels</value>
   </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Main color</value>
@@ -1953,5 +1953,8 @@ It can take time if there are a lot of segments.</value>
   </data>
   <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
     <value>Two different</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>Hold {0} to collapse/expand all rules</value>
   </data>
 </root>

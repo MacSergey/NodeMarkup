@@ -17,6 +17,7 @@ namespace IMT.Manager
         public override LineType Type => throw new NotImplementedException();
         public override IEnumerable<ILinePartEdge> RulesEdges => throw new NotImplementedException();
         public override IEnumerable<MarkingLineRawRule> Rules { get { yield break; } }
+        public override int RuleCount => 0;
 
         public virtual Alignment StartAlignment { get; private set; } = Alignment.Centre;
         public virtual Alignment EndAlignment { get; private set; } = Alignment.Centre;

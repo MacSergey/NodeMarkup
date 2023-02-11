@@ -157,14 +157,15 @@ namespace IMT.UI.Editors
         }
         private void AddRulePanels(MarkingLine editObject)
         {
+            var isExpand = !Settings.CollapseRules || editObject.RuleCount <= 1;
             foreach (var rule in editObject.Rules)
-                AddRulePanel(rule);
+                AddRulePanel(rule, isExpand);
         }
 
-        private RulePanel AddRulePanel(MarkingLineRawRule rule)
+        private RulePanel AddRulePanel(MarkingLineRawRule rule, bool isExpand)
         {
             var rulePanel = ComponentPool.Get<RulePanel>(ContentPanel.Content);
-            rulePanel.Init(this, rule);
+            rulePanel.Init(this, rule, isExpand);
             rulePanel.OnEnter += RuleMouseEnter;
             rulePanel.OnLeave += RuleMouseLeave;
             return rulePanel;
@@ -198,7 +199,7 @@ namespace IMT.UI.Editors
                 return;
 
             var newRule = regularLine.AddRule(CanDivide);
-            var rulePanel = AddRulePanel(newRule);
+            var rulePanel = AddRulePanel(newRule, true);
             SetAddButtonVisible();
 
             ContentPanel.Content.ScrollToBottom();
@@ -219,10 +220,18 @@ namespace IMT.UI.Editors
                 else
                     RemoveRulePanel(rulePanel);
             }
+            var isExpand = !Settings.CollapseRules || EditObject.RuleCount <= 1;
             foreach (var rule in EditObject.Rules)
             {
                 if (!rulePanels.Any(r => r.Rule == rule))
-                    AddRulePanel(rule);
+                    AddRulePanel(rule, isExpand);
+            }
+        }
+        public void ExpandRules(bool isExpand)
+        {
+            foreach (var rulePanel in RulePanels)
+            {
+                rulePanel.IsExpand = isExpand;
             }
         }
         void IPropertyEditor.RefreshProperties()

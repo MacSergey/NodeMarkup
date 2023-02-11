@@ -2181,9 +2181,9 @@ namespace IMT
 		public static string Editor_MoreOptions => LocaleManager.GetString("Editor_MoreOptions", Culture);
 
 		/// <summary>
-		/// Collapse additional style options
+		/// Collapse line rule panels
 		/// </summary>
-		public static string Settings_CollapseOptions => LocaleManager.GetString("Settings_CollapseOptions", Culture);
+		public static string Settings_CollapseRules => LocaleManager.GetString("Settings_CollapseRules", Culture);
 
 		/// <summary>
 		/// Main color
@@ -2729,5 +2729,10 @@ namespace IMT
 		/// Two different
 		/// </summary>
 		public static string StyleOption_ObjectTwoDifferent => LocaleManager.GetString("StyleOption_ObjectTwoDifferent", Culture);
+
+		/// <summary>
+		/// Hold {0} to collapse/expand all rules
+		/// </summary>
+		public static string Header_ExpandTooltip => LocaleManager.GetString("Header_ExpandTooltip", Culture);
 	}
 }

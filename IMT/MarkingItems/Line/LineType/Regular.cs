@@ -21,6 +21,7 @@ namespace IMT.Manager
         public override bool IsSupportRules => true;
         private List<MarkingLineRawRule<RegularLineStyle>> RawRules { get; } = new List<MarkingLineRawRule<RegularLineStyle>>();
         public override IEnumerable<MarkingLineRawRule> Rules => RawRules.Cast<MarkingLineRawRule>();
+        public override int RuleCount => RawRules.Count;
 
         public LineBorders Borders => new LineBorders(this);
         private bool DefaultClipSidewalk => Marking.Type == MarkingType.Node && PointPair.IsSideLine && PointPair.NetworkType == NetworkType.Road;
