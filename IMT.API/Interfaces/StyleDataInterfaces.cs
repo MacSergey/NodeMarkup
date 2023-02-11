@@ -163,7 +163,8 @@ namespace IMT.API
     public interface INetworkLineStyle : IRegularLineStyleData, INormalLineStyleData, ILaneLineStyleData
     {
         NetInfo Prefab { get; set; }
-        float Shift { get; set; }
+        Color32? NetworkColor { get; set; }
+        Vector2 Shift { get; set; }
         float Elevation { get; set; }
         float Scale { get; set; }
         int RepeatDistance { get; set; }
@@ -237,6 +238,7 @@ namespace IMT.API
         bool TwoColors { get; set; }
         Color32 Color { get; set; }
         Color32 SecondColor { get; set; }
+        DashEnd DashEnd { get; set; }
         float Width { get; set; }
         float DashLength { get; set; }
         float SpaceLength { get; set; }
@@ -252,6 +254,7 @@ namespace IMT.API
         bool TwoColors { get; set; }
         Color32 Color { get; set; }
         Color32 SecondColor { get; set; }
+        DashEnd DashEnd { get; set; }
         float Width { get; set; }
         float DashLength { get; set; }
         float SpaceLength { get; set; }
@@ -329,12 +332,11 @@ namespace IMT.API
         float LineOffset { get; set; }
         float MedianOffset { get; set; }
     }
-    public interface ISolidFillerStyle : IFillerStyleData, IGuidedFillerStyleData, IEffectStyleData
+    public interface ISolidFillerStyle : IFillerStyleData, IEffectStyleData
     {
         Color32 Color { get; set; }
         float LineOffset { get; set; }
         float MedianOffset { get; set; }
-        bool FollowGuides { get; set; }
     }
     public interface IChevronFillerStyle : IFillerStyleData, IGuidedFillerStyleData, IEffectStyleData
     {

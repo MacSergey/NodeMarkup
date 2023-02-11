@@ -2734,5 +2734,10 @@ namespace IMT
 		/// Hold {0} to collapse/expand all rules
 		/// </summary>
 		public static string Header_ExpandTooltip => LocaleManager.GetString("Header_ExpandTooltip", Culture);
+
+		/// <summary>
+		/// [UPDATED] Improved resolution of rendering and shape of 2D fillers and crosswalks.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_13 => LocaleManager.GetString("Mod_WhatsNewMessage1_13", Culture);
 	}
 }
