@@ -1397,6 +1397,9 @@ Klik om de markering te wijzigen</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Meer opties</value>
   </data>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Regel panelen inklappen</value>
+  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Hoofdkleur</value>
   </data>
@@ -1683,5 +1686,115 @@ Het kan even duren als er veel segmenten zijn.</value>
   </data>
   <data name="StyleOptionCategory_Main" xml:space="preserve">
     <value>Algemeen</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>Toepassen op alle items</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>Toepassen op alle regels</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>Toepassen op alle oversteekplaatsen</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>Toepassen op alle "{0}" oversteekplaatsen</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>Toepassen op alle opvullingen</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>Toepassen op alle "{0}" opvullingen</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>Toepassen op alle lijnen</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>Toepassen op alle "{0}" lijnen</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>Toepassen op alle stoplijnen</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>Toepassen op alle "{0}" stoplijnen</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>Kopieer effecten</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>Plak effecten</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>Beide</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>Einde</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Begin</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Vast einde</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Limieten</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>Niet parallel</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>Parallel aan lijnen en hellend uiteinde</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>Parallel aan lijnen en rechte uiteinden</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Type streepjes</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Netwerk omkeren</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Twee verschillende</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>Houd {0} ingedrukt om alle regels in/uit te klappen</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
+    <value>[UPDATED] Verbeterde resolutie van rendering en vorm van 2D opvullers en oversteekplaatsen.
+[NEW] Effecten van scheuren en leegtes toegevoegd aan alle 2D-lijnen, 2D-opvullers en oversteekplaatsen.
+[NEW] Textuur van materiaal toegevoegd aan markeringen, zodat het er niet zo vlak uitziet.
+[FIXED] Berekening offsets voor opvullingen hersteld.
+[NEW] Mogelijkheid toegevoegd om een voorinstelling toe te passen op alle segmenten van het netwerk.
+[NEW] Mogelijkheid toegevoegd om lijnregels in te klappen. Automatisch inklappen kan worden ingeschakeld in de mod-instellingen.
+[NEW] Categorieën voor eigenschappen toegevoegd. Ze kunnen worden ingeklapt.
+[NEW] Kopieer/plak optie toegevoegd aan kleureigenschap.
+[NEW] Mogelijkheid toegevoegd om HEX waarde van kleur in te stellen.
+[NEW] Mogelijkheid toegevoegd om stijl in te stellen op alle regels van de lijn.
+[NEW] Mogelijkheid toegevoegd om stijl in te stellen op alle regels van knooppunten/segmenten met dezelfde stijl.
+[NEW] Mogelijkheid toegevoegd om stijl te zetten op alle regels van knooppunt/segment.
+[NEW] Mogelijkheid toegevoegd om sjabloon toe te passen op alle lijnen/oversteekplaatsen/vullingen op knooppunt/segment.
+[NEW] Mogelijkheid toegevoegd om stijlinstellingen terug te zetten naar standaardwaarden.
+[NEW] Mogelijkheid toegevoegd om te selecteren welk uiteinde van prop/boom stijl wordt vastgezet (beide/alleen begin/alleen einde).
+[NEW] Mogelijkheid toegevoegd om verschillende verschuivingen in te stellen aan elk uiteinde van het netwerk.
+[NEW] Min-max aantal props/bomen toegevoegd.
+[NEW] Mogelijkheid toegevoegd om hellende uiteinden van zebrapaden te maken.
+[NEW] Mogelijkheid toegevoegd om offset op tekst in te stellen.
+[NEW] Mogelijkheid toegevoegd om kleur in te stellen op een netwerk (kan alleen invloed hebben op bepaalde netwerken).
+[NEW] Focus wordt automatisch ingesteld op zoekveld wanneer prop/boom/netwerk kiezer opent.
+[UPDATED] Time-out tussen scrollen en waarde veranderen met muiswiel is verhoogd naar 3 seconden om onbedoeld veranderen van waarde te voorkomen.
+[UPDATED] Prioriteit van toepassen van standaard markering veranderd:
+---1. gekoppelde voorinstelling.
+---2. opgeslagen in asset data.
+---3. gegevens van vervangen segment.
+[FIXED] Zoekveld van prop/boom/netwerk kiezer verliest focus als gereedschapspaneel wordt gesloten, zodat het de camerabesturing niet blokkeert als gereedschap wordt gesloten tijdens het zoeken.
+[NEW] Zoeken op lettertype toegevoegd.
+[FIXED] Verwijdert correct ongebruikte texturen en meshes om geheugengebruik te verminderen en geheugenlekken te voorkomen.
+[NEW] API toegevoegd. Andere mods kunnen communiceren met IMT. Beschikbaar als Nuget pakket op www.nuget.org/packages/IMT.API.</value>
   </data>
 </root>

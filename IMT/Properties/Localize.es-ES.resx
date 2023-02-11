@@ -1400,6 +1400,9 @@ para modo subterráneo</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Más opciones</value>
   </data>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Colapsar paneles de reglas de líneas</value>
+  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Color principal</value>
   </data>
@@ -1761,5 +1764,8 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
   </data>
   <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
     <value>Dos diferentes</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>Mantenga presionado {0} para colapsar/expandir todas las reglas</value>
   </data>
 </root>

@@ -1837,7 +1837,7 @@
     <value>裂缝</value>
   </data>
   <data name="StyleOption_Voids" xml:space="preserve">
-    <value>空白</value>
+    <value>空洞</value>
   </data>
   <data name="StyleOption_Texture" xml:space="preserve">
     <value>纹理密度</value>
@@ -1888,7 +1888,7 @@
     <value>粘贴效果</value>
   </data>
   <data name="StyleOption_FixedEndBoth" xml:space="preserve">
-    <value>两者</value>
+    <value>两端</value>
   </data>
   <data name="StyleOption_FixedEndEnd" xml:space="preserve">
     <value>终点</value>

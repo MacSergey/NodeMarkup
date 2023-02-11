@@ -1818,4 +1818,36 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
   <data name="StyleOption_ZebraDashesType" xml:space="preserve">
     <value>Strichart</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
+    <value>[UPDATED] Verbesserte Auflösung von Rendering und Form von 2D-Füllern und Zebrastreifen.
+[NEW] Effekte von Rissen und fehlenden Stücken zu allen 2D-Linien, 2D-Füllungen und Zebrastreifen hinzugefügt.
+[NEW] Materialtextur zu Markierungen hinzugefügt, damit es nicht so flach aussieht.
+[FIXED] Berechnung des Abstandes für Füllungen korrigiert.
+[NEW] Möglichkeit hinzugefügt, eine Voreinstellung auf alle Segmente von Netzwerkressourcen anzuwenden.
+[NEW] Möglichkeit hinzugefügt, Linienregeln zu reduzieren. Das automatische Zusammenklappen kann in den Mod-Einstellungen aktiviert werden.
+[NEW] Eigenschaftskategorien hinzugefügt. Diese können zusammengeklappt werden.
+[NEW] Option zum Kopieren/Einfügen zur Farbeigenschaft hinzugefügt.
+[NEW] Möglichkeit hinzugefügt, den HEX-Wert der Farbe festzulegen.
+[NEW] Möglichkeit hinzugefügt, den Stil für alle Linienregeln festzulegen.
+[NEW] Möglichkeit hinzugefügt, Stil für alle Regeln auf Netzwerkknoten/Segmenten mit demselben Stil festzulegen.
+[NEW] Möglichkeit hinzugefügt, den Stil für alle Regeln auf Netzwerkknoten/Segmenten festzulegen.
+[NEW] Möglichkeit hinzugefügt, Vorlagen auf alle Linien/Zebrastreifen/Füller auf Netzwerkknoten/Segmenten anzuwenden.
+[NEW] Möglichkeit hinzugefügt, die Stileinstellungen auf die Standardwerte zurückzusetzen.
+[NEW] Möglichkeit hinzugefügt, auszuwählen, welches Ende des Dekorations-/Baumstils festgelegt ist (beide/nur Anfang/nur Ende).
+[NEW] Möglichkeit hinzugefügt, an jedem Ende des Netzwerks unterschiedliche Verschiebungen einzustellen.
+[NEW] Min-Max-Anzahl von Dekorationen/Bäumen hinzugefügt.
+[NEW] Möglichkeit hinzugefügt, Zebrastreifen schräg zu machen.
+[NEW] Möglichkeit hinzugefügt, Offset für Text festzulegen.
+[NEW] Möglichkeit hinzugefügt, Farben für Netzwerke festzulegen (nur für bestimmte Netzwerke).
+[NEW] Der Fokus wird automatisch auf das Suchfeld gesetzt, wenn die Dekorationen/Baum/Netzwerk-Auswahl geöffnet wird.
+[UPDATED] Die Zeitüberschreitung zwischen dem Scrollen des Bedienfelds und dem Ändern des Werts mit dem Rad wurde auf 3 Sekunden erhöht, um eine übermäßige Änderung des Werts der Eigenschaft zu verhindern.
+[UPDATED] Geänderte Priorität beim Anwenden der Standardmarkierung:
+---1. verknüpfte Voreinstellung.
+---2. in den Anlagendaten gespeichert.
+---3. Daten aus dem ersetzten Segment.
+[FIXED] Das Suchfeld der Dekorationen-/Baum-/Netzwerkauswahl verlor den Fokus, wenn das Werkzeugfenster geschlossen wurde, so dass die Kamerasteuerung nicht blockiert wird, wenn das Werkzeug während der Suche geschlossen wird.
+[NEW] Schriftsuche hinzugefügt.
+[FIXED] Korrektes Entfernen unbenutzter Texturen und Meshes, um die Speichernutzung zu reduzieren und Speicherlecks zu verhindern.
+[NEW] API hinzugefügt. Andere Mods können mit IMT kommunizieren. Verfügbar als Nuget-Paket www.nuget.org/packages/IMT.API.</value>
+  </data>
 </root>

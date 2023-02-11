@@ -1590,6 +1590,9 @@ le mode souterrain</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Plus d'options</value>
   </data>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Réduire le panneau des règles des lignes</value>
+  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Couleur principale</value>
   </data>
@@ -1951,5 +1954,40 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
   </data>
   <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
     <value>Deux différents</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>Maintenez {0} pour réduire/étendre toutes les règles</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
+    <value>[UPDATED] Amélioration de la résolution du rendu et de la forme des remplissages 2D et des passages piétons.
+[NEW] Ajout des effets de fissures et de vides à toutes les lignes 2D, aux remplisseurs 2D et aux passages piétons.
+[NEW] Ajout de texture au matériau des marquages, afin qu'il paraisse moins plat.
+[FIXED] Correction du calcul du décalage du remplissage.
+[NEW] Ajout de la possibilité d'appliquer un préréglage à tous les segments d'une ressource réseau.
+[NEW] Ajout de la possibilité de réduire les règles de lignes. La réduction automatique peut être activée dans les paramètres du mod.
+[NEW] Ajout de catégories de propriétés. Elles peuvent être réduites.
+[NEW] Ajout d'une option copier/coller pour la couleur.
+[NEW] Ajout de la possibilité de définir la valeur hexadécimale d'une couleur.
+[NEW] Ajout de la possibilité de définir un style pour toutes les règles d'une ligne.
+[NEW] Ajout de la possibilité de définir un style pour toutes les règles sur les nœuds/segments avec le même style.
+[NEW] Ajout de la possibilité de définir un style pour toutes les règles d'un nœud/segment.
+[NEW] Ajout de la possibilité d'appliquer le modèle à toutes les lignes/passages piétons/remplissages sur le nœud/segment.
+[NEW] Ajout de la possibilité de réinitialiser les paramètres de style aux valeurs par défaut.
+[NEW] Ajout de la possibilité de sélectionner quelle extrémité du style d'accessoire/arbre est fixe (les deux/seulement le début/seulement la fin).
+[NEW] Ajout de la possibilité de définir un décalage différent à chaque extrémité du réseau.
+[NEW] Ajout de la limite minimale et maximale du nombre d'accessoires/arbres.
+[NEW] Ajouté la possibilité de faire des extrémités en pente pour le style zébra.
+[NEW] Ajout de la possibilité de définir le décalage pour le texte.
+[NEW] Ajout de la possibilité de définir la couleur d'un réseau (peut affecter seulement certains réseaux).
+[NEW] Le focalisation est automatiquement sur le champ de recherche lorsque le sélecteur d'accessoire/arbre/réseau s'ouvre.
+[UPDATED] Le délai entre le défilement du panneau et la modification de la valeur par la molette est porté à 3 secondes afin d'éviter de modifier par erreur la valeur d'une propriété.
+[UPDATED] Modification de la priorité d'application du marquage par défaut :
+---1. préréglages liés.
+---2. sauvegardé dans les données de la ressource.
+---3. données du segment qui a été remplacé.
+[FIXED] Le champ de recherche du sélecteur d'accessoire/arbre/réseau perd le focus lorsque le panneau de l'outil est fermé afin de ne pas bloquer le contrôle de la caméra si l'outil est fermé pendant la recherche.
+[NEW] Ajout de la recherche de polices de caractères.
+[FIXED] Suppression des textures et maillages inutilisés afin de réduire l'utilisation de la mémoire et d'éviter les fuites de mémoire.
+[NEW] Ajout d'une API. D'autres mods peuvent communiquer avec IMT. Disponible sous forme de paquet Nuget www.nuget.org/packages/IMT.API.</value>
   </data>
 </root>

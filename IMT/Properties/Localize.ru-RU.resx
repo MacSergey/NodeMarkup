@@ -1598,7 +1598,7 @@
     <value>Основной цвет</value>
   </data>
   <data name="StyleOption_SecondColor" xml:space="preserve">
-    <value>Дополнительный цвет</value>
+    <value>Второй цвет</value>
   </data>
   <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
     <value>Ассим. двойная пунктирная</value>

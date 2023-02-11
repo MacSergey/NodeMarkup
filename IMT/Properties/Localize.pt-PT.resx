@@ -872,6 +872,12 @@ Para criar uma predefinição, clique «{0}» no cabeçalho.</value>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nova predefinição</value>
   </data>
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
+    <value>Sair do modo de aplicação de predefinições</value>
+  </data>
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
+    <value>Deseja aplicar uma predefinição?</value>
+  </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autor</value>
   </data>
@@ -1201,11 +1207,26 @@ Clique para editar marcações</value>
   <data name="Settings_Gameplay" xml:space="preserve">
     <value>Jogabilidade</value>
   </data>
+  <data name="Settings_GroupPresets" xml:space="preserve">
+    <value>Grupos predefinidos</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Close" xml:space="preserve">
+    <value>Ajuste próximo</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Perfect" xml:space="preserve">
+    <value>Ajuste perfeito</value>
+  </data>
   <data name="PresetEditor_PresetFit_Poor" xml:space="preserve">
     <value>Ajuste pobre</value>
   </data>
   <data name="PresetEditor_PresetFit_Possible" xml:space="preserve">
     <value>Ajuste possível</value>
+  </data>
+  <data name="Settings_LevelCrossingUnderMarking" xml:space="preserve">
+    <value>Marcações sob passagens de nível</value>
+  </data>
+  <data name="PointEditor_RevertOffsets" xml:space="preserve">
+    <value>Reverter compensações</value>
   </data>
   <data name="PointEditor_SaveOffsets" xml:space="preserve">
     <value>Guardar deslocamentos</value>
@@ -1213,11 +1234,53 @@ Clique para editar marcações</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Nome da rua</value>
   </data>
+  <data name="LineStyle_Prop" xml:space="preserve">
+    <value>Acessório</value>
+  </data>
+  <data name="LineStyle_Tree" xml:space="preserve">
+    <value>Árvore</value>
+  </data>
+  <data name="StyleOption_ObjectAngle" xml:space="preserve">
+    <value>Ângulo</value>
+  </data>
+  <data name="StyleOption_ObjectScale" xml:space="preserve">
+    <value>Escala</value>
+  </data>
+  <data name="StyleOption_ObjectShift" xml:space="preserve">
+    <value>Deslocação</value>
+  </data>
+  <data name="StyleOption_ObjectStep" xml:space="preserve">
+    <value>Intervalo</value>
+  </data>
+  <data name="NumberFormat_Degree" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="NumberFormat_Meter" xml:space="preserve">
+    <value>{0}m</value>
+  </data>
+  <data name="NumberFormat_Percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="StyleOption_Color1" xml:space="preserve">
+    <value>Variante #1</value>
+  </data>
+  <data name="StyleOption_Color2" xml:space="preserve">
+    <value>Variante #2</value>
+  </data>
+  <data name="StyleOption_Color3" xml:space="preserve">
+    <value>Variante #3</value>
+  </data>
+  <data name="StyleOption_Color4" xml:space="preserve">
+    <value>Variante #4</value>
+  </data>
   <data name="StyleOption_ColorCustom" xml:space="preserve">
     <value>Personalizado</value>
   </data>
   <data name="StyleOption_ColorRandom" xml:space="preserve">
     <value>Aleatório</value>
+  </data>
+  <data name="StyleOption_ColorOption" xml:space="preserve">
+    <value>Variante de cor</value>
   </data>
   <data name="StyleOption_SharkToothAngle" xml:space="preserve">
     <value>Ângulo</value>
