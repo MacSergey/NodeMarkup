@@ -130,6 +130,13 @@
     <None Remove="Resources\StylesLine\LineText.png" />
     <None Remove="Resources\StylesLine\LineZigZag.png" />
     <None Remove="Resources\StylesPreview\StylesPreviewLineDoubleDashedAsym.png" />
+    <None Remove="Resources\WideButtonIcons\DynamicFixedButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\DynamicFreeButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\FixedFixedButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\FixedFreeButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\ParallelButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\SlopeButtonIcon.png" />
+    <None Remove="Resources\WideButtonIcons\StraightButtonIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -146,10 +153,6 @@
     <EmbeddedResource Include="Resources\ButtonIcons\CopyButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\CopyToAllButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\CopyToSameButtonIcon.png" />
-    <EmbeddedResource Include="Resources\ButtonIcons\DynamicFixedButtonIcon.png" />
-    <EmbeddedResource Include="Resources\ButtonIcons\DynamicFreeButtonIcon.png" />
-    <EmbeddedResource Include="Resources\ButtonIcons\FixedFixedButtonIcon.png" />
-    <EmbeddedResource Include="Resources\ButtonIcons\FixedFreeButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\ItalicButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\LeftToRightButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\PasteButtonIcon.png" />
@@ -291,6 +294,13 @@
     <EmbeddedResource Include="Resources\StylesFiller\FillerRuined.png" />
     <EmbeddedResource Include="Resources\StylesFiller\FillerSolid.png" />
     <EmbeddedResource Include="Resources\StylesFiller\FillerStripe.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\DynamicFixedButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\DynamicFreeButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\FixedFixedButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\FixedFreeButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\ParallelButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\SlopeButtonIcon.png" />
+    <EmbeddedResource Include="Resources\WideButtonIcons\StraightButtonIcon.png" />
   </ItemGroup>
 
   <ItemGroup>

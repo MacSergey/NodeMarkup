@@ -79,6 +79,10 @@ namespace IMT.Utilities
         public static string FixedFixedButtonIcon { get; } = nameof(FixedFixedButtonIcon);
         public static string FixedFreeButtonIcon { get; } = nameof(FixedFreeButtonIcon);
 
+        public static string ParallelButtonIcon { get; } = nameof(ParallelButtonIcon);
+        public static string SlopeButtonIcon { get; } = nameof(SlopeButtonIcon);
+        public static string StraightButtonIcon { get; } = nameof(StraightButtonIcon);
+
         public static string RotateButtonIcon { get; } = nameof(RotateButtonIcon);
         public static string CopyButtonIcon { get; } = nameof(CopyButtonIcon);
         public static string PasteButtonIcon { get; } = nameof(PasteButtonIcon);
@@ -159,6 +163,10 @@ namespace IMT.Utilities
             spriteParams[DynamicFreeButtonIcon] = new RectOffset();
             spriteParams[FixedFixedButtonIcon] = new RectOffset();
             spriteParams[FixedFreeButtonIcon] = new RectOffset();
+
+            spriteParams[ParallelButtonIcon] = new RectOffset();
+            spriteParams[StraightButtonIcon] = new RectOffset();
+            spriteParams[SlopeButtonIcon] = new RectOffset();
 
             spriteParams[RotateButtonIcon] = new RectOffset();
             spriteParams[CopyButtonIcon] = new RectOffset();

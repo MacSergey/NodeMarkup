@@ -189,10 +189,9 @@ namespace IMT.UI.Editors
         private void SaveChanges()
         {
             var name = NameProperty.Value;
-            var messageBox = default(YesNoMessageBox);
             if (!string.IsNullOrEmpty(name) && name != EditObject.Name && (EditObject.Manager as TemplateManager<TemplateType>).ContainsName(name, EditObject))
             {
-                messageBox = MessageBox.Show<YesNoMessageBox>();
+                var messageBox = MessageBox.Show<YesNoMessageBox>();
                 messageBox.CaptionText = IMT.Localize.TemplateEditor_NameExistCaption;
                 messageBox.MessageText = string.Format(NameExistMessage, name);
                 messageBox.OnButton1Click = AgreeExistName;
@@ -206,10 +205,11 @@ namespace IMT.UI.Editors
             {
                 if (EditObject.IsAsset)
                 {
-                    messageBox ??= MessageBox.Show<YesNoMessageBox>();
+                    var messageBox = MessageBox.Show<YesNoMessageBox>();
                     messageBox.CaptionText = RewriteCaption;
                     messageBox.MessageText = $"{IsAssetMessage} {RewriteMessage}";
                     messageBox.OnButton1Click = Save;
+                    messageBox.OnButton2Click = EditName;
                     return false;
                 }
                 else
