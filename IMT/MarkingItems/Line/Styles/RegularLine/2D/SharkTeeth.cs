@@ -1,5 +1,4 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
@@ -9,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -80,6 +78,7 @@ namespace IMT.Manager
                     StyleHelper.GetPartParams(trajectory, Invert ? part.Invert : part, offset, out var pos, out var dir);
                     if (StyleHelper.CheckBorders(borders, pos, dir, Base, Height))
                     {
+                        dir = dir.TurnDeg(Angle, true);
                         var data = new DecalData(this, MaterialType.Triangle, lod, pos, dir, Base, Height, Color);
                         addData(data);
                     }
