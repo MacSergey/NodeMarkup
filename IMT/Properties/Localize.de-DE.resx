@@ -1471,6 +1471,9 @@ zu verlassen</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Weitere Optionen</value>
   </data>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Anzeige der Linien-Regeln zusammenklappen</value>
+  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Hauptfarbe</value>
   </data>
@@ -1806,6 +1809,15 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
   <data name="StyleOption_FixedEnd" xml:space="preserve">
     <value>Fixiertes Ende</value>
   </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Limitierung</value>
+  </data>
   <data name="StyleOption_NotParallel" xml:space="preserve">
     <value>Nicht parallel</value>
   </data>
@@ -1817,6 +1829,15 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
   </data>
   <data name="StyleOption_ZebraDashesType" xml:space="preserve">
     <value>Strichart</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Netzwerk invertieren</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Zwei Unterschiedliche</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>Halte {0} zum ein-/ausklappen aller Regeln</value>
   </data>
   <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
     <value>[UPDATED] Verbesserte Auflösung von Rendering und Form von 2D-Füllern und Zebrastreifen.

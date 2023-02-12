@@ -1461,7 +1461,7 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Angolo</value>
   </data>
   <data name="LineStyle_Network" xml:space="preserve">
-    <value>Network Decorativo</value>
+    <value>Rete decorativa</value>
   </data>
   <data name="StyleOption_NetWidthScale" xml:space="preserve">
     <value>Larghezza</value>
@@ -1470,22 +1470,22 @@ Seleziona per modificare la segnaletica orizzontale</value>
     <value>Distanza di Ripetizione</value>
   </data>
   <data name="StyleOption_AssetNetwork" xml:space="preserve">
-    <value>Assetto del Network</value>
+    <value>Rete</value>
   </data>
   <data name="StyleOption_AssetNotSet" xml:space="preserve">
     <value>Non Impostato</value>
   </data>
   <data name="StyleOption_AssetProp" xml:space="preserve">
-    <value>Assetto dell'Oggetto</value>
+    <value>Oggetto</value>
   </data>
   <data name="StyleOption_AssetTree" xml:space="preserve">
-    <value>Assetto dell'Albero</value>
+    <value>Albero</value>
   </data>
   <data name="AssetPopup_NothingFound" xml:space="preserve">
     <value>Nessun risultato</value>
   </data>
   <data name="Settings_AutoApplyPasting" xml:space="preserve">
-    <value>Applica automaticamente marcatura incolla se la fonte corrisponde</value>
+    <value>Applica automaticamente marcatura copiata se l'incrocio di destinazione e quella di origine coincidono</value>
   </data>
   <data name="StyleOption_ObjectProbability" xml:space="preserve">
     <value>Probabilità</value>
@@ -1581,16 +1581,19 @@ modalità sotterranea</value>
     <value>Renderizza</value>
   </data>
   <data name="Editor_LessOptions" xml:space="preserve">
-    <value>Meno Opzioni</value>
+    <value>Meno opzioni</value>
   </data>
   <data name="Editor_MoreOptions" xml:space="preserve">
-    <value>Più Opzioni</value>
+    <value>Più opzioni</value>
+  </data>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Ridurre pannello delle regole delle linee</value>
   </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
-    <value>Colore Principale</value>
+    <value>Colore principale</value>
   </data>
   <data name="StyleOption_SecondColor" xml:space="preserve">
-    <value>Colore Secondario</value>
+    <value>Colore secondario</value>
   </data>
   <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
     <value>Doppia linea tratteggiata asimmetrica</value>
@@ -1673,7 +1676,7 @@ modalità sotterranea</value>
     <value>Testo</value>
   </data>
   <data name="StyleOption_DefaultFont" xml:space="preserve">
-    <value>Carattere Predefinito di Gioco</value>
+    <value>Carattere predefinito di gioco</value>
   </data>
   <data name="StyleOption_Font" xml:space="preserve">
     <value>Carattere</value>
@@ -1847,7 +1850,7 @@ Può volerci del tempo se ci sono molti segmenti.</value>
     <value>Uscendo dalla modalità Incolla</value>
   </data>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
-    <value>Vuoi salvare la Segnaletica?</value>
+    <value>Vuoi applicare la marcatura?</value>
   </data>
   <data name="StyleOption_Density" xml:space="preserve">
     <value>Densità</value>
@@ -1872,5 +1875,115 @@ Può volerci del tempo se ci sono molti segmenti.</value>
   </data>
   <data name="StyleOptionCategory_Main" xml:space="preserve">
     <value>Principale</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>Applica a tutti gli elementi</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>Applica a tutte le regole</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>Applica a tutti gli attraversamenti</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>Applica a tutti gli attraversamenti "{0}"</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>Applica a tutti i riempimenti</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>Applica a tutti i riempimenti "{0}"</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>Applica a tutte le linee</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>Applica a tutte le linee "{0}"</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>Applica a tutte le linee trasversali</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>Applica a tutte le linee trasversali "{0}"</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>Copia effetti</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>Incolla effetti</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>Entrambi</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>Fine</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Inizio</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Terminale fisso</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Limiti</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>Non parallelo</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>Parallelo alle linee e all'estremità del pendio</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>Parallelo alle linee e alle estremità diritte</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Tipo di tratteggi</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Inverti rete</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Due differenti</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>Tieni premuti {0} per ridurre/espandere tutte le regole</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
+    <value>[AGGIORNATO] Migliorata la risoluzione del rendering e la forma dei riempimenti 2D e delle strisce pedonali.
+[NOVITÀ] Aggiunti effetti di crepe e vuoti a tutte le linee 2D, i riempimenti 2D e le strisce pedonali.
+[NOVITÀ] Aggiunta trama del materiale ai segni, in modo che non sembri così piatto.
+[FISSO] Calcolo dello spostamento' di riempimento fisso.
+[NOVITÀ] Aggiunta la possibilità di applicare un preset a tutti i segmenti dell'asset di rete.
+[NOVITÀ] Aggiunta la possibilità di comprimere le regole della linea. Il collasso automatico può essere abilitato nelle impostazioni mod.
+[NOVITÀ] Aggiunte categorie di proprietà. possono essere collassate.
+[NOVITÀ] Aggiunta l'opzione copia/incolla alla proprietà del colore.
+[NOVITÀ] Aggiunta la possibilità di impostare il valore HEX del colore.
+[NOVITÀ] Aggiunta la possibilità di impostare lo stile per tutte le regole di linea.
+[NOVITÀ] Aggiunta la possibilità di impostare lo stile per tutte le regole su nodo/segmento con lo stesso stile.
+[NOVITÀ] Aggiunta la possibilità di impostare lo stile per tutte le regole su nodo/segmento.
+[NOVITÀ] Aggiunta la possibilità di applicare il modello a tutte le linee/attraversamenti pedonali/riempimenti su nodo/segmento.
+[NOVITÀ] Aggiunta la possibilità di ripristinare le impostazioni di stile ai valori predefiniti.
+[NOVITÀ] Aggiunta la possibilità di selezionare quale estremità dello stile dell'oggetto/albero è fissa (entrambi/solo inizio/solo fine).
+[NOVITÀ] Aggiunta la possibilità di impostare diversi turni su ciascuna estremità della rete.
+[NOVITÀ] Aggiunto il conteggio minimo massimo di oggetti di scena/alberi.
+[NOVITÀ] Aggiunta la possibilità di creare estremità inclinate della zebra.
+[NOVITÀ] Aggiunta la possibilità di impostare lo spostamento del testo.
+[NOVITÀ] Aggiunta la possibilità di impostare il colore sulla rete (può influire solo su determinate reti).
+[NOVITÀ] Il focus viene impostato automaticamente sul campo di ricerca quando si apre il selettore oggetto/albero/rete.
+[AGGIORNATO] Il timeout tra lo scorrimento del pannello e la modifica del valore tramite ruota è stato aumentato a 3 secondi per impedire la modifica eccessiva del valore della proprietà.
+[AGGIORNATO] Modificata la priorità dell'applicazione della marcatura predefinita:
+---1. preset collegato.
+---2. salvato nei dati delle risorse.
+---3. dati dal segmento che è stato sostituito.
+[RISOLTO] Il campo di ricerca del selettore oggetto/albero/rete ha perso il focus quando il pannello degli strumenti è chiuso in modo che non blocchi il controllo della telecamera se lo strumento viene chiuso durante la ricerca.
+[NOVITÀ] Aggiunta la ricerca dei caratteri.
+[RISOLTO] Rimozione corretta di texture e mesh inutilizzate per ridurre l'utilizzo della memoria e prevenire perdite di memoria.
+[NOVITÀ] API aggiunta. Altre mod possono comunicare con IMT. Disponibile come pacchetto Nuget www.nuget.org/packages/IMT.API.</value>
   </data>
 </root>
