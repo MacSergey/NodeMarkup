@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.13.0.591</AssemblyVersion>
+    <AssemblyVersion>1.13.0.608</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -364,7 +364,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CitiesHarmony.API" Version="2.1.0" />
+    <PackageReference Include="CitiesHarmony.API" Version="2.2.0" />
     <PackageReference Include="MoveItIntegration" Version="1.0.0" />
     <PackageReference Include="UnifiedUILib" Version="2.2.12" />
     <ProjectReference Include="..\IMT.API\IntersectionMarkingTool.API.csproj" />
