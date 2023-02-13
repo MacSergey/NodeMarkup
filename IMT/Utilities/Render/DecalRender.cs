@@ -154,9 +154,9 @@ namespace IMT.Utilities
             else
                 return MaterialType.AreaUpTo16;
         }
-        public static List<DecalData> GetData(IEffectStyle effectStyle, MarkingLOD lod, ITrajectory[] trajectories, StyleHelper.SplitParams splitParams, Color32 color,
+        public static List<DecalData> GetData(IEffectStyle effectStyle, MarkingLOD lod, ITrajectory[] trajectories, StyleHelper.SplitParams splitParams, Color32 color
 #if DEBUG
-            bool debug = false
+            , bool debug = false
 #endif
             )
         {

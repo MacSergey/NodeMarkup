@@ -1,17 +1,13 @@
-﻿using ColossalFramework.Math;
-using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
-using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -19,6 +15,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.FillerStripe;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
+        protected override float DefaultStep => DefaultStepStripe;
 
         public PropertyValue<float> Angle { get; }
         public PropertyValue<bool> FollowGuides { get; }

@@ -23,6 +23,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.FillerChevron;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
+        protected override float DefaultStep => DefaultStepStripe;
 
         public PropertyValue<float> AngleBetween { get; }
         public PropertyBoolValue Invert { get; }
