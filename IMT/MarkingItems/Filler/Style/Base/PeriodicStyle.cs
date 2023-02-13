@@ -16,8 +16,10 @@ namespace IMT.Manager
 {
     public abstract class PeriodicFillerStyle : FillerStyle, IPeriodicFiller
     {
+        protected abstract float DefaultStep { get; }
         public PropertyValue<float> Step { get; }
 #if DEBUG
+        public PropertyBoolValue Debug { get; }
         public PropertyValue<int> RenderOnly { get; }
         public PropertyBoolValue Start { get; }
         public PropertyBoolValue End { get; }
@@ -29,6 +31,7 @@ namespace IMT.Manager
         {
             Step = GetStepProperty(step);
 #if DEBUG
+            Debug = new PropertyBoolValue(StyleChanged, false);
             RenderOnly = new PropertyStructValue<int>(StyleChanged, -1);
             Start = new PropertyBoolValue(StyleChanged, true);
             End = new PropertyBoolValue(StyleChanged, true);
@@ -53,6 +56,7 @@ namespace IMT.Manager
 #if DEBUG
             if (!provider.isTemplate && Settings.ShowDebugProperties)
             {
+                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Debug), DebugCategory, GetDebug));
                 provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RenderOnly), DebugCategory, GetRenderOnlyProperty));
                 provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Start), DebugCategory, AddStartProperty));
                 provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(End), DebugCategory, AddEndProperty));
@@ -62,6 +66,13 @@ namespace IMT.Manager
 #endif
         }
 #if DEBUG
+        private void GetDebug(BoolListPropertyPanel debugProperty, EditorProvider provider)
+        {
+            debugProperty.Text = "Debug";
+            debugProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
+            debugProperty.SelectedObject = Debug;
+            debugProperty.OnSelectObjectChanged += (value) => Debug.Value = value;
+        }
         private void GetRenderOnlyProperty(IntPropertyPanel property, EditorProvider provider)
         {
             property.Text = "Render only";
@@ -200,7 +211,11 @@ namespace IMT.Manager
                         foreach (var contour in cutContours)
                         {
                             var trajectories = contour.Select(e => e.trajectory).ToArray();
-                            var datas = DecalData.GetData(this as IEffectStyle, lod, trajectories, MinAngle, MinLength, MaxLength, Color);
+                            var datas = DecalData.GetData(this as IEffectStyle, lod, trajectories, SplitParams, Color
+#if DEBUG
+                                , Debug
+#endif
+                                );
                             foreach (var data in datas)
                                 addData(data);
                         }
@@ -268,7 +283,7 @@ namespace IMT.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
-            Step.FromXml(config, DefaultStepGrid);
+            Step.FromXml(config, DefaultStep);
         }
 
         protected readonly struct Part

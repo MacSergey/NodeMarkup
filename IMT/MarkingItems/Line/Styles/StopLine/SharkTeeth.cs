@@ -64,7 +64,7 @@ namespace IMT.Manager
                 var parts = StyleHelper.CalculateDashed(trajectory, Base, Space);
                 foreach (var part in parts)
                 {
-                    StyleHelper.GetPartParams(trajectory, part, Height * -0.5f, out var pos, out var angle);
+                    StyleHelper.GetPartParams(trajectory, part.Invert, Height * -0.5f, out var pos, out var angle);
                     var data = new DecalData(this, MaterialType.Triangle, lod, pos, angle, Base, Height, Color);
                     addData(data);
                 }

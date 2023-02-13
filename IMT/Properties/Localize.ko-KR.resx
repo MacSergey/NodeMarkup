@@ -1401,6 +1401,9 @@
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>상세 설정</value>
   </data>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>선 규칙 패널 접기</value>
+  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>주 색상</value>
   </data>
@@ -1632,21 +1635,21 @@
     <value>연결 안 함</value>
   </data>
   <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
-    <value>[신규] '내용' 선 스타일을 추가했습니다. 도로에 마음대로 글씨를 쓸 수 있으며, 시스템에 있는 모든 글꼴 중에서 글꼴을 지정할 수 있습니다.
-[신규] 프리셋을 네트워크 에셋에 연결하는 기능을 추가했습니다. 도로가 지어질 때 자동 적용됩니다.
-[신규] '차선' 선 스타일을 추가했습니다. 차선 한가운데에 프롭/나무/네트워크/글자를 쉽게 배치할 수 있습니다.
-[신규] '지그재그' 선 스타일을 추가했습니다.
-[신규] 에셋 편집기에서 여러 도로 높이(경사로, 터널)에 대해 다른 마킹을 지정하여 저장할 수 있습니다.
-[신규] 차선에 모서리 선을 자동 생성하도록 했습니다. 모드 설정에서 끌 수 있습니다.
-[신규] 프롭/나무에 분포 설정을 추가했습니다. 선 끝에 프롭/나무를 고정하고 동적으로 간격을 설정할 수 있습니다.
-[신규] 네트워크 시프트 값을 반전시키는 기능을 추가했습니다.
-[신규] 마킹 붙여넣기 모드에 대한 단축키를 추가했습니다.
-[변경] 더는 점을 드래그할 때 Ctrl 키를 누르지 않아도 됩니다. 기존 방식(Ctrl 키를 누른 채 이동)은 모드 설정에서 켤 수 있습니다.
-[수정] 선과 필러가 최대한 경사 구간을 따라가도록 수정했습니다. 아직 어떤 경우에는 완벽하지 않지만 전보다는 훨씬 낫습니다.
-[수정] 인도 포장 선이 필러를 정확히 따라옵니다.
-[수정] 비대칭 스타일의 값이 잘못 반전된 채로 붙여넣어지는 현상을 수정했습니다.
-[수정] 이 모드로 추가한 네트워크/프롭/나무를 프리셋 스크린샷에서 볼 수 있습니다.
-[수정] 필러 가이드를 선택한 뒤 필러가 갱신되지 않는 현상을 수정했습니다.</value>
+    <value>[NEW] '내용' 선 스타일을 추가했습니다. 도로에 마음대로 글씨를 쓸 수 있으며, 시스템에 있는 모든 글꼴 중에서 글꼴을 지정할 수 있습니다.
+[NEW] 프리셋을 네트워크 에셋에 연결하는 기능을 추가했습니다. 도로가 지어질 때 자동 적용됩니다.
+[NEW] '차선' 선 스타일을 추가했습니다. 차선 한가운데에 프롭/나무/네트워크/글자를 쉽게 배치할 수 있습니다.
+[New] '지그재그' 선 스타일을 추가했습니다.
+[NEW] 에셋 편집기에서 여러 도로 높이(경사로, 터널)에 대해 다른 마킹을 지정하여 저장할 수 있습니다.
+[NEW] 차선에 모서리 선을 자동 생성하도록 했습니다. 모드 설정에서 끌 수 있습니다.
+[NEW] 프롭/나무에 분포 설정을 추가했습니다. 선 끝에 프롭/나무를 고정하고 동적으로 간격을 설정할 수 있습니다.
+[NEW] 네트워크 시프트 값을 반전시키는 기능을 추가했습니다.
+[NEW] 마킹 붙여넣기 모드에 대한 단축키를 추가했습니다.
+[UPDATED] 더는 점을 드래그할 때 Ctrl 키를 누르지 않아도 됩니다. 기존 방식(Ctrl 키를 누른 채 이동)은 모드 설정에서 켤 수 있습니다.
+[FIXED] 선과 필러가 최대한 경사 구간을 따라가도록 수정했습니다. 아직 어떤 경우에는 완벽하지 않지만 전보다는 훨씬 낫습니다.
+[FIXED] 인도 포장 선이 필러를 정확히 따라옵니다.
+[FIXED] 비대칭 스타일의 값이 잘못 반전된 채로 붙여넣어지는 현상을 수정했습니다.
+[FIXED] 이 모드로 추가한 네트워크/프롭/나무를 프리셋 스크린샷에서 볼 수 있습니다.
+[FIXED] 필러 가이드를 선택한 뒤 필러가 갱신되지 않는 현상을 수정했습니다.</value>
   </data>
   <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
     <value>이 에셋의 모든 구간에 프리셋 적용</value>
@@ -1674,7 +1677,7 @@
     <value>균열</value>
   </data>
   <data name="StyleOption_Voids" xml:space="preserve">
-    <value>공백</value>
+    <value>구멍</value>
   </data>
   <data name="StyleOption_Texture" xml:space="preserve">
     <value>텍스처 밀도</value>
@@ -1744,5 +1747,58 @@
   </data>
   <data name="StyleOption_ObjectLimits" xml:space="preserve">
     <value>제한</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>평행하지 않게</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>선과 경사면 끝이 평행하게</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>선과 직선 끝이 평행하게</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>점선 유형</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>네트워크 반전</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>서로 다른 2가지</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>{0} 키를 꾹 눌러 모든 규칙 접기/펼치기</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
+    <value>[UPDATED] 2D 필러 및 횡단보도의 모양과 렌더링 해상도를 개선했습니다.
+[NEW] 모든 2D 선, 2D 필러, 횡단보도에 균열, 구멍 효과를 추가했습니다.
+[NEW]마킹에 재질의 질감을 추가하여, 너무 평평하게 보이지 않도록 했습니다.
+[FIXED] 필러 오프셋 연산을 수정했습니다.
+[NEW] 네트워크 에셋의 모든 구간에 프리셋을 적용하는 기능을 추가했습니다.
+[NEW] 선 규칙을 접을 수 있습니다. 모드 설정에서 자동 접기를 켤 수 있습니다.
+[NEW] 속성 카테고리를 추가했습니다. 카테고리별로 접을 수 있습니다.
+[NEW] 색상 속성에 복사/붙여넣기 기능을 추가했습니다.
+[NEW] 색상의 헥스 코드를 설정하는 기능을 추가했습니다.
+[NEW] 모든 선 규칙에 스타일을 지정하는 기능을 추가했습니다.
+[NEW] 같은 스타일로 된 모든 노드/구간의 규칙에 스타일을 지정하는 기능을 추가했습니다.
+[NEW] 모든 노드/구간 규칙에 스타일을 지정하는 기능을 추가했습니다.
+[NEW] 노드/구간의 모든 선/횡단보도/필러에 템플릿을 적용하는 기능을 추가했습니다.
+[NEW] 스타일 설정을 기본값으로 초기화하는 기능을 추가했습니다.
+[NEW] 프롭/나무 스타일의 어느 쪽 끝을 고정할지 지정하는 기능을 추가했습니다 (모두/시작만/끝만).
+[NEW] 각 네트워크의 끝에 다른 시프트 값을 지정하는 기능을 추가했습니다.
+[NEW] 프롭/나무의 최소 최대 수량을 추가했습니다.
+[NEW] 줄무늬에 경사진 끝을 만드는 기능을 추가했습니다.
+[NEW] '내용'에 오프셋을 지정하는 기능을 추가했습니다.
+[NEW] 네트워크 색상을 지정하는 기능을 추가했습니다 (특정 네트워크에만 영향).
+[NEW] 프롭/나무/네트워크 선택기가 열릴 때 검색란이 자동으로 활성화됩니다.
+[UPDATED] 속성 값을 잘못 바꾸지 않도록 하기 위하여, 패널을 스크롤하는 동작과 휠로 설정값을 변경하는 동작 사이의 시간 제한을 3초로 연장했습니다.
+[UPDATED] 마킹 기본값을 적용할 때 우선순위를 변경했습니다:
+---1. 연결된 프리셋.
+---2. 에셋에 저장된 데이터.
+---3. 덮어쓴 구간의 기존 데이터.
+[FIXED] 도구 패널을 닫았을 때 프롭/나무/네트워크 선택기의 검색란이 비활성화되어, 검색 도중 도구 패널을 닫아도 카메라를 제어할 수 있도록 수정했습니다.
+[NEW] 글꼴 검색 기능을 추가했습니다.
+[FIXED] 사용하지 않는 텍스처나 메시를 정확히 제거하여 메모리 사용량을 줄이고 메모리 누수 현상을 방지했습니다.
+[NEW] API를 추가했습니다. 다른 모드에서 IMT 모드와 상호작용할 수 있습니다. www.nuget.org/packages/IMT.API Nuget 패키지로 이용할 수 있습니다.</value>
   </data>
 </root>

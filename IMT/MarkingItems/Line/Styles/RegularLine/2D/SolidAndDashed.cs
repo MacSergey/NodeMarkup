@@ -91,7 +91,7 @@ namespace IMT.Manager
             var dashedOffset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
             var borders = line.Borders;
 
-            var solidParts = StyleHelper.CalculateSolid(trajectory, lod);
+            var solidParts = StyleHelper.CalculateSolid(trajectory, lod, StyleHelper.SplitParams.Default);
             foreach (var part in solidParts)
             {
                 StyleHelper.GetPartParams(trajectory, part, solidOffset, out var startPos, out var endPos, out var dir);
@@ -139,8 +139,8 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), MainCategory, AddUseSecondColorProperty));
-            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), MainCategory, AddSecondColorProperty, RefreshSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), AdditionalCategory, AddSecondColorProperty, RefreshSecondColorProperty));
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), MainCategory, AddLengthProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), MainCategory, AddOffsetProperty));
             if (!provider.isTemplate)

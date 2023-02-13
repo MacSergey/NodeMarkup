@@ -1,18 +1,12 @@
-﻿using ColossalFramework.Math;
-using ColossalFramework.UI;
-using IMT.API;
-using IMT.Manager;
+﻿using IMT.API;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
-using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -20,6 +14,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.FillerGrid;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
+        protected override float DefaultStep => DefaultStepGrid;
 
         public PropertyValue<float> Angle { get; }
 
@@ -37,6 +32,7 @@ namespace IMT.Manager
                 yield return nameof(Cracks);
                 yield return nameof(Voids);
 #if DEBUG
+                yield return nameof(Debug);
                 yield return nameof(RenderOnly);
                 yield return nameof(Start);
                 yield return nameof(End);
@@ -119,14 +115,12 @@ namespace IMT.Manager
         {
             var config = base.ToXml();
             Angle.ToXml(config);
-            Step.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
             Angle.FromXml(config, DefaultAngle);
-            Step.FromXml(config, DefaultStepGrid);
         }
     }
 }
