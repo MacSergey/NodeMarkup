@@ -1955,35 +1955,35 @@ Può volerci del tempo se ci sono molti segmenti.</value>
     <value>Tieni premuti {0} per ridurre/espandere tutte le regole</value>
   </data>
   <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
-    <value>[AGGIORNATO] Migliorata la risoluzione del rendering e la forma dei riempimenti 2D e delle strisce pedonali.
-[NOVITÀ] Aggiunti effetti di crepe e vuoti a tutte le linee 2D, i riempimenti 2D e le strisce pedonali.
-[NOVITÀ] Aggiunta trama del materiale ai segni, in modo che non sembri così piatto.
-[FISSO] Calcolo dello spostamento' di riempimento fisso.
-[NOVITÀ] Aggiunta la possibilità di applicare un preset a tutti i segmenti dell'asset di rete.
-[NOVITÀ] Aggiunta la possibilità di comprimere le regole della linea. Il collasso automatico può essere abilitato nelle impostazioni mod.
-[NOVITÀ] Aggiunte categorie di proprietà. possono essere collassate.
-[NOVITÀ] Aggiunta l'opzione copia/incolla alla proprietà del colore.
-[NOVITÀ] Aggiunta la possibilità di impostare il valore HEX del colore.
-[NOVITÀ] Aggiunta la possibilità di impostare lo stile per tutte le regole di linea.
-[NOVITÀ] Aggiunta la possibilità di impostare lo stile per tutte le regole su nodo/segmento con lo stesso stile.
-[NOVITÀ] Aggiunta la possibilità di impostare lo stile per tutte le regole su nodo/segmento.
-[NOVITÀ] Aggiunta la possibilità di applicare il modello a tutte le linee/attraversamenti pedonali/riempimenti su nodo/segmento.
-[NOVITÀ] Aggiunta la possibilità di ripristinare le impostazioni di stile ai valori predefiniti.
-[NOVITÀ] Aggiunta la possibilità di selezionare quale estremità dello stile dell'oggetto/albero è fissa (entrambi/solo inizio/solo fine).
-[NOVITÀ] Aggiunta la possibilità di impostare diversi turni su ciascuna estremità della rete.
-[NOVITÀ] Aggiunto il conteggio minimo massimo di oggetti di scena/alberi.
-[NOVITÀ] Aggiunta la possibilità di creare estremità inclinate della zebra.
-[NOVITÀ] Aggiunta la possibilità di impostare lo spostamento del testo.
-[NOVITÀ] Aggiunta la possibilità di impostare il colore sulla rete (può influire solo su determinate reti).
-[NOVITÀ] Il focus viene impostato automaticamente sul campo di ricerca quando si apre il selettore oggetto/albero/rete.
-[AGGIORNATO] Il timeout tra lo scorrimento del pannello e la modifica del valore tramite ruota è stato aumentato a 3 secondi per impedire la modifica eccessiva del valore della proprietà.
-[AGGIORNATO] Modificata la priorità dell'applicazione della marcatura predefinita:
+    <value>[UPDATED] Migliorata la risoluzione del rendering e la forma dei riempimenti 2D e delle strisce pedonali.
+[NEW] Aggiunti effetti di crepe e vuoti a tutte le linee 2D, i riempimenti 2D e le strisce pedonali.
+[NEW] Aggiunta trama del materiale ai segni, in modo che non sembri così piatto.
+[FIXED] Calcolo dello spostamento' di riempimento fisso.
+[NEW] Aggiunta la possibilità di applicare un preset a tutti i segmenti dell'asset di rete.
+[NEW] Aggiunta la possibilità di comprimere le regole della linea. Il collasso automatico può essere abilitato nelle impostazioni mod.
+[NEW] Aggiunte categorie di proprietà. possono essere collassate.
+[NEW] Aggiunta l'opzione copia/incolla alla proprietà del colore.
+[NEW] Aggiunta la possibilità di impostare il valore HEX del colore.
+[NEW] Aggiunta la possibilità di impostare lo stile per tutte le regole di linea.
+[NEW] Aggiunta la possibilità di impostare lo stile per tutte le regole su nodo/segmento con lo stesso stile.
+[NEW] Aggiunta la possibilità di impostare lo stile per tutte le regole su nodo/segmento.
+[NEW] Aggiunta la possibilità di applicare il modello a tutte le linee/attraversamenti pedonali/riempimenti su nodo/segmento.
+[NEW] Aggiunta la possibilità di ripristinare le impostazioni di stile ai valori predefiniti.
+[NEW] Aggiunta la possibilità di selezionare quale estremità dello stile dell'oggetto/albero è fissa (entrambi/solo inizio/solo fine).
+[NEW] Aggiunta la possibilità di impostare diversi turni su ciascuna estremità della rete.
+[NEW] Aggiunto il conteggio minimo massimo di oggetti di scena/alberi.
+[NEW] Aggiunta la possibilità di creare estremità inclinate della zebra.
+[NEW] Aggiunta la possibilità di impostare lo spostamento del testo.
+[NEW] Aggiunta la possibilità di impostare il colore sulla rete (può influire solo su determinate reti).
+[NEW] Il focus viene impostato automaticamente sul campo di ricerca quando si apre il selettore oggetto/albero/rete.
+[UPDATED] Il timeout tra lo scorrimento del pannello e la modifica del valore tramite ruota è stato aumentato a 3 secondi per impedire la modifica eccessiva del valore della proprietà.
+[UPDATED] Modificata la priorità dell'applicazione della marcatura predefinita:
 ---1. preset collegato.
 ---2. salvato nei dati delle risorse.
 ---3. dati dal segmento che è stato sostituito.
-[RISOLTO] Il campo di ricerca del selettore oggetto/albero/rete ha perso il focus quando il pannello degli strumenti è chiuso in modo che non blocchi il controllo della telecamera se lo strumento viene chiuso durante la ricerca.
-[NOVITÀ] Aggiunta la ricerca dei caratteri.
-[RISOLTO] Rimozione corretta di texture e mesh inutilizzate per ridurre l'utilizzo della memoria e prevenire perdite di memoria.
-[NOVITÀ] API aggiunta. Altre mod possono comunicare con IMT. Disponibile come pacchetto Nuget www.nuget.org/packages/IMT.API.</value>
+[FIXED] Il campo di ricerca del selettore oggetto/albero/rete ha perso il focus quando il pannello degli strumenti è chiuso in modo che non blocchi il controllo della telecamera se lo strumento viene chiuso durante la ricerca.
+[NEW] Aggiunta la ricerca dei caratteri.
+[FIXED] Rimozione corretta di texture e mesh inutilizzate per ridurre l'utilizzo della memoria e prevenire perdite di memoria.
+[NEW] API aggiunta. Altre mod possono comunicare con IMT. Disponibile come pacchetto Nuget www.nuget.org/packages/IMT.API.</value>
   </data>
 </root>
