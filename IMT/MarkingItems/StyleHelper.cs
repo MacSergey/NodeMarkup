@@ -2,50 +2,67 @@
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
     public static class StyleHelper
     {
-        public static float MinAngle { get; } = 5f;
-        public static float MinLength { get; } = 1f;
-        public static float MaxLength { get; } = 10f;
         private static int MaxDepth => 5;
+
+        public struct SplitParams
+        {
+            public float minAngle;
+            public float minLength;
+            public float maxLength;
+            public float maxHeight;
+
+            public static SplitParams Default => new SplitParams()
+            {
+                minAngle = 5f,
+                minLength = 1f,
+                maxLength = 10f,
+                maxHeight = 3f,
+            };
+        }
 
         #region SOLID
 
-        public static List<PartT> CalculateSolid(ITrajectory trajectory, MarkingLOD lod, float? minAngle = null, float? minLength = null, float? maxLength = null)
+        public static List<PartT> CalculateSolid(ITrajectory trajectory, MarkingLOD lod, SplitParams splitParams)
         {
             var lodScale = lod switch
             {
                 MarkingLOD.LOD0 or MarkingLOD.NoLOD => 1f,
                 MarkingLOD.LOD1 => 4f,
             };
+
+            splitParams.minLength *= lodScale;
+            splitParams.maxLength *= lodScale;
+            splitParams.minAngle *= lodScale;
+
             var parts = new List<PartT>();
 
-            CalculateSolid(parts, 0, trajectory, 0, 1, trajectory.DeltaAngle, (minAngle ?? MinAngle) * lodScale, (minLength ?? MinLength) * lodScale, (maxLength ?? MaxLength) * lodScale);
+            CalculateSolid(parts, trajectory, splitParams, 0, 0, 1, trajectory.DeltaAngle);
 
             return parts;
         }
-        public static List<PartT> CalculateSolid(ITrajectory trajectory, float minAngle, float minLength, float maxLength)
+        public static List<PartT> CalculateSolid(ITrajectory trajectory, SplitParams splitParams)
         {
             var parts = new List<PartT>();
-            CalculateSolid(parts, 0, trajectory, 0, 1, trajectory.DeltaAngle, minAngle, minLength, maxLength);
+            CalculateSolid(parts, trajectory, splitParams, 0, 0, 1, trajectory.DeltaAngle);
             return parts;
         }
-        private static void CalculateSolid(List<PartT> parts, int depth, ITrajectory trajectory, int index, int total, float deltaAngle, float minAngle, float minLength, float maxLength)
+        private static void CalculateSolid(List<PartT> parts, ITrajectory trajectory, SplitParams splitParams, int depth, int index, int total, float deltaAngle)
         {
             var startT = 1f / total * index;
             var endT = 1f / total * (index + 1);
             var startPos = trajectory.Position(startT);
             var endPos = trajectory.Position(endT);
             var length = (endPos - startPos).magnitude;
+            var height = Mathf.Abs(endPos.y - startPos.y);
 
-            var needDivide = (deltaAngle > minAngle && length >= minLength) || length > maxLength;
+            var needDivide = (deltaAngle > splitParams.minAngle && length >= splitParams.minLength) || length > splitParams.maxLength || height > splitParams.maxHeight;
             if (depth < MaxDepth && (needDivide || depth == 0))
             {
                 var middleT = (startT + endT) * 0.5f;
@@ -57,10 +74,10 @@ namespace IMT.Manager
                 var firstDeltaAngle = 180 - Vector3.Angle(startDir, -middleDir);
                 var secondDeltaAngle = 180 - Vector3.Angle(middleDir, -endDir);
 
-                if (needDivide || deltaAngle > minAngle || (firstDeltaAngle + secondDeltaAngle) > minAngle)
+                if (needDivide || deltaAngle > splitParams.minAngle || (firstDeltaAngle + secondDeltaAngle) > splitParams.minAngle)
                 {
-                    CalculateSolid(parts, depth + 1, trajectory, index * 2, total * 2, firstDeltaAngle, minAngle, minLength, maxLength);
-                    CalculateSolid(parts, depth + 1, trajectory, index * 2 + 1, total * 2, secondDeltaAngle, minAngle, minLength, maxLength);
+                    CalculateSolid(parts, trajectory, splitParams, depth + 1, index * 2, total * 2, firstDeltaAngle);
+                    CalculateSolid(parts, trajectory, splitParams, depth + 1, index * 2 + 1, total * 2, secondDeltaAngle);
 
                     return;
                 }
@@ -229,7 +246,7 @@ namespace IMT.Manager
             if (from != 0f || to != 1f)
             {
                 var line = new StraightTrajectory(startPos, endPos).Cut(from, to);
-                startPos = line.StartPosition; 
+                startPos = line.StartPosition;
                 endPos = line.EndPosition;
             }
             return true;
@@ -274,7 +291,7 @@ namespace IMT.Manager
                 return false;
 
             var iTrajectories = new List<StraightTrajectory>();
-            var iParts = CalculateSolid(parts[i].trajectory, 5, 1f, 40f);
+            var iParts = CalculateSolid(parts[i].trajectory, new SplitParams() {minAngle = 5f, minLength = 1f, maxLength = 40f, maxHeight = 10f });
             foreach (var part in iParts)
             {
                 var trajectory = new StraightTrajectory(parts[i].trajectory.Position(part.start), parts[i].trajectory.Position(part.end));
@@ -282,7 +299,7 @@ namespace IMT.Manager
             }
 
             var jTrajectories = new List<StraightTrajectory>();
-            var jParts = CalculateSolid(parts[j].trajectory, 5, 1f, 40f);
+            var jParts = CalculateSolid(parts[j].trajectory, new SplitParams() { minAngle = 5f, minLength = 1f, maxLength = 40f, maxHeight = 10f });
             foreach (var part in jParts)
             {
                 var trajectory = new StraightTrajectory(parts[j].trajectory.Position(part.start), parts[j].trajectory.Position(part.end));

@@ -75,7 +75,7 @@ namespace IMT.Manager
                 var offset = Height / (Invert ? 2 : -2);
                 foreach (var part in parts)
                 {
-                    StyleHelper.GetPartParams(trajectory, Invert ? part.Invert : part, offset, out var pos, out var dir);
+                    StyleHelper.GetPartParams(trajectory, Invert ? part : part.Invert, offset, out var pos, out var dir);
                     if (StyleHelper.CheckBorders(borders, pos, dir, Base, Height))
                     {
                         dir = dir.TurnDeg(Angle, true);
@@ -104,7 +104,7 @@ namespace IMT.Manager
 
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Triangle), MainCategory, AddTriangleProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Space), MainCategory, AddSpaceProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), AdditionalCategory, AddAngleProperty, RefreshAngleProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), MainCategory, AddAngleProperty, RefreshAngleProperty));
 
             if (!provider.isTemplate)
             {

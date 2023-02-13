@@ -20,6 +20,7 @@ namespace IMT.Utilities
         private static int voidDensityId = Shader.PropertyToID("_VoidDensity");
         private static int voidTilingId = Shader.PropertyToID("_VoidTiling");
         private static int textureDensityId = Shader.PropertyToID("_TextureDensity");
+        public static float DefaultHeight => 5f;
 
 
         public MarkingLOD LOD { get; }
@@ -44,7 +45,7 @@ namespace IMT.Utilities
         public float Width => size.z;
         public float Angle => rotation.eulerAngles.z * Mathf.Deg2Rad;
 
-        public DecalData(MaterialType materialType, MarkingLOD lod, Texture2D mainTexture, Texture2D alphaTexture, Vector3 position, float angle, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
+        private DecalData(MaterialType materialType, MarkingLOD lod, Texture2D mainTexture, Texture2D alphaTexture, Vector3 position, float angle, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
         {
             LOD = lod;
             this.material = RenderHelper.MaterialLib[materialType];
@@ -53,7 +54,6 @@ namespace IMT.Utilities
             this.position = position;
             this.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down);
             this.color = color.ToX3Vector();
-            size.y = 5f;
             this.size = size;
             this.tiling = new Vector4(tiling.x, 0f, tiling.y, 0f);
             this.cracksDensity = cracksDensity;
@@ -76,18 +76,18 @@ namespace IMT.Utilities
 
         public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Texture2D mainTexture, Texture2D alphaTexture, Vector3 position, float angle, float length, float width, Color32 color)
         {
-            this = new DecalData(materialType, lod, mainTexture, alphaTexture, position, angle, color, new Vector3(length, 0f, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
+            this = new DecalData(materialType, lod, mainTexture, alphaTexture, position, angle, color, new Vector3(length, DefaultHeight, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
         }
         public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Vector3 pos, Vector3 dir, float length, float width, Color32 color)
         {
-            this = new DecalData(materialType, lod, null, null, pos, dir.AbsoluteAngle(), color, new Vector3(length, 0f, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
+            this = new DecalData(materialType, lod, null, null, pos, dir.AbsoluteAngle(), color, new Vector3(length, DefaultHeight, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
         }
         public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Vector3 startPos, Vector3 endPos, float width, Color32 color)
         {
             var pos = (startPos + endPos) * 0.5f;
             var angle = (endPos - startPos).AbsoluteAngle();
             var length = (endPos - startPos).magnitude;
-            this = new DecalData(materialType, lod, null, null, pos, angle, color, new Vector3(length, 0f, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
+            this = new DecalData(materialType, lod, null, null, pos, angle, color, new Vector3(length, DefaultHeight, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
         }
 
         public DecalData(MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
@@ -103,6 +103,7 @@ namespace IMT.Utilities
 
             var position = (min + max) * 0.5f;
             var size = (max - min);
+            size.y = Mathf.Max(size.y * 2f, DefaultHeight);
 
             var pointUVs = new Vector2[points.Length];
             for (var i = 0; i < pointUVs.Length; i += 1)
@@ -122,6 +123,7 @@ namespace IMT.Utilities
             var max = area.Max;
             var position = (min + max) * 0.5f;
             var size = (max - min);
+            size.y = Mathf.Min(size.y * 2f, DefaultHeight);
 
             var pointUVs = new Vector2[area.Count];
             for (var i = 0; i < pointUVs.Length; i += 1)
@@ -152,18 +154,29 @@ namespace IMT.Utilities
             else
                 return MaterialType.AreaUpTo16;
         }
-        public static List<DecalData> GetData(IEffectStyle effectStyle, MarkingLOD lod, ITrajectory[] trajectories, float minAngle, float minLength, float maxLength, Color32 color)
+        public static List<DecalData> GetData(IEffectStyle effectStyle, MarkingLOD lod, ITrajectory[] trajectories, StyleHelper.SplitParams splitParams, Color32 color,
+#if DEBUG
+            bool debug = false
+#endif
+            )
         {
             var result = new List<DecalData>();
 
-            var points = trajectories.SelectMany(c => GetPoints(c, lod, minAngle, minLength, maxLength)).ToArray();
+            var points = trajectories.SelectMany(c => GetPoints(c, lod, splitParams)).ToArray();
             var triangles = Triangulator.TriangulateSimple(points, trajectories.GetDirection());
 
             if (triangles != null)
             {
+#if DEBUG
+                if (debug)
+                {
+                    foreach (var point in points)
+                        result.Add(new DecalData(effectStyle, MaterialType.Dash, lod, point, Vector3.forward, 0.3f, 0.3f, Color.green));
+                }
+#endif
                 if (points.Length <= 16)
                 {
-                    if(effectStyle != null)
+                    if (effectStyle != null)
                         result.Add(new DecalData(lod, points, color, Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity));
                     else
                         result.Add(new DecalData(lod, points, color, Vector3.one, 0f, Vector3.one, 0f, Vector3.one, 0f));
@@ -171,10 +184,19 @@ namespace IMT.Utilities
                 else
                 {
                     var polygon = new Polygon(points, triangles);
-                    polygon.Arange(8, 3f);
+                    polygon.Arrange(8, splitParams.maxHeight);
 
                     foreach (var area in polygon)
                     {
+#if DEBUG
+                        if (debug)
+                        {
+                            foreach (var side in area.Sides)
+                            {
+                                result.Add(new DecalData(effectStyle, MaterialType.Dash, lod, side.Start.Position, side.End.Position, 0.05f, Color.magenta));
+                            }
+                        }
+#endif
                         if (effectStyle != null)
                             result.Add(new DecalData(lod, area, color, Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity));
                         else
@@ -186,13 +208,13 @@ namespace IMT.Utilities
             return result;
         }
 
-        private static IEnumerable<Vector3> GetPoints(ITrajectory trajectory, MarkingLOD lod, float minAngle, float minLength, float maxLength)
+        private static IEnumerable<Vector3> GetPoints(ITrajectory trajectory, MarkingLOD lod, StyleHelper.SplitParams splitParams)
         {
             if (trajectory is StraightTrajectory straight)
                 return new Vector3[] { trajectory.StartPosition };
             else
             {
-                var parts = StyleHelper.CalculateSolid(trajectory, lod, minAngle, minLength, maxLength);
+                var parts = StyleHelper.CalculateSolid(trajectory, lod, splitParams);
                 return parts.Select(p => trajectory.Position(p.start));
             }
         }
