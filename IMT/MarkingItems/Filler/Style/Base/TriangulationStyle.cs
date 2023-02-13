@@ -87,7 +87,7 @@ namespace IMT.Manager
         }
         protected bool Triangulate(Vector3[] points, out int[] triangles)
         {
-            triangles = Triangulator.Triangulate(points, TrajectoryHelper.Direction.ClockWise);
+            triangles = Triangulator.TriangulateSimple(points, TrajectoryHelper.Direction.ClockWise);
             return triangles != null;
         }
         private List<List<ITrajectory>> GetParts(List<ITrajectory> trajectories, MarkingLOD lod)
@@ -96,7 +96,7 @@ namespace IMT.Manager
 
             foreach (var trajectory in trajectories)
             {
-                var partsT = StyleHelper.CalculateSolid(trajectory, lod, MinAngle, MinLength, MaxLength);
+                var partsT = StyleHelper.CalculateSolid(trajectory, lod, SplitParams);
                 var parts = new List<ITrajectory>();
                 foreach (var partT in partsT)
                     parts.Add(trajectory.Cut(partT.start, partT.end));

@@ -48,7 +48,7 @@ namespace IMT.Manager
         protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             var borders = line.Borders;
-            var parts = StyleHelper.CalculateSolid(trajectory, lod);
+            var parts = StyleHelper.CalculateSolid(trajectory, lod, StyleHelper.SplitParams.Default);
             foreach (var part in parts)
             {
                 StyleHelper.GetPartParams(trajectory, part, 0f, out var startPos, out var endPos, out var dir);

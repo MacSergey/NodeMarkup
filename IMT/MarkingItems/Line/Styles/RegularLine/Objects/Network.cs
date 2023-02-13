@@ -137,12 +137,12 @@ namespace IMT.Manager
 
             provider.AddProperty(new PropertyInfo<SelectNetworkProperty>(this, nameof(Prefab), MainCategory, AddPrefabProperty));
             provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(NetworkColor), AdditionalCategory, AddNetworkColorProperty, RefreshNetworkColorProperty));
-            provider.AddProperty(new PropertyInfo<FloatSingleDoubleInvertedProperty>(this, nameof(Shift), MainCategory, AddShiftProperty));
+            provider.AddProperty(new PropertyInfo<FloatSingleDoubleInvertedProperty>(this, nameof(Shift), MainCategory, AddShiftProperty, RefreshShiftProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), AdditionalCategory, AddScaleProperty));
-            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RepeatDistance), AdditionalCategory, AddRepeatDistanceProperty));
-            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), AdditionalCategory, AddOffsetProperty));
-            provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), MainCategory, AddInvertProperty));
+            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), AdditionalCategory, AddScaleProperty, RefreshScaleProperty));
+            provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RepeatDistance), AdditionalCategory, AddRepeatDistanceProperty, RefreshRepeatDistanceProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), AdditionalCategory, AddOffsetProperty, RefreshOffsetProperty));
+            provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), MainCategory, AddInvertProperty, RefreshInvertProperty));
         }
 
         private void AddPrefabProperty(SelectNetworkProperty prefabProperty, EditorProvider provider)
@@ -158,6 +158,7 @@ namespace IMT.Manager
                 Prefab.Value = value;
                 if ((oldPrefab == null || NetworkColor.Value == null || NetworkColor.Value != oldPrefab.m_color) && value != null)
                     NetworkColor.Value = value.m_color;
+
                 provider.Refresh();
             };
         }
@@ -167,11 +168,13 @@ namespace IMT.Manager
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(Prefab.Value?.m_color);
-            colorProperty.Value = Color;
-            colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
+            colorProperty.Value = NetworkColor.Value ?? Prefab.Value.m_color;
+            colorProperty.OnValueChanged += (Color32 color) => NetworkColor.Value = color;
         }
         private void RefreshNetworkColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
+            colorProperty.IsHidden = !IsValid;
+
             if (Prefab.Value != null)
                 colorProperty.DefaultColor = Prefab.Value.m_color;
         }
@@ -192,6 +195,11 @@ namespace IMT.Manager
             shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
             shiftProperty.OnValueChanged += (valueA, valueB) => Shift.Value = new Vector2(valueA, valueB);
         }
+        private void RefreshShiftProperty(FloatSingleDoubleInvertedProperty shiftProperty, EditorProvider provider)
+        {
+            shiftProperty.IsHidden = !IsValid;
+        }
+
         new private void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
             elevationProperty.Text = Localize.LineStyle_Elevation;
@@ -209,10 +217,7 @@ namespace IMT.Manager
         }
         private void RefreshElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
-            if (IsValidNetwork(Prefab.Value))
-                elevationProperty.isVisible = Prefab.Value.m_segments[0].m_segmentMaterial.shader.name != "Custom/Net/Fence";
-            else
-                elevationProperty.isVisible = true;
+            elevationProperty.IsHidden = !IsValid || Prefab.Value.m_segments[0].m_segmentMaterial.shader.name == "Custom/Net/Fence";
         }
 
         private void AddScaleProperty(FloatPropertyPanel scaleProperty, EditorProvider provider)
@@ -230,6 +235,11 @@ namespace IMT.Manager
             scaleProperty.Value = Scale.Value * 100f;
             scaleProperty.OnValueChanged += (value) => Scale.Value = value * 0.01f;
         }
+        private void RefreshScaleProperty(FloatPropertyPanel scaleProperty, EditorProvider provider)
+        {
+            scaleProperty.IsHidden = !IsValid;
+        }
+
         private void AddRepeatDistanceProperty(IntPropertyPanel repeatDistanceProperty, EditorProvider provider)
         {
             repeatDistanceProperty.Text = Localize.StyleOption_NetRepeatDistance;
@@ -245,6 +255,11 @@ namespace IMT.Manager
             repeatDistanceProperty.Value = RepeatDistance.Value;
             repeatDistanceProperty.OnValueChanged += (value) => RepeatDistance.Value = value;
         }
+        private void RefreshRepeatDistanceProperty(IntPropertyPanel repeatDistanceProperty, EditorProvider provider)
+        {
+            repeatDistanceProperty.IsHidden = !IsValid;
+        }
+
         private void AddOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
             offsetProperty.Text = Localize.StyleOption_Offset;
@@ -264,6 +279,11 @@ namespace IMT.Manager
                 OffsetAfter.Value = value.y;
             };
         }
+        private void RefreshOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
+        {
+            offsetProperty.IsHidden = !IsValid;
+        }
+
         new private void AddInvertProperty(ButtonPanel buttonsPanel, EditorProvider provider)
         {
             buttonsPanel.Text = Localize.StyleOption_InvertNetwork;
@@ -272,6 +292,10 @@ namespace IMT.Manager
             {
                 Invert.Value = !Invert;
             };
+        }
+        new private void RefreshInvertProperty(ButtonPanel buttonsPanel, EditorProvider provider)
+        {
+            buttonsPanel.IsHidden = !IsValid;
         }
 
         public override XElement ToXml()

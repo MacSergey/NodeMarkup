@@ -247,7 +247,7 @@ namespace IMT.Manager
 #if DEBUG
             if (!provider.isTemplate && Settings.ShowDebugProperties)
             {
-                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Ratio), AdditionalCategory, AddRatioProperty));
+                provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Ratio), DebugCategory, AddRatioProperty));
             }
 #endif
         }

@@ -66,7 +66,7 @@ namespace IMT.Manager
             if (GetContour(crosswalk, offset, width, out var contour))
             {
                 var trajectories = contour.Select(c => c.trajectory).ToArray();
-                foreach (var data in DecalData.GetData(this, lod, trajectories, StyleHelper.MinAngle, StyleHelper.MinLength, StyleHelper.MaxLength, Color))
+                foreach (var data in DecalData.GetData(this, lod, trajectories, StyleHelper.SplitParams.Default, Color))
                 {
                     addData(data);
                 }

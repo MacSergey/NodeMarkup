@@ -54,9 +54,13 @@ namespace IMT.Manager
         public static float DefaultCurbSize => 0f;
         public static bool DefaultFollowGuides => false;
 
-        protected static float MinAngle => 5f;
-        protected static float MinLength => 1f;
-        protected static float MaxLength => 10f;
+        protected static StyleHelper.SplitParams SplitParams => new StyleHelper.SplitParams()
+        {
+            minAngle = 5f,
+            minLength = 1f,
+            maxLength = 10f,
+            maxHeight = 3f,
+        };
 
         protected static string Guide => nameof(Guide);
 

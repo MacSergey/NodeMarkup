@@ -38,6 +38,7 @@ namespace IMT.Manager
                 yield return nameof(Cracks);
                 yield return nameof(Voids);
 #if DEBUG
+                yield return nameof(Debug);
                 yield return nameof(RenderOnly);
                 yield return nameof(Start);
                 yield return nameof(End);

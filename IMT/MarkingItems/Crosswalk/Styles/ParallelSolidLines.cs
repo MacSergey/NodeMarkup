@@ -68,7 +68,7 @@ namespace IMT.Manager
             var secondTrajectory = crosswalk.GetTrajectory(middleOffset + deltaOffset);
 
 
-            var firstParts = StyleHelper.CalculateSolid(firstTrajectory, lod);
+            var firstParts = StyleHelper.CalculateSolid(firstTrajectory, lod, StyleHelper.SplitParams.Default);
             foreach (var part in firstParts)
             {
                 StyleHelper.GetPartParams(firstTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out var dir);
@@ -76,7 +76,7 @@ namespace IMT.Manager
                 addData(data);
             }
 
-            var secondParts = StyleHelper.CalculateSolid(secondTrajectory, lod);
+            var secondParts = StyleHelper.CalculateSolid(secondTrajectory, lod, StyleHelper.SplitParams.Default);
             foreach (var part in secondParts)
             {
                 StyleHelper.GetPartParams(secondTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out var dir);

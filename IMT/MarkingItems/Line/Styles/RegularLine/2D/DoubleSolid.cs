@@ -81,7 +81,7 @@ namespace IMT.Manager
         protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             var borders = line.Borders;
-            var parts = StyleHelper.CalculateSolid(trajectory, lod);
+            var parts = StyleHelper.CalculateSolid(trajectory, lod, StyleHelper.SplitParams.Default);
             foreach (var part in parts)
             {
                 var firstOffset = Alignment.Value switch
@@ -119,8 +119,8 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), MainCategory, AddUseSecondColorProperty));
-            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), MainCategory, AddSecondColorProperty, RefreshSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), AdditionalCategory, AddSecondColorProperty, RefreshSecondColorProperty));
 
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), MainCategory, AddOffsetProperty));
             if (!provider.isTemplate)
