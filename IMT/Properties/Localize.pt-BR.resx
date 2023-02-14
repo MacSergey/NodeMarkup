@@ -117,4 +117,177 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Tool_DeleteCaption" xml:space="preserve">
+    <value>Deletar ({0})</value>
+  </data>
+  <data name="Tool_DeleteMessage" xml:space="preserve">
+    <value>Tem a certeza que quer mesmo apagar {0} "{1}"?</value>
+  </data>
+  <data name="HeaderPanel_ApplyTemplate" xml:space="preserve">
+    <value>Aplicar modelo</value>
+  </data>
+  <data name="HeaderPanel_SaveAsTemplate" xml:space="preserve">
+    <value>Guardar como modelo</value>
+  </data>
+  <data name="HeaderPanel_SetAsDefault" xml:space="preserve">
+    <value>Definir como predefinição</value>
+  </data>
+  <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
+    <value>Remover como predefinição</value>
+  </data>
+  <data name="LineEditor_AddRuleButton" xml:space="preserve">
+    <value>Adicionar Regra</value>
+  </data>
+  <data name="StyleOption_Color" xml:space="preserve">
+    <value>Cor</value>
+  </data>
+  <data name="StyleOption_DashedLength" xml:space="preserve">
+    <value>Comprimento do traço</value>
+  </data>
+  <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
+    <value>Excluir a regra</value>
+  </data>
+  <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
+    <value>Deseja realmente excluir esta resposta?</value>
+  </data>
+  <data name="LineRule_From" xml:space="preserve">
+    <value>De</value>
+  </data>
+  <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
+    <value>Seleccione o ponto "De" da regra</value>
+  </data>
+  <data name="LineEditor_InfoSelectTo" xml:space="preserve">
+    <value>Seleccione o ponto "Para" da regra</value>
+  </data>
+  <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>linha</value>
+  </data>
+  <data name="LineEditor_Lines" xml:space="preserve">
+    <value>Linhas</value>
+  </data>
+  <data name="StyleOption_Offset" xml:space="preserve">
+    <value>Deslocamento</value>
+  </data>
+  <data name="StyleOption_SpaceLength" xml:space="preserve">
+    <value>Comprimento do espaço</value>
+  </data>
+  <data name="Editor_Style" xml:space="preserve">
+    <value>Estilo</value>
+  </data>
+  <data name="LineRule_To" xml:space="preserve">
+    <value>Para</value>
+  </data>
+  <data name="LineRule_IntersectWith" xml:space="preserve">
+    <value>Intersecção com {0}</value>
+  </data>
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>Ponto próprio {0}</value>
+  </data>
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>Tracejada</value>
+  </data>
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>Tracejada dupla</value>
+  </data>
+  <data name="LineStyle_DoubleSolid" xml:space="preserve">
+    <value>Sólida dupla</value>
+  </data>
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>Sólida</value>
+  </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>Faz apenas marcações nas intersecções</value>
+  </data>
+  <data name="Panel_NodeCaption" xml:space="preserve">
+    <value>Editar marcações do nó #{0}</value>
+  </data>
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>ponto</value>
+  </data>
+  <data name="PointEditor_Offset" xml:space="preserve">
+    <value>Deslocamento</value>
+  </data>
+  <data name="PointEditor_Points" xml:space="preserve">
+    <value>Pontos</value>
+  </data>
+  <data name="SelectPanel_NotSet" xml:space="preserve">
+    <value>Não definido</value>
+  </data>
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
+    <value>Adicionar nova regra à linha</value>
+  </data>
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
+    <value>Remover todas as linhas deste nó</value>
+  </data>
+  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
+    <value>Remover todas as marcações de todas a intersecções</value>
+  </data>
+  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
+    <value>Remover todas as marcações</value>
+  </data>
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Tem a certeza que quer mesmo remover todas as marcações?</value>
+  </data>
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>Exportar dados de marcações para um ficheiro</value>
+  </data>
+  <data name="Settings_CopyPathToClipboard" xml:space="preserve">
+    <value>Copiar caminho para a área de transferência</value>
+  </data>
+  <data name="Settings_DumpMarkingCaption" xml:space="preserve">
+    <value>Exportar dados das marcações</value>
+  </data>
+  <data name="Settings_DumpMessageFailed" xml:space="preserve">
+    <value>Exportação falhou</value>
+  </data>
+  <data name="Settings_DumpMessageSuccess" xml:space="preserve">
+    <value>Exportação guardada com sucesso</value>
+  </data>
+  <data name="Settings_RestoreMarkingButton" xml:space="preserve">
+    <value>Recuperar dados das marcações a partir dum ficheiro</value>
+  </data>
+  <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
+    <value>Recuperar dados das marcações</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
+    <value>Tem a certeza que quer recuperar as predefinições?
+As predefinições recuperadas vão substituir todas as predefinições existentes.</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
+    <value>A recuperação de dados falhou</value>
+  </data>
+  <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
+    <value>Dados recuperados com sucesso</value>
+  </data>
+  <data name="Settings_QuickRuleSetup" xml:space="preserve">
+    <value>Configuração rápida das regras</value>
+  </data>
+  <data name="Settings_RenderDistance" xml:space="preserve">
+    <value>Distância de renderização</value>
+  </data>
+  <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
+    <value>Confirmar antes de remover</value>
+  </data>
+  <data name="CrosswalkStyle_Existent" xml:space="preserve">
+    <value>Passadeira existente</value>
+  </data>
+  <data name="StyleOption_OffsetBetween" xml:space="preserve">
+    <value>Deslocamento no meio</value>
+  </data>
+  <data name="CrosswalkEditor_Crosswalks" xml:space="preserve">
+    <value>Passadeiras</value>
+  </data>
+  <data name="CrosswalkEditor_EmptyMessage" xml:space="preserve">
+    <value>Ainda não existem passadeiras nesta intercessão.
+Para criar uma passadeira pressione {0}.</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>passadeira</value>
+  </data>
+  <data name="CrosswalkStyle_Group" xml:space="preserve">
+    <value>Passadeiras</value>
+  </data>
+  <data name="FillerStyle_Group" xml:space="preserve">
+    <value>Preenchimentos</value>
+  </data>
 </root>
