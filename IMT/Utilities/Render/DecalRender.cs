@@ -103,7 +103,7 @@ namespace IMT.Utilities
 
             var position = (min + max) * 0.5f;
             var size = (max - min);
-            size.y = Mathf.Max(size.y * 2f, DefaultHeight);
+            size.y = Mathf.Max(size.y * 2f, 1f);
 
             var pointUVs = new Vector2[points.Length];
             for (var i = 0; i < pointUVs.Length; i += 1)
@@ -123,7 +123,7 @@ namespace IMT.Utilities
             var max = area.Max;
             var position = (min + max) * 0.5f;
             var size = (max - min);
-            size.y = Mathf.Min(size.y * 2f, DefaultHeight);
+            size.y = Mathf.Max(size.y * 2f, 1f);
 
             var pointUVs = new Vector2[area.Count];
             for (var i = 0; i < pointUVs.Length; i += 1)
