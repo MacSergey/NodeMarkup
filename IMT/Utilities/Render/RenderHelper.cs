@@ -132,7 +132,7 @@ namespace IMT.Utilities
             }
         }
 
-        public static Material CreateRoadMaterial(MaterialType type, Texture2D texture, Texture2D apr = null, int renderQueue = 2461)
+        public static Material CreateRoadMaterial(MaterialType type, Texture2D texture, Texture2D apr = null, int renderQueue = 2465)
         {
             var material = new Material(Shader.Find("Custom/Net/Road"))
             {
