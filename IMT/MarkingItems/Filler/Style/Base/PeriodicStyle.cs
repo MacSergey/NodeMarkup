@@ -211,7 +211,7 @@ namespace IMT.Manager
                         foreach (var contour in cutContours)
                         {
                             var trajectories = contour.Select(e => e.trajectory).ToArray();
-                            var datas = DecalData.GetData(this as IEffectStyle, lod, trajectories, SplitParams, Color
+                            var datas = DecalData.GetData(this as IEffectStyle, Marking.Item.Filler, lod, trajectories, SplitParams, Color
 #if DEBUG
                                 , Debug
 #endif
