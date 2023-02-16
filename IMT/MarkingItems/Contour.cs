@@ -203,7 +203,7 @@ namespace IMT.Manager
             {
                 var movedEdges = Move(lineOffset, medianOffset);
                 var allInters = GetAllIntersections(movedEdges);
-                var pairs = GetIntersectionPairs(allInters);
+                var pairs = GetIntersectionPairs(movedEdges, allInters);
                 var movedContour = new Contour(movedEdges.Select(e => e.edge));
                 return ConnectEdges(movedContour, pairs, true);
             }
@@ -257,7 +257,7 @@ namespace IMT.Manager
 
                     var next = pairs[nextIndex].pair.from == searchFor ? pairs[nextIndex] : pairs[nextIndex].Reverse;
 
-                    if(!oneDir || next.pair.from.firstT <= next.pair.to.firstT)
+                    if (!oneDir || next.pair.from.firstT <= next.pair.to.firstT)
                     {
                         current = next;
                         index = nextIndex;
@@ -451,8 +451,11 @@ namespace IMT.Manager
 
             return allInters;
         }
-        private static List<IntersectionPairEdge> GetIntersectionPairs(List<MovedEdgeIntersections> allInters)
+        private static List<IntersectionPairEdge> GetIntersectionPairs(List<MovedEdge> contour, List<MovedEdgeIntersections> allInters)
         {
+            RemoveSingle(allInters);
+            RemoveEmpty(contour, allInters);
+
             var count = allInters.Count;
 
             for (var i = 0; i < count; i += 1)
@@ -460,7 +463,7 @@ namespace IMT.Manager
                 if (allInters[i].Count == 0)
                     continue;
 
-                if(allInters[i].Count == 1)
+                if (allInters[i].Count == 1)
                 {
                     RemoveAt(allInters, i, 0);
                     continue;
@@ -473,7 +476,7 @@ namespace IMT.Manager
                 {
                     for (var j = 0; j < allInters[i].Count; j += 1)
                     {
-                        if (allInters[i].inters[j].firstT - allInters[i].edge.index >= allInters[i].edge.minT)
+                        if (allInters[i].inters[j].firstT - allInters[i].movedEdge.index >= allInters[i].movedEdge.minT)
                         {
                             startI = j;
                             break;
@@ -481,7 +484,7 @@ namespace IMT.Manager
                     }
                     for (var j = allInters[i].Count - 1; j >= 0; j -= 1)
                     {
-                        if (allInters[i].inters[j].firstT - allInters[i].edge.index <= allInters[i].edge.maxT)
+                        if (allInters[i].inters[j].firstT - allInters[i].movedEdge.index <= allInters[i].movedEdge.maxT)
                         {
                             endI = j;
                             break;
@@ -499,23 +502,27 @@ namespace IMT.Manager
                             endI += 1;
                         }
                     }
-                }
 
-                var prevI = (i + count - 1) % count;
-                var nextI = (i + 1) % count;
+                    var prevI = (i + count - 1) % count;
+                    var nextI = (i + 1) % count;
 
-                for (var index = 1; index < allInters[i].Count; index += 1)
-                {
-                    var firstI = Mathf.FloorToInt(allInters[i].inters[index - 1].secondT);
-                    var secondI = Mathf.FloorToInt(allInters[i].inters[index].secondT);
-                    if (firstI == prevI && secondI == nextI)
+                    for (var index = 1; index < allInters[i].Count; index += 1)
                     {
-                        if ((index - 1) % 2 == 0 && (allInters[i].Count - 1 - index) % 2 == 0)
+                        var firstI = Mathf.FloorToInt(allInters[i].inters[index - 1].secondT);
+                        var secondI = Mathf.FloorToInt(allInters[i].inters[index].secondT);
+                        if (firstI == prevI && secondI == nextI)
                         {
                             startI = index - 1;
                             endI = index;
+
+                            if (index - 2 >= 0 && Mathf.FloorToInt(allInters[i].inters[index - 2].secondT) == prevI)
+                                startI = index - 2;
+
+                            if (index + 1 < allInters[i].Count && Mathf.FloorToInt(allInters[i].inters[index + 1].secondT) == nextI)
+                                endI = index + 1;
+
+                            break;
                         }
-                        break;
                     }
                 }
 
@@ -535,17 +542,7 @@ namespace IMT.Manager
                 }
             }
 
-            var k = 0;
-            for (var iter = 0; iter < count; iter += 1)
-            {
-                if (allInters[k].Count == 1)
-                {
-                    RemoveAt(allInters, k, 0);
-                    iter = 0;
-                }
-
-                k = (k + 1) % count;
-            }
+            RemoveSingle(allInters);
 
             var pairs = new List<IntersectionPairEdge>();
             for (var i = 0; i < allInters.Count; i += 1)
@@ -558,7 +555,7 @@ namespace IMT.Manager
             return pairs;
 
 
-            bool RemoveAt(List<MovedEdgeIntersections> allInters, int i, int interIndex)
+            static bool RemoveAt(List<MovedEdgeIntersections> allInters, int i, int interIndex)
             {
                 var inverted = allInters[i].inters[interIndex].GetReverse();
                 allInters[i].inters.RemoveAt(interIndex);
@@ -573,6 +570,53 @@ namespace IMT.Manager
                 }
 
                 return false;
+            }
+            static void RemoveSingle(List<MovedEdgeIntersections> allInters)
+            {
+                var i = 0;
+                for (var iter = 0; iter < allInters.Count; iter += 1)
+                {
+                    if (allInters[i].Count == 1)
+                    {
+                        RemoveAt(allInters, i, 0);
+                        iter = 0;
+                    }
+
+                    i = (i + 1) % allInters.Count;
+                }
+            }
+            static void RemoveEmpty(List<MovedEdge> contour, List<MovedEdgeIntersections> allInters)
+            {
+                for (var i = 0; i < allInters.Count; i += 1)
+                {
+                    if (allInters[i].Count == 0)
+                    {
+                        for (var k = 0; k < allInters.Count; k += 1)
+                        {
+                            if (k > i)
+                            {
+                                contour[k] = new MovedEdge(contour[k].index - 1, contour[k].edge, contour[k].minT, contour[k].maxT, contour[k].moved);
+                                allInters[k] = new MovedEdgeIntersections(contour[k], allInters[k].inters);
+                            }
+
+                            for (var l = 0; l < allInters[k].Count; l += 1)
+                            {
+                                var inter = allInters[k].inters[l];
+                                var index = Mathf.FloorToInt(inter.secondT);
+                                if (k > i && index > i)
+                                    allInters[k].inters[l] = new Intersection(inter.firstT - 1f, inter.secondT - 1f);
+                                else if (k > i)
+                                    allInters[k].inters[l] = new Intersection(inter.firstT - 1f, inter.secondT);
+                                else if (index > i)
+                                    allInters[k].inters[l] = new Intersection(inter.firstT, inter.secondT - 1f);
+                            }
+                        }
+
+                        allInters.RemoveAt(i);
+                        contour.RemoveAt(i);
+                        i -= 1;
+                    }
+                }
             }
         }
 
@@ -646,18 +690,18 @@ namespace IMT.Manager
     }
     readonly struct MovedEdgeIntersections
     {
-        public readonly MovedEdge edge;
+        public readonly MovedEdge movedEdge;
         public readonly List<Intersection> inters;
 
         public int Count => inters.Count;
 
-        public MovedEdgeIntersections(MovedEdge edge)
+        public MovedEdgeIntersections(MovedEdge movedEdge, List<Intersection> intersections = null)
         {
-            this.edge = edge;
-            this.inters = new List<Intersection>();
+            this.movedEdge = movedEdge;
+            this.inters = intersections ?? new List<Intersection>();
         }
 
-        public override string ToString() => $"{edge} - {inters.Count} inters";
+        public override string ToString() => $"{movedEdge} - {inters.Count} inters";
     }
 
     public static class ContourUtil
