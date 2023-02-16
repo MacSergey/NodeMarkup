@@ -399,6 +399,7 @@ namespace IMT.Manager
             Width.ToXml(config);
             if (this is IEffectStyle)
             {
+                Texture.ToXml(config); 
                 Cracks.ToXml(config);
                 Voids.ToXml(config);
             }
@@ -410,6 +411,7 @@ namespace IMT.Manager
             Width.FromXml(config, DefaultWidth);
             if (this is IEffectStyle)
             {
+                Texture.FromXml(config, DefaultTexture);
                 Cracks.FromXml(config, DefaultEffect);
                 Voids.FromXml(config, DefaultEffect);
             }

@@ -682,7 +682,7 @@ namespace IMT.Manager
             if (!LineIntersects.TryGetValue(linePair, out MarkingLinesIntersect intersect))
             {
                 intersect = MarkingLinesIntersect.Calculate(linePair);
-                LineIntersects.Add(linePair, intersect);
+                LineIntersects[linePair] = intersect;
             }
 
             return intersect;
