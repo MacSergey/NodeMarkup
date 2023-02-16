@@ -453,6 +453,7 @@ namespace IMT.Manager
         }
         private static List<IntersectionPairEdge> GetIntersectionPairs(List<MovedEdge> contour, List<MovedEdgeIntersections> allInters)
         {
+            RemoveSame(allInters);
             RemoveSingle(allInters);
             RemoveEmpty(contour, allInters);
 
@@ -474,7 +475,29 @@ namespace IMT.Manager
 
                 if (allInters[i].Count > 2)
                 {
-                    if (allInters[i].Count > 3)
+                    var prevI = (i + count - 1) % count;
+                    var nextI = (i + 1) % count;
+
+                    for (var index = 1; index < allInters[i].Count; index += 1)
+                    {
+                        var firstI = allInters[i].GetSecondIndex(index - 1);
+                        var secondI = allInters[i].GetSecondIndex(index);
+                        if (firstI == prevI && secondI == nextI)
+                        {
+                            startI = index - 1;
+                            endI = index;
+
+                            if (index - 2 >= 0 && allInters[i].GetSecondIndex(index - 2) == prevI && allInters[i].GetFirstT(index - 2) >= allInters[i].movedEdge.minT)
+                                startI = index - 2;
+
+                            if (index + 1 < allInters[i].Count && allInters[i].GetSecondIndex(index + 1) == nextI && allInters[i].GetFirstT(index + 1) <= allInters[i].movedEdge.maxT)
+                                endI = index + 1;
+
+                            break;
+                        }
+                    }
+
+                    if (allInters[i].Count > 3 && startI == 0 && endI == allInters[i].Count - 1)
                     {
                         for (var j = 0; j < allInters[i].Count; j += 1)
                         {
@@ -499,43 +522,23 @@ namespace IMT.Manager
                             startI = 0;
                         else if ((endI - startI + 1) % 2 == 1)
                         {
-                            if (startI > 0 && Mathf.FloorToInt(allInters[i].inters[startI - 1].secondT) == (i - 1 + count) % count)
+                            if (startI > 0 && allInters[i].GetSecondIndex(startI - 1) == (i - 1 + count) % count)
                             {
                                 startI -= 1;
                             }
-                            else if (endI < allInters[i].Count - 1 && Mathf.FloorToInt(allInters[i].inters[endI + 1].secondT) == (i + 1) % count)
+                            else if (endI < allInters[i].Count - 1 && allInters[i].GetSecondIndex(endI + 1) == (i + 1) % count)
                             {
                                 endI += 1;
                             }
-                        }
-                    }
-
-                    var prevI = (i + count - 1) % count;
-                    var nextI = (i + 1) % count;
-
-                    for (var index = 1; index < allInters[i].Count; index += 1)
-                    {
-                        var firstI = Mathf.FloorToInt(allInters[i].inters[index - 1].secondT);
-                        var secondI = Mathf.FloorToInt(allInters[i].inters[index].secondT);
-                        if (firstI == prevI && secondI == nextI)
-                        {
-                            startI = index - 1;
-                            endI = index;
-
-                            if (index - 2 >= 0 && Mathf.FloorToInt(allInters[i].inters[index - 2].secondT) == prevI)
-                                startI = index - 2;
-
-                            if (index + 1 < allInters[i].Count && Mathf.FloorToInt(allInters[i].inters[index + 1].secondT) == nextI)
-                                endI = index + 1;
-
-                            break;
                         }
                     }
                 }
 
                 for (int interIndex = 0; interIndex < allInters[i].Count; interIndex += 1)
                 {
-                    if (interIndex < startI || interIndex > endI)
+                    if (interIndex == startI)
+                        interIndex = endI;
+                    else if (interIndex < startI || interIndex > endI)
                     {
                         if (RemoveAt(allInters, i, interIndex))
                         {
@@ -577,6 +580,25 @@ namespace IMT.Manager
                 }
 
                 return false;
+            }
+            static void RemoveSame(List<MovedEdgeIntersections> allInters)
+            {
+                for (var i = 0; i < allInters.Count; i += 1)
+                {
+                    for (var j = 1; j < allInters[i].Count; j += 1)
+                    {
+                        if (Mathf.Approximately(allInters[i].inters[j - 1].firstT, allInters[i].inters[j].firstT))
+                        {
+                            var prev = allInters[i].GetSecondIndex(j - 1);
+                            var next = allInters[i].GetSecondIndex(j);
+                            if ((i + allInters.Count - 1) % allInters.Count == prev && (i + 1) % allInters.Count == next)
+                            {
+                                RemoveAt(allInters, i, j - 1);
+                                RemoveAt(allInters, i, j);
+                            }
+                        }
+                    }
+                }
             }
             static void RemoveSingle(List<MovedEdgeIntersections> allInters)
             {
@@ -707,6 +729,12 @@ namespace IMT.Manager
             this.movedEdge = movedEdge;
             this.inters = intersections ?? new List<Intersection>();
         }
+
+        public int GetFirstIndex(int index) => Mathf.FloorToInt(inters[index].firstT);
+        public int GetSecondIndex(int index) => Mathf.FloorToInt(inters[index].secondT);
+
+        public float GetFirstT(int index) => inters[index].firstT - GetFirstIndex(index);
+        public float GetSecondT(int index) => inters[index].secondT - GetSecondIndex(index);
 
         public override string ToString() => $"{movedEdge} - {inters.Count} inters";
     }
