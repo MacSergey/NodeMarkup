@@ -474,32 +474,39 @@ namespace IMT.Manager
 
                 if (allInters[i].Count > 2)
                 {
-                    for (var j = 0; j < allInters[i].Count; j += 1)
+                    if (allInters[i].Count > 3)
                     {
-                        if (allInters[i].inters[j].firstT - allInters[i].movedEdge.index >= allInters[i].movedEdge.minT)
+                        for (var j = 0; j < allInters[i].Count; j += 1)
                         {
-                            startI = j;
-                            break;
+                            if (allInters[i].inters[j].firstT - allInters[i].movedEdge.index >= allInters[i].movedEdge.minT)
+                            {
+                                startI = j;
+                                break;
+                            }
                         }
-                    }
-                    for (var j = allInters[i].Count - 1; j >= 0; j -= 1)
-                    {
-                        if (allInters[i].inters[j].firstT - allInters[i].movedEdge.index <= allInters[i].movedEdge.maxT)
+                        for (var j = allInters[i].Count - 1; j >= 0; j -= 1)
                         {
-                            endI = j;
-                            break;
+                            if (allInters[i].inters[j].firstT - allInters[i].movedEdge.index <= allInters[i].movedEdge.maxT)
+                            {
+                                endI = j;
+                                break;
+                            }
                         }
-                    }
 
-                    if ((endI - startI + 1) % 2 == 1)
-                    {
-                        if (startI > 0 && Mathf.FloorToInt(allInters[i].inters[startI - 1].secondT) == (i - 1 + count) % count)
+                        if (startI == 0 && startI == endI)
+                            endI = allInters[i].Count - 1;
+                        else if (endI == allInters[i].Count - 1 && endI == startI)
+                            startI = 0;
+                        else if ((endI - startI + 1) % 2 == 1)
                         {
-                            startI -= 1;
-                        }
-                        else if (endI < allInters[i].Count - 1 && Mathf.FloorToInt(allInters[i].inters[endI + 1].secondT) == (i + 1) % count)
-                        {
-                            endI += 1;
+                            if (startI > 0 && Mathf.FloorToInt(allInters[i].inters[startI - 1].secondT) == (i - 1 + count) % count)
+                            {
+                                startI -= 1;
+                            }
+                            else if (endI < allInters[i].Count - 1 && Mathf.FloorToInt(allInters[i].inters[endI + 1].secondT) == (i + 1) % count)
+                            {
+                                endI += 1;
+                            }
                         }
                     }
 
