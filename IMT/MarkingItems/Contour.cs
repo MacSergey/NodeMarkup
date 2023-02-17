@@ -404,53 +404,71 @@ namespace IMT.Manager
                         continue;
                     }
 
-                    var isCombinedI = false;
-                    var isCombinedJ = false;
-                    ITrajectory trajectoryI;
-                    ITrajectory trajectoryJ;
+                    var trajectoryI = contour[i].edge.trajectory;
+                    var trajectoryJ = contour[j].edge.trajectory;
+                    CombinedTrajectory? combinedI = null;
+                    CombinedTrajectory? combinedJ = null;
 
-                    if (contour[i].edge.trajectory is CombinedTrajectory combinedI)
+                    if (trajectoryI.TrajectoryType == TrajectoryType.Combined)
+                        combinedI = (CombinedTrajectory)trajectoryI;
+
+                    if (trajectoryJ.TrajectoryType == TrajectoryType.Combined)
+                        combinedJ = (CombinedTrajectory)trajectoryJ;
+
+                    var inters = Intersection.Calculate(combinedI != null ? combinedI.Value[1] : trajectoryI, combinedJ != null ? combinedJ.Value[1] : trajectoryJ);
+
+                    var mainI = false;
+                    var mainJ = false;
+                    foreach (var inter in inters)
                     {
-                        trajectoryI = combinedI[1];
-                        isCombinedI = true;
-                    }
-                    else
-                    {
-                        trajectoryI = contour[i].edge.trajectory;
-                        combinedI = default;
+                        AddIntersection(allInters, i, j, combinedI, combinedJ, 1, 1, inter);
+
+                        if (contour[i].minT <= inter.firstT && inter.firstT <= contour[i].maxT)
+                            mainI = true;
+
+                        if (contour[j].minT <= inter.secondT && inter.secondT <= contour[j].maxT)
+                            mainJ = true;
                     }
 
-                    if (contour[j].edge.trajectory is CombinedTrajectory combinedJ)
+                    if(inters.Count == 0 || (!mainI && combinedI != null) || (!mainJ && combinedJ != null))
                     {
-                        trajectoryJ = combinedJ[1];
-                        isCombinedJ = true;
-                    }
-                    else
-                    {
-                        trajectoryJ = contour[j].edge.trajectory;
-                        combinedJ = default;
-                    }
-
-                    var inters = Intersection.Calculate(trajectoryI, trajectoryJ);
-                    if (inters.Count > 0)
-                    {
-                        foreach (var inter in inters)
+                        if(combinedI != null && combinedJ != null)
                         {
-                            var firstT = isCombinedI ? combinedI.FromPartT(1, inter.firstT) : inter.firstT;
-                            var secondT = isCombinedJ ? combinedJ.FromPartT(1, inter.secondT) : inter.secondT;
+                            inters = Intersection.Calculate(combinedI.Value[0], combinedJ.Value[0]);
+                            foreach (var inter in inters)
+                                AddIntersection(allInters, i, j, combinedI, combinedJ, 0, 0, inter);
 
-                            allInters[i].inters.Add(new Intersection(firstT + i, secondT + j));
-                            allInters[j].inters.Add(new Intersection(secondT + j, firstT + i));
+                            inters = Intersection.Calculate(combinedI.Value[0], combinedJ.Value[2]);
+                            foreach (var inter in inters)
+                                AddIntersection(allInters, i, j, combinedI, combinedJ, 0, 2, inter);
+
+                            inters = Intersection.Calculate(combinedI.Value[2], combinedJ.Value[0]);
+                            foreach (var inter in inters)
+                                AddIntersection(allInters, i, j, combinedI, combinedJ, 2, 0, inter);
+
+                            inters = Intersection.Calculate(combinedI.Value[2], combinedJ.Value[2]);
+                            foreach (var inter in inters)
+                                AddIntersection(allInters, i, j, combinedI, combinedJ, 2, 2, inter);
                         }
-                        continue;
-                    }
-                    else if (isCombinedI || isCombinedJ)
-                    {
-                        inters = Intersection.Calculate(contour[i].edge.trajectory, contour[j].edge.trajectory);
-                        foreach (var inter in inters)
+                        else if (combinedI != null)
                         {
-                            allInters[i].inters.Add(new Intersection(inter.firstT + i, inter.secondT + j));
-                            allInters[j].inters.Add(new Intersection(inter.secondT + j, inter.firstT + i));
+                            inters = Intersection.Calculate(combinedI.Value[0], trajectoryJ);
+                            foreach (var inter in inters)
+                                AddIntersection(allInters, i, j, combinedI, null, 0, 0, inter);
+
+                            inters = Intersection.Calculate(combinedI.Value[2], trajectoryJ);
+                            foreach (var inter in inters)
+                                AddIntersection(allInters, i, j, combinedI, null, 2, 0, inter);
+                        }
+                        else if(combinedJ != null)
+                        {
+                            inters = Intersection.Calculate(trajectoryI, combinedJ.Value[0]);
+                            foreach (var inter in inters)
+                                AddIntersection(allInters, i, j, null, combinedJ, 0, 0, inter);
+
+                            inters = Intersection.Calculate(trajectoryI, combinedJ.Value[2]);
+                            foreach (var inter in inters)
+                                AddIntersection(allInters, i, j, null, combinedJ, 2, 2, inter);
                         }
                     }
                 }
@@ -460,6 +478,15 @@ namespace IMT.Manager
                 allInters[i].inters.Sort(Intersection.FirstComparer);
 
             return allInters;
+
+            static void AddIntersection(List<MovedEdgeIntersections> allInters, int i, int j, CombinedTrajectory? combinedI, CombinedTrajectory? combinedJ, int partI, int partJ, Intersection inter)
+            {
+                var firstT = combinedI != null ? combinedI.Value.FromPartT(partI, inter.firstT) : inter.firstT;
+                var secondT = combinedJ != null ? combinedJ.Value.FromPartT(partJ, inter.secondT) : inter.secondT;
+
+                allInters[i].inters.Add(new Intersection(firstT + i, secondT + j));
+                allInters[j].inters.Add(new Intersection(secondT + j, firstT + i));
+            }
         }
         private static List<IntersectionPairEdge> GetIntersectionPairs(List<MovedEdge> contour, List<MovedEdgeIntersections> allInters)
         {
