@@ -428,14 +428,11 @@ namespace IMT.Manager
                         allInters[i].inters.Add(new Intersection(firstT + i, secondT + j));
                         allInters[j].inters.Add(new Intersection(secondT + j, firstT + i));
 
-                        if (contour[i].minT <= inter.firstT && inter.firstT <= contour[i].maxT)
-                            mainI = true;
-
-                        if (contour[j].minT <= inter.secondT && inter.secondT <= contour[j].maxT)
-                            mainJ = true;
+                        mainI |= contour[i].IsMain(firstT);
+                        mainJ |= contour[j].IsMain(secondT);
                     }
 
-                    if (inters.Count == 0 && ((combinedI != null && !mainI) || (combinedJ != null && !mainJ)))
+                    if((inters.Count == 0 || !mainI || !mainJ) && (combinedI != null || combinedJ != null))
                     {
                         inters = Intersection.Calculate(trajectoryI, trajectoryJ);
                         foreach (var inter in inters)
@@ -573,14 +570,14 @@ namespace IMT.Manager
                         else
                         {
                             var beforeT = allInters[i].GetSecondT(startInterI - 1);
-                            if (allInters[beforeI].movedEdge.minT <= beforeT && beforeT <= allInters[beforeI].movedEdge.maxT)
+                            if (allInters[beforeI].movedEdge.IsMain(beforeT))
                             {
                                 startInterI -= 1;
                                 return;
                             }
 
                             var afterT = allInters[i].GetSecondT(endInterI + 1);
-                            if(allInters[afterI].movedEdge.minT <= afterT && afterT <= allInters[afterI].movedEdge.maxT)
+                            if(allInters[afterI].movedEdge.IsMain(afterT))
                             {
                                 endInterI += 1;
                                 return;
@@ -766,6 +763,7 @@ namespace IMT.Manager
             this.moved = moved;
         }
 
+        public bool IsMain(float t) => minT <= t && t <= maxT;
         public override string ToString() => $"{index}: {minT:0.###} ÷ {maxT:0.###}";
     }
     readonly struct MovedEdgeIntersections

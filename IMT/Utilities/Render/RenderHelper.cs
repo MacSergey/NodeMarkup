@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace IMT.Utilities
 {
@@ -59,13 +60,16 @@ namespace IMT.Utilities
 
             try
             {
-                SingletonMod<Mod>.Logger.Debug($"Start loading bundle for {Application.platform}");
+                SingletonMod<Mod>.Logger.Debug($"Start loading bundle for {Application.platform}:{SystemInfo.graphicsDeviceType}");
 
                 var file = Application.platform switch
                 {
-                    RuntimePlatform.WindowsPlayer => "imt-win",
-                    RuntimePlatform.OSXPlayer => "imt-macos",
-                    RuntimePlatform.LinuxPlayer => "imt-linux",
+                    RuntimePlatform.WindowsPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.Direct3D9 => "imt-win",
+                    RuntimePlatform.WindowsPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.Direct3D11 => "imt-win",
+                    RuntimePlatform.WindowsPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLCore => "imt-win",
+                    RuntimePlatform.OSXPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.Metal => "imt-macos",
+                    RuntimePlatform.OSXPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLCore => "imt-macos",
+                    RuntimePlatform.LinuxPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLCore => "imt-linux",
                     _ => throw new PlatformNotSupportedException()
                 };
 
