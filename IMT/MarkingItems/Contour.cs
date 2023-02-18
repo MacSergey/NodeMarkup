@@ -1,5 +1,6 @@
 ﻿using ModsCommon;
 using ModsCommon.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -421,7 +422,11 @@ namespace IMT.Manager
                     var mainJ = false;
                     foreach (var inter in inters)
                     {
-                        AddIntersection(allInters, i, j, combinedI, combinedJ, 1, 1, inter);
+                        var firstT = combinedI != null ? combinedI.Value.FromPartT(1, inter.firstT) : inter.firstT;
+                        var secondT = combinedJ != null ? combinedJ.Value.FromPartT(1, inter.secondT) : inter.secondT;
+
+                        allInters[i].inters.Add(new Intersection(firstT + i, secondT + j));
+                        allInters[j].inters.Add(new Intersection(secondT + j, firstT + i));
 
                         if (contour[i].minT <= inter.firstT && inter.firstT <= contour[i].maxT)
                             mainI = true;
@@ -430,45 +435,13 @@ namespace IMT.Manager
                             mainJ = true;
                     }
 
-                    if(inters.Count == 0 || (!mainI && combinedI != null) || (!mainJ && combinedJ != null))
+                    if (inters.Count == 0 && ((combinedI != null && !mainI) || (combinedJ != null && !mainJ)))
                     {
-                        if(combinedI != null && combinedJ != null)
+                        inters = Intersection.Calculate(trajectoryI, trajectoryJ);
+                        foreach (var inter in inters)
                         {
-                            inters = Intersection.Calculate(combinedI.Value[0], combinedJ.Value[0]);
-                            foreach (var inter in inters)
-                                AddIntersection(allInters, i, j, combinedI, combinedJ, 0, 0, inter);
-
-                            inters = Intersection.Calculate(combinedI.Value[0], combinedJ.Value[2]);
-                            foreach (var inter in inters)
-                                AddIntersection(allInters, i, j, combinedI, combinedJ, 0, 2, inter);
-
-                            inters = Intersection.Calculate(combinedI.Value[2], combinedJ.Value[0]);
-                            foreach (var inter in inters)
-                                AddIntersection(allInters, i, j, combinedI, combinedJ, 2, 0, inter);
-
-                            inters = Intersection.Calculate(combinedI.Value[2], combinedJ.Value[2]);
-                            foreach (var inter in inters)
-                                AddIntersection(allInters, i, j, combinedI, combinedJ, 2, 2, inter);
-                        }
-                        else if (combinedI != null)
-                        {
-                            inters = Intersection.Calculate(combinedI.Value[0], trajectoryJ);
-                            foreach (var inter in inters)
-                                AddIntersection(allInters, i, j, combinedI, null, 0, 0, inter);
-
-                            inters = Intersection.Calculate(combinedI.Value[2], trajectoryJ);
-                            foreach (var inter in inters)
-                                AddIntersection(allInters, i, j, combinedI, null, 2, 0, inter);
-                        }
-                        else if(combinedJ != null)
-                        {
-                            inters = Intersection.Calculate(trajectoryI, combinedJ.Value[0]);
-                            foreach (var inter in inters)
-                                AddIntersection(allInters, i, j, null, combinedJ, 0, 0, inter);
-
-                            inters = Intersection.Calculate(trajectoryI, combinedJ.Value[2]);
-                            foreach (var inter in inters)
-                                AddIntersection(allInters, i, j, null, combinedJ, 2, 2, inter);
+                            allInters[i].inters.Add(new Intersection(inter.firstT + i, inter.secondT + j));
+                            allInters[j].inters.Add(new Intersection(inter.secondT + j, inter.firstT + i));
                         }
                     }
                 }
@@ -478,15 +451,6 @@ namespace IMT.Manager
                 allInters[i].inters.Sort(Intersection.FirstComparer);
 
             return allInters;
-
-            static void AddIntersection(List<MovedEdgeIntersections> allInters, int i, int j, CombinedTrajectory? combinedI, CombinedTrajectory? combinedJ, int partI, int partJ, Intersection inter)
-            {
-                var firstT = combinedI != null ? combinedI.Value.FromPartT(partI, inter.firstT) : inter.firstT;
-                var secondT = combinedJ != null ? combinedJ.Value.FromPartT(partJ, inter.secondT) : inter.secondT;
-
-                allInters[i].inters.Add(new Intersection(firstT + i, secondT + j));
-                allInters[j].inters.Add(new Intersection(secondT + j, firstT + i));
-            }
         }
         private static List<IntersectionPairEdge> GetIntersectionPairs(List<MovedEdge> contour, List<MovedEdgeIntersections> allInters)
         {
@@ -494,9 +458,7 @@ namespace IMT.Manager
             RemoveSingle(contour, allInters);
             RemoveEmpty(contour, allInters);
 
-            var count = allInters.Count;
-
-            for (var i = 0; i < count; i += 1)
+            for (var i = 0; i < allInters.Count; i += 1)
             {
                 if (allInters[i].Count == 0)
                     continue;
@@ -512,81 +474,127 @@ namespace IMT.Manager
 
                 if (allInters[i].Count > 2)
                 {
-                    var prevI = (i + count - 1) % count;
-                    var nextI = (i + 1) % count;
-
-                    for (var index = 1; index < allInters[i].Count; index += 1)
-                    {
-                        var firstI = allInters[i].GetSecondIndex(index - 1);
-                        var secondI = allInters[i].GetSecondIndex(index);
-                        if (firstI == prevI && secondI == nextI)
-                        {
-                            startInterI = index - 1;
-                            endInterI = index;
-
-                            if (index - 2 >= 0 && allInters[i].GetSecondIndex(index - 2) == prevI && allInters[i].GetFirstT(index - 2) >= allInters[i].movedEdge.minT)
-                                startInterI = index - 2;
-
-                            if (index + 1 < allInters[i].Count && allInters[i].GetSecondIndex(index + 1) == nextI && allInters[i].GetFirstT(index + 1) <= allInters[i].movedEdge.maxT)
-                                endInterI = index + 1;
-
-                            break;
-                        }
-                    }
+                    CheckNeighborsIsMain(allInters, i, ref startInterI, ref endInterI);
 
                     if (allInters[i].Count > 3 && startInterI == 0 && endInterI == allInters[i].Count - 1)
                     {
-                        for (var j = 0; j < allInters[i].Count; j += 1)
-                        {
-                            if (allInters[i].inters[j].firstT - allInters[i].movedEdge.index >= allInters[i].movedEdge.minT)
-                            {
-                                startInterI = j;
-                                break;
-                            }
-                        }
-                        for (var j = allInters[i].Count - 1; j >= 0; j -= 1)
-                        {
-                            if (allInters[i].inters[j].firstT - allInters[i].movedEdge.index <= allInters[i].movedEdge.maxT)
-                            {
-                                endInterI = j;
-                                break;
-                            }
-                        }
+                        TrimMain(allInters, i, ref startInterI, ref endInterI);
+                        ExpandMain(allInters, i, ref startInterI, ref endInterI);
+                    }
+                }
+                RemoveOutside(allInters, i, startInterI, endInterI);
+            }
 
-                        if (startInterI == 0 && startInterI == endInterI)
-                            endInterI = allInters[i].Count - 1;
-                        else if (endInterI == allInters[i].Count - 1 && endInterI == startInterI)
-                            startInterI = 0;
-                        else if ((endInterI - startInterI + 1) % 2 == 1)
-                        {
-                            var beforeI = startInterI > 0 ? allInters[i].GetSecondIndex(startInterI - 1) : -1;
-                            var afterI = endInterI < allInters[i].Count - 1 ? allInters[i].GetSecondIndex(endInterI + 1) : -1;
+            RemoveSingle(contour, allInters);
 
-                            if (beforeI != -1 && afterI != -1)
-                            {
-                                var startI = allInters[i].GetSecondIndex(startInterI);
-                                var endI = allInters[i].GetSecondIndex(endInterI);
-                                //var beforeDeltaI = startI - (beforeI > startI ? beforeI - count : beforeI);
-                                //var afterDeltaI = (afterI < endI ? afterI + count : afterI) - endI;
-                                var beforeDeltaI = (startI - beforeI + count) % count;
-                                var afterDeltaI = (afterI - endI + count) % count;
-                                if (beforeDeltaI < afterDeltaI)
-                                    startInterI -= 1;
-                                else if (afterDeltaI < beforeDeltaI)
-                                    endInterI += 1;
-                                else
-                                {
-                                    var a = "ups";
-                                }
-                            }
-                            else if (beforeI != -1)
-                                startInterI -= 1;
-                            else if (afterI != -1)
-                                endInterI += 1;
-                        }
+            var pairs = new List<IntersectionPairEdge>();
+            for (var i = 0; i < allInters.Count; i += 1)
+            {
+                for (int j = 1; j < allInters[i].Count; j += 1)
+                {
+                    pairs.Add(new IntersectionPairEdge(true, allInters[i].inters[j - 1], allInters[i].inters[j]));
+                }
+            }
+            return pairs;
+
+            static void CheckNeighborsIsMain(List<MovedEdgeIntersections> allInters, int i, ref int startInterI, ref int endInterI)
+            {
+                var prevI = (i + allInters.Count - 1) % allInters.Count;
+                var nextI = (i + 1) % allInters.Count;
+
+                for (var index = 1; index < allInters[i].Count; index += 1)
+                {
+                    var firstI = allInters[i].GetSecondIndex(index - 1);
+                    var secondI = allInters[i].GetSecondIndex(index);
+                    if (firstI == prevI && secondI == nextI)
+                    {
+                        startInterI = index - 1;
+                        endInterI = index;
+
+                        if (index - 2 >= 0 && allInters[i].GetSecondIndex(index - 2) == prevI && allInters[i].GetFirstT(index - 2) >= allInters[i].movedEdge.minT)
+                            startInterI = index - 2;
+
+                        if (index + 1 < allInters[i].Count && allInters[i].GetSecondIndex(index + 1) == nextI && allInters[i].GetFirstT(index + 1) <= allInters[i].movedEdge.maxT)
+                            endInterI = index + 1;
+
+                        break;
+                    }
+                }
+            }
+            static void TrimMain(List<MovedEdgeIntersections> allInters, int i, ref int startInterI, ref int endInterI)
+            {
+                for (var j = 0; j < allInters[i].Count; j += 1)
+                {
+                    var t = allInters[i].GetFirstT(j);
+                    if (t >= allInters[i].movedEdge.minT)
+                    {
+                        startInterI = j;
+                        break;
+                    }
+                }
+                for (var j = allInters[i].Count - 1; j >= 0; j -= 1)
+                {
+                    var t = allInters[i].GetFirstT(j);
+                    if (t <= allInters[i].movedEdge.maxT)
+                    {
+                        endInterI = j;
+                        break;
                     }
                 }
 
+                if (startInterI > endInterI)
+                {
+                    var tempI = startInterI;
+                    startInterI = endInterI;
+                    endInterI = tempI;
+                }
+            }
+            static void ExpandMain(List<MovedEdgeIntersections> allInters, int i, ref int startInterI, ref int endInterI)
+            {
+                if (startInterI == 0 && startInterI == endInterI)
+                    endInterI = allInters[i].Count - 1;
+                else if (endInterI == allInters[i].Count - 1 && endInterI == startInterI)
+                    startInterI = 0;
+                else if ((endInterI - startInterI + 1) % 2 == 1)
+                {
+                    var beforeI = startInterI > 0 ? allInters[i].GetSecondIndex(startInterI - 1) : -1;
+                    var afterI = endInterI < allInters[i].Count - 1 ? allInters[i].GetSecondIndex(endInterI + 1) : -1;
+
+                    if (beforeI != -1 && afterI != -1)
+                    {
+                        var startI = allInters[i].GetSecondIndex(startInterI);
+                        var endI = allInters[i].GetSecondIndex(endInterI);
+                        var beforeDeltaI = (startI - beforeI + allInters.Count) % allInters.Count;
+                        var afterDeltaI = (afterI - endI + allInters.Count) % allInters.Count;
+                        if (beforeDeltaI < afterDeltaI)
+                            startInterI -= 1;
+                        else if (afterDeltaI < beforeDeltaI)
+                            endInterI += 1;
+                        else
+                        {
+                            var beforeT = allInters[i].GetSecondT(startInterI - 1);
+                            if (allInters[beforeI].movedEdge.minT <= beforeT && beforeT <= allInters[beforeI].movedEdge.maxT)
+                            {
+                                startInterI -= 1;
+                                return;
+                            }
+
+                            var afterT = allInters[i].GetSecondT(endInterI + 1);
+                            if(allInters[afterI].movedEdge.minT <= afterT && afterT <= allInters[afterI].movedEdge.maxT)
+                            {
+                                endInterI += 1;
+                                return;
+                            }
+                        }
+                    }
+                    else if (beforeI != -1)
+                        startInterI -= 1;
+                    else if (afterI != -1)
+                        endInterI += 1;
+                }
+            }
+            static void RemoveOutside(List<MovedEdgeIntersections> allInters, int i, int startInterI, int endInterI)
+            {
                 for (int interI = 0; interI < allInters[i].Count; interI += 1)
                 {
                     if (interI == startInterI)
@@ -604,19 +612,6 @@ namespace IMT.Manager
                     }
                 }
             }
-
-            RemoveSingle(contour, allInters);
-
-            var pairs = new List<IntersectionPairEdge>();
-            for (var i = 0; i < allInters.Count; i += 1)
-            {
-                for (int j = 1; j < allInters[i].Count; j += 1)
-                {
-                    pairs.Add(new IntersectionPairEdge(true, allInters[i].inters[j - 1], allInters[i].inters[j]));
-                }
-            }
-            return pairs;
-
 
             static bool RemoveAt(List<MovedEdgeIntersections> allInters, int i, int interI)
             {
