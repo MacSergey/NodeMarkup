@@ -197,6 +197,7 @@ namespace IMT.Manager
             Step.ToXml(config);
             Offset.ToXml(config);
             Side.ToXml(config);
+            StartFrom.ToXml(config);
             return config;
         }
     }
