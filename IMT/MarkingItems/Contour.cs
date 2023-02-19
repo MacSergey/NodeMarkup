@@ -400,8 +400,8 @@ namespace IMT.Manager
                 {
                     if ((j - 1 == i || j + 1 - contour.Count == i) && !contour[i].moved && !contour[j].moved)
                     {
-                        allInters[i].Add(new Intersection(contour[i].maxT + i, contour[j].minT + j));
-                        allInters[j].Add(new Intersection(contour[j].minT + j, contour[i].maxT + i));
+                        allInters[i].Add(new EdgeIntersection(i, j, contour[i].maxT, contour[j].minT));
+                        allInters[j].Add(new EdgeIntersection(j, i, contour[j].minT, contour[i].maxT));
                         continue;
                     }
 
@@ -425,8 +425,8 @@ namespace IMT.Manager
                         var firstT = combinedI != null ? combinedI.Value.FromPartT(1, inter.firstT) : inter.firstT;
                         var secondT = combinedJ != null ? combinedJ.Value.FromPartT(1, inter.secondT) : inter.secondT;
 
-                        allInters[i].Add(new Intersection(firstT + i, secondT + j));
-                        allInters[j].Add(new Intersection(secondT + j, firstT + i));
+                        allInters[i].Add(new EdgeIntersection(i, j, firstT, secondT));
+                        allInters[j].Add(new EdgeIntersection(j, i, secondT, firstT));
 
                         mainI |= contour[i].IsMain(firstT);
                         mainJ |= contour[j].IsMain(secondT);
@@ -437,8 +437,8 @@ namespace IMT.Manager
                         inters = Intersection.Calculate(trajectoryI, trajectoryJ);
                         foreach (var inter in inters)
                         {
-                            var newInterI = new Intersection(inter.firstT + i, inter.secondT + j);
-                            var newInterJ = new Intersection(inter.secondT + j, inter.firstT + i);
+                            var newInterI = new EdgeIntersection(i, j, inter.firstT, inter.secondT);
+                            var newInterJ = new EdgeIntersection(j, i, inter.secondT, inter.firstT);
 
                             if (!allInters[i].ContainApproximately(newInterI) && !allInters[j].ContainApproximately(newInterJ))
                             {
@@ -460,20 +460,15 @@ namespace IMT.Manager
 
             for (var i = 0; i < allInters.Count; i += 1)
             {
-                if (allInters[i].Count == 0)
-                    continue;
-
                 if (allInters[i].Count == 1)
                 {
                     RemoveAt(allInters, i, 0);
-                    continue;
                 }
-
-                var startInterI = 0;
-                var endInterI = allInters[i].Count - 1;
-
-                if (allInters[i].Count > 2)
+                else if (allInters[i].Count > 2)
                 {
+                    var startInterI = 0;
+                    var endInterI = allInters[i].Count - 1;
+
                     CheckNeighborsIsMain(allInters, i, ref startInterI, ref endInterI);
 
                     if (allInters[i].Count > 3 && startInterI == 0 && endInterI == allInters[i].Count - 1)
@@ -481,8 +476,9 @@ namespace IMT.Manager
                         TrimMain(allInters, i, ref startInterI, ref endInterI);
                         ExpandMain(allInters, i, ref startInterI, ref endInterI);
                     }
+
+                    RemoveOutside(allInters, i, startInterI, endInterI);
                 }
-                RemoveOutside(allInters, i, startInterI, endInterI);
             }
 
             RemoveSingle(contour, allInters);
@@ -492,7 +488,7 @@ namespace IMT.Manager
             {
                 for (int j = 1; j < allInters[i].Count; j += 1)
                 {
-                    pairs.Add(new IntersectionPairEdge(true, allInters[i].inters[j - 1], allInters[i].inters[j]));
+                    pairs.Add(new IntersectionPairEdge(true, allInters[i].inters[j - 1].Intersection, allInters[i].inters[j].Intersection));
                 }
             }
             return pairs;
@@ -504,17 +500,17 @@ namespace IMT.Manager
 
                 for (var index = 1; index < allInters[i].Count; index += 1)
                 {
-                    var firstI = allInters[i].GetSecondIndex(index - 1);
-                    var secondI = allInters[i].GetSecondIndex(index);
+                    var firstI = allInters[i].inters[index - 1].secondI;
+                    var secondI = allInters[i].inters[index].secondI;
                     if (firstI == prevI && secondI == nextI)
                     {
                         startInterI = index - 1;
                         endInterI = index;
 
-                        if (index - 2 >= 0 && allInters[i].GetSecondIndex(index - 2) == prevI && allInters[i].GetFirstT(index - 2) >= allInters[i].movedEdge.minT)
+                        if (index - 2 >= 0 && allInters[i].inters[index - 2].secondI == prevI && allInters[i].inters[index - 2].firstT >= allInters[i].movedEdge.minT)
                             startInterI = index - 2;
 
-                        if (index + 1 < allInters[i].Count && allInters[i].GetSecondIndex(index + 1) == nextI && allInters[i].GetFirstT(index + 1) <= allInters[i].movedEdge.maxT)
+                        if (index + 1 < allInters[i].Count && allInters[i].inters[index + 1].secondI == nextI && allInters[i].inters[index + 1].firstT <= allInters[i].movedEdge.maxT)
                             endInterI = index + 1;
 
                         break;
@@ -525,8 +521,7 @@ namespace IMT.Manager
             {
                 for (var j = 0; j < allInters[i].Count; j += 1)
                 {
-                    var t = allInters[i].GetFirstT(j);
-                    if (t >= allInters[i].movedEdge.minT)
+                    if (allInters[i].inters[j].firstT >= allInters[i].movedEdge.minT)
                     {
                         startInterI = j;
                         break;
@@ -534,8 +529,7 @@ namespace IMT.Manager
                 }
                 for (var j = allInters[i].Count - 1; j >= 0; j -= 1)
                 {
-                    var t = allInters[i].GetFirstT(j);
-                    if (t <= allInters[i].movedEdge.maxT)
+                    if (allInters[i].inters[j].firstT <= allInters[i].movedEdge.maxT)
                     {
                         endInterI = j;
                         break;
@@ -557,13 +551,13 @@ namespace IMT.Manager
                     startInterI = 0;
                 else if ((endInterI - startInterI + 1) % 2 == 1)
                 {
-                    var beforeI = startInterI > 0 ? allInters[i].GetSecondIndex(startInterI - 1) : -1;
-                    var afterI = endInterI < allInters[i].Count - 1 ? allInters[i].GetSecondIndex(endInterI + 1) : -1;
+                    var beforeI = startInterI > 0 ? allInters[i].inters[startInterI - 1].secondI : -1;
+                    var afterI = endInterI < allInters[i].Count - 1 ? allInters[i].inters[endInterI + 1].secondI : -1;
 
                     if (beforeI != -1 && afterI != -1)
                     {
-                        var startI = allInters[i].GetSecondIndex(startInterI);
-                        var endI = allInters[i].GetSecondIndex(endInterI);
+                        var startI = allInters[i].inters[startInterI].secondI;
+                        var endI = allInters[i].inters[endInterI].secondI;
                         var beforeDeltaI = (startI - beforeI + allInters.Count) % allInters.Count;
                         var afterDeltaI = (afterI - endI + allInters.Count) % allInters.Count;
                         if (beforeDeltaI < afterDeltaI)
@@ -572,14 +566,14 @@ namespace IMT.Manager
                             endInterI += 1;
                         else
                         {
-                            var beforeT = allInters[i].GetSecondT(startInterI - 1);
+                            var beforeT = allInters[i].inters[startInterI - 1].secondT;
                             if (allInters[beforeI].movedEdge.IsMain(beforeT))
                             {
                                 startInterI -= 1;
                                 return;
                             }
 
-                            var afterT = allInters[i].GetSecondT(endInterI + 1);
+                            var afterT = allInters[i].inters[endInterI + 1].secondT;
                             if (allInters[afterI].movedEdge.IsMain(afterT))
                             {
                                 endInterI += 1;
@@ -617,12 +611,11 @@ namespace IMT.Manager
             {
                 var inverted = allInters[i].inters[interI].GetReverse();
                 allInters[i].RemoveAt(interI);
-                var j = Mathf.FloorToInt(inverted.firstT);
 
-                var foundIndex = allInters[j].inters.FindIndex(inter => inter == inverted);
+                var foundIndex = allInters[inverted.firstI].inters.FindIndex(inter => inter == inverted);
                 if (foundIndex >= 0)
                 {
-                    allInters[j].RemoveAt(foundIndex);
+                    allInters[inverted.firstI].RemoveAt(foundIndex);
 
                     return true;
                 }
@@ -635,23 +628,26 @@ namespace IMT.Manager
                 {
                     for (var j = 1; j < allInters[i].Count; j += 1)
                     {
-                        var pos1 = contour[i].edge.trajectory.Position(allInters[i].GetFirstT(j - 1));
-                        var pos2 = contour[i].edge.trajectory.Position(allInters[i].GetFirstT(j));
+                        var pos1 = contour[i].edge.trajectory.Position(allInters[i].inters[j - 1].firstT);
+                        var pos2 = contour[i].edge.trajectory.Position(allInters[i].inters[j].firstT);
                         var dist = (pos2 - pos1).sqrMagnitude;
                         if (dist < 0.0001f)
                         {
-                            var prevI = allInters[i].GetSecondIndex(j - 1);
-                            var nextI = allInters[i].GetSecondIndex(j);
+                            var prevI = allInters[i].inters[j - 1].secondI;
+                            var nextI = allInters[i].inters[j].secondI;
                             if ((i + allInters.Count - 1) % allInters.Count == prevI && (i + 1) % allInters.Count == nextI)
                             {
-                                var newPrevInter = new Intersection(allInters[i].inters[j - 1].secondT, allInters[i].inters[j].secondT);
+                                var prevInter = allInters[i].inters[j - 1];
+                                var nextInter = allInters[i].inters[j];
+
+                                var newPrevInter = new EdgeIntersection(prevInter.secondI, nextInter.secondI, prevInter.secondT, nextInter.secondT);
                                 var newNextInter = newPrevInter.GetReverse();
 
                                 RemoveAt(allInters, i, j);
                                 RemoveAt(allInters, i, j - 1);
 
-                                var prevInterI = allInters[prevI].BinarySearch(newPrevInter, Intersection.FirstApproxComparer);
-                                var nextInterI = allInters[nextI].BinarySearch(newNextInter, Intersection.FirstApproxComparer);
+                                var prevInterI = allInters[prevI].BinarySearch(newPrevInter, EdgeIntersection.FirstApproxComparer);
+                                var nextInterI = allInters[nextI].BinarySearch(newNextInter, EdgeIntersection.FirstApproxComparer);
 
                                 if (prevInterI < 0 && nextInterI < 0)
                                 {
@@ -694,13 +690,12 @@ namespace IMT.Manager
                             for (var l = 0; l < allInters[k].Count; l += 1)
                             {
                                 var inter = allInters[k].inters[l];
-                                var index = Mathf.FloorToInt(inter.secondT);
-                                if (k > i && index > i)
-                                    allInters[k].inters[l] = new Intersection(inter.firstT - 1f, inter.secondT - 1f);
+                                if (k > i && inter.secondI > i)
+                                    allInters[k].inters[l] = new EdgeIntersection(inter.firstI - 1, inter.secondI - 1, inter.firstT, inter.secondT);
                                 else if (k > i)
-                                    allInters[k].inters[l] = new Intersection(inter.firstT - 1f, inter.secondT);
-                                else if (index > i)
-                                    allInters[k].inters[l] = new Intersection(inter.firstT, inter.secondT - 1f);
+                                    allInters[k].inters[l] = new EdgeIntersection(inter.firstI - 1, inter.secondI, inter.firstT, inter.secondT);
+                                else if (inter.secondI > i)
+                                    allInters[k].inters[l] = new EdgeIntersection(inter.firstI, inter.secondI - 1, inter.firstT, inter.secondT);
                             }
                         }
 
@@ -784,43 +779,109 @@ namespace IMT.Manager
     readonly struct MovedEdgeIntersections
     {
         public readonly MovedEdge movedEdge;
-        public readonly List<Intersection> inters;
+        public readonly List<EdgeIntersection> inters;
 
         public int Count => inters.Count;
 
-        public MovedEdgeIntersections(MovedEdge movedEdge, List<Intersection> intersections = null)
+        public MovedEdgeIntersections(MovedEdge movedEdge, List<EdgeIntersection> intersections = null)
         {
             this.movedEdge = movedEdge;
-            this.inters = intersections ?? new List<Intersection>();
+            this.inters = intersections ?? new List<EdgeIntersection>();
         }
 
-        public int GetFirstIndex(int index) => Mathf.FloorToInt(inters[index].firstT);
-        public int GetSecondIndex(int index) => Mathf.FloorToInt(inters[index].secondT);
-
-        public float GetFirstT(int index) => inters[index].firstT - GetFirstIndex(index);
-        public float GetSecondT(int index) => inters[index].secondT - GetSecondIndex(index);
-
-        public void Add(Intersection inter)
+        public void Add(EdgeIntersection inter)
         {
-            var index = inters.BinarySearch(inter, Intersection.FirstComparer);
+            var index = inters.BinarySearch(inter, EdgeIntersection.FirstComparer);
             inters.Insert(index < 0 ? ~index : index, inter);
         }
-        public void Insert(int index, Intersection inter) => inters.Insert(index, inter);
-        public int BinarySearch(Intersection inter, IComparer<Intersection> comparer) => inters.BinarySearch(inter, comparer);
+        public void Insert(int index, EdgeIntersection inter) => inters.Insert(index, inter);
+        public int BinarySearch(EdgeIntersection inter, IComparer<EdgeIntersection> comparer) => inters.BinarySearch(inter, comparer);
         public void RemoveAt(int index) => inters.RemoveAt(index);
 
-        public bool Contain(Intersection inter)
+        public bool Contain(EdgeIntersection inter)
         {
-            var index = inters.BinarySearch(inter, Intersection.FirstComparer);
-            return index >= 0 && Intersection.SecondComparer.Compare(inters[index], inter) == 0;
+            var index = inters.BinarySearch(inter, EdgeIntersection.FirstComparer);
+            return index >= 0 && EdgeIntersection.SecondComparer.Compare(inters[index], inter) == 0;
         }
-        public bool ContainApproximately(Intersection inter)
+        public bool ContainApproximately(EdgeIntersection inter)
         {
-            var index = inters.BinarySearch(inter, Intersection.FirstApproxComparer);
-            return index >= 0 && Intersection.SecondApproxComparer.Compare(inters[index], inter) == 0;
+            var index = inters.BinarySearch(inter, EdgeIntersection.FirstApproxComparer);
+            return index >= 0 && EdgeIntersection.SecondApproxComparer.Compare(inters[index], inter) == 0;
         }
 
         public override string ToString() => $"{movedEdge} - {inters.Count} inters";
+    }
+    readonly struct EdgeIntersection
+    {
+        public static Comparer FirstComparer { get; } = new Comparer(true, true);
+        public static Comparer SecondComparer { get; } = new Comparer(false, true);
+
+        public static Comparer FirstApproxComparer { get; } = new Comparer(true, false);
+        public static Comparer SecondApproxComparer { get; } = new Comparer(false, false);
+
+
+        public readonly int firstI;
+        public readonly int secondI;
+        public readonly float firstT;
+        public readonly float secondT;
+
+        public float FirstEdgeT => firstT + firstI;
+        public float SecondEdgeT => secondT + secondI;
+        public Intersection Intersection => new Intersection(FirstEdgeT, SecondEdgeT);
+
+        public EdgeIntersection(int firstI, int secondI, Intersection intersection)
+        {
+            this.firstI = firstI;
+            this.secondI = secondI;
+            firstT = intersection.firstT;
+            secondT = intersection.secondT;
+        }
+        public EdgeIntersection(int firstI, int secondI, float firstT, float secondT)
+        {          
+            this.firstI = firstI;
+            this.secondI = secondI;
+            this.firstT = firstT;
+            this.secondT = secondT;
+        }
+
+        public EdgeIntersection GetReverse() => new EdgeIntersection(secondI, firstI, secondT, firstT);
+
+        public override string ToString() => $"{firstT + firstI:0.###} ÷ {secondT + secondI:0.###}";
+
+        public static bool operator ==(EdgeIntersection a, EdgeIntersection b) => a.firstI == b.firstI && a.secondI == b.secondI && a.firstT == b.firstT && a.secondT == b.secondT;
+        public static bool operator !=(EdgeIntersection a, EdgeIntersection b) => a.firstI != b.firstI || a.secondI != b.secondI || a.firstT != b.firstT || a.secondT != b.secondT;
+
+        public class Comparer : IComparer<EdgeIntersection>
+        {
+            private readonly bool isFirst;
+            private readonly bool strict;
+            public Comparer(bool isFirst, bool strict)
+            {
+                this.isFirst = isFirst;
+                this.strict = strict;
+            }
+            public int Compare(EdgeIntersection x, EdgeIntersection y)
+            {
+                if (isFirst)
+                {
+                    if (x.firstI != y.firstI)
+                        return x.firstI.CompareTo(y.firstI);
+                    else
+                        return !strict && Approximately(x.firstT, y.firstT) ? 0 : x.firstT.CompareTo(y.firstT);
+                }
+                else
+                {
+                    if (x.secondI != y.secondI)
+                        return x.secondI.CompareTo(y.secondI);
+                    else
+                        return !strict && Approximately(x.secondT, y.secondT) ? 0 : x.secondT.CompareTo(y.secondT);
+                }
+            }
+            private bool Approximately(float a, float b)
+            {
+                return Mathf.Abs(b - a) < 0.001f * Mathf.Max(Mathf.Abs(a), Mathf.Abs(b));
+            }
+        }
     }
 
     public static class ContourUtil
