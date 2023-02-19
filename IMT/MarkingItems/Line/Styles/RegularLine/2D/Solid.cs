@@ -54,7 +54,7 @@ namespace IMT.Manager
                 StyleHelper.GetPartParams(trajectory, part, 0f, out var startPos, out var endPos, out var dir);
                 if(StyleHelper.CheckBorders(borders, ref startPos, ref endPos, dir, Width))
                 {
-                    var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, Width, Color);
+                    var data = new DecalData(MaterialType.Dash, lod, startPos, endPos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                     addData(data);
                 }
             }

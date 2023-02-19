@@ -1,5 +1,4 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -10,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -77,7 +75,7 @@ namespace IMT.Manager
             foreach (var part in solidParts)
             {
                 StyleHelper.GetPartParams(trajectory, part, solidOffset, solidOffset, out var startPos, out var endPos, out var dir);
-                var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, Width, Color);
+                var data = new DecalData(MaterialType.Dash, lod, startPos, endPos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                 addData(data);
             }
 
@@ -87,7 +85,7 @@ namespace IMT.Manager
                 foreach (var part in dashedParts)
                 {
                     StyleHelper.GetPartParams(trajectory, part, dashedOffset, dashedOffset, out var pos, out var dir);
-                    var data = new DecalData(this, MaterialType.Dash, lod, pos, dir, DashLength, Width, TwoColors ? SecondColor : Color);
+                    var data = new DecalData( MaterialType.Dash, lod, pos, dir, DashLength, Width, TwoColors ? SecondColor : Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                     addData(data);
                 }
             }

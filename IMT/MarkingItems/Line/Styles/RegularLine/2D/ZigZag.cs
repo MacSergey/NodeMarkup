@@ -99,8 +99,8 @@ namespace IMT.Manager
                     var middlePos = trajectory.Position(middleT) + trajectory.Tangent(middleT).MakeFlatNormalized().Turn90(!Side) * Offset;
                     var endPos = trajectory.Position(endT);
 
-                    addData(new DecalData(this, MaterialType.Dash, lod, startPos, middlePos, Width, Color));
-                    addData(new DecalData(this, MaterialType.Dash, lod, middlePos, endPos, Width, Color));
+                    addData(new DecalData(MaterialType.Dash, lod, startPos, middlePos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
+                    addData(new DecalData(MaterialType.Dash, lod, middlePos, endPos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
                 }
                 else
                 {
@@ -108,8 +108,8 @@ namespace IMT.Manager
                     var middlePos = trajectory.Position(middleT);
                     var endPos = trajectory.Position(endT) + trajectory.Tangent(endT).MakeFlatNormalized().Turn90(!Side) * Offset;
 
-                    addData(new DecalData(this, MaterialType.Dash, lod, startPos, middlePos, Width, Color));
-                    addData(new DecalData(this, MaterialType.Dash, lod, middlePos, endPos, Width, Color));
+                    addData(new DecalData(MaterialType.Dash, lod, startPos, middlePos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
+                    addData(new DecalData(MaterialType.Dash, lod, middlePos, endPos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
                 }
             }
 
@@ -124,8 +124,8 @@ namespace IMT.Manager
                 var endDir = trajectory.Tangent(endT).MakeFlatNormalized().Turn90(!Side);
 
 
-                addData(new DecalData(this, MaterialType.Dash, lod, startPos, startPos + startDir * Offset, Width, Color));
-                addData(new DecalData(this, MaterialType.Dash, lod, endPos, endPos + endDir * Offset, Width, Color));
+                addData(new DecalData(MaterialType.Dash, lod, startPos, startPos + startDir * Offset, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
+                addData(new DecalData(MaterialType.Dash, lod, endPos, endPos + endDir * Offset, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
             }
         }
 

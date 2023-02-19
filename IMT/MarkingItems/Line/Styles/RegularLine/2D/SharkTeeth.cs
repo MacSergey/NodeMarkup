@@ -79,7 +79,7 @@ namespace IMT.Manager
                     if (StyleHelper.CheckBorders(borders, pos, dir, Base, Height))
                     {
                         dir = dir.TurnDeg(Angle, true);
-                        var data = new DecalData(this, MaterialType.Triangle, lod, pos, dir, Base, Height, Color);
+                        var data = new DecalData(MaterialType.Triangle, lod, pos, dir, Base, Height, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                         addData(data);
                     }
                 }

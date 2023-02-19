@@ -4,6 +4,7 @@ using UnityEngine;
 using IMT.Manager;
 using ModsCommon.Utilities;
 using System.Linq;
+using System;
 
 namespace IMT.Utilities
 {
@@ -27,40 +28,28 @@ namespace IMT.Utilities
         public MarkingLODType LODType => MarkingLODType.Dash;
 
         private readonly Material material;
-        private readonly Texture2D mainTexture;
-        private readonly Texture2D alphaTexture;
+        private readonly TextureData textureData;
         public readonly Vector3 position;
         public readonly Quaternion rotation;
         public readonly Color color;
         public readonly Vector4 size;
-        private readonly Vector4 tiling;
         private readonly Vector4[] points;
-        private readonly float cracksDensity;
-        private readonly Vector4 cracksTiling;
-        private readonly float voidDensity;
-        private readonly Vector4 voidTiling;
-        private readonly float texture;
+        private readonly EffectData effectData;
 
         public float Length => size.x;
         public float Width => size.z;
         public float Angle => rotation.eulerAngles.z * Mathf.Deg2Rad;
 
-        private DecalData(MaterialType materialType, MarkingLOD lod, Texture2D mainTexture, Texture2D alphaTexture, Vector3 position, float angle, Color32 color, Vector3 size, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture, params Vector2[] points)
+        private DecalData(MaterialType materialType, MarkingLOD lod, Vector3 position, float angle, Color32 color, Vector3 size, TextureData textureData, EffectData effectData, params Vector2[] points)
         {
             LOD = lod;
             this.material = RenderHelper.MaterialLib[materialType];
-            this.mainTexture = mainTexture;
-            this.alphaTexture = alphaTexture;
+            this.textureData = textureData;
             this.position = position;
             this.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down);
             this.color = color.ToX3Vector();
             this.size = size;
-            this.tiling = new Vector4(tiling.x, 0f, tiling.y, 0f);
-            this.cracksDensity = cracksDensity;
-            this.cracksTiling = new Vector4(cracksTiling.x, 0f, cracksTiling.y, 0f);
-            this.voidDensity = voidDensity;
-            this.voidTiling = new Vector4(voidTiling.x, 0f, voidTiling.y, 0f);
-            this.texture = texture;
+            this.effectData = effectData;
 
             var count = (points.Length + 3) / 4;
             this.points = new Vector4[count * 2];
@@ -74,23 +63,23 @@ namespace IMT.Utilities
             }
         }
 
-        public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Texture2D mainTexture, Texture2D alphaTexture, Vector3 position, float angle, float length, float width, Color32 color)
+        public DecalData(MaterialType materialType, MarkingLOD lod, Vector3 position, float angle, float length, float width, Color32 color, TextureData textureData, EffectData effectData)
         {
-            this = new DecalData(materialType, lod, mainTexture, alphaTexture, position, angle, color, new Vector3(length, DefaultHeight, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
+            this = new DecalData(materialType, lod, position, angle, color, new Vector3(length, DefaultHeight, width), textureData, effectData);
         }
-        public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Vector3 pos, Vector3 dir, float length, float width, Color32 color)
+        public DecalData(MaterialType materialType, MarkingLOD lod, Vector3 pos, Vector3 dir, float length, float width, Color32 color, TextureData textureData, EffectData effectData)
         {
-            this = new DecalData(materialType, lod, null, null, pos, dir.AbsoluteAngle(), color, new Vector3(length, DefaultHeight, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
+            this = new DecalData(materialType, lod, pos, dir.AbsoluteAngle(), color, new Vector3(length, DefaultHeight, width), textureData, effectData);
         }
-        public DecalData(IEffectStyle effectStyle, MaterialType materialType, MarkingLOD lod, Vector3 startPos, Vector3 endPos, float width, Color32 color)
+        public DecalData(MaterialType materialType, MarkingLOD lod, Vector3 startPos, Vector3 endPos, float width, Color32 color, TextureData textureData, EffectData effectData)
         {
             var pos = (startPos + endPos) * 0.5f;
             var angle = (endPos - startPos).AbsoluteAngle();
             var length = (endPos - startPos).magnitude;
-            this = new DecalData(materialType, lod, null, null, pos, angle, color, new Vector3(length, DefaultHeight, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
+            this = new DecalData(materialType, lod, pos, angle, color, new Vector3(length, DefaultHeight, width), textureData, effectData);
         }
 
-        public DecalData(Marking.Item itemType, MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
+        public DecalData(Marking.Item itemType, MarkingLOD lod, Vector3[] points, Color32 color, TextureData textureData, EffectData effectData)
         {
             var min = points[0];
             var max = points[0];
@@ -121,9 +110,9 @@ namespace IMT.Utilities
                 _ => MaterialType.Dash,
             };
 
-            this = new DecalData(materialType, lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
+            this = new DecalData(materialType, lod, position, 0f, color, size, textureData, effectData, pointUVs);
         }
-        public DecalData(Marking.Item itemType, MarkingLOD lod, Area area, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
+        public DecalData(Marking.Item itemType, MarkingLOD lod, Area area, Color32 color, TextureData textureData, EffectData effectData)
         {
             var min = area.Min;
             var max = area.Max;
@@ -147,7 +136,7 @@ namespace IMT.Utilities
                 _ => MaterialType.Dash,
             };
 
-            this = new DecalData(materialType, lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
+            this = new DecalData(materialType, lod, position, 0f, color, size, textureData, effectData, pointUVs);
         }
 
         public void OnDestroy() { }
@@ -180,7 +169,7 @@ namespace IMT.Utilities
                 return MaterialType.CrosswalkUpTo16;
         }
 
-        public static List<DecalData> GetData(IEffectStyle effectStyle, Marking.Item itemType, MarkingLOD lod, ITrajectory[] trajectories, StyleHelper.SplitParams splitParams, Color32 color
+        public static List<DecalData> GetData(Marking.Item itemType, MarkingLOD lod, ITrajectory[] trajectories, StyleHelper.SplitParams splitParams, Color32 color, TextureData textureData, EffectData effectData
 #if DEBUG
             , bool debug = false
 #endif
@@ -197,15 +186,12 @@ namespace IMT.Utilities
                 if (debug)
                 {
                     foreach (var point in points)
-                        result.Add(new DecalData(effectStyle, MaterialType.Dash, lod, point, Vector3.forward, 0.3f, 0.3f, Color.green));
+                        result.Add(new DecalData(MaterialType.Dash, lod, point, Vector3.forward, 0.3f, 0.3f, Color.green, textureData, effectData));
                 }
 #endif
                 if (points.Length <= 16)
                 {
-                    if (effectStyle != null)
-                        result.Add(new DecalData(itemType, lod, points, color, Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity));
-                    else
-                        result.Add(new DecalData(itemType, lod, points, color, Vector3.one, 0f, Vector3.one, 0f, Vector3.one, 0f));
+                    result.Add(new DecalData(itemType, lod, points, color, textureData, effectData));
                 }
                 else
                 {
@@ -219,14 +205,11 @@ namespace IMT.Utilities
                         {
                             foreach (var side in area.Sides)
                             {
-                                result.Add(new DecalData(effectStyle, MaterialType.Dash, lod, side.Start.Position, side.End.Position, 0.05f, Color.magenta));
+                                result.Add(new DecalData(MaterialType.Dash, lod, side.Start.Position, side.End.Position, 0.05f, Color.magenta, TextureData.Default, EffectData.Default));
                             }
                         }
 #endif
-                        if (effectStyle != null)
-                            result.Add(new DecalData(itemType, lod, area, color, Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity));
-                        else
-                            result.Add(new DecalData(itemType, lod, area, color, Vector3.one, 0f, Vector3.one, 0f, Vector3.one, 0f));
+                        result.Add(new DecalData(itemType, lod, area, color, textureData, effectData));
                     }
                 }
             }
@@ -254,25 +237,85 @@ namespace IMT.Utilities
             var materialBlock = instance.m_materialBlock;
             materialBlock.Clear();
 
-            if (mainTexture != null)
-                materialBlock.SetTexture(mainTexId, mainTexture);
+            if (textureData.mainTexture != null)
+                materialBlock.SetTexture(mainTexId, textureData.mainTexture);
 
-            if (alphaTexture != null)
-                materialBlock.SetTexture(alphaTexId, alphaTexture);
+            if (textureData.alphaTexture != null)
+                materialBlock.SetTexture(alphaTexId, textureData.alphaTexture);
 
             if (points != null && points.Length > 0)
                 materialBlock.SetVectorArray(pointsId, points);
 
             materialBlock.SetVector(colorId, color);
             materialBlock.SetVector(sizeId, size);
-            materialBlock.SetVector(tilingId, tiling);
-            materialBlock.SetFloat(cracksDensityId, cracksDensity);
-            materialBlock.SetVector(cracksTilingId, cracksTiling);
-            materialBlock.SetFloat(voidDensityId, voidDensity);
-            materialBlock.SetVector(voidTilingId, voidTiling);
-            materialBlock.SetFloat(textureDensityId, texture);
+            materialBlock.SetVector(tilingId, textureData.tiling);
+            materialBlock.SetFloat(cracksDensityId, effectData.cracksDensity);
+            materialBlock.SetVector(cracksTilingId, effectData.cracksTiling);
+            materialBlock.SetFloat(voidDensityId, effectData.voidDensity);
+            materialBlock.SetVector(voidTilingId, effectData.voidTiling);
+            materialBlock.SetFloat(textureDensityId, effectData.texture);
 
             Graphics.DrawMesh(RenderHelper.DecalMesh, position, rotation, material, RenderHelper.RoadLayer, null, 0, materialBlock);
+        }
+
+        public readonly struct TextureData
+        {
+            public static TextureData Default => new TextureData(null, null, Vector2.one, 0f);
+
+            public readonly Texture2D mainTexture;
+            public readonly Texture2D alphaTexture;
+            public readonly Vector4 tiling;
+
+            public TextureData(Texture2D mainTexture, Texture2D alphaTexture)
+            {
+                this.mainTexture = mainTexture;
+                this.alphaTexture = alphaTexture;
+                this.tiling = new Vector4(1f, 0f, 1f, 0f);
+            }
+            public TextureData(Texture2D mainTexture, Texture2D alphaTexture, Vector2 tiling, float angle)
+            {
+                this.mainTexture = mainTexture;
+                this.alphaTexture = alphaTexture;
+                this.tiling = new Vector4(tiling.x, Mathf.Sin(angle), tiling.y, Mathf.Cos(angle));
+            }
+        }
+        public readonly struct EffectData
+        {
+            public static EffectData Default => new EffectData(null);
+
+            public readonly float cracksDensity;
+            public readonly Vector4 cracksTiling;
+            public readonly float voidDensity;
+            public readonly Vector4 voidTiling;
+            public readonly float texture;
+
+            public EffectData(IEffectStyle effectStyle)
+            {
+                if (effectStyle != null)
+                {
+                    this.cracksDensity = effectStyle.CracksDensity;
+                    this.cracksTiling = new Vector4(effectStyle.CracksTiling.x, 0f, effectStyle.CracksTiling.y, 0f);
+                    this.voidDensity = effectStyle.VoidDensity;
+                    this.voidTiling = new Vector4(effectStyle.VoidTiling.x, 0f, effectStyle.VoidTiling.y, 0f);
+                    this.texture = effectStyle.Texture;
+                }
+                else
+                {
+                    this.cracksDensity = 0f;
+                    this.cracksTiling = new Vector4(1f, 0f, 1f, 0f);
+                    this.voidDensity = 0f;
+                    this.voidTiling = new Vector4(1f, 0f, 1f, 0f);
+                    this.texture = 0f;
+                }
+            }
+            public EffectData(float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
+            {
+                this.cracksDensity = cracksDensity;
+                this.cracksTiling = new Vector4(cracksTiling.x, 0f, cracksTiling.y, 0f);
+                this.voidDensity = voidDensity;
+                this.voidTiling = new Vector4(voidTiling.x, 0f, voidTiling.y, 0f);
+                this.texture = texture;
+            }
         }
     }
 }

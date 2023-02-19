@@ -653,6 +653,10 @@ namespace IMT.Manager
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             FillerChevron,
 
+            [Description("Decal")]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            FillerDecal,
+
             [NotItem]
             Filler3D = Filler + 0x80,
 

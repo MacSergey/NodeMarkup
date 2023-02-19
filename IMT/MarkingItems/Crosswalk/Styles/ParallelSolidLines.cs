@@ -71,16 +71,16 @@ namespace IMT.Manager
             var firstParts = StyleHelper.CalculateSolid(firstTrajectory, lod, StyleHelper.SplitParams.Default);
             foreach (var part in firstParts)
             {
-                StyleHelper.GetPartParams(firstTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out var dir);
-                var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, LineWidth, Color);
+                StyleHelper.GetPartParams(firstTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out _);
+                var data = new DecalData(MaterialType.Dash, lod, startPos, endPos, LineWidth, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                 addData(data);
             }
 
             var secondParts = StyleHelper.CalculateSolid(secondTrajectory, lod, StyleHelper.SplitParams.Default);
             foreach (var part in secondParts)
             {
-                StyleHelper.GetPartParams(secondTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out var dir);
-                var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, LineWidth, Color);
+                StyleHelper.GetPartParams(secondTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out _);
+                var data = new DecalData(MaterialType.Dash, lod, startPos, endPos, LineWidth, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                 addData(data);
             }
         }

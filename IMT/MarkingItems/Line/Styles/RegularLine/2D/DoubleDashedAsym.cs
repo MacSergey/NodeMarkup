@@ -147,14 +147,14 @@ namespace IMT.Manager
                     StyleHelper.GetPartParams(trajectory, part, Invert ? -offsetA : offsetA, out var firstPos, out var firstDir);
                     if (StyleHelper.CheckBorders(borders, firstPos, firstDir, DashLengthA, Width))
                     {
-                        var data = new DecalData(this, MaterialType.Dash, lod, firstPos, firstDir, DashLengthA, Width, Color);
+                        var data = new DecalData(MaterialType.Dash, lod, firstPos, firstDir, DashLengthA, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                         addData(data);
                     }
 
                     StyleHelper.GetPartParams(trajectory, part, Invert ? -offsetB : offsetB, out var secondPos, out var secondDir);
                     if (StyleHelper.CheckBorders(borders, secondPos, secondDir, DashLengthB, Width))
                     {
-                        var data = new DecalData(this, MaterialType.Dash, lod, secondPos, secondDir, DashLengthB, Width, TwoColors ? SecondColor : Color);
+                        var data = new DecalData(MaterialType.Dash, lod, secondPos, secondDir, DashLengthB, Width, TwoColors ? SecondColor : Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                         addData(data);
                     }
                 }

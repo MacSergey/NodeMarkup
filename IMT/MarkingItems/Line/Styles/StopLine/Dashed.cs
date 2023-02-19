@@ -64,7 +64,7 @@ namespace IMT.Manager
                 foreach (var part in parts)
                 {
                     StyleHelper.GetPartParams(trajectory, part, offset, offset, out var pos, out var dir);
-                    var data = new DecalData(this, MaterialType.Dash, lod, pos, dir, DashLength, Width, Color);
+                    var data = new DecalData(MaterialType.Dash, lod, pos, dir, DashLength, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                     addData(data);
                 }
             }

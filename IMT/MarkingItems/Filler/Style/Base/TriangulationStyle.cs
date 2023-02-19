@@ -278,9 +278,9 @@ namespace IMT.Manager
                 var point2 = points[triangles[i + 1]];
                 var point3 = points[triangles[i + 2]];
 
-                addData(new DecalData(null, materialType, MarkingLOD.NoLOD, point1, point2, 0.05f, color));
-                addData(new DecalData(null, materialType, MarkingLOD.NoLOD, point2, point3, 0.05f, color));
-                addData(new DecalData(null, materialType, MarkingLOD.NoLOD, point3, point1, 0.05f, color));
+                addData(new DecalData(materialType, MarkingLOD.NoLOD, point1, point2, 0.05f, color, DecalData.TextureData.Default, DecalData.EffectData.Default));
+                addData(new DecalData(materialType, MarkingLOD.NoLOD, point2, point3, 0.05f, color, DecalData.TextureData.Default, DecalData.EffectData.Default));
+                addData(new DecalData(materialType, MarkingLOD.NoLOD, point3, point1, 0.05f, color, DecalData.TextureData.Default, DecalData.EffectData.Default));
             }
         }
 #endif

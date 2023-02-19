@@ -90,6 +90,7 @@ namespace IMT.Utilities
                     Bundle.LoadAsset<Material>("CrosswalkUpTo16.mat"),
                     Bundle.LoadAsset<Material>("Dash.mat"),
                     Bundle.LoadAsset<Material>("Triangle.mat"),
+                    Bundle.LoadAsset<Material>("Text.mat"),
                 };
                 DecalMaterials = materials;
 
@@ -105,6 +106,7 @@ namespace IMT.Utilities
                 MaterialLib[MaterialType.CrosswalkUpTo16] = materials[9];
                 MaterialLib[MaterialType.Dash] = materials[10];
                 MaterialLib[MaterialType.Triangle] = materials[11];
+                MaterialLib[MaterialType.Text] = materials[12];
 
                 DecalMesh = Bundle.LoadAsset<Mesh>("Cube.fbx");
                 DecalMesh.bounds = new Bounds(DecalMesh.bounds.center, Vector3.one * 100f);
@@ -171,6 +173,7 @@ namespace IMT.Utilities
     {
         Dash,
         Triangle,
+        Text,
         FillerZero,
         FillerUpTo4,
         FillerUpTo8,

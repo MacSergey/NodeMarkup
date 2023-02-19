@@ -70,6 +70,7 @@ namespace IMT.Manager
             {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
             {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultOffset)},
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
+            {FillerType.Decal, new DecalFillerStyle(null, DefaultColor, DefaultOffset, DefaultOffset, Vector2.one, 0f)},
             {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
             {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
             {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
@@ -230,6 +231,10 @@ namespace IMT.Manager
             [Description(nameof(Localize.FillerStyle_Chevron))]
             [Order(1)]
             Chevron = StyleType.FillerChevron,
+
+            [Description("Decal")]
+            [Order(1)]
+            Decal = StyleType.FillerDecal,
 
             [Description(nameof(Localize.FillerStyle_Pavement))]
             [Order(4)]

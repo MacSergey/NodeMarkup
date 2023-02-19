@@ -119,7 +119,7 @@ namespace IMT.Manager
             foreach (var contour in cutContours)
             {
                 var trajectories = contour.Select(e => e.trajectory).ToArray();
-                var datas = DecalData.GetData(this as IEffectStyle, Marking.Item.Crosswalk, lod, trajectories, StyleHelper.SplitParams.Default, color);
+                var datas = DecalData.GetData(Marking.Item.Crosswalk, lod, trajectories, StyleHelper.SplitParams.Default, color, DecalData.TextureData.Default, new DecalData.EffectData(this as IEffectStyle));
 
                 foreach (var data in datas)
                     addData(data);

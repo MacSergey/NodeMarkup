@@ -90,7 +90,7 @@ namespace IMT.Manager
                 foreach (var contour in contours)
                 {
                     var trajectories = contour.Select(c => c.trajectory).ToArray();
-                    foreach (var data in DecalData.GetData(this, Marking.Item.Filler, lod, trajectories, SplitParams, Color
+                    foreach (var data in DecalData.GetData(Marking.Item.Filler, lod, trajectories, SplitParams, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)
 #if DEBUG
                                 , Debug
 #endif

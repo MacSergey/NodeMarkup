@@ -226,7 +226,7 @@ namespace IMT.Manager
             var width = textureData.texture.width * ratio;
             var height = textureData.texture.height * ratio;
 
-            var data = new DecalData(this, MaterialType.Dash, lod, null, textureData.texture, position, angle, width, height, Color);
+            var data = new DecalData(MaterialType.Text, lod, position, angle, width, height, Color, new DecalData.TextureData(null, textureData.texture), new DecalData.EffectData(this));
             addData(data);
         }
 
