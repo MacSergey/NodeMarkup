@@ -398,11 +398,20 @@ namespace IMT.Manager
             {
                 for (int j = i + 1; j < contour.Count; j += 1)
                 {
-                    if ((j - 1 == i || j + 1 - contour.Count == i) && !contour[i].moved && !contour[j].moved)
+                    if (!contour[i].moved && !contour[j].moved)
                     {
-                        allInters[i].Add(new EdgeIntersection(i, j, contour[i].maxT, contour[j].minT));
-                        allInters[j].Add(new EdgeIntersection(j, i, contour[j].minT, contour[i].maxT));
-                        continue;
+                        if (i + 1 == j)
+                        {
+                            allInters[i].Add(new EdgeIntersection(i, j, contour[i].maxT, contour[j].minT));
+                            allInters[j].Add(new EdgeIntersection(j, i, contour[j].minT, contour[i].maxT));
+                            continue;
+                        }
+                        else if (i - 1 + contour.Count == j)
+                        {
+                            allInters[i].Add(new EdgeIntersection(i, j, contour[i].minT, contour[j].maxT));
+                            allInters[j].Add(new EdgeIntersection(j, i, contour[j].maxT, contour[i].minT));
+                            continue;
+                        }
                     }
 
                     var trajectoryI = contour[i].edge.trajectory;
@@ -837,7 +846,7 @@ namespace IMT.Manager
             secondT = intersection.secondT;
         }
         public EdgeIntersection(int firstI, int secondI, float firstT, float secondT)
-        {          
+        {
             this.firstI = firstI;
             this.secondI = secondI;
             this.firstT = firstT;
