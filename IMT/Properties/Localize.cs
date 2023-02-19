@@ -2739,5 +2739,10 @@ namespace IMT
 		/// [UPDATED] Improved resolution of rendering and shape of 2D fillers and crosswalks.
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_13 => LocaleManager.GetString("Mod_WhatsNewMessage1_13", Culture);
+
+		/// <summary>
+		/// [UPDATED] Improved solid filler rendering on slope.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_13_1 => LocaleManager.GetString("Mod_WhatsNewMessage1_13_1", Culture);
 	}
 }
