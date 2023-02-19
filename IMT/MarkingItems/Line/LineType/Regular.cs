@@ -246,6 +246,9 @@ namespace IMT.Manager
                 if (MarkingLineRawRule<RegularLineStyle>.FromXml(ruleConfig, this, map, invert, typeChanged, out MarkingLineRawRule<RegularLineStyle> rule))
                     AddRule(rule, false);
             }
+
+            if (invert)
+                RawAlignment.Value = RawAlignment.Value.Invert();
         }
     }
 }
