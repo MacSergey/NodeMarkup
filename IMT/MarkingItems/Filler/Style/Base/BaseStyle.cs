@@ -233,27 +233,27 @@ namespace IMT.Manager
             Chevron = StyleType.FillerChevron,
 
             [Description("Decal")]
-            [Order(1)]
+            [Order(4)]
             Decal = StyleType.FillerDecal,
 
             [Description(nameof(Localize.FillerStyle_Pavement))]
-            [Order(4)]
+            [Order(100)]
             Pavement = StyleType.FillerPavement,
 
             [Description(nameof(Localize.FillerStyle_Grass))]
-            [Order(5)]
+            [Order(101)]
             Grass = StyleType.FillerGrass,
 
             [Description(nameof(Localize.FillerStyle_Gravel))]
-            [Order(6)]
+            [Order(102)]
             Gravel = StyleType.FillerGravel,
 
             [Description(nameof(Localize.FillerStyle_Ruined))]
-            [Order(7)]
+            [Order(103)]
             Ruined = StyleType.FillerRuined,
 
             [Description(nameof(Localize.FillerStyle_Cliff))]
-            [Order(8)]
+            [Order(104)]
             Cliff = StyleType.FillerCliff,
 
             [Description(nameof(Localize.Style_FromClipboard))]
