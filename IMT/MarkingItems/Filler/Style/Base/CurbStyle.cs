@@ -58,10 +58,13 @@ namespace IMT.Manager
                 {
                     if (CurbSize > 0 || MedianCurbSize > 0)
                     {
-                        contourDatas[i].center = contourDatas[i].side.SetOffset(CurbSize, MedianCurbSize).FirstOrDefault();
-                        var lineCornerRadius = Mathf.Max(0f, CornerRadius - CurbSize);
-                        var medianCornerRadius = Mathf.Max(0f, MedianCornerRadius - MedianCurbSize);
-                        contourDatas[i].center = contourDatas[i].center.SetCornerRadius(lineCornerRadius, medianCornerRadius);
+                        var centerGroup = contourDatas[i].side.SetOffset(CurbSize, MedianCurbSize);
+                        if (centerGroup.Count > 0) {
+                            contourDatas[i].center = centerGroup[0];
+                            var lineCornerRadius = Mathf.Max(0f, CornerRadius - CurbSize);
+                            var medianCornerRadius = Mathf.Max(0f, MedianCornerRadius - MedianCurbSize);
+                            contourDatas[i].center = contourDatas[i].center.SetCornerRadius(lineCornerRadius, medianCornerRadius);
+                        }
                     }
                     contourDatas[i].side = contourDatas[i].side.SetCornerRadius(CornerRadius, MedianCornerRadius);
                 }

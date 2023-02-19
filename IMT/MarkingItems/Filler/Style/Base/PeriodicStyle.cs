@@ -16,6 +16,7 @@ namespace IMT.Manager
 {
     public abstract class PeriodicFillerStyle : FillerStyle, IPeriodicFiller
     {
+        protected abstract float DefaultStep { get; }
         public PropertyValue<float> Step { get; }
 #if DEBUG
         public PropertyBoolValue Debug { get; }
@@ -210,7 +211,7 @@ namespace IMT.Manager
                         foreach (var contour in cutContours)
                         {
                             var trajectories = contour.Select(e => e.trajectory).ToArray();
-                            var datas = DecalData.GetData(this as IEffectStyle, lod, trajectories, SplitParams, Color
+                            var datas = DecalData.GetData(this as IEffectStyle, Marking.Item.Filler, lod, trajectories, SplitParams, Color
 #if DEBUG
                                 , Debug
 #endif
@@ -282,7 +283,7 @@ namespace IMT.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
-            Step.FromXml(config, DefaultStepGrid);
+            Step.FromXml(config, DefaultStep);
         }
 
         protected readonly struct Part

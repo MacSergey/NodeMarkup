@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace IMT.Utilities
 {
@@ -59,13 +60,16 @@ namespace IMT.Utilities
 
             try
             {
-                SingletonMod<Mod>.Logger.Debug($"Start loading bundle for {Application.platform}");
+                SingletonMod<Mod>.Logger.Debug($"Start loading bundle for {Application.platform}:{SystemInfo.graphicsDeviceType}");
 
                 var file = Application.platform switch
                 {
-                    RuntimePlatform.WindowsPlayer => "imt-win",
-                    RuntimePlatform.OSXPlayer => "imt-macos",
-                    RuntimePlatform.LinuxPlayer => "imt-linux",
+                    RuntimePlatform.WindowsPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.Direct3D9 => "imt-win",
+                    RuntimePlatform.WindowsPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.Direct3D11 => "imt-win",
+                    RuntimePlatform.WindowsPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLCore => "imt-win",
+                    RuntimePlatform.OSXPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.Metal => "imt-macos",
+                    RuntimePlatform.OSXPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLCore => "imt-macos",
+                    RuntimePlatform.LinuxPlayer when SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLCore => "imt-linux",
                     _ => throw new PlatformNotSupportedException()
                 };
 
@@ -74,23 +78,33 @@ namespace IMT.Utilities
 
                 var materials = new Material[]
                 {
-                    Bundle.LoadAsset<Material>("AreaZero.mat"),
-                    Bundle.LoadAsset<Material>("AreaUpTo4.mat"),
-                    Bundle.LoadAsset<Material>("AreaUpTo8.mat"),
-                    Bundle.LoadAsset<Material>("AreaUpTo12.mat"),
-                    Bundle.LoadAsset<Material>("AreaUpTo16.mat"),
+                    Bundle.LoadAsset<Material>("FillerZero.mat"),
+                    Bundle.LoadAsset<Material>("FillerUpTo4.mat"),
+                    Bundle.LoadAsset<Material>("FillerUpTo8.mat"),
+                    Bundle.LoadAsset<Material>("FillerUpTo12.mat"),
+                    Bundle.LoadAsset<Material>("FillerUpTo16.mat"),
+                    Bundle.LoadAsset<Material>("CrosswalkZero.mat"),
+                    Bundle.LoadAsset<Material>("CrosswalkUpTo4.mat"),
+                    Bundle.LoadAsset<Material>("CrosswalkUpTo8.mat"),
+                    Bundle.LoadAsset<Material>("CrosswalkUpTo12.mat"),
+                    Bundle.LoadAsset<Material>("CrosswalkUpTo16.mat"),
                     Bundle.LoadAsset<Material>("Dash.mat"),
                     Bundle.LoadAsset<Material>("Triangle.mat"),
                 };
                 DecalMaterials = materials;
 
-                MaterialLib[MaterialType.AreaZero] = materials[0];
-                MaterialLib[MaterialType.AreaUpTo4] = materials[1];
-                MaterialLib[MaterialType.AreaUpTo8] = materials[2];
-                MaterialLib[MaterialType.AreaUpTo12] = materials[3];
-                MaterialLib[MaterialType.AreaUpTo16] = materials[4];
-                MaterialLib[MaterialType.Dash] = materials[5];
-                MaterialLib[MaterialType.Triangle] = materials[6];
+                MaterialLib[MaterialType.FillerZero] = materials[0];
+                MaterialLib[MaterialType.FillerUpTo4] = materials[1];
+                MaterialLib[MaterialType.FillerUpTo8] = materials[2];
+                MaterialLib[MaterialType.FillerUpTo12] = materials[3];
+                MaterialLib[MaterialType.FillerUpTo16] = materials[4];
+                MaterialLib[MaterialType.CrosswalkZero] = materials[5];
+                MaterialLib[MaterialType.CrosswalkUpTo4] = materials[6];
+                MaterialLib[MaterialType.CrosswalkUpTo8] = materials[7];
+                MaterialLib[MaterialType.CrosswalkUpTo12] = materials[8];
+                MaterialLib[MaterialType.CrosswalkUpTo16] = materials[9];
+                MaterialLib[MaterialType.Dash] = materials[10];
+                MaterialLib[MaterialType.Triangle] = materials[11];
 
                 DecalMesh = Bundle.LoadAsset<Mesh>("Cube.fbx");
                 DecalMesh.bounds = new Bounds(DecalMesh.bounds.center, Vector3.one * 100f);
@@ -122,7 +136,7 @@ namespace IMT.Utilities
             }
         }
 
-        public static Material CreateRoadMaterial(MaterialType type, Texture2D texture, Texture2D apr = null, int renderQueue = 2461)
+        public static Material CreateRoadMaterial(MaterialType type, Texture2D texture, Texture2D apr = null, int renderQueue = 2465)
         {
             var material = new Material(Shader.Find("Custom/Net/Road"))
             {
@@ -157,11 +171,16 @@ namespace IMT.Utilities
     {
         Dash,
         Triangle,
-        AreaZero,
-        AreaUpTo4,
-        AreaUpTo8,
-        AreaUpTo12,
-        AreaUpTo16,
+        FillerZero,
+        FillerUpTo4,
+        FillerUpTo8,
+        FillerUpTo12,
+        FillerUpTo16,
+        CrosswalkZero,
+        CrosswalkUpTo4,
+        CrosswalkUpTo8,
+        CrosswalkUpTo12,
+        CrosswalkUpTo16,
         Pavement,
         Grass,
         Gravel,

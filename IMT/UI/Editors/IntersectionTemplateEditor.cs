@@ -231,7 +231,7 @@ namespace IMT.UI.Editors
 
     public class IntersectionTemplateItem : EditItem<IntersectionTemplate, IntersectionTemplateIcon>
     {
-        private bool IsLinked => Editor.Marking.Type == MarkingType.Segment && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Marking.Id.GetSegment().Info.name, out var preset) && preset == Object.Id;
+        private bool IsLinked => Editor.Marking.Type == MarkingType.Segment && Editor.Marking.Id.GetSegment().Info is NetInfo info && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var preset) && preset == Object.Id;
 
         public override Color32 NormalColor => IsLinked ? new Color32(255, 197, 0, 255) : base.NormalColor;
         public override Color32 HoveredColor => IsLinked ? new Color32(255, 207, 51, 255) : base.HoveredColor;

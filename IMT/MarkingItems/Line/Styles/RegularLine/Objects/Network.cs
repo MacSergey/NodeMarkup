@@ -168,7 +168,7 @@ namespace IMT.Manager
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(Prefab.Value?.m_color);
-            colorProperty.Value = NetworkColor.Value ?? Prefab.Value.m_color;
+            colorProperty.Value = NetworkColor.Value ?? Prefab.Value?.m_color ?? new Color32(127, 127, 127, 255);
             colorProperty.OnValueChanged += (Color32 color) => NetworkColor.Value = color;
         }
         private void RefreshNetworkColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)

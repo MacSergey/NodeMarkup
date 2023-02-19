@@ -252,22 +252,6 @@ namespace IMT.Manager
             return true;
         }
 
-        public readonly struct PartT
-        {
-            public readonly float start;
-            public readonly float end;
-
-            public PartT(float start, float end)
-            {
-                this.start = start;
-                this.end = end;
-            }
-
-            public PartT Invert => new PartT(end, start);
-
-            public override string ToString() => $"{start}:{end}";
-        }
-
         public static Contour SetCornerRadius(this Contour originalEdges, float lineRadius, float medianRadius)
         {
             var edges = new Contour(originalEdges);
@@ -283,35 +267,19 @@ namespace IMT.Manager
 
             return edges;
         }
-        private static bool SetRadius(int i, Contour parts, float lineRadius, float medianRadius)
+        private static bool SetRadius(int i, Contour contour, float lineRadius, float medianRadius)
         {
-            var j = (i + 1) % parts.Count;
-            var radius = (parts[i].isEnter || parts[j].isEnter) ? medianRadius : lineRadius;
+            var j = (i + 1) % contour.Count;
+            var radius = (contour[i].isEnter || contour[j].isEnter) ? medianRadius : lineRadius;
             if (radius <= 0f)
                 return false;
 
-            var iTrajectories = new List<StraightTrajectory>();
-            var iParts = CalculateSolid(parts[i].trajectory, new SplitParams() {minAngle = 5f, minLength = 1f, maxLength = 40f, maxHeight = 10f });
-            foreach (var part in iParts)
-            {
-                var trajectory = new StraightTrajectory(parts[i].trajectory.Position(part.start), parts[i].trajectory.Position(part.end));
-                iTrajectories.Add(trajectory);
-            }
+            var iParts = CalculateSolid(contour[i].trajectory, new SplitParams() { minAngle = 3f, minLength = 0.3f, maxLength = 40f, maxHeight = 10f });
+            var jParts = CalculateSolid(contour[j].trajectory, new SplitParams() { minAngle = 3f, minLength = 0.3f, maxLength = 40f, maxHeight = 10f });
 
-            var jTrajectories = new List<StraightTrajectory>();
-            var jParts = CalculateSolid(parts[j].trajectory, new SplitParams() { minAngle = 5f, minLength = 1f, maxLength = 40f, maxHeight = 10f });
-            foreach (var part in jParts)
-            {
-                var trajectory = new StraightTrajectory(parts[j].trajectory.Position(part.start), parts[j].trajectory.Position(part.end));
-                jTrajectories.Add(trajectory);
-            }
-
-            var width = Math.Max(iTrajectories.Count, jTrajectories.Count);
+            var width = Math.Max(iParts.Count, jParts.Count);
             width = (width % 2 == 0 ? width : width + 1) / 2;
-            var sum = iTrajectories.Count + jTrajectories.Count - 1;
-            var center = Vector3.zero;
-            var firstDir = Vector3.zero;
-            var secondDir = Vector3.zero;
+            var sum = iParts.Count + jParts.Count - 1;
 
             for (var k = 0; k < width; k += 1)
             {
@@ -320,63 +288,92 @@ namespace IMT.Manager
                     var first = (l / 2) + k + (l % 2);
                     var second = (l / 2) - k;
 
-                    if (first < iTrajectories.Count && second < jTrajectories.Count)
+                    if (first < iParts.Count && second < jParts.Count)
                     {
-                        if (CheckRadius(iTrajectories[iTrajectories.Count - 1 - first], jTrajectories[second], radius, ref center, ref firstDir, ref secondDir))
-                        {
-                            AddRadius(i, j, parts, center, firstDir, secondDir);
+                        if (CheckRadius(i, j, contour, iParts[iParts.Count - 1 - first], jParts[second], radius))
                             return true;
-                        }
                     }
-                    if (first != second && first < jTrajectories.Count && second < iTrajectories.Count)
+
+                    if (first != second && first < jParts.Count && second < iParts.Count)
                     {
-                        if (CheckRadius(iTrajectories[iTrajectories.Count - 1 - second], jTrajectories[first], radius, ref center, ref firstDir, ref secondDir))
-                        {
-                            AddRadius(i, j, parts, center, firstDir, secondDir);
+                        if (CheckRadius(i, j, contour, iParts[iParts.Count - 1 - second], jParts[first], radius))
                             return true;
-                        }
                     }
                 }
             }
 
             return false;
         }
-        private static bool CheckRadius(StraightTrajectory first, StraightTrajectory second, float radius, ref Vector3 center, ref Vector3 firstDir, ref Vector3 secondDir)
+        private static bool CheckRadius(int i, int j, Contour parts, PartT firstPart, PartT secondPart, float radius)
         {
-            var angleA = Vector3.Angle(first.Direction.MakeFlat(), second.Direction.MakeFlat());
-            first = new StraightTrajectory(first.StartPosition.MakeFlat(), first.EndPosition.MakeFlat(), false);
-            second = new StraightTrajectory(second.StartPosition.MakeFlat(), second.EndPosition.MakeFlat(), false);
+            var firstStartPos = parts[i].trajectory.Position(firstPart.start).MakeFlat();
+            var firstEndPos = parts[i].trajectory.Position(firstPart.end).MakeFlat();
 
-            if (!Intersection.CalculateSingle(first, second, out var firstT, out var secondT))
+            var secondStartPos = parts[j].trajectory.Position(secondPart.start).MakeFlat();
+            var secondEndPos = parts[j].trajectory.Position(secondPart.end).MakeFlat();
+
+            var firstDir = (firstEndPos - firstStartPos).normalized;
+            var secondDir = (secondEndPos - secondStartPos).normalized;
+
+            var first = new StraightTrajectory(firstStartPos, firstStartPos + firstDir, false);
+            var second = new StraightTrajectory(secondStartPos, secondStartPos + secondDir, false);
+
+            if (!Intersection.CalculateSingle(first, second, out var firstInterT, out var secondInterT))
                 return false;
 
-            var position = (first.Position(firstT) + second.Position(secondT)) * 0.5f;
-            var direction = (first.Direction - second.Direction).normalized * (firstT < 0 ? 1f : -1f);
-            var distance = radius / Mathf.Cos(angleA * 0.5f * Mathf.Deg2Rad);
+            var angleA = Vector3.Angle(firstDir, -secondDir);
+            var tan = Mathf.Tan(angleA * 0.5f * Mathf.Deg2Rad);
+            var distance = radius / tan;
+            var delta = 0.2f / tan;
 
-            center = position + direction * distance;
-            firstDir = first.Direction.Turn90(true);
-            secondDir = second.Direction.Turn90(true);
+            var firstLen = (firstEndPos - firstStartPos).magnitude;
+            var secondLen = (secondEndPos - secondStartPos).magnitude;
 
-            var firstInter = Intersection.CalculateSingle(first, new StraightTrajectory(center, center + firstDir, false));
-            var secondInter = Intersection.CalculateSingle(second, new StraightTrajectory(center, center + secondDir, false));
-            return firstInter.isIntersect && CorrectT(firstInter.firstT, first.Length) && secondInter.isIntersect && CorrectT(secondInter.firstT, second.Length);
+            var firstStartDist = firstInterT;
+            var firstEndDist = firstStartDist - firstLen;
 
-            static bool CorrectT(float t, float length) => -0.05f / length < t && t < 1f + 0.05f / length;
+            var secondStartDist = -secondInterT;
+            var secondEndDist = secondStartDist + secondLen;
+
+            var firstStartDelta = (firstStartDist + delta) - distance;
+            var firstEndDelta = distance - (firstEndDist - delta);
+            var secondStartDelta = distance - (secondStartDist - delta);
+            var secondEndDelta = (secondEndDist + delta) - distance;
+
+            if (firstStartDelta < 0 || firstEndDelta < 0 || secondStartDelta < 0 || secondEndDelta < 0)
+                return false;
+
+            var firstT = Mathf.Lerp(firstPart.start, firstPart.end, (firstStartDist - distance) / firstLen);
+            var secondT = Mathf.Lerp(secondPart.start, secondPart.end, (distance - secondStartDist) / secondLen);
+
+            var startPos = parts[i].trajectory.Position(firstT);
+            var startDir = parts[i].trajectory.Tangent(firstT);
+            var endPos = parts[j].trajectory.Position(secondT);
+            var endDir = -parts[j].trajectory.Tangent(secondT);
+
+            parts[i] = new ContourEdge(parts[i].trajectory.Cut(0f, firstT), parts[i].isEnter);
+            parts[j] = new ContourEdge(parts[j].trajectory.Cut(secondT, 1f), parts[j].isEnter);
+
+            parts.Insert(j, new ContourEdge(new BezierTrajectory(startPos, startDir, endPos, endDir)));
+
+            return true;
         }
-        private static void AddRadius(int i, int j, Contour parts, Vector3 center, Vector3 firstDir, Vector3 secondDir)
+
+
+        public readonly struct PartT
         {
-            var firstInter = Intersection.CalculateSingle(parts[i].trajectory, new StraightTrajectory(center, center + firstDir, false), out var firstT, out _);
-            var secondInter = Intersection.CalculateSingle(new StraightTrajectory(center, center + secondDir, false), parts[j].trajectory, out _, out var secondT);
-            if (firstInter && secondInter)
+            public readonly float start;
+            public readonly float end;
+
+            public PartT(float start, float end)
             {
-                parts[i] = new ContourEdge(parts[i].trajectory.Cut(0f, firstT), parts[i].isEnter);
-                parts[j] = new ContourEdge(parts[j].trajectory.Cut(secondT, 1f), parts[j].isEnter);
-
-                var corner = new BezierTrajectory(parts[i].trajectory.EndPosition, -parts[i].trajectory.EndDirection, parts[j].trajectory.StartPosition, -parts[j].trajectory.StartDirection);
-
-                parts.Insert(j, new ContourEdge(corner));
+                this.start = start;
+                this.end = end;
             }
+
+            public PartT Invert => new PartT(end, start);
+
+            public override string ToString() => $"{start}:{end}";
         }
     }
 

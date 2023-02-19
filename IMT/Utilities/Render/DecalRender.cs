@@ -90,7 +90,7 @@ namespace IMT.Utilities
             this = new DecalData(materialType, lod, null, null, pos, angle, color, new Vector3(length, DefaultHeight, width), Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity);
         }
 
-        public DecalData(MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
+        public DecalData(Marking.Item itemType, MarkingLOD lod, Vector3[] points, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
         {
             var min = points[0];
             var max = points[0];
@@ -103,7 +103,7 @@ namespace IMT.Utilities
 
             var position = (min + max) * 0.5f;
             var size = (max - min);
-            size.y = Mathf.Max(size.y * 2f, DefaultHeight);
+            size.y = Mathf.Max(size.y * 2f, 1f);
 
             var pointUVs = new Vector2[points.Length];
             for (var i = 0; i < pointUVs.Length; i += 1)
@@ -113,17 +113,23 @@ namespace IMT.Utilities
                 var y = (pos.z - min.z) / size.z;
                 pointUVs[i] = new Vector2(x, y);
             }
-            var materialType = GetAreaMaterial(points.Length);
+
+            var materialType = itemType switch
+            {
+                Marking.Item.Filler => GetFillerMaterial(points.Length),
+                Marking.Item.Crosswalk => GetCrosswalkMaterial(points.Length),
+                _ => MaterialType.Dash,
+            };
 
             this = new DecalData(materialType, lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
-        public DecalData(MarkingLOD lod, Area area, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
+        public DecalData(Marking.Item itemType, MarkingLOD lod, Area area, Color32 color, Vector2 tiling, float cracksDensity, Vector2 cracksTiling, float voidDensity, Vector2 voidTiling, float texture)
         {
             var min = area.Min;
             var max = area.Max;
             var position = (min + max) * 0.5f;
             var size = (max - min);
-            size.y = Mathf.Min(size.y * 2f, DefaultHeight);
+            size.y = Mathf.Max(size.y * 2f, 1f);
 
             var pointUVs = new Vector2[area.Count];
             for (var i = 0; i < pointUVs.Length; i += 1)
@@ -133,7 +139,13 @@ namespace IMT.Utilities
                 var y = (pos.z - min.z) / size.z;
                 pointUVs[i] = new Vector2(x, y);
             }
-            var materialType = GetAreaMaterial(area.Count);
+
+            var materialType = itemType switch
+            {
+                Marking.Item.Filler => GetFillerMaterial(area.Count),
+                Marking.Item.Crosswalk => GetCrosswalkMaterial(area.Count),
+                _ => MaterialType.Dash,
+            };
 
             this = new DecalData(materialType, lod, null, null, position, 0f, color, size, tiling, cracksDensity, cracksTiling, voidDensity, voidTiling, texture, pointUVs);
         }
@@ -141,22 +153,36 @@ namespace IMT.Utilities
         public void OnDestroy() { }
         public IEnumerable<IDrawData> GetDrawData() { yield return this; }
 
-        public static MaterialType GetAreaMaterial(int points)
+        public static MaterialType GetFillerMaterial(int points)
         {
             if (points == 0)
-                return MaterialType.AreaZero;
+                return MaterialType.FillerZero;
             else if (points <= 4)
-                return MaterialType.AreaUpTo4;
+                return MaterialType.FillerUpTo4;
             else if (points <= 8)
-                return MaterialType.AreaUpTo8;
+                return MaterialType.FillerUpTo8;
             else if (points <= 12)
-                return MaterialType.AreaUpTo12;
+                return MaterialType.FillerUpTo12;
             else
-                return MaterialType.AreaUpTo16;
+                return MaterialType.FillerUpTo16;
         }
-        public static List<DecalData> GetData(IEffectStyle effectStyle, MarkingLOD lod, ITrajectory[] trajectories, StyleHelper.SplitParams splitParams, Color32 color,
+        public static MaterialType GetCrosswalkMaterial(int points)
+        {
+            if (points == 0)
+                return MaterialType.CrosswalkZero;
+            else if (points <= 4)
+                return MaterialType.CrosswalkUpTo4;
+            else if (points <= 8)
+                return MaterialType.CrosswalkUpTo8;
+            else if (points <= 12)
+                return MaterialType.CrosswalkUpTo12;
+            else
+                return MaterialType.CrosswalkUpTo16;
+        }
+
+        public static List<DecalData> GetData(IEffectStyle effectStyle, Marking.Item itemType, MarkingLOD lod, ITrajectory[] trajectories, StyleHelper.SplitParams splitParams, Color32 color
 #if DEBUG
-            bool debug = false
+            , bool debug = false
 #endif
             )
         {
@@ -177,9 +203,9 @@ namespace IMT.Utilities
                 if (points.Length <= 16)
                 {
                     if (effectStyle != null)
-                        result.Add(new DecalData(lod, points, color, Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity));
+                        result.Add(new DecalData(itemType, lod, points, color, Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity));
                     else
-                        result.Add(new DecalData(lod, points, color, Vector3.one, 0f, Vector3.one, 0f, Vector3.one, 0f));
+                        result.Add(new DecalData(itemType, lod, points, color, Vector3.one, 0f, Vector3.one, 0f, Vector3.one, 0f));
                 }
                 else
                 {
@@ -198,9 +224,9 @@ namespace IMT.Utilities
                         }
 #endif
                         if (effectStyle != null)
-                            result.Add(new DecalData(lod, area, color, Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity));
+                            result.Add(new DecalData(itemType, lod, area, color, Vector3.one, effectStyle.CracksDensity, effectStyle.CracksTiling, effectStyle.VoidDensity, effectStyle.VoidTiling, effectStyle.TextureDensity));
                         else
-                            result.Add(new DecalData(lod, area, color, Vector3.one, 0f, Vector3.one, 0f, Vector3.one, 0f));
+                            result.Add(new DecalData(itemType, lod, area, color, Vector3.one, 0f, Vector3.one, 0f, Vector3.one, 0f));
                     }
                 }
             }

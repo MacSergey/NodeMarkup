@@ -59,25 +59,25 @@ namespace IMT.UI.Editors
             var position = ComponentPool.Get<FloatPropertyPanel>(DebugPanel, "Position");
             position.Text = "Position";
             position.Format = IMT.Localize.NumberFormat_Meter;
-            position.isEnabled = false;
+            position.EnableControl = false;
             position.Init();
             position.Value = point.GetRelativePosition();
 
             var isInverted = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "isInverted");
             isInverted.Text = "Is inverted";
-            isInverted.isEnabled = false;
+            isInverted.EnableControl = false;
             isInverted.Init();
             isInverted.Value = point.Enter.IsLaneInvert.ToString();
 
             var location = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Location");
             location.Text = "Location";
-            location.isEnabled = false;
+            location.EnableControl = false;
             location.Init();
             location.Value = point.Source.Location.ToString();
 
             var networkType = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "NetworkType");
             networkType.Text = "Network type";
-            networkType.isEnabled = false;
+            networkType.EnableControl = false;
             networkType.Init();
             networkType.Value = point.Source.NetworkType.ToString();
 
@@ -87,25 +87,25 @@ namespace IMT.UI.Editors
                 {
                     var index = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Index");
                     index.Text = "Left Index";
-                    index.isEnabled = false;
+                    index.EnableControl = false;
                     index.Init();
                     index.Value = source.LeftLane.Index.ToString();
 
                     var id = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Id");
                     id.Text = "Left Id";
-                    id.isEnabled = false;
+                    id.EnableControl = false;
                     id.Init();
                     id.Value = source.LeftLane.LaneId.ToString();
 
                     var pos = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Position");
                     pos.Text = "Left position";
-                    pos.isEnabled = false;
+                    pos.EnableControl = false;
                     pos.Init();
                     pos.Value = source.LeftLane.Position.ToString();
 
                     var width = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Width");
                     width.Text = "Left half width";
-                    width.isEnabled = false;
+                    width.EnableControl = false;
                     width.Init();
                     width.Value = source.LeftLane.HalfWidth.ToString();
                 }
@@ -114,25 +114,25 @@ namespace IMT.UI.Editors
                 {
                     var index = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Index");
                     index.Text = "Right Index";
-                    index.isEnabled = false;
+                    index.EnableControl = false;
                     index.Init();
                     index.Value = source.RightLane.Index.ToString();
 
                     var id = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Id");
                     id.Text = "Right Id";
-                    id.isEnabled = false;
+                    id.EnableControl = false;
                     id.Init();
                     id.Value = source.RightLane.LaneId.ToString();
 
                     var pos = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Position");
                     pos.Text = "Right position";
-                    pos.isEnabled = false;
+                    pos.EnableControl = false;
                     pos.Init();
                     pos.Value = source.RightLane.Position.ToString();
 
                     var width = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Width");
                     width.Text = "Right half width";
-                    width.isEnabled = false;
+                    width.EnableControl = false;
                     width.Init();
                     width.Value = source.RightLane.HalfWidth.ToString();
                 }

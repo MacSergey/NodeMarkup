@@ -16,11 +16,11 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.13.0.607</AssemblyVersion>
+    <AssemblyVersion>1.13.0.732</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
-    <AssemblyVersion>1.13.0.1</AssemblyVersion>
+    <AssemblyVersion>1.13.0.3</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
@@ -365,6 +365,9 @@
 
   <ItemGroup>
     <PackageReference Include="CitiesHarmony.API" Version="2.1.0" />
+    <PackageReference Include="Mono.Unofficial.pdb2mdb" Version="4.2.3.4">
+      <Aliases>PkgMono_Unofficial_pdb2mdb</Aliases>
+    </PackageReference>
     <PackageReference Include="MoveItIntegration" Version="1.0.0" />
     <PackageReference Include="UnifiedUILib" Version="2.2.12" />
     <ProjectReference Include="..\IMT.API\IntersectionMarkingTool.API.csproj" />
@@ -460,6 +463,7 @@
     <ItemGroup>
       <FilesToDelete Include="$(OutDir)*.pdb" />
     </ItemGroup>
+    <!--<Exec Command="&quot;$(PkgMono_Unofficial_pdb2mdb)\tools\pdb2mdb.exe&quot; &quot;$(TargetPath)&quot;" />-->
     <Delete Files="@(FilesToDelete)" />
 
 	  <ItemGroup>
