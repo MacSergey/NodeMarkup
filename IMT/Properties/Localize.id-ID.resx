@@ -1031,12 +1031,6 @@ Pemuatan markah untuk semua persimpangan gagal.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Edit markah ruas #{0}</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Rumput</value>
-  </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Trotoar</value>
-  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Ketinggian</value>
   </data>
@@ -1133,15 +1127,6 @@ Klik untuk mengedit markah</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Klik dengan menahan {0} untuk memilih garis</value>
-  </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Kerikil</value>
-  </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Jurang</value>
-  </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Rusak</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Radius sudut</value>

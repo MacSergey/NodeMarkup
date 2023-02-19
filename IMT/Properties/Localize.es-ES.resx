@@ -1025,11 +1025,11 @@ Los preajustes restaurados reemplazarán todos los preajustes existentes.</value
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Editar las marcas del segmento #{0}</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Césped</value>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>Isla de césped</value>
   </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Acera</value>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>Isla de acera</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Elevación</value>
@@ -1128,14 +1128,14 @@ Haga clic para editar las marcas</value>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Clic con la tecla {0} para seleccionar la línea</value>
   </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Grava</value>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>Isla de grava</value>
   </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Acantilado</value>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>Isla de acantilado</value>
   </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Arruinada</value>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>Isla de arruinado</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Radio de esquina</value>
@@ -1766,6 +1766,96 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
     <value>Dos diferentes</value>
   </data>
   <data name="Header_ExpandTooltip" xml:space="preserve">
-    <value>Mantenga presionado {0} para colapsar/expandir todas las reglas</value>
+    <value>Mantener presionada la tecla {0} para colapsar/expandir todas las reglas</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
+    <value>[UPDATED] Mejorada la resolución de renderizado y figura de rellenos 2D y pasos de peatones.
+[NEW] Agregados efectos de grietas y vacios a todas las líneas 2D, rellenos 2D y paso de peatones.
+[NEW] Agregada textura de material a las marcas así no lucen tan planas.
+[FIXED] Corregido el calculo del desplazamiento de rellenos.
+[NEW] Agregada la capacidad de aplicar un pre ajuste a todos los segmentos de elementos de red.
+[NEW] Agregada la capacidad de colapsar las reglas de líneas. El auto colapso puede ser habilitado en las configuración del mod.
+[NEW] Agregada la propiedad de categorías. Pueden ser colapsadas.
+[NEW] Agregada la opción de copiar/pegar propiedad de color.
+[NEW] Agregada la capacidad de establecer valor hexadecimal del color.
+[NEW] Agregada la capacidad de establecer un estilo a todas las reglas de líneas.
+[NEW] Agregada la capacidad de establecer un estilo a todas las reglas en un nodo/segmento con el mismo estilo.
+[NEW] Agregada la capacidad de establecer un estilo a todas las reglas en un nodo/segmento.
+[NEW] Agregada la capacidad de aplicar una plantilla a todas las líneas/pasos de peatones/rellenos en nodos/segmentos.
+[NEW] Agregada la capacidad de restablecer la configuración de estilo a valores predeterminados.
+[NEW] Agregada la capacidad de seleccionar que final del estilo de adorno/árbol esta fijo. (Ambos/solo el inicio/solo el final).
+[NEW] Agregada la capacidad de establecer distinto paso en cada final de red.
+[NEW] Agregada cantidad mínima y máxima de adornos/árboles.
+[NEW] Agregada la capacidad de hacer finales inclinados de las cebras.
+[NEW] Agregada la capacidad de establecer desplazamiento del texto.
+[NEW] Agregada la capacidad de establecer color de la red. (Puede que solo afecte algunas redes).
+[NEW] El cursor se establece al campo de búsqueda cuando el selector de adornos/árboles/redes es abierto.
+[UPDATED] El tiempo de espera entre el desplazamiento del panel y el cambio de valor con la rueda se incrementa a 3 segundos para evitar cambiar el valor de la propiedad de forma accidental.
+[UPDATED] Cambiada la prioridad de aplicar las marcas predeterminadas:
+---1. Pre ajuste vinculado.
+---2. Guardado en datos de elemento.
+---3. Datos desde el segmento que fue reemplazado.
+[FIXED] El campo de búsqueda de adornos/árboles/redes pierde el foco cuando el panel de herramientas es cerrado así no bloques el control de cámara si la herramienta es cerrada mientras busca.
+[NEW] Agregada la búsqueda de fuentes.
+[FIXED] Remoción apropiada de texturas y mallas no usadas para reducir el uso de memoria y prevenir fugas de memoria.
+[NEW] Agregada API. Otros mods pueden comunicarse con IMC. Disponible como paquete Nuget www.nuget.org/packages/IMT.API.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13_1" xml:space="preserve">
+    <value>[UPDATED] Mejorada la renderizacion de rellenos sólidos en pendientes.
+[UPDATED] Mejorado el calculo de desplazamiento de los rellenos 3D.
+[FIXED] Alineación de marcas de dientes de tiburón.
+[FIXED] Redes de líneas no visibles. 
+[FIXED] Error que no permite guardar datos de intersección si un relleno de grilla es usado.
+[FIXED] Cambiado el orden en que las líneas y los pasos de peatones son renderizado: se muestran sobre los otros decals.
+[FIXED] Valor de densidad de textura no era guardado.
+[FIXED] Relleno es invisible con cierto valor de tamaño y radio de bordillo.
+[FIXED] Marcado no es visible si OpenGL es usado para renderizar.
+[FIXED] Intersección de líneas no detectada en ciertos caso. 
+[FIXED] Alineación incorrecta de líneas que comienza en un punto dividido después de copiar/pegar desde otra intersección.</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>Decal</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>Decal</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>Invertir todos los chevrones</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>Otros</value>
+  </data>
+  <data name="StyleOption_AssetMissed" xml:space="preserve">
+    <value>Seleccione el elemento faltante: "{0}"</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>Decal</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>Mantener proporciones</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>Proporciones personalizadas</value>
+  </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>Seleccione el tema faltante: "{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>Tema del mapa</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>Agregar a favoritos</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>Eliminar de favoritos</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>Asfalto</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>Isla de textura personalizada</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>Tema de mapa predeterminado</value>
   </data>
 </root>

@@ -1027,12 +1027,6 @@ Nie udało się załadować oznaczeń dla wszystkich skrzyżowań.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Modyfikuj oznaczenia segmentu #{0}</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Trawa</value>
-  </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Chodnik</value>
-  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Wysokość</value>
   </data>
@@ -1129,15 +1123,6 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Przytrzymaj {0} i naciśnij, aby wybrać linię</value>
-  </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Żwir</value>
-  </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Klif</value>
-  </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Zrujnowany</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Zaokrąglenie rogów</value>

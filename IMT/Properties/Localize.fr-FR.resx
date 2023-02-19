@@ -1119,12 +1119,6 @@ Le marquage de toutes les intersections n'a pas pu être chargé.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Modifier le marquage du segment n°{0}</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Herbe</value>
-  </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Béton</value>
-  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Hauteur</value>
   </data>
@@ -1276,15 +1270,6 @@ Cliquez pour modifier le marquage</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Cliquez sur {0} pour sélectionner la ligne</value>
-  </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Gravier</value>
-  </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Falaise</value>
-  </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Détérioré</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Rayon du coin</value>
@@ -1989,5 +1974,42 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
 [NEW] Ajout de la recherche de polices de caractères.
 [FIXED] Suppression des textures et maillages inutilisés afin de réduire l'utilisation de la mémoire et d'éviter les fuites de mémoire.
 [NEW] Ajout d'une API. D'autres mods peuvent communiquer avec IMT. Disponible sous forme de paquet Nuget www.nuget.org/packages/IMT.API.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13_1" xml:space="preserve">
+    <value>[UPDATED] Amélioration du rendu des remplisseurs pleins sur les pentes.
+[UPDATED] Amélioration du calcul du décalage des remplisseurs 3D.
+[FIXED] Le marquage en dent de scie est mal aligné.
+[FIXED] Les options de ligne des réseaux ne sont pas visibles.
+[FIXED] Erreur qui ne permet pas de sauvegarder les données d'intersection si le remplissage en grille est utilisé.
+[FIXED] Modification de l'ordre de rendu des lignes et des passages piétons : ils se dessinent par-dessus d'autres décalques.
+[FIXED] La valeur de la densité de la texture n'est pas enregistrée.
+[FIXED] Le remplissage est invisible avec certaines valeurs de taille et de rayon de bordure.
+[FIXED] Le marquage n'est pas visible si OpenGL est utilisé pour le rendu.
+[FIXED] Les intersections de lignes ne sont pas détectées dans certains cas.
+[FIXED] Mauvais alignement des lignes qui commencent à partir d'un point de séparation après un copier/coller du marquage d'une intersection à une autre.</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>Décalque</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>Décalque</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>Inverser tous les chevrons</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>Autres</value>
+  </data>
+  <data name="StyleOption_AssetMissed" xml:space="preserve">
+    <value>Ressource sélectionnée manquante : "{0}"</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>Décalque</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>Garder les proportions</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>Proportions personnalisées</value>
   </data>
 </root>

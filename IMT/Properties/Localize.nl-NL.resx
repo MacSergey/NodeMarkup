@@ -1024,12 +1024,6 @@ Het laden van de markeringen is voor alle kruispunten mislukt.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Bewerk segment #{0} markering</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Gras</value>
-  </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Bestrating</value>
-  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Hoogte</value>
   </data>
@@ -1126,15 +1120,6 @@ Klik om de markering te wijzigen</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Klik met {0} om een lijn te selecteren</value>
-  </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Grind</value>
-  </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Klif</value>
-  </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Geruïneerd</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Hoekstraal</value>
@@ -1796,5 +1781,20 @@ Het kan even duren als er veel segmenten zijn.</value>
 [NEW] Zoeken op lettertype toegevoegd.
 [FIXED] Verwijdert correct ongebruikte texturen en meshes om geheugengebruik te verminderen en geheugenlekken te voorkomen.
 [NEW] API toegevoegd. Andere mods kunnen communiceren met IMT. Beschikbaar als Nuget pakket op www.nuget.org/packages/IMT.API.</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>Alle visgraten omkren</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>Overig</value>
+  </data>
+  <data name="StyleOption_AssetMissed" xml:space="preserve">
+    <value>Geselecteerd item ontbreekt: "{0}"</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>Verhoudingen behouden</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>Aangepaste verhoudingen</value>
   </data>
 </root>

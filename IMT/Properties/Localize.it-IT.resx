@@ -1115,11 +1115,11 @@ Impossibile caricare la segnaletica orizzontale delle intersezioni.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Modifica segnaletica orizzontale del segmento #{0}</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Erba</value>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>Isola d'erba</value>
   </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Pavimentazione</value>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>Isola pavimentata</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Altezza</value>
@@ -1273,14 +1273,14 @@ Seleziona per modificare la segnaletica orizzontale</value>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Click+{0} per selezionare la linea</value>
   </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Ghiaia</value>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>Isola di ghiaia</value>
   </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Scogliera</value>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>Isola di scogliera</value>
   </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Rovine</value>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>Isola in rovina</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Raggio dell'angolo</value>
@@ -1985,5 +1985,63 @@ Può volerci del tempo se ci sono molti segmenti.</value>
 [NEW] Aggiunta la ricerca dei caratteri.
 [FIXED] Rimozione corretta di texture e mesh inutilizzate per ridurre l'utilizzo della memoria e prevenire perdite di memoria.
 [NEW] API aggiunta. Altre mod possono comunicare con IMT. Disponibile come pacchetto Nuget www.nuget.org/packages/IMT.API.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13_1" xml:space="preserve">
+    <value>[UPDATED] Migliore resa del riempitivo solido in pendenza.
+[UPDATED] Calcolo dello spostamento del riempitivo 3D migliorato.
+[FIXED] La marcatura a denti di squalo ha un allineamento errato.
+[FIXED] Le opzioni della linea di rete non sono visibili.
+[FIXED] Errore che non consente di salvare i dati di intersezione se si utilizza il riempimento griglia.
+[FIXED] Ordine di rendering delle linee e delle strisce pedonali modificate: si sovrappongono ad altre decalcomanie.
+[FIXED] Il valore della densità della trama non viene salvato.
+[FIXED] Il riempitivo è invisibile con determinati valori di dimensione e raggio del cordolo.
+[FIXED] Il contrassegno non è visibile se si utilizza OpenGL per il rendering.
+[FIXED] In alcuni casi le intersezioni delle linee non vengono rilevate.
+[FIXED] Allineamento errato della linea che inizia dal punto di divisione dopo aver copiato/incollato la marcatura da un'intersezione all'altra.</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>Decalcomania</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>Risorsa Decalcomania</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>Inverti tutte le "caporali"</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>Altri</value>
+  </data>
+  <data name="StyleOption_AssetMissed" xml:space="preserve">
+    <value>Risorsa selezionata mancante: "{0}"</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>Decalcomania</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>Mantieni le proporzioni</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>Proporzioni personalizzate</value>
+  </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>Tema selezionato mancante: "{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>Temi Mappa</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>Aggiungi ai preferiti</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>Rimuovi dai preferiti</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>Asfalto</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>Isola texture personalizzata</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>Tema predefinito</value>
   </data>
 </root>

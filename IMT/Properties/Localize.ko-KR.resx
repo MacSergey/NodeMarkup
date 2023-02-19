@@ -1023,11 +1023,11 @@
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>세그먼트 #{0}의 마킹 수정</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>잔디</value>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>잔디 교통섬</value>
   </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>인도 포장</value>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>인도 포장 교통섬</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>고도</value>
@@ -1126,14 +1126,14 @@
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>{0}을 누른 채 클릭해 선을 선택하세요</value>
   </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>자갈</value>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>자갈 교통섬</value>
   </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>절벽</value>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>절벽 교통섬</value>
   </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>폐허 잔디</value>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>황폐화된 교통섬</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>모서리 반경</value>
@@ -1800,5 +1800,63 @@
 [NEW] 글꼴 검색 기능을 추가했습니다.
 [FIXED] 사용하지 않는 텍스처나 메시를 정확히 제거하여 메모리 사용량을 줄이고 메모리 누수 현상을 방지했습니다.
 [NEW] API를 추가했습니다. 다른 모드에서 IMT 모드와 상호작용할 수 있습니다. www.nuget.org/packages/IMT.API Nuget 패키지로 이용할 수 있습니다.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13_1" xml:space="preserve">
+    <value>[UPDATED] 경사면 실선 필러 렌더링을 개선했습니다.
+[UPDATED] 3D 필러 오프셋 연산을 개선했습니다.
+[FIXED] 삼각형 마킹의 정렬이 이상한 현상을 수정했습니다.
+[FIXED] 네트워크 선 설정을 볼 수 없는 현상을 수정했습니다.
+[FIXED] 격자 필러를 이용할 때 교차로 데이터를 저장할 수 없던 것을 수정했습니다.
+[FIXED] 선과 횡단보도의 렌더링 순서를 변경했습니다. 이제 다른 데칼보다 위에 그려집니다.
+[FIXED] 텍스처 밀도 값을 저장할 수 없던 것을 수정했습니다.
+[FIXED] 특정 연석 크기와 반경 값을 가질 때 필러가 보이지 않는 현상을 수정했습니다.
+[FIXED] OpenGL을 통해 렌더링하느 경우 마킹이 보이지 않는 현상을 수정했습니다.
+[FIXED] 선의 교차점이 감지되지 않는 경우를 수정했습니다.
+[FIXED] 마킹을 한 교차로에서 다른 교차로로 복사/붙여넣기한 뒤, 갈라지는 지점에서 나오는 선이 잘못 정렬되는 현상을 수정했습니다.</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>데칼</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>데칼 에셋</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>V자 모두 반전</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>기타</value>
+  </data>
+  <data name="StyleOption_AssetMissed" xml:space="preserve">
+    <value>선택한 에셋 누락: "{0}"</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>데칼</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>비율 유지</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>비율 사용자 지정</value>
+  </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>선택한 테마 누락: "{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>맵 테마</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>즐겨찾기에 추가</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>즐겨찾기에서 제거</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>아스팔트</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>사용자 지정 텍스처 교통섬</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>기본 맵 테마</value>
   </data>
 </root>

@@ -1119,11 +1119,11 @@
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>#{0} のセグメントを編集中</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>芝生(3Dスタイル)</value>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>芝生の分離帯</value>
   </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>舗装(3Dスタイル)</value>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>舗装の分離帯</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>高さ・厚み</value>
@@ -1277,14 +1277,14 @@
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>{0} + クリックで、ラインを選択</value>
   </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>砂利(3Dスタイル)</value>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>砂利の分離帯</value>
   </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>崖(3Dスタイル)</value>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>崖の分離帯</value>
   </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>荒れ地(3Dスタイル)</value>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>荒れ地の分離帯</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>角丸の半径(ライン側)</value>
@@ -1990,5 +1990,63 @@
 [NEW] Added Font search.
 [FIXED] Properly removing unused texture and meshes to reduce memory usage and prevent memory leaks.
 [NEW] Added API. Other mods can communicate with IMT. Available as Nuget package www.nuget.org/packages/IMT.API.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13_1" xml:space="preserve">
+    <value>[UPDATED] Improved solid filler rendering on slope.
+[UPDATED] Improved 3D filler offset calculation.
+[FIXED] Shark teeth marking has wrong alignment.
+[FIXED] Network line options are not visible.
+[FIXED] Error that does not allow to save intersection data if grid filler is used.
+[FIXED] Changed lines and crosswalks render order: they draw on top of other decals.
+[FIXED] Texture density value does not save.
+[FIXED] Filler is invisible with certain curb size and radius values.
+[FIXED] Marking is not visible if OpenGL is used for rendering.
+[FIXED] Line intersections are not detected in certain cases.
+[FIXED] Wrong aligment of line that is started from split point after copy/paste marking from one intersection to another.</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>デカール</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>デカールのProp</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>全てのV字型を反転</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="StyleOption_AssetMissed" xml:space="preserve">
+    <value>選択したアセットが無い: "{0}"</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>デカール</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>比率を維持</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>任意の比率</value>
+  </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>選択したテーマが無い: "{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>マップテーマ</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>お気に入りに追加</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>お気に入りから削除</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>アスファルト</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>カスタムテクスチャの分離帯</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>デフォルトのマップテーマ</value>
   </data>
 </root>

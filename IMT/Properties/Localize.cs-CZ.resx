@@ -1021,12 +1021,6 @@ Nepodařilo se načíst značení pro všechny křižovatky.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Upravit značení silnice #{0}</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Tráva</value>
-  </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Chodník</value>
-  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Vyvýšení</value>
   </data>
@@ -1134,15 +1128,6 @@ Klikněte pro změnu značení</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Klikněte s {0} pro výběr čáry</value>
-  </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Štěrk</value>
-  </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Útes</value>
-  </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Rozbořený</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Poloměr rohu</value>

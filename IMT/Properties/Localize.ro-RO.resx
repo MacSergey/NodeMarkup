@@ -1023,12 +1023,6 @@ Sigur doriți să aveți mai multe preseturi cu același nume?</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Editare marcaje la segmentul #{0}</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Iarbă</value>
-  </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Trotuar</value>
-  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Înălțime</value>
   </data>
@@ -1125,15 +1119,6 @@ Apăsați pentru a modifica marcajele</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Apăsați cu {0} pentru a alege linia</value>
-  </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Pietriş</value>
-  </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Râpa</value>
-  </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Ruinat</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Raza colțurilor</value>

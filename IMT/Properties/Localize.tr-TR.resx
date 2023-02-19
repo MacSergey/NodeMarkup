@@ -859,6 +859,12 @@ Yeni ön ayar oluşturmak için panel başlığında {0} tuşunu kullanın.</val
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Yeni ön ayar</value>
   </data>
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
+    <value>Ön ayar modunu uygulamadan çık</value>
+  </data>
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
+    <value>Bir ön ayar uygulamak istiyor musunuz?</value>
+  </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Tasarımcı</value>
   </data>
@@ -1015,12 +1021,6 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>#{0} sektörünün işaretlerini değiştir</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Çimen</value>
-  </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Kaldırım</value>
-  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Yükseklik</value>
   </data>
@@ -1117,15 +1117,6 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Şeritleri seçmek için {0} tuşuyla beraber tıklayın</value>
-  </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Çakıl</value>
-  </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Uçurum</value>
-  </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Harabe olmuş</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Köşe yarıçapı</value>
@@ -1280,6 +1271,9 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="StyleOption_AssetNotSet" xml:space="preserve">
     <value>Ayarlanmamış</value>
   </data>
+  <data name="StyleOption_AssetProp" xml:space="preserve">
+    <value>Dekor varlığı</value>
+  </data>
   <data name="StyleOption_AssetTree" xml:space="preserve">
     <value>Ağaç varlığı</value>
   </data>
@@ -1386,6 +1380,9 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   </data>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Daha fazla seçenek</value>
+  </data>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Satır kuralı panellerini daralt</value>
   </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Ana renk</value>
@@ -1504,16 +1501,310 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="Tool_InfoSelectLane" xml:space="preserve">
     <value>Şeritleri seçmek için {0} tuşuyla beraber tıklayın</value>
   </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>Şerit kenar çizgilerini otomatik olarak oluştur</value>
+  </data>
   <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
     <value>Şerit oluşturmak için bitiş noktası seçin</value>
   </data>
   <data name="StyleOption_Distribution" xml:space="preserve">
     <value>Dağıtım</value>
   </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>Dinamik Aralık ve Sabit Bitiş Noktaları</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>Dinamik Aralık ve Serbest Bitiş Noktaları</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>Sabit Aralık ve Sabit Bitiş Noktaları</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>Sabit aralık ve Serbest bitiş noktaları</value>
+  </data>
   <data name="LineStyle_ZigZag" xml:space="preserve">
     <value>Zikzak</value>
   </data>
   <data name="StyleOption_SideLeft" xml:space="preserve">
     <value>Sol</value>
+  </data>
+  <data name="StyleOption_SideRight" xml:space="preserve">
+    <value>Sağ</value>
+  </data>
+  <data name="StyleOption_ZigzagOffset" xml:space="preserve">
+    <value>Ortala</value>
+  </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Yön</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Başlangıç noktası</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Şerit</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Dışarı</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Adım</value>
+  </data>
+  <data name="StyleOption_TextAlignment" xml:space="preserve">
+    <value>Hizalanma</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>Uç</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Orta</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Başlangıç</value>
+  </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Bu ön ayarı yol varlığına bağlayın</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Bu ön ayarın yol varlığından bağlantısını kaldırın</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Bağlantılı</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Ofseti değiştirmek için bir noktayı sürükleyin</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Bir noktayı taşımak için {0} tuşunu basılı tutun</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Yol varlıklarından işaretleri otomatik olarak uygula</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Bağlama ön ayar modundan çık</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Bağlantı ön ayarı modundan çıkmak ve bu ön ayarı yol varlığına bağlamak istiyor musunuz?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Bağla</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Bağlanma</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_12" xml:space="preserve">
+    <value>[NEW] Yeni bir çizgi stili eklendi: Metin. Yolda özel metin yazmaya ve sistemde yüklü herhangi bir yazı tipini ayarlamaya izin verir.
+[NEW] Ön ayarı ağ varlığına bağlama yeteneği eklendi. Yol yapıldığında otomatik olarak uygulanacaktır.
+[NEW] Yeni bir hat türü eklendi: Şerit. Kulvarın ortasına yerleştirilmesi gereken dikmelerin/ağaçların/ağların/metnin yerleşimini basitleştirir.
+[New] Yeni bir çizgi stili eklendi: Zikzak.
+[NEW] Varlık düzenleyicide farklı yol kotları (eğim, tünel) için farklı işaretler kaydetme özelliği eklendi.
+[NEW] Şerit kenar çizgilerinin otomatik oluşturulması. Mod ayarlarında devre dışı bırakılabilir.
+[NEW] Aksesuarlara/ağaçlara dağıtım seçeneği eklendi. hattın uçlarında pervane/ağaç sabitlenmesini ve dinamik alan uzunluğunun ayarlanmasını sağlar.
+[NEW] Ağ kaymasının değerini tersine çevirme yeteneği eklendi.
+[NEW] Yapıştırma işaretleme modu için kısayollar eklendi.
+[UPDATED] Artık noktayı sürüklemek için Ctrl tuşunu basılı tutmanıza gerek yok. Mod ayarlarında eski davranış (Ctrl'yi basılı tutarak) etkinleştirilebilir.
+[FIXED] Çizgiler ve dolgular eğimli segmenti mümkün olduğunca takip ediyor. Bazı durumlarda hala mükemmel olmayabilir, ancak eskisinden çok daha iyi.
+[FIXED] Kaplama çizgisi dolguyu düzgün şekilde takip ediyor.
+[FIXED] Asym stilleri değerleri yanlış evirme ile yapıştırıldığında düzeltildi.
+[FIXED] IMT tarafından eklenen ağlar/destekler/ağaçlar önceden ayarlanmış ekran görüntüsünde görülebilir.
+[FIXED] Dolgu kılavuzları seçildikten sonra dolguların güncellenmemesi düzeltildi.</value>
+  </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>Bu varlığın tüm segmentlerine hazır ayar uygula</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>Varsayılana sıfırla</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>"{0}" öğesinin tüm segmentlerine bir ön ayar uygulamak istiyor musunuz?
+Çok fazla segment varsa zaman alabilir.</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>Yapıştırma modundan çık</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>İşaretleme uygulamak istiyor musunuz?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Yoğunluk</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Ölçek</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Çatlaklar</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Geçersizlikler</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Doku yoğunluğu</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Ekstralar</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Grafik Efektleri</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Ana Kategori</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>Tüm öğelere uygula</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>Tüm kurallara uygula</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>Tüm yaya geçitlerine uygula</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>Tüm "{0}" yaya geçitlerine uygula</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>Tüm dolgulara uygula</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>Tüm "{0}" dolgulara uygula</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>Tüm satırlara uygula</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>Tüm "{0}" satırlarına uygula</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>Tüm stop şeritlerine uygula</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>Tüm "{0}" Stop şeritlerine uygula</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>Efektleri kopyala</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>Efektleri yapıştır</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>İkisi de</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>Uç</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Başlangıç</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Sabit uç</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Azami</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Sınırlar</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>Paralel değil</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>Çizgilere paralel ve eğim sonu</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>Şeritlere ve düz uçlara paralel</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Kısa çizgi türü</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Ağı ters çevir</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Iki farklı</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>Tüm kuralları daraltmak/genişletmek için {0} tuşunu basılı tutun</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13" xml:space="preserve">
+    <value>[UPDATED] 2B dolguların ve yaya geçitlerinin oluşturma ve şeklinin iyileştirilmiş çözünürlüğü.
+[NEW] Tüm 2B çizgilere, 2B dolgulara ve yaya geçitlerine çatlak ve boşluk efektleri eklendi.
+[NEW] Çok düz görünmemesi için işaretlere malzeme dokusu eklendi.
+[FIXED] Dolgu ofseti hesaplaması düzeltildi.
+[NEW] Ağ varlığının tüm bölümlerine bir ön ayar uygulama yeteneği eklendi.
+[NEW] Satır kurallarını daraltma özelliği eklendi. Mod ayarlarında otomatik daraltma etkinleştirilebilir.
+[NEW] Özellik kategorileri eklendi. çökebilirler.
+[NEW] Renk özelliğine kopyala/yapıştır seçeneği eklendi.
+[NEW] Rengin HEX değerini ayarlama özelliği eklendi.
+[NEW] Tüm şerit kurallarına stil belirleme yeteneği eklendi.
+[NEW] Aynı stille düğüm/segment üzerindeki tüm kurallara stil belirleme yeteneği eklendi.
+[NEW] Düğüm/segment üzerindeki tüm kurallara stil belirleme yeteneği eklendi.
+[NEW] Düğüm/segment üzerindeki tüm çizgilere/yaya geçitlerine/dolduruculara şablon uygulama yeteneği eklendi.
+[NEW] Stil ayarlarını varsayılan değerlere sıfırlama özelliği eklendi.
+[NEW] Nesne/ağaç stilinin hangi ucunun sabitleneceğini seçme yeteneği eklendi (her ikisi/yalnızca başlangıç/yalnızca son).
+[NEW] Ağın her bir ucuna farklı geçiş ayarlama özelliği eklendi.
+[NEW] Minumum maksimum donanım/ağaç sayısı eklendi.
+[NEW] Zebranın eğimli uçlarını yapabilme özelliği eklendi.
+[NEW] Metne ofseti ayarlama yeteneği eklendi.
+[NEW] Ağa renk ayarlama özelliği eklendi (yalnızca belirli ağları etkileyebilir).
+[NEW] Nesne/ağaç/ağ seçici açıldığında odak otomatik olarak arama alanına ayarlanır.
+[UPDATED] Panel kaydırma ile değerin tekerlekle değiştirilmesi arasındaki zaman aşımı, özelliğin değerinin harici olarak değiştirilmesini önlemek için 3 saniyeye çıkarılmıştır.
+[UPDATED] Varsayılan işaretlemeyi uygulama önceliği değiştirildi:
+---1. bağlantılı ön ayar
+---2. varlık verilerine kaydedilir.
+---3. değiştirilen segmentten veriler.
+[FIXED] Nesne/ağaç/ağ seçici arama alanı, araç paneli kapatıldığında odağı kaybetti, böylece araç arama sırasında kapatılırsa kamera kontrolünü engellemez.
+[NEW] Yazı tipi araması eklendi.
+[FIXED] Bellek kullanımını azaltmak ve bellek sızıntılarını önlemek için kullanılmayan doku ve kafeslerin düzgün şekilde kaldırılması.
+[NEW] API eklendi. Diğer modlar IMT ile iletişim kurabilir. Nuget paketi olarak mevcuttur www.nuget.org/packages/IMT.API.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13_1" xml:space="preserve">
+    <value>[UPDATED] Eğimde katı dolgu oluşturma iyileştirildi.
+[UPDATED] İyileştirilmiş 3B dolgu ofset hesaplaması.
+[FIXED] Köpekbalığı dişi işaretlemesinin yanlış hizalaması var.
+[FIXED] Ağ hattı seçenekleri görünmüyor.
+[FIXED] Izgara doldurucu kullanılırsa kavşak verilerinin kaydedilmesine izin vermeyen hata.
+[FIXED] Değiştirilen çizgiler ve yaya geçitleri düzeni sağlıyor: diğer çıkartmaların üzerine çiziyorlar.
+[FIXED] Doku yoğunluğu değeri kaydedilmiyor.
+[FIXED] Belirli bordür boyutu ve yarıçap değerlerinde dolgu maddesi görünmez.
+[FIXED] İşleme için OpenGL kullanılıyorsa işaretleme görünmez.
+[FIXED] Belirli durumlarda çizgi kesişimleri algılanmıyor.
+[FIXED] Bir kesişim noktasından diğerine kopyala/yapıştır işaretlemesinden sonra ayrım noktasından başlayan çizginin yanlış hizalanması.</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>Çıkartma</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>Çıkartma öğesi</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>Tüm köşeli çift ayraçları ters çevir</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>Diğerleri</value>
+  </data>
+  <data name="StyleOption_AssetMissed" xml:space="preserve">
+    <value>Seçilen öğe kaçırıldı: "{0}"</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>Çıkartma</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>Orantıları koruyun</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>Oranları sınırla</value>
+  </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>Seçilen tema kaçırıldı: "{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>Harita teması</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>Favorilere ekle</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>Favorilerden çıkar</value>
   </data>
 </root>

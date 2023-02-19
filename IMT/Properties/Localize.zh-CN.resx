@@ -1102,11 +1102,11 @@
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>编辑段落 #{0} 的地标线</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>草地</value>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>草地纹理交通岛</value>
   </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>路肩</value>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>人行道纹理交通岛</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>高度</value>
@@ -1260,14 +1260,14 @@
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>按住{0}点击来选中线</value>
   </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>砂砾</value>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>碎石纹理交通岛</value>
   </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>悬崖</value>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>悬崖纹理交通岛</value>
   </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>砂石</value>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>毁坏纹理交通岛</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>拐角半径</value>
@@ -1961,5 +1961,63 @@
 [FIXED]正确删除未使用的贴图和网格，以减少内存的使用并防止内存溢出。
 [NEW]添加了API接口。其他模组可以与 IMT 通信。由 Nuget 软件包提供：www.nuget.org/packages/IMT.API。
 </value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13_1" xml:space="preserve">
+    <value>[UPDATED]改进了斜坡上填充图案的渲染方式。
+[UPDATED]改进了3D填充图案的偏移计算方式。
+[FIXED]修复了三角式标线对齐错误的问题。
+[FIXED]修复了道路标线选项不可见的问题。
+[FIXED]修复了如果使用网格填充图案，则路口标线无法保存的错误。
+[FIXED]修改了线段和人行横道的渲染顺序：现在它们会覆盖在其他贴花上。
+[FIXED]修复了纹理密度值无法保存的问题。
+[FIXED]修复了对于某些路缘尺寸和半径下，填充图案不可见的问题。
+[FIXED]修复了如果使用OpenGL进行渲染，则标线不可见的问题。
+[FIXED]修复了某些情况下，检测不到标线交点的问题。
+[FIXED]修复了将标线从一个路口复制/粘贴到另一个路口后，分割处的标线对齐错误的问题。</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>贴花</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>贴花资产</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>反转所有锯齿形填充图案</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>其它</value>
+  </data>
+  <data name="StyleOption_AssetMissed" xml:space="preserve">
+    <value>所选资产丢失：“{0}”</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>贴花</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>保持比例</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>自定义比例</value>
+  </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>所选的主题丢失："{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>地图主题</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>添加到收藏夹</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>从收藏夹中删除</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>沥青</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>自定义纹理交通岛</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>默认地图主题</value>
   </data>
 </root>

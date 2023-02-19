@@ -1078,11 +1078,11 @@ Nicht alle Markierungen der Kreuzungen konnten geladen werden.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Markierungen von Segment #{0} bearbeiten</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Gras</value>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>Verkehrsinsel Gras</value>
   </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Bürgersteig</value>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>Verkehrsinsel Gehweg</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Höhe</value>
@@ -1198,14 +1198,14 @@ Klicken um die Markierungen zu bearbeiten</value>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>{0}+Klick um die Linie auszuwählen</value>
   </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Kies</value>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>Verkehrsinsel Kies</value>
   </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Felsen</value>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>Verkehrsinsel Klippen</value>
   </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Abgenutzte Oberfläche</value>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>Verkehrsinsel ruiniertes Gras</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Eckenradius</value>
@@ -1870,5 +1870,63 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
 [NEW] Schriftsuche hinzugefügt.
 [FIXED] Korrektes Entfernen unbenutzter Texturen und Meshes, um die Speichernutzung zu reduzieren und Speicherlecks zu verhindern.
 [NEW] API hinzugefügt. Andere Mods können mit IMT kommunizieren. Verfügbar als Nuget-Paket www.nuget.org/packages/IMT.API.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_13_1" xml:space="preserve">
+    <value>[UPDATED] Verbessertes Rendern von Flächenfüllungen auf Neigungen.
+[UPDATED] Verbesserte 3D-Füllversatzberechnung.
+[FIXED] Die Markierung der Haifischzähne war falsch ausgerichtet.
+[FIXED] Netzwerk Linien-Optionen waren nicht sichtbar.
+[FIXED] Fehler, der es nicht erlaubte, Kreuzungsdaten zu speichern, wenn Gitter verwendet wurden.
+[FIXED] Geänderte Renderreihenfolge von Linien und Zebrastreifen: Sie werden nun über anderen Boden-Fliesen gezeichnet.
+[FIXED] Texturdichtewert wurde nicht gespeichert.
+[FIXED] Füller war bei bestimmten Bordsteingrößen und Radiuswerten unsichtbar.
+[FIXED] Markierung war nicht sichtbar, wenn OpenGL zum Rendern verwendet wurde.
+[FIXED] Linienkreuzungen wurden in bestimmten Fällen nicht erkannt.
+[FIXED] Falsche Ausrichtung der Linie, die am Teilungspunkt beginnt, nachdem die Markierung von einem Schnittpunkt zum anderen kopiert/eingefügt wurde.</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>Dekor-Fliese</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>Fliesen-Gegenstand</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>Alle Winkel invertieren</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>Sonstiges</value>
+  </data>
+  <data name="StyleOption_AssetMissed" xml:space="preserve">
+    <value>Ausgewählter Gegenstand fehlt: "{0}"</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>Dekor-Fliese</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>Gleichmäßig skalieren</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>Individuell skalieren</value>
+  </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>Ausgewähltes Kartenthema fehlt: "{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>Kartenthema</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>Zu Favoriten hinzufügen</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>Von Favoriten entfernen</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>Asphalt</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>Verkehrsinsel Individuell</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>Standard Kartenthema</value>
   </data>
 </root>
