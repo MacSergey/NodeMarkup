@@ -260,7 +260,7 @@ namespace IMT.Utilities
 
         public readonly struct TextureData
         {
-            public static TextureData Default => new TextureData(null, null, Vector2.one, 0f);
+            public static TextureData Default => new TextureData(null, null);
 
             public readonly Texture2D mainTexture;
             public readonly Texture2D alphaTexture;
@@ -270,7 +270,7 @@ namespace IMT.Utilities
             {
                 this.mainTexture = mainTexture;
                 this.alphaTexture = alphaTexture;
-                this.tiling = new Vector4(1f, 0f, 1f, 0f);
+                this.tiling = new Vector4(1f, 0f, 1f, 1f);
             }
             public TextureData(Texture2D mainTexture, Texture2D alphaTexture, Vector2 tiling, float angle)
             {
