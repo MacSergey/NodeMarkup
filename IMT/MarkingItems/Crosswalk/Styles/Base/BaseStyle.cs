@@ -34,6 +34,7 @@ namespace IMT.Manager
             {CrosswalkType.Ladder, new LadderCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, DefaultWidth) },
             {CrosswalkType.Solid, new SolidCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset) },
             {CrosswalkType.ChessBoard, new ChessBoardCrosswalkStyle(DefaultColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkSquareSide, DefaultCrosswalkLineCount, false) },
+            {CrosswalkType.Decal, new DecalCrosswalkStyle(null, null, DefaultCrosswalkWidth, Vector2.one, 0f, DefaultCrosswalkOffset, DefaultCrosswalkOffset) },
         };
         public static CrosswalkStyle GetDefault(CrosswalkType type)
         {
@@ -151,6 +152,9 @@ namespace IMT.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             ChessBoard = StyleType.CrosswalkChessBoard,
+
+            [Description(nameof(Localize.CrosswalkStyle_Decal))]
+            Decal = StyleType.CrosswalkDecal,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]

@@ -725,6 +725,10 @@ namespace IMT.Manager
             [NetworkType(NetworkType.Road)]
             CrosswalkChessBoard,
 
+            [Description(nameof(Localize.CrosswalkStyle_Decal))]
+            [NetworkType(NetworkType.Road)]
+            CrosswalkDecal,
+
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.Road)]
             [NotVisible]

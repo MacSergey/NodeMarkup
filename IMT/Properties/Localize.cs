@@ -2756,11 +2756,6 @@ namespace IMT
 		public static string StyleOption_AssetDecal => LocaleManager.GetString("StyleOption_AssetDecal", Culture);
 
 		/// <summary>
-		/// Tiling
-		/// </summary>
-		public static string StyleOption_Tiling => LocaleManager.GetString("StyleOption_Tiling", Culture);
-
-		/// <summary>
 		/// Invert all chevrons
 		/// </summary>
 		public static string Settings_InvertChevrons => LocaleManager.GetString("Settings_InvertChevrons", Culture);
@@ -2774,5 +2769,10 @@ namespace IMT
 		/// Selected asset missed: "{0}"
 		/// </summary>
 		public static string StyleOption_AssetMissed => LocaleManager.GetString("StyleOption_AssetMissed", Culture);
+
+		/// <summary>
+		/// Decal
+		/// </summary>
+		public static string CrosswalkStyle_Decal => LocaleManager.GetString("CrosswalkStyle_Decal", Culture);
 	}
 }

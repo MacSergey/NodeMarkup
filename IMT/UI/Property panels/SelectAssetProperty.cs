@@ -320,7 +320,7 @@ namespace IMT.UI
                 if (value != prefab)
                 {
                     prefab = value;
-                    rawName = prefab.name;
+                    rawName = prefab?.name ?? string.Empty;
                     Set();
                 }
             }

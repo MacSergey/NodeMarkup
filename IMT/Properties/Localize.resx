@@ -2008,9 +2008,6 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_AssetDecal" xml:space="preserve">
     <value>Decal asset</value>
   </data>
-  <data name="StyleOption_Tiling" xml:space="preserve">
-    <value>Tiling</value>
-  </data>
   <data name="Settings_InvertChevrons" xml:space="preserve">
     <value>Invert all chevrons</value>
   </data>
@@ -2019,5 +2016,8 @@ It can take time if there are a lot of segments.</value>
   </data>
   <data name="StyleOption_AssetMissed" xml:space="preserve">
     <value>Selected asset missed: "{0}"</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>Decal</value>
   </data>
 </root>
