@@ -97,6 +97,7 @@ namespace IMT
             AddGrouping(GeneralTab);
             AddSorting(GeneralTab);
             AddNotifications(GeneralTab);
+            AddOther(GeneralTab);
 
             AddKeyMapping(ShortcutsTab, undergroundOptions);
 
@@ -189,6 +190,38 @@ namespace IMT
 
 
             static void OnChanged() => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
+        }
+        private void AddOther(UIAdvancedHelper helper)
+        {
+            var group = helper.AddGroup(Localize.Setting_Others);
+            var button = AddButton(group, Localize.Settings_InvertChevrons, InvertChevrons, 400);
+
+            static void InvertChevrons()
+            {
+                for(int i = 0; i < NetManager.MAX_NODE_COUNT; i+= 1)
+                {
+                    if(SingletonManager<NodeMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                    {
+                        foreach(var filler in marking.Fillers)
+                        {
+                            if(filler.Style.Value is ChevronFillerStyle chevron)
+                                chevron.Invert.Value = !chevron.Invert;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < NetManager.MAX_SEGMENT_COUNT; i += 1)
+                {
+                    if (SingletonManager<SegmentMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                    {
+                        foreach (var filler in marking.Fillers)
+                        {
+                            if (filler.Style.Value is ChevronFillerStyle chevron)
+                                chevron.Invert.Value = !chevron.Invert;
+                        }
+                    }
+                }
+            }
         }
 
         #endregion

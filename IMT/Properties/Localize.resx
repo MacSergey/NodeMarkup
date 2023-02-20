@@ -2002,4 +2002,19 @@ It can take time if there are a lot of segments.</value>
 [FIXED] Line intersections are not detected in certain cases.
 [FIXED] Wrong aligment of line that is started from split point after copy/paste marking from one intersection to another.</value>
   </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>Decal</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>Decal asset</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Tiling</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>Invert all chevrons</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>Others</value>
+  </data>
 </root>

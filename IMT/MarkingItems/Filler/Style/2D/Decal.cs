@@ -7,7 +7,6 @@ using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -112,7 +111,7 @@ namespace IMT.Manager
 
         protected void AddDecalProperty(SelectPropProperty decalProperty, EditorProvider provider)
         {
-            decalProperty.Text = "Decal asset";
+            decalProperty.Text = Localize.StyleOption_AssetDecal;
             decalProperty.PrefabSelectPredicate = IsValidDecal;
             decalProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
             decalProperty.Init(60f);
@@ -146,7 +145,7 @@ namespace IMT.Manager
 
         private void AddTilingProperty(Vector2PropertyPanel tilingProperty, EditorProvider provider)
         {
-            tilingProperty.Text = "Tilling";
+            tilingProperty.Text = Localize.StyleOption_Tiling;
             tilingProperty.SetLabels("X", "Y");
             tilingProperty.Format = Localize.NumberFormat_Percent;
             tilingProperty.FieldsWidth = 50f;

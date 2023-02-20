@@ -653,7 +653,7 @@ namespace IMT.Manager
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             FillerChevron,
 
-            [Description("Decal")]
+            [Description(nameof(Localize.FillerStyle_Decal))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             FillerDecal,
 

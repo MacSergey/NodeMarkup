@@ -232,7 +232,7 @@ namespace IMT.Manager
             [Order(1)]
             Chevron = StyleType.FillerChevron,
 
-            [Description("Decal")]
+            [Description(nameof(Localize.FillerStyle_Decal))]
             [Order(4)]
             Decal = StyleType.FillerDecal,
 

@@ -2744,5 +2744,30 @@ namespace IMT
 		/// [UPDATED] Improved solid filler rendering on slope.
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_13_1 => LocaleManager.GetString("Mod_WhatsNewMessage1_13_1", Culture);
+
+		/// <summary>
+		/// Decal
+		/// </summary>
+		public static string FillerStyle_Decal => LocaleManager.GetString("FillerStyle_Decal", Culture);
+
+		/// <summary>
+		/// Decal asset
+		/// </summary>
+		public static string StyleOption_AssetDecal => LocaleManager.GetString("StyleOption_AssetDecal", Culture);
+
+		/// <summary>
+		/// Tiling
+		/// </summary>
+		public static string StyleOption_Tiling => LocaleManager.GetString("StyleOption_Tiling", Culture);
+
+		/// <summary>
+		/// Invert all chevrons
+		/// </summary>
+		public static string Settings_InvertChevrons => LocaleManager.GetString("Settings_InvertChevrons", Culture);
+
+		/// <summary>
+		/// Others
+		/// </summary>
+		public static string Setting_Others => LocaleManager.GetString("Setting_Others", Culture);
 	}
 }
