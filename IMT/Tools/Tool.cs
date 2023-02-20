@@ -982,6 +982,8 @@ namespace IMT.Tools
                 }
             }
         }
+
+        public override string ToString() => Type.ToString();
     }
     public enum ToolModeType
     {
@@ -1001,7 +1003,7 @@ namespace IMT.Tools
         DragPoint = 1 << 11,
 
         MakeItem = MakeLine | MakeCrosswalk,
-        Order = ApplyPreset | EditEntersOrder | LinkPreset | PointsOrder,
+        Order = PasteMarking | ApplyPreset | EditEntersOrder | LinkPreset | PointsOrder,
     }
     public interface IShortcutMode
     {
