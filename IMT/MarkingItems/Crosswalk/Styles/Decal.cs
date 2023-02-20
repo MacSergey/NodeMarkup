@@ -109,7 +109,7 @@ namespace IMT.Manager
             base.GetUIComponents(crosswalk, provider);
             provider.AddProperty(new PropertyInfo<SelectPropProperty>(this, nameof(Decal), MainCategory, AddDecalProperty));
             provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(DecalColor), MainCategory, AddDecalColorProperty, RefreshDecalColorProperty));
-            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Tiling), MainCategory, AddTilingProperty, RefreshTilingProperty));
+            provider.AddProperty(new PropertyInfo<FloatSingleDoubleProperty>(this, nameof(Tiling), MainCategory, AddTilingProperty, RefreshTilingProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), MainCategory, AddAngleProperty, RefreshAngleProperty));
         }
 
@@ -148,25 +148,26 @@ namespace IMT.Manager
                 colorProperty.DefaultColor = Decal.Value.m_color0;
         }
 
-        private void AddTilingProperty(Vector2PropertyPanel tilingProperty, EditorProvider provider)
+        private void AddTilingProperty(FloatSingleDoubleProperty tilingProperty, EditorProvider provider)
         {
             tilingProperty.Text = Localize.StyleOption_Scale;
-            tilingProperty.SetLabels("X", "Y");
             tilingProperty.Format = Localize.NumberFormat_Percent;
-            tilingProperty.FieldsWidth = 50f;
+            tilingProperty.FieldWidth = 100f;
             tilingProperty.CheckMax = true;
             tilingProperty.CheckMin = true;
-            tilingProperty.MinValue = new Vector2(10f, 10f);
-            tilingProperty.MaxValue = new Vector2(1000f, 1000f);
-            tilingProperty.WheelStep = new Vector2(10f, 10f);
+            tilingProperty.MinValue = 10f;
+            tilingProperty.MaxValue = 1000f;
+            tilingProperty.WheelStep = 10f;
             tilingProperty.UseWheel = true;
-            tilingProperty.Init(0, 1);
-            tilingProperty.OnValueChanged += (Vector2 value) => Tiling.Value = value * 0.01f;
+            tilingProperty.Init
+                (new OptionData(Localize.StyleOption_ScaleLock, IMTTextures.Atlas, IMTTextures.LockButtonIcon),
+                new OptionData(Localize.StyleOption_ScaleUnlock, IMTTextures.Atlas, IMTTextures.UnlockButtonIcon));
+            tilingProperty.OnValueChanged += (x, y) => Tiling.Value = new Vector2(x * 0.01f, y * 0.01f);
         }
-        protected virtual void RefreshTilingProperty(Vector2PropertyPanel tilingProperty, EditorProvider provider)
+        protected virtual void RefreshTilingProperty(FloatSingleDoubleProperty tilingProperty, EditorProvider provider)
         {
             tilingProperty.IsHidden = !IsValid;
-            tilingProperty.Value = Tiling.Value * 100f;
+            tilingProperty.SetValues(Tiling.Value.x * 100f, Tiling.Value.y * 100f);
         }
 
         private void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)

@@ -285,7 +285,7 @@ namespace IMT.UI
                                 _ => IMTTextures.RegularButtonIcon,
                             };
 
-                            FontStyleSelector.AddItem(style, label, IMTTextures.Atlas, sprite);
+                            FontStyleSelector.AddItem(style, new OptionData(label, IMTTextures.Atlas, sprite));
                         }
 
                         if (styles.Contains(selectedStyle))

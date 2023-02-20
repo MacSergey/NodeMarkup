@@ -2020,4 +2020,10 @@ It can take time if there are a lot of segments.</value>
   <data name="CrosswalkStyle_Decal" xml:space="preserve">
     <value>Decal</value>
   </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>Keep proportions</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>Custom proportions</value>
+  </data>
 </root>

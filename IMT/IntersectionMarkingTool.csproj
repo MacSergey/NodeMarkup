@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.14.0.27</AssemblyVersion>
+    <AssemblyVersion>1.14.0.32</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -94,6 +94,7 @@
     <None Remove="Resources\ButtonIcons\CopyButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\CopyToAllButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\CopyToSameButtonIcon.png" />
+    <None Remove="Resources\ButtonIcons\DoubleButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\DynamicFixedButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\DynamicFixedButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\DynamicFreeButtonIcon.png" />
@@ -106,6 +107,7 @@
     <None Remove="Resources\ButtonIcons\ItalicButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\LeftToRightButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\LeftToRightButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\LockButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\PasteButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\RangeButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\RegularButtonIcon.png" />
@@ -114,6 +116,7 @@
     <None Remove="Resources\ButtonIcons\SingleButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\TopToBottomButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\TopToBottomButtonIcons.png" />
+    <None Remove="Resources\ButtonIcons\UnlockButtonIcon.png" />
     <None Remove="Resources\ButtonWhite.png" />
     <None Remove="Resources\ButtonWhiteBorder.png" />
     <None Remove="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
@@ -155,14 +158,17 @@
     <EmbeddedResource Include="Resources\ButtonIcons\CopyButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\CopyToAllButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\CopyToSameButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\DoubleButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\ItalicButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\LeftToRightButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\LockButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\PasteButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\RangeButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\RegularButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\RotateButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\SingleButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\TopToBottomButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\UnlockButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonWhiteBorder.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyStyleHeaderButton.png" />

@@ -2774,5 +2774,15 @@ namespace IMT
 		/// Decal
 		/// </summary>
 		public static string CrosswalkStyle_Decal => LocaleManager.GetString("CrosswalkStyle_Decal", Culture);
+
+		/// <summary>
+		/// Keep proportions
+		/// </summary>
+		public static string StyleOption_ScaleLock => LocaleManager.GetString("StyleOption_ScaleLock", Culture);
+
+		/// <summary>
+		/// Custom proportions
+		/// </summary>
+		public static string StyleOption_ScaleUnlock => LocaleManager.GetString("StyleOption_ScaleUnlock", Culture);
 	}
 }

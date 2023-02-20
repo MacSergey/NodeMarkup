@@ -192,7 +192,9 @@ namespace IMT.Manager
             shiftProperty.CheckMax = true;
             shiftProperty.MinValue = -50;
             shiftProperty.MaxValue = 50;
-            shiftProperty.Init();
+            shiftProperty.Init
+                (new OptionData(Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcon), 
+                new OptionData(Localize.StyleOption_ObjectTwoDifferent, IMTTextures.Atlas, IMTTextures.DoubleButtonIcon));
             shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
             shiftProperty.OnValueChanged += (valueA, valueB) => Shift.Value = new Vector2(valueA, valueB);
         }

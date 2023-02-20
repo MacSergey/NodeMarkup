@@ -52,7 +52,7 @@ namespace IMT.UI
         private void AddData()
         {
             foreach (var file in GetList())
-                DropDown.AddItem(file.Key, file.Value);
+                DropDown.AddItem(file.Key, new OptionData(file.Value));
         }
         protected abstract Dictionary<string, string> GetList();
         private void ImportClick()

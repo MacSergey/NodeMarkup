@@ -87,8 +87,8 @@ namespace IMT.UI
             UseSegmented.StopLayout();
             UseSegmented.AutoButtonSize = false;
             UseSegmented.ButtonWidth = 25f;
-            UseSegmented.AddItem(true, "I");
-            UseSegmented.AddItem(false, "O");
+            UseSegmented.AddItem(true, new OptionData("I"));
+            UseSegmented.AddItem(false, new OptionData("O"));
             UseSegmented.StartLayout();
             UseSegmented.OnSelectObjectChanged += UseChanged;
 
