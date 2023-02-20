@@ -116,6 +116,7 @@ namespace IMT.Manager
             decalProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
             decalProperty.Init(60f);
             decalProperty.Prefab = Decal;
+            decalProperty.RawName = Decal.RawName;
             decalProperty.OnValueChanged += (value) =>
             {
                 var oldDecal = Decal.Value;

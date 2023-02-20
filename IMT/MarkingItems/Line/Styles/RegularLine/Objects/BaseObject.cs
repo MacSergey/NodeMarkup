@@ -622,6 +622,7 @@ namespace IMT.Manager
             prefabProperty.PrefabSortPredicate = GetSortPredicate();
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
+            prefabProperty.RawName = Prefab.RawName;
             prefabProperty.OnValueChanged += (value) =>
             {
                 Prefab.Value = value;

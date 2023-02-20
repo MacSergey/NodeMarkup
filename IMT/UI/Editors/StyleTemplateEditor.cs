@@ -235,7 +235,7 @@ namespace IMT.UI.Editors
         {
             base.Refresh();
             Icon.Type = Object.Style.Type;
-            Icon.StyleColor = Object.Style.Color;
+            Icon.StyleColor = Object.Style is IColorStyle ? Object.Style.Color : Color.white;
             Label.wordWrap = !Object.IsAsset;
 
             SetColors();

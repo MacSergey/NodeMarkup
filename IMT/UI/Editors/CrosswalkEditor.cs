@@ -321,7 +321,7 @@ namespace IMT.UI.Editors
             base.Refresh();
 
             Icon.Type = Object.Style.Value.Type;
-            Icon.StyleColor = Object.Style.Value.Color;
+            Icon.StyleColor = Object.Style.Value is IColorStyle ? Object.Style.Value.Color : Color.white;
         }
     }
 

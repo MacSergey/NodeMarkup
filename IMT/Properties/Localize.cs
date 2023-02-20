@@ -2769,5 +2769,10 @@ namespace IMT
 		/// Others
 		/// </summary>
 		public static string Setting_Others => LocaleManager.GetString("Setting_Others", Culture);
+
+		/// <summary>
+		/// Selected asset missed: "{0}"
+		/// </summary>
+		public static string StyleOption_AssetMissed => LocaleManager.GetString("StyleOption_AssetMissed", Culture);
 	}
 }

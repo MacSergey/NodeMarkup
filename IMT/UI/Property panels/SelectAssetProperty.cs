@@ -16,6 +16,7 @@ namespace IMT.UI
         public override bool SupportEven => true;
 
         public abstract PrefabType Prefab { get; set; }
+        public abstract string RawName { get; set; }
         public Func<PrefabType, bool> PrefabSelectPredicate { get; set; }
         public Func<PrefabType, string> PrefabSortPredicate { get; set; }
 
@@ -61,6 +62,11 @@ namespace IMT.UI
                     Panel.Prefab = value;
                 }
             }
+        }
+        public override string RawName
+        {
+            get => Panel.RawName;
+            set => Panel.RawName = value;
         }
 
         private IEnumerable<PrefabType> Prefabs
@@ -303,19 +309,32 @@ namespace IMT.UI
     {
         bool IReusable.InCache { get; set; }
 
-        private PrefabType _prefab;
+        private PrefabType prefab;
+        private string rawName;
+
         public PrefabType Prefab
         {
-            get => _prefab;
+            get => prefab;
             set
             {
-                if (value != _prefab)
+                if (value != prefab)
                 {
-                    _prefab = value;
+                    prefab = value;
+                    rawName = prefab.name;
                     Set();
                 }
             }
         }
+        public string RawName 
+        {
+            get => rawName;
+            set
+            {
+                rawName = value;
+                Set();
+            }
+        }
+
         private CustomUISprite Screenshot { get; set; }
         private CustomUILabel Title { get; set; }
 
@@ -339,9 +358,10 @@ namespace IMT.UI
 
         public void DeInit()
         {
-            Title.text = IMT.Localize.StyleOption_AssetNotSet;
             Screenshot.atlas = null;
             Screenshot.spriteName = string.Empty;
+            prefab = null;
+            RawName = string.Empty;
         }
 
         private void Set()
@@ -360,7 +380,7 @@ namespace IMT.UI
                 Screenshot.spriteName = string.Empty;
                 Screenshot.isVisible = false;
                 autoLayoutPadding = new RectOffset(8, 8, 5, 5);
-                Title.text = IMT.Localize.StyleOption_AssetNotSet;
+                Title.text = string.IsNullOrEmpty(RawName) ? IMT.Localize.StyleOption_AssetNotSet : string.Format(IMT.Localize.StyleOption_AssetMissed, RawName);
             }
 
             SetPosition();
