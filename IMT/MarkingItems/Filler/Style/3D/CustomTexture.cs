@@ -2,21 +2,19 @@
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
+using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class DecalCrosswalkStyle : CustomCrosswalkStyle, IWidthStyle
+    public class CustomTextureFillerStyle : CurbFillerStyle
     {
-        public override StyleType Type => StyleType.CrosswalkDecal;
-
+        public override StyleType Type => StyleType.FillerTexture;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         private bool IsValid => IsValidDecal(Decal.Value);
@@ -33,17 +31,11 @@ namespace IMT.Manager
             {
                 yield return nameof(Decal);
                 yield return nameof(DecalColor);
-                yield return nameof(Width);
                 yield return nameof(Tiling);
                 yield return nameof(Angle);
+                yield return nameof(Elevation);
+                yield return nameof(LineCornerRadius);
                 yield return nameof(Offset);
-#if DEBUG
-                yield return nameof(RenderOnly);
-                yield return nameof(Start);
-                yield return nameof(End);
-                yield return nameof(StartBorder);
-                yield return nameof(EndBorder);
-#endif
             }
         }
         public override Dictionary<string, int> PropertyIndices => PropertyIndicesDic;
@@ -51,11 +43,15 @@ namespace IMT.Manager
         {
             get
             {
-                yield break;
+                yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
+                //yield return new StylePropertyDataProvider<float>(nameof(LineCornerRadius), LineCornerRadius);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
+                //yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
             }
         }
 
-        public DecalCrosswalkStyle(PropInfo decal, Color32? color, float width, Vector2 tiling, float angle, float offsetBefore, float offsetAfter) : base(default, width, offsetBefore, offsetAfter)
+        public CustomTextureFillerStyle(PropInfo decal, Color32? color, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize, Vector2 tiling, float angle) : base(offset, elevation, cornerRadius, curbSize)
         {
             Decal = new PropertyPrefabValue<PropInfo>("DCL", StyleChanged, decal);
             DecalColor = new PropertyNullableStructValue<Color32, PropertyColorValue>(new PropertyColorValue("DC", null), "DC", StyleChanged, color);
@@ -64,49 +60,29 @@ namespace IMT.Manager
         }
 
         protected bool IsValidDecal(PropInfo info) => info != null && !info.m_isMarker && info.m_isDecal;
-        public override void CopyTo(BaseCrosswalkStyle target)
+        public override BaseFillerStyle CopyStyle() => new CustomTextureFillerStyle(Decal, DecalColor, Offset, Elevation, CornerRadius, CurbSize, Tiling, Angle);
+
+        protected override void CalculateImpl(MarkingFiller filler, ContourGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {
-            base.CopyTo(target);
-            if (target is DecalCrosswalkStyle decalTarget)
-            {
-                decalTarget.Decal.Value = Decal;
-                decalTarget.DecalColor.Value = DecalColor;
-                decalTarget.Angle.Value = Angle;
-                decalTarget.Tiling.Value = Tiling;
-            }
-        }
-        public override BaseCrosswalkStyle CopyStyle() => new DecalCrosswalkStyle(Decal, DecalColor, Width, Tiling, Angle, OffsetBefore, OffsetAfter);
-        protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
-
-        protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData)
-        {
-            if (Decal.Value is not PropInfo decal)
-                return;
-
-            var width = GetAbsoluteWidth(Width, crosswalk);
-            var offset = width * 0.5f + OffsetBefore;
-
-            if (GetContour(crosswalk, offset, width, out var contour))
-            {
-                var trajectories = contour.Select(c => c.trajectory).ToArray();
-                var mainTexture = decal.m_material.mainTexture as Texture2D;
-                var alphaTexture = decal.m_material.GetTexture("_ACIMap") as Texture2D;
-                var size = decal.m_material.GetVector("_DecalSize");
-                var tiling = new Vector2(1f / (Tiling.Value.x * size.x), 1f / (Tiling.Value.y * size.z));
-                var angle = Angle * Mathf.Deg2Rad - crosswalk.CornerDir.AbsoluteAngle();
-                var color = DecalColor.Value ?? decal.m_color0;
-
-                var datas = DecalData.GetData(Marking.Item.Crosswalk, lod, trajectories, StyleHelper.SplitParams.Default, color, new DecalData.TextureData(mainTexture, alphaTexture, tiling, angle), DecalData.EffectData.Default);
-                foreach (var data in datas)
-                {
-                    addData(data);
-                }
-            }
+            if (IsValid)
+                base.CalculateImpl(filler, contours, lod, addData);
         }
 
-        protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
+        protected override FillerMeshData.TextureData GetTopTexture()
         {
-            base.GetUIComponents(crosswalk, provider);
+            var decal = Decal.Value;
+            var mainTexture = decal.m_material.mainTexture as Texture2D;
+            var size = decal.m_material.GetVector("_DecalSize");
+            var tiling = new Vector2(1f / (Tiling.Value.x * size.x), 1f / (Tiling.Value.y * size.z));
+            var angle = Angle * Mathf.Deg2Rad;
+            var color = DecalColor.Value ?? decal.m_color0;
+            var textureData = new FillerMeshData.TextureData(mainTexture, color, tiling, angle);
+            return textureData;
+        }
+
+        protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
+        {
+            base.GetUIComponents(filler, provider);
             provider.AddProperty(new PropertyInfo<SelectPropProperty>(this, nameof(Decal), MainCategory, AddDecalProperty));
             provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(DecalColor), MainCategory, AddDecalColorProperty, RefreshDecalColorProperty));
             provider.AddProperty(new PropertyInfo<FloatSingleDoubleProperty>(this, nameof(Tiling), MainCategory, AddTilingProperty, RefreshTilingProperty));
@@ -170,7 +146,7 @@ namespace IMT.Manager
             tilingProperty.SetValues(Tiling.Value.x * 100f, Tiling.Value.y * 100f);
         }
 
-        private void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
+        private new void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
             angleProperty.Text = Localize.StyleOption_ObjectAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;

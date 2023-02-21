@@ -12,11 +12,10 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class PavementFillerStyle : TriangulationFillerStyle
+    public class PavementFillerStyle : MeshFillerStyle
     {
         public override StyleType Type => StyleType.FillerPavement;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
-        protected override MaterialType MaterialType => MaterialType.Pavement;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -34,15 +33,17 @@ namespace IMT.Manager
             get
             {
                 yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
-                yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
+                //yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
             }
         }
 
-        public PavementFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius) { }
+        public PavementFillerStyle(Vector2 offset, float elevation, Vector2 cornerRadius) : base(offset, elevation, cornerRadius) { }
 
-        public override FillerStyle CopyStyle() => new PavementFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius);
+        public override BaseFillerStyle CopyStyle() => new PavementFillerStyle(Offset, Elevation, CornerRadius);
+
+        protected override FillerMeshData.TextureData GetTopTexture() => GetSideTexture();
     }
 }

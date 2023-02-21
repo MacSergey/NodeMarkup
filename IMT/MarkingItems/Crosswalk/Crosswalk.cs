@@ -27,7 +27,7 @@ namespace IMT.Manager
 
         public PropertyValue<MarkingRegularLine> RightBorder { get; }
         public PropertyValue<MarkingRegularLine> LeftBorder { get; }
-        public PropertyValue<CrosswalkStyle> Style { get; }
+        public PropertyValue<BaseCrosswalkStyle> Style { get; }
 
         private StraightTrajectory DefaultRightBorderTrajectory => new StraightTrajectory(EnterLine.Start.Position, EnterLine.Start.Position + NormalDir * TotalWidth);
         private StraightTrajectory DefaultLeftBorderTrajectory => new StraightTrajectory(EnterLine.End.Position, EnterLine.End.Position + NormalDir * TotalWidth);
@@ -70,7 +70,7 @@ namespace IMT.Manager
 
         #endregion
 
-        public MarkingCrosswalk(Marking marking, MarkingCrosswalkLine line, CrosswalkStyle style, MarkingRegularLine rightBorder = null, MarkingRegularLine leftBorder = null)
+        public MarkingCrosswalk(Marking marking, MarkingCrosswalkLine line, BaseCrosswalkStyle style, MarkingRegularLine rightBorder = null, MarkingRegularLine leftBorder = null)
         {
             Marking = marking;
             CrosswalkLine = line;
@@ -79,7 +79,7 @@ namespace IMT.Manager
             RightBorder = new PropertyClassValue<MarkingRegularLine>("RB", CrosswalkChanged, rightBorder);
             LeftBorder = new PropertyClassValue<MarkingRegularLine>("LB", CrosswalkChanged, leftBorder);
             style.OnStyleChanged = CrosswalkChanged;
-            Style = new PropertyClassValue<CrosswalkStyle>(StyleChanged, style);
+            Style = new PropertyClassValue<BaseCrosswalkStyle>(StyleChanged, style);
 
             CrosswalkLine.Start.Enter.TryGetPoint(CrosswalkLine.Start.Index, MarkingPoint.PointType.Enter, out MarkingPoint startPoint);
             CrosswalkLine.End.Enter.TryGetPoint(CrosswalkLine.End.Index, MarkingPoint.PointType.Enter, out MarkingPoint endPoint);
@@ -209,7 +209,7 @@ namespace IMT.Manager
         {
             RightBorder.Value = GetBorder(map.Invert ? "LB" : "RB");
             LeftBorder.Value = GetBorder(map.Invert ? "RB" : "LB");
-            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, false, false, out CrosswalkStyle style))
+            if (config.Element(Manager.Style.XmlName) is XElement styleConfig && Manager.Style.FromXml(styleConfig, map, false, false, out BaseCrosswalkStyle style))
                 Style.Value = style;
 
             MarkingRegularLine GetBorder(string key)

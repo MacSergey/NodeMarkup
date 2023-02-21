@@ -46,7 +46,7 @@ namespace IMT.Tools
             if (Contour.IsEmpty)
                 return Localize.Tool_InfoFillerClickStart;
             else if (Hover.Equals(Contour.First))
-                return Tool.GetModifierToolTip<FillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd, NetworkType.All, LineType.All);
+                return Tool.GetModifierToolTip<BaseFillerStyle.FillerType>(Localize.Tool_InfoFillerClickEnd, NetworkType.All, LineType.All);
             else
                 return Localize.Tool_InfoFillerClickNext;
         }
@@ -57,7 +57,7 @@ namespace IMT.Tools
             {
                 if (Contour.Add(Hover))
                 {
-                    var style = Tool.GetStyleByModifier<FillerStyle, FillerStyle.FillerType>(NetworkType.All, LineType.All, FillerStyle.FillerType.Stripe);
+                    var style = Tool.GetStyleByModifier<BaseFillerStyle, BaseFillerStyle.FillerType>(NetworkType.All, LineType.All, BaseFillerStyle.FillerType.Stripe);
                     var filler = Marking.AddFiller(Contour, style, out var lines);
 
                     foreach (var line in lines)

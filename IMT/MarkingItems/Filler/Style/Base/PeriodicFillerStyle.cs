@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public abstract class PeriodicFillerStyle : FillerStyle, IPeriodicFiller
+    public abstract class PeriodicFillerStyle : BaseFillerStyle, IPeriodicFiller
     {
         protected abstract float DefaultStep { get; }
         public PropertyValue<float> Step { get; }
@@ -27,7 +27,7 @@ namespace IMT.Manager
         public PropertyBoolValue EndBorder { get; }
 #endif
 
-        public PeriodicFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float step, float lineOffset, float medianOffset) : base(color, width, cracks, voids, texture, lineOffset, medianOffset)
+        public PeriodicFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float step, Vector2 offset) : base(color, width, cracks, voids, texture, offset)
         {
             Step = GetStepProperty(step);
 #if DEBUG
@@ -40,7 +40,7 @@ namespace IMT.Manager
 #endif
         }
 
-        public override void CopyTo(FillerStyle target)
+        public override void CopyTo(BaseFillerStyle target)
         {
             base.CopyTo(target);
 

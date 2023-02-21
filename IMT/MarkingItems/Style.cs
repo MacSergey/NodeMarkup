@@ -93,8 +93,8 @@ namespace IMT.Manager
             {
                 StyleType.RegularLine => RegularLineStyle.GetDefault(type.ToEnum<RegularLineStyle.RegularLineType, StyleType>()) as T,
                 StyleType.StopLine => StopLineStyle.GetDefault(type.ToEnum<StopLineStyle.StopLineType, StyleType>()) as T,
-                StyleType.Filler => FillerStyle.GetDefault(type.ToEnum<FillerStyle.FillerType, StyleType>()) as T,
-                StyleType.Crosswalk => CrosswalkStyle.GetDefault(type.ToEnum<CrosswalkStyle.CrosswalkType, StyleType>()) as T,
+                StyleType.Filler => BaseFillerStyle.GetDefault(type.ToEnum<BaseFillerStyle.FillerType, StyleType>()) as T,
+                StyleType.Crosswalk => BaseCrosswalkStyle.GetDefault(type.ToEnum<BaseCrosswalkStyle.CrosswalkType, StyleType>()) as T,
                 _ => null,
             };
         }
@@ -679,6 +679,10 @@ namespace IMT.Manager
             [Description(nameof(Localize.FillerStyle_Cliff))]
             [NetworkType(NetworkType.All)]
             FillerCliff,
+
+            [Description("Texture")]
+            [NetworkType(NetworkType.All)]
+            FillerTexture,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.All)]

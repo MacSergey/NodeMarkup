@@ -68,9 +68,9 @@ namespace IMT.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        public override CrosswalkStyle CopyStyle() => new ParallelDashedLinesCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, LineWidth, DashLength, SpaceLength);
+        public override BaseCrosswalkStyle CopyStyle() => new ParallelDashedLinesCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, LineWidth, DashLength, SpaceLength);
 
-        public override void CopyTo(CrosswalkStyle target)
+        public override void CopyTo(BaseCrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)

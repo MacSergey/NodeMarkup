@@ -95,8 +95,8 @@ namespace IMT.Manager
             }
         }
 
-        public override CrosswalkStyle CopyStyle() => new ChessBoardCrosswalkStyle(Color, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, SquareSide, LineCount, Invert);
-        public override void CopyTo(CrosswalkStyle target)
+        public override BaseCrosswalkStyle CopyStyle() => new ChessBoardCrosswalkStyle(Color, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, SquareSide, LineCount, Invert);
+        public override void CopyTo(BaseCrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is ChessBoardCrosswalkStyle chessBoardTarget)

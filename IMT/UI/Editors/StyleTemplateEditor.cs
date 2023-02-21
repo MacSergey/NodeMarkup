@@ -115,14 +115,14 @@ namespace IMT.UI.Editors
                         }
                     }
                     break;
-                case CrosswalkStyle crosswalkStyle:
+                case BaseCrosswalkStyle crosswalkStyle:
                     foreach (var crosswalk in Marking.Crosswalks)
                     {
                         if (crosswalk.Style.Value.Type == crosswalkStyle.Type)
                             crosswalk.Style.Value = crosswalkStyle.CopyStyle();
                     }
                     break;
-                case FillerStyle fillerStyle:
+                case BaseFillerStyle fillerStyle:
                     foreach (var filler in Marking.Fillers)
                     {
                         if (filler.Style.Value.Type == fillerStyle.Type)
@@ -157,11 +157,11 @@ namespace IMT.UI.Editors
                             rule.Style.Value = stopStyle.CopyStyle();
                     }
                     break;
-                case CrosswalkStyle crosswalkStyle:
+                case BaseCrosswalkStyle crosswalkStyle:
                     foreach (var crosswalk in Marking.Crosswalks)
                         crosswalk.Style.Value = crosswalkStyle.CopyStyle();
                     break;
-                case FillerStyle fillerStyle:
+                case BaseFillerStyle fillerStyle:
                     foreach (var filler in Marking.Fillers)
                     {
                         filler.Style.Value = fillerStyle.CopyStyle();

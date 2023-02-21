@@ -194,11 +194,11 @@ namespace IMT.Utilities
             foreach (var item in EnumExtension.GetEnumValues<StopLineStyle.StopLineType>())
                 spriteParams.Add(item.ToEnum<Style.StyleType, StopLineStyle.StopLineType>().ToString(), new RectOffset());
 
-            foreach (var item in EnumExtension.GetEnumValues<CrosswalkStyle.CrosswalkType>())
-                spriteParams.Add(item.ToEnum<Style.StyleType, CrosswalkStyle.CrosswalkType>().ToString(), new RectOffset());
+            foreach (var item in EnumExtension.GetEnumValues<BaseCrosswalkStyle.CrosswalkType>())
+                spriteParams.Add(item.ToEnum<Style.StyleType, BaseCrosswalkStyle.CrosswalkType>().ToString(), new RectOffset());
 
-            foreach (var item in EnumExtension.GetEnumValues<FillerStyle.FillerType>())
-                spriteParams.Add(item.ToEnum<Style.StyleType, FillerStyle.FillerType>().ToString(), new RectOffset());
+            foreach (var item in EnumExtension.GetEnumValues<BaseFillerStyle.FillerType>())
+                spriteParams.Add(item.ToEnum<Style.StyleType, BaseFillerStyle.FillerType>().ToString(), new RectOffset());
 
             Atlas = TextureHelper.CreateAtlas(nameof(IMT), spriteParams);
         }

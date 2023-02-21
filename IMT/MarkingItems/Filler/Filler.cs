@@ -19,19 +19,19 @@ namespace IMT.Manager
         public int Id { get; }
         public FillerContour Contour { get; }
 
-        public PropertyValue<FillerStyle> Style { get; }
+        public PropertyValue<BaseFillerStyle> Style { get; }
         public List<IStyleData> StyleData { get; } = new List<IStyleData>();
         public bool IsMedian => Contour.IsMedian;
 
         public string XmlSection => XmlName;
 
-        public MarkingFiller(FillerContour contour, FillerStyle style)
+        public MarkingFiller(FillerContour contour, BaseFillerStyle style)
         {
             Id = Math.Abs(GetHashCode());
             Contour = contour;
             Marking = Contour.Marking;
             style.OnStyleChanged = FillerChanged;
-            Style = new PropertyClassValue<FillerStyle>(StyleChanged, style);
+            Style = new PropertyClassValue<BaseFillerStyle>(StyleChanged, style);
         }
 
         private void StyleChanged()
@@ -67,7 +67,7 @@ namespace IMT.Manager
         {
             filler = default;
 
-            if (config.Element(Manager.Style.XmlName) is not XElement styleConfig || !Manager.Style.FromXml(styleConfig, map, false, false, out FillerStyle style))
+            if (config.Element(Manager.Style.XmlName) is not XElement styleConfig || !Manager.Style.FromXml(styleConfig, map, false, false, out BaseFillerStyle style))
                 return false;
 
             var vertixes = config.Elements(FillerVertex.XmlName).Select(e => FillerVertex.FromXml(e, marking, map, out IFillerVertex vertex) ? vertex : null).ToArray();

@@ -326,11 +326,11 @@ namespace IMT.UI.Editors
                     ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyStopType, Template.Style.Type.Description());
                     ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyStopAll;
                     break;
-                case CrosswalkStyle:
+                case BaseCrosswalkStyle:
                     ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyCrosswalkType, Template.Style.Type.Description());
                     ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyCrosswalkAll;
                     break;
-                case FillerStyle:
+                case BaseFillerStyle:
                     ApplySameStyle.Text = string.Format(IMT.Localize.HeaderPanel_ApplyFillerType, Template.Style.Type.Description());
                     ApplySameType.Text = IMT.Localize.HeaderPanel_ApplyFillerAll;
                     break;

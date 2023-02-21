@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class ExistCrosswalkStyle : CrosswalkStyle, IWidthStyle
+    public class ExistCrosswalkStyle : BaseCrosswalkStyle, IWidthStyle
     {
         public override StyleType Type => StyleType.CrosswalkExistent;
         public override MarkingLOD SupportLOD => 0;
@@ -40,7 +40,7 @@ namespace IMT.Manager
         public ExistCrosswalkStyle(float width) : base(new Color32(0, 0, 0, 0), width) { }
 
         protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData) { }
-        public override CrosswalkStyle CopyStyle() => new ExistCrosswalkStyle(Width);
+        public override BaseCrosswalkStyle CopyStyle() => new ExistCrosswalkStyle(Width);
 
         public override XElement ToXml()
         {

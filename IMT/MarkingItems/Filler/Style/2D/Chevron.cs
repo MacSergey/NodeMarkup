@@ -63,8 +63,8 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
                 yield return new StylePropertyDataProvider<float>(nameof(Step), Step);
                 yield return new StylePropertyDataProvider<float>(nameof(AngleBetween), AngleBetween);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
                 yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
                 yield return new StylePropertyDataProvider<int>(nameof(LeftGuideB), LeftGuideB);
                 yield return new StylePropertyDataProvider<int>(nameof(RightGuideA), RightGuideA);
@@ -76,7 +76,7 @@ namespace IMT.Manager
             }
         }
 
-        public ChevronFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float lineOffset, float medianOffset, float angleBetween, float step) : base(color, width, cracks, voids, texture, step, lineOffset, medianOffset)
+        public ChevronFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, Vector2 offset, float angleBetween, float step) : base(color, width, cracks, voids, texture, step, offset)
         {
             AngleBetween = GetAngleBetweenProperty(angleBetween);
             Invert = GetInvertProperty(false);
@@ -85,8 +85,8 @@ namespace IMT.Manager
             StartingFrom = GetStartingFromProperty(From.Vertex);
         }
 
-        public override FillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, Cracks, Voids, Texture, LineOffset, DefaultOffset, AngleBetween, Step);
-        public override void CopyTo(FillerStyle target)
+        public override BaseFillerStyle CopyStyle() => new ChevronFillerStyle(Color, Width, Cracks, Voids, Texture, Offset, AngleBetween, Step);
+        public override void CopyTo(BaseFillerStyle target)
         {
             base.CopyTo(target);
 

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class SolidFillerStyle : FillerStyle, IColorStyle, IEffectStyle
+    public class SolidFillerStyle : BaseFillerStyle, IColorStyle, IEffectStyle
     {
         public static float DefaultSolidWidth { get; } = 0.2f;
 
@@ -61,19 +61,19 @@ namespace IMT.Manager
             get
             {
                 yield return new StylePropertyDataProvider<Color32>(nameof(Color), Color);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
                 yield return new StylePropertyDataProvider<float>(nameof(Texture), Texture);
                 yield return new StylePropertyDataProvider<Vector2>(nameof(Cracks), Cracks);
                 yield return new StylePropertyDataProvider<Vector2>(nameof(Voids), Voids);
             }
         }
 
-        public SolidFillerStyle(Color32 color, Vector2 cracks, Vector2 voids, float texture, float lineOffset, float medianOffset) : base(color, DefaultSolidWidth, cracks, voids, texture, lineOffset, medianOffset)
+        public SolidFillerStyle(Color32 color, Vector2 cracks, Vector2 voids, float texture, Vector2 offset) : base(color, DefaultSolidWidth, cracks, voids, texture, offset)
         {
 #if DEBUG
             Debug = new PropertyBoolValue(StyleChanged, false);
-            var splitParams = FillerStyle.SplitParams;
+            var splitParams = BaseFillerStyle.SplitParams;
             MinAngle = new PropertyStructValue<float>(StyleChanged, splitParams.minAngle);
             MinLength = new PropertyStructValue<float>(StyleChanged, splitParams.minLength);
             MaxLength = new PropertyStructValue<float>(StyleChanged, splitParams.maxLength);
@@ -81,7 +81,7 @@ namespace IMT.Manager
 #endif
         }
 
-        public override FillerStyle CopyStyle() => new SolidFillerStyle(Color, Cracks, Voids, Texture, LineOffset, DefaultOffset);
+        public override BaseFillerStyle CopyStyle() => new SolidFillerStyle(Color, Cracks, Voids, Texture, Offset);
 
         protected override void CalculateImpl(MarkingFiller filler, ContourGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {

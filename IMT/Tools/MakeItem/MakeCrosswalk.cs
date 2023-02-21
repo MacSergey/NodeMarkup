@@ -48,7 +48,7 @@ namespace IMT.Tools
                 }
                 else
                 {
-                    var style = Tool.GetStyleByModifier<CrosswalkStyle, CrosswalkStyle.CrosswalkType>(NetworkType.Road, LineType.Crosswalk, CrosswalkStyle.CrosswalkType.Zebra);
+                    var style = Tool.GetStyleByModifier<BaseCrosswalkStyle, BaseCrosswalkStyle.CrosswalkType>(NetworkType.Road, LineType.Crosswalk, BaseCrosswalkStyle.CrosswalkType.Zebra);
                     var newCrosswalkLine = Tool.Marking.AddCrosswalkLine(pointPair, style);
                     Panel.AddLine(newCrosswalkLine);
                     Panel.EditCrosswalk(newCrosswalkLine?.Crosswalk);

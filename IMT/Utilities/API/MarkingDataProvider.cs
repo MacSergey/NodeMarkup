@@ -277,7 +277,7 @@ namespace IMT.Utilities.API
                 throw new IntersectionMarkingToolException($"Crosswalk {pair} already exist");
 
             MarkingCrosswalkLine line;
-            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is CrosswalkStyle crosswalkStyle)
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is BaseCrosswalkStyle crosswalkStyle)
                 line = marking.AddCrosswalkLine(pair, crosswalkStyle.CopyStyle());
             else
                 throw new IntersectionMarkingToolException($"Unsupported crosswalk style: {styleData.Name}");
@@ -294,7 +294,7 @@ namespace IMT.Utilities.API
 
             var marking = Marking;
             var contour = APIHelper.GetFillerContour(marking, pointDatas);
-            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is FillerStyle fillerStyle)
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is BaseFillerStyle fillerStyle)
             {
                 var filler = marking.AddFiller(contour, fillerStyle.CopyStyle(), out _);
                 DataProvider.Log($"Filler {filler} added");
@@ -583,7 +583,7 @@ namespace IMT.Utilities.API
 
             var marking = Marking;
             var contour = APIHelper.GetFillerContour(marking, pointDatas);
-            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is FillerStyle fillerStyle)
+            if (styleData is StyleDataProvider dataProvider && dataProvider.Style is BaseFillerStyle fillerStyle)
             {
                 var filler = marking.AddFiller(contour, fillerStyle.CopyStyle(), out _);
                 DataProvider.Log($"Filler {filler} added");

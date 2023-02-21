@@ -74,8 +74,8 @@ namespace IMT.UI
 
     public class RegularLineModifierPanel : StyleModifierPanel<RegularLineStyle.RegularLineType> { }
     public class StopLineModifierPanel : StyleModifierPanel<StopLineStyle.StopLineType> { }
-    public class CrosswalkModifierPanel : StyleModifierPanel<CrosswalkStyle.CrosswalkType> { }
-    public class FillerModifierPanel : StyleModifierPanel<FillerStyle.FillerType> { }
+    public class CrosswalkModifierPanel : StyleModifierPanel<BaseCrosswalkStyle.CrosswalkType> { }
+    public class FillerModifierPanel : StyleModifierPanel<BaseFillerStyle.FillerType> { }
 
     public class ModifierDropDown : UIDropDown<StyleModifier>
     {

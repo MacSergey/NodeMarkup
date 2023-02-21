@@ -15,16 +15,11 @@ namespace IMT.Manager
 {
     public interface IFillerStyle : IStyle
     {
-        PropertyValue<float> LineOffset { get; }
-        PropertyValue<float> MedianOffset { get; }
+        PropertyVector2Value Offset { get; }
     }
     public interface IPeriodicFiller : IFillerStyle
     {
         PropertyValue<float> Step { get; }
-    }
-    public interface IOffsetFiller : IFillerStyle
-    {
-        PropertyValue<float> Offset { get; }
     }
     public interface IRotateFiller : IFillerStyle
     {
@@ -41,43 +36,44 @@ namespace IMT.Manager
     {
         PropertyValue<bool> FollowGuides { get; }
     }
-    public abstract class FillerStyle : Style<FillerStyle>, IFillerStyle
+    public abstract class BaseFillerStyle : Style<BaseFillerStyle>, IFillerStyle
     {
         public static float DefaultAngle => 0f;
         public static float DefaultStepStripe => 3f;
         public static float DefaultStepGrid => 6f;
-        public static float DefaultOffset => 0f;
+        public static Vector2 DefaultOffset => Vector2.zero;
         public static float StripeDefaultWidth => 0.5f;
         public static float DefaultAngleBetween => 90f;
         public static float DefaultElevation => 0.3f;
-        public static float DefaultCornerRadius => 0f;
-        public static float DefaultCurbSize => 0f;
+        public static Vector2 DefaultCornerRadius => Vector2.zero;
+        public static Vector2 DefaultCurbSize => Vector2.zero;
         public static bool DefaultFollowGuides => false;
 
         protected static StyleHelper.SplitParams SplitParams => new StyleHelper.SplitParams()
         {
             minAngle = 5f,
-            minLength = 1f,
+            minLength = 0.5f,
             maxLength = 10f,
             maxHeight = 3f,
         };
 
         protected static string Guide => nameof(Guide);
 
-        private static Dictionary<FillerType, FillerStyle> Defaults { get; } = new Dictionary<FillerType, FillerStyle>()
+        private static Dictionary<FillerType, BaseFillerStyle> Defaults { get; } = new Dictionary<FillerType, BaseFillerStyle>()
         {
-            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset,DefaultAngle, DefaultStepStripe, DefaultOffset,  DefaultFollowGuides)},
-            {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultAngle, DefaultStepGrid, DefaultOffset, DefaultOffset)},
-            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultOffset)},
-            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
-            {FillerType.Decal, new DecalFillerStyle(null, DefaultColor, DefaultOffset, DefaultOffset, Vector2.one, 0f)},
-            {FillerType.Pavement, new PavementFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius)},
-            {FillerType.Grass, new GrassFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
-            {FillerType.Gravel, new GravelFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
-            {FillerType.Ruined, new RuinedFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
-            {FillerType.Cliff, new CliffFillerStyle(DefaultColor, DefaultWidth, DefaultOffset, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCornerRadius, DefaultCurbSize, DefaultCurbSize)},
+            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultAngle, DefaultStepStripe,  DefaultFollowGuides)},
+            {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultAngle, DefaultStepGrid, DefaultOffset)},
+            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset)},
+            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
+            {FillerType.Decal, new DecalFillerStyle(null, DefaultColor, DefaultOffset, Vector2.one, 0f)},
+            {FillerType.Pavement, new PavementFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius)},
+            {FillerType.Grass, new GrassFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Gravel, new GravelFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Ruined, new RuinedFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Cliff, new CliffFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Texture, new CustomTextureFillerStyle(null, null, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize, Vector2.one, 0f)},
         };
-        public static FillerStyle GetDefault(FillerType type)
+        public static BaseFillerStyle GetDefault(FillerType type)
         {
             return Defaults.TryGetValue(type, out var style) ? style.CopyStyle() : null;
         }
@@ -85,27 +81,25 @@ namespace IMT.Manager
         protected override float WidthWheelStep => 0.1f;
         protected override float WidthMinValue => 0.1f;
 
-        public PropertyValue<float> MedianOffset { get; }
-        public PropertyValue<float> LineOffset { get; }
+        public new PropertyVector2Value Offset { get; }
+        public float LineOffset => Offset.Value.x;
+        public float MedianOffset => Offset.Value.y;
 
-        public FillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float lineOffset, float medianOffset) : base(color, width, cracks, voids, texture)
+        public BaseFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, Vector2 offset) : base(color, width, cracks, voids, texture)
         {
-            MedianOffset = GetMedianOffsetProperty(medianOffset);
-            LineOffset = GetLineOffsetProperty(lineOffset);
+            Offset = new PropertyVector2Value(StyleChanged, offset, "O", "MO");
         }
-        public FillerStyle(Color32 color, float width, float lineOffset, float medianOffset) : base(color, width)
+        public BaseFillerStyle(Color32 color, float width, Vector2 offset) : base(color, width)
         {
-            MedianOffset = GetMedianOffsetProperty(medianOffset);
-            LineOffset = GetLineOffsetProperty(lineOffset);
+            Offset = new PropertyVector2Value(StyleChanged, offset, "O", "MO");
         }
 
-        public override void CopyTo(FillerStyle target)
+        public override void CopyTo(BaseFillerStyle target)
         {
             base.CopyTo(target);
             if (target is IFillerStyle fillerTarget)
             {
-                fillerTarget.MedianOffset.Value = MedianOffset;
-                fillerTarget.LineOffset.Value = LineOffset;
+                fillerTarget.Offset.Value = Offset;
             }
         }
 
@@ -149,15 +143,13 @@ namespace IMT.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            LineOffset.ToXml(config);
-            MedianOffset.ToXml(config);
+            Offset.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
-            LineOffset.FromXml(config, DefaultOffset);
-            MedianOffset.FromXml(config, DefaultOffset);
+            Offset.FromXml(config, DefaultOffset);
         }
 
         protected void AddLineOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
@@ -171,7 +163,7 @@ namespace IMT.Manager
             offsetProperty.MinValue = 0f;
             offsetProperty.Init();
             offsetProperty.Value = LineOffset;
-            offsetProperty.OnValueChanged += (float value) => LineOffset.Value = value;
+            offsetProperty.OnValueChanged += (float value) => Offset.Value = new Vector2(value, value);
         }
         private void AddMedianOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
@@ -185,12 +177,8 @@ namespace IMT.Manager
             offsetProperty.CheckMin = true;
             offsetProperty.MinValue = new Vector2(0f, 0f);
             offsetProperty.Init(0, 1);
-            offsetProperty.Value = new Vector2(LineOffset, MedianOffset);
-            offsetProperty.OnValueChanged += (Vector2 value) =>
-            {
-                LineOffset.Value = value.x;
-                MedianOffset.Value = value.y;
-            };
+            offsetProperty.Value = Offset;
+            offsetProperty.OnValueChanged += (Vector2 value) => Offset.Value = value;
         }
         protected void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
@@ -255,6 +243,10 @@ namespace IMT.Manager
             [Description(nameof(Localize.FillerStyle_Cliff))]
             [Order(104)]
             Cliff = StyleType.FillerCliff,
+
+            [Description("Texture")]
+            [Order(105)]
+            Texture = StyleType.FillerTexture,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]

@@ -53,8 +53,8 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
                 yield return new StylePropertyDataProvider<float>(nameof(Step), Step);
                 yield return new StylePropertyDataProvider<float>(nameof(Angle), Angle);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
                 yield return new StylePropertyDataProvider<int>(nameof(LeftGuideA), LeftGuideA);
                 yield return new StylePropertyDataProvider<int>(nameof(LeftGuideB), LeftGuideB);
                 yield return new StylePropertyDataProvider<int>(nameof(RightGuideA), RightGuideA);
@@ -66,13 +66,13 @@ namespace IMT.Manager
             }
         }
 
-        public StripeFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float lineOffset, float medianOffset, float angle, float step, bool followGuides = false) : base(color, width, cracks, voids, texture, step, lineOffset, medianOffset)
+        public StripeFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, Vector2 offset, float angle, float step, bool followGuides = false) : base(color, width, cracks, voids, texture, step, offset)
         {
             Angle = GetAngleProperty(angle);
             FollowGuides = GetFollowGuidesProperty(followGuides);
         }
-        public override FillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, Cracks, Voids, Texture, LineOffset, DefaultOffset, DefaultAngle, Step, FollowGuides);
-        public override void CopyTo(FillerStyle target)
+        public override BaseFillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, Cracks, Voids, Texture, Offset, DefaultAngle, Step, FollowGuides);
+        public override void CopyTo(BaseFillerStyle target)
         {
             base.CopyTo(target);
 

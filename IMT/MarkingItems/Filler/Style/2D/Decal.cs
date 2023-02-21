@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class DecalFillerStyle : FillerStyle
+    public class DecalFillerStyle : BaseFillerStyle
     {
         public override StyleType Type => StyleType.FillerDecal;
 
@@ -49,7 +49,7 @@ namespace IMT.Manager
             }
         }
 
-        public DecalFillerStyle(PropInfo decal, Color32? color, float lineOffset, float medianOffset, Vector2 tiling, float angle) : base(default, default, lineOffset, medianOffset)
+        public DecalFillerStyle(PropInfo decal, Color32? color, Vector2 offset, Vector2 tiling, float angle) : base(default, default, offset)
         {
             Decal = new PropertyPrefabValue<PropInfo>("DCL", StyleChanged, decal);
             DecalColor = new PropertyNullableStructValue<Color32, PropertyColorValue>(new PropertyColorValue("DC", null), "DC", StyleChanged, color);
@@ -58,7 +58,7 @@ namespace IMT.Manager
         }
 
         protected bool IsValidDecal(PropInfo info) => info != null && !info.m_isMarker && info.m_isDecal;
-        public override void CopyTo(FillerStyle target)
+        public override void CopyTo(BaseFillerStyle target)
         {
             base.CopyTo(target);
             if (target is DecalFillerStyle decalTarget)
@@ -69,7 +69,7 @@ namespace IMT.Manager
                 decalTarget.Tiling.Value = Tiling;
             }
         }
-        public override FillerStyle CopyStyle() => new DecalFillerStyle(Decal, DecalColor, LineOffset, MedianOffset, Tiling, Angle);
+        public override BaseFillerStyle CopyStyle() => new DecalFillerStyle(Decal, DecalColor, Offset, Tiling, Angle);
 
         protected override void CalculateImpl(MarkingFiller filler, ContourGroup contours, MarkingLOD lod, Action<IStyleData> addData)
         {

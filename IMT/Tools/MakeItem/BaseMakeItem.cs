@@ -58,7 +58,7 @@ namespace IMT.Tools
             if (pointPair.IsStopLine)
                 return exist ? $"{Localize.Tool_InfoDeleteStopLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<StopLineStyle.StopLineType>(Localize.Tool_InfoCreateStopLine, pointPair.NetworkType, pointPair.LineType);
             else if (pointPair.IsCrosswalk)
-                return exist ? $"{Localize.Tool_InfoDeleteCrosswalk}\n{string.Format(Localize.Tool_InfoSelectCrosswalk, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<CrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk, pointPair.NetworkType, pointPair.LineType);
+                return exist ? $"{Localize.Tool_InfoDeleteCrosswalk}\n{string.Format(Localize.Tool_InfoSelectCrosswalk, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<BaseCrosswalkStyle.CrosswalkType>(Localize.Tool_InfoCreateCrosswalk, pointPair.NetworkType, pointPair.LineType);
             else if (pointPair.IsNormal)
                 return exist ? $"{Localize.Tool_InfoDeleteNormalLine}\n{string.Format(Localize.Tool_InfoSelectLine, LocalizeExtension.Ctrl.AddInfoColor())}" : Tool.GetModifierToolTip<RegularLineStyle.RegularLineType>(Localize.Tool_InfoCreateNormalLine, pointPair.NetworkType, pointPair.LineType);
             else if (pointPair.IsLane)

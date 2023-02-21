@@ -55,7 +55,7 @@ namespace IMT.Manager
 
         public SolidCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter) { }
 
-        public override CrosswalkStyle CopyStyle() => new SolidCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter);
+        public override BaseCrosswalkStyle CopyStyle() => new SolidCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter);
         protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
 
         protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData)

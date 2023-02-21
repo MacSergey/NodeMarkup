@@ -25,31 +25,31 @@ namespace IMT.Utilities
             MaterialLib = new Dictionary<MaterialType, Material>()
             {
             { MaterialType.Pavement, CreateRoadMaterial(MaterialType.Pavement, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black)) },
-            { MaterialType.Grass, CreateRoadMaterial(MaterialType.Grass, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(255, 0, 0, 255)))},
-            { MaterialType.Gravel, CreateRoadMaterial(MaterialType.Gravel, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
-            { MaterialType.Asphalt, CreateRoadMaterial(MaterialType.Asphalt, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(0, 255, 255, 255)))},
-            { MaterialType.Ruined, CreateRoadMaterial(MaterialType.Ruined, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
-            { MaterialType.Cliff, CreateRoadMaterial(MaterialType.Cliff, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            { MaterialType.FillerGrass, CreateRoadMaterial(MaterialType.FillerGrass, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(255, 0, 0, 255)))},
+            { MaterialType.FillerGravel, CreateRoadMaterial(MaterialType.FillerGravel, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            { MaterialType.FillerAsphalt, CreateRoadMaterial(MaterialType.FillerAsphalt, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(0, 255, 255, 255)))},
+            { MaterialType.FillerRuined, CreateRoadMaterial(MaterialType.FillerRuined, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            { MaterialType.FillerCliff, CreateRoadMaterial(MaterialType.FillerCliff, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
             };
 
             SurfaceALib = new Dictionary<MaterialType, Texture2D>()
             {
             { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
-            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
-            { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 127)) },
-            { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 127)) },
-            { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 191, 127)) },
-            { MaterialType.Cliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 191)) },
+            { MaterialType.FillerGrass, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
+            { MaterialType.FillerGravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 127)) },
+            { MaterialType.FillerAsphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 127)) },
+            { MaterialType.FillerRuined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 191, 127)) },
+            { MaterialType.FillerCliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 191)) },
             };
 
             SurfaceBLib = new Dictionary<MaterialType, Texture2D>()
             {
             { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 255, 0)) },
-            { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Cliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.FillerGrass, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.FillerGravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 255, 0)) },
+            { MaterialType.FillerAsphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.FillerRuined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.FillerCliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
             };
         }
 
@@ -91,6 +91,7 @@ namespace IMT.Utilities
                     Bundle.LoadAsset<Material>("Dash.mat"),
                     Bundle.LoadAsset<Material>("Triangle.mat"),
                     Bundle.LoadAsset<Material>("Text.mat"),
+                    Bundle.LoadAsset<Material>("Filler3D.mat"),
                 };
                 DecalMaterials = materials;
 
@@ -107,6 +108,7 @@ namespace IMT.Utilities
                 MaterialLib[MaterialType.Dash] = materials[10];
                 MaterialLib[MaterialType.Triangle] = materials[11];
                 MaterialLib[MaterialType.Text] = materials[12];
+                MaterialLib[MaterialType.FillerTexture] = materials[13];
 
                 DecalMesh = Bundle.LoadAsset<Mesh>("Cube.fbx");
                 DecalMesh.bounds = new Bounds(DecalMesh.bounds.center, Vector3.one * 100f);
@@ -185,11 +187,12 @@ namespace IMT.Utilities
         CrosswalkUpTo12,
         CrosswalkUpTo16,
         Pavement,
-        Grass,
-        Gravel,
-        Asphalt,
-        Ruined,
-        Cliff,
+        FillerGrass,
+        FillerGravel,
+        FillerAsphalt,
+        FillerRuined,
+        FillerCliff,
+        FillerTexture,
     }
     public enum MarkingLOD
     {

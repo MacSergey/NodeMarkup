@@ -1,22 +1,15 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.Utilities;
 using IMT.Utilities.API;
-using ModsCommon.UI;
-using ModsCommon.Utilities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class GrassFillerStyle : CurbTriangulationFillerStyle
+    public class GrassFillerStyle : CurbFillerStyle
     {
         public override StyleType Type => StyleType.FillerGrass;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
-        protected override MaterialType MaterialType => MaterialType.Grass;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -35,17 +28,26 @@ namespace IMT.Manager
             get
             {
                 yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
-                yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
-                yield return new StylePropertyDataProvider<float>(nameof(CurbSize), CurbSize);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianCurbSize), MedianCurbSize);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(CornerRadius), CornerRadius);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianCornerRadius), MedianCornerRadius);
+                //yield return new StylePropertyDataProvider<float>(nameof(CurbSize), CurbSize);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianCurbSize), MedianCurbSize);
+                //yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
             }
         }
 
-        public GrassFillerStyle(Color32 color, float width, float lineOffset, float medianOffset, float elevation, float cornerRadius, float medianCornerRadius, float curbSize, float medianCurbSize) : base(color, width, lineOffset, medianOffset, elevation, cornerRadius, medianCornerRadius, curbSize, medianCurbSize) { }
+        public GrassFillerStyle(Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(offset, elevation, cornerRadius, curbSize) { }
 
-        public override FillerStyle CopyStyle() => new GrassFillerStyle(Color, Width, LineOffset, DefaultOffset, Elevation, CornerRadius, DefaultCornerRadius, CurbSize, DefaultCurbSize);
+        public override BaseFillerStyle CopyStyle() => new GrassFillerStyle(Offset, Elevation, CornerRadius, CurbSize);
+
+        protected override FillerMeshData.TextureData GetTopTexture()
+        {
+            var texture = (Texture2D)Shader.GetGlobalTexture("_TerrainGrassDiffuse");
+            var size = Shader.GetGlobalVector("_TerrainTextureTiling2");
+            var tiling = new Vector2(size.x, size.x);
+            var textureData = new FillerMeshData.TextureData(texture, UnityEngine.Color.white, tiling, 0f);
+            return textureData;
+        }
     }
 }

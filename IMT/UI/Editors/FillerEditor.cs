@@ -115,7 +115,7 @@ namespace IMT.UI.Editors
             if (style == EditObject.Style.Value.Type)
                 return;
 
-            var newStyle = SingletonManager<StyleTemplateManager>.Instance.GetDefault<FillerStyle>(style);
+            var newStyle = SingletonManager<StyleTemplateManager>.Instance.GetDefault<BaseFillerStyle>(style);
             EditObject.Style.Value.CopyTo(newStyle);
             EditObject.Style.Value = newStyle;
 
@@ -130,7 +130,7 @@ namespace IMT.UI.Editors
             PropertiesPanel.StartLayout();
         }
 
-        private void ApplyStyle(FillerStyle style)
+        private void ApplyStyle(BaseFillerStyle style)
         {
             EditObject.Style.Value = style.CopyStyle();
             Style.SelectedObject = EditObject.Style.Value.Type;
@@ -149,16 +149,16 @@ namespace IMT.UI.Editors
         }
         private void SelectTemplate(StyleTemplate template)
         {
-            if (template.Style is FillerStyle style)
+            if (template.Style is BaseFillerStyle style)
                 ApplyStyle(style);
         }
         private void CopyStyle() => Tool.ToStyleBuffer(Manager.Style.StyleType.Filler, EditObject.Style.Value);
         private void PasteStyle()
         {
-            if (Tool.FromStyleBuffer<FillerStyle>(Manager.Style.StyleType.Filler, out var style))
+            if (Tool.FromStyleBuffer<BaseFillerStyle>(Manager.Style.StyleType.Filler, out var style))
                 ApplyStyle(style);
         }
-        private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<FillerStyle>(EditObject.Style.Value.Type));
+        private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<BaseFillerStyle>(EditObject.Style.Value.Type));
         private void ApplyStyleSameStyle()
         {
             foreach (var filler in Marking.Fillers)

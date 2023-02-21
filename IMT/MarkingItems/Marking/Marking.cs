@@ -9,7 +9,6 @@ using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
-using static IMT.Utilities.MarkingFillerMeshData;
 using ObjectId = IMT.Utilities.ObjectId;
 
 namespace IMT.Manager
@@ -481,7 +480,7 @@ namespace IMT.Manager
         {
             return AddLine(pointPair, () => new MarkingStopLine(this, pointPair, style));
         }
-        public MarkingCrosswalkLine AddCrosswalkLine(MarkingPointPair pointPair, CrosswalkStyle style)
+        public MarkingCrosswalkLine AddCrosswalkLine(MarkingPointPair pointPair, BaseCrosswalkStyle style)
         {
             return AddLine(pointPair, () => new MarkingCrosswalkLine(this, pointPair, style));
         }
@@ -548,7 +547,7 @@ namespace IMT.Manager
             FillersList.Add(filler);
             RecalculateStyleData(filler);
         }
-        public MarkingFiller AddFiller(FillerContour contour, FillerStyle style, out List<MarkingRegularLine> lines)
+        public MarkingFiller AddFiller(FillerContour contour, BaseFillerStyle style, out List<MarkingRegularLine> lines)
         {
             lines = new List<MarkingRegularLine>();
             foreach (var part in contour.RawEdges)
