@@ -37,8 +37,8 @@ namespace IMT.Manager
 
     public interface IStyleData
     {
-        IEnumerable<IDrawData> GetDrawData();
         MarkingLOD LOD { get; }
         MarkingLODType LODType { get; }
+        void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
     }
 }

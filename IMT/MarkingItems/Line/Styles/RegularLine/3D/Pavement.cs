@@ -34,14 +34,11 @@ namespace IMT.Manager
         {
             if (trajectory is CombinedTrajectory combined)
             {
-                var data = new IStyleData[combined.Count];
-                for (var i = 0; i < data.Length; i += 1)
-                    data[i] = new MarkingLineMeshData(lod, combined[i], Width, Elevation, MaterialType.Pavement);
-
-                addData(new RenderGroupData(lod, MarkingLODType.Mesh, data));
+                for (var i = 0; i < combined.Count; i += 1)
+                    addData(new LineMeshData(lod, combined[i], Width, Elevation, MaterialType.Pavement));
             }
             else
-                addData(new MarkingLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement));
+                addData(new LineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement));
         }
 
         protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)

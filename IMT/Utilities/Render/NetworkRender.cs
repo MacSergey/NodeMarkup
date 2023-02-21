@@ -1,12 +1,11 @@
 ﻿using ColossalFramework;
 using ModsCommon.Utilities;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace IMT.Utilities
 {
-    public class MarkingNetworkData : BaseMarkingMeshData
+    public class MarkingNetworkData : BaseMeshData
     {
         private struct Data
         {
@@ -58,11 +57,6 @@ namespace IMT.Utilities
                     }
                 }
             }
-        }
-
-        public override IEnumerable<IDrawData> GetDrawData()
-        {
-            yield return this;
         }
 
         public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance renderData, bool infoView)

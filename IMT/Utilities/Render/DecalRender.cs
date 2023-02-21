@@ -8,7 +8,7 @@ using System;
 
 namespace IMT.Utilities
 {
-    public readonly struct DecalData : IStyleData, IDrawData
+    public readonly struct DecalData : IStyleData
     {
         private static int mainTexId = Shader.PropertyToID("_MainTex");
         private static int alphaTexId = Shader.PropertyToID("_Alpha");
@@ -138,9 +138,6 @@ namespace IMT.Utilities
 
             this = new DecalData(materialType, lod, position, 0f, color, size, textureData, effectData, pointUVs);
         }
-
-        public void OnDestroy() { }
-        public IEnumerable<IDrawData> GetDrawData() { yield return this; }
 
         public static MaterialType GetFillerMaterial(int points)
         {

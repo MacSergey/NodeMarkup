@@ -16,7 +16,7 @@ namespace IMT.Utilities
         public float scale;
         public Color32 color;
     }
-    public abstract class BaseMarkingPrefabData<PrefabType> : IStyleData, IDrawData
+    public abstract class BaseMarkingPrefabData<PrefabType> : IStyleData
         where PrefabType : PrefabInfo
     {
         public MarkingLOD LOD => MarkingLOD.NoLOD;
@@ -28,11 +28,6 @@ namespace IMT.Utilities
         {
             Info = info;
             Items = items;
-        }
-
-        public IEnumerable<IDrawData> GetDrawData()
-        {
-            yield return this;
         }
 
         public abstract void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);

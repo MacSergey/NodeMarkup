@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace IMT.Utilities
 {
-    public class FillerMeshData : IStyleData, IDrawData
+    public class FillerMeshData : IStyleData
     {
         private static int mainTexId = Shader.PropertyToID("_MainTex");
         private static int colorId = Shader.PropertyToID("_Color");
@@ -190,11 +190,6 @@ namespace IMT.Utilities
                     }
                 }
             }
-        }
-
-        public IEnumerable<IDrawData> GetDrawData()
-        {
-            yield return this;
         }
 
         public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)

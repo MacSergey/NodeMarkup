@@ -419,17 +419,17 @@ namespace IMT.Manager
                 foreach(var line in Lines)
                 {
                     foreach(var styleData in line.StyleData)
-                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
+                        DrawData[styleData.LODType][styleData.LOD].Add(styleData);
                 }
                 foreach (var fillers in Fillers)
                 {
                     foreach (var styleData in fillers.StyleData)
-                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
+                        DrawData[styleData.LODType][styleData.LOD].Add(styleData);
                 }
                 foreach (var crosswalk in Crosswalks)
                 {
                     foreach (var styleData in crosswalk.StyleData)
-                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
+                        DrawData[styleData.LODType][styleData.LOD].Add(styleData);
                 }
 
                 RecalculateList.Clear();

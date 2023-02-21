@@ -209,11 +209,6 @@ namespace IMT.Utilities
         Tree,
     }
 
-    public interface IDrawData
-    {
-        void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
-    }
-
     public abstract class EnumDictionary<EnumType, Type> : Dictionary<EnumType, Type>
         where EnumType : Enum
     {
@@ -240,7 +235,7 @@ namespace IMT.Utilities
             _ => new MarkingGroupDrawData(),
         };
     }
-    public class MarkingGroupDrawData : EnumDictionary<MarkingLOD, List<IDrawData>>
+    public class MarkingGroupDrawData : EnumDictionary<MarkingLOD, List<IStyleData>>
     {
         public virtual float LODDistance => Settings.LODDistance;
         public void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
@@ -259,7 +254,7 @@ namespace IMT.Utilities
                     drawData.Draw(cameraInfo, data, infoView);
             }
         }
-        protected override List<IDrawData> GetDefault(MarkingLOD value) => new List<IDrawData>();
+        protected override List<IStyleData> GetDefault(MarkingLOD value) => new List<IStyleData>();
     }
     public class MarkingDashGroupDrawData : MarkingGroupDrawData
     {
@@ -281,27 +276,4 @@ namespace IMT.Utilities
     {
         public override float LODDistance => Settings.TreeLODDistance;
     }
-    public class RenderGroupData : IStyleData
-    {
-        private IStyleData[] Datas { get; }
-        public MarkingLOD LOD { get; }
-        public MarkingLODType LODType { get; }
-
-        public RenderGroupData(MarkingLOD lod, MarkingLODType lodType, IStyleData[] datas)
-        {
-            LOD = lod;
-            LODType = lodType;
-            Datas = datas;
-        }
-
-        public IEnumerable<IDrawData> GetDrawData()
-        {
-            foreach (var data in Datas)
-            {
-                foreach (var drawData in data.GetDrawData())
-                    yield return drawData;
-            }
-        }
-    }
-
 }
