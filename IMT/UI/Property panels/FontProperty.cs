@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace IMT.UI
 {
-    public class FontPtopertyPanel : EditorPropertyPanel, IReusable
+    public class FontPropertyPanel : EditorPropertyPanel, IReusable
     {
         bool IReusable.InCache { get; set; }
 
@@ -80,7 +80,7 @@ namespace IMT.UI
             }
         }
 
-        public FontPtopertyPanel()
+        public FontPropertyPanel()
         {
             FontSelector = Content.AddUIComponent<CustomUIButton>();
             FontSelector.atlas = CommonTextures.Atlas;
@@ -136,9 +136,7 @@ namespace IMT.UI
         public override void Update()
         {
             base.Update();
-
-            if (Input.GetMouseButtonDown(0))
-                CheckPopup();
+            CheckPopup();
         }
 
         private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
@@ -167,6 +165,7 @@ namespace IMT.UI
             Popup.SelectedObject = FontFamily;
 
             Popup.eventKeyDown += OnPopupKeyDown;
+            Popup.eventLeaveFocus += OnPopupLeaveFocus;
             Popup.OnSelectedChanged += OnFontSelected;
 
             SetPopupPosition();
@@ -188,13 +187,19 @@ namespace IMT.UI
         }
         private void CheckPopup()
         {
-            if (Popup != null)
+            if (Popup == null)
+                return;
+
+            if (!Popup.containsFocus)
             {
-                var uiView = Popup.GetUIView();
-                var mouse = uiView.ScreenPointToGUI(Input.mousePosition / uiView.inputScale);
-                var popupRect = new Rect(Popup.absolutePosition, Popup.size);
-                if (!popupRect.Contains(mouse))
-                    ClosePopup();
+                ClosePopup();
+                return;
+            }
+
+            if (Input.GetMouseButtonDown(0) && !Popup.Raycast(GetCamera().ScreenPointToRay(Input.mousePosition)))
+            {
+                ClosePopup();
+                return;
             }
         }
         private void OnFontSelected(string font)

@@ -108,9 +108,7 @@ namespace IMT.UI
         public override void Update()
         {
             base.Update();
-
-            if (Input.GetMouseButtonDown(0))
-                CheckPopup();
+            CheckPopup();
         }
 
         private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
@@ -161,13 +159,19 @@ namespace IMT.UI
         }
         private void CheckPopup()
         {
-            if (Popup != null)
+            if (Popup == null)
+                return;
+
+            if (!Popup.containsFocus)
             {
-                var uiView = Popup.GetUIView();
-                var mouse = uiView.ScreenPointToGUI(Input.mousePosition / uiView.inputScale);
-                var popupRect = new Rect(Popup.absolutePosition, Popup.size);
-                if (!popupRect.Contains(mouse))
-                    ClosePopup();
+                ClosePopup();
+                return;
+            }
+
+            if (Input.GetMouseButtonDown(0) && !Popup.Raycast(GetCamera().ScreenPointToRay(Input.mousePosition)))
+            {
+                ClosePopup();
+                return;
             }
         }
 
@@ -325,7 +329,7 @@ namespace IMT.UI
                 }
             }
         }
-        public string RawName 
+        public string RawName
         {
             get => rawName;
             set

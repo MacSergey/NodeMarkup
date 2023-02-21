@@ -235,7 +235,7 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<FontPtopertyPanel>(this, nameof(Font), MainCategory, AddFontProperty));
+            provider.AddProperty(new PropertyInfo<FontPropertyPanel>(this, nameof(Font), MainCategory, AddFontProperty));
             provider.AddProperty(new PropertyInfo<StringPropertyPanel>(this, nameof(Text), MainCategory, AddTextProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), MainCategory, AddScaleProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), AdditionalCategory, AddAngleProperty));
@@ -252,7 +252,7 @@ namespace IMT.Manager
 #endif
         }
 
-        protected void AddFontProperty(FontPtopertyPanel fontProperty, EditorProvider provider)
+        protected void AddFontProperty(FontPropertyPanel fontProperty, EditorProvider provider)
         {
             fontProperty.Text = Localize.StyleOption_Font;
             fontProperty.Init();
