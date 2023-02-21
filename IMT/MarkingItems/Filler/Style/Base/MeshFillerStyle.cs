@@ -1,4 +1,5 @@
-﻿using IMT.UI.Editors;
+﻿using IMT.UI;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;

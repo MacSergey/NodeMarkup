@@ -10,6 +10,7 @@ namespace IMT
         protected override void OnLoad()
         {
             RenderHelper.LoadBundle();
+            ThemeHelper.LoadThemes();
             MarkingManager.UpdateAll();
             DataManager.Reload();
 
@@ -27,6 +28,7 @@ namespace IMT
             base.OnUnload();
             MarkingManager.Destroy();
             RenderHelper.UnloadBundle();
+            ThemeHelper.UnloadThemes();
         }
     }
 }

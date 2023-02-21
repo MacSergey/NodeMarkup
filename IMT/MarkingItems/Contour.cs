@@ -204,15 +204,15 @@ namespace IMT.Manager
             else
             {
                 var movedEdges = Move(lineOffset, medianOffset);
-#if DEBUG
-                SingletonMod<Mod>.Logger.Debug("Original");
-                foreach (var edge in this)
-                    SingletonMod<Mod>.Logger.Debug("\n" + edge.trajectory.Table);
+//#if DEBUG
+//                SingletonMod<Mod>.Logger.Debug("Original");
+//                foreach (var edge in this)
+//                    SingletonMod<Mod>.Logger.Debug("\n" + edge.trajectory.Table);
 
-                SingletonMod<Mod>.Logger.Debug("Moved");
-                foreach (var movedEdge in movedEdges)
-                    SingletonMod<Mod>.Logger.Debug("\n" + movedEdge.edge.trajectory.Table);
-#endif
+//                SingletonMod<Mod>.Logger.Debug("Moved");
+//                foreach (var movedEdge in movedEdges)
+//                    SingletonMod<Mod>.Logger.Debug("\n" + movedEdge.edge.trajectory.Table);
+//#endif
                 var allInters = GetAllIntersections(movedEdges);
                 var pairs = GetIntersectionPairs(movedEdges, allInters);
                 var movedContour = new Contour(movedEdges.Select(e => e.edge));

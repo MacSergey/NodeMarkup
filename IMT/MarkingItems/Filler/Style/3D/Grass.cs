@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class GrassFillerStyle : CurbFillerStyle
+    public class GrassFillerStyle : ThemeFillerStyle
     {
         public override StyleType Type => StyleType.FillerGrass;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
@@ -16,6 +16,7 @@ namespace IMT.Manager
         {
             get
             {
+                yield return nameof(Theme);
                 yield return nameof(Elevation);
                 yield return nameof(CornerRadius);
                 yield return nameof(CurbSize);
@@ -37,17 +38,26 @@ namespace IMT.Manager
             }
         }
 
-        public GrassFillerStyle(Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(offset, elevation, cornerRadius, curbSize) { }
+        public GrassFillerStyle(ThemeHelper.IThemeData theme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(theme, offset, elevation, cornerRadius, curbSize) { }
 
-        public override BaseFillerStyle CopyStyle() => new GrassFillerStyle(Offset, Elevation, CornerRadius, CurbSize);
+        public override BaseFillerStyle CopyStyle() => new GrassFillerStyle(Theme.Value, Offset, Elevation, CornerRadius, CurbSize);
 
         protected override FillerMeshData.TextureData GetTopTexture()
         {
-            var texture = (Texture2D)Shader.GetGlobalTexture("_TerrainGrassDiffuse");
-            var size = Shader.GetGlobalVector("_TerrainTextureTiling2");
-            var tiling = new Vector2(size.x, size.x);
-            var textureData = new FillerMeshData.TextureData(texture, UnityEngine.Color.white, tiling, 0f);
-            return textureData;
+            if (Theme.Value is ThemeHelper.IThemeData themeData)
+            {
+                var grass = themeData.Grass;
+                var textureData = new FillerMeshData.TextureData(grass.texture, UnityEngine.Color.white, grass.tiling, 0f);
+                return textureData;
+            }
+            else
+            {
+                var texture = (Texture2D)Shader.GetGlobalTexture("_TerrainGrassDiffuse");
+                var size = Shader.GetGlobalVector("_TerrainTextureTiling2");
+                var tiling = new Vector2(size.x, size.x);
+                var textureData = new FillerMeshData.TextureData(texture, UnityEngine.Color.white, tiling, 0f);
+                return textureData;
+            }
         }
     }
 }
