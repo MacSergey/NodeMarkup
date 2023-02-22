@@ -46,11 +46,12 @@ namespace IMT.Utilities
             public TextureData Gravel { get; }
             public TextureData Ruined { get; }
             public TextureData Cliff { get; }
+
+            public TextureData GetTexture(TextureType type);
         }
         public class ThemeData : IThemeData
         {
             public readonly MapThemeMetaData metaData;
-            public readonly Texture2D screenshot;
             public readonly string fullName;
 
             public string Id => fullName;
@@ -72,15 +73,18 @@ namespace IMT.Utilities
             {
                 this.metaData = metaData;
                 this.fullName = fullName;
+            }
 
-                //if (metaData.imageRef != null)
-                //    this.screenshot = metaData.imageRef.Instantiate<Texture2D>();
-            }
-            ~ThemeData()
+            public TextureData GetTexture(TextureType type) => type switch
             {
-                if (screenshot != null)
-                    UnityEngine.Object.Destroy(screenshot);
-            }
+                TextureType.Asphalt => throw new NotImplementedException(),
+                TextureType.Pavement => Pavement,
+                TextureType.Grass => Grass,
+                TextureType.Gravel => Gravel,
+                TextureType.Cliff => Cliff,
+                TextureType.Ruined => Ruined,
+                _ => throw new NotSupportedException(),
+            };
 
             private TextureData PavementGetter()
             {
@@ -122,34 +126,60 @@ namespace IMT.Utilities
 
             public TextureData Pavement => throw new NotImplementedException();
 
-            public TextureData Grass => new((Texture2D)Shader.GetGlobalTexture("_TerrainGrassDiffuse"), Shader.GetGlobalVector("_TerrainTextureTiling2").x);
+            public TextureData Grass => new((Texture2D)Shader.GetGlobalTexture("_TerrainGrassDiffuse"), Shader.GetGlobalVector("_TerrainTextureTiling2").x, false);
 
-            public TextureData Gravel => throw new NotImplementedException();
+            public TextureData Gravel => new((Texture2D)Shader.GetGlobalTexture("_TerrainGravelDiffuse"), Shader.GetGlobalVector("_TerrainTextureTiling2").y, false);
 
-            public TextureData Ruined => throw new NotImplementedException();
+            public TextureData Ruined => new((Texture2D)Shader.GetGlobalTexture("_TerrainRuinedDiffuse"), Shader.GetGlobalVector("_TerrainTextureTiling1").y, false);
 
-            public TextureData Cliff => throw new NotImplementedException();
+            public TextureData Cliff => new((Texture2D)Shader.GetGlobalTexture("_TerrainCliffDiffuse"), Shader.GetGlobalVector("_TerrainTextureTiling1").w, false);
+
+            public TextureData GetTexture(TextureType type) => type switch
+            {
+                TextureType.Asphalt => throw new NotImplementedException(),
+                TextureType.Pavement => Pavement,
+                TextureType.Grass => Grass,
+                TextureType.Gravel => Gravel,
+                TextureType.Cliff => Cliff,
+                TextureType.Ruined => Ruined,
+                _ => throw new NotSupportedException(),
+            };
         }
 
         public class TextureData
         {
             public readonly Texture2D texture;
             public readonly Vector2 tiling;
+            private readonly bool destroyTexture;
 
-            public TextureData(Texture2D texture, float tiling)
+            public TextureData(Texture2D texture, float tiling, bool destroyTexture = true)
             {
-                texture.wrapMode = TextureWrapMode.Repeat;
-                texture.filterMode = FilterMode.Trilinear;
-                texture.anisoLevel = 8;
+                if (destroyTexture)
+                {
+                    texture.wrapMode = TextureWrapMode.Repeat;
+                    texture.filterMode = FilterMode.Trilinear;
+                    texture.anisoLevel = 8;
+                }
                 this.texture = texture;
                 this.tiling = new Vector2(tiling, tiling);
+                this.destroyTexture = destroyTexture;
             }
 
             ~TextureData()
             {
-                if (texture != null)
+                if (destroyTexture && texture != null)
                     UnityEngine.Object.Destroy(texture);
             }
+        }
+
+        public enum TextureType
+        {
+            Asphalt,
+            Pavement,
+            Grass,
+            Gravel,
+            Cliff,
+            Ruined,
         }
     }
 }

@@ -67,10 +67,10 @@ namespace IMT.Manager
             {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
             {FillerType.Decal, new DecalFillerStyle(null, DefaultColor, DefaultOffset, Vector2.one, 0f)},
             {FillerType.Pavement, new PavementFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius)},
-            {FillerType.Grass, new GrassFillerStyle(null, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
-            {FillerType.Gravel, new GravelFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
-            {FillerType.Ruined, new RuinedFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
-            {FillerType.Cliff, new CliffFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Grass, new GrassFillerStyle(ThemeHelper.DefaultTheme, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Gravel, new GravelFillerStyle(ThemeHelper.DefaultTheme,DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Ruined, new RuinedFillerStyle(ThemeHelper.DefaultTheme,DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Cliff, new CliffFillerStyle(ThemeHelper.DefaultTheme,DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
             {FillerType.Texture, new CustomTextureFillerStyle(null, null, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize, Vector2.one, 0f)},
         };
         public static BaseFillerStyle GetDefault(FillerType type)

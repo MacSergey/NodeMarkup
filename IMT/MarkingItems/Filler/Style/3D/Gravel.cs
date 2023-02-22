@@ -6,16 +6,18 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class GravelFillerStyle : CurbFillerStyle
+    public class GravelFillerStyle : ThemeFillerStyle
     {
         public override StyleType Type => StyleType.FillerGravel;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        protected override ThemeHelper.TextureType TextureType => ThemeHelper.TextureType.Gravel;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
         {
             get
             {
+                yield return nameof(Theme);
                 yield return nameof(Elevation);
                 yield return nameof(CornerRadius);
                 yield return nameof(CurbSize);
@@ -37,17 +39,26 @@ namespace IMT.Manager
             }
         }
 
-        public GravelFillerStyle(Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(offset, elevation, cornerRadius, curbSize) { }
+        public GravelFillerStyle(ThemeHelper.IThemeData theme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(theme, offset, elevation, cornerRadius, curbSize) { }
 
-        public override BaseFillerStyle CopyStyle() => new GravelFillerStyle(Offset, Elevation, CornerRadius, CurbSize);
+        public override BaseFillerStyle CopyStyle() => new GravelFillerStyle(Theme.Value, Offset, Elevation, CornerRadius, CurbSize);
 
         protected override FillerMeshData.TextureData GetTopTexture()
         {
-            var texture = (Texture2D)Shader.GetGlobalTexture("_TerrainGravelDiffuse");
-            var size = Shader.GetGlobalVector("_TerrainTextureTiling2");
-            var tiling = new Vector2(size.y, size.y);
-            var textureData = new FillerMeshData.TextureData(texture, UnityEngine.Color.white, tiling, 0f);
-            return textureData;
+            if (Theme.Value is ThemeHelper.IThemeData themeData)
+            {
+                var gravel = themeData.Gravel;
+                var textureData = new FillerMeshData.TextureData(gravel.texture, UnityEngine.Color.white, gravel.tiling, 0f);
+                return textureData;
+            }
+            else
+            {
+                var texture = (Texture2D)Shader.GetGlobalTexture("_TerrainGravelDiffuse");
+                var size = Shader.GetGlobalVector("_TerrainTextureTiling2");
+                var tiling = new Vector2(size.y, size.y);
+                var textureData = new FillerMeshData.TextureData(texture, UnityEngine.Color.white, tiling, 0f);
+                return textureData;
+            }
         }
     }
 }

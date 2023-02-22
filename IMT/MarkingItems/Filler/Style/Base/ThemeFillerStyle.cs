@@ -12,8 +12,9 @@ namespace IMT.Manager
     public abstract class ThemeFillerStyle : CurbFillerStyle
     {
         public PropertyThemeValue Theme { get; }
+        protected abstract ThemeHelper.TextureType TextureType { get; }
 
-        public ThemeFillerStyle(ThemeHelper.IThemeData theme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(offset, elevation, cornerRadius, curbSize) 
+        public ThemeFillerStyle(ThemeHelper.IThemeData theme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(offset, elevation, cornerRadius, curbSize)
         {
             Theme = new PropertyThemeValue("THM", StyleChanged, theme);
         }
@@ -21,7 +22,7 @@ namespace IMT.Manager
         public override void CopyTo(BaseFillerStyle target)
         {
             base.CopyTo(target);
-            if(target is ThemeFillerStyle themeTarger)
+            if (target is ThemeFillerStyle themeTarger)
             {
                 themeTarger.Theme.Value = Theme.Value;
             }
@@ -37,6 +38,7 @@ namespace IMT.Manager
             themeProperty.Text = "Theme";
             themeProperty.Init(60f);
             themeProperty.RawName = Theme.RawName;
+            themeProperty.TextureType = TextureType;
             themeProperty.Theme = Theme.Value;
             themeProperty.OnValueChanged += (value) => Theme.Value = value;
         }

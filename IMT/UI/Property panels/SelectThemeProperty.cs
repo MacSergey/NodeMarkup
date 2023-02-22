@@ -22,6 +22,7 @@ namespace IMT.UI
         private SelectThemePopup Popup { get; set; }
 
         private ThemeHelper.IThemeData theme;
+        private ThemeHelper.TextureType textureType;
         public ThemeHelper.IThemeData Theme
         {
             get => theme;
@@ -39,12 +40,24 @@ namespace IMT.UI
             get => Panel.RawName;
             set => Panel.RawName = value;
         }
+        public ThemeHelper.TextureType TextureType
+        {
+            get => textureType;
+            set
+            {
+                if (value != textureType)
+                {
+                    textureType = value;
+                    Panel.TextureType = value;
+                }
+            }
+        }
 
         private static IEnumerable<ThemeHelper.IThemeData> Themes
         {
             get
             {
-                //yield return ThemeHelper.DefaultTheme;
+                yield return ThemeHelper.DefaultTheme;
 
                 foreach (var theme in ThemeHelper.ThemeDatas)
                     yield return theme;
@@ -88,6 +101,7 @@ namespace IMT.UI
         {
             base.DeInit();
             Theme = null;
+            TextureType = default;
             OnValueChanged = null;
         }
         protected void ValueChanged() => OnValueChanged?.Invoke(Theme);
@@ -118,7 +132,7 @@ namespace IMT.UI
             Popup.EntityHeight = 50f;
             Popup.MaxVisibleItems = 10;
             Popup.maximumSize = new Vector2(230f, 700f);
-            Popup.Init(Themes);
+            Popup.Init(TextureType, Themes);
             Popup.Focus();
             Popup.SelectedObject = Theme;
 
@@ -213,15 +227,23 @@ namespace IMT.UI
     {
         protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchText { get; set; } = string.Empty;
-        public override void Init(IEnumerable<ThemeHelper.IThemeData> values, Func<ThemeHelper.IThemeData, bool> selector = null)
+        private ThemeHelper.TextureType TextureType { get; set; }
+        public void Init(ThemeHelper.TextureType textureType, IEnumerable<ThemeHelper.IThemeData> values, Func<ThemeHelper.IThemeData, bool> selector = null)
         {
+            TextureType = textureType;
             Search.text = SearchText;
             base.Init(values, selector);
         }
         public override void DeInit()
         {
+            TextureType = default;
             SearchText = Search.text;
             base.DeInit();
+        }
+        protected override void SetEntityValue(ThemeEntity entity, ThemeHelper.IThemeData value, bool selected)
+        {
+            entity.TextureType = TextureType;
+            base.SetEntityValue(entity, value, selected);
         }
 
         protected override string GetName(ThemeHelper.IThemeData value) => value.Name;
@@ -240,6 +262,12 @@ namespace IMT.UI
                 Panel.Theme = value;
             }
         }
+        public ThemeHelper.TextureType TextureType
+        {
+            get => Panel.TextureType;
+            set => Panel.TextureType = value;
+        }
+
         public ThemeEntity()
         {
             Panel = AddUIComponent<ThemePanel>();
@@ -257,6 +285,7 @@ namespace IMT.UI
         bool IReusable.InCache { get; set; }
 
         private ThemeHelper.IThemeData theme;
+        private ThemeHelper.TextureType textureType;
         private string rawName;
 
         public ThemeHelper.IThemeData Theme
@@ -267,7 +296,7 @@ namespace IMT.UI
                 if (value != theme)
                 {
                     theme = value;
-                    rawName = theme.Id;
+                    rawName = theme?.Id ?? string.Empty;
                     Set();
                 }
             }
@@ -281,16 +310,28 @@ namespace IMT.UI
                 Set();
             }
         }
+        public ThemeHelper.TextureType TextureType
+        {
+            get => textureType;
+            set
+            {
+                if (value != textureType)
+                {
+                    textureType = value;
+                    Set();
+                }
+            }
+        }
 
-        //private CustomUITextureSprite Screenshot { get; set; }
+        private CustomUITextureSprite Screenshot { get; set; }
         private CustomUILabel Title { get; set; }
 
         public ThemePanel()
         {
             autoLayout = true;
 
-            //Screenshot = AddUIComponent<CustomUITextureSprite>();
-            //Screenshot.size = new Vector2(90f, 90f);
+            Screenshot = AddUIComponent<CustomUITextureSprite>();
+            Screenshot.size = new Vector2(90f, 90f);
 
             Title = AddUIComponent<CustomUILabel>();
             Title.autoSize = false;
@@ -303,23 +344,24 @@ namespace IMT.UI
 
         public void DeInit()
         {
-            //Screenshot.texture = null;
+            Screenshot.texture = null;
             theme = default;
+            TextureType = default;
         }
 
         private void Set()
         {
             if (Theme is ThemeHelper.IThemeData data)
             {
-                //Screenshot.texture = Theme.screenshot;
-                //Screenshot.isVisible = true;
+                Screenshot.texture = Theme.GetTexture(TextureType).texture;
+                Screenshot.isVisible = true;
                 autoLayoutPadding = new RectOffset(5, 5, 5, 5);
                 Title.text = data.Name;
             }
             else
             {
-                //Screenshot.texture = null;
-                //Screenshot.isVisible = false;
+                Screenshot.texture = null;
+                Screenshot.isVisible = false;
                 autoLayoutPadding = new RectOffset(8, 8, 5, 5);
                 Title.text = string.IsNullOrEmpty(RawName) ? IMT.Localize.StyleOption_AssetNotSet : string.Format(IMT.Localize.StyleOption_AssetMissed, RawName);
             }
@@ -334,15 +376,10 @@ namespace IMT.UI
         }
         private void SetPosition()
         {
-            //if (Screenshot != null && Title != null)
-            //{
-            //    Screenshot.size = new Vector2(height - autoLayoutPadding.vertical, height - autoLayoutPadding.vertical);
-            //    var titleWidth = width - (Screenshot.isVisible ? Screenshot.width + autoLayoutPadding.horizontal * 2f : autoLayoutPadding.horizontal);
-            //    Title.size = new Vector2(titleWidth, height - autoLayoutPadding.vertical);
-            //}
-            if (Title != null)
+            if (Screenshot != null && Title != null)
             {
-                var titleWidth = width - autoLayoutPadding.horizontal;
+                Screenshot.size = new Vector2(height - autoLayoutPadding.vertical, height - autoLayoutPadding.vertical);
+                var titleWidth = width - (Screenshot.isVisible ? Screenshot.width + autoLayoutPadding.horizontal * 2f : autoLayoutPadding.horizontal);
                 Title.size = new Vector2(titleWidth, height - autoLayoutPadding.vertical);
             }
         }

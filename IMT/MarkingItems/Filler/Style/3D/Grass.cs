@@ -10,6 +10,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.FillerGrass;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        protected override ThemeHelper.TextureType TextureType => ThemeHelper.TextureType.Grass;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
