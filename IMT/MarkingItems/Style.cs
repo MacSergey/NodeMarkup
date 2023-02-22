@@ -416,6 +416,7 @@ namespace IMT.Manager
                 Voids.FromXml(config, DefaultEffect);
             }
         }
+        public virtual void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees) { }
 
         public override string ToString() => Type.ToString();
 

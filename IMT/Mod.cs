@@ -273,6 +273,7 @@ namespace IMT
             {
                 success &= Patch_LoadingManager_LoadCustomContent();
                 success &= Patch_LoadingScreenMod_LoadImpl();
+                success &= Patch_LoadingScreenMod_UsedAssets();
                 success &= Patch_PackageHelper_ResolveLegacyTypeHandler();
             }
         }
@@ -419,7 +420,7 @@ namespace IMT
                 return success;
             else
             {
-                Logger.Error($"LSM not founded, patch skiped");
+                Logger.Error($"LSM is not found, patch skiped");
                 return true;
             }
         }
@@ -509,6 +510,22 @@ namespace IMT
             }
 
             return newInstructions;
+        }
+
+        private bool Patch_LoadingScreenMod_UsedAssets()
+        {
+            if (AccessTools.TypeByName("LoadingScreenModRevisited.UsedAssets") is Type type)
+                return AddPostfix(typeof(Mod), nameof(Mod.LoadingScreenMod_UsedAssets_Postfix), type);
+            else
+            {
+                Logger.Error($"LSM is not found, patch skiped");
+                return true;
+            }
+        }
+        private static void LoadingScreenMod_UsedAssets_Postfix(HashSet<string> ____netAssets, HashSet<string> ____propAssets, HashSet<string> ____treeAssets)
+        {
+            if (SingletonItem<SerializableDataExtension>.Exist)
+                SingletonItem<SerializableDataExtension>.Instance.SetUsedPrefabs(____netAssets, ____propAssets, ____treeAssets);
         }
 
         private bool Patch_PackageHelper_ResolveLegacyTypeHandler()

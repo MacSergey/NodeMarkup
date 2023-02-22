@@ -792,6 +792,18 @@ namespace IMT.Manager
                 Update();
         }
 
+        public void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            foreach (var line in Lines)
+                line.GetUsedAssets(networks, props, trees);
+
+            foreach (var filler in Fillers)
+                filler.GetUsedAssets(networks, props, trees);
+
+            foreach (var crosswalk in Crosswalks)
+                crosswalk.GetUsedAssets(networks, props, trees);
+        }
+
         #endregion
 
         #region UTILITY

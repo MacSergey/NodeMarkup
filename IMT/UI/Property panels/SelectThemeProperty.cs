@@ -363,7 +363,7 @@ namespace IMT.UI
                 Screenshot.texture = null;
                 Screenshot.isVisible = false;
                 autoLayoutPadding = new RectOffset(8, 8, 5, 5);
-                Title.text = string.IsNullOrEmpty(RawName) ? IMT.Localize.StyleOption_AssetNotSet : string.Format(IMT.Localize.StyleOption_AssetMissed, RawName);
+                Title.text = string.IsNullOrEmpty(RawName) ? IMT.Localize.StyleOption_AssetNotSet : string.Format(IMT.Localize.StyleOption_ThemeMissed, RawName);
             }
 
             SetPosition();

@@ -2026,4 +2026,10 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_ScaleUnlock" xml:space="preserve">
     <value>Custom proportions</value>
   </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>Selected theme missed: "{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>Map theme</value>
+  </data>
 </root>

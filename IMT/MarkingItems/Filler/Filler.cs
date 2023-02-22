@@ -81,7 +81,10 @@ namespace IMT.Manager
 
             filler = new MarkingFiller(contour, style);
             return true;
-
+        }
+        public void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            Style.Value.GetUsedAssets(networks, props, trees);
         }
 
         public void Render(OverlayData data)

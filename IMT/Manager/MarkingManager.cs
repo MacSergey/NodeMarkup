@@ -77,7 +77,7 @@ namespace IMT.Manager
         }
         public static XElement ToXml()
         {
-            var config = new XElement(nameof(NodeMarking));
+            var config = new XElement("NodeMarking");
             config.AddAttr("V", SingletonMod<Mod>.Version);
 
             Errors = 0;
@@ -95,6 +95,11 @@ namespace IMT.Manager
 
             SingletonManager<NodeMarkingManager>.Instance.FromXml(config, map, version, needUpdate);
             SingletonManager<SegmentMarkingManager>.Instance.FromXml(config, map, version, needUpdate);
+        }
+        public static void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            SingletonManager<NodeMarkingManager>.Instance.GetUsedAssets(networks, props, trees);
+            SingletonManager<SegmentMarkingManager>.Instance.GetUsedAssets(networks, props, trees);
         }
         public static Version GetVersion(XElement config)
         {
@@ -238,6 +243,12 @@ namespace IMT.Manager
                     MarkingManager.Errors += 1;
                 }
             }
+        }
+
+        public void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            foreach (var marking in Markings.Values)
+                marking.GetUsedAssets(networks, props, trees);
         }
 
         public IEnumerator<TypeMarking> GetEnumerator() => Markings.Values.GetEnumerator();

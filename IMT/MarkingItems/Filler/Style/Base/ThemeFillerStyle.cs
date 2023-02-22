@@ -52,7 +52,7 @@ namespace IMT.Manager
         }
         protected void AddThemeProperty(SelectThemeProperty themeProperty, EditorProvider provider)
         {
-            themeProperty.Text = "Theme";
+            themeProperty.Text = Localize.StyleOption_Theme;
             themeProperty.Init(60f);
             themeProperty.RawName = Theme.RawName;
             themeProperty.TextureType = TextureType;

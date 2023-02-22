@@ -208,5 +208,10 @@ namespace IMT.Manager
             Tiling.FromXml(config, Vector2.one);
             Angle.FromXml(config, 0f);
         }
+
+        public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            props.Add(Decal.RawName);
+        }
     }
 }

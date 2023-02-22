@@ -2784,5 +2784,15 @@ namespace IMT
 		/// Custom proportions
 		/// </summary>
 		public static string StyleOption_ScaleUnlock => LocaleManager.GetString("StyleOption_ScaleUnlock", Culture);
+
+		/// <summary>
+		/// Selected theme missed: "{0}"
+		/// </summary>
+		public static string StyleOption_ThemeMissed => LocaleManager.GetString("StyleOption_ThemeMissed", Culture);
+
+		/// <summary>
+		/// Map theme
+		/// </summary>
+		public static string StyleOption_Theme => LocaleManager.GetString("StyleOption_Theme", Culture);
 	}
 }

@@ -196,10 +196,15 @@ namespace IMT.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
-            Decal.FromXml(config, null); 
+            Decal.FromXml(config, null);
             DecalColor.FromXml(config, Decal.Value?.m_color0);
             Tiling.FromXml(config, Vector2.one);
             Angle.FromXml(config, 0f);
+        }
+
+        public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            props.Add(Decal.RawName);
         }
     }
 }

@@ -235,6 +235,11 @@ namespace IMT.Manager
             }
         }
 
+        public void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            Style.Value.GetUsedAssets(networks, props, trees);
+        }
+
         #endregion
 
         public override string ToString() => CrosswalkLine.ToString();

@@ -46,5 +46,6 @@ namespace IMT.Manager
         protected override void GetStyleData(Action<IStyleData> addData) { }
 
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged) { }
+        public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees) { }
     }
 }
