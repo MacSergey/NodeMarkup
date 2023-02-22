@@ -1,4 +1,5 @@
-﻿using IMT.Manager;
+﻿using ICities;
+using IMT.Manager;
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
@@ -9,8 +10,6 @@ namespace IMT
     {
         protected override void OnLoad()
         {
-            RenderHelper.LoadBundle();
-            ThemeHelper.LoadThemes();
             MarkingManager.UpdateAll();
             DataManager.Reload();
 
@@ -27,6 +26,14 @@ namespace IMT
         {
             base.OnUnload();
             MarkingManager.Destroy();
+        }
+        protected override void OnPreLoaded()
+        {
+            RenderHelper.LoadBundle();
+            ThemeHelper.LoadThemes();
+        }
+        protected override void OnPreUnloaded()
+        {
             RenderHelper.UnloadBundle();
             ThemeHelper.UnloadThemes();
         }

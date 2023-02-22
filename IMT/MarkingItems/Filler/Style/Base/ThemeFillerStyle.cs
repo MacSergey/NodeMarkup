@@ -5,6 +5,7 @@ using IMT.Utilities;
 using IMT.Utilities.API;
 using ModsCommon.Utilities;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace IMT.Manager
@@ -28,6 +29,22 @@ namespace IMT.Manager
             }
         }
 
+        protected override FillerMeshData.TextureData GetTopTexture()
+        {
+            if (Theme.Value is ThemeHelper.IThemeData themeData)
+            {         
+                var theme = themeData.GetTexture(TextureType);
+                var textureData = new FillerMeshData.TextureData(theme.texture, UnityEngine.Color.white, theme.tiling, 0f);
+                return textureData;
+            }
+            else
+            {
+                var theme = ThemeHelper.DefaultTheme.GetTexture(TextureType);
+                var textureData = new FillerMeshData.TextureData(theme.texture, UnityEngine.Color.white, theme.tiling, 0f);
+                return textureData;
+            }
+        }
+
         protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {
             base.GetUIComponents(filler, provider);
@@ -41,6 +58,18 @@ namespace IMT.Manager
             themeProperty.TextureType = TextureType;
             themeProperty.Theme = Theme.Value;
             themeProperty.OnValueChanged += (value) => Theme.Value = value;
+        }
+
+        public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
+        {
+            base.FromXml(config, map, invert, typeChanged);
+            Theme.FromXml(config, null);
+        }
+        public override XElement ToXml()
+        {
+            var config = base.ToXml();
+            Theme.ToXml(config);
+            return config;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Packaging;
+using ModsCommon;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,12 +18,11 @@ namespace IMT.Utilities
 
         public static void LoadThemes()
         {
+            SingletonMod<Mod>.Logger.Debug($"Start loading map themes");
+
             foreach (var themeAsset in PackageManager.FilterAssets(UserAssetType.MapThemeMetaData))
             {
                 if (themeAsset == null || themeAsset.package == null)
-                    continue;
-
-                if (themeAsset.fullName.Contains("CO-Winter-Theme") && !SteamHelper.IsDLCOwned(SteamHelper.DLC.SnowFallDLC))
                     continue;
 
                 var themeData = themeAsset.Instantiate<MapThemeMetaData>();
@@ -30,9 +30,12 @@ namespace IMT.Utilities
 
                 Themes[themeAsset.fullName] = new ThemeData(themeData, themeAsset.fullName);
             }
+
+            SingletonMod<Mod>.Logger.Debug($"{Themes.Count} map themes loaded");
         }
         public static void UnloadThemes()
         {
+            SingletonMod<Mod>.Logger.Debug($"Unloading map themes");
             Themes.Clear();
         }
 

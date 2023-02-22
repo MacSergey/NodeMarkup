@@ -42,23 +42,5 @@ namespace IMT.Manager
         public RuinedFillerStyle(ThemeHelper.IThemeData theme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(theme, offset, elevation, cornerRadius, curbSize) { }
 
         public override BaseFillerStyle CopyStyle() => new RuinedFillerStyle(Theme.Value, Offset, Elevation, CornerRadius, CurbSize);
-
-        protected override FillerMeshData.TextureData GetTopTexture()
-        {
-            if (Theme.Value is ThemeHelper.IThemeData themeData)
-            {
-                var ruined = themeData.Ruined;
-                var textureData = new FillerMeshData.TextureData(ruined.texture, UnityEngine.Color.white, ruined.tiling, 0f);
-                return textureData;
-            }
-            else
-            {
-                var texture = (Texture2D)Shader.GetGlobalTexture("_TerrainRuinedDiffuse");
-                var size = Shader.GetGlobalVector("_TerrainTextureTiling1");
-                var tiling = new Vector2(size.y, size.y);
-                var textureData = new FillerMeshData.TextureData(texture, UnityEngine.Color.white, tiling, 0f);
-                return textureData;
-            }
-        }
     }
 }

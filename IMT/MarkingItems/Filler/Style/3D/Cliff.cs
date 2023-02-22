@@ -48,23 +48,5 @@ namespace IMT.Manager
         public CliffFillerStyle(ThemeHelper.IThemeData theme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(theme, offset, elevation, cornerRadius, curbSize) { }
 
         public override BaseFillerStyle CopyStyle() => new CliffFillerStyle(Theme.Value, Offset, Elevation, CornerRadius, CurbSize);
-
-        protected override FillerMeshData.TextureData GetTopTexture()
-        {
-            if (Theme.Value is ThemeHelper.IThemeData themeData)
-            {
-                var cliff = themeData.Cliff;
-                var textureData = new FillerMeshData.TextureData(cliff.texture, UnityEngine.Color.white, cliff.tiling, 0f);
-                return textureData;
-            }
-            else
-            {
-                var texture = (Texture2D)Shader.GetGlobalTexture("_TerrainCliffDiffuse");
-                var size = Shader.GetGlobalVector("_TerrainTextureTiling1");
-                var tiling = new Vector2(size.w, size.w);
-                var textureData = new FillerMeshData.TextureData(texture, UnityEngine.Color.white, tiling, 0f);
-                return textureData;
-            }
-        }
     }
 }
