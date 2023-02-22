@@ -2794,5 +2794,15 @@ namespace IMT
 		/// Map theme
 		/// </summary>
 		public static string StyleOption_Theme => LocaleManager.GetString("StyleOption_Theme", Culture);
+
+		/// <summary>
+		/// Add to favorites
+		/// </summary>
+		public static string StyleOption_AddToFavorites => LocaleManager.GetString("StyleOption_AddToFavorites", Culture);
+
+		/// <summary>
+		/// Remove from favorites
+		/// </summary>
+		public static string StyleOption_RemoveFromFavorites => LocaleManager.GetString("StyleOption_RemoveFromFavorites", Culture);
 	}
 }

@@ -2032,4 +2032,10 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_Theme" xml:space="preserve">
     <value>Map theme</value>
   </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>Add to favorites</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>Remove from favorites</value>
+  </data>
 </root>

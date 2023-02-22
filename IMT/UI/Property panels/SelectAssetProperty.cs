@@ -1,4 +1,7 @@
 ﻿using ColossalFramework.UI;
+using IMT.Manager;
+using IMT.Utilities;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
@@ -89,6 +92,7 @@ namespace IMT.UI
 
             Panel = Background.AddUIComponent<PanelType>();
             Panel.relativePosition = new Vector3(0f, 0f);
+            Panel.ShowFavorite = false;
 
             Button = Background.AddUIComponent<CustomUIButton>();
             Button.atlas = TextureHelper.InGameAtlas;
@@ -132,7 +136,10 @@ namespace IMT.UI
             Popup.EntityHeight = 50f;
             Popup.MaxVisibleItems = 10;
             Popup.maximumSize = new Vector2(230f, 700f);
-            Popup.Init(PrefabSortPredicate != null ? Prefabs.OrderBy(PrefabSortPredicate) : Prefabs, PrefabSelectPredicate);
+            if (PrefabSortPredicate != null)
+                Popup.Init(Prefabs.OrderByDescending(p => SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(p.name)).ThenBy(PrefabSortPredicate), PrefabSelectPredicate);
+            else
+                Popup.Init(Prefabs.OrderByDescending(p => SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(p.name)), PrefabSelectPredicate);
             Popup.Focus();
             Popup.SelectedObject = Prefab;
 
@@ -315,6 +322,7 @@ namespace IMT.UI
 
         private PrefabType prefab;
         private string rawName;
+        private bool showFavorite;
 
         public PrefabType Prefab
         {
@@ -338,11 +346,22 @@ namespace IMT.UI
                 Set();
             }
         }
+        public bool ShowFavorite
+        {
+            get => showFavorite;
+            set
+            {
+                showFavorite = value;
+                Set();
+            }
+        }
 
         private CustomUISprite Screenshot { get; set; }
         private CustomUILabel Title { get; set; }
+        private CustomUIButton Favorite { get; set; }
 
         protected abstract string LocalizedTitle { get; }
+        private bool IsFavorite => SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(RawName);
 
         public PrefabPanel()
         {
@@ -357,6 +376,14 @@ namespace IMT.UI
             Title.textScale = 0.7f;
             Title.verticalAlignment = UIVerticalAlignment.Middle;
 
+            Favorite = AddUIComponent<CustomUIButton>();
+            Favorite.atlas = IMTTextures.Atlas;
+            Favorite.foregroundSpriteMode = UIForegroundSpriteMode.Fill;
+            Favorite.size = new Vector2(20, 90);
+            Favorite.eventClick += FavoriteClick;
+
+            showFavorite = true;
+
             Set();
         }
 
@@ -365,6 +392,7 @@ namespace IMT.UI
             Screenshot.atlas = null;
             Screenshot.spriteName = string.Empty;
             prefab = null;
+            showFavorite = true;
             RawName = string.Empty;
         }
 
@@ -374,8 +402,9 @@ namespace IMT.UI
             {
                 Screenshot.atlas = prefab.m_Atlas;
                 Screenshot.spriteName = prefab.m_Thumbnail;
-                Screenshot.isVisible = true;
-                autoLayoutPadding = new RectOffset(5, 5, 5, 5);
+                Screenshot.isVisible = !string.IsNullOrEmpty(Screenshot.spriteName);
+                Favorite.isVisible = ShowFavorite;
+                SetFavoriteButton();
                 Title.text = LocalizedTitle;
             }
             else
@@ -383,11 +412,43 @@ namespace IMT.UI
                 Screenshot.atlas = null;
                 Screenshot.spriteName = string.Empty;
                 Screenshot.isVisible = false;
-                autoLayoutPadding = new RectOffset(8, 8, 5, 5);
+                Favorite.isVisible = false;
                 Title.text = string.IsNullOrEmpty(RawName) ? IMT.Localize.StyleOption_AssetNotSet : string.Format(IMT.Localize.StyleOption_AssetMissed, RawName);
             }
+            autoLayoutPadding = Screenshot.isVisible ? new RectOffset(5, 5, 5, 5) : new RectOffset(8, 5, 5, 5);
 
             SetPosition();
+        }
+        private void SetFavoriteButton()
+        {
+            if(IsFavorite)
+            {
+                Favorite.tooltip = IMT.Localize.StyleOption_RemoveFromFavorites;
+
+                Favorite.normalFgSprite = IMTTextures.SetDefaultHeaderButton;
+                Favorite.hoveredFgSprite = IMTTextures.UnsetDefaultHeaderButton;
+                Favorite.pressedFgSprite = IMTTextures.UnsetDefaultHeaderButton;
+                Favorite.focusedFgSprite = IMTTextures.SetDefaultHeaderButton;
+
+                Favorite.color = new Color32(255, 215, 0, 255);
+                Favorite.hoveredColor = new Color32(255, 200, 0, 255);
+                Favorite.pressedColor = new Color32(255, 190, 0, 255);
+                Favorite.focusedColor = new Color32(255, 215, 0, 255);
+            }
+            else
+            {
+                Favorite.tooltip = IMT.Localize.StyleOption_AddToFavorites;
+
+                Favorite.normalFgSprite = IMTTextures.NotSetDefaultHeaderButton;
+                Favorite.hoveredFgSprite = IMTTextures.SetDefaultHeaderButton;
+                Favorite.pressedFgSprite = IMTTextures.SetDefaultHeaderButton;
+                Favorite.focusedFgSprite = IMTTextures.NotSetDefaultHeaderButton;
+
+                Favorite.color = new Color32(255, 255, 255, 255);
+                Favorite.hoveredColor = new Color32(255, 200, 0, 255);
+                Favorite.pressedColor = new Color32(255, 190, 0, 255);
+                Favorite.focusedColor = new Color32(255, 255, 255, 255);
+            }
         }
 
         protected override void OnSizeChanged()
@@ -400,9 +461,23 @@ namespace IMT.UI
             if (Screenshot != null && Title != null)
             {
                 Screenshot.size = new Vector2(height - autoLayoutPadding.vertical, height - autoLayoutPadding.vertical);
-                var titleWidth = width - (Screenshot.isVisible ? Screenshot.width + autoLayoutPadding.horizontal * 2f : autoLayoutPadding.horizontal);
+                Favorite.size = new Vector2(20f, height - autoLayoutPadding.vertical);
+
+                var titleWidth = width - autoLayoutPadding.horizontal;
+                if (Screenshot.isVisible)
+                    titleWidth -= Screenshot.width + autoLayoutPadding.horizontal;
+                if (Favorite.isVisible)
+                    titleWidth -= Favorite.width + autoLayoutPadding.horizontal;
                 Title.size = new Vector2(titleWidth, height - autoLayoutPadding.vertical);
             }
+        }
+
+        private void FavoriteClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            eventParam.Use();
+
+            SingletonManager<FavoritePrefabsManager>.Instance.Set(RawName, !IsFavorite);
+            SetFavoriteButton();
         }
     }
     public class PropPanel : PrefabPanel<PropInfo>

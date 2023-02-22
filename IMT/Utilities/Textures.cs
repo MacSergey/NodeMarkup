@@ -30,6 +30,7 @@ namespace IMT.Utilities
         public static string DuplicateHeaderButton => nameof(DuplicateHeaderButton);
         public static string SetDefaultHeaderButton => nameof(SetDefaultHeaderButton);
         public static string UnsetDefaultHeaderButton => nameof(UnsetDefaultHeaderButton);
+        public static string NotSetDefaultHeaderButton => nameof(NotSetDefaultHeaderButton);
         public static string ApplyHeaderButton => nameof(ApplyHeaderButton);
         public static string ApplyAllHeaderButton => nameof(ApplyAllHeaderButton);
         public static string PackageHeaderButton => nameof(PackageHeaderButton);
@@ -122,6 +123,7 @@ namespace IMT.Utilities
             spriteParams[DuplicateHeaderButton] = new RectOffset();
             spriteParams[SetDefaultHeaderButton] = new RectOffset();
             spriteParams[UnsetDefaultHeaderButton] = new RectOffset();
+            spriteParams[NotSetDefaultHeaderButton] = new RectOffset();
             spriteParams[ApplyHeaderButton] = new RectOffset();
             spriteParams[ApplyAllHeaderButton] = new RectOffset();
             spriteParams[PackageHeaderButton] = new RectOffset();

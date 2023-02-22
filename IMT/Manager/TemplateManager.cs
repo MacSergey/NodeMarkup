@@ -48,6 +48,7 @@ namespace IMT.Manager
             SingletonManager<StyleTemplateManager>.Instance.LoadData();
             SingletonManager<IntersectionTemplateManager>.Instance.LoadData();
             SingletonManager<RoadTemplateManager>.Instance.LoadData();
+            SingletonManager<FavoritePrefabsManager>.Instance.LoadData();
         }
         public static void Clear()
         {
@@ -56,6 +57,7 @@ namespace IMT.Manager
             SingletonManager<StyleTemplateManager>.Instance.ClearData();
             SingletonManager<IntersectionTemplateManager>.Instance.ClearData();
             SingletonManager<RoadTemplateManager>.Instance.ClearData();
+            SingletonManager<FavoritePrefabsManager>.Instance.ClearData();
             Authors.Clear();
         }
     }
@@ -562,6 +564,39 @@ namespace IMT.Manager
             public Guid preset;
             public bool flip;
             public bool invert;
+        }
+    }
+
+    public class FavoritePrefabsManager : DataManager
+    {
+        public override SavedString Saved => Settings.FavoritePrefabs;
+        private HashSet<string> Favorites { get; } = new HashSet<string>();
+
+        public bool IsFavorite(string prefab) => Favorites.Contains(prefab);
+        public void Set(string prefab, bool favorite)
+        {
+            if (favorite)
+                Favorites.Add(prefab);
+            else
+                Favorites.Remove(prefab);
+
+            SaveData();
+        }
+
+        protected override void ClearData()
+        {
+            Favorites.Clear();
+        }
+
+        protected override void LoadData()
+        {
+            ClearData();
+            Favorites.AddRange(Saved.value.Split(';'));
+        }
+
+        protected override void SaveData()
+        {
+            Saved.value = string.Join(";", Favorites.ToArray());
         }
     }
 }

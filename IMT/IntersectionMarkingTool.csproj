@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.14.0.113</AssemblyVersion>
+    <AssemblyVersion>1.14.0.124</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -124,6 +124,7 @@
     <None Remove="Resources\HeaderButtons\CopyToAllHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\CopyToSameHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\LinkHeaderButton.png" />
+    <None Remove="Resources\HeaderButtons\NotSetDefaultHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\ResetHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\UnlinkHeaderButton.png" />
     <None Remove="Resources\imt-linux" />
@@ -177,6 +178,7 @@
     <EmbeddedResource Include="Resources\HeaderButtons\LinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HeaderButtons\NotSetDefaultHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ResetHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\UnlinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
