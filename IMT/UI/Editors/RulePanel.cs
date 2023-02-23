@@ -91,7 +91,7 @@ namespace IMT.UI.Editors
             OnEnter = null;
             OnLeave = null;
 
-            this.isExpand = false;
+            isExpand = false;
 
             (this as IPropertyContainer).ExpandList.Clear();
         }
@@ -313,6 +313,7 @@ namespace IMT.UI.Editors
         {
             Editor.RefreshEditor();
             AddStyleProperties();
+            Header.Style = Rule.Style.Value.Type;
         }
         public void Refresh()
         {

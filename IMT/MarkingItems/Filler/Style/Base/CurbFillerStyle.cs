@@ -72,7 +72,7 @@ namespace IMT.Manager
                     foreach (var topContour in topContours)
                     {
                         var roundedTop = topContour.SetCornerRadius(lineCornerRadius, medianCornerRadius);
-                        var trajectories = roundedTop.Select(c => c.trajectory).ToArray();
+                        var trajectories = roundedTop.Select(c => c.trajectory.Elevate(Elevation)).ToArray();
                         var centerDatas = DecalData.GetData(DecalData.DecalType.FillerIsland, lod, trajectories, SplitParams, centerColor, centerTexture, DecalData.EffectData.Default);
                         foreach (var data in centerDatas)
                         {

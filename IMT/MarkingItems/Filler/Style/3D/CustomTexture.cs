@@ -81,6 +81,21 @@ namespace IMT.Manager
                 return false;
             }
         }
+        protected override bool GetTopTexture(out FillerMeshData.TextureData textureData, out Color color)
+        {
+            if (Decal.Value is PropInfo decal)
+            {
+                var mainTexture = decal.m_material.mainTexture as Texture2D;
+                var size = decal.m_material.GetVector("_DecalSize");
+                var tiling = new Vector2(1f / (Tiling.Value.x * size.x), 1f / (Tiling.Value.y * size.z));
+                var angle = Angle * Mathf.Deg2Rad;
+                color = DecalColor.Value ?? decal.m_color0;
+                textureData = new FillerMeshData.TextureData(mainTexture, tiling, angle);
+                return true;
+            }
+            else
+                return base.GetTopTexture(out textureData, out color);
+        }
 
         protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {

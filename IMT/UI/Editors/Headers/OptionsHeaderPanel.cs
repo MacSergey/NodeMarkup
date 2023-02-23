@@ -47,10 +47,10 @@ namespace IMT.UI.Editors
             Content.AddButton(ApplySameType);
         }
 
-        public void Init(IPropertyEditor editor, Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
+        public virtual void Init(IPropertyEditor editor, Style.StyleType styleType, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
         {
             Editor = editor;
-            StyleGroup = styleGroup.GetGroup();
+            StyleGroup = styleType.GetGroup();
             ApplyTemplate.Button.Init(StyleGroup, onSelectTemplate);
 
             SetPasteEnabled();
@@ -120,9 +120,21 @@ namespace IMT.UI.Editors
         public event Action OnExpand;
 
         protected CustomUIButton ExpandButton { get; set; }
+        protected CustomUISprite Icon { get; set; }
+        protected CustomUISprite Separator { get; set; }
+
         HeaderButtonInfo<HeaderButton> ApplyAllRules { get; }
 
         public bool IsExpand { set => ExpandButton.normalBgSprite = value ? IMTTextures.ListItemCollapse : IMTTextures.ListItemExpand; }
+        public Style.StyleType Style
+        {
+            get => (Style.StyleType)Enum.Parse(typeof(Style.StyleType), Icon.spriteName);
+            set
+            {
+                Icon.spriteName = value.ToString();
+                Icon.parent.tooltip = value.Description();
+            }
+        }
 
         public RuleHeaderPanel()
         {
@@ -131,10 +143,33 @@ namespace IMT.UI.Editors
             ExpandButton.atlas = IMTTextures.Atlas;
             ExpandButton.size = new Vector2(30, 30);
             ExpandButton.zOrder = 0;
-            ExpandButton.eventClick += (_,_) => OnExpand?.Invoke();
+            ExpandButton.eventClick += (_, _) => OnExpand?.Invoke();
+
+            var iconCircle = AddUIComponent<CustomUISprite>();
+            iconCircle.atlas = IMTTextures.Atlas;
+            iconCircle.spriteName = IMTTextures.StyleCircle;
+            iconCircle.size = new Vector2(19f, 19f);
+            iconCircle.zOrder = 1;
+
+            Icon = iconCircle.AddUIComponent<CustomUISprite>();
+            Icon.atlas = IMTTextures.Atlas;
+            Icon.size = new Vector2(19f, 19f);
+            Icon.relativePosition = Vector2.zero;
+
+            Separator = AddUIComponent<CustomUISprite>();
+            Separator.atlas = CommonTextures.Atlas;
+            Separator.spriteName = CommonTextures.EmptyWithotBorder;
+            Separator.size = new Vector2(2f, 30f);
+            Separator.color = new Color32(0, 0, 0, 128);
+            Separator.zOrder = 2;
 
             ApplyAllRules = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyStyleHeaderButton, IMT.Localize.HeaderPanel_ApplyAllRules, ApplyAllRulesClick);
             Content.AddButton(ApplyAllRules);
+        }
+        public override void Init(IPropertyEditor editor, Style.StyleType styleType, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
+        {
+            base.Init(editor, styleType, onSelectTemplate, isDeletable);
+            Style = styleType;
         }
         public override void DeInit()
         {
@@ -146,9 +181,13 @@ namespace IMT.UI.Editors
         protected override void SetSize()
         {
             base.SetSize();
-            ExpandButton.relativePosition = new Vector3(ItemsPadding, (height - ExpandButton.height) * 0.5f);
-            Content.width -= ExpandButton.width + ItemsPadding;
-            Content.relativePosition = Content.relativePosition + new Vector3(ExpandButton.width + ItemsPadding, 0f);
+            ExpandButton.relativePosition = new Vector3(5f, (height - ExpandButton.height) * 0.5f);
+            Icon.parent.relativePosition = new Vector3(38f, (height - Icon.height) * 0.5f);
+            Separator.relativePosition = new Vector3(64f, 0f);
+            Separator.height = height;
+
+            Content.width -= 69f;
+            Content.relativePosition = new Vector3(69f, Content.relativePosition.y);
         }
         public override void Refresh()
         {

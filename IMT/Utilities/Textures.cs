@@ -97,6 +97,7 @@ namespace IMT.Utilities
         public static string CopyToSameButtonIcon { get; } = nameof(CopyToSameButtonIcon);
 
         public static string ButtonWhiteBorder { get; } = nameof(ButtonWhiteBorder);
+        public static string StyleCircle { get; } = nameof(StyleCircle);
 
         static IMTTextures()
         {
@@ -151,6 +152,7 @@ namespace IMT.Utilities
             spriteParams[NotApplyOrderButton] = new RectOffset();
             spriteParams[ResetOrderButton] = new RectOffset();
             spriteParams[ButtonWhiteBorder] = new RectOffset(6, 6, 6, 6);
+            spriteParams[StyleCircle] = new RectOffset();
 
             //ButtonIcons
             spriteParams[AutoButtonIcon] = new RectOffset();
