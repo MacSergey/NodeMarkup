@@ -49,6 +49,7 @@ namespace IMT.Utilities
             public TextureData Gravel { get; }
             public TextureData Ruined { get; }
             public TextureData Cliff { get; }
+            public TextureData Asphalt { get; }
 
             public TextureData GetTexture(TextureType type);
         }
@@ -65,12 +66,14 @@ namespace IMT.Utilities
             private TextureData gravel;
             private TextureData ruined;
             private TextureData cliff;
+            private TextureData asphalt;
 
             public TextureData Pavement => pavement ??= PavementGetter();
             public TextureData Grass => grass ??= GrassGetter();
             public TextureData Gravel => gravel ??= GravelGetter();
             public TextureData Ruined => ruined ??= RuinedGetter();
             public TextureData Cliff => cliff ??= CliffGetter();
+            public TextureData Asphalt => asphalt ??= AsphaltGetter();
 
             public ThemeData(MapThemeMetaData metaData, string fullName)
             {
@@ -80,7 +83,7 @@ namespace IMT.Utilities
 
             public TextureData GetTexture(TextureType type) => type switch
             {
-                TextureType.Asphalt => throw new NotImplementedException(),
+                TextureType.Asphalt => Asphalt,
                 TextureType.Pavement => Pavement,
                 TextureType.Grass => Grass,
                 TextureType.Gravel => Gravel,
@@ -119,15 +122,21 @@ namespace IMT.Utilities
                 var textureData = new TextureData(texture, metaData.cliffDiffuseTiling);
                 return textureData;
             }
+            private TextureData AsphaltGetter()
+            {
+                var texture = metaData.upwardRoadDiffuse.Instantiate<Texture2D>();
+                var textureData = new TextureData(texture, 0.0625f);
+                return textureData;
+            }
 
         }
 
         public class CurrentThemeData : IThemeData
         {
             public string Id => string.Empty;
-            public string Name => "Default theme";
+            public string Name => Localize.StyleOption_DefaultTheme;
 
-            public TextureData Pavement => throw new NotImplementedException();
+            public TextureData Pavement => new((Texture2D)Shader.GetGlobalTexture("_TerrainPavementDiffuse"), Shader.GetGlobalVector("_TerrainTextureTiling1").x, false);
 
             public TextureData Grass => new((Texture2D)Shader.GetGlobalTexture("_TerrainGrassDiffuse"), Shader.GetGlobalVector("_TerrainTextureTiling2").x, false);
 
@@ -137,9 +146,11 @@ namespace IMT.Utilities
 
             public TextureData Cliff => new((Texture2D)Shader.GetGlobalTexture("_TerrainCliffDiffuse"), Shader.GetGlobalVector("_TerrainTextureTiling1").w, false);
 
+            public TextureData Asphalt => new((Texture2D)Shader.GetGlobalTexture("_RoadUpwardDiffuse"), 0.0625f, false);
+
             public TextureData GetTexture(TextureType type) => type switch
             {
-                TextureType.Asphalt => throw new NotImplementedException(),
+                TextureType.Asphalt => Asphalt,
                 TextureType.Pavement => Pavement,
                 TextureType.Grass => Grass,
                 TextureType.Gravel => Gravel,

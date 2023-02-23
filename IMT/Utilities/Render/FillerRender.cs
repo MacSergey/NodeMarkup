@@ -24,56 +24,57 @@ namespace IMT.Utilities
             public readonly int[] groups;
             public readonly Vector3[] points;
             public readonly int[] polygons;
+            public readonly Color color;
             public readonly TextureData textureData;
 
-            private RawData(MeshType meshType, int[] groups, Vector3[] points, int[] polygons, TextureData textureData)
+            private RawData(MeshType meshType, int[] groups, Vector3[] points, int[] polygons, Color color, TextureData textureData)
             {
                 this.meshType = meshType;
                 this.groups = groups;
                 this.points = points;
                 this.polygons = polygons;
+                this.color = color;
                 this.textureData = textureData;
             }
 
-            public static RawData GetSide(int[] groups, Vector3[] points, TextureData textureData)
+            public static RawData GetSide(int[] groups, Vector3[] points, Color color, TextureData textureData)
             {
-                return new RawData(MeshType.Side, groups.ToArray(), points.ToArray(), null, textureData);
+                return new RawData(MeshType.Side, groups.ToArray(), points.ToArray(), null, color, textureData);
             }
-            public static RawData GetTop(Vector3[] points, int[] polygons, TextureData textureData)
+            public static RawData GetTop(Vector3[] points, int[] polygons, Color color, TextureData textureData)
             {
-                return new RawData(MeshType.Top, null, points.ToArray(), polygons.ToArray(), textureData);
+                return new RawData(MeshType.Top, null, points.ToArray(), polygons.ToArray(), color, textureData);
             }
         }
         private readonly struct RenderData
 
         {
             public readonly Mesh mesh;
+            public readonly Color color;
             public readonly TextureData textureData;
 
-            public RenderData(Mesh mesh, TextureData textureData)
+            public RenderData(Mesh mesh, Color color, TextureData textureData)
             {
                 this.mesh = mesh;
+                this.color = color;
                 this.textureData = textureData;
             }
         }
         public readonly struct TextureData
         {
-            public static TextureData Default => new TextureData(null, default);
+            public static TextureData Default => new TextureData(null);
 
             public readonly Texture2D mainTexture;
-            public readonly Color color;
             public readonly Vector4 tiling;
 
-            public TextureData(Texture2D mainTexture, Color color)
+            public TextureData(Texture2D mainTexture)
             {
                 this.mainTexture = mainTexture;
-                this.color = color;
                 this.tiling = new Vector4(1f, 0f, 1f, 1f);
             }
-            public TextureData(Texture2D mainTexture, Color color, Vector2 tiling, float angle)
+            public TextureData(Texture2D mainTexture, Vector2 tiling, float angle)
             {
                 this.mainTexture = mainTexture;
-                this.color = color;
                 this.tiling = new Vector4(tiling.x, Mathf.Sin(angle), tiling.y, Mathf.Cos(angle));
             }
         }
@@ -172,7 +173,7 @@ namespace IMT.Utilities
                 mesh.RecalculateTangents();
                 mesh.UploadMeshData(false);
 
-                Datas[i] = new RenderData(mesh, rawData.textureData);
+                Datas[i] = new RenderData(mesh, rawData.color, rawData.textureData);
             }
         }
         ~FillerMeshData()
@@ -201,8 +202,10 @@ namespace IMT.Utilities
             {
                 materialBlock.Clear();
 
-                materialBlock.SetTexture(mainTexId, Datas[i].textureData.mainTexture);
-                materialBlock.SetVector(colorId, Datas[i].textureData.color);
+                if (!infoView)
+                    materialBlock.SetTexture(mainTexId, Datas[i].textureData.mainTexture);
+
+                materialBlock.SetVector(colorId, infoView ? new Color(0.4f, 0.4f, 0.4f, 0f) : Datas[i].color);
                 materialBlock.SetVector(tilingId, Datas[i].textureData.tiling);
 
                 var material = RenderHelper.MaterialLib[MaterialType.FillerTexture];

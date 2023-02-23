@@ -61,11 +61,12 @@ namespace IMT.Manager
 
         private static Dictionary<FillerType, BaseFillerStyle> Defaults { get; } = new Dictionary<FillerType, BaseFillerStyle>()
         {
-            {FillerType.Stripe, new StripeFillerStyle(DefaultColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultAngle, DefaultStepStripe,  DefaultFollowGuides)},
-            {FillerType.Grid, new GridFillerStyle(DefaultColor, DefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultAngle, DefaultStepGrid, DefaultOffset)},
-            {FillerType.Solid, new SolidFillerStyle(DefaultColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset)},
-            {FillerType.Chevron, new ChevronFillerStyle(DefaultColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
-            {FillerType.Decal, new DecalFillerStyle(null, DefaultColor, DefaultOffset, Vector2.one, 0f)},
+            {FillerType.Stripe, new StripeFillerStyle(DefaultMarkingColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultAngle, DefaultStepStripe,  DefaultFollowGuides)},
+            {FillerType.Grid, new GridFillerStyle(DefaultMarkingColor, DefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultAngle, DefaultStepGrid, DefaultOffset)},
+            {FillerType.Solid, new SolidFillerStyle(DefaultMarkingColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset)},
+            {FillerType.Chevron, new ChevronFillerStyle(DefaultMarkingColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
+            {FillerType.Decal, new DecalFillerStyle(null, DefaultMarkingColor, DefaultOffset, Vector2.one, 0f)},
+            {FillerType.Asphalt, new AsphaltFillerStyle(ThemeHelper.DefaultTheme, new Color32(170, 170, 170, 255), DefaultOffset)},
             {FillerType.Pavement, new PavementFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius)},
             {FillerType.Grass, new GrassFillerStyle(ThemeHelper.DefaultTheme, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
             {FillerType.Gravel, new GravelFillerStyle(ThemeHelper.DefaultTheme,DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
@@ -224,27 +225,31 @@ namespace IMT.Manager
             [Order(4)]
             Decal = StyleType.FillerDecal,
 
-            [Description(nameof(Localize.FillerStyle_Pavement))]
+            [Description(nameof(Localize.FillerStyle_Asphalt))]
+            [Order(5)]
+            Asphalt = StyleType.FillerAsphalt,
+
+            [Description(nameof(Localize.FillerStyle_PavementIsland))]
             [Order(100)]
             Pavement = StyleType.FillerPavement,
 
-            [Description(nameof(Localize.FillerStyle_Grass))]
+            [Description(nameof(Localize.FillerStyle_GrassIsland))]
             [Order(101)]
             Grass = StyleType.FillerGrass,
 
-            [Description(nameof(Localize.FillerStyle_Gravel))]
+            [Description(nameof(Localize.FillerStyle_GravelIsland))]
             [Order(102)]
             Gravel = StyleType.FillerGravel,
 
-            [Description(nameof(Localize.FillerStyle_Ruined))]
+            [Description(nameof(Localize.FillerStyle_RuinedIsland))]
             [Order(103)]
             Ruined = StyleType.FillerRuined,
 
-            [Description(nameof(Localize.FillerStyle_Cliff))]
+            [Description(nameof(Localize.FillerStyle_CliffIsland))]
             [Order(104)]
             Cliff = StyleType.FillerCliff,
 
-            [Description("Texture")]
+            [Description(nameof(Localize.FillerStyle_TextureIsland))]
             [Order(105)]
             Texture = StyleType.FillerTexture,
 

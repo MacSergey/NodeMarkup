@@ -1,21 +1,14 @@
-﻿using ColossalFramework.DataBinding;
-using ColossalFramework.Math;
-using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
-using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
@@ -23,6 +16,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.FillerChevron;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
+        public bool KeepColor => true;
         protected override float DefaultStep => DefaultStepStripe;
 
         public PropertyValue<float> AngleBetween { get; }

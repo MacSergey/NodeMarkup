@@ -16,6 +16,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.StopLineSolidAndDashed;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         public PropertyBoolValue TwoColors { get; }
         public PropertyColorValue SecondColor { get; }
@@ -135,7 +136,7 @@ namespace IMT.Manager
         {
             base.FromXml(config, map, invert, typeChanged);
             TwoColors.FromXml(config, false);
-            SecondColor.FromXml(config, DefaultColor);
+            SecondColor.FromXml(config, DefaultMarkingColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);

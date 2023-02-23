@@ -16,6 +16,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.LineDoubleDashedAsym;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         public PropertyValue<float> DashLengthA { get; }
         public PropertyValue<float> DashLengthB { get; }
@@ -215,7 +216,7 @@ namespace IMT.Manager
             DashLengthB.FromXml(config, DefaultDashLength * 2f);
             SpaceLength.FromXml(config, DefaultSpaceLength);
             TwoColors.FromXml(config, false);
-            SecondColor.FromXml(config, DefaultColor);
+            SecondColor.FromXml(config, DefaultMarkingColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             Alignment.FromXml(config, Manager.Alignment.Centre);
             Invert.FromXml(config, false);

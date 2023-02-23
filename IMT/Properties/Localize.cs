@@ -1526,14 +1526,14 @@ namespace IMT
 		public static string Panel_SegmentCaption => LocaleManager.GetString("Panel_SegmentCaption", Culture);
 
 		/// <summary>
-		/// Grass
+		/// Grass island
 		/// </summary>
-		public static string FillerStyle_Grass => LocaleManager.GetString("FillerStyle_Grass", Culture);
+		public static string FillerStyle_GrassIsland => LocaleManager.GetString("FillerStyle_GrassIsland", Culture);
 
 		/// <summary>
-		/// Pavement
+		/// Pavement island
 		/// </summary>
-		public static string FillerStyle_Pavement => LocaleManager.GetString("FillerStyle_Pavement", Culture);
+		public static string FillerStyle_PavementIsland => LocaleManager.GetString("FillerStyle_PavementIsland", Culture);
 
 		/// <summary>
 		/// Elevation
@@ -1736,19 +1736,19 @@ namespace IMT
 		public static string Tool_InfoSelectLine => LocaleManager.GetString("Tool_InfoSelectLine", Culture);
 
 		/// <summary>
-		/// Gravel
+		/// Gravel island
 		/// </summary>
-		public static string FillerStyle_Gravel => LocaleManager.GetString("FillerStyle_Gravel", Culture);
+		public static string FillerStyle_GravelIsland => LocaleManager.GetString("FillerStyle_GravelIsland", Culture);
 
 		/// <summary>
-		/// Cliff
+		/// Cliff island
 		/// </summary>
-		public static string FillerStyle_Cliff => LocaleManager.GetString("FillerStyle_Cliff", Culture);
+		public static string FillerStyle_CliffIsland => LocaleManager.GetString("FillerStyle_CliffIsland", Culture);
 
 		/// <summary>
-		/// Ruined
+		/// Ruined island
 		/// </summary>
-		public static string FillerStyle_Ruined => LocaleManager.GetString("FillerStyle_Ruined", Culture);
+		public static string FillerStyle_RuinedIsland => LocaleManager.GetString("FillerStyle_RuinedIsland", Culture);
 
 		/// <summary>
 		/// Corner radius
@@ -2804,5 +2804,20 @@ namespace IMT
 		/// Remove from favorites
 		/// </summary>
 		public static string StyleOption_RemoveFromFavorites => LocaleManager.GetString("StyleOption_RemoveFromFavorites", Culture);
+
+		/// <summary>
+		/// Asphalt
+		/// </summary>
+		public static string FillerStyle_Asphalt => LocaleManager.GetString("FillerStyle_Asphalt", Culture);
+
+		/// <summary>
+		/// Custom texture island
+		/// </summary>
+		public static string FillerStyle_TextureIsland => LocaleManager.GetString("FillerStyle_TextureIsland", Culture);
+
+		/// <summary>
+		/// Default map theme
+		/// </summary>
+		public static string StyleOption_DefaultTheme => LocaleManager.GetString("StyleOption_DefaultTheme", Culture);
 	}
 }

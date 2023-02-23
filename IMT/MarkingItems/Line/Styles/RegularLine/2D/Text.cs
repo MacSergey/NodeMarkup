@@ -23,6 +23,7 @@ namespace IMT.Manager
 
         public override StyleType Type => StyleType.LineText;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
         public override bool CanOverlap => true;
 
         private PropertyStringValue Text { get; }

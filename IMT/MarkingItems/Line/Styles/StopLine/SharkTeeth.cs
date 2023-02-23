@@ -16,6 +16,7 @@ namespace IMT.Manager
     {
         public override StyleType Type { get; } = StyleType.StopLineSharkTeeth;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
         protected override float LodWidth => 0.5f;
 
         public PropertyValue<float> Base { get; }

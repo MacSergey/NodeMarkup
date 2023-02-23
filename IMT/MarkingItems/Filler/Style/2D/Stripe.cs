@@ -15,6 +15,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.FillerStripe;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
+        public bool KeepColor => true;
         protected override float DefaultStep => DefaultStepStripe;
 
         public PropertyValue<float> Angle { get; }

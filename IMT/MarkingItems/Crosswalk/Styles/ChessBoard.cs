@@ -18,6 +18,8 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.CrosswalkChessBoard;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
+
         public PropertyValue<float> SquareSide { get; }
         public PropertyValue<int> LineCount { get; }
         public PropertyBoolValue Invert { get; }

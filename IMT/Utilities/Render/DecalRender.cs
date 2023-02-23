@@ -79,7 +79,7 @@ namespace IMT.Utilities
             this = new DecalData(materialType, lod, pos, angle, color, new Vector3(length, DefaultHeight, width), textureData, effectData);
         }
 
-        public DecalData(Marking.Item itemType, MarkingLOD lod, Vector3[] points, Color32 color, TextureData textureData, EffectData effectData)
+        public DecalData(DecalType type, MarkingLOD lod, Vector3[] points, Color32 color, TextureData textureData, EffectData effectData)
         {
             var min = points[0];
             var max = points[0];
@@ -103,16 +103,17 @@ namespace IMT.Utilities
                 pointUVs[i] = new Vector2(x, y);
             }
 
-            var materialType = itemType switch
+            var materialType = type switch
             {
-                Marking.Item.Filler => GetFillerMaterial(points.Length),
-                Marking.Item.Crosswalk => GetCrosswalkMaterial(points.Length),
+                DecalType.Filler => GetFillerMaterial(points.Length),
+                DecalType.FillerIsland => GetFillerIslandMaterial(points.Length),
+                DecalType.Crosswalk => GetCrosswalkMaterial(points.Length),
                 _ => MaterialType.Dash,
             };
 
             this = new DecalData(materialType, lod, position, 0f, color, size, textureData, effectData, pointUVs);
         }
-        public DecalData(Marking.Item itemType, MarkingLOD lod, Area area, Color32 color, TextureData textureData, EffectData effectData)
+        public DecalData(DecalType type, MarkingLOD lod, Area area, Color32 color, TextureData textureData, EffectData effectData)
         {
             var min = area.Min;
             var max = area.Max;
@@ -129,10 +130,11 @@ namespace IMT.Utilities
                 pointUVs[i] = new Vector2(x, y);
             }
 
-            var materialType = itemType switch
+            var materialType = type switch
             {
-                Marking.Item.Filler => GetFillerMaterial(area.Count),
-                Marking.Item.Crosswalk => GetCrosswalkMaterial(area.Count),
+                DecalType.Filler => GetFillerMaterial(area.Count),
+                DecalType.FillerIsland => GetFillerIslandMaterial(area.Count),
+                DecalType.Crosswalk => GetCrosswalkMaterial(area.Count),
                 _ => MaterialType.Dash,
             };
 
@@ -152,6 +154,19 @@ namespace IMT.Utilities
             else
                 return MaterialType.FillerUpTo16;
         }
+        public static MaterialType GetFillerIslandMaterial(int points)
+        {
+            if (points == 0)
+                return MaterialType.FillerIslandZero;
+            else if (points <= 4)
+                return MaterialType.FillerIslandUpTo4;
+            else if (points <= 8)
+                return MaterialType.FillerIslandUpTo8;
+            else if (points <= 12)
+                return MaterialType.FillerIslandUpTo12;
+            else
+                return MaterialType.FillerIslandUpTo16;
+        }
         public static MaterialType GetCrosswalkMaterial(int points)
         {
             if (points == 0)
@@ -166,7 +181,7 @@ namespace IMT.Utilities
                 return MaterialType.CrosswalkUpTo16;
         }
 
-        public static List<DecalData> GetData(Marking.Item itemType, MarkingLOD lod, ITrajectory[] trajectories, StyleHelper.SplitParams splitParams, Color32 color, TextureData textureData, EffectData effectData
+        public static List<DecalData> GetData(DecalType type, MarkingLOD lod, ITrajectory[] trajectories, StyleHelper.SplitParams splitParams, Color32 color, TextureData textureData, EffectData effectData
 #if DEBUG
             , bool debug = false
 #endif
@@ -188,7 +203,7 @@ namespace IMT.Utilities
 #endif
                 if (points.Length <= 16)
                 {
-                    result.Add(new DecalData(itemType, lod, points, color, textureData, effectData));
+                    result.Add(new DecalData(type, lod, points, color, textureData, effectData));
                 }
                 else
                 {
@@ -206,7 +221,7 @@ namespace IMT.Utilities
                             }
                         }
 #endif
-                        result.Add(new DecalData(itemType, lod, area, color, textureData, effectData));
+                        result.Add(new DecalData(type, lod, area, color, textureData, effectData));
                     }
                 }
             }
@@ -313,6 +328,14 @@ namespace IMT.Utilities
                 this.voidTiling = new Vector4(voidTiling.x, 0f, voidTiling.y, 0f);
                 this.texture = texture;
             }
+        }
+
+        public enum DecalType
+        {
+            Dash,
+            Filler,
+            FillerIsland,
+            Crosswalk,
         }
     }
 }

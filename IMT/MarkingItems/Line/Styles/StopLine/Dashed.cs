@@ -17,6 +17,7 @@ namespace IMT.Manager
     {
         public override StyleType Type { get; } = StyleType.StopLineDashed;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }

@@ -96,7 +96,7 @@ namespace IMT.Manager
                 var angle = Angle * Mathf.Deg2Rad - crosswalk.CornerDir.AbsoluteAngle();
                 var color = DecalColor.Value ?? decal.m_color0;
 
-                var datas = DecalData.GetData(Marking.Item.Crosswalk, lod, trajectories, StyleHelper.SplitParams.Default, color, new DecalData.TextureData(mainTexture, alphaTexture, tiling, angle), DecalData.EffectData.Default);
+                var datas = DecalData.GetData(DecalData.DecalType.Crosswalk, lod, trajectories, StyleHelper.SplitParams.Default, color, new DecalData.TextureData(mainTexture, alphaTexture, tiling, angle), DecalData.EffectData.Default);
                 foreach (var data in datas)
                 {
                     addData(data);

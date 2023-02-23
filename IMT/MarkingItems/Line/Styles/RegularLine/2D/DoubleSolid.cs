@@ -142,7 +142,7 @@ namespace IMT.Manager
         {
             base.FromXml(config, map, invert, typeChanged);
             TwoColors.FromXml(config, false);
-            SecondColor.FromXml(config, DefaultColor);
+            SecondColor.FromXml(config, DefaultMarkingColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             Alignment.FromXml(config, Manager.Alignment.Centre);
 

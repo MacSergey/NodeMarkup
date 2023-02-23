@@ -39,45 +39,51 @@ namespace IMT.Manager
                 base.CalculateImpl(filler, contours, lod, addData);
             else
             {
+                GetSideTexture(out var curbTexture, out var curbColor);
+
                 foreach (var contour in contours)
                 {
                     var roundedContour = contour.SetCornerRadius(LineCornerRadius, MedianCornerRadius);
-                    if (Triangulate(roundedContour, lod, out var points, out var groups, out var triangles))
+                    if (!Triangulate(roundedContour, lod, out var points, out var groups, out var triangles))
+                        continue;
+
+                    var datas = new List<FillerMeshData.RawData>()
                     {
-                        var curbTexture = GetCurbTexture();
+                        FillerMeshData.RawData.GetTop(points, triangles, curbColor, curbTexture),
+                        FillerMeshData.RawData.GetSide(groups, points, curbColor, curbTexture),
+                    };
+                    addData(new FillerMeshData(lod, Elevation, datas.ToArray()));
+                }
 
-                        var datas = new List<FillerMeshData.RawData>()
+                if (!GetCenterTexture(out var centerTexture, out var centerColor))
+                    return;
+
+                foreach (var contour in contours)
+                {
+                    var lineCurb = Mathf.Max(0.01f, LineCurbSize);
+                    var medianCurb = Mathf.Max(0.01f, MedianCurbSize);
+                    var topContours = contour.SetOffset(lineCurb, medianCurb);
+                    if (topContours.Count == 0)
+                        continue;
+
+                    var lineCornerRadius = Mathf.Max(0f, LineCornerRadius - lineCurb);
+                    var medianCornerRadius = Mathf.Max(0f, MedianCornerRadius - medianCurb);
+
+                    foreach (var topContour in topContours)
+                    {
+                        var roundedTop = topContour.SetCornerRadius(lineCornerRadius, medianCornerRadius);
+                        var trajectories = roundedTop.Select(c => c.trajectory).ToArray();
+                        var centerDatas = DecalData.GetData(DecalData.DecalType.FillerIsland, lod, trajectories, SplitParams, centerColor, centerTexture, DecalData.EffectData.Default);
+                        foreach (var data in centerDatas)
                         {
-                            FillerMeshData.RawData.GetTop(points, triangles, curbTexture),
-                            FillerMeshData.RawData.GetSide(groups, points, curbTexture),
-                        };
-
-                        var topContours = contour.SetOffset(LineCurbSize, MedianCurbSize);
-                        if (topContours.Count > 0)
-                        {
-                            var lineCornerRadius = Mathf.Max(0f, LineCornerRadius - LineCurbSize);
-                            var medianCornerRadius = Mathf.Max(0f, MedianCornerRadius - MedianCurbSize);
-                            var topTexture = GetTopTexture();
-
-                            foreach (var topContour in topContours)
-                            {
-                                var roundedTop = topContour.SetCornerRadius(lineCornerRadius, medianCornerRadius);
-                                if (Triangulate(roundedTop, lod, out var topPoints, out _, out var topTriangles))
-                                {
-                                    topPoints = topPoints.Select(p => p += new Vector3(0f, 0.03f, 0f)).ToArray();
-                                    datas.Add(FillerMeshData.RawData.GetTop(topPoints, topTriangles, topTexture));
-                                }
-                            }
+                            addData(data);
                         }
-
-                        var renderData = new FillerMeshData(lod, Elevation, datas.ToArray());
-                        addData(renderData);
                     }
                 }
             }
         }
 
-        protected virtual FillerMeshData.TextureData GetCurbTexture() => GetSideTexture();
+        protected abstract bool GetCenterTexture(out DecalData.TextureData textureData, out Color color);
 
         protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
         {

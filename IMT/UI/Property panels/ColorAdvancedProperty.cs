@@ -14,7 +14,7 @@ namespace IMT.UI
         Color32? defaultColor;
         public Color32 DefaultColor
         {
-            get => defaultColor ?? Manager.Style.DefaultColor;
+            get => defaultColor ?? Manager.Style.DefaultMarkingColor;
             set => defaultColor = value;
         }
 

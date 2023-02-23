@@ -18,6 +18,7 @@ namespace IMT.Manager
 
         public override StyleType Type => StyleType.FillerSolid;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
 #if DEBUG
         public PropertyBoolValue Debug { get; }
@@ -90,7 +91,7 @@ namespace IMT.Manager
                 foreach (var contour in contours)
                 {
                     var trajectories = contour.Select(c => c.trajectory).ToArray();
-                    foreach (var data in DecalData.GetData(Marking.Item.Filler, lod, trajectories, SplitParams, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)
+                    foreach (var data in DecalData.GetData(DecalData.DecalType.Filler, lod, trajectories, SplitParams, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)
 #if DEBUG
                                 , Debug
 #endif

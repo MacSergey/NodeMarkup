@@ -14,6 +14,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.FillerGrid;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
+        public bool KeepColor => true;
         protected override float DefaultStep => DefaultStepGrid;
 
         public PropertyValue<float> Angle { get; }

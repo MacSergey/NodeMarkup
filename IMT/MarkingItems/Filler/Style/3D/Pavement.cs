@@ -43,7 +43,5 @@ namespace IMT.Manager
         public PavementFillerStyle(Vector2 offset, float elevation, Vector2 cornerRadius) : base(offset, elevation, cornerRadius) { }
 
         public override BaseFillerStyle CopyStyle() => new PavementFillerStyle(Offset, Elevation, CornerRadius);
-
-        protected override FillerMeshData.TextureData GetTopTexture() => GetSideTexture();
     }
 }

@@ -83,6 +83,11 @@ namespace IMT.Utilities
                     Bundle.LoadAsset<Material>("FillerUpTo8.mat"),
                     Bundle.LoadAsset<Material>("FillerUpTo12.mat"),
                     Bundle.LoadAsset<Material>("FillerUpTo16.mat"),
+                    Bundle.LoadAsset<Material>("FillerIslandZero.mat"),
+                    Bundle.LoadAsset<Material>("FillerIslandUpTo4.mat"),
+                    Bundle.LoadAsset<Material>("FillerIslandUpTo8.mat"),
+                    Bundle.LoadAsset<Material>("FillerIslandUpTo12.mat"),
+                    Bundle.LoadAsset<Material>("FillerIslandUpTo16.mat"),
                     Bundle.LoadAsset<Material>("CrosswalkZero.mat"),
                     Bundle.LoadAsset<Material>("CrosswalkUpTo4.mat"),
                     Bundle.LoadAsset<Material>("CrosswalkUpTo8.mat"),
@@ -100,15 +105,20 @@ namespace IMT.Utilities
                 MaterialLib[MaterialType.FillerUpTo8] = materials[2];
                 MaterialLib[MaterialType.FillerUpTo12] = materials[3];
                 MaterialLib[MaterialType.FillerUpTo16] = materials[4];
-                MaterialLib[MaterialType.CrosswalkZero] = materials[5];
-                MaterialLib[MaterialType.CrosswalkUpTo4] = materials[6];
-                MaterialLib[MaterialType.CrosswalkUpTo8] = materials[7];
-                MaterialLib[MaterialType.CrosswalkUpTo12] = materials[8];
-                MaterialLib[MaterialType.CrosswalkUpTo16] = materials[9];
-                MaterialLib[MaterialType.Dash] = materials[10];
-                MaterialLib[MaterialType.Triangle] = materials[11];
-                MaterialLib[MaterialType.Text] = materials[12];
-                MaterialLib[MaterialType.FillerTexture] = materials[13];
+                MaterialLib[MaterialType.FillerIslandZero] = materials[5];
+                MaterialLib[MaterialType.FillerIslandUpTo4] = materials[6];
+                MaterialLib[MaterialType.FillerIslandUpTo8] = materials[7];
+                MaterialLib[MaterialType.FillerIslandUpTo12] = materials[8];
+                MaterialLib[MaterialType.FillerIslandUpTo16] = materials[9];
+                MaterialLib[MaterialType.CrosswalkZero] = materials[10];
+                MaterialLib[MaterialType.CrosswalkUpTo4] = materials[11];
+                MaterialLib[MaterialType.CrosswalkUpTo8] = materials[12];
+                MaterialLib[MaterialType.CrosswalkUpTo12] = materials[13];
+                MaterialLib[MaterialType.CrosswalkUpTo16] = materials[14];
+                MaterialLib[MaterialType.Dash] = materials[15];
+                MaterialLib[MaterialType.Triangle] = materials[16];
+                MaterialLib[MaterialType.Text] = materials[17];
+                MaterialLib[MaterialType.FillerTexture] = materials[18];
 
                 DecalMesh = Bundle.LoadAsset<Mesh>("Cube.fbx");
                 DecalMesh.bounds = new Bounds(DecalMesh.bounds.center, Vector3.one * 100f);
@@ -181,6 +191,11 @@ namespace IMT.Utilities
         FillerUpTo8,
         FillerUpTo12,
         FillerUpTo16,
+        FillerIslandZero,
+        FillerIslandUpTo4,
+        FillerIslandUpTo8,
+        FillerIslandUpTo12,
+        FillerIslandUpTo16,
         CrosswalkZero,
         CrosswalkUpTo4,
         CrosswalkUpTo8,

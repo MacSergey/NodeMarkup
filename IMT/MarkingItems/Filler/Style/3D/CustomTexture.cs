@@ -62,7 +62,7 @@ namespace IMT.Manager
         protected bool IsValidDecal(PropInfo info) => info != null && !info.m_isMarker && info.m_isDecal;
         public override BaseFillerStyle CopyStyle() => new CustomTextureFillerStyle(Decal, DecalColor, Offset, Elevation, CornerRadius, CurbSize, Tiling, Angle);
 
-        protected override FillerMeshData.TextureData GetTopTexture()
+        protected override bool GetCenterTexture(out DecalData.TextureData textureData, out Color color)
         {
             if (Decal.Value is PropInfo decal)
             {
@@ -70,12 +70,16 @@ namespace IMT.Manager
                 var size = decal.m_material.GetVector("_DecalSize");
                 var tiling = new Vector2(1f / (Tiling.Value.x * size.x), 1f / (Tiling.Value.y * size.z));
                 var angle = Angle * Mathf.Deg2Rad;
-                var color = DecalColor.Value ?? decal.m_color0;
-                var textureData = new FillerMeshData.TextureData(mainTexture, color, tiling, angle);
-                return textureData;
+                color = DecalColor.Value ?? decal.m_color0;
+                textureData = new DecalData.TextureData(mainTexture, null, tiling, angle);
+                return true;
             }
             else
-                return GetSideTexture();
+            {
+                color = default;
+                textureData = default;
+                return false;
+            }
         }
 
         protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)

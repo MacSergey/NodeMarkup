@@ -17,6 +17,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.CrosswalkZebra;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
@@ -308,7 +309,7 @@ namespace IMT.Manager
             SpaceLength.FromXml(config, DefaultSpaceLength);
             DashType.FromXml(config, DashEnd.ParallelStraight);
             TwoColors.FromXml(config, false);
-            SecondColor.FromXml(config, DefaultColor);
+            SecondColor.FromXml(config, DefaultMarkingColor);
             UseGap.FromXml(config, false);
             GapLength.FromXml(config, DefaultSpaceLength);
             GapPeriod.FromXml(config, DefaulCrosswalkGapPeriod);

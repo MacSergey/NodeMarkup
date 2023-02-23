@@ -1116,11 +1116,11 @@ Failed to load markings for all intersections.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Edit segment #{0} markings</value>
   </data>
-  <data name="FillerStyle_Grass" xml:space="preserve">
-    <value>Grass</value>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>Grass island</value>
   </data>
-  <data name="FillerStyle_Pavement" xml:space="preserve">
-    <value>Pavement</value>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>Pavement island</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Elevation</value>
@@ -1274,14 +1274,14 @@ Click to edit markings</value>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Click with {0} to select the line</value>
   </data>
-  <data name="FillerStyle_Gravel" xml:space="preserve">
-    <value>Gravel</value>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>Gravel island</value>
   </data>
-  <data name="FillerStyle_Cliff" xml:space="preserve">
-    <value>Cliff</value>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>Cliff island</value>
   </data>
-  <data name="FillerStyle_Ruined" xml:space="preserve">
-    <value>Ruined</value>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>Ruined island</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Corner radius</value>
@@ -2037,5 +2037,14 @@ It can take time if there are a lot of segments.</value>
   </data>
   <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
     <value>Remove from favorites</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>Asphalt</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>Custom texture island</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>Default map theme</value>
   </data>
 </root>

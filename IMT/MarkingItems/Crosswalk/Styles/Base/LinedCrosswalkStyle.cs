@@ -9,6 +9,7 @@ namespace IMT.Manager
 {
     public abstract class LinedCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, ILinedCrosswalk
     {
+        public bool KeepColor => true;
         public PropertyValue<float> LineWidth { get; }
 
         public LinedCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float lineWidth) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter)

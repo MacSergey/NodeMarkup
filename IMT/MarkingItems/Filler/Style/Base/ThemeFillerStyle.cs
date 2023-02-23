@@ -29,20 +29,19 @@ namespace IMT.Manager
             }
         }
 
-        protected override FillerMeshData.TextureData GetTopTexture()
+        protected override bool GetCenterTexture(out DecalData.TextureData textureData, out Color color)
         {
-            if (Theme.Value is ThemeHelper.IThemeData themeData)
-            {         
-                var theme = themeData.GetTexture(TextureType);
-                var textureData = new FillerMeshData.TextureData(theme.texture, UnityEngine.Color.white, theme.tiling, 0f);
-                return textureData;
-            }
-            else
-            {
-                var theme = ThemeHelper.DefaultTheme.GetTexture(TextureType);
-                var textureData = new FillerMeshData.TextureData(theme.texture, UnityEngine.Color.white, theme.tiling, 0f);
-                return textureData;
-            }
+            var theme = (Theme.Value is ThemeHelper.IThemeData themeData ? themeData : ThemeHelper.DefaultTheme).GetTexture(TextureType);
+            textureData = new DecalData.TextureData(theme.texture, null, theme.tiling, 0f);
+            color = UnityEngine.Color.white;
+            return true;
+        }
+        protected override bool GetTopTexture(out FillerMeshData.TextureData textureData, out Color color)
+        {
+            var theme = (Theme.Value is ThemeHelper.IThemeData themeData ? themeData : ThemeHelper.DefaultTheme).GetTexture(TextureType);
+            textureData = new FillerMeshData.TextureData(theme.texture, theme.tiling, 0f);
+            color = UnityEngine.Color.white;
+            return true;
         }
 
         protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)

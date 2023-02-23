@@ -1,5 +1,4 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
@@ -9,15 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
     public class ZigZagLineStyle : RegularLineStyle, IRegularLine, IEffectStyle
     {
         public override StyleType Type => StyleType.LineZigZag;
-
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList

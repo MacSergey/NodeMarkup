@@ -43,13 +43,13 @@ namespace IMT.Manager
             foreach (var contour in contours)
             {
                 var roundedContour = contour.SetCornerRadius(LineCornerRadius, MedianCornerRadius);
-                if(Triangulate(roundedContour, lod, out var points, out var groups, out var triangles))
+                if (Triangulate(roundedContour, lod, out var points, out var groups, out var triangles))
                 {
-                    var topTexture = GetTopTexture();
-                    var sideTexture = GetSideTexture();
+                    GetTopTexture(out var topTexture, out var topColor);
+                    GetSideTexture(out var sideTexture, out var sideColor);
 
-                    var top = FillerMeshData.RawData.GetTop(points, triangles, topTexture);
-                    var side = FillerMeshData.RawData.GetSide(groups, points, sideTexture);
+                    var top = FillerMeshData.RawData.GetTop(points, triangles, topColor, topTexture);
+                    var side = FillerMeshData.RawData.GetSide(groups, points, sideColor, sideTexture);
 
                     var data = new FillerMeshData(lod, Elevation, top, side);
                     addData(data);
@@ -61,14 +61,16 @@ namespace IMT.Manager
             }
         }
 
-        protected abstract FillerMeshData.TextureData GetTopTexture();
-        protected virtual FillerMeshData.TextureData GetSideTexture()
+        protected virtual bool GetTopTexture(out FillerMeshData.TextureData textureData, out Color color) => GetTexture(out textureData, out color);
+        protected virtual bool GetSideTexture(out FillerMeshData.TextureData textureData, out Color color) => GetTexture(out textureData, out color);
+        private bool GetTexture(out FillerMeshData.TextureData textureData, out Color color)
         {
             var texture = (Texture2D)Shader.GetGlobalTexture("_TerrainPavementDiffuse");
             var size = Shader.GetGlobalVector("_TerrainTextureTiling1");
             var tiling = new Vector2(size.x, size.x);
-            var textureData = new FillerMeshData.TextureData(texture, UnityEngine.Color.white, tiling, 0f);
-            return textureData;
+            color = UnityEngine.Color.white;
+            textureData = new FillerMeshData.TextureData(texture, tiling, 0f);
+            return true;
         }
 
         protected bool Triangulate(Contour contour, MarkingLOD lod, out Vector3[] points, out int[] groups, out int[] triangles)

@@ -15,7 +15,6 @@ namespace IMT.Manager
     public class DecalFillerStyle : BaseFillerStyle
     {
         public override StyleType Type => StyleType.FillerDecal;
-
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
 
         private bool IsValid => IsValidDecal(Decal.Value);
@@ -78,17 +77,18 @@ namespace IMT.Manager
 
             if ((SupportLOD & lod) != 0)
             {
+                var mainTexture = decal.m_material.mainTexture as Texture2D;
+                var alphaTexture = decal.m_material.GetTexture("_ACIMap") as Texture2D;
+                var size = decal.m_material.GetVector("_DecalSize");
+                var tiling = new Vector2(1f / (Tiling.Value.x * size.x), 1f / (Tiling.Value.y * size.z));
+                var angle = Angle * Mathf.Deg2Rad;
+                var color = DecalColor.Value ?? decal.m_color0;
+                var textureData = new DecalData.TextureData(mainTexture, alphaTexture, tiling, angle);
+
                 foreach (var contour in contours)
                 {
                     var trajectories = contour.Select(c => c.trajectory).ToArray();
-                    var mainTexture = decal.m_material.mainTexture as Texture2D;
-                    var alphaTexture = decal.m_material.GetTexture("_ACIMap") as Texture2D;
-                    var size = decal.m_material.GetVector("_DecalSize");
-                    var tiling = new Vector2(1f / (Tiling.Value.x * size.x), 1f / (Tiling.Value.y * size.z));
-                    var angle = Angle * Mathf.Deg2Rad;
-                    var color = DecalColor.Value ?? decal.m_color0;
-
-                    var datas = DecalData.GetData(Marking.Item.Filler, lod, trajectories, SplitParams, color, new DecalData.TextureData(mainTexture, alphaTexture, tiling, angle), DecalData.EffectData.Default);
+                    var datas = DecalData.GetData(DecalData.DecalType.Filler, lod, trajectories, SplitParams, color, textureData, DecalData.EffectData.Default);
                     foreach (var data in datas)
                     {
                         addData(data);
