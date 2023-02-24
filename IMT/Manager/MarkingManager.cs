@@ -174,9 +174,6 @@ namespace IMT.Manager
                 if (data.m_nextInstance != ushort.MaxValue)
                     return;
 
-                if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
-                    return;
-
                 if (!TryGetMarking(id, out TypeMarking marking))
                     return;
 

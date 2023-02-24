@@ -153,29 +153,21 @@ namespace IMT.Utilities
 
         public override bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
         {
-            if (Info.m_prefabDataLayer == layer)
+            foreach (var item in Items)
             {
-                foreach (var item in Items)
-                {
-                    PropInstance.CalculateGroupData(Info, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
-                }
-
-                return true;
+                PropInstance.CalculateGroupData(Info, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
             }
-            else
-                return false;
+
+            return true;
         }
 
         public override void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
         {
             var instance = new InstanceID();
 
-            if (Info.m_prefabDataLayer == layer)
+            foreach (var item in Items)
             {
-                foreach (var item in Items)
-                {
-                    PropInstance.PopulateGroupData(Info, layer, instance, item.position, item.scale, item.absoluteAngle + item.angle, item.color, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
-                }
+                PropInstance.PopulateGroupData(Info, layer, instance, item.position, item.scale, item.absoluteAngle + item.angle, item.color, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
             }
         }
     }
@@ -236,27 +228,19 @@ namespace IMT.Utilities
 
         public override bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
         {
-            if (Info.m_prefabDataLayer == layer)
+            foreach (var item in Items)
             {
-                foreach (var item in Items)
-                {
-                    TreeInstance.CalculateGroupData(ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
-                }
-
-                return true;
+                TreeInstance.CalculateGroupData(ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
             }
-            else
-                return false;
+
+            return true;
         }
 
         public override void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
         {
-            if (Info.m_prefabDataLayer == layer)
+            foreach (var item in Items)
             {
-                foreach (var item in Items)
-                {
-                    TreeInstance.PopulateGroupData(Info, item.position, item.scale, 1f, RenderManager.DefaultColorLocation, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
-                }
+                TreeInstance.PopulateGroupData(Info, item.position, item.scale, 1f, RenderManager.DefaultColorLocation, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
             }
         }
     }

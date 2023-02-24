@@ -247,7 +247,7 @@ namespace IMT.Utilities
             MarkingLODType.Network => new MarkingNetworkGroupRenderData(),
             MarkingLODType.Prop => new MarkingPropGroupRenderData(),
             MarkingLODType.Tree => new MarkingTreeGroupRenderData(),
-            _ => new MarkingGroupRenderData(),
+            _ => throw new NotSupportedException(),
         };
 
         public int GetRenderLayers()
@@ -260,11 +260,15 @@ namespace IMT.Utilities
             return renderLayers;
         }
     }
-    public class MarkingGroupRenderData : EnumDictionary<MarkingLOD, List<IStyleData>>
+    public abstract class MarkingGroupRenderData : EnumDictionary<MarkingLOD, List<IStyleData>>
     {
         public virtual float LODDistance => Settings.LODDistance;
+        public virtual float MaxRenderDistance => Settings.RenderDistance;
         public void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
+            if (!cameraInfo.CheckRenderDistance(data.m_position, MaxRenderDistance))
+                return;
+
             foreach (var renderData in this[MarkingLOD.NoLOD])
                 renderData.Render(cameraInfo, data, infoView);
 
@@ -285,10 +289,20 @@ namespace IMT.Utilities
             bool result = false;
 
             foreach (var renderData in this[MarkingLOD.NoLOD])
-                result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+            {
+                if (renderData.RenderLayer == layer)
+                {
+                    result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+                }
+            }
 
             foreach (var renderData in this[MarkingLOD.LOD1])
-                result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+            {
+                if (renderData.RenderLayer == layer)
+                {
+                    result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+                }
+            }
 
             return result;
         }
@@ -296,10 +310,20 @@ namespace IMT.Utilities
         public void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
         {
             foreach (var renderData in this[MarkingLOD.NoLOD])
-                renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+            {
+                if (renderData.RenderLayer == layer)
+                {
+                    renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+                }
+            }
 
             foreach (var renderData in this[MarkingLOD.LOD1])
-                renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+            {
+                if (renderData.RenderLayer == layer)
+                {
+                    renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+                }
+            }
         }
         public int GetRenderLayers()
         {
@@ -327,13 +351,16 @@ namespace IMT.Utilities
     public class MarkingNetworkGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.NetworkLODDistance;
+        public override float MaxRenderDistance => float.MaxValue;
     }
     public class MarkingPropGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.PropLODDistance;
+        public override float MaxRenderDistance => float.MaxValue;
     }
     public class MarkingTreeGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.TreeLODDistance;
+        public override float MaxRenderDistance => float.MaxValue;
     }
 }

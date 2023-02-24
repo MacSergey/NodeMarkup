@@ -217,11 +217,34 @@ namespace IMT.Utilities
         public bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
         {
             return false;
+
+            foreach (var data in Datas)
+            {
+                vertexCount += data.mesh.vertexCount;
+                triangleCount += data.mesh.triangles.Length;
+                objectCount += 1;
+            }
+
+            return true;
         }
 
-        public void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        public void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData groupData, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
         {
+            foreach (var data in Datas)
+            {
+                var triangles = data.mesh.triangles;
+                for (int i = 0; i < triangles.Length; i += 1)
+                {
+                    groupData.m_triangles[triangleIndex++] = triangles[i] + vertexIndex;
+                }
 
+                var vertices = data.mesh.vertices;
+                for (int i = 0; i < vertices.Length; i += 1)
+                {
+                    groupData.m_vertices[vertexIndex] = Position - groupPosition + vertices[i];
+                    vertexIndex += 1;
+                }
+            }
         }
     }
 }

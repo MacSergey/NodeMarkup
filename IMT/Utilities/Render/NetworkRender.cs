@@ -137,32 +137,24 @@ namespace IMT.Utilities
 
         public override bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
         {
-            if (Info.m_prefabDataLayer == layer)
+            foreach (var data in Datas)
             {
-                foreach (var data in Datas)
-                {
-                    RenderGroup.MeshData renderData = data.segment.m_combinedLod.m_key.m_mesh.m_data;
-                    vertexCount += renderData.m_vertices.Length;
-                    triangleCount += renderData.m_triangles.Length;
-                    objectCount++;
-                    vertexArrays |= renderData.VertexArrayMask() | RenderGroup.VertexArrays.Colors | RenderGroup.VertexArrays.Uvs2 | RenderGroup.VertexArrays.Uvs4;
-                }
-
-                return true;
+                RenderGroup.MeshData renderData = data.segment.m_combinedLod.m_key.m_mesh.m_data;
+                vertexCount += renderData.m_vertices.Length;
+                triangleCount += renderData.m_triangles.Length;
+                objectCount += 1;
+                vertexArrays |= renderData.VertexArrayMask() | RenderGroup.VertexArrays.Colors | RenderGroup.VertexArrays.Uvs2 | RenderGroup.VertexArrays.Uvs4;
             }
-            else
-                return false;
+
+            return true;
         }
 
         public override void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData renderData, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
         {
-            if (Info.m_prefabDataLayer == layer)
+            foreach (var data in Datas)
             {
-                foreach (var data in Datas)
-                {
-                    CalculateMatrix(data.trajectory, width * 0.5f * scale, groupPosition, out var left, out var right);
-                    NetSegment.PopulateGroupData(Info, data.segment, left, right, Scale, default, ref vertexIndex, ref triangleIndex, groupPosition, renderData, ref requireSurfaceMaps);
-                }
+                CalculateMatrix(data.trajectory, width * 0.5f * scale, groupPosition, out var left, out var right);
+                NetSegment.PopulateGroupData(Info, data.segment, left, right, Scale, default, ref vertexIndex, ref triangleIndex, groupPosition, renderData, ref requireSurfaceMaps);
             }
         }
     }
