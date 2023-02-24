@@ -48,7 +48,7 @@ namespace IMT.Utilities
             this.textureData = textureData;
             this.position = position;
             this.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down);
-            this.color = color.ToX3Vector();
+            this.color = textureData.mainTexture != null ? color : color.ToX3Vector();
             this.size = size;
             this.effectData = effectData;
 
