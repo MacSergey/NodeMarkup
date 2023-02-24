@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public abstract class CrosswalkStyle : Style<CrosswalkStyle>
+    public abstract class BaseCrosswalkStyle : Style<BaseCrosswalkStyle>
     {
         public static float DefaultCrosswalkWidth { get; } = 2f;
         public static float DefaultCrosswalkDashLength { get; } = 0.4f;
@@ -24,18 +24,19 @@ namespace IMT.Manager
 
         protected static string Gap => string.Empty;
 
-        private static Dictionary<CrosswalkType, CrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, CrosswalkStyle>()
+        private static Dictionary<CrosswalkType, BaseCrosswalkStyle> Defaults { get; } = new Dictionary<CrosswalkType, BaseCrosswalkStyle>()
         {
             {CrosswalkType.Existent, new ExistCrosswalkStyle(DefaultCrosswalkWidth) },
-            {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultColor, DefaultColor, false, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, false, DefaultCrosswalkSpaceLength, DefaulCrosswalkGapPeriod, ZebraCrosswalkStyle.DashEnd.ParallelStraight) },
-            {CrosswalkType.DoubleZebra, new DoubleZebraCrosswalkStyle(DefaultColor, DefaultColor, false, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, false, DefaultCrosswalkSpaceLength, DefaulCrosswalkGapPeriod, ZebraCrosswalkStyle.DashEnd.ParallelStraight, DefaultCrosswalkOffset) },
-            {CrosswalkType.ParallelSolidLines, new ParallelSolidLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth) },
-            {CrosswalkType.ParallelDashedLines, new ParallelDashedLinesCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth, DefaultDashLength, DefaultSpaceLength) },
-            {CrosswalkType.Ladder, new LadderCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, DefaultWidth) },
-            {CrosswalkType.Solid, new SolidCrosswalkStyle(DefaultColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset) },
-            {CrosswalkType.ChessBoard, new ChessBoardCrosswalkStyle(DefaultColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkSquareSide, DefaultCrosswalkLineCount, false) },
+            {CrosswalkType.Zebra, new ZebraCrosswalkStyle(DefaultMarkingColor, DefaultMarkingColor, false, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, false, DefaultCrosswalkSpaceLength, DefaulCrosswalkGapPeriod, ZebraCrosswalkStyle.DashEnd.ParallelStraight) },
+            {CrosswalkType.DoubleZebra, new DoubleZebraCrosswalkStyle(DefaultMarkingColor, DefaultMarkingColor, false, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, false, DefaultCrosswalkSpaceLength, DefaulCrosswalkGapPeriod, ZebraCrosswalkStyle.DashEnd.ParallelStraight, DefaultCrosswalkOffset) },
+            {CrosswalkType.ParallelSolidLines, new ParallelSolidLinesCrosswalkStyle(DefaultMarkingColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth) },
+            {CrosswalkType.ParallelDashedLines, new ParallelDashedLinesCrosswalkStyle(DefaultMarkingColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultWidth, DefaultDashLength, DefaultSpaceLength) },
+            {CrosswalkType.Ladder, new LadderCrosswalkStyle(DefaultMarkingColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkDashLength, DefaultCrosswalkSpaceLength, DefaultWidth) },
+            {CrosswalkType.Solid, new SolidCrosswalkStyle(DefaultMarkingColor, DefaultCrosswalkWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset) },
+            {CrosswalkType.ChessBoard, new ChessBoardCrosswalkStyle(DefaultMarkingColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultCrosswalkOffset, DefaultCrosswalkOffset, DefaultCrosswalkSquareSide, DefaultCrosswalkLineCount, false) },
+            {CrosswalkType.Decal, new DecalCrosswalkStyle(null, null, DefaultCrosswalkWidth, Vector2.one, 0f, DefaultCrosswalkOffset, DefaultCrosswalkOffset) },
         };
-        public static CrosswalkStyle GetDefault(CrosswalkType type)
+        public static BaseCrosswalkStyle GetDefault(CrosswalkType type)
         {
             return Defaults.TryGetValue(type, out var style) ? style.CopyStyle() : null;
         }
@@ -45,8 +46,8 @@ namespace IMT.Manager
 
         public abstract float GetTotalWidth(MarkingCrosswalk crosswalk);
 
-        public CrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture) : base(color, width, cracks, voids, texture) { }
-        public CrosswalkStyle(Color32 color, float width) : base(color, width) { }
+        public BaseCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture) : base(color, width, cracks, voids, texture) { }
+        public BaseCrosswalkStyle(Color32 color, float width) : base(color, width) { }
 
         public sealed override void GetUIComponents(EditorProvider provider)
         {
@@ -119,7 +120,7 @@ namespace IMT.Manager
             foreach (var contour in cutContours)
             {
                 var trajectories = contour.Select(e => e.trajectory).ToArray();
-                var datas = DecalData.GetData(this as IEffectStyle, Marking.Item.Crosswalk, lod, trajectories, StyleHelper.SplitParams.Default, color);
+                var datas = DecalData.GetData(DecalData.DecalType.Crosswalk, lod, trajectories, StyleHelper.SplitParams.Default, color, DecalData.TextureData.Default, new DecalData.EffectData(this as IEffectStyle));
 
                 foreach (var data in datas)
                     addData(data);
@@ -151,6 +152,9 @@ namespace IMT.Manager
 
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             ChessBoard = StyleType.CrosswalkChessBoard,
+
+            [Description(nameof(Localize.CrosswalkStyle_Decal))]
+            Decal = StyleType.CrosswalkDecal,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NotVisible]

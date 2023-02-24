@@ -1,4 +1,5 @@
-﻿using ColossalFramework.Math;
+﻿using ColossalFramework;
+using ColossalFramework.Math;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
@@ -6,10 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Xml.Linq;
 using UnityEngine;
 using static ColossalFramework.Math.VectorUtils;
-using static IMT.Utilities.MarkingFillerMeshData;
 using ObjectId = IMT.Utilities.ObjectId;
 
 namespace IMT.Manager
@@ -67,23 +68,24 @@ namespace IMT.Manager
         public int FillersCount => FillersList.Count;
 
 
-        public bool NeedRecalculateDrawData { get; private set; }
         private HashSet<IStyleItem> RecalculateList { get; set; } = new HashSet<IStyleItem>();
-        public MarkingRenderData DrawData { get; } = new MarkingRenderData();
+        private MarkingRenderData RenderData { get; set; } = new MarkingRenderData();
+        private MarkingRenderData TempRenderData { get; set; } = new MarkingRenderData();
+        public int RenderLayers { get; private set; }
 
 
-        private bool _needSetOrder;
+        private bool needSetOrder;
         public bool NeedSetOrder
         {
-            get => _needSetOrder;
+            get => needSetOrder;
             set
             {
-                if (_needSetOrder && !value)
+                if (needSetOrder && !value)
                     Backup = null;
-                else if (!_needSetOrder && value)
+                else if (!needSetOrder && value)
                     Backup = new IntersectionTemplate(this);
 
-                _needSetOrder = value;
+                needSetOrder = value;
             }
         }
         public IntersectionTemplate Backup { get; private set; }
@@ -391,50 +393,17 @@ namespace IMT.Manager
         }
         public void RecalculateStyleData(IStyleItem toRecalculate = null)
         {
-            lock (RecalculateList)
+            lock (this)
             {
                 if (toRecalculate != null)
                     RecalculateList.Add(toRecalculate);
-
-                NeedRecalculateDrawData = true;
             }
         }
         public void RecalculateStyleData(HashSet<IStyleItem> toRecalculate)
         {
-            lock (RecalculateList)
+            lock (this)
             {
                 RecalculateList.AddRange(toRecalculate);
-                NeedRecalculateDrawData = true;
-            }
-        }
-
-        public void RecalculateDrawData()
-        {
-            lock (RecalculateList)
-            {
-                DrawData.Clear();
-
-                foreach (var item in RecalculateList)
-                    item.RecalculateStyleData();
-
-                foreach(var line in Lines)
-                {
-                    foreach(var styleData in line.StyleData)
-                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
-                }
-                foreach (var fillers in Fillers)
-                {
-                    foreach (var styleData in fillers.StyleData)
-                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
-                }
-                foreach (var crosswalk in Crosswalks)
-                {
-                    foreach (var styleData in crosswalk.StyleData)
-                        DrawData[styleData.LODType][styleData.LOD].AddRange(styleData.GetDrawData());
-                }
-
-                RecalculateList.Clear();
-                NeedRecalculateDrawData = false;
             }
         }
 
@@ -481,7 +450,7 @@ namespace IMT.Manager
         {
             return AddLine(pointPair, () => new MarkingStopLine(this, pointPair, style));
         }
-        public MarkingCrosswalkLine AddCrosswalkLine(MarkingPointPair pointPair, CrosswalkStyle style)
+        public MarkingCrosswalkLine AddCrosswalkLine(MarkingPointPair pointPair, BaseCrosswalkStyle style)
         {
             return AddLine(pointPair, () => new MarkingCrosswalkLine(this, pointPair, style));
         }
@@ -548,7 +517,7 @@ namespace IMT.Manager
             FillersList.Add(filler);
             RecalculateStyleData(filler);
         }
-        public MarkingFiller AddFiller(FillerContour contour, FillerStyle style, out List<MarkingRegularLine> lines)
+        public MarkingFiller AddFiller(FillerContour contour, BaseFillerStyle style, out List<MarkingRegularLine> lines)
         {
             lines = new List<MarkingRegularLine>();
             foreach (var part in contour.RawEdges)
@@ -793,6 +762,18 @@ namespace IMT.Manager
                 Update();
         }
 
+        public void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            foreach (var line in Lines)
+                line.GetUsedAssets(networks, props, trees);
+
+            foreach (var filler in Fillers)
+                filler.GetUsedAssets(networks, props, trees);
+
+            foreach (var crosswalk in Crosswalks)
+                crosswalk.GetUsedAssets(networks, props, trees);
+        }
+
         #endregion
 
         #region UTILITY
@@ -870,6 +851,78 @@ namespace IMT.Manager
 
             return true;
         }
+
+        #endregion
+
+        #region RENDER
+
+        public void Render(RenderManager.CameraInfo cameraInfo, ref RenderManager.Instance data)
+        {
+            if (RecalculateList.Count > 0)
+            {
+                lock(this)
+                {
+                    var renderData = TempRenderData;
+
+                    foreach (var item in RecalculateList)
+                        item.RecalculateStyleData();
+
+                    foreach (var line in Lines)
+                    {
+                        foreach (var styleData in line.StyleData)
+                            renderData[styleData.LODType][styleData.LOD].Add(styleData);
+                    }
+                    foreach (var fillers in Fillers)
+                    {
+                        foreach (var styleData in fillers.StyleData)
+                            renderData[styleData.LODType][styleData.LOD].Add(styleData);
+                    }
+                    foreach (var crosswalk in Crosswalks)
+                    {
+                        foreach (var styleData in crosswalk.StyleData)
+                            renderData[styleData.LODType][styleData.LOD].Add(styleData);
+                    }
+
+                    SimulationManager.instance.AddAction(() =>
+                    {
+                        lock (this)
+                        {
+                            TempRenderData = RenderData;
+                            TempRenderData.Clear();
+
+                            RenderData = renderData;
+                            RenderLayers = renderData.GetRenderLayers();
+                        }
+                        UpdateRenderer();
+                    });
+
+                    RecalculateList.Clear();
+                }
+            }
+
+            bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
+
+            foreach (var renderData in RenderData.Values)
+                renderData.Render(cameraInfo, data, infoView);
+        }
+
+        public void CalculateGroupData(ref bool result, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            foreach (var renderData in RenderData.Values)
+            {
+                result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+            }
+        }
+
+        public void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+            foreach (var renderData in RenderData.Values)
+            {
+                renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+            }
+        }
+
+        protected abstract void UpdateRenderer();
 
         #endregion
 

@@ -16,6 +16,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.LineSolidAndDashed;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         public PropertyBoolValue TwoColors { get; }
         public PropertyColorValue SecondColor { get; }
@@ -97,7 +98,7 @@ namespace IMT.Manager
                 StyleHelper.GetPartParams(trajectory, part, solidOffset, out var startPos, out var endPos, out var dir);
                 if (StyleHelper.CheckBorders(borders, ref startPos, ref endPos, dir, Width))
                 {
-                    var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, Width, Color);
+                    var data = new DecalData(MaterialType.Dash, lod, startPos, endPos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                     addData(data);
                 }
             }
@@ -110,7 +111,7 @@ namespace IMT.Manager
                     StyleHelper.GetPartParams(trajectory, part, dashedOffset, out var pos, out var dir);
                     if (StyleHelper.CheckBorders(borders, pos, dir, DashLength, Width))
                     {
-                        var data = new DecalData(this, MaterialType.Dash, lod, pos, dir, DashLength, Width, TwoColors ? SecondColor : Color);
+                        var data = new DecalData(MaterialType.Dash, lod, pos, dir, DashLength, Width, TwoColors ? SecondColor : Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                         addData(data);
                     }
                 }
@@ -176,7 +177,7 @@ namespace IMT.Manager
         {
             base.FromXml(config, map, invert, typeChanged);
             TwoColors.FromXml(config, false);
-            SecondColor.FromXml(config, DefaultColor);
+            SecondColor.FromXml(config, DefaultMarkingColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             DashLength.FromXml(config, DefaultDashLength);
             SpaceLength.FromXml(config, DefaultSpaceLength);

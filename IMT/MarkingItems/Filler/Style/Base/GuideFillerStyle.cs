@@ -24,7 +24,7 @@ namespace IMT.Manager
         public PropertyValue<int> LeftGuideB { get; }
         public PropertyValue<int> RightGuideB { get; }
 
-        public GuideFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float step, float lineOffset, float medianOffset) : base(color, width, cracks, voids, texture, step, lineOffset, medianOffset)
+        public GuideFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float step, Vector2 offset) : base(color, width, cracks, voids, texture, step, offset)
         {
             LeftGuideA = GetLeftGuideAProperty(0);
             LeftGuideB = GetLeftGuideBProperty(1);
@@ -32,7 +32,7 @@ namespace IMT.Manager
             RightGuideB = GetRightGuideBProperty(2);
         }
 
-        public override void CopyTo(FillerStyle target)
+        public override void CopyTo(BaseFillerStyle target)
         {
             base.CopyTo(target);
 

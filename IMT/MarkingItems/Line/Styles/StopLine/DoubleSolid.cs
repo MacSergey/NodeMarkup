@@ -68,11 +68,11 @@ namespace IMT.Manager
             foreach (var part in parts)
             {
                 StyleHelper.GetPartParams(trajectory, part, offsetLeft, offsetLeft, out var leftStartPos, out var leftEndPos, out var leftDir);
-                var left = new DecalData(this, MaterialType.Dash, lod, leftStartPos, leftEndPos, Width, Color);
+                var left = new DecalData(MaterialType.Dash, lod, leftStartPos, leftEndPos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                 addData(left);
 
                 StyleHelper.GetPartParams(trajectory, part, offsetRight, offsetRight, out var rightStartPos, out var rightEndPos, out var rightDir);
-                var right = new DecalData(this, MaterialType.Dash, lod, rightStartPos, rightEndPos, Width, TwoColors ? SecondColor : Color);
+                var right = new DecalData(MaterialType.Dash, lod, rightStartPos, rightEndPos, Width, TwoColors ? SecondColor : Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                 addData(right);
             }
         }
@@ -112,7 +112,7 @@ namespace IMT.Manager
         {
             base.FromXml(config, map, invert, typeChanged);
             TwoColors.FromXml(config, false);
-            SecondColor.FromXml(config, DefaultColor);
+            SecondColor.FromXml(config, DefaultMarkingColor);
             Offset.FromXml(config, DefaultDoubleOffset);
         }
     }

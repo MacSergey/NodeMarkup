@@ -74,8 +74,8 @@ namespace IMT.UI
 
     public class RegularLineModifierPanel : StyleModifierPanel<RegularLineStyle.RegularLineType> { }
     public class StopLineModifierPanel : StyleModifierPanel<StopLineStyle.StopLineType> { }
-    public class CrosswalkModifierPanel : StyleModifierPanel<CrosswalkStyle.CrosswalkType> { }
-    public class FillerModifierPanel : StyleModifierPanel<FillerStyle.FillerType> { }
+    public class CrosswalkModifierPanel : StyleModifierPanel<BaseCrosswalkStyle.CrosswalkType> { }
+    public class FillerModifierPanel : StyleModifierPanel<BaseFillerStyle.FillerType> { }
 
     public class ModifierDropDown : UIDropDown<StyleModifier>
     {
@@ -86,7 +86,7 @@ namespace IMT.UI
             ComponentStyle.CustomSettingsStyle(this, new Vector2(278, 31));
 
             foreach (var modifier in EnumExtension.GetEnumValues<StyleModifier>())
-                AddItem(modifier, modifier.Description());
+                AddItem(modifier, new OptionData(modifier.Description()));
 
             SelectedObject = StyleModifier.NotSet;
         }

@@ -18,6 +18,8 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.CrosswalkChessBoard;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
+
         public PropertyValue<float> SquareSide { get; }
         public PropertyValue<int> LineCount { get; }
         public PropertyBoolValue Invert { get; }
@@ -95,8 +97,8 @@ namespace IMT.Manager
             }
         }
 
-        public override CrosswalkStyle CopyStyle() => new ChessBoardCrosswalkStyle(Color, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, SquareSide, LineCount, Invert);
-        public override void CopyTo(CrosswalkStyle target)
+        public override BaseCrosswalkStyle CopyStyle() => new ChessBoardCrosswalkStyle(Color, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, SquareSide, LineCount, Invert);
+        public override void CopyTo(BaseCrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is ChessBoardCrosswalkStyle chessBoardTarget)

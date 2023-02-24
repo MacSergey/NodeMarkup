@@ -622,6 +622,7 @@ namespace IMT.Manager
             prefabProperty.PrefabSortPredicate = GetSortPredicate();
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
+            prefabProperty.RawName = Prefab.RawName;
             prefabProperty.OnValueChanged += (value) =>
             {
                 Prefab.Value = value;
@@ -681,9 +682,9 @@ namespace IMT.Manager
                 {
                     var sprite = value.Sprite();
                     if (string.IsNullOrEmpty(sprite))
-                        Selector.AddItem(value, GetDescription(value));
+                        Selector.AddItem(value, new OptionData(GetDescription(value)));
                     else
-                        Selector.AddItem(value, GetDescription(value), IMTTextures.Atlas, sprite);
+                        Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
                 }
             }
             Selector.StartLayout();

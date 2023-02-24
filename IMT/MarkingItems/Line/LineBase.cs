@@ -167,6 +167,8 @@ namespace IMT.Manager
         }
         public abstract void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged);
 
+        public abstract void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees);
+
         public override string ToString() => PointPair.ToString();
     }
 

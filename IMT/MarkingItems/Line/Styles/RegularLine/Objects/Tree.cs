@@ -69,5 +69,10 @@ namespace IMT.Manager
 
         protected override bool IsValidPrefab(TreeInfo info) => info != null;
         protected override Func<TreeInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
+
+        public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            trees.Add(Prefab.RawName);
+        }
     }
 }

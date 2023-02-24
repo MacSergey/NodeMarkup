@@ -195,7 +195,7 @@ namespace IMT.UI.Editors
             if (style == EditObject.Style.Value.Type)
                 return;
 
-            var newStyle = SingletonManager<StyleTemplateManager>.Instance.GetDefault<CrosswalkStyle>(style);
+            var newStyle = SingletonManager<StyleTemplateManager>.Instance.GetDefault<BaseCrosswalkStyle>(style);
             EditObject.Style.Value.CopyTo(newStyle);
             EditObject.Style.Value = newStyle;
 
@@ -209,7 +209,7 @@ namespace IMT.UI.Editors
             AddStyleProperties();
             PropertiesPanel.StartLayout();
         }
-        private void ApplyStyle(CrosswalkStyle style)
+        private void ApplyStyle(BaseCrosswalkStyle style)
         {
             EditObject.Style.Value = style.CopyStyle();
             Style.SelectedObject = EditObject.Style.Value.Type;
@@ -228,16 +228,16 @@ namespace IMT.UI.Editors
         }
         private void SelectTemplate(StyleTemplate template)
         {
-            if (template.Style is CrosswalkStyle style)
+            if (template.Style is BaseCrosswalkStyle style)
                 ApplyStyle(style);
         }
         private void CopyStyle() => Tool.ToStyleBuffer(Manager.Style.StyleType.Crosswalk, EditObject.Style.Value);
         private void PasteStyle()
         {
-            if (Tool.FromStyleBuffer<CrosswalkStyle>(Manager.Style.StyleType.Crosswalk, out var style))
+            if (Tool.FromStyleBuffer<BaseCrosswalkStyle>(Manager.Style.StyleType.Crosswalk, out var style))
                 ApplyStyle(style);
         }
-        private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<CrosswalkStyle>(EditObject.Style.Value.Type));
+        private void ResetStyle() => ApplyStyle(Manager.Style.GetDefault<BaseCrosswalkStyle>(EditObject.Style.Value.Type));
         private void CutLines() => Marking.CutLinesByCrosswalk(EditObject);
         private void ApplyStyleSameStyle()
         {
@@ -321,7 +321,7 @@ namespace IMT.UI.Editors
             base.Refresh();
 
             Icon.Type = Object.Style.Value.Type;
-            Icon.StyleColor = Object.Style.Value.Color;
+            Icon.StyleColor = Object.Style.Value is IColorStyle ? Object.Style.Value.Color : Color.white;
         }
     }
 

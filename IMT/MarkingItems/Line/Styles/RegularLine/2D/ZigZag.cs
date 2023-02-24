@@ -1,5 +1,4 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
@@ -9,15 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
     public class ZigZagLineStyle : RegularLineStyle, IRegularLine, IEffectStyle
     {
         public override StyleType Type => StyleType.LineZigZag;
-
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -99,8 +97,8 @@ namespace IMT.Manager
                     var middlePos = trajectory.Position(middleT) + trajectory.Tangent(middleT).MakeFlatNormalized().Turn90(!Side) * Offset;
                     var endPos = trajectory.Position(endT);
 
-                    addData(new DecalData(this, MaterialType.Dash, lod, startPos, middlePos, Width, Color));
-                    addData(new DecalData(this, MaterialType.Dash, lod, middlePos, endPos, Width, Color));
+                    addData(new DecalData(MaterialType.Dash, lod, startPos, middlePos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
+                    addData(new DecalData(MaterialType.Dash, lod, middlePos, endPos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
                 }
                 else
                 {
@@ -108,8 +106,8 @@ namespace IMT.Manager
                     var middlePos = trajectory.Position(middleT);
                     var endPos = trajectory.Position(endT) + trajectory.Tangent(endT).MakeFlatNormalized().Turn90(!Side) * Offset;
 
-                    addData(new DecalData(this, MaterialType.Dash, lod, startPos, middlePos, Width, Color));
-                    addData(new DecalData(this, MaterialType.Dash, lod, middlePos, endPos, Width, Color));
+                    addData(new DecalData(MaterialType.Dash, lod, startPos, middlePos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
+                    addData(new DecalData(MaterialType.Dash, lod, middlePos, endPos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
                 }
             }
 
@@ -124,8 +122,8 @@ namespace IMT.Manager
                 var endDir = trajectory.Tangent(endT).MakeFlatNormalized().Turn90(!Side);
 
 
-                addData(new DecalData(this, MaterialType.Dash, lod, startPos, startPos + startDir * Offset, Width, Color));
-                addData(new DecalData(this, MaterialType.Dash, lod, endPos, endPos + endDir * Offset, Width, Color));
+                addData(new DecalData(MaterialType.Dash, lod, startPos, startPos + startDir * Offset, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
+                addData(new DecalData(MaterialType.Dash, lod, endPos, endPos + endDir * Offset, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)));
             }
         }
 
@@ -197,6 +195,7 @@ namespace IMT.Manager
             Step.ToXml(config);
             Offset.ToXml(config);
             Side.ToXml(config);
+            StartFrom.ToXml(config);
             return config;
         }
     }

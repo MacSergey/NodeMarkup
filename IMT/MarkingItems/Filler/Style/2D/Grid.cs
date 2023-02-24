@@ -14,6 +14,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.FillerGrid;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
+        public bool KeepColor => true;
         protected override float DefaultStep => DefaultStepGrid;
 
         public PropertyValue<float> Angle { get; }
@@ -50,21 +51,21 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<float>(nameof(Width), Width);
                 yield return new StylePropertyDataProvider<float>(nameof(Step), Step);
                 yield return new StylePropertyDataProvider<float>(nameof(Angle), Angle);
-                yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
-                yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(LineOffset), LineOffset);
+                //yield return new StylePropertyDataProvider<float>(nameof(MedianOffset), MedianOffset);
                 yield return new StylePropertyDataProvider<float>(nameof(Texture), Texture);
                 yield return new StylePropertyDataProvider<Vector2>(nameof(Cracks), Cracks);
                 yield return new StylePropertyDataProvider<Vector2>(nameof(Voids), Voids);
             }
         }
 
-        public GridFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float angle, float step, float lineOffset, float medianOffset) : base(color, width, cracks, voids, texture, step, lineOffset, medianOffset)
+        public GridFillerStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float angle, float step, Vector2 offset) : base(color, width, cracks, voids, texture, step, offset)
         {
             Angle = GetAngleProperty(angle);
         }
 
-        public override FillerStyle CopyStyle() => new GridFillerStyle(Color, Width, Cracks, Voids, Texture, DefaultAngle, Step, LineOffset, DefaultOffset);
-        public override void CopyTo(FillerStyle target)
+        public override BaseFillerStyle CopyStyle() => new GridFillerStyle(Color, Width, Cracks, Voids, Texture, DefaultAngle, Step, Offset);
+        public override void CopyTo(BaseFillerStyle target)
         {
             base.CopyTo(target);
 

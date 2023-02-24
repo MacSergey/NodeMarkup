@@ -152,11 +152,12 @@ namespace IMT.Manager
             prefabProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
+            prefabProperty.RawName = Prefab.RawName;
             prefabProperty.OnValueChanged += (value) =>
             {
                 var oldPrefab = Prefab.Value;
                 Prefab.Value = value;
-                if ((oldPrefab == null || NetworkColor.Value == null || NetworkColor.Value != oldPrefab.m_color) && value != null)
+                if (value != null && (oldPrefab == null || !NetworkColor.HasValue || NetworkColor.Value.Value == oldPrefab.m_color))
                     NetworkColor.Value = value.m_color;
 
                 provider.Refresh();
@@ -168,11 +169,11 @@ namespace IMT.Manager
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(Prefab.Value?.m_color);
-            colorProperty.Value = NetworkColor.Value ?? Prefab.Value?.m_color ?? new Color32(127, 127, 127, 255);
             colorProperty.OnValueChanged += (Color32 color) => NetworkColor.Value = color;
         }
         private void RefreshNetworkColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
+            colorProperty.Value = NetworkColor.Value ?? Prefab.Value?.m_color ?? new Color32(127, 127, 127, 255);
             colorProperty.IsHidden = !IsValid;
 
             if (Prefab.Value != null)
@@ -191,7 +192,9 @@ namespace IMT.Manager
             shiftProperty.CheckMax = true;
             shiftProperty.MinValue = -50;
             shiftProperty.MaxValue = 50;
-            shiftProperty.Init();
+            shiftProperty.Init
+                (new OptionData(Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcon),
+                new OptionData(Localize.StyleOption_ObjectTwoDifferent, IMTTextures.Atlas, IMTTextures.DoubleButtonIcon));
             shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
             shiftProperty.OnValueChanged += (valueA, valueB) => Shift.Value = new Vector2(valueA, valueB);
         }
@@ -340,6 +343,11 @@ namespace IMT.Manager
                 Invert.Value = !Invert.Value;
                 Shift.Value = -Shift.Value;
             }
+        }
+
+        public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            networks.Add(Prefab.RawName);
         }
     }
 }

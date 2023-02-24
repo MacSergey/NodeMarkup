@@ -23,6 +23,7 @@ namespace IMT.Manager
 
         public override StyleType Type => StyleType.LineText;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
         public override bool CanOverlap => true;
 
         private PropertyStringValue Text { get; }
@@ -226,7 +227,7 @@ namespace IMT.Manager
             var width = textureData.texture.width * ratio;
             var height = textureData.texture.height * ratio;
 
-            var data = new DecalData(this, MaterialType.Dash, lod, null, textureData.texture, position, angle, width, height, Color);
+            var data = new DecalData(MaterialType.Text, lod, position, angle, width, height, Color, new DecalData.TextureData(null, textureData.texture), new DecalData.EffectData(this));
             addData(data);
         }
 
@@ -235,7 +236,7 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<FontPtopertyPanel>(this, nameof(Font), MainCategory, AddFontProperty));
+            provider.AddProperty(new PropertyInfo<FontPropertyPanel>(this, nameof(Font), MainCategory, AddFontProperty));
             provider.AddProperty(new PropertyInfo<StringPropertyPanel>(this, nameof(Text), MainCategory, AddTextProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), MainCategory, AddScaleProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), AdditionalCategory, AddAngleProperty));
@@ -252,7 +253,7 @@ namespace IMT.Manager
 #endif
         }
 
-        protected void AddFontProperty(FontPtopertyPanel fontProperty, EditorProvider provider)
+        protected void AddFontProperty(FontPropertyPanel fontProperty, EditorProvider provider)
         {
             fontProperty.Text = Localize.StyleOption_Font;
             fontProperty.Init();
@@ -471,9 +472,9 @@ namespace IMT.Manager
                     {
                         var sprite = value.Sprite();
                         if (string.IsNullOrEmpty(sprite))
-                            Selector.AddItem(value, GetDescription(value));
+                            Selector.AddItem(value, new OptionData(GetDescription(value)));
                         else
-                            Selector.AddItem(value, GetDescription(value), IMTTextures.Atlas, sprite);
+                            Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
                     }
                 }
                 Selector.StartLayout();

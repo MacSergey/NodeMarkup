@@ -46,6 +46,7 @@ namespace IMT
         public static SavedString Templates { get; } = new SavedString(nameof(Templates), SettingsFile, string.Empty, true);
         public static SavedString Intersections { get; } = new SavedString(nameof(Intersections), SettingsFile, string.Empty, true);
         public static SavedString Roads { get; } = new SavedString(nameof(Roads), SettingsFile, string.Empty, true);
+        public static SavedString FavoritePrefabs { get; } = new SavedString(nameof(FavoritePrefabs), SettingsFile, string.Empty, true);
 
         public static SavedBool GroupPoints { get; } = new SavedBool(nameof(GroupPoints), SettingsFile, true, true);
         public static SavedBool GroupLines { get; } = new SavedBool(nameof(GroupLines), SettingsFile, false, true);
@@ -97,6 +98,7 @@ namespace IMT
             AddGrouping(GeneralTab);
             AddSorting(GeneralTab);
             AddNotifications(GeneralTab);
+            AddOther(GeneralTab);
 
             AddKeyMapping(ShortcutsTab, undergroundOptions);
 
@@ -189,6 +191,38 @@ namespace IMT
 
 
             static void OnChanged() => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
+        }
+        private void AddOther(UIAdvancedHelper helper)
+        {
+            var group = helper.AddGroup(Localize.Setting_Others);
+            var button = AddButton(group, Localize.Settings_InvertChevrons, InvertChevrons, 400);
+
+            static void InvertChevrons()
+            {
+                for(int i = 0; i < NetManager.MAX_NODE_COUNT; i+= 1)
+                {
+                    if(SingletonManager<NodeMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                    {
+                        foreach(var filler in marking.Fillers)
+                        {
+                            if(filler.Style.Value is ChevronFillerStyle chevron)
+                                chevron.Invert.Value = !chevron.Invert;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < NetManager.MAX_SEGMENT_COUNT; i += 1)
+                {
+                    if (SingletonManager<SegmentMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                    {
+                        foreach (var filler in marking.Fillers)
+                        {
+                            if (filler.Style.Value is ChevronFillerStyle chevron)
+                                chevron.Invert.Value = !chevron.Invert;
+                        }
+                    }
+                }
+            }
         }
 
         #endregion

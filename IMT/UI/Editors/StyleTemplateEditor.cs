@@ -115,14 +115,14 @@ namespace IMT.UI.Editors
                         }
                     }
                     break;
-                case CrosswalkStyle crosswalkStyle:
+                case BaseCrosswalkStyle crosswalkStyle:
                     foreach (var crosswalk in Marking.Crosswalks)
                     {
                         if (crosswalk.Style.Value.Type == crosswalkStyle.Type)
                             crosswalk.Style.Value = crosswalkStyle.CopyStyle();
                     }
                     break;
-                case FillerStyle fillerStyle:
+                case BaseFillerStyle fillerStyle:
                     foreach (var filler in Marking.Fillers)
                     {
                         if (filler.Style.Value.Type == fillerStyle.Type)
@@ -157,11 +157,11 @@ namespace IMT.UI.Editors
                             rule.Style.Value = stopStyle.CopyStyle();
                     }
                     break;
-                case CrosswalkStyle crosswalkStyle:
+                case BaseCrosswalkStyle crosswalkStyle:
                     foreach (var crosswalk in Marking.Crosswalks)
                         crosswalk.Style.Value = crosswalkStyle.CopyStyle();
                     break;
-                case FillerStyle fillerStyle:
+                case BaseFillerStyle fillerStyle:
                     foreach (var filler in Marking.Fillers)
                     {
                         filler.Style.Value = fillerStyle.CopyStyle();
@@ -235,7 +235,7 @@ namespace IMT.UI.Editors
         {
             base.Refresh();
             Icon.Type = Object.Style.Type;
-            Icon.StyleColor = Object.Style.Color;
+            Icon.StyleColor = Object.Style is IColorStyle ? Object.Style.Color : Color.white;
             Label.wordWrap = !Object.IsAsset;
 
             SetColors();

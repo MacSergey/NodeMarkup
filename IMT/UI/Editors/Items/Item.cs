@@ -185,24 +185,22 @@ namespace IMT.UI.Editors
         protected override void LabelSizeChanged() => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) * 0.5f);
     }
 
-    public class ColorIcon : CustomUIButton
+    public class ColorIcon : CustomUISprite
     {
         private static float Border => 1f;
-        protected CustomUIButton InnerCircule { get; set; }
+        protected CustomUISprite InnerCircule { get; set; }
         public Color32 InnerColor { set => InnerCircule.color = value; }
         public Color32 BorderColor { set => color = value; }
         public ColorIcon()
         {
             atlas = TextureHelper.InGameAtlas;
-            normalBgSprite = disabledBgSprite = "PieChartWhiteBg";
+            spriteName = "PieChartWhiteBg";
             isInteractive = false;
             color = Color.white;
 
-            InnerCircule = AddUIComponent<CustomUIButton>();
+            InnerCircule = AddUIComponent<CustomUISprite>();
             InnerCircule.atlas = TextureHelper.InGameAtlas;
-            InnerCircule.normalBgSprite = InnerCircule.normalFgSprite = "PieChartWhiteBg";
-            InnerCircule.disabledBgSprite = InnerCircule.disabledFgSprite = "PieChartWhiteBg";
-            InnerCircule.isInteractive = false;
+            InnerCircule.spriteName = "PieChartWhiteBg";
             InnerCircule.relativePosition = new Vector3(Border, Border);
             InnerCircule.color = InnerCircule.disabledColor = Color.black;
 
@@ -218,14 +216,14 @@ namespace IMT.UI.Editors
     }
     public class StyleIcon : ColorIcon
     {
-        protected CustomUIButton Thumbnail { get; set; }
+        protected CustomUISprite Thumbnail { get; set; }
 
         public Color32 StyleColor { set => Thumbnail.color = Thumbnail.disabledColor = value.GetStyleIconColor(); }
-        public Style.StyleType Type { set => Thumbnail.normalBgSprite = Thumbnail.normalFgSprite = value.ToString(); }
+        public Style.StyleType Type { set => Thumbnail.spriteName = value.ToString(); }
 
         public StyleIcon()
         {
-            Thumbnail = AddUIComponent<CustomUIButton>();
+            Thumbnail = AddUIComponent<CustomUISprite>();
             Thumbnail.atlas = IMTTextures.Atlas;
             Thumbnail.relativePosition = new Vector3(0, 0);
             Thumbnail.isInteractive = false;

@@ -18,12 +18,12 @@ namespace IMT.Manager
 
         private static Dictionary<StopLineType, StopLineStyle> Defaults { get; } = new Dictionary<StopLineType, StopLineStyle>()
         {
-            {StopLineType.Solid, new SolidStopLineStyle(DefaultColor, DefaultStopWidth, DefaultEffect, DefaultEffect, DefaultTexture)},
-            {StopLineType.Dashed, new DashedStopLineStyle(DefaultColor, DefaultStopWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultDashLength, DefaultSpaceLength)},
-            {StopLineType.DoubleSolid, new DoubleSolidStopLineStyle(DefaultColor, DefaultColor, false, DefaultStopWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultStopOffset)},
-            {StopLineType.DoubleDashed, new DoubleDashedStopLineStyle(DefaultColor, DefaultColor, false, DefaultStopWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
-            {StopLineType.SolidAndDashed, new SolidAndDashedStopLineStyle(DefaultColor, DefaultColor, false, DefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
-            {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
+            {StopLineType.Solid, new SolidStopLineStyle(DefaultMarkingColor, DefaultStopWidth, DefaultEffect, DefaultEffect, DefaultTexture)},
+            {StopLineType.Dashed, new DashedStopLineStyle(DefaultMarkingColor, DefaultStopWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultDashLength, DefaultSpaceLength)},
+            {StopLineType.DoubleSolid, new DoubleSolidStopLineStyle(DefaultMarkingColor, DefaultMarkingColor, false, DefaultStopWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultStopOffset)},
+            {StopLineType.DoubleDashed, new DoubleDashedStopLineStyle(DefaultMarkingColor, DefaultMarkingColor, false, DefaultStopWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
+            {StopLineType.SolidAndDashed, new SolidAndDashedStopLineStyle(DefaultMarkingColor, DefaultMarkingColor, false, DefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultDashLength, DefaultSpaceLength, DefaultStopOffset)},
+            {StopLineType.SharkTeeth, new SharkTeethStopLineStyle(DefaultMarkingColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength) },
             {StopLineType.Pavement, new PavementStopLineStyle(Default3DWidth, Default3DHeigth) },
         };
         public static StopLineStyle GetDefault(StopLineType type)

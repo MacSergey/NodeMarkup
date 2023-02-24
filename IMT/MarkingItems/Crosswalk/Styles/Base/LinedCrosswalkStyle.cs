@@ -1,14 +1,7 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
-using IMT.UI;
-using IMT.UI.Editors;
+﻿using IMT.UI.Editors;
 using IMT.Utilities;
-using IMT.Utilities.API;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -16,6 +9,7 @@ namespace IMT.Manager
 {
     public abstract class LinedCrosswalkStyle : CustomCrosswalkStyle, ICrosswalkStyle, ILinedCrosswalk
     {
+        public bool KeepColor => true;
         public PropertyValue<float> LineWidth { get; }
 
         public LinedCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float lineWidth) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter)
@@ -23,7 +17,7 @@ namespace IMT.Manager
             LineWidth = GetLineWidthProperty(lineWidth);
         }
         protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
-        public override void CopyTo(CrosswalkStyle target)
+        public override void CopyTo(BaseCrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is ILinedCrosswalk linedTarget)

@@ -73,8 +73,8 @@ namespace IMT.Manager
             OffsetBetween = GetOffsetProperty(offset);
         }
         protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => GetAbsoluteWidth(Width * 2f + OffsetBetween, crosswalk);
-        public override CrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, DashType, OffsetBetween);
-        public override void CopyTo(CrosswalkStyle target)
+        public override BaseCrosswalkStyle CopyStyle() => new DoubleZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, DashType, OffsetBetween);
+        public override void CopyTo(BaseCrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is IDoubleCrosswalk doubleTarget)

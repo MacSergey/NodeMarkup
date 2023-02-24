@@ -250,5 +250,11 @@ namespace IMT.Manager
             if (invert)
                 RawAlignment.Value = RawAlignment.Value.Invert();
         }
+
+        public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            foreach(var rule in Rules)
+                rule.Style.Value.GetUsedAssets(networks, props, trees);
+        }
     }
 }

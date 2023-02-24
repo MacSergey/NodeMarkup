@@ -17,6 +17,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.CrosswalkSolid;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -55,7 +56,7 @@ namespace IMT.Manager
 
         public SolidCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter) { }
 
-        public override CrosswalkStyle CopyStyle() => new SolidCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter);
+        public override BaseCrosswalkStyle CopyStyle() => new SolidCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter);
         protected override float GetVisibleWidth(MarkingCrosswalk crosswalk) => Width / Mathf.Sin(crosswalk.CornerAndNormalAngle);
 
         protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData)
@@ -66,7 +67,7 @@ namespace IMT.Manager
             if (GetContour(crosswalk, offset, width, out var contour))
             {
                 var trajectories = contour.Select(c => c.trajectory).ToArray();
-                foreach (var data in DecalData.GetData(this, Marking.Item.Crosswalk, lod, trajectories, StyleHelper.SplitParams.Default, Color))
+                foreach (var data in DecalData.GetData(DecalData.DecalType.Crosswalk, lod, trajectories, StyleHelper.SplitParams.Default, Color, DecalData.TextureData.Default, new DecalData.EffectData(this)))
                 {
                     addData(data);
                 }

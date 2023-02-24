@@ -236,7 +236,7 @@ namespace IMT.UI.Editors
         }
         void IPropertyEditor.RefreshProperties()
         {
-            foreach(var rulePanel in RulePanels)
+            foreach (var rulePanel in RulePanels)
             {
                 rulePanel.RefreshProperties();
             }
@@ -403,7 +403,7 @@ namespace IMT.UI.Editors
             if (rules.Length == 1)
             {
                 Icon.Type = rules[0].Style.Value.Type;
-                Icon.StyleColor = rules[0].Style.Value.Color;
+                Icon.StyleColor = rules[0].Style.Value is IColorStyle ? rules[0].Style.Value.Color : Color.white;
             }
         }
     }

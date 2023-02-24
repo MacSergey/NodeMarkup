@@ -68,5 +68,9 @@ namespace IMT.Manager
             RawStartAlignment.FromXml(config);
             RawEndAlignment.FromXml(config);
         }
+        public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            Rule.Style.GetUsedAssets(networks, props, trees);
+        }
     }
 }

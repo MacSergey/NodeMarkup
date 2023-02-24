@@ -30,7 +30,7 @@ namespace IMT.Manager
 
         protected override void CalculateImpl(MarkingStopLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
-            addData(new MarkingLineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement));
+            addData(new LineMeshData(lod, trajectory, Width, Elevation, MaterialType.Pavement));
         }
 
         protected override void GetUIComponents(MarkingStopLine line, EditorProvider provider)

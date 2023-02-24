@@ -91,8 +91,8 @@ namespace IMT.UI
             UseCount.StopLayout();
             UseCount.AutoButtonSize = false;
             UseCount.ButtonWidth = 25f;
-            UseCount.AddItem(true, "I");
-            UseCount.AddItem(false, "O");
+            UseCount.AddItem(true, new OptionData("I"));
+            UseCount.AddItem(false, new OptionData("O"));
             UseCount.StartLayout();
             UseCount.OnSelectObjectChanged += UseChanged;
 

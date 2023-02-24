@@ -15,6 +15,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.LineSharkTeeth;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
         protected override float LodWidth => 0.5f;
 
         public PropertyValue<float> Base { get; }
@@ -79,7 +80,7 @@ namespace IMT.Manager
                     if (StyleHelper.CheckBorders(borders, pos, dir, Base, Height))
                     {
                         dir = dir.TurnDeg(Angle, true);
-                        var data = new DecalData(this, MaterialType.Triangle, lod, pos, dir, Base, Height, Color);
+                        var data = new DecalData(MaterialType.Triangle, lod, pos, dir, Base, Height, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                         addData(data);
                     }
                 }

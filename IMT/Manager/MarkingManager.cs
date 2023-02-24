@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using UnityEngine;
 using static NetInfo;
 
 namespace IMT.Manager
@@ -30,11 +31,19 @@ namespace IMT.Manager
         }
 
         public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => SingletonManager<NodeMarkingManager>.Instance.Render(cameraInfo, nodeID, ref data);
-
         public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SingletonManager<SegmentMarkingManager>.Instance.Render(cameraInfo, segmentID, ref data);
+
+        public static void NetNodeCalculateGroupDataPostfix(ref bool __result, ushort nodeID, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays) => SingletonManager<NodeMarkingManager>.Instance.CalculateGroupData(ref __result, nodeID, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+        public static void NetSegmentCalculateGroupDataPostfix(ref bool __result, ushort segmentID, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays) => SingletonManager<SegmentMarkingManager>.Instance.CalculateGroupData(ref __result, segmentID, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+
+        public static void NetNodePopulateGroupDataPrefix(ushort nodeID, int groupX, int groupZ, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps) => SingletonManager<NodeMarkingManager>.Instance.PopulateGroupData(nodeID, layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+        public static void NetSegmentPopulateGroupDataPrefix(ushort segmentID, int groupX, int groupZ, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps) => SingletonManager<SegmentMarkingManager>.Instance.PopulateGroupData(segmentID, layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
 
         public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => SingletonManager<NodeMarkingManager>.Instance.Remove(node);
         public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SingletonManager<SegmentMarkingManager>.Instance.Remove(segment);
+
+        public static int GetNodeRenderLayer(ushort id) => SingletonManager<NodeMarkingManager>.Instance.GetRenderLayer(id);
+        public static int GetSegmentRenderLayer(ushort id) => SingletonManager<SegmentMarkingManager>.Instance.GetRenderLayer(id);
 
         public static void GetToUpdate()
         {
@@ -77,7 +86,7 @@ namespace IMT.Manager
         }
         public static XElement ToXml()
         {
-            var config = new XElement(nameof(NodeMarking));
+            var config = new XElement("NodeMarking");
             config.AddAttr("V", SingletonMod<Mod>.Version);
 
             Errors = 0;
@@ -95,6 +104,11 @@ namespace IMT.Manager
 
             SingletonManager<NodeMarkingManager>.Instance.FromXml(config, map, version, needUpdate);
             SingletonManager<SegmentMarkingManager>.Instance.FromXml(config, map, version, needUpdate);
+        }
+        public static void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            SingletonManager<NodeMarkingManager>.Instance.GetUsedAssets(networks, props, trees);
+            SingletonManager<SegmentMarkingManager>.Instance.GetUsedAssets(networks, props, trees);
         }
         public static Version GetVersion(XElement config)
         {
@@ -160,25 +174,40 @@ namespace IMT.Manager
                 if (data.m_nextInstance != ushort.MaxValue)
                     return;
 
-                if (!cameraInfo.CheckRenderDistance(data.m_position, Settings.RenderDistance))
-                    return;
-
-                if (!TryGetMarking(id, out TypeMarking marking))
-                    return;
-
-                if (marking.NeedRecalculateDrawData)
-                    marking.RecalculateDrawData();
-
-                bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
-
-                foreach (var drawData in marking.DrawData.Values)
-                    drawData.Render(cameraInfo, data, infoView);
+                if (TryGetMarking(id, out TypeMarking marking))
+                    marking.Render(cameraInfo, ref data);
             }
             catch (Exception error)
             {
                 SingletonMod<Mod>.Logger.Error($"Error while rendering {Type} #{id} marking", error);
             }
         }
+
+        public void CalculateGroupData(ref bool result, ushort id, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            try
+            {
+                if (TryGetMarking(id, out TypeMarking marking))
+                    marking.CalculateGroupData(ref result, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error($"Error while calculating group data {Type} #{id} marking", error);
+            }
+        }
+        public void PopulateGroupData(ushort id, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+            try
+            {
+                if (TryGetMarking(id, out TypeMarking marking))
+                    marking.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error($"Error while populating group data {Type} #{id} marking", error);
+            }
+        }
+        public int GetRenderLayer(ushort id) => TryGetMarking(id, out TypeMarking marking) ? marking.RenderLayers : 0;
 
         public virtual void Remove(ushort id) => Markings.Remove(id);
         public void Clear()
@@ -238,6 +267,12 @@ namespace IMT.Manager
                     MarkingManager.Errors += 1;
                 }
             }
+        }
+
+        public void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            foreach (var marking in Markings.Values)
+                marking.GetUsedAssets(networks, props, trees);
         }
 
         public IEnumerator<TypeMarking> GetEnumerator() => Markings.Values.GetEnumerator();

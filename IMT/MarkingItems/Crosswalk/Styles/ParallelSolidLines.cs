@@ -58,7 +58,7 @@ namespace IMT.Manager
         public ParallelSolidLinesCrosswalkStyle(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture, float offsetBefore, float offsetAfter, float lineWidth) : base(color, width, cracks, voids, texture, offsetBefore, offsetAfter, lineWidth)
         { }
 
-        public override CrosswalkStyle CopyStyle() => new ParallelSolidLinesCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, LineWidth);
+        public override BaseCrosswalkStyle CopyStyle() => new ParallelSolidLinesCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, LineWidth);
 
         protected override void CalculateImpl(MarkingCrosswalk crosswalk, MarkingLOD lod, Action<IStyleData> addData)
         {
@@ -71,16 +71,16 @@ namespace IMT.Manager
             var firstParts = StyleHelper.CalculateSolid(firstTrajectory, lod, StyleHelper.SplitParams.Default);
             foreach (var part in firstParts)
             {
-                StyleHelper.GetPartParams(firstTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out var dir);
-                var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, LineWidth, Color);
+                StyleHelper.GetPartParams(firstTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out _);
+                var data = new DecalData(MaterialType.Dash, lod, startPos, endPos, LineWidth, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                 addData(data);
             }
 
             var secondParts = StyleHelper.CalculateSolid(secondTrajectory, lod, StyleHelper.SplitParams.Default);
             foreach (var part in secondParts)
             {
-                StyleHelper.GetPartParams(secondTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out var dir);
-                var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, LineWidth, Color);
+                StyleHelper.GetPartParams(secondTrajectory, part, Vector3.zero, Vector3.zero, out var startPos, out var endPos, out _);
+                var data = new DecalData(MaterialType.Dash, lod, startPos, endPos, LineWidth, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                 addData(data);
             }
         }

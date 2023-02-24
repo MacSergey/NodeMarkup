@@ -30,6 +30,8 @@ namespace IMT.Manager
         protected override IEnumerable<ushort> GetEnters() => Id.GetSegment().NodeIds();
         protected override Entrance NewEnter(ushort id) => new NodeEntrance(this, id);
 
+        protected override void UpdateRenderer() => NetManager.instance.UpdateSegmentRenderer(Id, true);
+
         protected override void UpdateEnters()
         {
             base.UpdateEnters();

@@ -4,8 +4,8 @@ using ModsCommon;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using static IMT.Manager.CrosswalkStyle;
-using static IMT.Manager.FillerStyle;
+using static IMT.Manager.BaseCrosswalkStyle;
+using static IMT.Manager.BaseFillerStyle;
 using static IMT.Manager.RegularLineStyle;
 using static IMT.Manager.StopLineStyle;
 
@@ -251,15 +251,15 @@ namespace IMT.Utilities.API
             var styleData = new StyleDataProvider(style);
             return styleData;
         }
-        private StyleDataProvider GetCrosswalkStyleProvider(CrosswalkStyle.CrosswalkType type)
+        private StyleDataProvider GetCrosswalkStyleProvider(BaseCrosswalkStyle.CrosswalkType type)
         {
-            var style = CrosswalkStyle.GetDefault(type);
+            var style = BaseCrosswalkStyle.GetDefault(type);
             var styleData = new StyleDataProvider(style);
             return styleData;
         }
-        private StyleDataProvider GetFillerStyleProvider(FillerStyle.FillerType type)
+        private StyleDataProvider GetFillerStyleProvider(BaseFillerStyle.FillerType type)
         {
-            var style = FillerStyle.GetDefault(type);
+            var style = BaseFillerStyle.GetDefault(type);
             var styleData = new StyleDataProvider(style);
             return styleData;
         }

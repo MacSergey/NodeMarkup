@@ -20,7 +20,8 @@ namespace IMT.Manager
     public interface IStyle { }
     public interface IColorStyle : IStyle
     {
-        PropertyColorValue Color { get; }
+        PropertyColorValue Color { get; }     
+        bool KeepColor { get; }
     }
     public interface IWidthStyle : IStyle
     {
@@ -78,7 +79,7 @@ namespace IMT.Manager
             return rawType;
         }
 
-        public static Color32 DefaultColor => new Color32(136, 136, 136, 224);
+        public static Color32 DefaultMarkingColor => new Color32(136, 136, 136, 224);
         public static float DefaultWidth => 0.15f;
         protected static Vector2 DefaultEffect => new Vector2(0f, 1f);
         protected static float DefaultTexture => 0f;
@@ -93,8 +94,8 @@ namespace IMT.Manager
             {
                 StyleType.RegularLine => RegularLineStyle.GetDefault(type.ToEnum<RegularLineStyle.RegularLineType, StyleType>()) as T,
                 StyleType.StopLine => StopLineStyle.GetDefault(type.ToEnum<StopLineStyle.StopLineType, StyleType>()) as T,
-                StyleType.Filler => FillerStyle.GetDefault(type.ToEnum<FillerStyle.FillerType, StyleType>()) as T,
-                StyleType.Crosswalk => CrosswalkStyle.GetDefault(type.ToEnum<CrosswalkStyle.CrosswalkType, StyleType>()) as T,
+                StyleType.Filler => BaseFillerStyle.GetDefault(type.ToEnum<BaseFillerStyle.FillerType, StyleType>()) as T,
+                StyleType.Crosswalk => BaseCrosswalkStyle.GetDefault(type.ToEnum<BaseCrosswalkStyle.CrosswalkType, StyleType>()) as T,
                 _ => null,
             };
         }
@@ -115,6 +116,7 @@ namespace IMT.Manager
         protected virtual void StyleChanged() => OnStyleChanged?.Invoke();
 
         public PropertyColorValue Color { get; }
+        protected virtual Color32 DefaultColor => GetDefault()?.Color;
         public PropertyStructValue<float> Width { get; }
         public PropertyVector2Value Cracks { get; }
         public PropertyVector2Value Voids { get; }
@@ -180,7 +182,7 @@ namespace IMT.Manager
         {
             if (this is IWidthStyle widthSource && target is IWidthStyle widthTarget)
                 widthTarget.Width.Value = widthSource.Width;
-            if (this is IColorStyle colorSource && target is IColorStyle colorTarget)
+            if (this is IColorStyle colorSource && target is IColorStyle colorTarget && colorTarget.KeepColor)
                 colorTarget.Color.Value = colorSource.Color;
 
             CopyEffectsTo(target);
@@ -230,7 +232,7 @@ namespace IMT.Manager
         {
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
-            colorProperty.Init(GetDefault()?.Color);
+            colorProperty.Init(DefaultColor);
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
         }
@@ -407,7 +409,7 @@ namespace IMT.Manager
         }
         public virtual void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
-            Color.FromXml(config, DefaultColor);
+            Color.FromXml(config, DefaultMarkingColor);
             Width.FromXml(config, DefaultWidth);
             if (this is IEffectStyle)
             {
@@ -416,6 +418,7 @@ namespace IMT.Manager
                 Voids.FromXml(config, DefaultEffect);
             }
         }
+        public virtual void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees) { }
 
         public override string ToString() => Type.ToString();
 
@@ -653,28 +656,40 @@ namespace IMT.Manager
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             FillerChevron,
 
+            [Description(nameof(Localize.FillerStyle_Decal))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            FillerDecal,
+
+            [Description(nameof(Localize.FillerStyle_Asphalt))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            FillerAsphalt,
+
             [NotItem]
             Filler3D = Filler + 0x80,
 
-            [Description(nameof(Localize.FillerStyle_Pavement))]
+            [Description(nameof(Localize.FillerStyle_PavementIsland))]
             [NetworkType(NetworkType.All)]
             FillerPavement,
 
-            [Description(nameof(Localize.FillerStyle_Grass))]
+            [Description(nameof(Localize.FillerStyle_GrassIsland))]
             [NetworkType(NetworkType.All)]
             FillerGrass,
 
-            [Description(nameof(Localize.FillerStyle_Gravel))]
+            [Description(nameof(Localize.FillerStyle_GravelIsland))]
             [NetworkType(NetworkType.All)]
             FillerGravel,
 
-            [Description(nameof(Localize.FillerStyle_Ruined))]
+            [Description(nameof(Localize.FillerStyle_RuinedIsland))]
             [NetworkType(NetworkType.All)]
             FillerRuined,
 
-            [Description(nameof(Localize.FillerStyle_Cliff))]
+            [Description(nameof(Localize.FillerStyle_CliffIsland))]
             [NetworkType(NetworkType.All)]
             FillerCliff,
+
+            [Description(nameof(Localize.FillerStyle_TextureIsland))]
+            [NetworkType(NetworkType.All)]
+            FillerTexture,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.All)]
@@ -720,6 +735,10 @@ namespace IMT.Manager
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             [NetworkType(NetworkType.Road)]
             CrosswalkChessBoard,
+
+            [Description(nameof(Localize.CrosswalkStyle_Decal))]
+            [NetworkType(NetworkType.Road)]
+            CrosswalkDecal,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.Road)]

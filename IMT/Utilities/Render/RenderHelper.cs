@@ -18,6 +18,7 @@ namespace IMT.Utilities
         public static Dictionary<MaterialType, Material> MaterialLib { get; }
         public static Dictionary<MaterialType, Texture2D> SurfaceALib { get; }
         public static Dictionary<MaterialType, Texture2D> SurfaceBLib { get; }
+        public static Material ThemeTexture { get; private set; }
         public static int RoadLayer => 9;
 
         static RenderHelper()
@@ -25,31 +26,31 @@ namespace IMT.Utilities
             MaterialLib = new Dictionary<MaterialType, Material>()
             {
             { MaterialType.Pavement, CreateRoadMaterial(MaterialType.Pavement, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black)) },
-            { MaterialType.Grass, CreateRoadMaterial(MaterialType.Grass, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(255, 0, 0, 255)))},
-            { MaterialType.Gravel, CreateRoadMaterial(MaterialType.Gravel, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
-            { MaterialType.Asphalt, CreateRoadMaterial(MaterialType.Asphalt, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(0, 255, 255, 255)))},
-            { MaterialType.Ruined, CreateRoadMaterial(MaterialType.Ruined, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
-            { MaterialType.Cliff, CreateRoadMaterial(MaterialType.Cliff, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            { MaterialType.FillerGrass, CreateRoadMaterial(MaterialType.FillerGrass, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(255, 0, 0, 255)))},
+            { MaterialType.FillerGravel, CreateRoadMaterial(MaterialType.FillerGravel, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            { MaterialType.FillerAsphalt, CreateRoadMaterial(MaterialType.FillerAsphalt, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,new Color32(0, 255, 255, 255)))},
+            { MaterialType.FillerRuined, CreateRoadMaterial(MaterialType.FillerRuined, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
+            { MaterialType.FillerCliff, CreateRoadMaterial(MaterialType.FillerCliff, TextureHelper.CreateTexture(128,128,Color.white), TextureHelper.CreateTexture(128,128,Color.black))},
             };
 
             SurfaceALib = new Dictionary<MaterialType, Texture2D>()
             {
             { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
-            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
-            { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 127)) },
-            { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 127)) },
-            { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 191, 127)) },
-            { MaterialType.Cliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 191)) },
+            { MaterialType.FillerGrass, TextureHelper.CreateTexture(512, 512, new Color32(255, 255, 127, 127)) },
+            { MaterialType.FillerGravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 127)) },
+            { MaterialType.FillerAsphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 127)) },
+            { MaterialType.FillerRuined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 191, 127)) },
+            { MaterialType.FillerCliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 127, 191)) },
             };
 
             SurfaceBLib = new Dictionary<MaterialType, Texture2D>()
             {
             { MaterialType.Pavement, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Grass, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Gravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 255, 0)) },
-            { MaterialType.Asphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Ruined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
-            { MaterialType.Cliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.FillerGrass, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.FillerGravel, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 255, 0)) },
+            { MaterialType.FillerAsphalt, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.FillerRuined, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
+            { MaterialType.FillerCliff, TextureHelper.CreateTexture(512, 512, new Color32(0, 0, 0, 0)) },
             };
         }
 
@@ -83,6 +84,11 @@ namespace IMT.Utilities
                     Bundle.LoadAsset<Material>("FillerUpTo8.mat"),
                     Bundle.LoadAsset<Material>("FillerUpTo12.mat"),
                     Bundle.LoadAsset<Material>("FillerUpTo16.mat"),
+                    Bundle.LoadAsset<Material>("FillerIslandZero.mat"),
+                    Bundle.LoadAsset<Material>("FillerIslandUpTo4.mat"),
+                    Bundle.LoadAsset<Material>("FillerIslandUpTo8.mat"),
+                    Bundle.LoadAsset<Material>("FillerIslandUpTo12.mat"),
+                    Bundle.LoadAsset<Material>("FillerIslandUpTo16.mat"),
                     Bundle.LoadAsset<Material>("CrosswalkZero.mat"),
                     Bundle.LoadAsset<Material>("CrosswalkUpTo4.mat"),
                     Bundle.LoadAsset<Material>("CrosswalkUpTo8.mat"),
@@ -90,6 +96,9 @@ namespace IMT.Utilities
                     Bundle.LoadAsset<Material>("CrosswalkUpTo16.mat"),
                     Bundle.LoadAsset<Material>("Dash.mat"),
                     Bundle.LoadAsset<Material>("Triangle.mat"),
+                    Bundle.LoadAsset<Material>("Text.mat"),
+                    Bundle.LoadAsset<Material>("Filler3D.mat"),
+                    Bundle.LoadAsset<Material>("ThemeTexture.mat"),
                 };
                 DecalMaterials = materials;
 
@@ -98,13 +107,21 @@ namespace IMT.Utilities
                 MaterialLib[MaterialType.FillerUpTo8] = materials[2];
                 MaterialLib[MaterialType.FillerUpTo12] = materials[3];
                 MaterialLib[MaterialType.FillerUpTo16] = materials[4];
-                MaterialLib[MaterialType.CrosswalkZero] = materials[5];
-                MaterialLib[MaterialType.CrosswalkUpTo4] = materials[6];
-                MaterialLib[MaterialType.CrosswalkUpTo8] = materials[7];
-                MaterialLib[MaterialType.CrosswalkUpTo12] = materials[8];
-                MaterialLib[MaterialType.CrosswalkUpTo16] = materials[9];
-                MaterialLib[MaterialType.Dash] = materials[10];
-                MaterialLib[MaterialType.Triangle] = materials[11];
+                MaterialLib[MaterialType.FillerIslandZero] = materials[5];
+                MaterialLib[MaterialType.FillerIslandUpTo4] = materials[6];
+                MaterialLib[MaterialType.FillerIslandUpTo8] = materials[7];
+                MaterialLib[MaterialType.FillerIslandUpTo12] = materials[8];
+                MaterialLib[MaterialType.FillerIslandUpTo16] = materials[9];
+                MaterialLib[MaterialType.CrosswalkZero] = materials[10];
+                MaterialLib[MaterialType.CrosswalkUpTo4] = materials[11];
+                MaterialLib[MaterialType.CrosswalkUpTo8] = materials[12];
+                MaterialLib[MaterialType.CrosswalkUpTo12] = materials[13];
+                MaterialLib[MaterialType.CrosswalkUpTo16] = materials[14];
+                MaterialLib[MaterialType.Dash] = materials[15];
+                MaterialLib[MaterialType.Triangle] = materials[16];
+                MaterialLib[MaterialType.Text] = materials[17];
+                MaterialLib[MaterialType.FillerTexture] = materials[18];
+                ThemeTexture = materials[19];
 
                 DecalMesh = Bundle.LoadAsset<Mesh>("Cube.fbx");
                 DecalMesh.bounds = new Bounds(DecalMesh.bounds.center, Vector3.one * 100f);
@@ -171,22 +188,29 @@ namespace IMT.Utilities
     {
         Dash,
         Triangle,
+        Text,
         FillerZero,
         FillerUpTo4,
         FillerUpTo8,
         FillerUpTo12,
         FillerUpTo16,
+        FillerIslandZero,
+        FillerIslandUpTo4,
+        FillerIslandUpTo8,
+        FillerIslandUpTo12,
+        FillerIslandUpTo16,
         CrosswalkZero,
         CrosswalkUpTo4,
         CrosswalkUpTo8,
         CrosswalkUpTo12,
         CrosswalkUpTo16,
         Pavement,
-        Grass,
-        Gravel,
-        Asphalt,
-        Ruined,
-        Cliff,
+        FillerGrass,
+        FillerGravel,
+        FillerAsphalt,
+        FillerRuined,
+        FillerCliff,
+        FillerTexture,
     }
     public enum MarkingLOD
     {
@@ -203,11 +227,6 @@ namespace IMT.Utilities
         Tree,
     }
 
-    public interface IDrawData
-    {
-        void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
-    }
-
     public abstract class EnumDictionary<EnumType, Type> : Dictionary<EnumType, Type>
         where EnumType : Enum
     {
@@ -222,80 +241,129 @@ namespace IMT.Utilities
         }
         protected abstract Type GetDefault(EnumType value);
     }
-    public class MarkingRenderData : EnumDictionary<MarkingLODType, MarkingGroupDrawData>
+    public class MarkingRenderData : EnumDictionary<MarkingLODType, MarkingGroupRenderData>
     {
-        protected override MarkingGroupDrawData GetDefault(MarkingLODType value) => value switch
+        protected override MarkingGroupRenderData GetDefault(MarkingLODType value) => value switch
         {
-            MarkingLODType.Dash => new MarkingDashGroupDrawData(),
-            MarkingLODType.Mesh => new MarkingMeshGroupDrawData(),
-            MarkingLODType.Network => new MarkingNetworkGroupDrawData(),
-            MarkingLODType.Prop => new MarkingPropGroupDrawData(),
-            MarkingLODType.Tree => new MarkingTreeGroupDrawData(),
-            _ => new MarkingGroupDrawData(),
+            MarkingLODType.Dash => new MarkingDashGroupRenderData(),
+            MarkingLODType.Mesh => new MarkingMeshGroupRenderData(),
+            MarkingLODType.Network => new MarkingNetworkGroupRenderData(),
+            MarkingLODType.Prop => new MarkingPropGroupRenderData(),
+            MarkingLODType.Tree => new MarkingTreeGroupRenderData(),
+            _ => throw new NotSupportedException(),
         };
+
+        public int GetRenderLayers()
+        {
+            var renderLayers = 0;
+
+            foreach (var lodType in Values)
+                renderLayers |= lodType.GetRenderLayers();
+
+            return renderLayers;
+        }
     }
-    public class MarkingGroupDrawData : EnumDictionary<MarkingLOD, List<IDrawData>>
+    public abstract class MarkingGroupRenderData : EnumDictionary<MarkingLOD, List<IStyleData>>
     {
         public virtual float LODDistance => Settings.LODDistance;
+        public virtual float MaxRenderDistance => Settings.RenderDistance;
         public void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
-            foreach (var drawData in this[MarkingLOD.NoLOD])
-                drawData.Draw(cameraInfo, data, infoView);
+            if (!cameraInfo.CheckRenderDistance(data.m_position, MaxRenderDistance))
+                return;
+
+            foreach (var renderData in this[MarkingLOD.NoLOD])
+                renderData.Render(cameraInfo, data, infoView);
 
             if (cameraInfo.CheckRenderDistance(data.m_position, LODDistance))
             {
-                foreach (var drawData in this[MarkingLOD.LOD0])
-                    drawData.Draw(cameraInfo, data, infoView);
+                foreach (var renderData in this[MarkingLOD.LOD0])
+                    renderData.Render(cameraInfo, data, infoView);
             }
             else
             {
-                foreach (var drawData in this[MarkingLOD.LOD1])
-                    drawData.Draw(cameraInfo, data, infoView);
+                foreach (var renderData in this[MarkingLOD.LOD1])
+                    renderData.Render(cameraInfo, data, infoView);
             }
         }
-        protected override List<IDrawData> GetDefault(MarkingLOD value) => new List<IDrawData>();
+
+        public bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            bool result = false;
+
+            foreach (var renderData in this[MarkingLOD.NoLOD])
+            {
+                if (renderData.RenderLayer == layer)
+                {
+                    result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+                }
+            }
+
+            foreach (var renderData in this[MarkingLOD.LOD1])
+            {
+                if (renderData.RenderLayer == layer)
+                {
+                    result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+                }
+            }
+
+            return result;
+        }
+
+        public void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+            foreach (var renderData in this[MarkingLOD.NoLOD])
+            {
+                if (renderData.RenderLayer == layer)
+                {
+                    renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+                }
+            }
+
+            foreach (var renderData in this[MarkingLOD.LOD1])
+            {
+                if (renderData.RenderLayer == layer)
+                {
+                    renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+                }
+            }
+        }
+        public int GetRenderLayers()
+        {
+            var renderLayers = 0;
+
+            foreach (var renderData in this[MarkingLOD.NoLOD])
+                renderLayers |= 1 << renderData.RenderLayer;
+
+            foreach (var renderData in this[MarkingLOD.LOD1])
+                renderLayers |= 1 << renderData.RenderLayer;
+
+            return renderLayers;
+        }
+
+        protected override List<IStyleData> GetDefault(MarkingLOD value) => new List<IStyleData>();
     }
-    public class MarkingDashGroupDrawData : MarkingGroupDrawData
+    public class MarkingDashGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.LODDistance;
     }
-    public class MarkingMeshGroupDrawData : MarkingGroupDrawData
+    public class MarkingMeshGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.MeshLODDistance;
     }
-    public class MarkingNetworkGroupDrawData : MarkingGroupDrawData
+    public class MarkingNetworkGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.NetworkLODDistance;
+        public override float MaxRenderDistance => float.MaxValue;
     }
-    public class MarkingPropGroupDrawData : MarkingGroupDrawData
+    public class MarkingPropGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.PropLODDistance;
+        public override float MaxRenderDistance => float.MaxValue;
     }
-    public class MarkingTreeGroupDrawData : MarkingGroupDrawData
+    public class MarkingTreeGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.TreeLODDistance;
+        public override float MaxRenderDistance => float.MaxValue;
     }
-    public class RenderGroupData : IStyleData
-    {
-        private IStyleData[] Datas { get; }
-        public MarkingLOD LOD { get; }
-        public MarkingLODType LODType { get; }
-
-        public RenderGroupData(MarkingLOD lod, MarkingLODType lodType, IStyleData[] datas)
-        {
-            LOD = lod;
-            LODType = lodType;
-            Datas = datas;
-        }
-
-        public IEnumerable<IDrawData> GetDrawData()
-        {
-            foreach (var data in Datas)
-            {
-                foreach (var drawData in data.GetDrawData())
-                    yield return drawData;
-            }
-        }
-    }
-
 }

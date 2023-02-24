@@ -68,8 +68,8 @@ namespace IMT.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        public override CrosswalkStyle CopyStyle() => new LadderCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, LineWidth);
-        public override void CopyTo(CrosswalkStyle target)
+        public override BaseCrosswalkStyle CopyStyle() => new LadderCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, LineWidth);
+        public override void CopyTo(BaseCrosswalkStyle target)
         {
             base.CopyTo(target);
 

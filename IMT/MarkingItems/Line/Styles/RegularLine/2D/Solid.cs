@@ -15,6 +15,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.LineSolid;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -54,7 +55,7 @@ namespace IMT.Manager
                 StyleHelper.GetPartParams(trajectory, part, 0f, out var startPos, out var endPos, out var dir);
                 if(StyleHelper.CheckBorders(borders, ref startPos, ref endPos, dir, Width))
                 {
-                    var data = new DecalData(this, MaterialType.Dash, lod, startPos, endPos, Width, Color);
+                    var data = new DecalData(MaterialType.Dash, lod, startPos, endPos, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                     addData(data);
                 }
             }

@@ -16,6 +16,7 @@ namespace IMT.Manager
     {
         public override StyleType Type { get; } = StyleType.StopLineSharkTeeth;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
         protected override float LodWidth => 0.5f;
 
         public PropertyValue<float> Base { get; }
@@ -65,7 +66,7 @@ namespace IMT.Manager
                 foreach (var part in parts)
                 {
                     StyleHelper.GetPartParams(trajectory, part.Invert, Height * -0.5f, out var pos, out var angle);
-                    var data = new DecalData(this, MaterialType.Triangle, lod, pos, angle, Base, Height, Color);
+                    var data = new DecalData(MaterialType.Triangle, lod, pos, angle, Base, Height, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                     addData(data);
                 }
             }

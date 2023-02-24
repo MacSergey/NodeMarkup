@@ -30,6 +30,7 @@ namespace IMT.Utilities
         public static string DuplicateHeaderButton => nameof(DuplicateHeaderButton);
         public static string SetDefaultHeaderButton => nameof(SetDefaultHeaderButton);
         public static string UnsetDefaultHeaderButton => nameof(UnsetDefaultHeaderButton);
+        public static string NotSetDefaultHeaderButton => nameof(NotSetDefaultHeaderButton);
         public static string ApplyHeaderButton => nameof(ApplyHeaderButton);
         public static string ApplyAllHeaderButton => nameof(ApplyAllHeaderButton);
         public static string PackageHeaderButton => nameof(PackageHeaderButton);
@@ -63,6 +64,9 @@ namespace IMT.Utilities
         public static string AutoButtonIcon { get; } = nameof(AutoButtonIcon);
         public static string SingleButtonIcon { get; } = nameof(SingleButtonIcon);
         public static string RangeButtonIcon { get; } = nameof(RangeButtonIcon);
+        public static string DoubleButtonIcon { get; } = nameof(DoubleButtonIcon);
+        public static string LockButtonIcon { get; } = nameof(LockButtonIcon);
+        public static string UnlockButtonIcon { get; } = nameof(UnlockButtonIcon);
 
         public static string RegularButtonIcon { get; } = nameof(RegularButtonIcon);
         public static string BoldButtonIcon { get; } = nameof(BoldButtonIcon);
@@ -93,6 +97,7 @@ namespace IMT.Utilities
         public static string CopyToSameButtonIcon { get; } = nameof(CopyToSameButtonIcon);
 
         public static string ButtonWhiteBorder { get; } = nameof(ButtonWhiteBorder);
+        public static string StyleCircle { get; } = nameof(StyleCircle);
 
         static IMTTextures()
         {
@@ -119,6 +124,7 @@ namespace IMT.Utilities
             spriteParams[DuplicateHeaderButton] = new RectOffset();
             spriteParams[SetDefaultHeaderButton] = new RectOffset();
             spriteParams[UnsetDefaultHeaderButton] = new RectOffset();
+            spriteParams[NotSetDefaultHeaderButton] = new RectOffset();
             spriteParams[ApplyHeaderButton] = new RectOffset();
             spriteParams[ApplyAllHeaderButton] = new RectOffset();
             spriteParams[PackageHeaderButton] = new RectOffset();
@@ -146,11 +152,15 @@ namespace IMT.Utilities
             spriteParams[NotApplyOrderButton] = new RectOffset();
             spriteParams[ResetOrderButton] = new RectOffset();
             spriteParams[ButtonWhiteBorder] = new RectOffset(6, 6, 6, 6);
+            spriteParams[StyleCircle] = new RectOffset();
 
             //ButtonIcons
             spriteParams[AutoButtonIcon] = new RectOffset();
             spriteParams[SingleButtonIcon] = new RectOffset();
             spriteParams[RangeButtonIcon] = new RectOffset();
+            spriteParams[DoubleButtonIcon] = new RectOffset();
+            spriteParams[LockButtonIcon] = new RectOffset();
+            spriteParams[UnlockButtonIcon] = new RectOffset();
             spriteParams[RegularButtonIcon] = new RectOffset();
             spriteParams[BoldButtonIcon] = new RectOffset();
             spriteParams[ItalicButtonIcon] = new RectOffset();
@@ -188,11 +198,11 @@ namespace IMT.Utilities
             foreach (var item in EnumExtension.GetEnumValues<StopLineStyle.StopLineType>())
                 spriteParams.Add(item.ToEnum<Style.StyleType, StopLineStyle.StopLineType>().ToString(), new RectOffset());
 
-            foreach (var item in EnumExtension.GetEnumValues<CrosswalkStyle.CrosswalkType>())
-                spriteParams.Add(item.ToEnum<Style.StyleType, CrosswalkStyle.CrosswalkType>().ToString(), new RectOffset());
+            foreach (var item in EnumExtension.GetEnumValues<BaseCrosswalkStyle.CrosswalkType>())
+                spriteParams.Add(item.ToEnum<Style.StyleType, BaseCrosswalkStyle.CrosswalkType>().ToString(), new RectOffset());
 
-            foreach (var item in EnumExtension.GetEnumValues<FillerStyle.FillerType>())
-                spriteParams.Add(item.ToEnum<Style.StyleType, FillerStyle.FillerType>().ToString(), new RectOffset());
+            foreach (var item in EnumExtension.GetEnumValues<BaseFillerStyle.FillerType>())
+                spriteParams.Add(item.ToEnum<Style.StyleType, BaseFillerStyle.FillerType>().ToString(), new RectOffset());
 
             Atlas = TextureHelper.CreateAtlas(nameof(IMT), spriteParams);
         }

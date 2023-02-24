@@ -17,6 +17,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.CrosswalkZebra;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
@@ -93,8 +94,8 @@ namespace IMT.Manager
             GapLength = GetGapLengthProperty(gapLength);
             GapPeriod = GetGapPeriodProperty(gapPeriod);
         }
-        public override CrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, DashType);
-        public override void CopyTo(CrosswalkStyle target)
+        public override BaseCrosswalkStyle CopyStyle() => new ZebraCrosswalkStyle(Color, SecondColor, TwoColors, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, DashLength, SpaceLength, UseGap, GapLength, GapPeriod, DashType);
+        public override void CopyTo(BaseCrosswalkStyle target)
         {
             base.CopyTo(target);
 
@@ -308,7 +309,7 @@ namespace IMT.Manager
             SpaceLength.FromXml(config, DefaultSpaceLength);
             DashType.FromXml(config, DashEnd.ParallelStraight);
             TwoColors.FromXml(config, false);
-            SecondColor.FromXml(config, DefaultColor);
+            SecondColor.FromXml(config, DefaultMarkingColor);
             UseGap.FromXml(config, false);
             GapLength.FromXml(config, DefaultSpaceLength);
             GapPeriod.FromXml(config, DefaulCrosswalkGapPeriod);
@@ -343,9 +344,9 @@ namespace IMT.Manager
                     {
                         var sprite = value.Sprite();
                         if (string.IsNullOrEmpty(sprite))
-                            Selector.AddItem(value, GetDescription(value));
+                            Selector.AddItem(value, new OptionData(GetDescription(value)));
                         else
-                            Selector.AddItem(value, GetDescription(value), IMTTextures.Atlas, sprite);
+                            Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
                     }
                 }
                 Selector.StartLayout();

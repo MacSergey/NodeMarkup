@@ -163,6 +163,10 @@ namespace IMT.Manager
             base.FromXml(config, map, invert, typeChanged);
             ColorOption.FromXml(config, DefaultColorOption);
         }
+        public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
+        {
+            props.Add(Prefab.RawName);
+        }
 
         public enum ColorOptionEnum
         {

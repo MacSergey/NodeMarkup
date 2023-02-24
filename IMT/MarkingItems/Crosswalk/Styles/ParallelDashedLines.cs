@@ -68,9 +68,9 @@ namespace IMT.Manager
             SpaceLength = GetSpaceLengthProperty(spaceLength);
         }
 
-        public override CrosswalkStyle CopyStyle() => new ParallelDashedLinesCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, LineWidth, DashLength, SpaceLength);
+        public override BaseCrosswalkStyle CopyStyle() => new ParallelDashedLinesCrosswalkStyle(Color, Width, Cracks, Voids, Texture, OffsetBefore, OffsetAfter, LineWidth, DashLength, SpaceLength);
 
-        public override void CopyTo(CrosswalkStyle target)
+        public override void CopyTo(BaseCrosswalkStyle target)
         {
             base.CopyTo(target);
             if (target is IDashedLine dashedTarget)
@@ -96,7 +96,7 @@ namespace IMT.Manager
             foreach (var part in firstParts)
             {
                 StyleHelper.GetPartParams(firstTrajectory, part, 0f, out var pos, out var dir);
-                var data = new DecalData(this, MaterialType.Dash, lod, pos, dir, DashLength, LineWidth, Color);
+                var data = new DecalData(MaterialType.Dash, lod, pos, dir, DashLength, LineWidth, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                 addData(data);
             }
 
@@ -104,7 +104,7 @@ namespace IMT.Manager
             foreach (var part in secondParts)
             {
                 StyleHelper.GetPartParams(secondTrajectory, part, 0f, out var pos, out var dir);
-                var data = new DecalData(this, MaterialType.Dash, lod, pos, dir, DashLength, LineWidth, Color);
+                var data = new DecalData(MaterialType.Dash, lod, pos, dir, DashLength, LineWidth, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                 addData(data);
             }
         }

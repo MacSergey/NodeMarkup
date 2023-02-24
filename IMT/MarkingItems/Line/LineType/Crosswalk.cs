@@ -18,10 +18,10 @@ namespace IMT.Manager
         public MarkingCrosswalk Crosswalk { get; set; }
         public Func<StraightTrajectory> TrajectoryGetter { get; set; }
 
-        public MarkingCrosswalkLine(Marking marking, MarkingPointPair pointPair, CrosswalkStyle style = null) : base(marking, pointPair, update: false)
+        public MarkingCrosswalkLine(Marking marking, MarkingPointPair pointPair, BaseCrosswalkStyle style = null) : base(marking, pointPair, update: false)
         {
             if (style == null)
-                style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<CrosswalkStyle>(Style.StyleType.CrosswalkExistent);
+                style = SingletonManager<StyleTemplateManager>.Instance.GetDefault<BaseCrosswalkStyle>(Style.StyleType.CrosswalkExistent);
 
             Crosswalk = new MarkingCrosswalk(Marking, this, style);
             Update(true);

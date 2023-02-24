@@ -11,11 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
-    public abstract class CustomCrosswalkStyle : CrosswalkStyle
+    public abstract class CustomCrosswalkStyle : BaseCrosswalkStyle
     {
         public PropertyValue<float> OffsetBefore { get; }
         public PropertyValue<float> OffsetAfter { get; }
@@ -43,7 +42,20 @@ namespace IMT.Manager
             EndBorder = new PropertyBoolValue(StyleChanged, true);
 #endif
         }
-        public override void CopyTo(CrosswalkStyle target)
+        public CustomCrosswalkStyle(Color32 color, float width, float offsetBefore, float offsetAfter) : base(color, width)
+        {
+            OffsetBefore = GetOffsetBeforeProperty(offsetBefore);
+            OffsetAfter = GetOffsetAfterProperty(offsetAfter);
+#if DEBUG
+            RenderOnly = new PropertyStructValue<int>(StyleChanged, -1);
+            Start = new PropertyBoolValue(StyleChanged, true);
+            End = new PropertyBoolValue(StyleChanged, true);
+            StartBorder = new PropertyBoolValue(StyleChanged, true);
+            EndBorder = new PropertyBoolValue(StyleChanged, true);
+#endif
+        }
+
+        public override void CopyTo(BaseCrosswalkStyle target)
         {
             base.CopyTo(target);
 

@@ -16,6 +16,7 @@ namespace IMT.Manager
     {
         public override StyleType Type => StyleType.LineDoubleDashedAsym;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         public PropertyValue<float> DashLengthA { get; }
         public PropertyValue<float> DashLengthB { get; }
@@ -147,14 +148,14 @@ namespace IMT.Manager
                     StyleHelper.GetPartParams(trajectory, part, Invert ? -offsetA : offsetA, out var firstPos, out var firstDir);
                     if (StyleHelper.CheckBorders(borders, firstPos, firstDir, DashLengthA, Width))
                     {
-                        var data = new DecalData(this, MaterialType.Dash, lod, firstPos, firstDir, DashLengthA, Width, Color);
+                        var data = new DecalData(MaterialType.Dash, lod, firstPos, firstDir, DashLengthA, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                         addData(data);
                     }
 
                     StyleHelper.GetPartParams(trajectory, part, Invert ? -offsetB : offsetB, out var secondPos, out var secondDir);
                     if (StyleHelper.CheckBorders(borders, secondPos, secondDir, DashLengthB, Width))
                     {
-                        var data = new DecalData(this, MaterialType.Dash, lod, secondPos, secondDir, DashLengthB, Width, TwoColors ? SecondColor : Color);
+                        var data = new DecalData(MaterialType.Dash, lod, secondPos, secondDir, DashLengthB, Width, TwoColors ? SecondColor : Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                         addData(data);
                     }
                 }
@@ -215,7 +216,7 @@ namespace IMT.Manager
             DashLengthB.FromXml(config, DefaultDashLength * 2f);
             SpaceLength.FromXml(config, DefaultSpaceLength);
             TwoColors.FromXml(config, false);
-            SecondColor.FromXml(config, DefaultColor);
+            SecondColor.FromXml(config, DefaultMarkingColor);
             Offset.FromXml(config, DefaultDoubleOffset);
             Alignment.FromXml(config, Manager.Alignment.Centre);
             Invert.FromXml(config, false);

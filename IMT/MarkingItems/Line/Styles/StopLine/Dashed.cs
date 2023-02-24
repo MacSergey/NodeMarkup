@@ -17,6 +17,7 @@ namespace IMT.Manager
     {
         public override StyleType Type { get; } = StyleType.StopLineDashed;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;
+        public bool KeepColor => true;
 
         public PropertyValue<float> DashLength { get; }
         public PropertyValue<float> SpaceLength { get; }
@@ -64,7 +65,7 @@ namespace IMT.Manager
                 foreach (var part in parts)
                 {
                     StyleHelper.GetPartParams(trajectory, part, offset, offset, out var pos, out var dir);
-                    var data = new DecalData(this, MaterialType.Dash, lod, pos, dir, DashLength, Width, Color);
+                    var data = new DecalData(MaterialType.Dash, lod, pos, dir, DashLength, Width, Color, DecalData.TextureData.Default, new DecalData.EffectData(this));
                     addData(data);
                 }
             }

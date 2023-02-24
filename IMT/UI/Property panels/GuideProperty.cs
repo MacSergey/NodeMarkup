@@ -65,8 +65,8 @@ namespace IMT.UI
             FollowGuide.StopLayout();
             FollowGuide.AutoButtonSize = false;
             FollowGuide.ButtonWidth = 25f;
-            FollowGuide.AddItem(true, "I");
-            FollowGuide.AddItem(false, "O");
+            FollowGuide.AddItem(true, new OptionData("I"));
+            FollowGuide.AddItem(false, new OptionData("O"));
             FollowGuide.StartLayout();
             FollowGuide.OnSelectObjectChanged += FollowChanged;
 
