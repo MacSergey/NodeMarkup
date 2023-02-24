@@ -1,6 +1,7 @@
 ﻿using IMT.Utilities;
 using ModsCommon.Utilities;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace IMT.Manager
 {
@@ -39,6 +40,9 @@ namespace IMT.Manager
     {
         MarkingLOD LOD { get; }
         MarkingLODType LODType { get; }
-        void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
+        public int RenderLayer { get; }
+        void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
+        bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays);
+        void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps);
     }
 }

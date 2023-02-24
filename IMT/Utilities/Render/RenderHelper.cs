@@ -238,56 +238,101 @@ namespace IMT.Utilities
         }
         protected abstract Type GetDefault(EnumType value);
     }
-    public class MarkingRenderData : EnumDictionary<MarkingLODType, MarkingGroupDrawData>
+    public class MarkingRenderData : EnumDictionary<MarkingLODType, MarkingGroupRenderData>
     {
-        protected override MarkingGroupDrawData GetDefault(MarkingLODType value) => value switch
+        protected override MarkingGroupRenderData GetDefault(MarkingLODType value) => value switch
         {
-            MarkingLODType.Dash => new MarkingDashGroupDrawData(),
-            MarkingLODType.Mesh => new MarkingMeshGroupDrawData(),
-            MarkingLODType.Network => new MarkingNetworkGroupDrawData(),
-            MarkingLODType.Prop => new MarkingPropGroupDrawData(),
-            MarkingLODType.Tree => new MarkingTreeGroupDrawData(),
-            _ => new MarkingGroupDrawData(),
+            MarkingLODType.Dash => new MarkingDashGroupRenderData(),
+            MarkingLODType.Mesh => new MarkingMeshGroupRenderData(),
+            MarkingLODType.Network => new MarkingNetworkGroupRenderData(),
+            MarkingLODType.Prop => new MarkingPropGroupRenderData(),
+            MarkingLODType.Tree => new MarkingTreeGroupRenderData(),
+            _ => new MarkingGroupRenderData(),
         };
+
+        public int GetRenderLayers()
+        {
+            var renderLayers = 0;
+
+            foreach (var lodType in Values)
+                renderLayers |= lodType.GetRenderLayers();
+
+            return renderLayers;
+        }
     }
-    public class MarkingGroupDrawData : EnumDictionary<MarkingLOD, List<IStyleData>>
+    public class MarkingGroupRenderData : EnumDictionary<MarkingLOD, List<IStyleData>>
     {
         public virtual float LODDistance => Settings.LODDistance;
         public void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
-            foreach (var drawData in this[MarkingLOD.NoLOD])
-                drawData.Draw(cameraInfo, data, infoView);
+            foreach (var renderData in this[MarkingLOD.NoLOD])
+                renderData.Render(cameraInfo, data, infoView);
 
             if (cameraInfo.CheckRenderDistance(data.m_position, LODDistance))
             {
-                foreach (var drawData in this[MarkingLOD.LOD0])
-                    drawData.Draw(cameraInfo, data, infoView);
+                foreach (var renderData in this[MarkingLOD.LOD0])
+                    renderData.Render(cameraInfo, data, infoView);
             }
             else
             {
-                foreach (var drawData in this[MarkingLOD.LOD1])
-                    drawData.Draw(cameraInfo, data, infoView);
+                foreach (var renderData in this[MarkingLOD.LOD1])
+                    renderData.Render(cameraInfo, data, infoView);
             }
         }
+
+        public bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            bool result = false;
+
+            foreach (var renderData in this[MarkingLOD.NoLOD])
+                result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+
+            foreach (var renderData in this[MarkingLOD.LOD1])
+                result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+
+            return result;
+        }
+
+        public void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+            foreach (var renderData in this[MarkingLOD.NoLOD])
+                renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+
+            foreach (var renderData in this[MarkingLOD.LOD1])
+                renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+        }
+        public int GetRenderLayers()
+        {
+            var renderLayers = 0;
+
+            foreach (var renderData in this[MarkingLOD.NoLOD])
+                renderLayers |= 1 << renderData.RenderLayer;
+
+            foreach (var renderData in this[MarkingLOD.LOD1])
+                renderLayers |= 1 << renderData.RenderLayer;
+
+            return renderLayers;
+        }
+
         protected override List<IStyleData> GetDefault(MarkingLOD value) => new List<IStyleData>();
     }
-    public class MarkingDashGroupDrawData : MarkingGroupDrawData
+    public class MarkingDashGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.LODDistance;
     }
-    public class MarkingMeshGroupDrawData : MarkingGroupDrawData
+    public class MarkingMeshGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.MeshLODDistance;
     }
-    public class MarkingNetworkGroupDrawData : MarkingGroupDrawData
+    public class MarkingNetworkGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.NetworkLODDistance;
     }
-    public class MarkingPropGroupDrawData : MarkingGroupDrawData
+    public class MarkingPropGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.PropLODDistance;
     }
-    public class MarkingTreeGroupDrawData : MarkingGroupDrawData
+    public class MarkingTreeGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.TreeLODDistance;
     }

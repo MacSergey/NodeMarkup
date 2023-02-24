@@ -11,6 +11,8 @@ namespace IMT.Utilities
     {
         public MarkingLOD LOD { get; }
         public abstract MarkingLODType LODType { get; }
+        public abstract int RenderLayer { get; }
+
         protected Vector4 Scale { get; }
 
         public BaseMeshData(MarkingLOD lod, float width, float length)
@@ -19,7 +21,9 @@ namespace IMT.Utilities
             Scale = new Vector4(1f / width, 1f / length, 1f, 1f);
         }
 
-        public abstract void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
+        public abstract void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
+        public abstract bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays);
+        public abstract void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps);
 
         protected void CalculateMatrix(ITrajectory trajectory, float halfWidth, Vector3 position, out Matrix4x4 left, out Matrix4x4 right)
         {
@@ -89,6 +93,7 @@ namespace IMT.Utilities
         private MaterialType MaterialType { get; set; }
 
         public override MarkingLODType LODType => MarkingLODType.Mesh;
+        public override int RenderLayer => RenderHelper.RoadLayer;
 
         public LineMeshData(MarkingLOD lod, ITrajectory trajectory, float width, float elevation, MaterialType materialType) : base(lod, HalfWidth * 2f, HalfLength * 2f)
         {
@@ -176,7 +181,7 @@ namespace IMT.Utilities
             }
         }
 
-        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
+        public override void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
             var instance = Singleton<NetManager>.instance;
 
@@ -191,6 +196,15 @@ namespace IMT.Utilities
             instance.m_materialBlock.SetTexture(instance.ID_SurfaceTexB, RenderHelper.SurfaceBLib[materialType]);
 
             Graphics.DrawMesh(LineMesh, Position, Quaternion.identity, RenderHelper.MaterialLib[materialType], RenderHelper.RoadLayer, null, 0, instance.m_materialBlock);
+        }
+        public override bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            return false;
+        }
+
+        public override void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+
         }
     }
 }

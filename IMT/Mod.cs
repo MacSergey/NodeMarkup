@@ -151,6 +151,8 @@ namespace IMT
             success &= Patch_NetManager_SimulationStepImpl_Prefix();
             success &= Patch_NetManager_SimulationStepImpl_Postfix();
             success &= Patch_NetManager_EndOverlay_Prefix();
+            success &= Patch_NetNode_UpdateNodeRenderer();
+            success &= Patch_NetSegment_UpdateSegmentRenderer();
         }
 
         private bool Patch_NetManager_ReleaseNodeImplementation()
@@ -180,6 +182,52 @@ namespace IMT
             return !SingletonTool<IntersectionMarkingTool>.Instance.enabled || !Settings.HideStreetName;
         }
 
+        private bool Patch_NetNode_UpdateNodeRenderer()
+        {
+            return AddTranspiler(typeof(Mod), nameof(Mod.NetNode_UpdateNodeRenderer_Transpiler), typeof(NetManager), nameof(NetManager.UpdateNodeRenderer));
+        }
+        private static IEnumerable<CodeInstruction> NetNode_UpdateNodeRenderer_Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase original)
+        {
+            var patched = false;
+
+            foreach(var instruction in instructions)
+            {
+                yield return instruction;
+                if(!patched && instruction.opcode == OpCodes.Stloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 6)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldloc_S, local);
+                    yield return new CodeInstruction(TranspilerUtilities.GetLDArg(original, "node"));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkingManager), nameof(MarkingManager.UpdateNodeRenderer)));
+                    yield return new CodeInstruction(OpCodes.Or);
+                    yield return instruction;
+                    patched = true;
+                }
+            }
+        }
+
+        private bool Patch_NetSegment_UpdateSegmentRenderer()
+        {
+            return AddTranspiler(typeof(Mod), nameof(Mod.NetSegment_UpdateSegmentRenderer_Transpiler), typeof(NetManager), nameof(NetManager.UpdateSegmentRenderer));
+        }
+        private static IEnumerable<CodeInstruction> NetSegment_UpdateSegmentRenderer_Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase original)
+        {
+            var patched = false;
+
+            foreach (var instruction in instructions)
+            {
+                yield return instruction;
+                if (!patched && instruction.opcode == OpCodes.Stloc_S && instruction.operand is LocalBuilder local && local.LocalIndex == 10)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldloc_S, local);
+                    yield return new CodeInstruction(TranspilerUtilities.GetLDArg(original, "segment"));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkingManager), nameof(MarkingManager.UpdateSegmentRenderer)));
+                    yield return new CodeInstruction(OpCodes.Or);
+                    yield return instruction;
+                    patched = true;
+                }
+            }
+        }
+
         #endregion
 
         #region NETNODE
@@ -187,6 +235,8 @@ namespace IMT
         private void PatchNetNode(ref bool success)
         {
             success &= Patch_NetNode_RenderInstance();
+            success &= Patch_NetNode_CalculateGroupData();
+            success &= Patch_NetNode_PopulateGroupData();
             success &= Patch_NetNode_CheckHeightOffset();
         }
         private bool Patch_NetNode_RenderInstance()
@@ -194,6 +244,17 @@ namespace IMT
             var parameters = new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(NetInfo), typeof(int), typeof(NetNode.Flags), typeof(uint).MakeByRefType(), typeof(RenderManager.Instance).MakeByRefType() };
             return AddPostfix(typeof(MarkingManager), nameof(MarkingManager.NetNodeRenderInstancePostfix), typeof(NetNode), nameof(NetNode.RenderInstance), parameters);
         }
+        private bool Patch_NetNode_CalculateGroupData()
+        {
+            var parameters = new Type[] { typeof(ushort), typeof(int), typeof(int).MakeByRefType(), typeof(int).MakeByRefType(), typeof(int).MakeByRefType(), typeof(RenderGroup.VertexArrays).MakeByRefType() };
+            return AddPostfix(typeof(MarkingManager), nameof(MarkingManager.NetNodeCalculateGroupDataPostfix), typeof(NetNode), nameof(NetNode.CalculateGroupData), parameters);
+        }
+        private bool Patch_NetNode_PopulateGroupData()
+        {
+            var parameters = new Type[] { typeof(ushort), typeof(int), typeof(int), typeof(int), typeof(int).MakeByRefType(), typeof(int).MakeByRefType(), typeof(Vector3), typeof(RenderGroup.MeshData), typeof(Vector3).MakeByRefType(), typeof(Vector3).MakeByRefType(), typeof(float).MakeByRefType(), typeof(float).MakeByRefType(), typeof(bool).MakeByRefType() };
+            return AddPrefix(typeof(MarkingManager), nameof(MarkingManager.NetNodePopulateGroupDataPrefix), typeof(NetNode), nameof(NetNode.PopulateGroupData), parameters);
+        }
+
         private bool Patch_NetNode_CheckHeightOffset()
         {
             return AddTranspiler(typeof(Mod), nameof(Mod.NetNode_CheckHeightOffset_Transpiler), typeof(NetNode), "CheckHeightOffset");
@@ -228,11 +289,23 @@ namespace IMT
         private void PatchNetSegment(ref bool success)
         {
             success &= Patch_NetSegment_RenderInstance();
+            success &= Patch_NetSegment_CalculateGroupData();
+            success &= Patch_NetSegment_PopulateGroupData();
         }
         private bool Patch_NetSegment_RenderInstance()
         {
             var parameters = new Type[] { typeof(RenderManager.CameraInfo), typeof(ushort), typeof(int), typeof(NetInfo), typeof(RenderManager.Instance).MakeByRefType() };
             return AddPostfix(typeof(MarkingManager), nameof(MarkingManager.NetSegmentRenderInstancePostfix), typeof(NetSegment), nameof(NetSegment.RenderInstance), parameters);
+        }
+        private bool Patch_NetSegment_CalculateGroupData()
+        {
+            var parameters = new Type[] { typeof(ushort), typeof(int), typeof(int).MakeByRefType(), typeof(int).MakeByRefType(), typeof(int).MakeByRefType(), typeof(RenderGroup.VertexArrays).MakeByRefType() };
+            return AddPostfix(typeof(MarkingManager), nameof(MarkingManager.NetSegmentCalculateGroupDataPostfix), typeof(NetSegment), nameof(NetSegment.CalculateGroupData), parameters);
+        }
+        private bool Patch_NetSegment_PopulateGroupData()
+        {
+            var parameters = new Type[] { typeof(ushort), typeof(int), typeof(int), typeof(int), typeof(int).MakeByRefType(), typeof(int).MakeByRefType(), typeof(Vector3), typeof(RenderGroup.MeshData), typeof(Vector3).MakeByRefType(), typeof(Vector3).MakeByRefType(), typeof(float).MakeByRefType(), typeof(float).MakeByRefType(), typeof(bool).MakeByRefType() };
+            return AddPrefix(typeof(MarkingManager), nameof(MarkingManager.NetSegmentPopulateGroupDataPrefix), typeof(NetSegment), nameof(NetSegment.PopulateGroupData), parameters);
         }
 
         #endregion

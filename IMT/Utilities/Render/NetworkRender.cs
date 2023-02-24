@@ -19,13 +19,23 @@ namespace IMT.Utilities
             public Texture heightMap;
             public Vector4 heightMapping;
             public Vector4 surfaceMapping;
+            public ITrajectory trajectory;
         }
 
         public override MarkingLODType LODType => MarkingLODType.Network;
+        public override int RenderLayer => Info.m_prefabDataLayer;
+        public NetInfo Info { get; private set; }
         Data[] Datas { get; set; }
+
+        float width;
+        float scale;
 
         public MarkingNetworkData(NetInfo info, ITrajectory[] trajectories, float width, float length, float scale, float elevation, Color32 color) : base(MarkingLOD.NoLOD, width, length)
         {
+            Info = info;
+            this.width = width;
+            this.scale = scale;
+
             var count = info.m_segments.Count(s => s.CheckFlags(NetSegment.Flags.None, out _));
             Datas = new Data[trajectories.Length * count];
 
@@ -42,6 +52,7 @@ namespace IMT.Utilities
                     {
                         int index = i * count + j;
 
+                        Datas[index].trajectory = trajectories[i];
                         Datas[index].segment = segment;
                         Datas[index].position = position;
                         Datas[index].left = left;
@@ -59,7 +70,7 @@ namespace IMT.Utilities
             }
         }
 
-        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance renderData, bool infoView)
+        public override void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance renderData, bool infoView)
         {
             var instance = Singleton<NetManager>.instance;
 
@@ -92,7 +103,16 @@ namespace IMT.Utilities
                 }
                 else if (data.segment.m_combinedLod is NetInfo.LodValue combinedLod)
                 {
-                    if (data.segment.m_requireHeightMap && data.heightMap != combinedLod.m_heightMap)
+                    if (data.segment.m_requireSurfaceMaps && data.surfaceTexA != combinedLod.m_surfaceTexA)
+                    {
+                        if (combinedLod.m_lodCount != 0)
+                            NetSegment.RenderLod(cameraInfo, combinedLod);
+
+                        combinedLod.m_surfaceTexA = data.surfaceTexA;
+                        combinedLod.m_surfaceTexB = data.surfaceTexB;
+                        combinedLod.m_surfaceMapping = data.surfaceMapping;
+                    }
+                    else if (data.segment.m_requireHeightMap && data.heightMap != combinedLod.m_heightMap)
                     {
                         if (combinedLod.m_lodCount != 0)
                             NetSegment.RenderLod(cameraInfo, combinedLod);
@@ -111,6 +131,37 @@ namespace IMT.Utilities
 
                     if (++combinedLod.m_lodCount == combinedLod.m_leftMatrices.Length)
                         NetSegment.RenderLod(cameraInfo, combinedLod);
+                }
+            }
+        }
+
+        public override bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            if (Info.m_prefabDataLayer == layer)
+            {
+                foreach (var data in Datas)
+                {
+                    RenderGroup.MeshData renderData = data.segment.m_combinedLod.m_key.m_mesh.m_data;
+                    vertexCount += renderData.m_vertices.Length;
+                    triangleCount += renderData.m_triangles.Length;
+                    objectCount++;
+                    vertexArrays |= renderData.VertexArrayMask() | RenderGroup.VertexArrays.Colors | RenderGroup.VertexArrays.Uvs2 | RenderGroup.VertexArrays.Uvs4;
+                }
+
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public override void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData renderData, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+            if (Info.m_prefabDataLayer == layer)
+            {
+                foreach (var data in Datas)
+                {
+                    CalculateMatrix(data.trajectory, width * 0.5f * scale, groupPosition, out var left, out var right);
+                    NetSegment.PopulateGroupData(Info, data.segment, left, right, Scale, default, ref vertexIndex, ref triangleIndex, groupPosition, renderData, ref requireSurfaceMaps);
                 }
             }
         }

@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using UnityEngine;
 using static NetInfo;
 
 namespace IMT.Manager
@@ -30,11 +31,19 @@ namespace IMT.Manager
         }
 
         public static void NetNodeRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort nodeID, ref RenderManager.Instance data) => SingletonManager<NodeMarkingManager>.Instance.Render(cameraInfo, nodeID, ref data);
-
         public static void NetSegmentRenderInstancePostfix(RenderManager.CameraInfo cameraInfo, ushort segmentID, ref RenderManager.Instance data) => SingletonManager<SegmentMarkingManager>.Instance.Render(cameraInfo, segmentID, ref data);
+
+        public static void NetNodeCalculateGroupDataPostfix(ref bool __result, ushort nodeID, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays) => SingletonManager<NodeMarkingManager>.Instance.CalculateGroupData(ref __result, nodeID, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+        public static void NetSegmentCalculateGroupDataPostfix(ref bool __result, ushort segmentID, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays) => SingletonManager<SegmentMarkingManager>.Instance.CalculateGroupData(ref __result, segmentID, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+
+        public static void NetNodePopulateGroupDataPrefix(ushort nodeID, int groupX, int groupZ, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps) => SingletonManager<NodeMarkingManager>.Instance.PopulateGroupData(nodeID, layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+        public static void NetSegmentPopulateGroupDataPrefix(ushort segmentID, int groupX, int groupZ, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps) => SingletonManager<SegmentMarkingManager>.Instance.PopulateGroupData(segmentID, layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
 
         public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => SingletonManager<NodeMarkingManager>.Instance.Remove(node);
         public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SingletonManager<SegmentMarkingManager>.Instance.Remove(segment);
+
+        public static int UpdateNodeRenderer(ushort id) => SingletonManager<NodeMarkingManager>.Instance.UpdateRenderer(id);
+        public static int UpdateSegmentRenderer(ushort id) => SingletonManager<SegmentMarkingManager>.Instance.UpdateRenderer(id);
 
         public static void GetToUpdate()
         {
@@ -171,18 +180,58 @@ namespace IMT.Manager
                 if (!TryGetMarking(id, out TypeMarking marking))
                     return;
 
-                if (marking.NeedRecalculateDrawData)
-                    marking.RecalculateDrawData();
+                if (marking.NeedRecalculateRenderData)
+                    marking.RecalculateRenderData();
 
                 bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
 
-                foreach (var drawData in marking.DrawData.Values)
-                    drawData.Render(cameraInfo, data, infoView);
+                foreach (var renderData in marking.RenderData.Values)
+                    renderData.Render(cameraInfo, data, infoView);
             }
             catch (Exception error)
             {
                 SingletonMod<Mod>.Logger.Error($"Error while rendering {Type} #{id} marking", error);
             }
+        }
+
+        public void CalculateGroupData(ref bool result, ushort id, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            try
+            {
+                if (!TryGetMarking(id, out TypeMarking marking))
+                    return;
+
+                foreach (var renderData in marking.RenderData.Values)
+                    result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error($"Error while calculating group data {Type} #{id} marking", error);
+            }
+        }
+        public void PopulateGroupData(ushort id, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+            try
+            {
+                if (!TryGetMarking(id, out TypeMarking marking))
+                    return;
+
+                foreach (var renderData in marking.RenderData.Values)
+                    renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+            }
+            catch (Exception error)
+            {
+                SingletonMod<Mod>.Logger.Error($"Error while populating group data {Type} #{id} marking", error);
+            }
+        }
+        public int UpdateRenderer(ushort id)
+        {
+            int renderLayers = 0;
+
+            if (TryGetMarking(id, out TypeMarking marking))
+                renderLayers |= marking.RenderData.GetRenderLayers();
+
+            return renderLayers;
         }
 
         public virtual void Remove(ushort id) => Markings.Remove(id);

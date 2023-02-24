@@ -21,6 +21,7 @@ namespace IMT.Utilities
     {
         public MarkingLOD LOD => MarkingLOD.NoLOD;
         public abstract MarkingLODType LODType { get; }
+        public abstract int RenderLayer { get; }
         public PrefabType Info { get; private set; }
         protected MarkingPropItemData[] Items { get; private set; }
 
@@ -30,20 +31,24 @@ namespace IMT.Utilities
             Items = items;
         }
 
-        public abstract void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
+        public abstract void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView);
+        public abstract bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays);
+        public abstract void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps);
     }
     public class MarkingPropData : BaseMarkingPrefabData<PropInfo>
     {
         public override MarkingLODType LODType => MarkingLODType.Prop;
-
+        public override int RenderLayer => Info.m_prefabDataLayer;
         public MarkingPropData(PropInfo info, MarkingPropItemData[] items) : base(info, items) { }
 
-        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
+        public override void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
-            var instance = new InstanceID() { };
+            var instance = new InstanceID();
 
             foreach (var item in Items)
+            {
                 RenderInstance(cameraInfo, Info, instance, item.position, item.scale, item.absoluteAngle, item.angle, item.tilt, item.slope, item.color, new Vector4(), true);
+            }
         }
 
         public static void RenderInstance(RenderManager.CameraInfo cameraInfo, PropInfo info, InstanceID id, Vector3 position, float scale, float absoluteAngle, float angle, float tilt, float slope, Color color, Vector4 objectIndex, bool active)
@@ -145,17 +150,48 @@ namespace IMT.Utilities
                     PropInstance.RenderLod(cameraInfo, info);
             }
         }
+
+        public override bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            if (Info.m_prefabDataLayer == layer)
+            {
+                foreach (var item in Items)
+                {
+                    PropInstance.CalculateGroupData(Info, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+                }
+
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public override void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+            var instance = new InstanceID();
+
+            if (Info.m_prefabDataLayer == layer)
+            {
+                foreach (var item in Items)
+                {
+                    PropInstance.PopulateGroupData(Info, layer, instance, item.position, item.scale, item.absoluteAngle + item.angle, item.color, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
+                }
+            }
+        }
     }
     public class MarkingTreeData : BaseMarkingPrefabData<TreeInfo>
     {
         public override MarkingLODType LODType => MarkingLODType.Tree;
+        public override int RenderLayer => Info.m_prefabDataLayer;
 
         public MarkingTreeData(TreeInfo info, MarkingPropItemData[] items) : base(info, items) { }
 
-        public override void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
+        public override void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
             foreach (var item in Items)
+            {
                 RenderInstance(cameraInfo, Info, item.position, item.scale, item.absoluteAngle, item.angle, item.tilt, item.slope, 1f, new Vector4());
+            }
         }
 
         public static void RenderInstance(RenderManager.CameraInfo cameraInfo, TreeInfo info, Vector3 position, float scale, float absoluteAngle, float angle, float tilt, float slope, float brightness, Vector4 objectIndex)
@@ -194,6 +230,32 @@ namespace IMT.Utilities
                 if (++info.m_lodCount == info.m_lodLocations.Length)
                 {
                     TreeInstance.RenderLod(cameraInfo, info);
+                }
+            }
+        }
+
+        public override bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            if (Info.m_prefabDataLayer == layer)
+            {
+                foreach (var item in Items)
+                {
+                    TreeInstance.CalculateGroupData(ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+                }
+
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public override void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+            if (Info.m_prefabDataLayer == layer)
+            {
+                foreach (var item in Items)
+                {
+                    TreeInstance.PopulateGroupData(Info, item.position, item.scale, 1f, RenderManager.DefaultColorLocation, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
                 }
             }
         }

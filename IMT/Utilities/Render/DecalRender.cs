@@ -26,6 +26,7 @@ namespace IMT.Utilities
 
         public MarkingLOD LOD { get; }
         public MarkingLODType LODType => MarkingLODType.Dash;
+        public int RenderLayer => RenderHelper.RoadLayer;
 
         private readonly Material material;
         private readonly TextureData textureData;
@@ -240,7 +241,7 @@ namespace IMT.Utilities
             }
         }
 
-        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
+        public void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
             if (infoView)
                 return;
@@ -268,6 +269,16 @@ namespace IMT.Utilities
             materialBlock.SetFloat(textureDensityId, effectData.texture);
 
             Graphics.DrawMesh(RenderHelper.DecalMesh, position, rotation, material, RenderHelper.RoadLayer, null, 0, materialBlock);
+        }
+
+        public bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            return false;
+        }
+
+        public void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+
         }
 
         public readonly struct TextureData

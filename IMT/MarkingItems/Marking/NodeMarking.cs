@@ -29,6 +29,9 @@ namespace IMT.Manager
         }
         protected override IEnumerable<ushort> GetEnters() => Id.GetNode().SegmentIds();
         protected override Entrance NewEnter(ushort id) => new SegmentEntrance(this, id);
+
+        protected override void UpdateRenderer() => NetManager.instance.UpdateNodeRenderer(Id, true);
+
         public override void FromXml(Version version, XElement config, ObjectsMap map, bool needUpdate = true)
         {
             if (version < new Version("1.2"))

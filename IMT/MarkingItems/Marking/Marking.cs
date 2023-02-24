@@ -1,4 +1,5 @@
-﻿using ColossalFramework.Math;
+﻿using ColossalFramework;
+using ColossalFramework.Math;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
@@ -66,9 +67,9 @@ namespace IMT.Manager
         public int FillersCount => FillersList.Count;
 
 
-        public bool NeedRecalculateDrawData { get; private set; }
+        public bool NeedRecalculateRenderData { get; private set; }
         private HashSet<IStyleItem> RecalculateList { get; set; } = new HashSet<IStyleItem>();
-        public MarkingRenderData DrawData { get; } = new MarkingRenderData();
+        public MarkingRenderData RenderData { get; } = new MarkingRenderData();
 
 
         private bool _needSetOrder;
@@ -395,7 +396,7 @@ namespace IMT.Manager
                 if (toRecalculate != null)
                     RecalculateList.Add(toRecalculate);
 
-                NeedRecalculateDrawData = true;
+                NeedRecalculateRenderData = true;
             }
         }
         public void RecalculateStyleData(HashSet<IStyleItem> toRecalculate)
@@ -403,39 +404,42 @@ namespace IMT.Manager
             lock (RecalculateList)
             {
                 RecalculateList.AddRange(toRecalculate);
-                NeedRecalculateDrawData = true;
+                NeedRecalculateRenderData = true;
             }
         }
 
-        public void RecalculateDrawData()
+        public void RecalculateRenderData()
         {
             lock (RecalculateList)
             {
-                DrawData.Clear();
+                RenderData.Clear();
 
                 foreach (var item in RecalculateList)
                     item.RecalculateStyleData();
 
-                foreach(var line in Lines)
+                foreach (var line in Lines)
                 {
-                    foreach(var styleData in line.StyleData)
-                        DrawData[styleData.LODType][styleData.LOD].Add(styleData);
+                    foreach (var styleData in line.StyleData)
+                        RenderData[styleData.LODType][styleData.LOD].Add(styleData);
                 }
                 foreach (var fillers in Fillers)
                 {
                     foreach (var styleData in fillers.StyleData)
-                        DrawData[styleData.LODType][styleData.LOD].Add(styleData);
+                        RenderData[styleData.LODType][styleData.LOD].Add(styleData);
                 }
                 foreach (var crosswalk in Crosswalks)
                 {
                     foreach (var styleData in crosswalk.StyleData)
-                        DrawData[styleData.LODType][styleData.LOD].Add(styleData);
+                        RenderData[styleData.LODType][styleData.LOD].Add(styleData);
                 }
 
+                SimulationManager.instance.AddAction(UpdateRenderer);
+
                 RecalculateList.Clear();
-                NeedRecalculateDrawData = false;
+                NeedRecalculateRenderData = false;
             }
         }
+        protected abstract void UpdateRenderer();
 
         #endregion
 

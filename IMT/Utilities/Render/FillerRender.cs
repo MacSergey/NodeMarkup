@@ -81,6 +81,7 @@ namespace IMT.Utilities
 
         public MarkingLOD LOD { get; }
         public MarkingLODType LODType => MarkingLODType.Mesh;
+        public int RenderLayer => RenderHelper.RoadLayer;
         private RenderData[] Datas { get; }
         private Vector3 Position { get; }
 
@@ -193,7 +194,7 @@ namespace IMT.Utilities
             }
         }
 
-        public void Draw(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
+        public void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
             var instance = Singleton<PropManager>.instance;
             var materialBlock = instance.m_materialBlock;
@@ -211,6 +212,16 @@ namespace IMT.Utilities
                 var material = RenderHelper.MaterialLib[MaterialType.FillerTexture];
                 Graphics.DrawMesh(Datas[i].mesh, Position, Quaternion.identity, material, RenderHelper.RoadLayer, null, 0, materialBlock);
             }
+        }
+
+        public bool CalculateGroupData(int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
+        {
+            return false;
+        }
+
+        public void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
+        {
+
         }
     }
 }
