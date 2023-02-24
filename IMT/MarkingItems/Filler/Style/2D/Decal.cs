@@ -118,7 +118,7 @@ namespace IMT.Manager
             {
                 var oldDecal = Decal.Value;
                 Decal.Value = value;
-                if ((oldDecal == null || DecalColor.Value == null || DecalColor.Value != oldDecal.m_color0) && value != null)
+                if (value != null && (oldDecal == null || !DecalColor.HasValue || DecalColor.Value.Value == oldDecal.m_color0))
                     DecalColor.Value = value.m_color0;
 
                 provider.Refresh();
@@ -130,11 +130,11 @@ namespace IMT.Manager
             colorProperty.Text = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(Decal.Value?.m_color0);
-            colorProperty.Value = DecalColor.Value ?? Decal.Value?.m_color0 ?? new Color32(127, 127, 127, 255);
             colorProperty.OnValueChanged += (Color32 color) => DecalColor.Value = color;
         }
         private void RefreshDecalColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
+            colorProperty.Value = DecalColor.Value ?? Decal.Value?.m_color0 ?? new Color32(127, 127, 127, 255);
             colorProperty.IsHidden = !IsValid;
 
             if (Decal.Value != null)
