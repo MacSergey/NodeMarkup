@@ -197,7 +197,7 @@ namespace IMT
                 {
                     yield return new CodeInstruction(OpCodes.Ldloc_S, local);
                     yield return new CodeInstruction(TranspilerUtilities.GetLDArg(original, "node"));
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkingManager), nameof(MarkingManager.UpdateNodeRenderer)));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkingManager), nameof(MarkingManager.GetNodeRenderLayer)));
                     yield return new CodeInstruction(OpCodes.Or);
                     yield return instruction;
                     patched = true;
@@ -220,7 +220,7 @@ namespace IMT
                 {
                     yield return new CodeInstruction(OpCodes.Ldloc_S, local);
                     yield return new CodeInstruction(TranspilerUtilities.GetLDArg(original, "segment"));
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkingManager), nameof(MarkingManager.UpdateSegmentRenderer)));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkingManager), nameof(MarkingManager.GetSegmentRenderLayer)));
                     yield return new CodeInstruction(OpCodes.Or);
                     yield return instruction;
                     patched = true;

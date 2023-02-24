@@ -42,8 +42,8 @@ namespace IMT.Manager
         public static void NetManagerReleaseNodeImplementationPrefix(ushort node) => SingletonManager<NodeMarkingManager>.Instance.Remove(node);
         public static void NetManagerReleaseSegmentImplementationPrefix(ushort segment) => SingletonManager<SegmentMarkingManager>.Instance.Remove(segment);
 
-        public static int UpdateNodeRenderer(ushort id) => SingletonManager<NodeMarkingManager>.Instance.UpdateRenderer(id);
-        public static int UpdateSegmentRenderer(ushort id) => SingletonManager<SegmentMarkingManager>.Instance.UpdateRenderer(id);
+        public static int GetNodeRenderLayer(ushort id) => SingletonManager<NodeMarkingManager>.Instance.GetRenderLayer(id);
+        public static int GetSegmentRenderLayer(ushort id) => SingletonManager<SegmentMarkingManager>.Instance.GetRenderLayer(id);
 
         public static void GetToUpdate()
         {
@@ -174,16 +174,8 @@ namespace IMT.Manager
                 if (data.m_nextInstance != ushort.MaxValue)
                     return;
 
-                if (!TryGetMarking(id, out TypeMarking marking))
-                    return;
-
-                if (marking.NeedRecalculateRenderData)
-                    marking.RecalculateRenderData();
-
-                bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
-
-                foreach (var renderData in marking.RenderData.Values)
-                    renderData.Render(cameraInfo, data, infoView);
+                if (TryGetMarking(id, out TypeMarking marking))
+                    marking.Render(cameraInfo, ref data);
             }
             catch (Exception error)
             {
@@ -195,11 +187,8 @@ namespace IMT.Manager
         {
             try
             {
-                if (!TryGetMarking(id, out TypeMarking marking))
-                    return;
-
-                foreach (var renderData in marking.RenderData.Values)
-                    result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
+                if (TryGetMarking(id, out TypeMarking marking))
+                    marking.CalculateGroupData(ref result, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
             }
             catch (Exception error)
             {
@@ -210,26 +199,15 @@ namespace IMT.Manager
         {
             try
             {
-                if (!TryGetMarking(id, out TypeMarking marking))
-                    return;
-
-                foreach (var renderData in marking.RenderData.Values)
-                    renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
+                if (TryGetMarking(id, out TypeMarking marking))
+                    marking.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
             }
             catch (Exception error)
             {
                 SingletonMod<Mod>.Logger.Error($"Error while populating group data {Type} #{id} marking", error);
             }
         }
-        public int UpdateRenderer(ushort id)
-        {
-            int renderLayers = 0;
-
-            if (TryGetMarking(id, out TypeMarking marking))
-                renderLayers |= marking.RenderData.GetRenderLayers();
-
-            return renderLayers;
-        }
+        public int GetRenderLayer(ushort id) => TryGetMarking(id, out TypeMarking marking) ? marking.RenderLayers : 0;
 
         public virtual void Remove(ushort id) => Markings.Remove(id);
         public void Clear()

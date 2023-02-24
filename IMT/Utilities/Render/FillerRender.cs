@@ -230,6 +230,8 @@ namespace IMT.Utilities
 
         public void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData groupData, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
         {
+            return;
+
             foreach (var data in Datas)
             {
                 var triangles = data.mesh.triangles;
