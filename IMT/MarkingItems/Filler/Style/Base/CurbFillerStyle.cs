@@ -61,7 +61,7 @@ namespace IMT.Manager
                 foreach (var contour in contours)
                 {
                     var lineCurb = Mathf.Max(0.01f, LineCurbSize);
-                    var medianCurb = Mathf.Max(0.01f, MedianCurbSize);
+                    var medianCurb = MedianOffset > 0 ? Mathf.Max(0.01f, MedianCurbSize) : MedianCurbSize;
                     var topContours = contour.SetOffset(lineCurb, medianCurb);
                     if (topContours.Count == 0)
                         continue;

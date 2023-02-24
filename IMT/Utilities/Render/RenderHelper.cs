@@ -18,6 +18,7 @@ namespace IMT.Utilities
         public static Dictionary<MaterialType, Material> MaterialLib { get; }
         public static Dictionary<MaterialType, Texture2D> SurfaceALib { get; }
         public static Dictionary<MaterialType, Texture2D> SurfaceBLib { get; }
+        public static Material ThemeTexture { get; private set; }
         public static int RoadLayer => 9;
 
         static RenderHelper()
@@ -97,6 +98,7 @@ namespace IMT.Utilities
                     Bundle.LoadAsset<Material>("Triangle.mat"),
                     Bundle.LoadAsset<Material>("Text.mat"),
                     Bundle.LoadAsset<Material>("Filler3D.mat"),
+                    Bundle.LoadAsset<Material>("ThemeTexture.mat"),
                 };
                 DecalMaterials = materials;
 
@@ -119,6 +121,7 @@ namespace IMT.Utilities
                 MaterialLib[MaterialType.Triangle] = materials[16];
                 MaterialLib[MaterialType.Text] = materials[17];
                 MaterialLib[MaterialType.FillerTexture] = materials[18];
+                ThemeTexture = materials[19];
 
                 DecalMesh = Bundle.LoadAsset<Mesh>("Cube.fbx");
                 DecalMesh.bounds = new Bounds(DecalMesh.bounds.center, Vector3.one * 100f);

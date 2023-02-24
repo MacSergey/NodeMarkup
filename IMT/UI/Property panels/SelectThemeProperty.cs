@@ -331,6 +331,7 @@ namespace IMT.UI
             autoLayout = true;
 
             Screenshot = AddUIComponent<CustomUITextureSprite>();
+            Screenshot.material = RenderHelper.ThemeTexture;
             Screenshot.size = new Vector2(90f, 90f);
 
             Title = AddUIComponent<CustomUILabel>();
