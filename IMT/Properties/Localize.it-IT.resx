@@ -1160,14 +1160,8 @@ Seleziona per modificare la segnaletica orizzontale</value>
 [FIXED] Risolto un conflitto con il pannello di scorrimento e la rotella di scorrimento per modificare i valori.
 [UPDATED] Ora non c'è differenza se inserisci un punto o una virgola nel campo del valore delle proprietà.</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Numero di colori</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Uno</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Due</value>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Usa colore secondario</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Dagli appunti</value>
@@ -2043,5 +2037,29 @@ Può volerci del tempo se ci sono molti segmenti.</value>
   </data>
   <data name="StyleOption_DefaultTheme" xml:space="preserve">
     <value>Tema predefinito</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Casuale</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Decalcomania</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Dimensione</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Tolleranza alla pendenza</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Piastrellatura</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Pavimentazione</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>Collassa automaticamente il pannello degli elementi</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Linea ({0})</value>
   </data>
 </root>

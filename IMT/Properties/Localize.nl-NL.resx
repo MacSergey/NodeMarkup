@@ -1024,6 +1024,12 @@ Het laden van de markeringen is voor alle kruispunten mislukt.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Bewerk segment #{0} markering</value>
   </data>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>Verkeerseiland gras</value>
+  </data>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>Verkeerseiland bestrating</value>
+  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Hoogte</value>
   </data>
@@ -1046,14 +1052,8 @@ Klik om de markering te wijzigen</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selecteer tweede punt van de hulplijn</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Aantal kleuren</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Een</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Twee</value>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Gebruik tweede kleur</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Vanaf klembord</value>
@@ -1120,6 +1120,15 @@ Klik om de markering te wijzigen</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Klik met {0} om een lijn te selecteren</value>
+  </data>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>Verkeerseiland grind</value>
+  </data>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>Verkeerseiland kliffen</value>
+  </data>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>Verkeerseiland verdord gras</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Hoekstraal</value>
@@ -1782,6 +1791,25 @@ Het kan even duren als er veel segmenten zijn.</value>
 [FIXED] Verwijdert correct ongebruikte texturen en meshes om geheugengebruik te verminderen en geheugenlekken te voorkomen.
 [NEW] API toegevoegd. Andere mods kunnen communiceren met IMT. Beschikbaar als Nuget pakket op www.nuget.org/packages/IMT.API.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_13_1" xml:space="preserve">
+    <value>[UPDATED] Verbeterde weergave van vlakvullingen op hellingen.
+[UPDATED] Verbeterde 3D vulling offset berekening.
+[FIXED] Markering van haaientanden was verkeerd uitgelijnd.
+[FIXED] Netwerklijn opties waren niet zichtbaar.
+[FIXED] Bug waardoor kruispuntgegevens niet konden worden opgeslagen bij gebruik van rasters.
+[FIXED] Weergavevolgorde van lijnen en zebrapaden veranderd: ze worden nu boven andere decals getekend.
+[FIXED] Waarde textuurdichtheid werd niet opgeslagen.
+[FIXED] Opvulling was onzichtbaar bij bepaalde stoepranden en radiuswaarden.
+[FIXED] Markeringen waren niet zichtbaar wanneer OpenGL werd gebruikt voor rendering.
+[FIXED] Lijnkruisingen werden in bepaalde gevallen niet gedetecteerd.
+[FIXED] Onjuiste uitlijning van lijn vanaf splitsingspunt nadat markering was gekopieerd/geplakt van het ene kruispunt naar het andere.</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>Decal</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>Decal asset</value>
+  </data>
   <data name="Settings_InvertChevrons" xml:space="preserve">
     <value>Alle visgraten omkren</value>
   </data>
@@ -1791,10 +1819,58 @@ Het kan even duren als er veel segmenten zijn.</value>
   <data name="StyleOption_AssetMissed" xml:space="preserve">
     <value>Geselecteerd item ontbreekt: "{0}"</value>
   </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>Decal</value>
+  </data>
   <data name="StyleOption_ScaleLock" xml:space="preserve">
     <value>Verhoudingen behouden</value>
   </data>
   <data name="StyleOption_ScaleUnlock" xml:space="preserve">
     <value>Aangepaste verhoudingen</value>
+  </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>Geselecteerd thema ontbreekt: "{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>Kaartthema</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>Toevoegen aan favorieten</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>Verwijderen uit favorieten</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>Asfalt</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>Verkeerseiland aangepaste textuur</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>Standaard kaartthema</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Willekeurig</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Decal</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Grootte</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Tolerantie van de helling</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Raster</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Bestrating</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>Automatisch samenvouwen van items paneel</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Lijn #{0}</value>
   </data>
 </root>

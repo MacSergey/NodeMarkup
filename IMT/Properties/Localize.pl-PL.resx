@@ -1027,6 +1027,12 @@ Nie udało się załadować oznaczeń dla wszystkich skrzyżowań.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Modyfikuj oznaczenia segmentu #{0}</value>
   </data>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>Wyspa z trawą</value>
+  </data>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>Wyspa z chodnikiem</value>
+  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Wysokość</value>
   </data>
@@ -1049,14 +1055,8 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Wybierz drugi punkt linii pomocniczej</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Liczba kolorów</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Jeden</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Dwa</value>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Użyj drugiego koloru</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Ze schowka</value>
@@ -1123,6 +1123,15 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Przytrzymaj {0} i naciśnij, aby wybrać linię</value>
+  </data>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>Wyspa ze żwirem</value>
+  </data>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>Wyspa z klifem</value>
+  </data>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>Zrujnowana wyspa</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Zaokrąglenie rogów</value>
@@ -1387,11 +1396,17 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Więcej opcji</value>
   </data>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Zwiń panele z zasadami linii</value>
+  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Główny kolor</value>
   </data>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Drugi kolor</value>
+  </data>
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Podwójna przerywana asymetryczna</value>
   </data>
   <data name="NumberFormat_Period" xml:space="preserve">
     <value>Każdy {0}</value>
@@ -1411,6 +1426,9 @@ Kliknij aby edytować oznaczenia</value>
   <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
     <value>Mediana</value>
   </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Kreska</value>
+  </data>
   <data name="StyleOption_Length" xml:space="preserve">
     <value>Długość</value>
   </data>
@@ -1425,6 +1443,9 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="StyleOption_OffsetBeforeAbrv" xml:space="preserve">
     <value>Przed</value>
+  </data>
+  <data name="StyleOption_Space" xml:space="preserve">
+    <value>Przestrzeń</value>
   </data>
   <data name="StyleOption_Rails" xml:space="preserve">
     <value>Linie pomocnicze</value>
@@ -1498,6 +1519,27 @@ Kliknij aby edytować oznaczenia</value>
   <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
     <value>Twórz automatycznie linie pasów ruchu</value>
   </data>
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Wybierz punkt końcowy aby stworzyć pas</value>
+  </data>
+  <data name="StyleOption_Distribution" xml:space="preserve">
+    <value>Rozkład</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFixed" xml:space="preserve">
+    <value>Dynamiczna przestrzeń i stałe końce</value>
+  </data>
+  <data name="StyleOption_DistributionDynamicFree" xml:space="preserve">
+    <value>Dynamiczna przestrzeń i wolne końce</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFixed" xml:space="preserve">
+    <value>Stała przestrzeń i stałe końce</value>
+  </data>
+  <data name="StyleOption_DistributionFixedFree" xml:space="preserve">
+    <value>Stała przestrzeń i wolne końce</value>
+  </data>
+  <data name="LineStyle_ZigZag" xml:space="preserve">
+    <value>Zygzak</value>
+  </data>
   <data name="StyleOption_SideLeft" xml:space="preserve">
     <value>Lewo</value>
   </data>
@@ -1507,7 +1549,31 @@ Kliknij aby edytować oznaczenia</value>
   <data name="StyleOption_ZigzagOffset" xml:space="preserve">
     <value>Przesunięcie</value>
   </data>
+  <data name="StyleOption_ZigzagSide" xml:space="preserve">
+    <value>Bok</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFrom" xml:space="preserve">
+    <value>Początek od</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromLine" xml:space="preserve">
+    <value>Linia</value>
+  </data>
+  <data name="StyleOption_ZigzagStartFromOutside" xml:space="preserve">
+    <value>Zewnątrz</value>
+  </data>
+  <data name="StyleOption_ZigzagStep" xml:space="preserve">
+    <value>Krok</value>
+  </data>
   <data name="StyleOption_TextAlignment" xml:space="preserve">
     <value>Wyrównanie</value>
+  </data>
+  <data name="StyleOption_TextAlignmentEnd" xml:space="preserve">
+    <value>Koniec</value>
+  </data>
+  <data name="StyleOption_TextAlignmentMiddle" xml:space="preserve">
+    <value>Środek</value>
+  </data>
+  <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
+    <value>Start</value>
   </data>
 </root>

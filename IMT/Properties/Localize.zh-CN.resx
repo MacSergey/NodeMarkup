@@ -1147,14 +1147,8 @@
 [FIXED] 修复了用滚轮修改数据时滚动窗口的冲突问题
 [UPDATED] 填写数字时既可使用逗号或句号为小数点</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>颜色数量：</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>一个</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>两个</value>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>次选颜色</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>从剪贴板创建</value>
@@ -2019,5 +2013,29 @@
   </data>
   <data name="StyleOption_DefaultTheme" xml:space="preserve">
     <value>默认地图主题</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>随机</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>贴花</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>尺寸</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>坡度公差</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>平铺</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>路肩</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>自动折叠项目面板</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>线段 #{0}</value>
   </data>
 </root>

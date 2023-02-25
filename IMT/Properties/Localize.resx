@@ -1161,14 +1161,8 @@ Click to edit markings</value>
 [FIXED] Fixed a conflict with scroll panel and scroll wheel to change values.
 [UPDATED] Now there is no difference that you enter a dot or a comma in the properties value field.</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Color count</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>One</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Two</value>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Use second color</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>From clipboard</value>
@@ -2046,5 +2040,29 @@ It can take time if there are a lot of segments.</value>
   </data>
   <data name="StyleOption_DefaultTheme" xml:space="preserve">
     <value>Default map theme</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Decal</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Slope tolerance</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Tiling</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Pavement</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>Auto collapse items panel</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Line #{0}</value>
   </data>
 </root>

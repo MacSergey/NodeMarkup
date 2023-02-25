@@ -1054,15 +1054,6 @@ Klikněte pro změnu značení</value>
 [FIXED] Opravena chyba se scrollováním a používáním kolečka myši pro změnu hodnot.
 [UPDATED] Při zadávání hodnot již není rozlišována tečka od čárky.</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Počet barev</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Jedna</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Dvě</value>
-  </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Ze schránky</value>
   </data>

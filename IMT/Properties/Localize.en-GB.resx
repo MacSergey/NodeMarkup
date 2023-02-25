@@ -268,9 +268,6 @@ crossings:</value>
   <data name="Settings_DontCutBorderByCrosswalk" xml:space="preserve">
     <value>Don't cut line by pedestrian crossing if it is their border</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Colour count</value>
-  </data>
   <data name="Tool_InfoSelectCrosswalk" xml:space="preserve">
     <value>Click with {0} to select the pedestrian crossing</value>
   </data>

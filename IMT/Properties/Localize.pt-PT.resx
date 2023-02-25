@@ -1060,15 +1060,6 @@ Clique para editar marcações</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selecione o segundo ponto do carril</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Quantidade de cores</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Uma</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Duas</value>
-  </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Da área de transferência</value>
   </data>

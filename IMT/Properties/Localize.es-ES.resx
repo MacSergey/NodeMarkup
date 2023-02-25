@@ -1053,14 +1053,8 @@ Haga clic para editar las marcas</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Seleccione el segundo punto de la pauta</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Numero de colores</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Uno</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Dos</value>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Usar color secundario</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Desde el portapapeles</value>
@@ -1857,5 +1851,29 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
   </data>
   <data name="StyleOption_DefaultTheme" xml:space="preserve">
     <value>Tema de mapa predeterminado</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Aleatorio</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Decal</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Tamaño</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Tolerancia de pendiente</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Mosaico</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Pavimento</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>Autocolapsar ítems del panel</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Línea #{0}</value>
   </data>
 </root>

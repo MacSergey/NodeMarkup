@@ -1021,6 +1021,12 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>#{0} sektörünün işaretlerini değiştir</value>
   </data>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>Çim adası</value>
+  </data>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>Kaldırım adası</value>
+  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Yükseklik</value>
   </data>
@@ -1042,15 +1048,6 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Rehber için ikinci bir nokta seçin</value>
-  </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Renk sayısı</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Bir</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>İki</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Panodan</value>
@@ -1117,6 +1114,15 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Şeritleri seçmek için {0} tuşuyla beraber tıklayın</value>
+  </data>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>Çakıl adası</value>
+  </data>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>Uçurum adası</value>
+  </data>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>Harap ada</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Köşe yarıçapı</value>
@@ -1806,5 +1812,17 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   </data>
   <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
     <value>Favorilerden çıkar</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>Asfalt</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>Özel doku adası</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>Varsayılan harita teması</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Rastgele</value>
   </data>
 </root>

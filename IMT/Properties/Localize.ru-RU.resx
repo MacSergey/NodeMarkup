@@ -166,7 +166,7 @@
     <value>Линии</value>
   </data>
   <data name="StyleOption_Offset" xml:space="preserve">
-    <value>Сдвиг</value>
+    <value>Отступ</value>
   </data>
   <data name="StyleOption_SpaceLength" xml:space="preserve">
     <value>Длина промежутка</value>
@@ -1122,7 +1122,7 @@
     <value>Островок с травой</value>
   </data>
   <data name="FillerStyle_PavementIsland" xml:space="preserve">
-    <value>Остаровок с тратуаром</value>
+    <value>Островок с тратуаром</value>
   </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Подъем</value>
@@ -1164,14 +1164,8 @@
 [FIXED] Исправлен конфликт между прокруткой панели и изменением значения свойств с помощью колесика мыши.
 [UPDATED] Теперь нет разницы между точкой и запятой при вводе значения свойства.</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Количество цветов</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Один</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Два</value>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Второй цвет</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Из буфера</value>
@@ -2044,9 +2038,30 @@
     <value>Асфальт</value>
   </data>
   <data name="FillerStyle_TextureIsland" xml:space="preserve">
-    <value>Островок с произвольной текстурой</value>
+    <value>Островок с текстурой</value>
   </data>
   <data name="StyleOption_DefaultTheme" xml:space="preserve">
     <value>Тема карты по умолчанию</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Случайный</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Декаль</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Повторение текстуры</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Тротуар</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>Автоматически сворачивать панель элементов</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Строка #{0}</value>
   </data>
 </root>

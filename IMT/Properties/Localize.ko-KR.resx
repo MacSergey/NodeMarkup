@@ -1051,14 +1051,8 @@
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>가이드의 두 번째 점을 선택하세요</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>색상</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>2</value>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>두번째 색상 사용</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>클립보드로부터</value>
@@ -1858,5 +1852,29 @@
   </data>
   <data name="StyleOption_DefaultTheme" xml:space="preserve">
     <value>기본 맵 테마</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>무작위</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>데칼</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>크기</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>경사 허용 오차</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>바둑판식</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>포장</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>항목 패널 자동 접기</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>선 #{0}</value>
   </data>
 </root>

@@ -1053,15 +1053,6 @@ Klik untuk mengedit markah</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Pilih titik kedua pemandu</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Hitungan warna</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Satu</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Dua</value>
-  </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Dari salinan</value>
   </data>

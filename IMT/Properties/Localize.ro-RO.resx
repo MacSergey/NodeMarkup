@@ -1045,15 +1045,6 @@ Apăsați pentru a modifica marcajele</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selectați al doilea punct al ghidului</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Numărare culori</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Unu</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Doi</value>
-  </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Din clipboard</value>
   </data>

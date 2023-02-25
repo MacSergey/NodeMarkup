@@ -1123,14 +1123,8 @@ Klicken um die Markierungen zu bearbeiten</value>
 [FIXED] Konflikt zwischen Scrollbalken und Mausscroll behoben.
 [UPDATED] Sowohl Komma als auch Punkt können nun als Zifferntrennzeichen verwendet werden.</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Anzahl der Farben</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Eine</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Zwei</value>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Zweite Farbe verwenden</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Aus der Zwischenablage</value>
@@ -1928,5 +1922,26 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
   </data>
   <data name="StyleOption_DefaultTheme" xml:space="preserve">
     <value>Standard Kartenthema</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Zufällig</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Dekor-Fliese</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Größe</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Neigungstoleranz</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Raster</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>Liste automatisch einklappen</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Linie #{0}</value>
   </data>
 </root>

@@ -1050,15 +1050,6 @@ Napauta muokataksesi merkintöjä</value>
 [FIXED] Korjattu ristiriita arvojen muuttamisen hiiren rullalla ja valikon rullaamisen välillä.
 [UPDATED] Nyt työkalun valikossa toimivat sekä pilkku että piste.</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Värien määrä</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Yksi</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Kaksi</value>
-  </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Liitä leikepöydältä</value>
   </data>

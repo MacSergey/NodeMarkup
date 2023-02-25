@@ -1119,6 +1119,12 @@ Le marquage de toutes les intersections n'a pas pu être chargé.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Modifier le marquage du segment n°{0}</value>
   </data>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>Îlot d'herbe</value>
+  </data>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>Îlot de béton</value>
+  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Hauteur</value>
   </data>
@@ -1158,14 +1164,8 @@ Cliquez pour modifier le marquage</value>
 [FIXED] Correction d'un conflit avec le panneau de défilement et la molette de défilement pour modifier les valeurs.
 [UPDATED] Désormais, il n'y a aucune différence que vous saisissiez un point ou une virgule dans les champs de valeur.</value>
   </data>
-  <data name="StyleOption_ColorCount" xml:space="preserve">
-    <value>Nombre de couleurs</value>
-  </data>
-  <data name="StyleOption_ColorCountOne" xml:space="preserve">
-    <value>Une</value>
-  </data>
-  <data name="StyleOption_ColorCountTwo" xml:space="preserve">
-    <value>Deux</value>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Utiliser la couleur secondaire</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Depuis le presse-papiers</value>
@@ -1270,6 +1270,15 @@ Cliquez pour modifier le marquage</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Cliquez sur {0} pour sélectionner la ligne</value>
+  </data>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>Îlot de gravier</value>
+  </data>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>Îlot de falaise</value>
+  </data>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>Îlot de détérioré</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Rayon du coin</value>
@@ -2011,5 +2020,50 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
   </data>
   <data name="StyleOption_ScaleUnlock" xml:space="preserve">
     <value>Proportions personnalisées</value>
+  </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>Thème sélectionné manquant : "{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>Thème de carte</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>Ajouter aux favoris</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>Retirer des favoris</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>Asphalte</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>Îlot de texture personnalisée</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>Thème de carte par défaut</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Aléatoire</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Décalque</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Taille</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Tolérance de pente</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Mosaïque</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Béton</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>Réduction automatique du panneau d'éléments</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Ligne n°{0}</value>
   </data>
 </root>
