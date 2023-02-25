@@ -64,6 +64,7 @@ namespace IMT.Utilities
         public static string AutoButtonIcon { get; } = nameof(AutoButtonIcon);
         public static string SingleButtonIcon { get; } = nameof(SingleButtonIcon);
         public static string RangeButtonIcon { get; } = nameof(RangeButtonIcon);
+        public static string RandomButtonIcon { get; } = nameof(RandomButtonIcon);
         public static string DoubleButtonIcon { get; } = nameof(DoubleButtonIcon);
         public static string LockButtonIcon { get; } = nameof(LockButtonIcon);
         public static string UnlockButtonIcon { get; } = nameof(UnlockButtonIcon);
@@ -158,6 +159,7 @@ namespace IMT.Utilities
             spriteParams[AutoButtonIcon] = new RectOffset();
             spriteParams[SingleButtonIcon] = new RectOffset();
             spriteParams[RangeButtonIcon] = new RectOffset();
+            spriteParams[RandomButtonIcon] = new RectOffset();
             spriteParams[DoubleButtonIcon] = new RectOffset();
             spriteParams[LockButtonIcon] = new RectOffset();
             spriteParams[UnlockButtonIcon] = new RectOffset();

@@ -148,6 +148,7 @@ namespace IMT.UI.Editors
             var iconCircle = AddUIComponent<CustomUISprite>();
             iconCircle.atlas = IMTTextures.Atlas;
             iconCircle.spriteName = IMTTextures.StyleCircle;
+            iconCircle.color = new Color32(177, 195, 94, 255);
             iconCircle.size = new Vector2(19f, 19f);
             iconCircle.zOrder = 1;
 

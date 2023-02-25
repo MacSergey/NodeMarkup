@@ -47,7 +47,7 @@ namespace IMT.Manager
                 yield return new StylePropertyDataProvider<DistributionType>(nameof(Distribution), Distribution);
                 yield return new StylePropertyDataProvider<int>(nameof(Probability), Probability);
                 yield return new StylePropertyDataProvider<float?>(nameof(Step), Step);
-                yield return new StylePropertyDataProvider<Vector2>(nameof(Angle), Angle);
+                yield return new StylePropertyDataProvider<Vector2?>(nameof(Angle), Angle);
                 yield return new StylePropertyDataProvider<Vector2>(nameof(Tilt), Tilt);
                 yield return new StylePropertyDataProvider<Vector2?>(nameof(Slope), Slope);
                 yield return new StylePropertyDataProvider<Vector2>(nameof(Shift), Shift);
@@ -58,7 +58,7 @@ namespace IMT.Manager
             }
         }
 
-        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount) { }
+        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2? angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount) { }
 
         public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount);
 

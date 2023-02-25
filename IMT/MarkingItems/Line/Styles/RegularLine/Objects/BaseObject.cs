@@ -20,7 +20,7 @@ namespace IMT.Manager
         public PropertyStructValue<int> Probability { get; }
         public PropertyNullableStructValue<float, PropertyStructValue<float>> Step { get; }
 
-        public PropertyVector2Value Angle { get; }
+        public PropertyNullableStructValue<Vector2, PropertyVector2Value> Angle { get; }
         public PropertyVector2Value Tilt { get; }
         public PropertyNullableStructValue<Vector2, PropertyVector2Value> Slope { get; }
         public PropertyVector2Value Scale { get; }
@@ -40,11 +40,11 @@ namespace IMT.Manager
         public abstract bool CanElevate { get; }
         public abstract bool CanSlope { get; }
 
-        public BaseObjectLineStyle(int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(new Color32(), 0f)
+        public BaseObjectLineStyle(int probability, float? step, Vector2? angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(new Color32(), 0f)
         {
             Probability = new PropertyStructValue<int>("P", StyleChanged, probability);
             Step = new PropertyNullableStructValue<float, PropertyStructValue<float>>(new PropertyStructValue<float>("S", null), "S", StyleChanged, step);
-            Angle = new PropertyVector2Value(StyleChanged, angle, "AA", "AB");
+            Angle = new PropertyNullableStructValue<Vector2, PropertyVector2Value>(new PropertyVector2Value(null, labelX: "AA", labelY: "AB"), "A", StyleChanged, angle);
             Tilt = new PropertyVector2Value(StyleChanged, tilt, "TLA", "TLB");
             Slope = new PropertyNullableStructValue<Vector2, PropertyVector2Value>(new PropertyVector2Value(null, labelX: "SLA", labelY: "SLB"), "SL", StyleChanged, slope);
             Scale = new PropertyVector2Value(StyleChanged, scale, "SCA", "SCB");
@@ -87,7 +87,7 @@ namespace IMT.Manager
             provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(Probability), AdditionalCategory, AddProbabilityProperty, RefreshProbabilityProperty));
             provider.AddProperty(new PropertyInfo<FloatStaticAutoProperty>(this, nameof(Step), MainCategory, AddStepProperty, RefreshStepProperty));
             provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Shift), MainCategory, AddShiftProperty, RefreshShiftProperty));
-            provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Angle), MainCategory, AddAngleRangeProperty, RefreshAngleRangeProperty));
+            provider.AddProperty(new PropertyInfo<FloatStaticRangeRandomProperty>(this, nameof(Angle), MainCategory, AddAngleRangeProperty, RefreshAngleRangeProperty));
             provider.AddProperty(new PropertyInfo<FloatStaticRangeProperty>(this, nameof(Scale), AdditionalCategory, AddScaleRangeProperty, RefreshScaleRangeProperty));
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), AdditionalCategory, AddOffsetProperty, RefreshOffsetProperty));
             provider.AddProperty(new PropertyInfo<DistributionTypePanel>(this, nameof(Distribution), AdditionalCategory, AddDistributionProperty, RefreshDistributionProperty));
@@ -152,7 +152,7 @@ namespace IMT.Manager
                 stepProperty.SetAuto();
         }
 
-        private void AddAngleRangeProperty(FloatStaticRangeProperty angleProperty, EditorProvider provider)
+        private void AddAngleRangeProperty(FloatStaticRangeRandomProperty angleProperty, EditorProvider provider)
         {
             angleProperty.Text = Localize.StyleOption_ObjectAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
@@ -166,10 +166,16 @@ namespace IMT.Manager
             angleProperty.AllowInvert = true;
             angleProperty.CyclicalValue = true;
             angleProperty.Init();
-            angleProperty.SetValues(Angle.Value.x, Angle.Value.y);
+
+            if (Angle.HasValue)
+                angleProperty.SetValues(Angle.Value.Value.x, Angle.Value.Value.y);
+            else
+                angleProperty.SetRandom();
+
             angleProperty.OnValueChanged += (valueA, valueB) => Angle.Value = new Vector2(valueA, valueB);
+            angleProperty.OnRandomValue += () => Angle.Value = null;
         }
-        private void RefreshAngleRangeProperty(FloatStaticRangeProperty angleProperty, EditorProvider provider)
+        private void RefreshAngleRangeProperty(FloatStaticRangeRandomProperty angleProperty, EditorProvider provider)
         {
             angleProperty.IsHidden = !IsValid;
         }
@@ -430,9 +436,13 @@ namespace IMT.Manager
             if (map.Invert ^ invert ^ typeChanged)
             {
                 Shift.Value = -Shift.Value;
-                var angleX = Angle.Value.x > 0 ? Angle.Value.x - 180 : Angle.Value.x + 180;
-                var angleY = Angle.Value.y > 0 ? Angle.Value.y - 180 : Angle.Value.y + 180;
-                Angle.Value = new Vector2(angleX, angleY);
+                if (Angle.Value.HasValue)
+                {
+                    var angle = Angle.Value.Value;
+                    var angleX = angle.x > 0 ? angle.x - 180 : angle.x + 180;
+                    var angleY = angle.y > 0 ? angle.y - 180 : angle.y + 180;
+                    Angle.Value = new Vector2(angleX, angleY);
+                }
             }
         }
     }
@@ -444,7 +454,7 @@ namespace IMT.Manager
         protected override bool IsValid => IsValidPrefab(Prefab.Value);
         protected abstract string AssetPropertyName { get; }
 
-        public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2 angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount)
+        public BaseObjectLineStyle(PrefabType prefab, int probability, float? step, Vector2? angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount)
         {
             Prefab = new PropertyPrefabValue<PrefabType>("PRF", StyleChanged, prefab);
         }
@@ -576,8 +586,20 @@ namespace IMT.Manager
                 item.position.y += Elevation.Value.x + randomElevation;
             }
 
-            var minAngle = Mathf.Min(Angle.Value.x, Angle.Value.y);
-            var maxAngle = Mathf.Max(Angle.Value.x, Angle.Value.y);
+            float minAngle;
+            float maxAngle;
+            if (Angle.HasValue)
+            {
+                var angle = Angle.Value.Value;
+                minAngle = Mathf.Min(angle.x, angle.y);
+                maxAngle = Mathf.Max(angle.x, angle.y);
+            }
+            else
+            {
+                minAngle = -180f;
+                maxAngle = 180f;
+            }
+
             var randomAngle = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(maxAngle - minAngle));
             item.absoluteAngle = trajectory.Tangent(t).AbsoluteAngle();
             item.angle = (minAngle + randomAngle) * Mathf.Deg2Rad;

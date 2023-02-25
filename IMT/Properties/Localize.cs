@@ -2819,5 +2819,10 @@ namespace IMT
 		/// Default map theme
 		/// </summary>
 		public static string StyleOption_DefaultTheme => LocaleManager.GetString("StyleOption_DefaultTheme", Culture);
+
+		/// <summary>
+		/// Random
+		/// </summary>
+		public static string StyleOption_ObjectRandom => LocaleManager.GetString("StyleOption_ObjectRandom", Culture);
 	}
 }

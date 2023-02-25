@@ -2047,4 +2047,7 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_DefaultTheme" xml:space="preserve">
     <value>Default map theme</value>
   </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Random</value>
+  </data>
 </root>
