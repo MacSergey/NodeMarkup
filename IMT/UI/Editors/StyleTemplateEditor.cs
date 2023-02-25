@@ -45,7 +45,7 @@ namespace IMT.UI.Editors
         private void AddStyleType()
         {
             var styleProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Style");
-            styleProperty.Text = IMT.Localize.Editor_Style;
+            styleProperty.Label = IMT.Localize.Editor_Style;
             styleProperty.FieldWidth = 230;
             styleProperty.EnableControl = false;
             styleProperty.Init();

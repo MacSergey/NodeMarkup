@@ -146,7 +146,7 @@ namespace IMT.Manager
             if (provider.editor.EditObject is MarkingFiller filler)
             {
                 var contour = filler.Contour;
-                guideProperty.Text = Localize.StyleOption_Rails;
+                guideProperty.Label = Localize.StyleOption_Rails;
                 guideProperty.Init(contour.ProcessedCount);
                 guideProperty.LeftGuide = new FillerGuide(contour.GetCorrectIndex(LeftGuideA), contour.GetCorrectIndex(LeftGuideB));
                 guideProperty.RightGuide = new FillerGuide(contour.GetCorrectIndex(RightGuideA), contour.GetCorrectIndex(RightGuideB));

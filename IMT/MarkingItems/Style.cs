@@ -230,7 +230,7 @@ namespace IMT.Manager
 
         private void AddColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(DefaultColor);
             colorProperty.Value = Color;
@@ -243,7 +243,7 @@ namespace IMT.Manager
 
         private void AddWidthProperty(FloatPropertyPanel widthProperty, EditorProvider provider)
         {
-            widthProperty.Text = Localize.StyleOption_Width;
+            widthProperty.Label = Localize.StyleOption_Width;
             widthProperty.Format = Localize.NumberFormat_Meter;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = WidthWheelStep;
@@ -261,7 +261,7 @@ namespace IMT.Manager
 
         private void AddCracksProperty(Vector2PropertyPanel cracksProperty, EditorProvider provider)
         {
-            cracksProperty.Text = Localize.StyleOption_Cracks;
+            cracksProperty.Label = Localize.StyleOption_Cracks;
             cracksProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
             cracksProperty.Format = Localize.NumberFormat_Percent;
             cracksProperty.FieldsWidth = 50f;
@@ -281,7 +281,7 @@ namespace IMT.Manager
 
         private void AddVoidsProperty(Vector2PropertyPanel voidProperty, EditorProvider provider)
         {
-            voidProperty.Text = Localize.StyleOption_Voids;
+            voidProperty.Label = Localize.StyleOption_Voids;
             voidProperty.SetLabels(Localize.StyleOption_Density, Localize.StyleOption_Scale);
             voidProperty.Format = Localize.NumberFormat_Percent;
             voidProperty.FieldsWidth = 50f;
@@ -301,7 +301,7 @@ namespace IMT.Manager
 
         private void AddTextureProperty(FloatPropertyPanel textureProperty, EditorProvider provider)
         {
-            textureProperty.Text = Localize.StyleOption_Texture;
+            textureProperty.Label = Localize.StyleOption_Texture;
             textureProperty.Format = Localize.NumberFormat_Percent;
             textureProperty.CheckMax = true;
             textureProperty.CheckMin = true;
@@ -321,7 +321,7 @@ namespace IMT.Manager
         {
             if (this is IDashedLine dashedStyle)
             {
-                lengthProperty.Text = Localize.StyleOption_Length;
+                lengthProperty.Label = Localize.StyleOption_Length;
                 lengthProperty.FieldsWidth = 50f;
                 lengthProperty.SetLabels(Localize.StyleOption_Dash, Localize.StyleOption_Space);
                 lengthProperty.Format = Localize.NumberFormat_Meter;
@@ -353,7 +353,7 @@ namespace IMT.Manager
         {
             if (this is IDashedLine dashedStyle)
             {
-                spaceLengthProperty.Text = Localize.StyleOption_SpaceLength;
+                spaceLengthProperty.Label = Localize.StyleOption_SpaceLength;
                 spaceLengthProperty.Format = Localize.NumberFormat_Meter;
                 spaceLengthProperty.UseWheel = true;
                 spaceLengthProperty.WheelStep = 0.1f;

@@ -32,7 +32,7 @@ namespace IMT.Manager
 
         protected void AddLineWidthProperty(FloatPropertyPanel widthProperty, EditorProvider provider)
         {
-            widthProperty.Text = Localize.StyleOption_LineWidth;
+            widthProperty.Label = Localize.StyleOption_LineWidth;
             widthProperty.Format = Localize.NumberFormat_Meter;
             widthProperty.UseWheel = true;
             widthProperty.WheelStep = 0.1f;

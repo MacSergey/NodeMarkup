@@ -155,7 +155,7 @@ namespace IMT.Manager
 
         protected void AddLineOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Label = Localize.StyleOption_Offset;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
@@ -168,7 +168,7 @@ namespace IMT.Manager
         }
         private void AddMedianOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Label = Localize.StyleOption_Offset;
             offsetProperty.FieldsWidth = 50f;
             offsetProperty.SetLabels(Localize.StyleOption_LineOffsetAbrv, Localize.StyleOption_MedianOffsetAbrv);
             offsetProperty.Format = Localize.NumberFormat_Meter;
@@ -185,7 +185,7 @@ namespace IMT.Manager
         {
             if (this is IRotateFiller rotateStyle)
             {
-                angleProperty.Text = Localize.StyleOption_Angle;
+                angleProperty.Label = Localize.StyleOption_Angle;
                 angleProperty.Format = Localize.NumberFormat_Degree;
                 angleProperty.UseWheel = true;
                 angleProperty.WheelStep = 1f;

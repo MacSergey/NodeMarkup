@@ -106,7 +106,7 @@ namespace IMT.Manager
 
         protected void AddAngleBetweenProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            angleProperty.Text = Localize.StyleOption_AngleBetween;
+            angleProperty.Label = Localize.StyleOption_AngleBetween;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;

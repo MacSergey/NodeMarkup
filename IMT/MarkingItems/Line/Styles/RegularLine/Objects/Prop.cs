@@ -121,7 +121,7 @@ namespace IMT.Manager
 
         private void AddColorOptionProperty(PropColorPropertyPanel colorOptionProperty, EditorProvider provider)
         {
-            colorOptionProperty.Text = Localize.StyleOption_ColorOption;
+            colorOptionProperty.Label = Localize.StyleOption_ColorOption;
             colorOptionProperty.UseWheel = true;
             colorOptionProperty.Init();
             colorOptionProperty.SelectedObject = ColorOption;
@@ -138,7 +138,7 @@ namespace IMT.Manager
 
         private void AddColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(GetDefault()?.Color);
             colorProperty.Value = Color;

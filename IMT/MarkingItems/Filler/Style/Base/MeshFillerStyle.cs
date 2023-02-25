@@ -188,7 +188,7 @@ namespace IMT.Manager
         }
         private void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
-            elevationProperty.Text = Localize.FillerStyle_Elevation;
+            elevationProperty.Label = Localize.FillerStyle_Elevation;
             elevationProperty.Format = Localize.NumberFormat_Meter;
             elevationProperty.UseWheel = true;
             elevationProperty.WheelStep = 0.1f;
@@ -203,7 +203,7 @@ namespace IMT.Manager
         }
         private void AddCornerRadiusProperty(FloatPropertyPanel cornerRadiusProperty, EditorProvider provider)
         {
-            cornerRadiusProperty.Text = Localize.FillerStyle_CornerRadius;
+            cornerRadiusProperty.Label = Localize.FillerStyle_CornerRadius;
             cornerRadiusProperty.Format = Localize.NumberFormat_Meter;
             cornerRadiusProperty.UseWheel = true;
             cornerRadiusProperty.WheelStep = 0.1f;
@@ -218,7 +218,7 @@ namespace IMT.Manager
         }
         private void AddMedianCornerRadiusProperty(Vector2PropertyPanel cornerRadiusProperty, EditorProvider provider)
         {
-            cornerRadiusProperty.Text = Localize.FillerStyle_CornerRadius;
+            cornerRadiusProperty.Label = Localize.FillerStyle_CornerRadius;
             cornerRadiusProperty.FieldsWidth = 50f;
             cornerRadiusProperty.SetLabels(Localize.FillerStyle_CornerRadiusAbrv, Localize.FillerStyle_CornerRadiusMedianAbrv);
             cornerRadiusProperty.Format = Localize.NumberFormat_Meter;

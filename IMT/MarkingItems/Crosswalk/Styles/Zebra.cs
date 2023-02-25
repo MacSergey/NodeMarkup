@@ -225,12 +225,12 @@ namespace IMT.Manager
         protected override void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
             base.RefreshColorProperty(colorProperty, provider);
-            colorProperty.Text = TwoColors.Value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
+            colorProperty.Label = TwoColors.Value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
         }
 
         protected void AddUseSecondColorProperty(BoolListPropertyPanel useSecondColorProperty, EditorProvider provider)
         {
-            useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
+            useSecondColorProperty.Label = Localize.StyleOption_ColorCount;
             useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
             useSecondColorProperty.SelectedObject = TwoColors;
             useSecondColorProperty.OnSelectObjectChanged += (value) =>
@@ -242,7 +242,7 @@ namespace IMT.Manager
 
         protected void AddSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init((GetDefault() as ZebraCrosswalkStyle)?.SecondColor);
             colorProperty.Value = SecondColor;
@@ -251,12 +251,12 @@ namespace IMT.Manager
         protected virtual void RefreshSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.IsHidden = !TwoColors.Value;
-            colorProperty.Text = TwoColors.Value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
+            colorProperty.Label = TwoColors.Value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
         }
 
         protected void AddDashEndProperty(DashEndPanel dashEndProperty, EditorProvider provider)
         {
-            dashEndProperty.Text = Localize.StyleOption_ZebraDashesType;
+            dashEndProperty.Label = Localize.StyleOption_ZebraDashesType;
             dashEndProperty.Selector.AutoButtonSize = false;
             dashEndProperty.Selector.ButtonWidth = 60f;
             dashEndProperty.Selector.atlas = IMTTextures.Atlas;
@@ -267,7 +267,7 @@ namespace IMT.Manager
 
         protected void AddGapProperty(GapProperty gapProperty, EditorProvider provider)
         {
-            gapProperty.Text = Localize.StyleOption_CrosswalkGap;
+            gapProperty.Label = Localize.StyleOption_CrosswalkGap;
             gapProperty.Init();
             gapProperty.UseWheel = true;
             gapProperty.WheelTip = Settings.ShowToolTip;

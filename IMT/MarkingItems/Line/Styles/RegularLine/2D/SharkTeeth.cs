@@ -115,7 +115,7 @@ namespace IMT.Manager
 
         protected void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            angleProperty.Text = Localize.StyleOption_SharkToothAngle;
+            angleProperty.Label = Localize.StyleOption_SharkToothAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;

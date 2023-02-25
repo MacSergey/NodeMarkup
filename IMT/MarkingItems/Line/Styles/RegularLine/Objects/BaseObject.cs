@@ -100,7 +100,7 @@ namespace IMT.Manager
 
         private void AddProbabilityProperty(IntPropertyPanel probabilityProperty, EditorProvider provider)
         {
-            probabilityProperty.Text = Localize.StyleOption_ObjectProbability;
+            probabilityProperty.Label = Localize.StyleOption_ObjectProbability;
             probabilityProperty.Format = Localize.NumberFormat_Percent;
             probabilityProperty.UseWheel = true;
             probabilityProperty.WheelStep = 1;
@@ -120,7 +120,7 @@ namespace IMT.Manager
 
         private void AddStepProperty(FloatStaticAutoProperty stepProperty, EditorProvider provider)
         {
-            stepProperty.Text = Localize.StyleOption_ObjectStep;
+            stepProperty.Label = Localize.StyleOption_ObjectStep;
             stepProperty.Format = Localize.NumberFormat_Meter;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
@@ -154,7 +154,7 @@ namespace IMT.Manager
 
         private void AddAngleRangeProperty(FloatStaticRangeRandomProperty angleProperty, EditorProvider provider)
         {
-            angleProperty.Text = Localize.StyleOption_ObjectAngle;
+            angleProperty.Label = Localize.StyleOption_ObjectAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
@@ -182,7 +182,7 @@ namespace IMT.Manager
 
         private void AddTiltRangeProperty(FloatStaticRangeProperty tiltProperty, EditorProvider provider)
         {
-            tiltProperty.Text = Localize.StyleOption_Tilt;
+            tiltProperty.Label = Localize.StyleOption_Tilt;
             tiltProperty.Format = Localize.NumberFormat_Degree;
             tiltProperty.UseWheel = true;
             tiltProperty.WheelStep = 1f;
@@ -204,7 +204,7 @@ namespace IMT.Manager
 
         private void AddSlopeRangeProperty(FloatStaticRangeAutoProperty slopeProperty, EditorProvider provider)
         {
-            slopeProperty.Text = Localize.StyleOption_Slope;
+            slopeProperty.Label = Localize.StyleOption_Slope;
             slopeProperty.Format = Localize.NumberFormat_Degree;
             slopeProperty.UseWheel = true;
             slopeProperty.WheelStep = 1f;
@@ -232,7 +232,7 @@ namespace IMT.Manager
 
         private void AddShiftProperty(FloatStaticRangeProperty shiftProperty, EditorProvider provider)
         {
-            shiftProperty.Text = Localize.StyleOption_ObjectShift;
+            shiftProperty.Label = Localize.StyleOption_ObjectShift;
             shiftProperty.Format = Localize.NumberFormat_Meter;
             shiftProperty.UseWheel = true;
             shiftProperty.WheelStep = 0.1f;
@@ -254,7 +254,7 @@ namespace IMT.Manager
 
         private void AddScaleRangeProperty(FloatStaticRangeProperty scaleProperty, EditorProvider provider)
         {
-            scaleProperty.Text = Localize.StyleOption_ObjectScale;
+            scaleProperty.Label = Localize.StyleOption_ObjectScale;
             scaleProperty.Format = Localize.NumberFormat_Percent;
             scaleProperty.UseWheel = true;
             scaleProperty.WheelStep = 1f;
@@ -276,7 +276,7 @@ namespace IMT.Manager
 
         private void AddElevationProperty(FloatStaticRangeProperty elevationProperty, EditorProvider provider)
         {
-            elevationProperty.Text = Localize.LineStyle_Elevation;
+            elevationProperty.Label = Localize.LineStyle_Elevation;
             elevationProperty.Format = Localize.NumberFormat_Meter;
             elevationProperty.UseWheel = true;
             elevationProperty.WheelStep = 0.1f;
@@ -298,7 +298,7 @@ namespace IMT.Manager
 
         private void AddOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Label = Localize.StyleOption_Offset;
             offsetProperty.SetLabels(Localize.StyleOption_OffsetBeforeAbrv, Localize.StyleOption_OffsetAfterAbrv);
             offsetProperty.FieldsWidth = 50f;
             offsetProperty.Format = Localize.NumberFormat_Meter;
@@ -322,7 +322,7 @@ namespace IMT.Manager
 
         private void AddDistributionProperty(DistributionTypePanel distributionProperty, EditorProvider provider)
         {
-            distributionProperty.Text = Localize.StyleOption_Distribution;
+            distributionProperty.Label = Localize.StyleOption_Distribution;
             distributionProperty.Selector.AutoButtonSize = false;
             distributionProperty.Selector.ButtonWidth = 57f;
             distributionProperty.Selector.atlas = IMTTextures.Atlas;
@@ -341,7 +341,7 @@ namespace IMT.Manager
 
         private void AddFixedEndProperty(FixedEndTypePanel fixedEndProperty, EditorProvider provider)
         {
-            fixedEndProperty.Text = Localize.StyleOption_FixedEnd;
+            fixedEndProperty.Label = Localize.StyleOption_FixedEnd;
             fixedEndProperty.Selector.AutoButtonSize = true;
             fixedEndProperty.Selector.atlas = IMTTextures.Atlas;
             fixedEndProperty.Init();
@@ -355,7 +355,7 @@ namespace IMT.Manager
 
         private void AddMinMaxCountProperty(MinMaxProperty minMaxProperty, EditorProvider provider)
         {
-            minMaxProperty.Text = Localize.StyleOption_ObjectLimits;
+            minMaxProperty.Label = Localize.StyleOption_ObjectLimits;
             minMaxProperty.MinRange = 0;
             minMaxProperty.MaxRange = 1000;
             minMaxProperty.MinValue = MinCount;
@@ -639,7 +639,7 @@ namespace IMT.Manager
 
         protected void AddPrefabProperty(SelectPrefabType prefabProperty, EditorProvider provider)
         {
-            prefabProperty.Text = AssetPropertyName;
+            prefabProperty.Label = AssetPropertyName;
             prefabProperty.PrefabSelectPredicate = IsValidPrefab;
             prefabProperty.PrefabSortPredicate = GetSortPredicate();
             prefabProperty.Init(60f);

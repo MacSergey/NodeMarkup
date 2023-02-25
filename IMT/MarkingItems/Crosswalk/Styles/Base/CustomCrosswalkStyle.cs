@@ -113,7 +113,7 @@ namespace IMT.Manager
 #if DEBUG
         private void GetRenderOnlyProperty(IntPropertyPanel property, EditorProvider provider)
         {
-            property.Text = "Render only";
+            property.Label = "Render only";
             property.UseWheel = true;
             property.WheelStep = 1;
             property.WheelTip = Settings.ShowToolTip;
@@ -125,28 +125,28 @@ namespace IMT.Manager
         }
         protected void AddStartProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            property.Text = "Start";
+            property.Label = "Start";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = Start;
             property.OnSelectObjectChanged += (value) => Start.Value = value;
         }
         protected void AddEndProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            property.Text = "End";
+            property.Label = "End";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = End;
             property.OnSelectObjectChanged += (value) => End.Value = value;
         }
         protected void AddStartBorderProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            property.Text = "Start border";
+            property.Label = "Start border";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = StartBorder;
             property.OnSelectObjectChanged += (value) => StartBorder.Value = value;
         }
         protected void AddEndBorderProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            property.Text = "End border";
+            property.Label = "End border";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = EndBorder;
             property.OnSelectObjectChanged += (value) => EndBorder.Value = value;
@@ -155,7 +155,7 @@ namespace IMT.Manager
 
         protected void AddOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Label = Localize.StyleOption_Offset;
             offsetProperty.FieldsWidth = 50f;
             offsetProperty.SetLabels(Localize.StyleOption_OffsetBeforeAbrv, Localize.StyleOption_OffsetAfterAbrv);
             offsetProperty.Format = Localize.NumberFormat_Meter;

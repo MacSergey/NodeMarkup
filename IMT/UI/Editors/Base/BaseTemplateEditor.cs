@@ -104,7 +104,7 @@ namespace IMT.UI.Editors
             if (EditObject.IsAsset)
             {
                 var authorProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Author");
-                authorProperty.Text = IMT.Localize.TemplateEditor_Author;
+                authorProperty.Label = IMT.Localize.TemplateEditor_Author;
                 authorProperty.FieldWidth = 230;
                 authorProperty.EnableControl = false;
                 authorProperty.Init();
@@ -114,7 +114,7 @@ namespace IMT.UI.Editors
         private void AddTemplateName()
         {
             NameProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Name");
-            NameProperty.Text = IMT.Localize.TemplateEditor_Name;
+            NameProperty.Label = IMT.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
             NameProperty.SubmitOnFocusLost = true;
             NameProperty.Init();

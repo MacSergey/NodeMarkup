@@ -179,7 +179,7 @@ namespace IMT.Manager
         }
         protected void AddDashLengthProperty(FloatRangePropertyPanel dashLengthProperty, EditorProvider provider)
         {
-            dashLengthProperty.Text = Localize.StyleOption_DashedLength;
+            dashLengthProperty.Label = Localize.StyleOption_DashedLength;
             dashLengthProperty.Format = Localize.NumberFormat_Meter;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;

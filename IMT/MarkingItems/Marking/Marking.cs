@@ -858,11 +858,13 @@ namespace IMT.Manager
 
         public void Render(RenderManager.CameraInfo cameraInfo, ref RenderManager.Instance data)
         {
+            var renderData = RenderData;
             if (RecalculateList.Count > 0)
             {
                 lock(this)
                 {
-                    var renderData = TempRenderData;
+                    renderData = TempRenderData;
+                    renderData.Clear();
 
                     foreach (var item in RecalculateList)
                         item.RecalculateStyleData();
@@ -888,7 +890,6 @@ namespace IMT.Manager
                         lock (this)
                         {
                             TempRenderData = RenderData;
-                            TempRenderData.Clear();
 
                             RenderData = renderData;
                             RenderLayers = renderData.GetRenderLayers();
@@ -902,8 +903,8 @@ namespace IMT.Manager
 
             bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
 
-            foreach (var renderData in RenderData.Values)
-                renderData.Render(cameraInfo, data, infoView);
+            foreach (var renderDataItem in renderData.Values)
+                renderDataItem.Render(cameraInfo, data, infoView);
         }
 
         public void CalculateGroupData(ref bool result, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)

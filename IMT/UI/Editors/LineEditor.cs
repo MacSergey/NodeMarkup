@@ -137,7 +137,7 @@ namespace IMT.UI.Editors
         {
             var alignment = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties, "LineAlignment");
 
-            alignment.Text = label;
+            alignment.Label = label;
             alignment.Init();
             alignment.SelectedObject = property;
             alignment.OnSelectObjectChanged += (value) => property.Value = value;
@@ -148,7 +148,7 @@ namespace IMT.UI.Editors
         {
             var clipSidewalk = ComponentPool.Get<BoolListPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
 
-            clipSidewalk.Text = IMT.Localize.LineEditor_ClipSidewalk;
+            clipSidewalk.Label = IMT.Localize.LineEditor_ClipSidewalk;
             clipSidewalk.Init(IMT.Localize.StyleOption_No, IMT.Localize.StyleOption_Yes);
             clipSidewalk.SelectedObject = line.ClipSidewalk;
             clipSidewalk.OnSelectObjectChanged += (value) => line.ClipSidewalk.Value = value;

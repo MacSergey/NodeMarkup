@@ -46,7 +46,7 @@ namespace IMT.Manager
 #if DEBUG
         private PropertyStructValue<float> Ratio { get; }
 #else
-        private static float Ratio => 0.05f;
+        private static float Ratio => 0.025f;
 #endif
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
@@ -58,8 +58,8 @@ namespace IMT.Manager
                 yield return nameof(Font);
                 yield return nameof(Color);
                 yield return nameof(Scale);
-                yield return nameof(Direction);
                 yield return nameof(Spacing);
+                yield return nameof(Direction);
                 yield return nameof(Alignment);
                 yield return nameof(Offset);
                 yield return nameof(Shift);
@@ -104,7 +104,7 @@ namespace IMT.Manager
             Alignment = new PropertyEnumValue<TextAlignment>("AL", StyleChanged, alignment);
             Offset = GetOffsetProperty(offset);
 #if DEBUG
-            Ratio = new PropertyStructValue<float>(StyleChanged, 0.05f);
+            Ratio = new PropertyStructValue<float>(StyleChanged, 0.025f);
 #endif
         }
         ~RegularLineStyleText()
@@ -190,7 +190,7 @@ namespace IMT.Manager
             else if (Direction == TextDirection.BottomToTop)
                 text = string.Join("\n", text.Reverse().Select(c => c.ToString()).ToArray());
 
-            var textureId = new TextureId(Font, text, lod == MarkingLOD.LOD0 ? Scale : Scale * 0.2f, Spacing);
+            var textureId = new TextureId(Font, text, lod == MarkingLOD.LOD0 ? Scale * 2f : Scale * 0.4f, Spacing);
             if (!TextTextures.TryGetValue(textureId, out var textureData))
             {
                 var textTexture = RenderHelper.CreateTextTexture(textureId.font, textureId.text, textureId.scale, textureId.spacing, out var textWidth, out var textHeight);
@@ -237,12 +237,12 @@ namespace IMT.Manager
             base.GetUIComponents(line, provider);
 
             provider.AddProperty(new PropertyInfo<FontPropertyPanel>(this, nameof(Font), MainCategory, AddFontProperty));
-            provider.AddProperty(new PropertyInfo<StringPropertyPanel>(this, nameof(Text), MainCategory, AddTextProperty));
+            provider.AddProperty(new PropertyInfo<MultilineTextProperty>(this, nameof(Text), MainCategory, AddTextProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), MainCategory, AddScaleProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Angle), AdditionalCategory, AddAngleProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Shift), AdditionalCategory, AddShiftProperty));
             provider.AddProperty(new PropertyInfo<TextDirectionPanel>(this, nameof(Direction), AdditionalCategory, AddDirectionProperty));
-            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Spacing), AdditionalCategory, AddSpacingProperty));
+            provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Spacing), MainCategory, AddSpacingProperty));
             provider.AddProperty(new PropertyInfo<TextAlignmentPanel>(this, nameof(Alignment), AdditionalCategory, AddAlignmentProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), AdditionalCategory, AddOffsetProperty, RefreshOffsetProperty));
 #if DEBUG
@@ -255,23 +255,23 @@ namespace IMT.Manager
 
         protected void AddFontProperty(FontPropertyPanel fontProperty, EditorProvider provider)
         {
-            fontProperty.Text = Localize.StyleOption_Font;
+            fontProperty.Label = Localize.StyleOption_Font;
             fontProperty.Init();
             fontProperty.Font = string.IsNullOrEmpty(Font.Value) ? null : Font.Value;
             fontProperty.OnValueChanged += (value) => Font.Value = value;
         }
-        protected void AddTextProperty(StringPropertyPanel textProperty, EditorProvider provider)
+        protected void AddTextProperty(MultilineTextProperty textProperty, EditorProvider provider)
         {
-            textProperty.Text = Localize.StyleOption_Text;
+            textProperty.Label = Localize.StyleOption_Text;
             textProperty.FieldWidth = 230f;
             textProperty.Init();
-            textProperty.Value = Text;
-            textProperty.OnValueChanged += (value) => Text.Value = value;
+            textProperty.Text = Text;
+            textProperty.OnTextChanged += (value) => Text.Value = value;
         }
         protected void AddScaleProperty(FloatPropertyPanel sizeProperty, EditorProvider provider)
         {
             ;
-            sizeProperty.Text = Localize.StyleOption_ObjectScale;
+            sizeProperty.Label = Localize.StyleOption_ObjectScale;
             sizeProperty.UseWheel = true;
             sizeProperty.WheelStep = 0.1f;
             sizeProperty.WheelTip = Settings.ShowToolTip;
@@ -285,7 +285,7 @@ namespace IMT.Manager
         }
         protected void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            angleProperty.Text = Localize.StyleOption_ObjectAngle;
+            angleProperty.Label = Localize.StyleOption_ObjectAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;
@@ -301,7 +301,7 @@ namespace IMT.Manager
         }
         protected void AddShiftProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.Text = Localize.StyleOption_ObjectShift;
+            offsetProperty.Label = Localize.StyleOption_ObjectShift;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
@@ -317,7 +317,7 @@ namespace IMT.Manager
         }
         protected void AddDirectionProperty(TextDirectionPanel directionProperty, EditorProvider provider)
         {
-            directionProperty.Text = Localize.StyleOption_TextDirection;
+            directionProperty.Label = Localize.StyleOption_TextDirection;
             directionProperty.Selector.AutoButtonSize = false;
             directionProperty.Selector.ButtonWidth = 33f;
             directionProperty.Init();
@@ -326,7 +326,7 @@ namespace IMT.Manager
         }
         protected void AddAlignmentProperty(TextAlignmentPanel alignmentProperty, EditorProvider provider)
         {
-            alignmentProperty.Text = Localize.StyleOption_TextAlignment;
+            alignmentProperty.Label = Localize.StyleOption_TextAlignment;
             alignmentProperty.Init();
             alignmentProperty.SelectedObject = Alignment;
             alignmentProperty.OnSelectObjectChanged += (value) =>
@@ -337,7 +337,7 @@ namespace IMT.Manager
         }
         private new void AddOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Label = Localize.StyleOption_Offset;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
@@ -360,7 +360,7 @@ namespace IMT.Manager
 
         protected void AddSpacingProperty(Vector2PropertyPanel spacingProperty, EditorProvider provider)
         {
-            spacingProperty.Text = Localize.StyleOption_Spacing;
+            spacingProperty.Label = Localize.StyleOption_Spacing;
             spacingProperty.SetLabels(Localize.StyleOption_SpacingChar, Localize.StyleOption_SpacingLine);
             spacingProperty.UseWheel = true;
             spacingProperty.WheelStep = new Vector2(1f, 1f);
@@ -378,7 +378,7 @@ namespace IMT.Manager
 #if DEBUG
         protected void AddRatioProperty(FloatPropertyPanel sizeProperty, EditorProvider provider)
         {
-            sizeProperty.Text = "Pixel ratio";
+            sizeProperty.Label = "Pixel ratio";
             sizeProperty.Format = Localize.NumberFormat_Meter;
             sizeProperty.UseWheel = true;
             sizeProperty.WheelStep = 0.01f;

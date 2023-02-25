@@ -68,14 +68,14 @@ namespace IMT.Manager
 #if DEBUG
         private void GetDebug(BoolListPropertyPanel debugProperty, EditorProvider provider)
         {
-            debugProperty.Text = "Debug";
+            debugProperty.Label = "Debug";
             debugProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             debugProperty.SelectedObject = Debug;
             debugProperty.OnSelectObjectChanged += (value) => Debug.Value = value;
         }
         private void GetRenderOnlyProperty(IntPropertyPanel property, EditorProvider provider)
         {
-            property.Text = "Render only";
+            property.Label = "Render only";
             property.UseWheel = true;
             property.WheelStep = 1;
             property.WheelTip = Settings.ShowToolTip;
@@ -87,28 +87,28 @@ namespace IMT.Manager
         }
         protected void AddStartProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            property.Text = "Start";
+            property.Label = "Start";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = Start;
             property.OnSelectObjectChanged += (value) => Start.Value = value;
         }
         protected void AddEndProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            property.Text = "End";
+            property.Label = "End";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = End;
             property.OnSelectObjectChanged += (value) => End.Value = value;
         }
         protected void AddStartBorderProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            property.Text = "Start border";
+            property.Label = "Start border";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = StartBorder;
             property.OnSelectObjectChanged += (value) => StartBorder.Value = value;
         }
         protected void AddEndBorderProperty(BoolListPropertyPanel property, EditorProvider provider)
         {
-            property.Text = "End border";
+            property.Label = "End border";
             property.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             property.SelectedObject = EndBorder;
             property.OnSelectObjectChanged += (value) => EndBorder.Value = value;
@@ -116,7 +116,7 @@ namespace IMT.Manager
 #endif
         protected void AddStepProperty(FloatPropertyPanel stepProperty, EditorProvider provider)
         {
-            stepProperty.Text = Localize.StyleOption_Step;
+            stepProperty.Label = Localize.StyleOption_Step;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
             stepProperty.WheelTip = Settings.ShowToolTip;

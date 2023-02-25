@@ -155,7 +155,7 @@ namespace IMT.Manager
 
         protected void AddCenterSolidProperty(BoolListPropertyPanel centerSolidProperty, EditorProvider provider)
         {
-            centerSolidProperty.Text = Localize.StyleOption_SolidInCenter;
+            centerSolidProperty.Label = Localize.StyleOption_SolidInCenter;
             centerSolidProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
             centerSolidProperty.SelectedObject = CenterSolid;
             centerSolidProperty.OnSelectObjectChanged += (value) => CenterSolid.Value = value;
