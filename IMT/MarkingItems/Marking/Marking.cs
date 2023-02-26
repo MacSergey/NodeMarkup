@@ -69,6 +69,7 @@ namespace IMT.Manager
 
 
         private HashSet<IStyleItem> RecalculateList { get; set; } = new HashSet<IStyleItem>();
+        private bool NeedRecalculateRenderData { get; set; } = false;
         private MarkingRenderData RenderData { get; set; } = new MarkingRenderData();
         private MarkingRenderData TempRenderData { get; set; } = new MarkingRenderData();
         public int RenderLayers { get; private set; }
@@ -397,6 +398,8 @@ namespace IMT.Manager
             {
                 if (toRecalculate != null)
                     RecalculateList.Add(toRecalculate);
+
+                NeedRecalculateRenderData = true;
             }
         }
         public void RecalculateStyleData(HashSet<IStyleItem> toRecalculate)
@@ -404,6 +407,7 @@ namespace IMT.Manager
             lock (this)
             {
                 RecalculateList.AddRange(toRecalculate);
+                NeedRecalculateRenderData = true;
             }
         }
 
@@ -859,7 +863,7 @@ namespace IMT.Manager
         public void Render(RenderManager.CameraInfo cameraInfo, ref RenderManager.Instance data)
         {
             var renderData = RenderData;
-            if (RecalculateList.Count > 0)
+            if (NeedRecalculateRenderData)
             {
                 lock(this)
                 {
@@ -898,6 +902,7 @@ namespace IMT.Manager
                     });
 
                     RecalculateList.Clear();
+                    NeedRecalculateRenderData = false;
                 }
             }
 
