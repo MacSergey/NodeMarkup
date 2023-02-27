@@ -269,21 +269,27 @@ namespace IMT.Utilities
         public virtual float MaxRenderDistance => Settings.RenderDistance;
         public void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
-            if (!cameraInfo.CheckRenderDistance(data.m_position, MaxRenderDistance))
-                return;
-
-            foreach (var renderData in this[MarkingLOD.NoLOD])
-                renderData.Render(cameraInfo, data, infoView);
-
-            if (cameraInfo.CheckRenderDistance(data.m_position, LODDistance))
+            if (cameraInfo.CheckRenderDistance(data.m_position, MaxRenderDistance))
             {
-                foreach (var renderData in this[MarkingLOD.LOD0])
+                foreach (var renderData in this[MarkingLOD.NoLOD])
+                {
                     renderData.Render(cameraInfo, data, infoView);
-            }
-            else
-            {
-                foreach (var renderData in this[MarkingLOD.LOD1])
-                    renderData.Render(cameraInfo, data, infoView);
+                }
+
+                if (cameraInfo.CheckRenderDistance(data.m_position, LODDistance))
+                {
+                    foreach (var renderData in this[MarkingLOD.LOD0])
+                    {
+                        renderData.Render(cameraInfo, data, infoView);
+                    }
+                }
+                else
+                {
+                    foreach (var renderData in this[MarkingLOD.LOD1])
+                    {
+                        renderData.Render(cameraInfo, data, infoView);
+                    }
+                }
             }
         }
 
@@ -354,16 +360,16 @@ namespace IMT.Utilities
     public class MarkingNetworkGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.NetworkLODDistance;
-        public override float MaxRenderDistance => float.MaxValue;
+        public override float MaxRenderDistance => 100000f;
     }
     public class MarkingPropGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.PropLODDistance;
-        public override float MaxRenderDistance => float.MaxValue;
+        public override float MaxRenderDistance => 100000f;
     }
     public class MarkingTreeGroupRenderData : MarkingGroupRenderData
     {
         public override float LODDistance => Settings.TreeLODDistance;
-        public override float MaxRenderDistance => float.MaxValue;
+        public override float MaxRenderDistance => 100000f;
     }
 }
