@@ -2824,5 +2824,25 @@ namespace IMT
 		/// Random
 		/// </summary>
 		public static string StyleOption_ObjectRandom => LocaleManager.GetString("StyleOption_ObjectRandom", Culture);
+
+		/// <summary>
+		/// Decal
+		/// </summary>
+		public static string LineStyle_Decal => LocaleManager.GetString("LineStyle_Decal", Culture);
+
+		/// <summary>
+		/// Size
+		/// </summary>
+		public static string StyleOption_Size => LocaleManager.GetString("StyleOption_Size", Culture);
+
+		/// <summary>
+		/// Slope tolerance
+		/// </summary>
+		public static string StyleOption_SlopeTolerance => LocaleManager.GetString("StyleOption_SlopeTolerance", Culture);
+
+		/// <summary>
+		/// Tiling
+		/// </summary>
+		public static string StyleOption_Tiling => LocaleManager.GetString("StyleOption_Tiling", Culture);
 	}
 }

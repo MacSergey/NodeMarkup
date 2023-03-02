@@ -2050,4 +2050,16 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_ObjectRandom" xml:space="preserve">
     <value>Random</value>
   </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Decal</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Slope tolerance</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Tiling</value>
+  </data>
 </root>

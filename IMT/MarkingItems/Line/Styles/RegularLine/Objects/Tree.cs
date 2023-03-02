@@ -8,14 +8,12 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class TreeLineStyle : BaseObjectLineStyle<TreeInfo, SelectTreeProperty>
+    public class TreeLineStyle : BaseObject3DObjectStyle<TreeInfo, SelectTreeProperty>
     {
         public override StyleType Type => StyleType.LineTree;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
         protected override string AssetPropertyName => Localize.StyleOption_AssetTree;
-        public override bool CanSlope => true;
-        public override bool CanElevate => true;
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -58,16 +56,16 @@ namespace IMT.Manager
             }
         }
 
-        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2? angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(tree, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount) { }
+        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2? angle, Vector2 shift, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount, Vector2 tilt, Vector2? slope, Vector2 scale, Vector2 elevation) : base(tree, probability, step, angle, shift, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount, tilt, slope, scale, elevation) { }
 
-        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount);
+        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Shift, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount, Tilt, Slope, Scale, Elevation);
 
-        protected override void CalculateParts(TreeInfo tree, MarkingPropItemData[] items, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void AddData(TreeInfo tree, MarkingObjectItemData[] items, MarkingLOD lod, Action<IStyleData> addData)
         {
             addData(new MarkingTreeData(tree, items));
         }
 
-        protected override bool IsValidPrefab(TreeInfo info) => info != null;
+        public override bool IsValidPrefab(TreeInfo info) => info != null;
         protected override Func<TreeInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
 
         public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)

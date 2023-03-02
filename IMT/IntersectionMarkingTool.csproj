@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.14.0.218</AssemblyVersion>
+    <AssemblyVersion>1.14.0.234</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -134,6 +134,7 @@
     <None Remove="Resources\StyleCircle.png" />
     <None Remove="Resources\StylesCrosswalk\CrosswalkDecal.png" />
     <None Remove="Resources\StylesFiller\FillerDecal.png" />
+    <None Remove="Resources\StylesLine\LineDecal.png" />
     <None Remove="Resources\StylesLine\LineDoubleDashedAsym.png" />
     <None Remove="Resources\StylesLine\LineText.png" />
     <None Remove="Resources\StylesLine\LineZigZag.png" />
@@ -193,6 +194,7 @@
     <EmbeddedResource Include="Resources\StyleCircle.png" />
     <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkDecal.png" />
     <EmbeddedResource Include="Resources\StylesFiller\FillerDecal.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineDecal.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineDoubleDashedAsym.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineText.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineZigZag.png" />

@@ -21,9 +21,10 @@ namespace IMT.Manager
             {RegularLineType.SharkTeeth, new SharkTeethLineStyle(DefaultMarkingColor, DefaultEffect, DefaultEffect, DefaultTexture, DefaultSharkBaseLength, DefaultSharkHeight, DefaultSharkSpaceLength, DefaultSharkAngle) },
             {RegularLineType.ZigZag, new ZigZagLineStyle(DefaultMarkingColor, DefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, ZigZagStep, ZigZagOffset, true, true) },
             {RegularLineType.Pavement, new PavementLineStyle(Default3DWidth, Default3DHeigth) },
-            {RegularLineType.Prop, new PropLineStyle(null, DefaultObjectProbability, PropLineStyle.DefaultColorOption, PropLineStyle.DefaultColor, DefaultObjectStep, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectShift,DefaultObjectShift), new Vector2(DefaultObjectScale, DefaultObjectScale), new Vector2(DefaultObjectElevation,DefaultObjectElevation), DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DistributionType.FixedSpaceFreeEnd, FixedEndType.Both, -1, -1) },
-            {RegularLineType.Tree, new TreeLineStyle(null, DefaultObjectProbability, DefaultObjectStep, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectShift,DefaultObjectShift), new Vector2(DefaultObjectScale, DefaultObjectScale), new Vector2(DefaultObjectElevation,DefaultObjectElevation), DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DistributionType.FixedSpaceFreeEnd, FixedEndType.Both, -1, -1) },
+            {RegularLineType.Prop, new PropLineStyle(null, DefaultObjectProbability, PropLineStyle.DefaultColorOption, PropLineStyle.DefaultColor, DefaultObjectStep, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectShift,DefaultObjectShift), DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DistributionType.FixedSpaceFreeEnd, FixedEndType.Both, -1, -1, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectScale, DefaultObjectScale), new Vector2(DefaultObjectElevation,DefaultObjectElevation)) },
+            {RegularLineType.Tree, new TreeLineStyle(null, DefaultObjectProbability, DefaultObjectStep, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectShift,DefaultObjectShift), DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DistributionType.FixedSpaceFreeEnd, FixedEndType.Both, -1, -1, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectScale, DefaultObjectScale), new Vector2(DefaultObjectElevation,DefaultObjectElevation)) },
             {RegularLineType.Text, new RegularLineStyleText(DefaultMarkingColor, DefaultEffect, DefaultEffect, DefaultTexture, string.Empty, string.Empty, DefaultTextScale, DefaultObjectAngle, DefaultObjectShift, RegularLineStyleText.TextDirection.LeftToRight, Vector2.zero, RegularLineStyleText.TextAlignment.Middle, 0f)},
+            {RegularLineType.Decal, new DecalLineStyle(null, DefaultObjectProbability, DefaultObjectStep, new Vector2(DefaultObjectAngle, DefaultObjectAngle), new Vector2(DefaultObjectShift,DefaultObjectShift), DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DistributionType.FixedSpaceFreeEnd, FixedEndType.Both, -1, -1, null, null, Vector2.one, 3f) },
             {RegularLineType.Network, new NetworkLineStyle(null, null, new Vector2(DefaultObjectShift,DefaultObjectShift), DefaultObjectElevation, DefaultNetworkScale, DefaultObjectOffsetBefore, DefaultObjectOffsetAfter, DefaultRepeatDistance, false) },
         };
         public static RegularLineStyle GetDefault(RegularLineType type)
@@ -117,24 +118,31 @@ namespace IMT.Manager
             [Description(nameof(Localize.LineStyle_Prop))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
-            [Order(9)]
+            [Order(100)]
             Prop = StyleType.LineProp,
 
             [Description(nameof(Localize.LineStyle_Tree))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
-            [Order(10)]
+            [Order(102)]
             Tree = StyleType.LineTree,
 
             [Description(nameof(Localize.LineStyle_Text))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
+            [Order(200)]
             Text = StyleType.LineText,
+
+            [Description(nameof(Localize.LineStyle_Decal))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
+            [Order(101)]
+            Decal = StyleType.LineDecal,
 
             [Description(nameof(Localize.LineStyle_Network))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
-            [Order(11)]
+            [Order(103)]
             Network = StyleType.LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]

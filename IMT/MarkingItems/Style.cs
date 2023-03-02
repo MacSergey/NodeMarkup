@@ -418,6 +418,7 @@ namespace IMT.Manager
                 Voids.FromXml(config, DefaultEffect);
             }
         }
+
         public virtual void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees) { }
 
         public override string ToString() => Type.ToString();
@@ -543,6 +544,7 @@ namespace IMT.Manager
             [LineType(LineType.Regular)]
             LineZigZag,
 
+
             [NotItem]
             Regular3DLine = Marking.Item.RegularLine + 0x80,
 
@@ -551,8 +553,9 @@ namespace IMT.Manager
             [LineType(LineType.Regular | LineType.Crosswalk)]
             LinePavement,
 
+
             [NotItem]
-            RegularPropLine = Regular3DLine + 0x10,
+            RegularObjectLine = Regular3DLine + 0x10,
 
             [Description(nameof(Localize.LineStyle_Prop))]
             [NetworkType(NetworkType.All)]
@@ -568,6 +571,11 @@ namespace IMT.Manager
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             LineText,
+
+            [Description(nameof(Localize.LineStyle_Decal))]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
+            LineDecal,
 
 
             [NotItem]

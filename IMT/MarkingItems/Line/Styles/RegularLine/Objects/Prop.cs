@@ -1,22 +1,18 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
-using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Xml.Linq;
 using UnityEngine;
-using static IMT.Manager.StyleHelper;
 
 namespace IMT.Manager
 {
-    public class PropLineStyle : BaseObjectLineStyle<PropInfo, SelectPropProperty>
+    public class PropLineStyle : BaseObject3DObjectStyle<PropInfo, SelectPropProperty>
     {
         public static new Color32 DefaultColor => new Color32();
         public static ColorOptionEnum DefaultColorOption => ColorOptionEnum.Random;
@@ -24,10 +20,8 @@ namespace IMT.Manager
         public override StyleType Type => StyleType.LineProp;
         public override MarkingLOD SupportLOD => MarkingLOD.NoLOD;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
+        protected bool IsDecal => IsValid && Prefab.Value.m_isDecal;
         protected override string AssetPropertyName => Localize.StyleOption_AssetProp;
-
-        public override bool CanElevate => Prefab.Value is PropInfo prop && !prop.m_isDecal;
-        public override bool CanSlope => Prefab.Value is PropInfo prop && !prop.m_isDecal;
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
@@ -75,16 +69,18 @@ namespace IMT.Manager
             }
         }
 
-        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2? angle, Vector2 tilt, Vector2? slope, Vector2 shift, Vector2 scale, Vector2 elevation, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(prop, probability, step, angle, tilt, slope, shift, scale, elevation, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount)
+        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2? angle, Vector2 shift, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount, Vector2 tilt, Vector2? slope, Vector2 scale, Vector2 elevation) : base(prop, probability, step, angle, shift, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount, tilt, slope, scale, elevation)
         {
             Color.Value = color;
             ColorOption = new PropertyEnumValue<ColorOptionEnum>("CO", StyleChanged, colorOption);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Tilt, Slope, Shift, Scale, Elevation, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount);
+        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Shift, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount, Tilt, Slope, Scale, Elevation);
 
-        protected override void CalculateItem(PropInfo prop, ref MarkingPropItemData item)
+        protected override void CalculateItem(ITrajectory trajectory, float t, PropInfo prop, ref MarkingObjectItemData item)
         {
+            base.CalculateItem(trajectory, t, prop, ref item);
+
             switch (ColorOption.Value)
             {
                 case ColorOptionEnum.Color1:
@@ -107,7 +103,7 @@ namespace IMT.Manager
                     break;
             }
         }
-        protected override void CalculateParts(PropInfo prop, MarkingPropItemData[] items, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void AddData(PropInfo prop, MarkingObjectItemData[] items, MarkingLOD lod, Action<IStyleData> addData)
         {
             addData(new MarkingPropData(prop, items));
         }
@@ -144,12 +140,12 @@ namespace IMT.Manager
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (color) => Color.Value = color;
         }
-        private void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        private new void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.IsHidden = !IsValid || !(ColorOption == ColorOptionEnum.Custom);
         }
 
-        protected override bool IsValidPrefab(PropInfo info) => info != null && !info.m_isMarker;
+        public override bool IsValidPrefab(PropInfo info) => info != null && !info.m_isMarker;
         protected override Func<PropInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
 
         public override XElement ToXml()
