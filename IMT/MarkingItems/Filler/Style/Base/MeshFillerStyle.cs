@@ -13,14 +13,16 @@ namespace IMT.Manager
 {
     public abstract class MeshFillerStyle : BaseFillerStyle
     {
+        public PropertyThemeValue PavementTheme { get; }
         public PropertyValue<float> Elevation { get; }
 
         public PropertyVector2Value CornerRadius { get; }
         public float LineCornerRadius => CornerRadius.Value.x;
         public float MedianCornerRadius => CornerRadius.Value.y;
 
-        public MeshFillerStyle(Vector2 offset, float elevation, Vector2 cornerRadius) : base(default, default, offset)
+        public MeshFillerStyle(ThemeHelper.IThemeData pavementTheme, Vector2 offset, float elevation, Vector2 cornerRadius) : base(default, default, offset)
         {
+            PavementTheme = new PropertyThemeValue("PTHM", StyleChanged, pavementTheme);
             Elevation = GetElevationProperty(elevation);
             CornerRadius = new PropertyVector2Value(StyleChanged, cornerRadius, "CR", "MCR");
         }
@@ -30,6 +32,7 @@ namespace IMT.Manager
             base.CopyTo(target);
             if (target is MeshFillerStyle meshTarget)
             {
+                meshTarget.PavementTheme.Value = PavementTheme.Value;
                 meshTarget.Elevation.Value = Elevation;
                 meshTarget.CornerRadius.Value = CornerRadius;
             }
@@ -65,11 +68,9 @@ namespace IMT.Manager
         protected virtual bool GetSideTexture(out FillerMeshData.TextureData textureData, out Color color) => GetTexture(out textureData, out color);
         private bool GetTexture(out FillerMeshData.TextureData textureData, out Color color)
         {
-            var texture = (Texture2D)Shader.GetGlobalTexture("_TerrainPavementDiffuse");
-            var size = Shader.GetGlobalVector("_TerrainTextureTiling1");
-            var tiling = new Vector2(size.x, size.x);
+            var theme = (PavementTheme.Value is ThemeHelper.IThemeData themeData ? themeData : ThemeHelper.DefaultTheme).GetTexture(ThemeHelper.TextureType.Pavement);
+            textureData = new FillerMeshData.TextureData(theme.texture, theme.tiling, 0f);
             color = UnityEngine.Color.white;
-            textureData = new FillerMeshData.TextureData(texture, tiling, 0f);
             return true;
         }
 
@@ -176,6 +177,7 @@ namespace IMT.Manager
         {
             base.GetUIComponents(filler, provider);
 
+            provider.AddProperty(new PropertyInfo<SelectThemeProperty>(this, nameof(PavementTheme), MainCategory, AddPavementThemeProperty, RefreshPavementThemeProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), MainCategory, AddElevationProperty));
             if (!provider.isTemplate)
             {
@@ -186,6 +188,20 @@ namespace IMT.Manager
 
             }
         }
+        private void AddPavementThemeProperty(SelectThemeProperty themeProperty, EditorProvider provider)
+        {
+            themeProperty.Label = Localize.StyleOption_PavementTheme;
+            themeProperty.Init(60f);
+            themeProperty.RawName = PavementTheme.RawName;
+            themeProperty.TextureType = ThemeHelper.TextureType.Pavement;
+            themeProperty.Theme = PavementTheme.Value;
+            themeProperty.OnValueChanged += (value) => PavementTheme.Value = value;
+        }
+        private void RefreshPavementThemeProperty(SelectThemeProperty themeProperty, EditorProvider provider)
+        {
+            themeProperty.IsHidden = ThemeHelper.ThemeCount == 0 && string.IsNullOrEmpty(PavementTheme.RawName);
+        }
+
         private void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
             elevationProperty.Label = Localize.FillerStyle_Elevation;
@@ -237,6 +253,7 @@ namespace IMT.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
+            PavementTheme.ToXml(config);
             Elevation.ToXml(config);
             CornerRadius.ToXml(config);
             return config;
@@ -244,6 +261,7 @@ namespace IMT.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
+            PavementTheme.FromXml(config, null);
             Elevation.FromXml(config, DefaultElevation);
             CornerRadius.FromXml(config, DefaultCornerRadius);
         }

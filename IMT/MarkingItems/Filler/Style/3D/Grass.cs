@@ -17,6 +17,7 @@ namespace IMT.Manager
         {
             get
             {
+                yield return nameof(PavementTheme);
                 yield return nameof(Theme);
                 yield return nameof(Elevation);
                 yield return nameof(CornerRadius);
@@ -39,8 +40,8 @@ namespace IMT.Manager
             }
         }
 
-        public GrassFillerStyle(ThemeHelper.IThemeData theme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(theme, offset, elevation, cornerRadius, curbSize) { }
+        public GrassFillerStyle(ThemeHelper.IThemeData pavementTheme, ThemeHelper.IThemeData theme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(pavementTheme, theme, offset, elevation, cornerRadius, curbSize) { }
 
-        public override BaseFillerStyle CopyStyle() => new GrassFillerStyle(Theme.Value, Offset, Elevation, CornerRadius, CurbSize);
+        public override BaseFillerStyle CopyStyle() => new GrassFillerStyle(PavementTheme.Value, Theme.Value, Offset, Elevation, CornerRadius, CurbSize);
     }
 }

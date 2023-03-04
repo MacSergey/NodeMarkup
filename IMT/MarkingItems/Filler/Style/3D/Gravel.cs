@@ -17,6 +17,7 @@ namespace IMT.Manager
         {
             get
             {
+                yield return nameof(PavementTheme);
                 yield return nameof(Theme);
                 yield return nameof(Elevation);
                 yield return nameof(CornerRadius);
@@ -39,8 +40,8 @@ namespace IMT.Manager
             }
         }
 
-        public GravelFillerStyle(ThemeHelper.IThemeData theme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(theme, offset, elevation, cornerRadius, curbSize) { }
+        public GravelFillerStyle(ThemeHelper.IThemeData pavementTheme, ThemeHelper.IThemeData theme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(pavementTheme, theme, offset, elevation, cornerRadius, curbSize) { }
 
-        public override BaseFillerStyle CopyStyle() => new GravelFillerStyle(Theme.Value, Offset, Elevation, CornerRadius, CurbSize);
+        public override BaseFillerStyle CopyStyle() => new GravelFillerStyle(PavementTheme.Value, Theme.Value, Offset, Elevation, CornerRadius, CurbSize);
     }
 }

@@ -16,7 +16,7 @@ namespace IMT.Manager
         public float LineCurbSize => CurbSize.Value.x;
         public float MedianCurbSize => CurbSize.Value.y;
 
-        public CurbFillerStyle(Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(offset, elevation, cornerRadius)
+        public CurbFillerStyle(ThemeHelper.IThemeData pavementTheme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(pavementTheme, offset, elevation, cornerRadius)
         {
             CurbSize = new PropertyVector2Value(StyleChanged, curbSize, "CS", "MCS");
         }

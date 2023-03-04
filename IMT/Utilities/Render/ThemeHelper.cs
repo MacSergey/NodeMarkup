@@ -13,6 +13,7 @@ namespace IMT.Utilities
 
         public static IEnumerable<string> ThemeNames => Themes.Keys;
         public static IEnumerable<ThemeData> ThemeDatas => Themes.Values;
+        public static int ThemeCount => Themes.Count;
 
         public static bool TryGetTheme(string name, out ThemeData data) => Themes.TryGetValue(name, out data);
 

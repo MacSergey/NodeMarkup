@@ -29,6 +29,7 @@ namespace IMT.Manager
         {
             get
             {
+                yield return nameof(PavementTheme);
                 yield return nameof(Decal);
                 yield return nameof(DecalColor);
                 yield return nameof(Tiling);
@@ -51,7 +52,7 @@ namespace IMT.Manager
             }
         }
 
-        public CustomTextureFillerStyle(PropInfo decal, Color32? color, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize, Vector2 tiling, float angle) : base(offset, elevation, cornerRadius, curbSize)
+        public CustomTextureFillerStyle(ThemeHelper.IThemeData pavementTheme, PropInfo decal, Color32? color, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize, Vector2 tiling, float angle) : base(pavementTheme, offset, elevation, cornerRadius, curbSize)
         {
             Decal = new PropertyPrefabValue<PropInfo>("DCL", StyleChanged, decal);
             DecalColor = new PropertyNullableStructValue<Color32, PropertyColorValue>(new PropertyColorValue("DC", null), "DC", StyleChanged, color);
@@ -60,7 +61,7 @@ namespace IMT.Manager
         }
 
         protected bool IsValidDecal(PropInfo info) => info != null && !info.m_isMarker && info.m_isDecal;
-        public override BaseFillerStyle CopyStyle() => new CustomTextureFillerStyle(Decal, DecalColor, Offset, Elevation, CornerRadius, CurbSize, Tiling, Angle);
+        public override BaseFillerStyle CopyStyle() => new CustomTextureFillerStyle(PavementTheme.Value, Decal, DecalColor, Offset, Elevation, CornerRadius, CurbSize, Tiling, Angle);
 
         protected override bool GetCenterTexture(out DecalData.TextureData textureData, out Color color)
         {

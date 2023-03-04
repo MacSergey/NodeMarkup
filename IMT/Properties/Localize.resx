@@ -2062,4 +2062,7 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_Tiling" xml:space="preserve">
     <value>Tiling</value>
   </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Pavement</value>
+  </data>
 </root>

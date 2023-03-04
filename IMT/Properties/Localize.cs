@@ -2844,5 +2844,10 @@ namespace IMT
 		/// Tiling
 		/// </summary>
 		public static string StyleOption_Tiling => LocaleManager.GetString("StyleOption_Tiling", Culture);
+
+		/// <summary>
+		/// Pavement
+		/// </summary>
+		public static string StyleOption_PavementTheme => LocaleManager.GetString("StyleOption_PavementTheme", Culture);
 	}
 }
