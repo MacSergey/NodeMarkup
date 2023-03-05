@@ -240,10 +240,10 @@ namespace IMT.UI
             SearchText = Search.text;
             base.DeInit();
         }
-        protected override void SetEntityValue(ThemeEntity entity, ThemeHelper.IThemeData value, bool selected)
+        protected override void SetEntityValue(ThemeEntity entity, int index, ThemeHelper.IThemeData value, bool selected)
         {
             entity.TextureType = TextureType;
-            base.SetEntityValue(entity, value, selected);
+            base.SetEntityValue(entity, index, value, selected);
         }
 
         protected override string GetName(ThemeHelper.IThemeData value) => value.Name;
