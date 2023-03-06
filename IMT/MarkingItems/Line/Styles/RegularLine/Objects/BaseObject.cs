@@ -81,7 +81,7 @@ namespace IMT.Manager
         }
 
         public abstract bool IsValidPrefab(PrefabType info);
-        protected abstract Func<PrefabType, string> GetSortPredicate();
+        protected abstract int SortPredicate(PrefabType objA, PrefabType objB);
 
         public override void CopyTo(LineStyle target)
         {
@@ -255,8 +255,8 @@ namespace IMT.Manager
         protected void AddPrefabProperty(SelectPrefabType prefabProperty, EditorProvider provider)
         {
             prefabProperty.Label = AssetPropertyName;
-            prefabProperty.PrefabSelectPredicate = IsValidPrefab;
-            prefabProperty.PrefabSortPredicate = GetSortPredicate();
+            prefabProperty.SelectPredicate = IsValidPrefab;
+            prefabProperty.SortPredicate = SortPredicate;
             prefabProperty.Init(60f);
             prefabProperty.Prefab = Prefab;
             prefabProperty.RawName = Prefab.RawName;

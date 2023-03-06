@@ -146,7 +146,7 @@ namespace IMT.Manager
         }
 
         public override bool IsValidPrefab(PropInfo info) => info != null && !info.m_isMarker;
-        protected override Func<PropInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
+        protected override int SortPredicate(PropInfo objA, PropInfo objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
 
         public override XElement ToXml()
         {

@@ -66,7 +66,7 @@ namespace IMT.Manager
         }
 
         public override bool IsValidPrefab(TreeInfo info) => info != null;
-        protected override Func<TreeInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
+        protected override int SortPredicate(TreeInfo objA, TreeInfo objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
 
         public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
         {

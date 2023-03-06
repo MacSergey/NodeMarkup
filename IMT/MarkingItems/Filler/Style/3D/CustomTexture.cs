@@ -110,8 +110,8 @@ namespace IMT.Manager
         protected void AddDecalProperty(SelectPropProperty decalProperty, EditorProvider provider)
         {
             decalProperty.Label = Localize.StyleOption_AssetDecal;
-            decalProperty.PrefabSelectPredicate = IsValidDecal;
-            decalProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
+            decalProperty.SelectPredicate = IsValidDecal;
+            decalProperty.SortPredicate = (objA, objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
             decalProperty.Init(60f);
             decalProperty.Prefab = Decal;
             decalProperty.RawName = Decal.RawName;

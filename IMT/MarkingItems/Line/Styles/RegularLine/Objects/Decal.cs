@@ -211,7 +211,7 @@ namespace IMT.Manager
             base.RefreshVoidsProperty(voidProperty, provider);
         }
 
-        protected override Func<PropInfo, string> GetSortPredicate() => Utilities.Utilities.GetPrefabName;
+        protected override int SortPredicate(PropInfo objA, PropInfo objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
         public override bool IsValidPrefab(PropInfo info) => info != null && info.m_isDecal && !info.m_isMarker;
         public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
         {

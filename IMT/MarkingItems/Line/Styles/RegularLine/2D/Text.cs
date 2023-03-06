@@ -257,7 +257,7 @@ namespace IMT.Manager
         {
             fontProperty.Label = Localize.StyleOption_Font;
             fontProperty.Init();
-            fontProperty.Font = string.IsNullOrEmpty(Font.Value) ? null : Font.Value;
+            fontProperty.Font = string.IsNullOrEmpty(Font.Value) ? string.Empty : Font.Value;
             fontProperty.OnValueChanged += (value) => Font.Value = value;
         }
         protected void AddTextProperty(MultilineTextProperty textProperty, EditorProvider provider)
