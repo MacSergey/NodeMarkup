@@ -5,6 +5,7 @@ using IMT.Manager;
 using IMT.Tools;
 using IMT.UI;
 using IMT.UI.Panel;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
@@ -253,19 +254,39 @@ namespace IMT
                     undergroundOptions.checkBoxes[1].label.text = string.Format(Localize.Settings_ToggleUndergroundButtons, IntersectionMarkingTool.EnterUndergroundShortcut, IntersectionMarkingTool.ExitUndergroundShortcut);
             }
 
-            AddModifier<RegularLineModifierPanel>(helper, Localize.Settings_RegularLinesModifier);
-            AddModifier<StopLineModifierPanel>(helper, Localize.Settings_StopLinesModifier);
-            AddModifier<CrosswalkModifierPanel>(helper, Localize.Settings_CrosswalksModifier);
-            AddModifier<FillerModifierPanel>(helper, Localize.Settings_FillersModifier);
+            AddModifier<RegularLineStyle.RegularLineType>(helper, Localize.Settings_RegularLinesModifier);
+            AddModifier<StopLineStyle.StopLineType>(helper, Localize.Settings_StopLinesModifier);
+            AddModifier<BaseCrosswalkStyle.CrosswalkType>(helper, Localize.Settings_CrosswalksModifier);
+            AddModifier<BaseFillerStyle.FillerType>(helper, Localize.Settings_FillersModifier);
         }
-        private void AddModifier<PanelType>(UIAdvancedHelper helper, string title)
-            where PanelType : StyleModifierPanel
+        private void AddModifier<StyleType>(UIAdvancedHelper helper, string title)
+            where StyleType : Enum
         {
-            var panel = helper.AddGroup(title).self as UIPanel;
-            var modifier = panel.gameObject.AddComponent<PanelType>();
-            modifier.OnModifierChanged += ModifierChanged;
+            var group = helper.AddGroup(title);
 
-            static void ModifierChanged(Style.StyleType style, StyleModifier value) => IntersectionMarkingTool.StylesModifier[style].value = (int)value;
+            var items = new Dictionary<Style.StyleType, StyleModifierSettingsItem>();
+            foreach (var styleRaw in EnumExtension.GetEnumValues<StyleType>(v => true))
+            {
+                var style = styleRaw.ToEnum<Style.StyleType, StyleType>();
+                var item = (group.self as UIPanel).AddUIComponent<StyleModifierSettingsItem>();
+                item.Text = style.Description();
+                item.Style = style;
+                item.OnModifierChanged += ModifierChanged;
+
+                items[style] = item;
+            }
+
+            void ModifierChanged(Style.StyleType style, StyleModifier value)
+            {
+                if (value != StyleModifier.NotSet)
+                {
+                    foreach(var pair in items)
+                    {
+                        if(pair.Key != style && pair.Value.Value == value)
+                            pair.Value.Value = StyleModifier.NotSet;
+                    }
+                }
+            }
         }
 
         #endregion

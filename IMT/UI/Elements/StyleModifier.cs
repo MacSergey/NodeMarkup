@@ -13,69 +13,52 @@ using UnityEngine;
 
 namespace IMT.UI
 {
-    public abstract class StyleModifierPanel : UICustomControl
+    public class StyleModifierSettingsItem : ContentSettingsItem
     {
         public event Action<Style.StyleType, StyleModifier> OnModifierChanged;
+        private ModifierDropDown DropDown { get; }
 
-        private int count;
 
-        private Dictionary<ModifierDropDown, Style.StyleType> Modifiers { get; } = new Dictionary<ModifierDropDown, Style.StyleType>();
-
-        protected void Add(Style.StyleType style, string label = null)
+        Style.StyleType style;
+        public Style.StyleType Style
         {
-            var modifier = AddKeymapping((StyleModifier)IntersectionMarkingTool.StylesModifier[style].value, label ?? style.Description());
-            Modifiers[modifier] = style;
+            get => style;
+            set
+            {
+                if(value != style)
+                {
+                    style = value;
+                    DropDown.SelectedObject = Value;
+                }
+            }
         }
-        public ModifierDropDown AddKeymapping(StyleModifier value, string description)
+        public StyleModifier Value
         {
-            var panel = component.AttachUIComponent(UITemplateManager.GetAsGameObject("KeyBindingTemplate")) as UIPanel;
-            panel.atlas = CommonTextures.Atlas;
-            panel.backgroundSprite = CommonTextures.Panel;
-            panel.color = count % 2 == 0 ? new Color32(0, 0, 0, 255) : new Color32(16, 16, 16, 255);
+            get => IntersectionMarkingTool.StylesModifier.TryGetValue(Style, out var modifier) ? (StyleModifier)modifier.value : StyleModifier.NotSet;
+            set
+            {
+                if(IntersectionMarkingTool.StylesModifier.ContainsKey(Style))
+                {
+                    IntersectionMarkingTool.StylesModifier[Style].value = (int)value;
+                    DropDown.SelectedObject = value;
+                }
+            }
+        }
 
-            count += 1;
+        public StyleModifierSettingsItem()
+        {
+            DropDown = Content.AddUIComponent<ModifierDropDown>();
+            DropDown.OnValueChanged += ModifierChanged;
 
-            var button = panel.Find<UIButton>("Binding");
-            panel.RemoveUIComponent(button);
-            Destroy(button);
-
-            var modifier = panel.AddUIComponent<ModifierDropDown>();
-            modifier.relativePosition = new Vector2(380, 6);
-            modifier.SelectedObject = value;
-            modifier.OnValueChanged += ModifierChanged;
-
-            var label = panel.Find<UILabel>("Name");
-            label.text = description;
-
-            return modifier;
+            height = DropDown.height + ItemsPadding * 2f;
         }
 
         private void ModifierChanged(ModifierDropDown changedModifier, StyleModifier value)
         {
-            if (value != StyleModifier.NotSet)
-            {
-                foreach (var modifier in Modifiers.Keys.Where(m => m != changedModifier && m.SelectedObject == value))
-                    modifier.SelectedObject = StyleModifier.NotSet;
-            }
-
-            OnModifierChanged?.Invoke(Modifiers[changedModifier], value);
+            Value = value;
+            OnModifierChanged?.Invoke(Style, value);
         }
     }
-    public abstract class StyleModifierPanel<StyleType> : StyleModifierPanel
-        where StyleType : Enum
-    {
-        public StyleModifierPanel()
-        {
-            foreach (var style in EnumExtension.GetEnumValues<StyleType>(v => true))
-                Add((Style.StyleType)(object)style);
-        }
-
-    }
-
-    public class RegularLineModifierPanel : StyleModifierPanel<RegularLineStyle.RegularLineType> { }
-    public class StopLineModifierPanel : StyleModifierPanel<StopLineStyle.StopLineType> { }
-    public class CrosswalkModifierPanel : StyleModifierPanel<BaseCrosswalkStyle.CrosswalkType> { }
-    public class FillerModifierPanel : StyleModifierPanel<BaseFillerStyle.FillerType> { }
 
     public class ModifierDropDown : SimpleDropDown<StyleModifier, ModifierDropDown.ModifierEntity, ModifierDropDown.ModifierPopup>
     {
