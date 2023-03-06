@@ -120,12 +120,18 @@ namespace IMT
         {
             var renderGroup = helper.AddGroup(Localize.Settings_Render);
 
-            AddFloatField(renderGroup, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
-            AddFloatField(renderGroup, Localize.Settings_LODDistanceMarking, LODDistance, 300f, 0f);
-            AddFloatField(renderGroup, Localize.Settings_LODDistanceMesh, MeshLODDistance, 300f, 0f);
-            AddFloatField(renderGroup, Localize.Settings_LODDistanceNetwork, NetworkLODDistance, 500f, 0f);
-            AddFloatField(renderGroup, Localize.Settings_LODDistanceProp, PropLODDistance, 500f, 0f);
-            AddFloatField(renderGroup, Localize.Settings_LODDistanceTree, TreeLODDistance, 500f, 0f);
+            var renderDistance = AddFloatField(renderGroup, Localize.Settings_RenderDistance, RenderDistance, 0f);
+            renderDistance.Field.Format = Localize.NumberFormat_Meter;
+            var markingLOD = AddFloatField(renderGroup, Localize.Settings_LODDistanceMarking, LODDistance, 0f);
+            markingLOD.Field.Format = Localize.NumberFormat_Meter;
+            var meshLOD = AddFloatField(renderGroup, Localize.Settings_LODDistanceMesh, MeshLODDistance, 0f);
+            meshLOD.Field.Format = Localize.NumberFormat_Meter;
+            var networkLOD = AddFloatField(renderGroup, Localize.Settings_LODDistanceNetwork, NetworkLODDistance, 0f);
+            networkLOD.Field.Format = Localize.NumberFormat_Meter;
+            var propLOD = AddFloatField(renderGroup, Localize.Settings_LODDistanceProp, PropLODDistance, 0f);
+            propLOD.Field.Format = Localize.NumberFormat_Meter;
+            var treeLOD = AddFloatField(renderGroup, Localize.Settings_LODDistanceTree, TreeLODDistance, 0f);
+            treeLOD.Field.Format = Localize.NumberFormat_Meter;
 
 
             var displayAndUsageGroup = helper.AddGroup(Localize.Settings_DisplayAndUsage);
@@ -149,7 +155,7 @@ namespace IMT
 
             UIPanel intensityField = null;
             AddCheckBox(displayAndUsageGroup, Localize.Settings_IlluminationAtNight, IlluminationAtNight, OnIlluminationChanged);
-            intensityField = AddIntField(displayAndUsageGroup, Localize.Settings_IlluminationIntensity, IlluminationIntensity, 10, 1, 30, padding: 25);
+            intensityField = AddIntField(displayAndUsageGroup, Localize.Settings_IlluminationIntensity, IlluminationIntensity, 1, 30);
             OnIlluminationChanged();
 
 
@@ -199,13 +205,13 @@ namespace IMT
 
             static void InvertChevrons()
             {
-                for(int i = 0; i < NetManager.MAX_NODE_COUNT; i+= 1)
+                for (int i = 0; i < NetManager.MAX_NODE_COUNT; i += 1)
                 {
-                    if(SingletonManager<NodeMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                    if (SingletonManager<NodeMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
                     {
-                        foreach(var filler in marking.Fillers)
+                        foreach (var filler in marking.Fillers)
                         {
-                            if(filler.Style.Value is ChevronFillerStyle chevron)
+                            if (filler.Style.Value is ChevronFillerStyle chevron)
                                 chevron.Invert.Value = !chevron.Invert;
                         }
                     }
@@ -233,12 +239,14 @@ namespace IMT
         private void AddKeyMapping(UIAdvancedHelper helper, OptionPanelWithLabelData undergroundOptions)
         {
             var group = helper.AddGroup(CommonLocalize.Settings_Shortcuts);
-            var keymappings = AddKeyMappingPanel(group);
-            keymappings.AddKeymapping(IntersectionMarkingTool.ActivationShortcut);
-            foreach (var shortcut in IntersectionMarkingTool.ToolShortcuts)
-                keymappings.AddKeymapping(shortcut);
 
-            keymappings.BindingChanged += OnBindingChanged;
+            AddKeyMappingButton(group, IntersectionMarkingTool.ActivationShortcut);
+            foreach (var shortcut in IntersectionMarkingTool.ToolShortcuts)
+            {
+                var shortcutItem = AddKeyMappingButton(group, shortcut);
+                shortcutItem.BindingChanged += OnBindingChanged;
+            }
+
             void OnBindingChanged(Shortcut shortcut)
             {
                 if (shortcut == IntersectionMarkingTool.EnterUndergroundShortcut || shortcut == IntersectionMarkingTool.ExitUndergroundShortcut)
@@ -381,7 +389,7 @@ namespace IMT
             var groupOther = helper.AddGroup("Nodes");
             AddCheckBox(groupOther, "Show debug properties", ShowDebugProperties);
             AddCheckBox(groupOther, "Show node contour", ShowNodeContour);
-            AddFloatField(groupOther, "Delta", IlluminationDelta, 1f);
+            AddFloatField(groupOther, "Delta", IlluminationDelta, 0f, 10f);
 
             AddCheckboxPanel(groupOther, "Show filler triangulation", ShowFillerTriangulation, new string[] { "Dont show", "Original", "Splitted", "Both" });
         }
@@ -405,11 +413,11 @@ namespace IMT
         {
             var lineGroup = helper.AddGroup("Add line to node");
 
-            AddIntField(lineGroup, "Node id", NodeId, 1, 1, NetManager.MAX_NODE_COUNT);
-            AddIntField(lineGroup, "Start segment id", StartSegmentEnterId, 1, 1, NetManager.MAX_SEGMENT_COUNT);
-            AddIntField(lineGroup, "End segment id", EndSegmentEnterId, 1, 1, NetManager.MAX_SEGMENT_COUNT);
-            AddIntField(lineGroup, "Start point index", StartPointIndex, 1, 1, 255);
-            AddIntField(lineGroup, "End point index", EndPointIndex, 1, 1, 255);
+            AddIntField(lineGroup, "Node id", NodeId, 1, NetManager.MAX_NODE_COUNT);
+            AddIntField(lineGroup, "Start segment id", StartSegmentEnterId, 1, NetManager.MAX_SEGMENT_COUNT);
+            AddIntField(lineGroup, "End segment id", EndSegmentEnterId, 1, NetManager.MAX_SEGMENT_COUNT);
+            AddIntField(lineGroup, "Start point index", StartPointIndex, 1, 255);
+            AddIntField(lineGroup, "End point index", EndPointIndex, 1, 255);
             AddCheckboxPanel(lineGroup, "Lane type", LineType, new string[] { "Regular", "Stop", "Normal", "Lane", "Crosswalk" });
             AddStringField(lineGroup, "Style", LineStyle);
 
@@ -420,7 +428,7 @@ namespace IMT
 
 
             var fillerGroup = helper.AddGroup("Add filler to node");
-            AddIntField(fillerGroup, "Node id", NodeId, 1, 1, NetManager.MAX_NODE_COUNT);
+            AddIntField(fillerGroup, "Node id", NodeId, 1, NetManager.MAX_NODE_COUNT);
             AddStringField(fillerGroup, "Points", FillerPoints);
             AddStringField(fillerGroup, "Style", FillerStyle);
 

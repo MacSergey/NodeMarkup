@@ -29,9 +29,9 @@ namespace IMT.UI
         public ModifierDropDown AddKeymapping(StyleModifier value, string description)
         {
             var panel = component.AttachUIComponent(UITemplateManager.GetAsGameObject("KeyBindingTemplate")) as UIPanel;
-
-            if (count % 2 == 1)
-                panel.backgroundSprite = null;
+            panel.atlas = CommonTextures.Atlas;
+            panel.backgroundSprite = CommonTextures.Panel;
+            panel.color = count % 2 == 0 ? new Color32(0, 0, 0, 255) : new Color32(16, 16, 16, 255);
 
             count += 1;
 
@@ -42,7 +42,7 @@ namespace IMT.UI
             var modifier = panel.AddUIComponent<ModifierDropDown>();
             modifier.relativePosition = new Vector2(380, 6);
             modifier.SelectedObject = value;
-            modifier.OnSelectObjectChanged += ModifierChanged;
+            modifier.OnValueChanged += ModifierChanged;
 
             var label = panel.Find<UILabel>("Name");
             label.text = description;
@@ -77,21 +77,29 @@ namespace IMT.UI
     public class CrosswalkModifierPanel : StyleModifierPanel<BaseCrosswalkStyle.CrosswalkType> { }
     public class FillerModifierPanel : StyleModifierPanel<BaseFillerStyle.FillerType> { }
 
-    public class ModifierDropDown : UIDropDown<StyleModifier>
+    public class ModifierDropDown : SimpleDropDown<StyleModifier, ModifierDropDown.ModifierEntity, ModifierDropDown.ModifierPopup>
     {
-        public new event Action<ModifierDropDown, StyleModifier> OnSelectObjectChanged;
+        public new event Action<ModifierDropDown, StyleModifier> OnValueChanged;
 
         public ModifierDropDown()
         {
             ComponentStyle.CustomSettingsStyle(this, new Vector2(278, 31));
 
             foreach (var modifier in EnumExtension.GetEnumValues<StyleModifier>())
-                AddItem(modifier, new OptionData(modifier.Description()));
+                AddItem(modifier, modifier.Description());
 
             SelectedObject = StyleModifier.NotSet;
         }
 
-        protected override void IndexChanged(UIComponent component, int value) => OnSelectObjectChanged?.Invoke(this, SelectedObject);
+        protected override void ValueChanged(DropDownItem<StyleModifier> item) => OnValueChanged?.Invoke(this, item.value);
+        protected override void InitPopup()
+        {
+            Popup.CustomSettingsStyle(height);
+            base.InitPopup();
+        }
+
+        public class ModifierEntity : SimpleEntity<StyleModifier> { }
+        public class ModifierPopup : SimplePopup<StyleModifier, ModifierEntity> { }
     }
 
     public enum StyleModifier
