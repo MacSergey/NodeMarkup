@@ -119,7 +119,7 @@ namespace IMT
         #region DISPLAY&USAGE
         private void AddGeneral(UIAdvancedHelper helper, out OptionPanelWithLabelData undergroundOptions)
         {
-            var renderGroup = helper.AddGroup(Localize.Settings_Render);
+            var renderGroup = helper.AddOptionsGroup(Localize.Settings_Render);
 
             var renderDistance = AddFloatField(renderGroup, Localize.Settings_RenderDistance, RenderDistance, 0f);
             renderDistance.Field.Format = Localize.NumberFormat_Meter;
@@ -135,66 +135,72 @@ namespace IMT
             treeLOD.Field.Format = Localize.NumberFormat_Meter;
 
 
-            var displayAndUsageGroup = helper.AddGroup(Localize.Settings_DisplayAndUsage);
+            var displayAndUsageGroup = helper.AddOptionsGroup(Localize.Settings_DisplayAndUsage);
 
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
+            AddToggle(displayAndUsageGroup, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
             AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_ApplyMarkingsFromAssets, ApplyMarkingFromAssets);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_RailUnderMarking, RailUnderMarking);
+            AddToggle(displayAndUsageGroup, Localize.Settings_ApplyMarkingsFromAssets, ApplyMarkingFromAssets);
+            AddToggle(displayAndUsageGroup, Localize.Settings_RailUnderMarking, RailUnderMarking);
             AddLabel(displayAndUsageGroup, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
             AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_LevelCrossingUnderMarking, LevelCrossingUnderMarking);
+            AddToggle(displayAndUsageGroup, Localize.Settings_LevelCrossingUnderMarking, LevelCrossingUnderMarking);
             AddLabel(displayAndUsageGroup, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
             AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
             AddToolButton<IntersectionMarkingTool, NodeMarkingButton>(displayAndUsageGroup);
-            undergroundOptions = AddCheckboxPanel(displayAndUsageGroup, Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, IntersectionMarkingTool.EnterUndergroundShortcut, IntersectionMarkingTool.ExitUndergroundShortcut) });
-            AddCheckBox(displayAndUsageGroup, string.Format(Localize.Setting_HoldToMovePoint, LocalizeExtension.Ctrl), HoldCtrlToMovePoint);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_CollapseRules, CollapseRules);
-            AddCheckBox(displayAndUsageGroup, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_ShowPaneltips, ShowPanelTip);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_HideStreetName, HideStreetName);
 
-            UIPanel intensityField = null;
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_IlluminationAtNight, IlluminationAtNight, OnIlluminationChanged);
+            undergroundOptions = AddTogglePanel(displayAndUsageGroup, Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, IntersectionMarkingTool.EnterUndergroundShortcut, IntersectionMarkingTool.ExitUndergroundShortcut) });
+            AddToggle(displayAndUsageGroup, string.Format(Localize.Setting_HoldToMovePoint, LocalizeExtension.Ctrl), HoldCtrlToMovePoint);
+            AddToggle(displayAndUsageGroup, Localize.Settings_CollapseRules, CollapseRules);
+            AddToggle(displayAndUsageGroup, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
+            AddToggle(displayAndUsageGroup, Localize.Settings_ShowPaneltips, ShowPanelTip);
+            AddToggle(displayAndUsageGroup, Localize.Settings_HideStreetName, HideStreetName);
+
+            IntSettingsItem intensityField = null;
+            var illuminationToggle = AddToggle(displayAndUsageGroup, Localize.Settings_IlluminationAtNight, IlluminationAtNight);
+            illuminationToggle.Toggle.OnStateChanged += OnIlluminationChanged;
             intensityField = AddIntField(displayAndUsageGroup, Localize.Settings_IlluminationIntensity, IlluminationIntensity, 1, 30);
-            OnIlluminationChanged();
+            OnIlluminationChanged(IlluminationAtNight);
 
 
-            var gameplayGroup = helper.AddGroup(Localize.Settings_Gameplay);
+            var gameplayGroup = helper.AddOptionsGroup(Localize.Settings_Gameplay);
 
-            AddCheckboxPanel(gameplayGroup, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
-            AddCheckBox(gameplayGroup, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
-            AddCheckBox(gameplayGroup, Localize.Settings_CreateLaneEdgeLines, CreateLaneEdgeLines);
-            AddCheckBox(gameplayGroup, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
-            AddCheckBox(gameplayGroup, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
-            AddCheckBox(gameplayGroup, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
-            AddCheckboxPanel(gameplayGroup, Localize.Settings_AutoApplyPasting, AutoApplyPasting, AutoApplyPastingType, new string[] { Localize.Settings_AutoApplyPastingDirectOnly, Localize.Settings_AutoApplyPastingDirectAndInvert });
+            AddTogglePanel(gameplayGroup, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
+            AddToggle(gameplayGroup, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
+            AddToggle(gameplayGroup, Localize.Settings_CreateLaneEdgeLines, CreateLaneEdgeLines);
+            AddToggle(gameplayGroup, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
+            AddToggle(gameplayGroup, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
+            AddToggle(gameplayGroup, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
+            AddTogglePanel(gameplayGroup, Localize.Settings_AutoApplyPasting, AutoApplyPasting, AutoApplyPastingType, new string[] { Localize.Settings_AutoApplyPastingDirectOnly, Localize.Settings_AutoApplyPastingDirectAndInvert });
 
-            void OnIlluminationChanged()
-            {
-                intensityField.isVisible = IlluminationAtNight;
-            }
+            void OnIlluminationChanged(bool value) => intensityField.isVisible = value;
         }
         private void AddGrouping(UIAdvancedHelper helper)
         {
-            var group = helper.AddGroup(Localize.Settings_Groupings);
+            var group = helper.AddOptionsGroup(Localize.Settings_Groupings);
 
-            AddCheckBox(group, Localize.Settings_GroupPoints, GroupPoints, OnChanged);
-            AddCheckBox(group, Localize.Settings_GroupLines, GroupLines, OnChanged);
-            AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnChanged);
-            AddCheckBox(group, Localize.Settings_GroupPresets, GroupPresets, OnChanged);
-            AddCheckboxPanel(group, Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
+            var groupPointToggle = AddToggle(group, Localize.Settings_GroupPoints, GroupPoints);
+            groupPointToggle.Toggle.OnStateChanged += OnChanged;
 
-            static void OnChanged() => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
+            var groupLineToggle = AddToggle(group, Localize.Settings_GroupLines, GroupLines);
+            groupLineToggle.Toggle.OnStateChanged += OnChanged;
+
+            AddTogglePanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, () => OnChanged(false));
+
+            var groupPresetToggle = AddToggle(group, Localize.Settings_GroupPresets, GroupPresets);
+            groupPresetToggle.Toggle.OnStateChanged += OnChanged;
+
+            AddTogglePanel(group, Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
+
+            static void OnChanged(bool value) => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
         }
         private void AddSorting(UIAdvancedHelper helper)
         {
-            var group = helper.AddGroup(Localize.Settings_Sortings);
+            var group = helper.AddOptionsGroup(Localize.Settings_Sortings);
 
-            AddCheckboxPanel(group, Localize.Settings_SortPresetType, SortPresetsType, new string[] { Localize.Settings_SortPresetByRoadCount, Localize.Settings_SortPresetByNames }, OnChanged);
-            AddCheckboxPanel(group, Localize.Settings_SortTemplateType, SortTemplatesType, new string[] { Localize.Settings_SortTemplateByAuthor, Localize.Settings_SortTemplateByType, Localize.Settings_SortTemplateByNames }, OnChanged);
-            AddCheckboxPanel(group, Localize.Settings_SortApplyType, SortApplyType, new string[] { Localize.Settings_SortApplyByAuthor, Localize.Settings_SortApplyByType, Localize.Settings_SortApplyByNames });
-            AddCheckBox(group, Localize.Settings_SortApplyDefaultFirst, DefaultTemlatesFirst);
+            AddTogglePanel(group, Localize.Settings_SortPresetType, SortPresetsType, new string[] { Localize.Settings_SortPresetByRoadCount, Localize.Settings_SortPresetByNames }, OnChanged);
+            AddTogglePanel(group, Localize.Settings_SortTemplateType, SortTemplatesType, new string[] { Localize.Settings_SortTemplateByAuthor, Localize.Settings_SortTemplateByType, Localize.Settings_SortTemplateByNames }, OnChanged);
+            AddTogglePanel(group, Localize.Settings_SortApplyType, SortApplyType, new string[] { Localize.Settings_SortApplyByAuthor, Localize.Settings_SortApplyByType, Localize.Settings_SortApplyByNames });
+            AddToggle(group, Localize.Settings_SortApplyDefaultFirst, DefaultTemlatesFirst);
 
 
             static void OnChanged() => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
@@ -239,7 +245,7 @@ namespace IMT
         #region KEYMAPPING
         private void AddKeyMapping(UIAdvancedHelper helper, OptionPanelWithLabelData undergroundOptions)
         {
-            var group = helper.AddGroup(CommonLocalize.Settings_Shortcuts);
+            var group = helper.AddOptionsGroup(CommonLocalize.Settings_Shortcuts);
 
             AddKeyMappingButton(group, IntersectionMarkingTool.ActivationShortcut);
             foreach (var shortcut in IntersectionMarkingTool.ToolShortcuts)
@@ -262,7 +268,7 @@ namespace IMT
         private void AddModifier<StyleType>(UIAdvancedHelper helper, string title)
             where StyleType : Enum
         {
-            var group = helper.AddGroup(title);
+            var group = helper.AddOptionsGroup(title);
 
             var items = new Dictionary<Style.StyleType, StyleModifierSettingsItem>();
             foreach (var styleRaw in EnumExtension.GetEnumValues<StyleType>(v => true))
@@ -400,19 +406,19 @@ namespace IMT
 
         private void AddDebug(UIAdvancedHelper helper)
         {
-            var overlayGroup = helper.AddGroup("Selection overlay");
+            var overlayGroup = helper.AddOptionsGroup("Selection overlay");
 
             Selection.AddAlphaBlendOverlay(overlayGroup);
             Selection.AddRenderOverlayCentre(overlayGroup);
             Selection.AddRenderOverlayBorders(overlayGroup);
             Selection.AddBorderOverlayWidth(overlayGroup);
 
-            var groupOther = helper.AddGroup("Nodes");
-            AddCheckBox(groupOther, "Show debug properties", ShowDebugProperties);
-            AddCheckBox(groupOther, "Show node contour", ShowNodeContour);
+            var groupOther = helper.AddOptionsGroup("Nodes");
+            AddToggle(groupOther, "Show debug properties", ShowDebugProperties);
+            AddToggle(groupOther, "Show node contour", ShowNodeContour);
             AddFloatField(groupOther, "Delta", IlluminationDelta, 0f, 10f);
 
-            AddCheckboxPanel(groupOther, "Show filler triangulation", ShowFillerTriangulation, new string[] { "Dont show", "Original", "Splitted", "Both" });
+            AddTogglePanel(groupOther, "Show filler triangulation", ShowFillerTriangulation, new string[] { "Dont show", "Original", "Splitted", "Both" });
         }
 
         private static IDataProviderV1 DataProvider { get; } = API.Helper.GetProvider("Test");
@@ -432,14 +438,14 @@ namespace IMT
 
         private void AddAPI(UIAdvancedHelper helper)
         {
-            var lineGroup = helper.AddGroup("Add line to node");
+            var lineGroup = helper.AddOptionsGroup("Add line to node");
 
             AddIntField(lineGroup, "Node id", NodeId, 1, NetManager.MAX_NODE_COUNT);
             AddIntField(lineGroup, "Start segment id", StartSegmentEnterId, 1, NetManager.MAX_SEGMENT_COUNT);
             AddIntField(lineGroup, "End segment id", EndSegmentEnterId, 1, NetManager.MAX_SEGMENT_COUNT);
             AddIntField(lineGroup, "Start point index", StartPointIndex, 1, 255);
             AddIntField(lineGroup, "End point index", EndPointIndex, 1, 255);
-            AddCheckboxPanel(lineGroup, "Lane type", LineType, new string[] { "Regular", "Stop", "Normal", "Lane", "Crosswalk" });
+            AddTogglePanel(lineGroup, "Lane type", LineType, new string[] { "Regular", "Stop", "Normal", "Lane", "Crosswalk" });
             AddStringField(lineGroup, "Style", LineStyle);
 
             AddButton(lineGroup, "Create line", CreateLine);
@@ -448,7 +454,7 @@ namespace IMT
             AddingLineResult = AddLabel(lineGroup, string.Empty);
 
 
-            var fillerGroup = helper.AddGroup("Add filler to node");
+            var fillerGroup = helper.AddOptionsGroup("Add filler to node");
             AddIntField(fillerGroup, "Node id", NodeId, 1, NetManager.MAX_NODE_COUNT);
             AddStringField(fillerGroup, "Points", FillerPoints);
             AddStringField(fillerGroup, "Style", FillerStyle);

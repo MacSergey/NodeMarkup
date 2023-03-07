@@ -50,7 +50,7 @@ namespace IMT.UI
             DropDown = Content.AddUIComponent<ModifierDropDown>();
             DropDown.OnValueChanged += ModifierChanged;
 
-            height = DropDown.height + ItemsPadding * 2f;
+            SetHeightBasedOn(DropDown);
         }
 
         private void ModifierChanged(ModifierDropDown changedModifier, StyleModifier value)
