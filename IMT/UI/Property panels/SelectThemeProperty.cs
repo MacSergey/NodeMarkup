@@ -94,9 +94,9 @@ namespace IMT.UI
             set => Entity.RawName = value;
         }
 
+        protected override void SetPopupStyle() => Popup.DefaultStyle(50f);
         protected override void InitPopup()
-        {
-            Popup.DefaultStyle(50f);
+        {           
             Popup.MaximumSize = new Vector2(width, 700f);
             Popup.width = width;
             Popup.MaxVisibleItems = 10;

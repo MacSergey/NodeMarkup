@@ -223,9 +223,11 @@ namespace IMT.UI.Editors
     }
     public class StyleTemplateItem : EditItem<StyleTemplate, StyleTemplateIcon>
     {
-        public override bool ShowDelete => !Object.IsAsset;
+        public override bool ShowDelete => Object != null && !Object.IsAsset;
 
         private bool IsDefault => Object?.IsDefault == true;
+
+        public override Color32 BackgroundColor => base.NormalColor;
         public override Color32 NormalColor => IsDefault ? new Color32(255, 197, 0, 255) : base.NormalColor;
         public override Color32 HoveredColor => IsDefault ? new Color32(255, 207, 51, 255) : base.HoveredColor;
         public override Color32 PressedColor => IsDefault ? new Color32(255, 218, 72, 255) : base.PressedColor;
@@ -236,7 +238,7 @@ namespace IMT.UI.Editors
             base.Refresh();
             Icon.Type = Object.Style.Type;
             Icon.StyleColor = Object.Style is IColorStyle ? Object.Style.Color : Color.white;
-            Label.wordWrap = !Object.IsAsset;
+            wordWrap = !Object.IsAsset;
 
             SetColors();
         }

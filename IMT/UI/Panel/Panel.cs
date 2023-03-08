@@ -36,7 +36,7 @@ namespace IMT.UI.Panel
             }
         }
 
-        private float Width => 580f;
+        private float Width => 500f;
 
         public Marking Marking { get; private set; }
         private bool NeedRefreshOnVisible { get; set; }
@@ -65,8 +65,9 @@ namespace IMT.UI.Panel
         {
             SingletonItem<IntersectionMarkingToolPanel>.Instance = this;
 
-            atlas = TextureHelper.InGameAtlas;
-            backgroundSprite = "MenuPanel2";
+            atlas = CommonTextures.Atlas;
+            backgroundSprite = CommonTextures.PanelBig;
+            color = new Color32(34, 38, 44, 255);
             name = nameof(IntersectionMarkingToolPanel);
 
             CreateHeader();
@@ -117,12 +118,16 @@ namespace IMT.UI.Panel
         }
         private void CreateEditors()
         {
-            CreateEditor<PointsEditor>();
-            CreateEditor<LinesEditor>();
-            CreateEditor<CrosswalksEditor>();
-            CreateEditor<FillerEditor>();
-            CreateEditor<StyleTemplateEditor>();
-            CreateEditor<IntersectionTemplateEditor>();
+            TabStrip.StopLayout();
+            {
+                CreateEditor<PointsEditor>();
+                CreateEditor<LinesEditor>();
+                CreateEditor<CrosswalksEditor>();
+                CreateEditor<FillerEditor>();
+                CreateEditor<StyleTemplateEditor>();
+                CreateEditor<IntersectionTemplateEditor>();
+            }
+            TabStrip.StartLayout();
         }
         private void CreateEditor<EditorType>() where EditorType : Editor
         {

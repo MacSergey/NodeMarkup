@@ -273,9 +273,9 @@ namespace IMT.UI.Editors
     public class PointItem : EditItem<MarkingEnterPoint, ColorIcon>
     {
         public override bool ShowDelete => false;
-        public override void Init(Editor editor, MarkingEnterPoint editObject)
+        public override void Init(Editor editor, MarkingEnterPoint editObject, bool inGroup)
         {
-            base.Init(editor, editObject);
+            base.Init(editor, editObject, inGroup);
             Icon.InnerColor = Object.Color;
         }
     }

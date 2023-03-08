@@ -18,14 +18,14 @@ namespace IMT.UI
             set => defaultColor = value;
         }
 
-        private MultyAtlasUIButton CopyButton { get; }
-        private MultyAtlasUIButton PasteButton { get; }
+        private CustomUIButton CopyButton { get; }
+        private CustomUIButton PasteButton { get; }
 
         protected override Color32 PopupColor => new Color32(36, 44, 51, 255);
 
         public ColorAdvancedPropertyPanel()
         {
-            CopyButton = Content.AddUIComponent<MultyAtlasUIButton>();
+            CopyButton = Content.AddUIComponent<CustomUIButton>();
             CopyButton.SetDefaultStyle();
             CopyButton.width = 20;
             CopyButton.atlasForeground = IMTTextures.Atlas;
@@ -33,7 +33,7 @@ namespace IMT.UI
             CopyButton.tooltip = IMT.Localize.Editor_ColorCopy;
             CopyButton.eventClick += Copy;
 
-            PasteButton = Content.AddUIComponent<MultyAtlasUIButton>();
+            PasteButton = Content.AddUIComponent<CustomUIButton>();
             PasteButton.SetDefaultStyle();
             PasteButton.width = 20;
             PasteButton.atlasForeground = IMTTextures.Atlas;

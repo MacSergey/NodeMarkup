@@ -128,6 +128,7 @@ namespace IMT.UI
         {
             Entity.ShowFavorite = false;
         }
+        protected override void SetPopupStyle() => Popup.DefaultStyle(50f);
         protected override void InitPopup()
         {
             Popup.DefaultStyle(50f);
@@ -294,9 +295,9 @@ namespace IMT.UI
                 Favorite.focusedFgSprite = IMTTextures.SetDefaultHeaderButton;
 
                 Favorite.color = new Color32(255, 215, 0, 255);
-                Favorite.hoveredColor = new Color32(255, 200, 0, 255);
-                Favorite.pressedColor = new Color32(255, 190, 0, 255);
-                Favorite.focusedColor = new Color32(255, 215, 0, 255);
+                Favorite.hoveredBgColor = new Color32(255, 200, 0, 255);
+                Favorite.pressedBgColor = new Color32(255, 190, 0, 255);
+                Favorite.focusedBgColor = new Color32(255, 215, 0, 255);
             }
             else
             {
@@ -308,9 +309,9 @@ namespace IMT.UI
                 Favorite.focusedFgSprite = IMTTextures.NotSetDefaultHeaderButton;
 
                 Favorite.color = new Color32(255, 255, 255, 255);
-                Favorite.hoveredColor = new Color32(255, 200, 0, 255);
-                Favorite.pressedColor = new Color32(255, 190, 0, 255);
-                Favorite.focusedColor = new Color32(255, 255, 255, 255);
+                Favorite.hoveredBgColor = new Color32(255, 200, 0, 255);
+                Favorite.pressedBgColor = new Color32(255, 190, 0, 255);
+                Favorite.focusedBgColor = new Color32(255, 255, 255, 255);
             }
         }
 

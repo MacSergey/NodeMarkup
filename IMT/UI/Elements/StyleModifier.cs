@@ -75,11 +75,7 @@ namespace IMT.UI
         }
 
         protected override void ValueChanged(DropDownItem<StyleModifier> item) => OnValueChanged?.Invoke(this, item.value);
-        protected override void InitPopup()
-        {
-            Popup.CustomSettingsStyle(height);
-            base.InitPopup();
-        }
+        protected override void SetPopupStyle() => Popup.CustomSettingsStyle(height);
 
         public class ModifierEntity : SimpleEntity<StyleModifier> { }
         public class ModifierPopup : SimplePopup<StyleModifier, ModifierEntity> { }

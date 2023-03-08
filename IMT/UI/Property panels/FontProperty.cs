@@ -209,9 +209,9 @@ namespace IMT.UI
     public class FontDropDown : AdvancedDropDown<string, FontPopup, FontEntity>
     {
         public float PopupWidth { get; set; }
+        protected override void SetPopupStyle() => Popup.DefaultStyle(20f);
         protected override void InitPopup()
         {
-            Popup.DefaultStyle(20f);
             Popup.MaximumSize = new Vector2(PopupWidth, 700f);
             Popup.width = PopupWidth;
             Popup.MaxVisibleItems = 25;

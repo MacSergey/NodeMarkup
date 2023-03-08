@@ -61,7 +61,7 @@ namespace IMT.UI.Editors
             foreach (var template in templates)
             {
                 var item = ComponentPool.Get<TemplatePopupItem>(Content);
-                item.Init(null, template);
+                item.Init(null, template, false);
                 item.eventClick += ItemClick;
             }
         }

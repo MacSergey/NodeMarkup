@@ -2,6 +2,7 @@
 using IMT.Manager;
 using IMT.Utilities;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using System.Linq;
 using UnityEngine;
 
@@ -35,10 +36,14 @@ namespace IMT.UI.Editors
 
         public EditGroup()
         {
-            autoLayout = true;
+            //autoLayout = true;
             autoLayoutDirection = LayoutDirection.Vertical;
             autoLayoutPadding = new RectOffset(0, 0, 0, 0);
             autoFitChildrenVertically = true;
+
+            atlas = CommonTextures.Atlas;
+            backgroundSprite = CommonTextures.PanelSmall;
+            color = disabledColor = new Color32(29, 58, 77, 255);
 
             AddGroupItem();
         }
@@ -54,7 +59,7 @@ namespace IMT.UI.Editors
         public void Init(GroupType selector, string groupName)
         {
             Selector = selector;
-            Item.Text = groupName;
+            Item.text = groupName;
             IsExpand = false;
         }
         public virtual void Refresh()
@@ -68,7 +73,7 @@ namespace IMT.UI.Editors
             base.OnSizeChanged();
 
             foreach (var item in components)
-                item.width = width;
+                item.width = width - autoLayoutPadding.horizontal;
         }
 
         public void DeInit()
@@ -89,21 +94,27 @@ namespace IMT.UI.Editors
         public override Color32 HoveredColor => new Color32(97, 180, 239, 255);
         public override Color32 PressedColor => new Color32(86, 167, 225, 255);
         public override Color32 FocusColor => NormalColor;
+        protected override float TextScale => 0.65f;
+        protected override float DefaultHeight => 36f;
 
         public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? IMTTextures.ListItemCollapse : IMTTextures.ListItemExpand; }
 
         private CustomUIPanel ExpandIcon { get; set; }
 
-        public GroupItem()
+        public GroupItem() : base()
         {
-            height = 36;
+            textPadding.right = 30;
+            textPadding.top = 5;
+            textPadding.left = 5;
+
+            normalBgSprite = CommonTextures.PanelSmall;
+
             AddExpandIcon();
         }
 
         public void Init()
         {
-            SetColors();
-            OnSizeChanged();
+            Refresh();
         }
         private void AddExpandIcon()
         {
@@ -112,18 +123,23 @@ namespace IMT.UI.Editors
             ExpandIcon.size = new Vector2(20, 20);
             IsExpand = true;
         }
-        protected override void OnSizeChanged()
+        private void Refresh()
         {
-            base.OnSizeChanged();
+            SetColors();
 
             if (ExpandIcon != null)
             {
+                ExpandIcon.isVisible = width >= 100f;
                 ExpandIcon.size = new Vector2(size.y - 12, size.y - 12);
                 ExpandIcon.relativePosition = new Vector2(size.x - (size.y - 6), 6);
-            }
 
-            Label.size = new Vector2(size.x - 6, size.y);
+                textPadding.right = ExpandIcon.isVisible ? 30 : 5;
+            }
         }
-        protected override void LabelSizeChanged() => Label.relativePosition = new Vector3(3, (height - Label.height) * 0.5f);
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            Refresh();
+        }
     }
 }

@@ -93,26 +93,17 @@ namespace IMT.UI.Editors
             var index = FindIndex(editObject);
             return AddObjectImpl(editObject, index >= 0 ? index : ~index);
         }
-        protected virtual ItemType AddObjectImpl(ObjectType editObject, int zOrder)
+        protected virtual ItemType AddObjectImpl(ObjectType editObject, int zOrder) => GetItem(editObject, false, Content, zOrder);
+        protected ItemType GetItem(ObjectType editObject, bool inGroup, UIComponent container, int zOrder = -1)
         {
-            var item = GetItem(Content, zOrder);
-            InitItem(item, editObject);
-            return item;
-        }
-        protected virtual ItemType GetItem(UIComponent parent, int zOrder = -1)
-        {
-            var newItem = ComponentPool.Get<ItemType>(parent, zOrder: zOrder);
-            newItem.width = parent.width;
-            return newItem;
-        }
-
-        protected void InitItem(ItemType item, ObjectType editObject)
-        {
-            item.Init(Editor, editObject);
+            var item = ComponentPool.Get<ItemType>(container, zOrder: zOrder);
+            item.Init(Editor, editObject, inGroup);
             item.eventClick += ItemClick;
             item.OnDelete += ItemDelete;
             item.eventMouseEnter += ItemHover;
             item.eventMouseLeave += ItemLeave;
+
+            return item;
         }
 
         #endregion
@@ -258,6 +249,12 @@ namespace IMT.UI.Editors
                 item.Refresh();
         }
         public abstract int Compare(ObjectType x, ObjectType y);
+
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            ShowScroll = width >= 100f;
+        }
 
         #endregion
     }

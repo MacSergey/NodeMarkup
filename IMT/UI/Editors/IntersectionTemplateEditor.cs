@@ -238,13 +238,13 @@ namespace IMT.UI.Editors
         public override Color32 PressedColor => IsLinked ? new Color32(255, 218, 72, 255) : base.PressedColor;
         public override Color32 FocusColor => IsLinked ? new Color32(255, 228, 92, 255) : base.FocusColor;
 
-        public override bool ShowDelete => !Object.IsAsset;
+        public override bool ShowDelete => Object != null && !Object.IsAsset;
 
         public override void Refresh()
         {
             base.Refresh();
             Icon.Count = Object.Roads;
-            Label.wordWrap = !Object.IsAsset;
+            wordWrap = !Object.IsAsset;
         }
     }
     public class IntersectionTemplateIcon : ColorIcon

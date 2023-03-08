@@ -34,8 +34,7 @@ namespace IMT.UI.Editors
             if (GroupingEnable)
             {
                 var group = GetGroup(editObject);
-                var item = GetItem(group, zOrder);
-                InitItem(item, editObject);
+                var item = GetItem(editObject, true, group, zOrder);
                 item.isVisible = group.IsExpand;
                 return item;
             }
@@ -95,6 +94,7 @@ namespace IMT.UI.Editors
             {
                 var index = FindIndex(groupType, Content);
                 group = ComponentPool.Get<GroupItemType>(Content, zOrder: index >= 0 ? index : ~index);
+                group.autoLayout = autoLayout;
                 group.Init(groupType, GroupName(groupType));
                 group.width = Content.width;
                 group.Item.eventMouseEnter += GroupHover;
@@ -144,6 +144,21 @@ namespace IMT.UI.Editors
         }
 
         public abstract int Compare(GroupType x, GroupType y);
+
+        public override void StopLayout()
+        {
+            foreach (var group in Groups.Values)
+                group.StopLayout();
+
+            base.StopLayout();
+        }
+        public override void StartLayout(bool layoutNow = true)
+        {
+            foreach (var group in Groups.Values)
+                group.StartLayout();
+
+            base.StartLayout(layoutNow);
+        }
 
         #endregion
     }

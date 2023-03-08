@@ -8,12 +8,21 @@ namespace IMT.UI.Panel
 {
     public class PanelTabStrip : TabStrip<PanelTabStrip.PanelTab>
     {
-        private static Color32 NormalColor { get; } = new Color32(107, 113, 115, 255);
-        private static Color32 HoverColor { get; } = new Color32(143, 149, 150, 255);
-        private static Color32 PressedColor { get; } = new Color32(153, 159, 160, 255);
-        private static Color32 FocusColor { get; } = new Color32(177, 195, 94, 255);
+        public PanelTabStrip()
+        {
+            isLocalized = true;
 
-        public PanelTabStrip() => isLocalized = true;
+            this.CustomStyle();
+
+            backgroundSprite = CommonTextures.Empty;
+
+            color = disabledColor = TabColor = new Color32(66, 72, 71, 255);
+            TabHoveredColor = new Color32(125, 134, 131, 255);
+            TabPressedColor = new Color32(134, 143, 140, 255);
+            TabFocusedColor = new Color32(155, 175, 86, 255);
+            TabDisabledColor = new Color32(36, 38, 37, 255);
+            TabFocusedDisabledColor = new Color32(111, 125, 61, 255);
+        }
 
         protected override void OnLocalize()
         {
@@ -21,21 +30,6 @@ namespace IMT.UI.Panel
                 tab.text = tab.Editor.Name;
 
             ArrangeTabs();
-        }
-
-        protected override void SetStyle(PanelTab tabButton)
-        {
-            tabButton.atlas = CommonTextures.Atlas;
-
-            tabButton.normalBgSprite = CommonTextures.Tab;
-            tabButton.focusedBgSprite = CommonTextures.Tab;
-            tabButton.hoveredBgSprite = CommonTextures.Tab;
-            tabButton.disabledBgSprite = CommonTextures.Tab;
-
-            tabButton.color = NormalColor;
-            tabButton.hoveredColor = HoverColor;
-            tabButton.pressedColor = PressedColor;
-            tabButton.focusedColor = FocusColor;
         }
         public void SetVisible(Marking marking)
         {
@@ -46,6 +40,7 @@ namespace IMT.UI.Panel
         public void AddTab(Editor editor)
         {
             var tab = AddTabImpl(editor.Name);
+            tab.textPadding.top = 4;
             tab.Editor = editor;
         }
         public class PanelTab : Tab

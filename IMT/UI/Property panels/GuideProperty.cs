@@ -19,7 +19,7 @@ namespace IMT.UI
         private BoolSegmented FollowGuide { get; }
         protected SelectGuideButton LeftGuideSelector { get; set; }
         protected SelectGuideButton RightGuideSelector { get; set; }
-        protected MultyAtlasUIButton TurnButton { get; set; }
+        protected CustomUIButton TurnButton { get; set; }
 
         public int VertexCount { get; private set; }
         public FillerGuide LeftGuide
@@ -84,7 +84,7 @@ namespace IMT.UI
             RightGuideSelector.Button.eventMouseLeave += ButtonMouseLeave;
             RightGuideSelector.OnValueChanged += RightGuideChanged;
 
-            TurnButton = Content.AddUIComponent<MultyAtlasUIButton>();
+            TurnButton = Content.AddUIComponent<CustomUIButton>();
             TurnButton.SetDefaultStyle();
             TurnButton.size = new Vector2(20f, 20f);
             TurnButton.atlasForeground = IMTTextures.Atlas;
