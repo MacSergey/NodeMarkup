@@ -286,9 +286,9 @@ namespace IMT
             {
                 if (value != StyleModifier.NotSet)
                 {
-                    foreach(var pair in items)
+                    foreach (var pair in items)
                     {
-                        if(pair.Key != style && pair.Value.Value == value)
+                        if (pair.Key != style && pair.Value.Value == value)
                             pair.Value.Value = StyleModifier.NotSet;
                     }
                 }
@@ -330,9 +330,9 @@ namespace IMT
         private void AddDeleteAll(UIHelper group, string buttonText, string caption, string message, Action process)
         {
             var button = AddButton(group, buttonText, Click, 600);
-            button.color = new Color32(255, 40, 40, 255);
-            button.hoveredColor = new Color32(224, 40, 40, 255);
-            button.pressedColor = new Color32(192, 40, 40, 255);
+            button.color = new Color32(179, 45, 45, 255);
+            button.hoveredColor = new Color32(153, 38, 38, 255);
+            button.pressedColor = new Color32(128, 32, 32, 255);
             button.focusedColor = button.color;
 
             void Click()
