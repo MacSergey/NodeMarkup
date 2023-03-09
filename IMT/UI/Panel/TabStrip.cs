@@ -16,7 +16,7 @@ namespace IMT.UI.Panel
 
             backgroundSprite = CommonTextures.Empty;
 
-            color = disabledColor = TabColor = new Color32(66, 72, 71, 255);
+            color = disabledColor = TabColor = new Color32(66, 69, 71, 255);
             TabHoveredColor = new Color32(125, 134, 131, 255);
             TabPressedColor = new Color32(134, 143, 140, 255);
             TabFocusedColor = new Color32(155, 175, 86, 255);

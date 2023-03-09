@@ -16,16 +16,16 @@ namespace IMT.UI
 
         public event Action<bool, int, int> OnValueChanged;
 
-        private BoolSegmented UseCount { get; }
+        private CustomUIToggle UseCount { get; }
         private IntUITextField MinField { get; }
         private IntUITextField MaxField { get; }
 
         public bool EnableCount
         {
-            get => UseCount.SelectedObject;
+            get => UseCount.State;
             set
             {
-                UseCount.SelectedObject = value;
+                UseCount.State = value;
                 Refresh();
             }
         }
@@ -87,14 +87,9 @@ namespace IMT.UI
 
         public MinMaxProperty()
         {
-            UseCount = Content.AddUIComponent<BoolSegmented>();
-            UseCount.StopLayout();
-            UseCount.AutoButtonSize = false;
-            UseCount.ButtonWidth = 25f;
-            UseCount.AddItem(true, new OptionData("I"));
-            UseCount.AddItem(false, new OptionData("O"));
-            UseCount.StartLayout();
-            UseCount.OnSelectObjectChanged += UseChanged;
+            UseCount = Content.AddUIComponent<CustomUIToggle>();
+            UseCount.CustomStyle();
+            UseCount.OnStateChanged += UseChanged;
 
             var min = Content.AddUIComponent<CustomUILabel>();
             min.text = IMT.Localize.StyleOption_Min;

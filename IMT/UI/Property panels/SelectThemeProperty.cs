@@ -38,7 +38,7 @@ namespace IMT.UI
         {
             DropDown = Content.AddUIComponent<ThemeDropDown>();
             DropDown.DefaultStyle();
-            DropDown.OnValueChanged += ValueChanged;
+            DropDown.OnSelectedObjectChanged += ValueChanged;
         }
 
         private void ValueChanged(ThemeHelper.IThemeData theme) => OnValueChanged?.Invoke(Theme);

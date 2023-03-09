@@ -31,6 +31,7 @@ namespace IMT
         public static SavedBool ApplyMarkingFromAssets { get; } = new SavedBool(nameof(ApplyMarkingFromAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool LevelCrossingUnderMarking { get; } = new SavedBool(nameof(LevelCrossingUnderMarking), SettingsFile, true, true);
+        public static SavedBool AutoCollapseItemsPanel { get; } = new SavedBool(nameof(AutoCollapseItemsPanel), SettingsFile, true, true);
         public static SavedBool CollapseRules { get; } = new SavedBool(nameof(CollapseRules), SettingsFile, true, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool ShowPanelTip { get; } = new SavedBool(nameof(ShowPanelTip), SettingsFile, true, true);
@@ -150,6 +151,8 @@ namespace IMT
 
             undergroundOptions = AddTogglePanel(displayAndUsageGroup, Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, IntersectionMarkingTool.EnterUndergroundShortcut, IntersectionMarkingTool.ExitUndergroundShortcut) });
             AddToggle(displayAndUsageGroup, string.Format(Localize.Setting_HoldToMovePoint, LocalizeExtension.Ctrl), HoldCtrlToMovePoint);
+            var autoCollapse = AddToggle(displayAndUsageGroup, Localize.Settings_AutoCollapseItemsPanel, AutoCollapseItemsPanel);
+            autoCollapse.Toggle.OnStateChanged += OnChanged;
             AddToggle(displayAndUsageGroup, Localize.Settings_CollapseRules, CollapseRules);
             AddToggle(displayAndUsageGroup, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
             AddToggle(displayAndUsageGroup, Localize.Settings_ShowPaneltips, ShowPanelTip);
@@ -173,6 +176,7 @@ namespace IMT
             AddTogglePanel(gameplayGroup, Localize.Settings_AutoApplyPasting, AutoApplyPasting, AutoApplyPastingType, new string[] { Localize.Settings_AutoApplyPastingDirectOnly, Localize.Settings_AutoApplyPastingDirectAndInvert });
 
             void OnIlluminationChanged(bool value) => intensityField.isVisible = value;
+            static void OnChanged(bool value) => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
         }
         private void AddGrouping(UIAdvancedHelper helper)
         {

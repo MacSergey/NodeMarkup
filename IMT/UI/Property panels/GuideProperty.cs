@@ -16,7 +16,7 @@ namespace IMT.UI
         public event Action<SelectGuideButton> OnEnter;
         public event Action<SelectGuideButton> OnLeave;
 
-        private BoolSegmented FollowGuide { get; }
+        private CustomUIToggle FollowGuide { get; }
         protected SelectGuideButton LeftGuideSelector { get; set; }
         protected SelectGuideButton RightGuideSelector { get; set; }
         protected CustomUIButton TurnButton { get; set; }
@@ -29,7 +29,7 @@ namespace IMT.UI
             {
                 LeftGuideSelector.Value = value;
                 RightGuideSelector.Other = value;
-                OnValueChanged?.Invoke(FollowGuide.SelectedObject, LeftGuideSelector.Value, RightGuide);
+                OnValueChanged?.Invoke(FollowGuide.State, LeftGuideSelector.Value, RightGuide);
             }
         }
         public FillerGuide RightGuide
@@ -39,18 +39,18 @@ namespace IMT.UI
             {
                 RightGuideSelector.Value = value;
                 LeftGuideSelector.Other = value;
-                OnValueChanged?.Invoke(FollowGuide.SelectedObject, LeftGuide, RightGuideSelector.Value);
+                OnValueChanged?.Invoke(FollowGuide.State, LeftGuide, RightGuideSelector.Value);
             }
         }
         public bool? Follow
         {
-            get => FollowGuide.isVisible ? FollowGuide.SelectedObject : null;
+            get => FollowGuide.isVisible ? FollowGuide.State : null;
             set
             {
                 if (value != null)
                 {
                     FollowGuide.isVisible = true;
-                    FollowGuide.SelectedObject = value.Value;
+                    FollowGuide.State = value.Value;
                 }
                 else
                     FollowGuide.isVisible = false;
@@ -61,27 +61,22 @@ namespace IMT.UI
 
         public FillerGuidePropertyPanel()
         {
-            FollowGuide = Content.AddUIComponent<BoolSegmented>();
-            FollowGuide.StopLayout();
-            FollowGuide.AutoButtonSize = false;
-            FollowGuide.ButtonWidth = 25f;
-            FollowGuide.AddItem(true, new OptionData("I"));
-            FollowGuide.AddItem(false, new OptionData("O"));
-            FollowGuide.StartLayout();
-            FollowGuide.OnSelectObjectChanged += FollowChanged;
+            FollowGuide = Content.AddUIComponent<CustomUIToggle>();
+            FollowGuide.CustomStyle();
+            FollowGuide.OnStateChanged += FollowChanged;
 
             LeftGuideSelector = Content.AddUIComponent<SelectGuideButton>();
             LeftGuideSelector.width = 80f;
-            LeftGuideSelector.Button.eventClick += ButtonClick;
-            LeftGuideSelector.Button.eventMouseEnter += ButtonMouseEnter;
-            LeftGuideSelector.Button.eventMouseLeave += ButtonMouseLeave;
+            LeftGuideSelector.eventClick += ButtonClick;
+            LeftGuideSelector.eventMouseEnter += ButtonMouseEnter;
+            LeftGuideSelector.eventMouseLeave += ButtonMouseLeave;
             LeftGuideSelector.OnValueChanged += LeftGuideChanged;
 
             RightGuideSelector = Content.AddUIComponent<SelectGuideButton>();
             RightGuideSelector.width = 80f;
-            RightGuideSelector.Button.eventClick += ButtonClick;
-            RightGuideSelector.Button.eventMouseEnter += ButtonMouseEnter;
-            RightGuideSelector.Button.eventMouseLeave += ButtonMouseLeave;
+            RightGuideSelector.eventClick += ButtonClick;
+            RightGuideSelector.eventMouseEnter += ButtonMouseEnter;
+            RightGuideSelector.eventMouseLeave += ButtonMouseLeave;
             RightGuideSelector.OnValueChanged += RightGuideChanged;
 
             TurnButton = Content.AddUIComponent<CustomUIButton>();
@@ -129,7 +124,7 @@ namespace IMT.UI
 
         private void Refresh()
         {
-            var isEnabled = !FollowGuide.isVisible || FollowGuide.SelectedObject;
+            var isEnabled = !FollowGuide.isVisible || FollowGuide.State;
             LeftGuideSelector.isEnabled = isEnabled;
             RightGuideSelector.isEnabled = isEnabled;
             TurnButton.isEnabled = isEnabled;

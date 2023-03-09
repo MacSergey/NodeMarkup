@@ -67,8 +67,7 @@ namespace IMT.UI
         {
             FontFamilySelector = Content.AddUIComponent<FontDropDown>();
             FontFamilySelector.DefaultStyle();
-            FontFamilySelector.spritePadding.right = 0;
-            FontFamilySelector.OnValueChanged += FontFamilyChanged;
+            FontFamilySelector.OnSelectedObjectChanged += FontFamilyChanged;
 
             FontStyleSelector = Content.AddUIComponent<FontStyleSegmented>();
             FontStyleSelector.StopLayout();
@@ -76,7 +75,7 @@ namespace IMT.UI
             FontStyleSelector.ButtonWidth = 20f;
             FontStyleSelector.isVisible = false;
             FontStyleSelector.StartLayout();
-            FontStyleSelector.OnSelectObjectChanged += FontStyleChanged;
+            FontStyleSelector.OnSelectedObjectChanged += FontStyleChanged;
             FontStyleSelector.eventSizeChanged += ItemSizeChanged;
             FontFamilySelector.PopupWidth = Width;
         }
@@ -209,6 +208,12 @@ namespace IMT.UI
     public class FontDropDown : AdvancedDropDown<string, FontPopup, FontEntity>
     {
         public float PopupWidth { get; set; }
+
+        public FontDropDown() : base() 
+        {
+            Entity.TextScale = 0.7f;
+        }
+
         protected override void SetPopupStyle() => Popup.DefaultStyle(20f);
         protected override void InitPopup()
         {
@@ -228,6 +233,11 @@ namespace IMT.UI
     public class FontEntity : PopupEntity<string>
     {
         private CustomUILabel Label { get; }
+        public float TextScale
+        {
+            get => Label.textScale; 
+            set => Label.textScale = value;
+        }
 
         public override void SetObject(int index, string font, bool selected)
         {
@@ -241,7 +251,7 @@ namespace IMT.UI
             Label.autoSize = false;
             Label.textAlignment = UIHorizontalAlignment.Left;
             Label.verticalAlignment = UIVerticalAlignment.Middle;
-            Label.padding = new RectOffset(5, 0, 3, 0);
+            Label.padding = new RectOffset(8, 0, 3, 0);
             Label.textScale = 0.9f;
         }
         protected override void OnSizeChanged()

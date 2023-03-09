@@ -83,7 +83,7 @@ namespace IMT.UI
         {
             DropDown = Content.AddUIComponent<DropDownType>();
             DropDown.DefaultStyle();
-            DropDown.OnValueChanged += ValueChanged;
+            DropDown.OnSelectedObjectChanged += ValueChanged;
         }
         public override void Init(float? height)
         {
@@ -283,35 +283,23 @@ namespace IMT.UI
 
             SetPosition();
         }
+
+        private Color32 FavoriteNormal => new Color32(255, 215, 0, 255);
+        private Color32 FavoriteHovered => new Color32(255, 200, 0, 255);
+        private Color32 FavoritePressed => new Color32(255, 190, 0, 255);
         private void SetFavoriteButton()
         {
             if (IsFavorite)
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_RemoveFromFavorites;
-
-                Favorite.normalFgSprite = IMTTextures.SetDefaultHeaderButton;
-                Favorite.hoveredFgSprite = IMTTextures.UnsetDefaultHeaderButton;
-                Favorite.pressedFgSprite = IMTTextures.UnsetDefaultHeaderButton;
-                Favorite.focusedFgSprite = IMTTextures.SetDefaultHeaderButton;
-
-                Favorite.color = new Color32(255, 215, 0, 255);
-                Favorite.hoveredBgColor = new Color32(255, 200, 0, 255);
-                Favorite.pressedBgColor = new Color32(255, 190, 0, 255);
-                Favorite.focusedBgColor = new Color32(255, 215, 0, 255);
+                Favorite.SetFgSprite(new ModsCommon.UI.SpriteSet(IMTTextures.SetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton));
+                Favorite.SetFgColor(new ColorSet(FavoriteNormal, FavoriteHovered, FavoritePressed, FavoriteNormal, FavoriteNormal));
             }
             else
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_AddToFavorites;
-
-                Favorite.normalFgSprite = IMTTextures.NotSetDefaultHeaderButton;
-                Favorite.hoveredFgSprite = IMTTextures.SetDefaultHeaderButton;
-                Favorite.pressedFgSprite = IMTTextures.SetDefaultHeaderButton;
-                Favorite.focusedFgSprite = IMTTextures.NotSetDefaultHeaderButton;
-
-                Favorite.color = new Color32(255, 255, 255, 255);
-                Favorite.hoveredBgColor = new Color32(255, 200, 0, 255);
-                Favorite.pressedBgColor = new Color32(255, 190, 0, 255);
-                Favorite.focusedBgColor = new Color32(255, 255, 255, 255);
+                Favorite.SetFgSprite(new ModsCommon.UI.SpriteSet(IMTTextures.NotSetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton));
+                Favorite.SetFgColor(new ColorSet(Color.white, FavoriteHovered, FavoritePressed, Color.white, Color.white));
             }
         }
 

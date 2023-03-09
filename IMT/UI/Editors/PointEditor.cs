@@ -19,7 +19,7 @@ namespace IMT.UI.Editors
 #endif
 
         private FloatPropertyPanel Offset { get; set; }
-        private BoolListPropertyPanel Split { get; set; }
+        private BoolPropertyPanel Split { get; set; }
         private FloatPropertyPanel Shift { get; set; }
 
         protected override IEnumerable<MarkingEnterPoint> GetObjects() => Marking.Enters.SelectMany(e => e.EnterPoints);
@@ -153,11 +153,11 @@ namespace IMT.UI.Editors
         }
         private void AddSplit(MarkingEnterPoint point)
         {
-            Split = ComponentPool.Get<BoolListPropertyPanel>(PropertiesPanel, nameof(Split));
+            Split = ComponentPool.Get<BoolPropertyPanel>(PropertiesPanel, nameof(Split));
             Split.Label = IMT.Localize.PointEditor_SplitIntoTwo;
-            Split.Init(IMT.Localize.StyleOption_No, IMT.Localize.StyleOption_Yes);
-            Split.SelectedObject = point.Split;
-            Split.OnSelectObjectChanged += SplitChanged;
+            Split.Init();
+            Split.Value = point.Split;
+            Split.OnValueChanged += SplitChanged;
         }
         private void AddShift(MarkingEnterPoint point)
         {

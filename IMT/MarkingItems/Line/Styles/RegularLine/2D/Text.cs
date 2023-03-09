@@ -263,7 +263,7 @@ namespace IMT.Manager
         protected void AddTextProperty(MultilineTextProperty textProperty, EditorProvider provider)
         {
             textProperty.Label = Localize.StyleOption_Text;
-            textProperty.FieldWidth = 230f;
+            textProperty.FieldWidth = 150f;
             textProperty.Init();
             textProperty.Text = Text;
             textProperty.OnTextChanged += (value) => Text.Value = value;

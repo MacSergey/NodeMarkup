@@ -3,9 +3,11 @@ using IMT.Manager;
 using IMT.Tools;
 using ModsCommon;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace IMT.UI.Editors
 {
@@ -43,21 +45,21 @@ namespace IMT.UI.Editors
         protected IntersectionMarkingTool Tool => SingletonTool<IntersectionMarkingTool>.Instance;
         protected Editor Editor { get; private set; }
 
-        private ItemType _selectItem;
+        private ItemType selectItem;
         protected ItemType SelectItem
         {
-            get => _selectItem;
+            get => selectItem;
             set
             {
-                if (_selectItem != null)
-                    _selectItem.IsSelect = false;
+                if (selectItem != null)
+                    selectItem.IsSelect = false;
 
-                _selectItem = value;
+                selectItem = value;
 
-                if (_selectItem != null)
-                    _selectItem.IsSelect = true;
+                if (selectItem != null)
+                    selectItem.IsSelect = true;
 
-                OnSelectClick?.Invoke(_selectItem?.Object);
+                OnSelectClick?.Invoke(selectItem?.Object);
             }
         }
         public ObjectType SelectedObject => SelectItem?.Object;

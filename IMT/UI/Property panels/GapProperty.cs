@@ -9,16 +9,16 @@ namespace IMT.UI
 
         public event Action<bool, float, int> OnValueChanged;
 
-        private BoolSegmented UseSegmented { get; }
+        private CustomUIToggle UseToggle { get; }
         private FloatUITextField LengthField { get; }
         private IntUITextField PeriodField { get; }
 
         public bool EnableGap
         {
-            get => UseSegmented.SelectedObject;
+            get => UseToggle.State;
             set
             {
-                UseSegmented.SelectedObject = value;
+                UseToggle.State = value;
                 Refresh();
             }
         }
@@ -83,14 +83,9 @@ namespace IMT.UI
 
         public GapProperty()
         {
-            UseSegmented = Content.AddUIComponent<BoolSegmented>();
-            UseSegmented.StopLayout();
-            UseSegmented.AutoButtonSize = false;
-            UseSegmented.ButtonWidth = 25f;
-            UseSegmented.AddItem(true, new OptionData("I"));
-            UseSegmented.AddItem(false, new OptionData("O"));
-            UseSegmented.StartLayout();
-            UseSegmented.OnSelectObjectChanged += UseChanged;
+            UseToggle = Content.AddUIComponent<CustomUIToggle>();
+            UseToggle.CustomStyle();
+            UseToggle.OnStateChanged += UseChanged;
 
             LengthField = Content.AddUIComponent<FloatUITextField>();
             LengthField.SetDefaultStyle();

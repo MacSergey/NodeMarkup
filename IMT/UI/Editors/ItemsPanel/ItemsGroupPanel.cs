@@ -7,7 +7,11 @@ using System.Linq;
 
 namespace IMT.UI.Editors
 {
-    public abstract class ItemsGroupPanel<ItemType, ObjectType, GroupItemType, GroupType> : ItemsPanel<ItemType, ObjectType>, IComparer<GroupType>
+    public interface IGroupItemPanel
+    {
+        bool GroupingEnable { get; }
+    }
+    public abstract class ItemsGroupPanel<ItemType, ObjectType, GroupItemType, GroupType> : ItemsPanel<ItemType, ObjectType>, IGroupItemPanel, IComparer<GroupType>
         where ItemType : EditItem<ObjectType>
         where ObjectType : class, IDeletable
         where GroupItemType : EditGroup<GroupType, ItemType, ObjectType>

@@ -15,7 +15,7 @@ namespace IMT.UI
 
         private CustomUIButton ImportButton { get; set; }
         private CustomUIButton CancelButton { get; set; }
-        protected StringSimpleDropDown DropDown { get; set; }
+        protected StringDropDown DropDown { get; set; }
         public ImportMessageBox()
         {
             ImportButton = AddButton(ImportClick);
@@ -28,11 +28,11 @@ namespace IMT.UI
         }
         private void AddFileList()
         {
-            DropDown = Panel.Content.AddUIComponent<StringSimpleDropDown>();
+            DropDown = Panel.Content.AddUIComponent<StringDropDown>();
             ComponentStyle.CustomMessageBoxStyle(DropDown, new Vector2(DefaultWidth - 2 * Padding, 38));
 
             DropDown.textScale = 1.25f;
-            DropDown.OnValueChanged += DropDownValueChanged;
+            DropDown.OnSelectedObjectChanged += DropDownValueChanged;
 
             var files = GetList();
             foreach (var file in files)
@@ -42,7 +42,7 @@ namespace IMT.UI
             DropDown.OnSetPopupStyle += SetPopupStyle;
         }
 
-        private void SetPopupStyle(StringSimpleDropDown.StringPopup popup, ref bool overridden)
+        private void SetPopupStyle(StringDropDown.StringPopup popup, ref bool overridden)
         {
             popup.CustomSettingsStyle();
             overridden = true;

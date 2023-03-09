@@ -144,14 +144,14 @@ namespace IMT.UI.Editors
 
             return alignment;
         }
-        private BoolListPropertyPanel AddClipSidewalkProperty(MarkingRegularLine line)
+        private BoolPropertyPanel AddClipSidewalkProperty(MarkingRegularLine line)
         {
-            var clipSidewalk = ComponentPool.Get<BoolListPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
+            var clipSidewalk = ComponentPool.Get<BoolPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
 
             clipSidewalk.Label = IMT.Localize.LineEditor_ClipSidewalk;
-            clipSidewalk.Init(IMT.Localize.StyleOption_No, IMT.Localize.StyleOption_Yes);
-            clipSidewalk.SelectedObject = line.ClipSidewalk;
-            clipSidewalk.OnSelectObjectChanged += (value) => line.ClipSidewalk.Value = value;
+            clipSidewalk.Init();
+            clipSidewalk.Value = line.ClipSidewalk;
+            clipSidewalk.OnValueChanged += (value) => line.ClipSidewalk.Value = value;
 
             return clipSidewalk;
         }

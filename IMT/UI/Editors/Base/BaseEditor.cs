@@ -60,7 +60,19 @@ namespace IMT.UI.Editors
     {
         #region PROPERTIES
 
-        private float ItemsSize => Mathf.Min(width - 465f, 300f);
+        private float ItemsSize
+        {
+            get
+
+            {
+                if (!Settings.AutoCollapseItemsPanel)
+                    return Mathf.Min(width * 0.3f, 300f);
+                else if ((ItemsPanel is IGroupItemPanel groupPanel) && groupPanel.GroupingEnable)
+                    return 40f;
+                else
+                    return 34f;
+            }
+        }
         private float ContentSize => width - ItemsSize;
 
         public IntersectionMarkingTool Tool => SingletonTool<IntersectionMarkingTool>.Instance;
@@ -70,6 +82,7 @@ namespace IMT.UI.Editors
         public ItemsPanelType ItemsPanel { get; protected set; }
         public AdvancedScrollablePanel ContentPanel { get; protected set; }
         protected CustomUILabel EmptyLabel { get; set; }
+        private CustomUISprite Shadow { get; }
 
         public sealed override bool AvailableItems
         {
@@ -89,23 +102,30 @@ namespace IMT.UI.Editors
         public Editor()
         {
             clipChildren = true;
-            atlas = TextureHelper.InGameAtlas;
-            backgroundSprite = "TextFieldPanel";
-            color = new Color32(68, 68, 75, 255);
 
             ItemsPanel = AddUIComponent<ItemsPanelType>();
             ItemsPanel.name = nameof(ItemsPanel);
-            ItemsPanel.atlas = TextureHelper.InGameAtlas;
-            ItemsPanel.backgroundSprite = "TextFieldPanel";
-            ItemsPanel.color = ItemsPanel.disabledColor = new Color32(142, 142, 142, 255);
+            ItemsPanel.atlas = CommonTextures.Atlas;
+            ItemsPanel.backgroundSprite = CommonTextures.PanelBig;
+            ItemsPanel.foregroundSprite = CommonTextures.BorderTop;
+            ItemsPanel.color = ItemsPanel.disabledColor = new Color32(99, 107, 107, 255);
+
             ItemsPanel.Content.autoLayoutPadding = new RectOffset(4, 4, 1, 2);
             ItemsPanel.Content.scrollPadding.top = 2;
             ItemsPanel.Content.scrollPadding.bottom = 2;
+
             ItemsPanel.Init(this);
             ItemsPanel.OnSelectClick += OnItemSelect;
             ItemsPanel.OnDeleteClick += OnItemDelete;
             ItemsPanel.eventMouseEnter += ItemsPanelEnter;
             ItemsPanel.eventMouseLeave += ItemsPanelLeave;
+
+            Shadow = AddUIComponent<CustomUISprite>();
+            Shadow.atlas = CommonTextures.Atlas;
+            Shadow.spriteName = CommonTextures.PanelShadow;
+            Shadow.color = new Color32(0, 0, 0, 224);
+            Shadow.width = 20f;
+            Shadow.isVisible = false;
 
             ContentPanel = AddUIComponent<AdvancedScrollablePanel>();
             ContentPanel.name = nameof(ContentPanel);
@@ -147,6 +167,7 @@ namespace IMT.UI.Editors
             {
                 AvailableItems = true;
                 AvailableContent = true;
+                PlaceItems();
 
                 var editObject = EditObject;
                 ItemsPanel.SetObjects(GetObjects());
@@ -161,6 +182,8 @@ namespace IMT.UI.Editors
         }
         public sealed override void RefreshEditor()
         {
+            PlaceItems();
+
             if (EditObject is ObjectType editObject)
                 OnObjectUpdate(editObject);
             else
@@ -192,9 +215,16 @@ namespace IMT.UI.Editors
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
-
+            PlaceItems();
+        }
+        private void PlaceItems()
+        {
             ItemsPanel.size = new Vector2(ItemsSize, size.y);
             ItemsPanel.relativePosition = new Vector2(0, 0);
+
+            Shadow.isVisible = false;
+            Shadow.height = ItemsPanel.height;
+            Shadow.relativePosition = ItemsPanel.relativePosition + new Vector3(ItemsPanel.width, 0f);
 
             ContentPanel.size = new Vector2(ContentSize, size.y);
             ContentPanel.relativePosition = new Vector2(ItemsSize, 0);
@@ -214,7 +244,7 @@ namespace IMT.UI.Editors
         private string AnimationId => $"{nameof(ItemsPanel)}{ItemsPanel.GetHashCode()}";
         private void ItemsPanelEnter(UIComponent component, UIMouseEventParameter eventParam)
         {
-            if (!isEnabled)
+            if (!isEnabled || !Settings.AutoCollapseItemsPanel)
                 return;
 
             ValueAnimator.Cancel(AnimationId);
@@ -226,11 +256,15 @@ namespace IMT.UI.Editors
 
             if (min < 250f && current != max)
             {
-                ValueAnimator.Animate(AnimationId, (v) => ItemsPanel.width = v, new AnimatedFloat(current, max, time, EasingType.CubicEaseOut));
+                Shadow.isVisible = true;
+                ValueAnimator.Animate(AnimationId, SetItemsPanelWidth, new AnimatedFloat(current, max, time, EasingType.CubicEaseOut));
             }
         }
         private void ItemsPanelLeave(UIComponent component, UIMouseEventParameter eventParam)
         {
+            if (!Settings.AutoCollapseItemsPanel)
+                return;
+
             ValueAnimator.Cancel(AnimationId);
 
             var current = ItemsPanel.width;
@@ -240,8 +274,13 @@ namespace IMT.UI.Editors
 
             if (current != min)
             {
-                ValueAnimator.Animate(AnimationId, (v) => ItemsPanel.width = v, new AnimatedFloat(current, min, time, EasingType.CubicEaseOut));
+                ValueAnimator.Animate(AnimationId, SetItemsPanelWidth, new AnimatedFloat(current, min, time, EasingType.CubicEaseOut), () => Shadow.isVisible = false);
             }
+        }
+        private void SetItemsPanelWidth(float width)
+        {
+            ItemsPanel.width = width;
+            Shadow.relativePosition = ItemsPanel.relativePosition + new Vector3(width, 0f);
         }
 
         protected virtual void OnObjectSelect(ObjectType editObject) { }

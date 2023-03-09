@@ -109,7 +109,7 @@ namespace IMT.Manager
 #if DEBUG
             if (!provider.isTemplate && Settings.ShowDebugProperties)
             {
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Debug), DebugCategory, GetDebug));
+                provider.AddProperty(new PropertyInfo<BoolPropertyPanel>(this, nameof(Debug), DebugCategory, GetDebug));
                 provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MinAngle), DebugCategory, GetMinAngle));
                 provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MinLength), DebugCategory, GetMinLength));
                 provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MaxLength), DebugCategory, GetMaxLength));
@@ -119,12 +119,12 @@ namespace IMT.Manager
         }
 
 #if DEBUG
-        private void GetDebug(BoolListPropertyPanel debugProperty, EditorProvider provider)
+        private void GetDebug(BoolPropertyPanel debugProperty, EditorProvider provider)
         {
             debugProperty.Label = "Debug";
-            debugProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
-            debugProperty.SelectedObject = Debug;
-            debugProperty.OnSelectObjectChanged += (value) => Debug.Value = value;
+            debugProperty.Init();
+            debugProperty.Value = Debug;
+            debugProperty.OnValueChanged += (value) => Debug.Value = value;
         }
         private void GetMinAngle(FloatPropertyPanel minAngleProperty, EditorProvider provider)
         {

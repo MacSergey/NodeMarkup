@@ -14,19 +14,19 @@ namespace IMT.UI.Editors
     {
         bool IReusable.InCache { get; set; }
 
-        private bool _isExpand = true;
+        private bool isExpand = true;
         public bool IsExpand
         {
-            get => _isExpand;
+            get => isExpand;
             set
             {
-                if (_isExpand == value)
+                if (isExpand == value)
                     return;
 
-                _isExpand = value;
-                Item.IsExpand = _isExpand;
+                isExpand = value;
+                Item.IsExpand = isExpand;
                 foreach (var item in components.Where(i => i != Item))
-                    item.isVisible = _isExpand;
+                    item.isVisible = isExpand;
             }
         }
 
@@ -36,7 +36,6 @@ namespace IMT.UI.Editors
 
         public EditGroup()
         {
-            //autoLayout = true;
             autoLayoutDirection = LayoutDirection.Vertical;
             autoLayoutPadding = new RectOffset(0, 0, 0, 0);
             autoFitChildrenVertically = true;
@@ -97,9 +96,9 @@ namespace IMT.UI.Editors
         protected override float TextScale => 0.65f;
         protected override float DefaultHeight => 36f;
 
-        public bool IsExpand { set => ExpandIcon.backgroundSprite = value ? IMTTextures.ListItemCollapse : IMTTextures.ListItemExpand; }
+        public bool IsExpand { set => ExpandIcon.spriteName = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
 
-        private CustomUIPanel ExpandIcon { get; set; }
+        private CustomUISprite ExpandIcon { get; set; }
 
         public GroupItem() : base()
         {
@@ -118,9 +117,10 @@ namespace IMT.UI.Editors
         }
         private void AddExpandIcon()
         {
-            ExpandIcon = AddUIComponent<CustomUIPanel>();
-            ExpandIcon.atlas = IMTTextures.Atlas;
-            ExpandIcon.size = new Vector2(20, 20);
+            ExpandIcon = AddUIComponent<CustomUISprite>();
+            ExpandIcon.atlas = CommonTextures.Atlas;
+            ExpandIcon.color = Color.white;
+            ExpandIcon.size = new Vector2(16, 16);
             IsExpand = true;
         }
         private void Refresh()
@@ -130,8 +130,8 @@ namespace IMT.UI.Editors
             if (ExpandIcon != null)
             {
                 ExpandIcon.isVisible = width >= 100f;
-                ExpandIcon.size = new Vector2(size.y - 12, size.y - 12);
-                ExpandIcon.relativePosition = new Vector2(size.x - (size.y - 6), 6);
+                var offset = (height - ExpandIcon.height) * 0.5f;
+                ExpandIcon.relativePosition = new Vector2(width - ExpandIcon.width - offset, offset);
 
                 textPadding.right = ExpandIcon.isVisible ? 30 : 5;
             }

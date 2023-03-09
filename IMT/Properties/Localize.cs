@@ -1586,19 +1586,9 @@ namespace IMT
 		public static string Mod_WhatsNewMessage1_6 => LocaleManager.GetString("Mod_WhatsNewMessage1_6", Culture);
 
 		/// <summary>
-		/// Color count
+		/// Use second color
 		/// </summary>
-		public static string StyleOption_ColorCount => LocaleManager.GetString("StyleOption_ColorCount", Culture);
-
-		/// <summary>
-		/// One
-		/// </summary>
-		public static string StyleOption_ColorCountOne => LocaleManager.GetString("StyleOption_ColorCountOne", Culture);
-
-		/// <summary>
-		/// Two
-		/// </summary>
-		public static string StyleOption_ColorCountTwo => LocaleManager.GetString("StyleOption_ColorCountTwo", Culture);
+		public static string StyleOption_UseSecondColor => LocaleManager.GetString("StyleOption_UseSecondColor", Culture);
 
 		/// <summary>
 		/// From clipboard
@@ -2849,5 +2839,15 @@ namespace IMT
 		/// Pavement
 		/// </summary>
 		public static string StyleOption_PavementTheme => LocaleManager.GetString("StyleOption_PavementTheme", Culture);
+
+		/// <summary>
+		/// Auto collapse items panel
+		/// </summary>
+		public static string Settings_AutoCollapseItemsPanel => LocaleManager.GetString("Settings_AutoCollapseItemsPanel", Culture);
+
+		/// <summary>
+		/// Line #{0}
+		/// </summary>
+		public static string StyleOption_LineNumber => LocaleManager.GetString("StyleOption_LineNumber", Culture);
 	}
 }

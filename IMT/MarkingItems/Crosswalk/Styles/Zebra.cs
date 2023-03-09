@@ -213,7 +213,7 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
             base.GetUIComponents(crosswalk, provider);
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<BoolPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
             provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), AdditionalCategory, AddSecondColorProperty, RefreshSecondColorProperty));
 
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), MainCategory, AddCrosswalkLengthProperty));
@@ -228,12 +228,12 @@ namespace IMT.Manager
             colorProperty.Label = TwoColors.Value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
         }
 
-        protected void AddUseSecondColorProperty(BoolListPropertyPanel useSecondColorProperty, EditorProvider provider)
+        protected void AddUseSecondColorProperty(BoolPropertyPanel useSecondColorProperty, EditorProvider provider)
         {
-            useSecondColorProperty.Label = Localize.StyleOption_ColorCount;
-            useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
-            useSecondColorProperty.SelectedObject = TwoColors;
-            useSecondColorProperty.OnSelectObjectChanged += (value) =>
+            useSecondColorProperty.Label = Localize.StyleOption_UseSecondColor;
+            useSecondColorProperty.Init();
+            useSecondColorProperty.Value = TwoColors;
+            useSecondColorProperty.OnValueChanged += (value) =>
             {
                 TwoColors.Value = value;
                 provider.Refresh();

@@ -62,7 +62,7 @@ namespace IMT.UI
 
     public class ModifierDropDown : SimpleDropDown<StyleModifier, ModifierDropDown.ModifierEntity, ModifierDropDown.ModifierPopup>
     {
-        public new event Action<ModifierDropDown, StyleModifier> OnValueChanged;
+        public event Action<ModifierDropDown, StyleModifier> OnValueChanged;
 
         public ModifierDropDown()
         {
@@ -74,7 +74,7 @@ namespace IMT.UI
             SelectedObject = StyleModifier.NotSet;
         }
 
-        protected override void ValueChanged(DropDownItem<StyleModifier> item) => OnValueChanged?.Invoke(this, item.value);
+        protected override void SelectedObjectChanged(DropDownItem<StyleModifier> item) => OnValueChanged?.Invoke(this, item.value);
         protected override void SetPopupStyle() => Popup.CustomSettingsStyle(height);
 
         public class ModifierEntity : SimpleEntity<StyleModifier> { }

@@ -163,14 +163,14 @@ namespace IMT.Manager
                 throw new NotSupportedException();
         }
 
-        protected void AddUseSecondColorProperty(BoolListPropertyPanel useSecondColorProperty, EditorProvider provider)
+        protected void AddUseSecondColorProperty(BoolPropertyPanel useSecondColorProperty, EditorProvider provider)
         {
             if (this is IDoubleLine doubleLine)
             {
-                useSecondColorProperty.Label = Localize.StyleOption_ColorCount;
-                useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
-                useSecondColorProperty.SelectedObject = doubleLine.TwoColors;
-                useSecondColorProperty.OnSelectObjectChanged += (value) =>
+                useSecondColorProperty.Label = Localize.StyleOption_UseSecondColor;
+                useSecondColorProperty.Init();
+                useSecondColorProperty.Value = doubleLine.TwoColors;
+                useSecondColorProperty.OnValueChanged += (value) =>
                     {
                         doubleLine.TwoColors.Value = value;
                         provider.Refresh();

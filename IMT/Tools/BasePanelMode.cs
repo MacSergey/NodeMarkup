@@ -16,25 +16,25 @@ namespace IMT.Tools
         protected abstract bool IsHover { get; }
         protected abstract ObjectType Hover { get; }
 
-        private ButtonType _selectButton;
+        private ButtonType selectButton;
         public ButtonType SelectButton
         {
-            get => _selectButton;
+            get => selectButton;
             set
             {
-                if (_selectButton != null)
+                if (selectButton != null)
                 {
-                    _selectButton.eventLeaveFocus -= SelectButtonLeaveFocus;
-                    _selectButton.Selected = false;
+                    selectButton.eventLeaveFocus -= SelectButtonLeaveFocus;
+                    selectButton.isSelected = false;
                 }
 
-                _selectButton = value;
+                selectButton = value;
 
-                if (_selectButton != null)
+                if (selectButton != null)
                 {
                     OnSetButton();
-                    _selectButton.eventLeaveFocus += SelectButtonLeaveFocus;
-                    _selectButton.Selected = true;
+                    selectButton.eventLeaveFocus += SelectButtonLeaveFocus;
+                    selectButton.isSelected = true;
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace IMT.Tools
         public void Update()
         {
             if (SelectButton is ButtonType button)
-                button.Selected = true;
+                button.isSelected = true;
         }
         public override void Deactivate()
         {
