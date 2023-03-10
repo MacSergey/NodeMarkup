@@ -123,36 +123,49 @@ namespace IMT
             var renderGroup = helper.AddOptionsGroup(Localize.Settings_Render);
 
             var renderDistance = AddFloatField(renderGroup, Localize.Settings_RenderDistance, RenderDistance, 0f);
-            renderDistance.Field.Format = Localize.NumberFormat_Meter;
+            renderDistance.Control.Format = Localize.NumberFormat_Meter;
             var markingLOD = AddFloatField(renderGroup, Localize.Settings_LODDistanceMarking, LODDistance, 0f);
-            markingLOD.Field.Format = Localize.NumberFormat_Meter;
+            markingLOD.Control.Format = Localize.NumberFormat_Meter;
             var meshLOD = AddFloatField(renderGroup, Localize.Settings_LODDistanceMesh, MeshLODDistance, 0f);
-            meshLOD.Field.Format = Localize.NumberFormat_Meter;
+            meshLOD.Control.Format = Localize.NumberFormat_Meter;
             var networkLOD = AddFloatField(renderGroup, Localize.Settings_LODDistanceNetwork, NetworkLODDistance, 0f);
-            networkLOD.Field.Format = Localize.NumberFormat_Meter;
+            networkLOD.Control.Format = Localize.NumberFormat_Meter;
             var propLOD = AddFloatField(renderGroup, Localize.Settings_LODDistanceProp, PropLODDistance, 0f);
-            propLOD.Field.Format = Localize.NumberFormat_Meter;
+            propLOD.Control.Format = Localize.NumberFormat_Meter;
             var treeLOD = AddFloatField(renderGroup, Localize.Settings_LODDistanceTree, TreeLODDistance, 0f);
-            treeLOD.Field.Format = Localize.NumberFormat_Meter;
+            treeLOD.Control.Format = Localize.NumberFormat_Meter;
 
 
             var displayAndUsageGroup = helper.AddOptionsGroup(Localize.Settings_DisplayAndUsage);
 
+            LabelSettingsItem label = null;
             AddToggle(displayAndUsageGroup, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
-            AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
+            label = AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart.AddColor(new Color32(255, 215, 81, 255)), 0.8f);
+            label.LabelItem.processMarkup = true;
+            label.Borders = SettingsContentItem.Border.None;
+            label.paddingTop = 0;
+
+            var warning = $"{Localize.Settings_RailUnderMarkingWarning.AddColor(new Color32(255, 68, 68, 255))}\n{Localize.Settings_ApplyAfterRestart.AddColor(new Color32(255, 215, 81, 255))}";
+
             AddToggle(displayAndUsageGroup, Localize.Settings_ApplyMarkingsFromAssets, ApplyMarkingFromAssets);
             AddToggle(displayAndUsageGroup, Localize.Settings_RailUnderMarking, RailUnderMarking);
-            AddLabel(displayAndUsageGroup, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
-            AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
+            label = AddLabel(displayAndUsageGroup, warning, 0.8f);
+            label.LabelItem.processMarkup = true;
+            label.Borders = SettingsContentItem.Border.None;
+            label.paddingTop = 0;
+
             AddToggle(displayAndUsageGroup, Localize.Settings_LevelCrossingUnderMarking, LevelCrossingUnderMarking);
-            AddLabel(displayAndUsageGroup, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
-            AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
+            label = AddLabel(displayAndUsageGroup, warning, 0.8f);
+            label.LabelItem.processMarkup = true;
+            label.Borders = SettingsContentItem.Border.None;
+            label.paddingTop = 0;
+
             AddToolButton<IntersectionMarkingTool, NodeMarkingButton>(displayAndUsageGroup);
 
             undergroundOptions = AddTogglePanel(displayAndUsageGroup, Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, IntersectionMarkingTool.EnterUndergroundShortcut, IntersectionMarkingTool.ExitUndergroundShortcut) });
             AddToggle(displayAndUsageGroup, string.Format(Localize.Setting_HoldToMovePoint, LocalizeExtension.Ctrl), HoldCtrlToMovePoint);
             var autoCollapse = AddToggle(displayAndUsageGroup, Localize.Settings_AutoCollapseItemsPanel, AutoCollapseItemsPanel);
-            autoCollapse.Toggle.OnStateChanged += OnChanged;
+            autoCollapse.Control.OnStateChanged += OnChanged;
             AddToggle(displayAndUsageGroup, Localize.Settings_CollapseRules, CollapseRules);
             AddToggle(displayAndUsageGroup, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
             AddToggle(displayAndUsageGroup, Localize.Settings_ShowPaneltips, ShowPanelTip);
@@ -160,7 +173,7 @@ namespace IMT
 
             IntSettingsItem intensityField = null;
             var illuminationToggle = AddToggle(displayAndUsageGroup, Localize.Settings_IlluminationAtNight, IlluminationAtNight);
-            illuminationToggle.Toggle.OnStateChanged += OnIlluminationChanged;
+            illuminationToggle.Control.OnStateChanged += OnIlluminationChanged;
             intensityField = AddIntField(displayAndUsageGroup, Localize.Settings_IlluminationIntensity, IlluminationIntensity, 1, 30);
             OnIlluminationChanged(IlluminationAtNight);
 
@@ -183,15 +196,15 @@ namespace IMT
             var group = helper.AddOptionsGroup(Localize.Settings_Groupings);
 
             var groupPointToggle = AddToggle(group, Localize.Settings_GroupPoints, GroupPoints);
-            groupPointToggle.Toggle.OnStateChanged += OnChanged;
+            groupPointToggle.Control.OnStateChanged += OnChanged;
 
             var groupLineToggle = AddToggle(group, Localize.Settings_GroupLines, GroupLines);
-            groupLineToggle.Toggle.OnStateChanged += OnChanged;
+            groupLineToggle.Control.OnStateChanged += OnChanged;
 
             AddTogglePanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, () => OnChanged(false));
 
             var groupPresetToggle = AddToggle(group, Localize.Settings_GroupPresets, GroupPresets);
-            groupPresetToggle.Toggle.OnStateChanged += OnChanged;
+            groupPresetToggle.Control.OnStateChanged += OnChanged;
 
             AddTogglePanel(group, Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
 
@@ -279,7 +292,7 @@ namespace IMT
             {
                 var style = styleRaw.ToEnum<Style.StyleType, StyleType>();
                 var item = (group.self as UIPanel).AddUIComponent<StyleModifierSettingsItem>();
-                item.Text = style.Description();
+                item.Label = style.Description();
                 item.Style = style;
                 item.OnModifierChanged += ModifierChanged;
 
@@ -437,8 +450,8 @@ namespace IMT
         public static SavedString FillerPoints { get; } = new SavedString(nameof(FillerPoints), SettingsFile, string.Empty, true);
         public static SavedString FillerStyle { get; } = new SavedString(nameof(FillerStyle), SettingsFile, string.Empty, true);
 
-        private UILabel AddingLineResult { get; set; }
-        private UILabel AddingFillerResult { get; set; }
+        private LabelSettingsItem AddingLineResult { get; set; }
+        private LabelSettingsItem AddingFillerResult { get; set; }
 
         private void AddAPI(UIAdvancedHelper helper)
         {
@@ -484,7 +497,7 @@ namespace IMT
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var style = provider.SolidLineStyle;
                             var line = nodeMarking.AddRegularLine(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Line {line} was added";
+                            AddingLineResult.Label = $"Line {line} was added";
                         }
                         break;
                     case 1:
@@ -493,7 +506,7 @@ namespace IMT
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var style = provider.SolidStopLineStyle;
                             var line = nodeMarking.AddStopLine(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Line {line} was added";
+                            AddingLineResult.Label = $"Line {line} was added";
                         }
                         break;
                     case 2:
@@ -502,7 +515,7 @@ namespace IMT
                             endEnter.GetNormalPoint((byte)StartPointIndex.value, out var endPoint);
                             var style = provider.SolidLineStyle;
                             var line = nodeMarking.AddNormalLine(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Line {line} was added";
+                            AddingLineResult.Label = $"Line {line} was added";
                         }
                         break;
                     case 3:
@@ -512,7 +525,7 @@ namespace IMT
                             var style = provider.PropLineStyle;
                             style.Prefab = PrefabCollection<PropInfo>.FindLoaded("Flowerpot 04");
                             var line = nodeMarking.AddLaneLine(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Line {line} was added";
+                            AddingLineResult.Label = $"Line {line} was added";
                         }
                         break;
                     case 4:
@@ -521,14 +534,14 @@ namespace IMT
                             endEnter.GetCrosswalkPoint((byte)EndPointIndex.value, out var endPoint);
                             var style = provider.ZebraCrosswalkStyle;
                             var crosswalk = nodeMarking.AddCrosswalk(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Crosswalk {crosswalk} was added";
+                            AddingLineResult.Label = $"Crosswalk {crosswalk} was added";
                         }
                         break;
                 }
             }
             catch (Exception ex)
             {
-                AddingLineResult.text = ex.Message;
+                AddingLineResult.Label = ex.Message;
             }
         }
         private void RemoveLine()
@@ -547,7 +560,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var removed = nodeMarking.RemoveRegularLine(startPoint, endPoint);
-                            AddingLineResult.text = removed ? "Line was removed" : "Line does not exist";
+                            AddingLineResult.Label = removed ? "Line was removed" : "Line does not exist";
                         }
                         break;
                     case 1:
@@ -555,7 +568,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var removed = nodeMarking.RemoveStopLine(startPoint, endPoint);
-                            AddingLineResult.text = removed ? "Line was removed" : "Line does not exist";
+                            AddingLineResult.Label = removed ? "Line was removed" : "Line does not exist";
                         }
                         break;
                     case 2:
@@ -563,7 +576,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetNormalPoint((byte)StartPointIndex.value, out var endPoint);
                             var removed = nodeMarking.RemoveNormalLine(startPoint, endPoint);
-                            AddingLineResult.text = removed ? "Line was removed" : "Line does not exist";
+                            AddingLineResult.Label = removed ? "Line was removed" : "Line does not exist";
                         }
                         break;
                     case 3:
@@ -571,7 +584,7 @@ namespace IMT
                             startEnter.GetLanePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetLanePoint((byte)EndPointIndex.value, out var endPoint);
                             var removed = nodeMarking.RemoveLaneLine(startPoint, endPoint);
-                            AddingLineResult.text = removed ? "Line was removed" : "Line does not exist";
+                            AddingLineResult.Label = removed ? "Line was removed" : "Line does not exist";
                         }
                         break;
                     case 4:
@@ -579,14 +592,14 @@ namespace IMT
                             startEnter.GetCrosswalkPoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetCrosswalkPoint((byte)EndPointIndex.value, out var endPoint);
                             var removed = nodeMarking.RemoveCrosswalk(startPoint, endPoint);
-                            AddingLineResult.text = removed ? "Crosswalk was removed" : "Crosswalk does not exist";
+                            AddingLineResult.Label = removed ? "Crosswalk was removed" : "Crosswalk does not exist";
                         }
                         break;
                 }
             }
             catch (Exception ex)
             {
-                AddingLineResult.text = ex.Message;
+                AddingLineResult.Label = ex.Message;
             }
         }
         private void ExistLine()
@@ -605,7 +618,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var exist = nodeMarking.RegularLineExist(startPoint, endPoint);
-                            AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
+                            AddingLineResult.Label = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
                     case 1:
@@ -613,7 +626,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var exist = nodeMarking.StopLineExist(startPoint, endPoint);
-                            AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
+                            AddingLineResult.Label = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
                     case 2:
@@ -621,7 +634,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetNormalPoint((byte)EndPointIndex.value, out var endPoint);
                             var exist = nodeMarking.NormalLineExist(startPoint, endPoint);
-                            AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
+                            AddingLineResult.Label = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
                     case 3:
@@ -629,7 +642,7 @@ namespace IMT
                             startEnter.GetLanePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetLanePoint((byte)EndPointIndex.value, out var endPoint);
                             var exist = nodeMarking.LaneLineExist(startPoint, endPoint);
-                            AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
+                            AddingLineResult.Label = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
                     case 4:
@@ -637,14 +650,14 @@ namespace IMT
                             startEnter.GetCrosswalkPoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetCrosswalkPoint((byte)EndPointIndex.value, out var endPoint);
                             var exist = nodeMarking.CrosswalkExist(startPoint, endPoint);
-                            AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
+                            AddingLineResult.Label = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
                 }
             }
             catch (Exception ex)
             {
-                AddingLineResult.text = ex.Message;
+                AddingLineResult.Label = ex.Message;
             }
         }
         private void CreateFiller()
@@ -673,11 +686,11 @@ namespace IMT
                 var style = provider.SolidFillerStyle;
                 style.Color = new Color32(255, 0, 0, 255);
                 var filler = nodeMarking.AddFiller(points, style);
-                AddingFillerResult.text = $"Filler {filler} was added";
+                AddingFillerResult.Label = $"Filler {filler} was added";
             }
             catch (Exception ex)
             {
-                AddingFillerResult.text = ex.Message;
+                AddingFillerResult.Label = ex.Message;
             }
         }
 #endif

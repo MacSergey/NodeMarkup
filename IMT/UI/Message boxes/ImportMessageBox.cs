@@ -30,6 +30,7 @@ namespace IMT.UI
         {
             DropDown = Panel.Content.AddUIComponent<StringDropDown>();
             ComponentStyle.CustomMessageBoxStyle(DropDown, new Vector2(DefaultWidth - 2 * Padding, 38));
+            DropDown.EntityTextScale = 1f;
 
             DropDown.textScale = 1.25f;
             DropDown.OnSelectedObjectChanged += DropDownValueChanged;

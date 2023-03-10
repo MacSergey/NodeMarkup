@@ -13,11 +13,9 @@ using UnityEngine;
 
 namespace IMT.UI
 {
-    public class StyleModifierSettingsItem : ContentSettingsItem
+    public class StyleModifierSettingsItem : ControlSettingsItem<ModifierDropDown>
     {
         public event Action<Style.StyleType, StyleModifier> OnModifierChanged;
-        private ModifierDropDown DropDown { get; }
-
 
         Style.StyleType style;
         public Style.StyleType Style
@@ -28,7 +26,7 @@ namespace IMT.UI
                 if(value != style)
                 {
                     style = value;
-                    DropDown.SelectedObject = Value;
+                    Control.SelectedObject = Value;
                 }
             }
         }
@@ -40,17 +38,14 @@ namespace IMT.UI
                 if(IntersectionMarkingTool.StylesModifier.ContainsKey(Style))
                 {
                     IntersectionMarkingTool.StylesModifier[Style].value = (int)value;
-                    DropDown.SelectedObject = value;
+                    Control.SelectedObject = value;
                 }
             }
         }
 
         public StyleModifierSettingsItem()
         {
-            DropDown = Content.AddUIComponent<ModifierDropDown>();
-            DropDown.OnValueChanged += ModifierChanged;
-
-            SetHeightBasedOn(DropDown);
+            Control.OnValueChanged += ModifierChanged;
         }
 
         private void ModifierChanged(ModifierDropDown changedModifier, StyleModifier value)
@@ -67,6 +62,7 @@ namespace IMT.UI
         public ModifierDropDown()
         {
             ComponentStyle.CustomSettingsStyle(this, new Vector2(278, 31));
+            EntityTextScale = 1f;
 
             foreach (var modifier in EnumExtension.GetEnumValues<StyleModifier>())
                 AddItem(modifier, modifier.Description());
