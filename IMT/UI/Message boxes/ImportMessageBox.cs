@@ -41,6 +41,8 @@ namespace IMT.UI
 
             DropDown.SelectedObject = files.FirstOrDefault().Key;
             DropDown.OnSetPopupStyle += SetPopupStyle;
+
+            DropDownValueChanged(DropDown.SelectedObject);
         }
 
         private void SetPopupStyle(StringDropDown.StringPopup popup, ref bool overridden)

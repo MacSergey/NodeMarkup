@@ -8,6 +8,7 @@ using IMT.UI;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.Utilities;
+using ModsCommon.Settings;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.14.0.552</AssemblyVersion>
+    <AssemblyVersion>1.14.0.568</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -131,6 +131,7 @@
     <None Remove="Resources\imt-linux" />
     <None Remove="Resources\imt-macos" />
     <None Remove="Resources\imt-win" />
+    <None Remove="Resources\PreviewImage.png" />
     <None Remove="Resources\StyleCircle.png" />
     <None Remove="Resources\StylesCrosswalk\CrosswalkDecal.png" />
     <None Remove="Resources\StylesFiller\FillerDecal.png" />
@@ -187,6 +188,7 @@
     <EmbeddedResource Include="Resources\HeaderButtons\UnlinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PreviewImage.png" />
     <EmbeddedResource Include="Resources\imt-linux" />
     <EmbeddedResource Include="Resources\imt-macos" />
     <EmbeddedResource Include="Resources\imt-win" />
