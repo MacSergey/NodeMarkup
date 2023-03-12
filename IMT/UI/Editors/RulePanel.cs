@@ -98,7 +98,7 @@ namespace IMT.UI.Editors
         private void AddHeader()
         {
             Header = ComponentPool.Get<RuleHeaderPanel>(this, nameof(Header));
-            Header.Init(this, Rule.Style.Value.Type, OnSelectTemplate, Line.IsSupportRules);
+            Header.Init(this, Rule.Style.Value.Type, Line.IsSupportRules);
             Header.OnDelete += () => Editor.DeleteRule(this);
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnCopy += CopyStyle;
@@ -108,6 +108,7 @@ namespace IMT.UI.Editors
             Header.OnApplySameStyle += ApplyStyleSameStyle;
             Header.OnApplySameType += ApplyStyleSameType;
             Header.OnExpand += Expand;
+            Header.OnSelectTemplate += OnSelectTemplate;
         }
 
         private void Expand()
@@ -313,7 +314,7 @@ namespace IMT.UI.Editors
         {
             Editor.RefreshEditor();
             AddStyleProperties();
-            Header.Style = Rule.Style.Value.Type;
+            Header.StyleType = Rule.Style.Value.Type;
         }
         public void Refresh()
         {

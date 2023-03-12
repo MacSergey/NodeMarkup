@@ -62,7 +62,7 @@ namespace IMT.UI
         public FillerGuidePropertyPanel()
         {
             FollowGuide = Content.AddUIComponent<CustomUIToggle>();
-            FollowGuide.CustomStyle();
+            FollowGuide.DefaultStyle();
             FollowGuide.OnStateChanged += FollowChanged;
 
             LeftGuideSelector = Content.AddUIComponent<SelectGuideButton>();

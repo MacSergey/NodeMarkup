@@ -66,8 +66,8 @@ namespace IMT.UI
         public FontPropertyPanel()
         {
             FontFamilySelector = Content.AddUIComponent<FontDropDown>();
-            FontFamilySelector.DefaultStyle();
-            FontFamilySelector.OnSelectedObjectChanged += FontFamilyChanged;
+            FontFamilySelector.DropDownDefaultStyle();
+            FontFamilySelector.OnSelectObject += FontFamilyChanged;
 
             FontStyleSelector = Content.AddUIComponent<FontStyleSegmented>();
             FontStyleSelector.StopLayout();
@@ -75,7 +75,7 @@ namespace IMT.UI
             FontStyleSelector.ButtonWidth = 20f;
             FontStyleSelector.isVisible = false;
             FontStyleSelector.StartLayout();
-            FontStyleSelector.OnSelectedObjectChanged += FontStyleChanged;
+            FontStyleSelector.OnSelectObject += FontStyleChanged;
             FontStyleSelector.eventSizeChanged += ItemSizeChanged;
             FontFamilySelector.PopupWidth = Width;
         }
@@ -205,22 +205,24 @@ namespace IMT.UI
         }
     }
 
-    public class FontDropDown : AdvancedDropDown<string, FontPopup, FontEntity>
+    public class FontDropDown : SelectItemDropDown<string, FontEntity, FontPopup>
     {
         public float PopupWidth { get; set; }
+        protected override Func<string, bool> Selector => null;
+        protected override Func<string, string, int> Sorter => (nameA, nameB) => nameA.CompareTo(nameB);
 
-        public FontDropDown() : base() 
+        public FontDropDown() : base()
         {
             Entity.TextScale = 0.7f;
         }
 
-        protected override void SetPopupStyle() => Popup.DefaultStyle(20f);
+        protected override void SetPopupStyle() => Popup.PopupDefaultStyle(20f);
         protected override void InitPopup()
         {
             Popup.MaximumSize = new Vector2(PopupWidth, 700f);
             Popup.width = PopupWidth;
             Popup.MaxVisibleItems = 25;
-            Popup.Init(Objects, null, (nameA, nameB) => nameA.CompareTo(nameB));
+            base.InitPopup();
         }
     }
     public class FontStyleSegmented : UIOnceSegmented<FontStyle> { }
@@ -229,13 +231,14 @@ namespace IMT.UI
     {
         protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
         protected override string GetName(string value) => value ?? IMT.Localize.StyleOption_DefaultFont;
+        protected override void SetEntityStyle(FontEntity entity) => entity.EntityStyle<string, FontEntity>();
     }
     public class FontEntity : PopupEntity<string>
     {
         private CustomUILabel Label { get; }
         public float TextScale
         {
-            get => Label.textScale; 
+            get => Label.textScale;
             set => Label.textScale = value;
         }
 

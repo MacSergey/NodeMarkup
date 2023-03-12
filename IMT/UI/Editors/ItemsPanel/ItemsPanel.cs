@@ -59,13 +59,13 @@ namespace IMT.UI.Editors
                 if (selectItem != null)
                     selectItem.IsSelect = true;
 
-                OnSelectClick?.Invoke(selectItem?.Object);
+                OnSelectClick?.Invoke(selectItem?.EditObject);
             }
         }
-        public ObjectType SelectedObject => SelectItem?.Object;
+        public ObjectType SelectedObject => SelectItem?.EditObject;
 
         protected ItemType HoverItem { get; set; }
-        public ObjectType HoverObject => HoverItem?.Object;
+        public ObjectType HoverObject => HoverItem?.EditObject;
         public virtual bool IsEmpty => !Content.components.Any(c => c is ItemType);
 
         #endregion
@@ -206,7 +206,7 @@ namespace IMT.UI.Editors
                 ItemClick(item);
             }
         }
-        private void ItemDelete(EditItem<ObjectType> item) => OnDeleteClick?.Invoke(item.Object);
+        private void ItemDelete(EditItem<ObjectType> item) => OnDeleteClick?.Invoke(item.EditObject);
         private void ItemHover(UIComponent component, UIMouseEventParameter eventParam)
         {
             if (component is ItemType item)
@@ -232,12 +232,12 @@ namespace IMT.UI.Editors
 
         #region ADDITIONAL
 
-        protected virtual ItemType FindItem(ObjectType editObject) => Content.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
+        protected virtual ItemType FindItem(ObjectType editObject) => Content.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.EditObject, editObject));
         protected virtual ItemType FindItem(int index) => FindItem<ItemType>(index, Content);
         protected T FindItem<T>(int index, UIComponent parent) where T : UIComponent => index >= 0 && parent.components.Count > index ? parent.components[index] as T : null;
 
         protected virtual int FindIndex(ObjectType editObject) => FindIndex(editObject, Content);
-        protected int FindIndex(ObjectType editObject, UIComponent parent) => Array.BinarySearch(parent.components.OfType<ItemType>().Select(i => i.Object).ToArray(), editObject, this);
+        protected int FindIndex(ObjectType editObject, UIComponent parent) => Array.BinarySearch(parent.components.OfType<ItemType>().Select(i => i.EditObject).ToArray(), editObject, this);
 
         public virtual void ScrollTo(ItemType item)
         {

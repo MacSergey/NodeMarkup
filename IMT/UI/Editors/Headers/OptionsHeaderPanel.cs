@@ -18,6 +18,11 @@ namespace IMT.UI.Editors
         public event Action OnReset;
         public event Action OnApplySameStyle;
         public event Action OnApplySameType;
+        public event Action<StyleTemplate> OnSelectTemplate
+        {
+            add => ApplyTemplate.Button.OnSelectObject += value;
+            remove => ApplyTemplate.Button.OnSelectObject -= value;
+        }
 
         protected IPropertyEditor Editor { get; private set; }
         private Style.StyleType StyleGroup { get; set; }
@@ -47,11 +52,11 @@ namespace IMT.UI.Editors
             Content.AddButton(ApplySameType);
         }
 
-        public virtual void Init(IPropertyEditor editor, Style.StyleType styleType, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
+        public virtual void Init(IPropertyEditor editor, Style.StyleType styleType, bool isDeletable = true)
         {
             Editor = editor;
             StyleGroup = styleType.GetGroup();
-            ApplyTemplate.Button.Init(StyleGroup, onSelectTemplate);
+            ApplyTemplate.Button.StyleGroup = StyleGroup;
 
             SetPasteEnabled();
             SingletonTool<IntersectionMarkingTool>.Instance.OnStyleToBuffer += StyleToBuffer;
@@ -126,7 +131,7 @@ namespace IMT.UI.Editors
         HeaderButtonInfo<HeaderButton> ApplyAllRules { get; }
 
         public bool IsExpand { set => ExpandButton.normalFgSprite = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
-        public Style.StyleType Style
+        public Style.StyleType StyleType
         {
             get => (Style.StyleType)Enum.Parse(typeof(Style.StyleType), Icon.spriteName);
             set
@@ -169,10 +174,10 @@ namespace IMT.UI.Editors
             ApplyAllRules = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyStyleHeaderButton, IMT.Localize.HeaderPanel_ApplyAllRules, ApplyAllRulesClick);
             Content.AddButton(ApplyAllRules);
         }
-        public override void Init(IPropertyEditor editor, Style.StyleType styleType, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
+        public override void Init(IPropertyEditor editor, Style.StyleType styleType, bool isDeletable = true)
         {
-            base.Init(editor, styleType, onSelectTemplate, isDeletable);
-            Style = styleType;
+            base.Init(editor, styleType, isDeletable);
+            StyleType = styleType;
         }
         public override void DeInit()
         {

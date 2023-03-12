@@ -1,4 +1,5 @@
-﻿using IMT.Manager;
+﻿using ColossalFramework.UI;
+using IMT.Manager;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
@@ -223,9 +224,9 @@ namespace IMT.UI.Editors
     }
     public class StyleTemplateItem : EditItem<StyleTemplate, StyleTemplateIcon>
     {
-        public override bool ShowDelete => Object != null && !Object.IsAsset;
+        public override bool ShowDelete => EditObject != null && !EditObject.IsAsset;
 
-        private bool IsDefault => Object?.IsDefault == true;
+        private bool IsDefault => EditObject?.IsDefault == true;
 
         public override Color32 BackgroundColor => base.NormalColor;
         public override Color32 NormalColor => IsDefault ? new Color32(255, 197, 0, 255) : base.NormalColor;
@@ -236,9 +237,9 @@ namespace IMT.UI.Editors
         public override void Refresh()
         {
             base.Refresh();
-            Icon.Type = Object.Style.Type;
-            Icon.StyleColor = Object.Style is IColorStyle ? Object.Style.Color : Color.white;
-            wordWrap = !Object.IsAsset;
+            Icon.Type = EditObject.Style.Type;
+            Icon.StyleColor = EditObject.Style is IColorStyle ? EditObject.Style.Color : Color.white;
+            wordWrap = !EditObject.IsAsset;
 
             SetColors();
         }

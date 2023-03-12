@@ -118,7 +118,7 @@ namespace IMT.UI.Editors
             Preview.Init(365f);
 
             var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview, "Info");
-            info.Init(item.Object);
+            info.Init(item.EditObject);
 
             var x = item.absolutePosition.x + item.width;
             var y = Mathf.Min(item.absolutePosition.y, root.absolutePosition.y + root.height - Preview.height);
@@ -231,20 +231,20 @@ namespace IMT.UI.Editors
 
     public class IntersectionTemplateItem : EditItem<IntersectionTemplate, IntersectionTemplateIcon>
     {
-        private bool IsLinked => Editor.Marking.Type == MarkingType.Segment && Editor.Marking.Id.GetSegment().Info is NetInfo info && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var preset) && preset == Object.Id;
+        private bool IsLinked => Editor.Marking.Type == MarkingType.Segment && Editor.Marking.Id.GetSegment().Info is NetInfo info && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var preset) && preset == EditObject.Id;
 
         public override Color32 NormalColor => IsLinked ? new Color32(255, 197, 0, 255) : base.NormalColor;
         public override Color32 HoveredColor => IsLinked ? new Color32(255, 207, 51, 255) : base.HoveredColor;
         public override Color32 PressedColor => IsLinked ? new Color32(255, 218, 72, 255) : base.PressedColor;
         public override Color32 FocusColor => IsLinked ? new Color32(255, 228, 92, 255) : base.FocusColor;
 
-        public override bool ShowDelete => Object != null && !Object.IsAsset;
+        public override bool ShowDelete => EditObject != null && !EditObject.IsAsset;
 
         public override void Refresh()
         {
             base.Refresh();
-            Icon.Count = Object.Roads;
-            wordWrap = !Object.IsAsset;
+            Icon.Count = EditObject.Roads;
+            wordWrap = !EditObject.IsAsset;
         }
     }
     public class IntersectionTemplateIcon : ColorIcon

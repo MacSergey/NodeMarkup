@@ -70,13 +70,14 @@ namespace IMT.UI.Editors
         private void AddHeader()
         {
             var header = ComponentPool.Get<StyleHeaderPanel>(PropertiesPanel, "Header");
-            header.Init(this, Manager.Style.StyleType.Filler, SelectTemplate, false);
+            header.Init(this, Manager.Style.StyleType.Filler, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
             header.OnReset += ResetStyle;
             header.OnApplySameStyle += ApplyStyleSameStyle;
             header.OnApplySameType += ApplyStyleSameType;
+            header.OnSelectTemplate += SelectTemplate;
         }
         private void AddStyleTypeProperty()
         {
@@ -226,8 +227,8 @@ namespace IMT.UI.Editors
         {
             base.Refresh();
 
-            Icon.Type = Object.Style.Value.Type;
-            Icon.StyleColor = Object.Style.Value is IColorStyle ? Object.Style.Value.Color : Color.white;
+            Icon.Type = EditObject.Style.Value.Type;
+            Icon.StyleColor = EditObject.Style.Value is IColorStyle ? EditObject.Style.Value.Color : Color.white;
         }
     }
 

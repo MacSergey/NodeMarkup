@@ -88,7 +88,7 @@ namespace IMT.UI
         public MinMaxProperty()
         {
             UseCount = Content.AddUIComponent<CustomUIToggle>();
-            UseCount.CustomStyle();
+            UseCount.DefaultStyle();
             UseCount.OnStateChanged += UseChanged;
 
             var min = Content.AddUIComponent<CustomUILabel>();

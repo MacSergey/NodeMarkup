@@ -47,14 +47,14 @@ namespace IMT.UI.Editors
         }
         protected override void DeleteSelectedItem(ItemType item)
         {
-            var group = SelectGroup(item.Object);
+            var group = SelectGroup(item.EditObject);
             var index = Math.Min(item.parent.components.IndexOf(item), item.parent.components.Count - 2);
             DeleteItem(item);
             Select(FindItem(index, group));
         }
         protected override void DeleteItem(ItemType item)
         {
-            var group = GetGroup(item.Object, false);
+            var group = GetGroup(item.EditObject, false);
 
             base.DeleteItem(item);
 
@@ -73,7 +73,7 @@ namespace IMT.UI.Editors
                 if (item == null)
                     return;
 
-                var group = SelectGroup(item.Object);
+                var group = SelectGroup(item.EditObject);
                 Groups[group].IsExpand = true;
             }
 
@@ -121,7 +121,7 @@ namespace IMT.UI.Editors
             {
                 var groupKey = SelectGroup(editObject);
                 if (Groups.TryGetValue(groupKey, out GroupItemType group))
-                    return group.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
+                    return group.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.EditObject, editObject));
                 else
                     return null;
             }

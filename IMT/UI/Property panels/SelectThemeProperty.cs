@@ -37,8 +37,8 @@ namespace IMT.UI
         public SelectThemeProperty()
         {
             DropDown = Content.AddUIComponent<ThemeDropDown>();
-            DropDown.DefaultStyle();
-            DropDown.OnSelectedObjectChanged += ValueChanged;
+            DropDown.DropDownDefaultStyle();
+            DropDown.OnSelectObject += ValueChanged;
         }
 
         private void ValueChanged(ThemeHelper.IThemeData theme) => OnValueChanged?.Invoke(Theme);
@@ -73,8 +73,11 @@ namespace IMT.UI
         }
     }
 
-    public class ThemeDropDown : AdvancedDropDown<ThemeHelper.IThemeData, ThemePopup, ThemeEntity>
+    public class ThemeDropDown : SelectItemDropDown<ThemeHelper.IThemeData, ThemeEntity, ThemePopup>
     {
+        protected override Func<ThemeHelper.IThemeData, bool> Selector => null;
+        protected override Func<ThemeHelper.IThemeData, ThemeHelper.IThemeData, int> Sorter => null;
+
         private ThemeHelper.TextureType textureType;
         public ThemeHelper.TextureType TextureType
         {
@@ -94,14 +97,14 @@ namespace IMT.UI
             set => Entity.RawName = value;
         }
 
-        protected override void SetPopupStyle() => Popup.DefaultStyle(50f);
+        protected override void SetPopupStyle() => Popup.PopupDefaultStyle(50f);
         protected override void InitPopup()
-        {           
+        {
             Popup.MaximumSize = new Vector2(width, 700f);
             Popup.width = width;
             Popup.MaxVisibleItems = 10;
             Popup.TextureType = TextureType;
-            Popup.Init(Objects, null, null);
+            base.InitPopup();
         }
     }
 
@@ -129,6 +132,7 @@ namespace IMT.UI
         }
 
         protected override string GetName(ThemeHelper.IThemeData value) => value.Name;
+        protected override void SetEntityStyle(ThemeEntity entity) => entity.EntityStyle<ThemeHelper.IThemeData, ThemeEntity>();
     }
 
     public class ThemeEntity : PopupEntity<ThemeHelper.IThemeData>
@@ -192,7 +196,7 @@ namespace IMT.UI
         }
         private void Set()
         {
-            if (Object is ThemeHelper.IThemeData theme)
+            if (EditObject is ThemeHelper.IThemeData theme)
             {
                 Screenshot.texture = theme.GetTexture(TextureType).texture;
                 Screenshot.isVisible = true;

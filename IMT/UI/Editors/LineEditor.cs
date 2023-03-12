@@ -390,7 +390,7 @@ namespace IMT.UI.Editors
 
             SetIcon();
 
-            HasOverlapped = Object.HasOverlapped;
+            HasOverlapped = EditObject.HasOverlapped;
             SetColors();
         }
         private void SetIcon()
@@ -398,7 +398,7 @@ namespace IMT.UI.Editors
             if (!ShowIcon)
                 return;
 
-            var rules = Object.Rules.ToArray();
+            var rules = EditObject.Rules.ToArray();
             Icon.Count = rules.Length;
             if (rules.Length == 1)
             {

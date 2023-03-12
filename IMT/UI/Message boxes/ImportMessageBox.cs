@@ -29,11 +29,11 @@ namespace IMT.UI
         private void AddFileList()
         {
             DropDown = Panel.Content.AddUIComponent<StringDropDown>();
-            ComponentStyle.CustomMessageBoxStyle(DropDown, new Vector2(DefaultWidth - 2 * Padding, 38));
+            ComponentStyle.DropDownMessageBoxStyle(DropDown, new Vector2(DefaultWidth - 2 * Padding, 38));
             DropDown.EntityTextScale = 1f;
 
             DropDown.textScale = 1.25f;
-            DropDown.OnSelectedObjectChanged += DropDownValueChanged;
+            DropDown.OnSelectObject += DropDownValueChanged;
 
             var files = GetList();
             foreach (var file in files)
@@ -41,13 +41,19 @@ namespace IMT.UI
 
             DropDown.SelectedObject = files.FirstOrDefault().Key;
             DropDown.OnSetPopupStyle += SetPopupStyle;
+            DropDown.OnSetEntityStyle += SetEntityStyle;
 
             DropDownValueChanged(DropDown.SelectedObject);
         }
 
         private void SetPopupStyle(StringDropDown.StringPopup popup, ref bool overridden)
         {
-            popup.CustomSettingsStyle();
+            popup.PopupSettingsStyle<DropDownItem<string>, StringDropDown.StringEntity, StringDropDown.StringPopup>();
+            overridden = true;
+        }
+        private void SetEntityStyle(StringDropDown.StringEntity entity, ref bool overridden)
+        {
+            entity.EntitySettingsStyle<DropDownItem<string>, StringDropDown.StringEntity>();
             overridden = true;
         }
 

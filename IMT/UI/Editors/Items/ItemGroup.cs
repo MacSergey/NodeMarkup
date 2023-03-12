@@ -25,8 +25,13 @@ namespace IMT.UI.Editors
 
                 isExpand = value;
                 Item.IsExpand = isExpand;
-                foreach (var item in components.Where(i => i != Item))
-                    item.isVisible = isExpand;
+
+                StopLayout();
+                {
+                    foreach (var item in components.Where(i => i != Item))
+                        item.isVisible = isExpand;
+                }
+                StartLayout();
             }
         }
 

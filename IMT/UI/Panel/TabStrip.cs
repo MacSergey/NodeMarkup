@@ -12,7 +12,7 @@ namespace IMT.UI.Panel
         {
             isLocalized = true;
 
-            this.CustomStyle();
+            this.DefaultStyle();
 
             backgroundSprite = CommonTextures.Empty;
 

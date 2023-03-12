@@ -42,8 +42,8 @@ namespace IMT.UI
     public abstract class SelectPrefabProperty<PrefabType, EntityType, PopupType, DropDownType> : SelectPrefabProperty<PrefabType>
         where PrefabType : PrefabInfo
         where EntityType : PrefabEntity<PrefabType>
-        where PopupType : Popup<PrefabType, EntityType>
-        where DropDownType : PrefabDropDown<PrefabType, PopupType, EntityType>
+        where PopupType : ObjectPopup<PrefabType, EntityType>
+        where DropDownType : PrefabDropDown<PrefabType, EntityType, PopupType>
     {
         protected override float DefaultHeight => 100f;
 
@@ -82,8 +82,8 @@ namespace IMT.UI
         public SelectPrefabProperty()
         {
             DropDown = Content.AddUIComponent<DropDownType>();
-            DropDown.DefaultStyle();
-            DropDown.OnSelectedObjectChanged += ValueChanged;
+            DropDown.DropDownDefaultStyle();
+            DropDown.OnSelectObject += ValueChanged;
         }
         public override void Init(float? height)
         {
@@ -111,10 +111,10 @@ namespace IMT.UI
     public class SelectTreeProperty : SelectPrefabProperty<TreeInfo, TreeEntity, TreePopup, TreeDropDown> { }
     public class SelectNetworkProperty : SelectPrefabProperty<NetInfo, NetEntity, NetPopup, NetDropDown> { }
 
-    public abstract class PrefabDropDown<PrefabType, PopupType, EntityType> : AdvancedDropDown<PrefabType, PopupType, EntityType>
+    public abstract class PrefabDropDown<PrefabType, EntityType, PopupType> : SelectItemDropDown<PrefabType, EntityType, PopupType>
         where PrefabType : PrefabInfo
         where EntityType : PrefabEntity<PrefabType>
-        where PopupType : Popup<PrefabType, EntityType>
+        where PopupType : ObjectPopup<PrefabType, EntityType>
     {
         public string RawName
         {
@@ -123,24 +123,25 @@ namespace IMT.UI
         }
         public Func<PrefabType, bool> SelectPredicate { get; set; }
         public Func<PrefabType, PrefabType, int> SortPredicate { get; set; }
+        protected override Func<PrefabType, bool> Selector => SelectPredicate;
+        protected override Func<PrefabType, PrefabType, int> Sorter => SortPredicate;
 
         public PrefabDropDown()
         {
             Entity.ShowFavorite = false;
         }
-        protected override void SetPopupStyle() => Popup.DefaultStyle(50f);
+        protected override void SetPopupStyle() => Popup.PopupDefaultStyle(50f);
         protected override void InitPopup()
         {
-            Popup.DefaultStyle(50f);
             Popup.MaximumSize = new Vector2(width, 700f);
             Popup.width = width;
             Popup.MaxVisibleItems = 10;
-            Popup.Init(Objects, SelectPredicate, SortPredicate);
+            base.InitPopup();
         }
     }
-    public class PropDropDown : PrefabDropDown<PropInfo, PropPopup, PropEntity> { }
-    public class TreeDropDown : PrefabDropDown<TreeInfo, TreePopup, TreeEntity> { }
-    public class NetDropDown : PrefabDropDown<NetInfo, NetPopup, NetEntity> { }
+    public class PropDropDown : PrefabDropDown<PropInfo, PropEntity, PropPopup> { }
+    public class TreeDropDown : PrefabDropDown<TreeInfo, TreeEntity, TreePopup> { }
+    public class NetDropDown : PrefabDropDown<NetInfo, NetEntity, NetPopup> { }
 
 
     public class PropPopup : SearchPopup<PropInfo, PropEntity>
@@ -159,6 +160,7 @@ namespace IMT.UI
             base.DeInit();
         }
         protected override string GetName(PropInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
+        protected override void SetEntityStyle(PropEntity entity) => entity.EntityStyle<PropInfo, PropEntity>();
     }
     public class TreePopup : SearchPopup<TreeInfo, TreeEntity>
     {
@@ -263,7 +265,7 @@ namespace IMT.UI
         }
         private void Set()
         {
-            if (Object is PrefabType prefab)
+            if (EditObject is PrefabType prefab)
             {
                 Screenshot.atlas = prefab.m_Atlas;
                 Screenshot.spriteName = prefab.m_Thumbnail;
@@ -334,14 +336,14 @@ namespace IMT.UI
     }
     public class PropEntity : PrefabEntity<PropInfo>
     {
-        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(Object);
+        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(EditObject);
     }
     public class TreeEntity : PrefabEntity<TreeInfo>
     {
-        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(Object);
+        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(EditObject);
     }
     public class NetEntity : PrefabEntity<NetInfo>
     {
-        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(Object);
+        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(EditObject);
     }
 }

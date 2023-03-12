@@ -84,7 +84,7 @@ namespace IMT.UI
         public GapProperty()
         {
             UseToggle = Content.AddUIComponent<CustomUIToggle>();
-            UseToggle.CustomStyle();
+            UseToggle.DefaultStyle();
             UseToggle.OnStateChanged += UseChanged;
 
             LengthField = Content.AddUIComponent<FloatUITextField>();

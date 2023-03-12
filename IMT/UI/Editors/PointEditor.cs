@@ -276,7 +276,7 @@ namespace IMT.UI.Editors
         public override void Init(Editor editor, MarkingEnterPoint editObject, bool inGroup)
         {
             base.Init(editor, editObject, inGroup);
-            Icon.InnerColor = Object.Color;
+            Icon.InnerColor = EditObject.Color;
         }
     }
     public class PointGroup : EditGroup<Entrance, PointItem, MarkingEnterPoint> { }

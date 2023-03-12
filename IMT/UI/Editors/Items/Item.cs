@@ -75,18 +75,18 @@ namespace IMT.UI.Editors
         bool IReusable.InCache { get; set; }
 
         protected Editor Editor { get; private set; }
-        private ObjectType _object;
-        public ObjectType Object
+        private ObjectType editObject;
+        public ObjectType EditObject
         {
-            get => _object;
+            get => editObject;
             private set
             {
-                _object = value;
-                if (_object != null)
+                editObject = value;
+                if (editObject != null)
                     Refresh();
             }
         }
-        protected bool Inited => Object != null;
+        protected bool Inited => EditObject != null;
         protected CustomUIButton DeleteButton { get; set; }
         public virtual bool ShowDelete => true;
 
@@ -98,7 +98,7 @@ namespace IMT.UI.Editors
         public virtual void Init(Editor editor, ObjectType editObject, bool inGroup)
         {
             Editor = editor;
-            Object = editObject;
+            EditObject = editObject;
 
             Refresh();
         }
@@ -108,7 +108,7 @@ namespace IMT.UI.Editors
 
             text = string.Empty;
             Editor = null;
-            Object = null;
+            EditObject = null;
             OnDelete = null;
         }
 
@@ -128,7 +128,7 @@ namespace IMT.UI.Editors
         public virtual void Refresh()
         {
             DeleteButton.isVisible = ShowDelete && width >= 120f;
-            text = Object.ToString();
+            text = EditObject.ToString();
             SetColors();
         }
     }

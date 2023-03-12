@@ -61,7 +61,7 @@ namespace IMT.UI
 
         public ModifierDropDown()
         {
-            ComponentStyle.CustomSettingsStyle(this, new Vector2(278, 31));
+            ComponentStyle.DropDownSettingsStyle(this, new Vector2(278, 31));
             EntityTextScale = 1f;
 
             foreach (var modifier in EnumExtension.GetEnumValues<StyleModifier>())
@@ -70,11 +70,14 @@ namespace IMT.UI
             SelectedObject = StyleModifier.NotSet;
         }
 
-        protected override void SelectedObjectChanged(DropDownItem<StyleModifier> item) => OnValueChanged?.Invoke(this, item.value);
-        protected override void SetPopupStyle() => Popup.CustomSettingsStyle(height);
+        protected override void SelectObject(DropDownItem<StyleModifier> item) => OnValueChanged?.Invoke(this, item.value);
+        protected override void SetPopupStyle() => Popup.PopupSettingsStyle<DropDownItem<StyleModifier>, ModifierEntity, ModifierPopup>(height);
 
         public class ModifierEntity : SimpleEntity<StyleModifier> { }
-        public class ModifierPopup : SimplePopup<StyleModifier, ModifierEntity> { }
+        public class ModifierPopup : SimplePopup<StyleModifier, ModifierEntity> 
+        {
+            protected override void SetEntityStyle(ModifierEntity entity) => entity.EntitySettingsStyle<DropDownItem<StyleModifier>, ModifierEntity>();
+        }
     }
 
     public enum StyleModifier

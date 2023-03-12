@@ -2,6 +2,7 @@
 using IMT.Manager;
 using ModsCommon;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,108 +10,135 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class ApplyTemplateHeaderButton : HeaderPopupButton<ApplyTemplatePopupPanel>
+    public class ApplyTemplateHeaderButton : ObjectDropDown<StyleTemplate, TemplatePopup, TemplateEntity>, IHeaderButton, IReusable
     {
-        protected Action<StyleTemplate> OnSelect { get; set; }
+        bool IReusable.InCache { get; set; }
 
-        private Style.StyleType StyleGroup { get; set; }
-        public void Init(Style.StyleType styleGroup, Action<StyleTemplate> onSelectTemplate)
-        {
-            StyleGroup = styleGroup;
-            OnSelect = onSelectTemplate;
-        }
-        public override void DeInit()
-        {
-            base.DeInit();
-            OnSelect = null;
-        }
-        protected override void OnPopupOpened()
-        {
-            Popup.Fill(StyleGroup);
-            Popup.OnSelectTemplate += PopupOnSelectTemplate;
+        public Style.StyleType StyleGroup { get; set; }
 
-            base.OnPopupOpened();
-        }
-        private void PopupOnSelectTemplate(StyleTemplate template)
+        protected override IEnumerable<StyleTemplate> Objects => SingletonManager<StyleTemplateManager>.Instance.GetTemplates(StyleGroup);
+        protected override Func<StyleTemplate, bool> Selector => null;
+        protected override Func<StyleTemplate, StyleTemplate, int> Sorter => (x, y) =>
         {
-            ClosePopup();
-            OnSelect?.Invoke(template);
-        }
-    }
-    public class ApplyTemplatePopupPanel : PopupPanel
-    {
-        public event Action<StyleTemplate> OnSelectTemplate;
-        private static TemplateComparer Comparer { get; } = new TemplateComparer();
+            var result = Settings.DefaultTemlatesFirst ? SortByDefault(x, y) : 0;
 
-        public void Fill(Style.StyleType group)
-        {
-            var templates = SingletonManager<StyleTemplateManager>.Instance.GetTemplates(group).OrderBy(t => t, Comparer).ToArray();
-            if (!templates.Any())
+            if (result == 0)
             {
-                var emptyLabel = Content.AddUIComponent<CustomUILabel>();
-                emptyLabel.text = IMT.Localize.HeaderPanel_NoTemplates;
-                emptyLabel.textScale = 0.8f;
-                emptyLabel.autoSize = false;
-                emptyLabel.width = Content.width;
-                emptyLabel.autoHeight = true;
-                emptyLabel.textAlignment = UIHorizontalAlignment.Center;
-                emptyLabel.padding = new RectOffset(0, 0, 5, 5);
-                return;
-            }
-
-            foreach (var template in templates)
-            {
-                var item = ComponentPool.Get<TemplatePopupItem>(Content);
-                item.Init(null, template, false);
-                item.eventClick += ItemClick;
-            }
-        }
-        private void ItemClick(UIComponent component, UIMouseEventParameter eventParam)
-        {
-            if (component is TemplatePopupItem item)
-                OnSelectTemplate?.Invoke(item.Object);
-        }
-
-        private class TemplateComparer : IComparer<StyleTemplate>
-        {
-            public int Compare(StyleTemplate x, StyleTemplate y)
-            {
-                var result = Settings.DefaultTemlatesFirst ? SortByDefault(x, y) : 0;
-
-                if (result == 0)
+                if (Settings.SortApplyType == 0)
                 {
-                    if (Settings.SortApplyType == 0)
-                    {
-                        if ((result = SortByAuthor(x, y)) == 0)
-                            if ((result = SortByType(x, y)) == 0)
-                                result = SortByName(x, y);
-                    }
-                    else if (Settings.SortApplyType == 1)
-                    {
+                    if ((result = SortByAuthor(x, y)) == 0)
                         if ((result = SortByType(x, y)) == 0)
                             result = SortByName(x, y);
-                    }
-                    else if (Settings.SortApplyType == 2)
-                    {
-                        if ((result = SortByName(x, y)) == 0)
-                            result = SortByType(x, y);
-                    }
                 }
-
-                return result;
-
-
-                static int SortByDefault(StyleTemplate x, StyleTemplate y) => -x.IsDefault.CompareTo(y.IsDefault);
-                static int SortByAuthor(StyleTemplate x, StyleTemplate y) => (x.Asset?.Author ?? string.Empty).CompareTo(y.Asset?.Author ?? string.Empty);
-                static int SortByType(StyleTemplate x, StyleTemplate y) => x.Style.Type.CompareTo(y.Style.Type);
-                static int SortByName(StyleTemplate x, StyleTemplate y) => x.Name.CompareTo(y.Name);
+                else if (Settings.SortApplyType == 1)
+                {
+                    if ((result = SortByType(x, y)) == 0)
+                        result = SortByName(x, y);
+                }
+                else if (Settings.SortApplyType == 2)
+                {
+                    if ((result = SortByName(x, y)) == 0)
+                        result = SortByType(x, y);
+                }
             }
+
+            return result;
+
+            static int SortByDefault(StyleTemplate x, StyleTemplate y) => -x.IsDefault.CompareTo(y.IsDefault);
+            static int SortByAuthor(StyleTemplate x, StyleTemplate y) => (x.Asset?.Author ?? string.Empty).CompareTo(y.Asset?.Author ?? string.Empty);
+            static int SortByType(StyleTemplate x, StyleTemplate y) => x.Style.Type.CompareTo(y.Style.Type);
+            static int SortByName(StyleTemplate x, StyleTemplate y) => x.Name.CompareTo(y.Name);
+        };
+
+        public ApplyTemplateHeaderButton()
+        {
+            atlasBackground = CommonTextures.Atlas;
+            hoveredBgSprite = pressedBgSprite = focusedBgSprite = CommonTextures.HeaderHover;
+            clipChildren = true;
+            textScale = 0.8f;
+            textHorizontalAlignment = UIHorizontalAlignment.Left;
+            foregroundSpriteMode = UIForegroundSpriteMode.Fill;
+        }
+        public void Init(UITextureAtlas atlas, string sprite, int size, int iconSize)
+        {
+            SetIcon(atlas, sprite);
+            SetSize(size, iconSize);
+        }
+        protected override void SetPopupStyle()
+        {
+            Popup.PopupDefaultStyle(50f);
+            Popup.color = new Color32(29, 58, 77, 255);
+        }
+        protected override void InitPopup()
+        {
+            Popup.MaximumSize = new Vector2(width, 700f);
+            Popup.width = 300f;
+            Popup.MaxVisibleItems = 7;
+            Popup.EntityHeight = 25f;
+            Popup.ItemsPadding = new RectOffset(4, 4, 4, 4);
+            base.InitPopup();
+        }
+        public void SetSize(int buttonSize, int iconSize)
+        {
+            size = new Vector2(buttonSize, buttonSize);
+            minimumSize = size;
+            textPadding = new RectOffset(iconSize + 5, 5, 5, 0);
+        }
+        public void SetIcon(UITextureAtlas atlas, string sprite)
+        {
+            atlasForeground = atlas ?? TextureHelper.InGameAtlas;
+            normalFgSprite = sprite;
+            hoveredFgSprite = sprite;
+            pressedFgSprite = sprite;
+        }
+        protected override void OnUpdate()
+        {
+            base.Update();
+            if (state == ButtonState.Focused)
+                state = ButtonState.Normal;
+        }
+        public virtual void DeInit()
+        {
+            SetIcon(null, string.Empty);
+        }
+        protected override void OnClick(UIMouseEventParameter p)
+        {
+            p.Use();
+            base.OnClick(p);
         }
     }
 
-
-    public class TemplatePopupItem : StyleTemplateItem
+    public class TemplatePopup : SearchPopup<StyleTemplate, TemplateEntity>
     {
+        protected override string NotFoundText => IMT.Localize.HeaderPanel_NoTemplates;
+        protected override string GetName(StyleTemplate value) => value.Name;
+        protected override void SetEntityStyle(TemplateEntity entity) => entity.EntityStyle<StyleTemplate, TemplateEntity>();
+    }
+    public class TemplateEntity : StyleTemplateItem, IPopupEntity<StyleTemplate>
+    {
+        public event Action<int, StyleTemplate> OnSelected;
+
+        public bool Selected { get; set; }
+        public int Index { get; set; }
+        public RectOffset Padding { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool ShowDelete => false;
+
+        public void PerformWidth()
+        {
+            AutoWidth();
+        }
+
+        public void SetObject(int index, StyleTemplate template, bool selected)
+        {
+            Init(null, template, false);
+        }
+
+        protected void Select() => OnSelected?.Invoke(Index, EditObject);
+        protected override void OnClick(UIMouseEventParameter p)
+        {
+            base.OnClick(p);
+            if (!p.used)
+                Select();
+        }
     }
 }
