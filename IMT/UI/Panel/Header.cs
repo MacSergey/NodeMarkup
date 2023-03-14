@@ -3,14 +3,15 @@ using IMT.Tools;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
-using ModsCommon.Utilities;
+using UnityEngine;
 
 namespace IMT.UI.Panel
 {
     public class PanelHeader : HeaderMoveablePanel<PanelHeaderContent>
     {
         private MarkingType Type { get; set; }
-        public bool Available { set => Content.SetAvailable(value); }
+
+        private BlurEffect Blur { get; set; }
 
         private HeaderButtonInfo<HeaderButton> PasteButton { get; }
         private HeaderButtonInfo<HeaderButton> EdgeLinesButton { get; }
@@ -18,8 +19,28 @@ namespace IMT.UI.Panel
         private HeaderButtonInfo<HeaderButton> BeetwenIntersectionsButton { get; }
         private HeaderButtonInfo<HeaderButton> WholeStreetButton { get; }
 
+        private bool available = true;
+        public bool Available
+        {
+            get => available;
+            set
+            {
+                if (value != available)
+                {
+                    available = value;
+                    Blur.isVisible = !available;
+                }
+            }
+        }
+
         public PanelHeader()
         {
+            Blur = AddUIComponent<BlurEffect>();
+            Blur.relativePosition = Vector3.zero;
+            Blur.size = size;
+            Blur.isVisible = false;
+            Caption.zOrder = Blur.zOrder + 1;
+
             Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.AddTemplateHeaderButton, IMT.Localize.Panel_SaveAsPreset, IntersectionMarkingTool.SaveAsIntersectionTemplateShortcut));
 
             Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyHeaderButton, IMT.Localize.Panel_CopyMarking, IntersectionMarkingTool.CopyMarkingShortcut));
@@ -64,6 +85,11 @@ namespace IMT.UI.Panel
             WholeStreetButton.Visible = Type == MarkingType.Segment;
 
             base.Refresh();
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            Blur.size = size;
         }
     }
 }

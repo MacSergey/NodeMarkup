@@ -232,7 +232,7 @@ namespace IMT.UI.Editors
         public override Color32 NormalColor => IsDefault ? new Color32(255, 197, 0, 255) : base.NormalColor;
         public override Color32 HoveredColor => IsDefault ? new Color32(255, 207, 51, 255) : base.HoveredColor;
         public override Color32 PressedColor => IsDefault ? new Color32(255, 218, 72, 255) : base.PressedColor;
-        public override Color32 FocusColor => IsDefault ? new Color32(255, 228, 92, 255) : base.FocusColor;
+        public override Color32 FocusColor => IsDefault ? new Color32(255, 166, 0, 255) : base.FocusColor;
 
         public override void Refresh()
         {

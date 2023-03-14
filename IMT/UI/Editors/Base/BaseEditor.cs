@@ -73,6 +73,7 @@ namespace IMT.UI.Editors
                     return 34f;
             }
         }
+        private float MaxItemSize => 250f;
         private float ContentSize => width - ItemsSize;
 
         public IntersectionMarkingTool Tool => SingletonTool<IntersectionMarkingTool>.Instance;
@@ -82,17 +83,36 @@ namespace IMT.UI.Editors
         public ItemsPanelType ItemsPanel { get; protected set; }
         public AdvancedScrollablePanel ContentPanel { get; protected set; }
         protected CustomUILabel EmptyLabel { get; set; }
-        private CustomUISprite Shadow { get; }
+        private CustomUISprite ItemsShadow { get; }
 
+        private BlurEffect ItemsBlur { get; }
+        private BlurEffect ContentBlur { get; }
+
+        private bool availableItems = true;
+        private bool availableContent = true;
         public sealed override bool AvailableItems
         {
-            get => ItemsPanel.isEnabled;
-            set => ItemsPanel.SetAvailable(value);
+            get => availableItems;
+            set
+            {
+                if (value != availableItems)
+                {
+                    availableItems = value;
+                    ItemsBlur.opacity = value ? 0.0f : 1.0f;
+                }
+            }
         }
         public sealed override bool AvailableContent
         {
-            get => ItemsPanel.isEnabled;
-            set => ContentPanel.SetAvailable(value);
+            get => availableContent;
+            set
+            {
+                if (value != availableContent)
+                {
+                    availableContent = value;
+                    ContentBlur.opacity = value ? 0.0f : 1.0f;
+                }
+            }
         }
 
         #endregion
@@ -109,6 +129,7 @@ namespace IMT.UI.Editors
             ItemsPanel.backgroundSprite = CommonTextures.PanelBig;
             ItemsPanel.foregroundSprite = CommonTextures.BorderTop;
             ItemsPanel.color = ItemsPanel.disabledColor = new Color32(99, 107, 107, 255);
+            ItemsPanel.canFocus = true;
 
             ItemsPanel.Content.autoLayoutPadding = new RectOffset(4, 4, 1, 2);
             ItemsPanel.Content.scrollPadding.top = 2;
@@ -119,21 +140,42 @@ namespace IMT.UI.Editors
             ItemsPanel.OnDeleteClick += OnItemDelete;
             ItemsPanel.eventMouseEnter += ItemsPanelEnter;
             ItemsPanel.eventMouseLeave += ItemsPanelLeave;
+            ItemsPanel.eventSizeChanged += (_, size) =>
+            {
+                ItemsBlur.size = size;
+                ItemsShadow.height = size.y;
+                ItemsShadow.relativePosition = ItemsPanel.relativePosition + new Vector3(size.x, 0f);
+            };
+            ItemsPanel.eventPositionChanged += (_, position) => ItemsBlur.position = position;
 
-            Shadow = AddUIComponent<CustomUISprite>();
-            Shadow.atlas = CommonTextures.Atlas;
-            Shadow.spriteName = CommonTextures.PanelShadow;
-            Shadow.color = new Color32(0, 0, 0, 224);
-            Shadow.width = 20f;
-            Shadow.isVisible = false;
+            ItemsBlur = AddUIComponent<BlurEffect>();
+            ItemsBlur.position = Vector3.zero;
+            ItemsBlur.opacity = 0f;
+            ItemsBlur.size = ItemsPanel.size;
+
+            ItemsShadow = AddUIComponent<CustomUISprite>();
+            ItemsShadow.atlas = CommonTextures.Atlas;
+            ItemsShadow.spriteName = CommonTextures.PanelShadow;
+            ItemsShadow.color = new Color32(0, 0, 0, 224);
+            ItemsShadow.width = 20f;
+            ItemsShadow.isVisible = false;
 
             ContentPanel = AddUIComponent<AdvancedScrollablePanel>();
             ContentPanel.name = nameof(ContentPanel);
             ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
             ContentPanel.atlas = CommonTextures.Atlas;
             ContentPanel.backgroundSprite = CommonTextures.PanelBig;
-            ContentPanel.color = ContentPanel.disabledColor = new Color32(34, 38, 44, 25);
+            ContentPanel.color = ContentPanel.disabledColor = new Color32(34, 38, 44, 255);
             ContentPanel.zOrder = 0;
+            ContentPanel.eventSizeChanged += (_, size) => ContentBlur.size = size;
+            ContentPanel.eventPositionChanged += (_, position) => ContentBlur.position = position;
+
+            ContentBlur = AddUIComponent<BlurEffect>();
+            ContentBlur.position = ContentPanel.position;
+            ContentBlur.size = ContentPanel.size;
+            ContentBlur.color = new Color32(188, 220, 245, 255);
+            ContentBlur.opacity = 0f;
+            ContentBlur.zOrder = 1;
 
             AddEmptyLabel();
         }
@@ -166,7 +208,7 @@ namespace IMT.UI.Editors
             if (Active)
             {
                 AvailableItems = true;
-                AvailableContent = true;
+                AvailableContent = !ItemsExpanded;
                 PlaceItems();
 
                 var editObject = EditObject;
@@ -222,10 +264,6 @@ namespace IMT.UI.Editors
             ItemsPanel.size = new Vector2(ItemsSize, size.y);
             ItemsPanel.relativePosition = new Vector2(0, 0);
 
-            Shadow.isVisible = false;
-            Shadow.height = ItemsPanel.height;
-            Shadow.relativePosition = ItemsPanel.relativePosition + new Vector3(ItemsPanel.width, 0f);
-
             ContentPanel.size = new Vector2(ContentSize, size.y);
             ContentPanel.relativePosition = new Vector2(ItemsSize, 0);
 
@@ -242,45 +280,64 @@ namespace IMT.UI.Editors
         private void OnItemDelete(ObjectType editObject) => Tool.DeleteItem(editObject, OnObjectDelete);
 
         private string AnimationId => $"{nameof(ItemsPanel)}{ItemsPanel.GetHashCode()}";
+        private bool itemsExpanded;
+        private bool ItemsExpanded
+        {
+            get => itemsExpanded;
+            set
+            {
+                if (value != itemsExpanded)
+                {
+                    itemsExpanded = value;
+                    ItemsShadow.isVisible = value;
+                    AvailableContent = !value;
+                }
+            }
+        }
         private void ItemsPanelEnter(UIComponent component, UIMouseEventParameter eventParam)
         {
-            if (!isEnabled || !Settings.AutoCollapseItemsPanel)
+            if (!isEnabled || !AvailableItems || !Settings.AutoCollapseItemsPanel)
                 return;
 
             ValueAnimator.Cancel(AnimationId);
+            ItemsPanel.Focus();
 
             var current = ItemsPanel.width;
             var min = ItemsSize;
-            var max = 250f;
+            var max = MaxItemSize;
             var time = 0.2f * (max - current) / (max - min);
 
-            if (min < 250f && current != max)
+            if (min < max && current != max)
             {
-                Shadow.isVisible = true;
-                ValueAnimator.Animate(AnimationId, SetItemsPanelWidth, new AnimatedFloat(current, max, time, EasingType.CubicEaseOut));
+                ItemsExpanded = true;
+                ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, max, time, EasingType.CubicEaseOut));
             }
         }
         private void ItemsPanelLeave(UIComponent component, UIMouseEventParameter eventParam)
         {
-            if (!Settings.AutoCollapseItemsPanel)
+            if (!AvailableItems || !Settings.AutoCollapseItemsPanel)
                 return;
 
             ValueAnimator.Cancel(AnimationId);
 
             var current = ItemsPanel.width;
             var min = ItemsSize;
-            var max = 250f;
+            var max = MaxItemSize;
             var time = 0.2f * (current - min) / (max - min);
 
             if (current != min)
             {
-                ValueAnimator.Animate(AnimationId, SetItemsPanelWidth, new AnimatedFloat(current, min, time, EasingType.CubicEaseOut), () => Shadow.isVisible = false);
+                ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, min, time, EasingType.CubicEaseOut), AfterItemPanelCollapsed);
             }
         }
-        private void SetItemsPanelWidth(float width)
+        private void SetItemPanelWidth(float width)
         {
             ItemsPanel.width = width;
-            Shadow.relativePosition = ItemsPanel.relativePosition + new Vector3(width, 0f);
+            ContentBlur.opacity = width / MaxItemSize;
+        }
+        private void AfterItemPanelCollapsed()
+        {
+            ItemsExpanded = false;
         }
 
         protected virtual void OnObjectSelect(ObjectType editObject) { }

@@ -69,7 +69,7 @@ namespace IMT.UI.Editors
         {
             Popup.MaximumSize = new Vector2(width, 700f);
             Popup.width = 300f;
-            Popup.MaxVisibleItems = 7;
+            Popup.MaxVisibleItems = 25;
             Popup.EntityHeight = 25f;
             Popup.ItemsPadding = new RectOffset(4, 4, 4, 4);
             base.InitPopup();

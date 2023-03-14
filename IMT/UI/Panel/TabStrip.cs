@@ -8,6 +8,21 @@ namespace IMT.UI.Panel
 {
     public class PanelTabStrip : TabStrip<PanelTabStrip.PanelTab>
     {
+        private bool available = true;
+        public bool Available
+        {
+            get => available;
+            set
+            {
+                if (value != available)
+                {
+                    available = value;
+                    Blur.isVisible = !available;
+                }
+            }
+        }
+        private BlurEffect Blur { get; set; }
+
         public PanelTabStrip()
         {
             isLocalized = true;
@@ -22,6 +37,11 @@ namespace IMT.UI.Panel
             TabFocusedColor = new Color32(155, 175, 86, 255);
             TabDisabledColor = new Color32(36, 38, 37, 255);
             TabFocusedDisabledColor = new Color32(111, 125, 61, 255);
+
+            Blur = AddUIComponent<BlurEffect>();
+            Blur.relativePosition = Vector3.zero;
+            Blur.size = size;
+            Blur.isVisible = false;
         }
 
         protected override void OnLocalize()
@@ -42,7 +62,16 @@ namespace IMT.UI.Panel
             var tab = AddTabImpl(editor.Name);
             tab.textPadding.top = 4;
             tab.Editor = editor;
+
+            Blur.zOrder = int.MaxValue;
         }
+
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            Blur.size = size;
+        }
+
         public class PanelTab : Tab
         {
             public Editor Editor { get; set; }
