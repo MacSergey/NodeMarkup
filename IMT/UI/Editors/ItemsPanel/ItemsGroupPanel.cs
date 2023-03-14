@@ -98,11 +98,14 @@ namespace IMT.UI.Editors
             {
                 var index = FindIndex(groupType, Content);
                 group = ComponentPool.Get<GroupItemType>(Content, zOrder: index >= 0 ? index : ~index);
-                group.autoLayout = autoLayout;
                 group.Init(groupType, GroupName(groupType));
                 group.width = Content.width;
                 group.Item.eventMouseEnter += GroupHover;
                 group.Item.eventMouseLeave += GroupLeave;
+
+                if (Level > 0)
+                    group.StopLayout();
+
                 Groups[groupType] = group;
             }
             return group;

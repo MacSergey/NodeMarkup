@@ -17,6 +17,7 @@ namespace IMT.Manager
         {
             get
             {
+                yield return nameof(PavementTheme);
                 yield return nameof(Theme);
                 yield return nameof(Elevation);
                 yield return nameof(CornerRadius);

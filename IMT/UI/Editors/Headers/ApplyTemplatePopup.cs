@@ -53,16 +53,12 @@ namespace IMT.UI.Editors
         public ApplyTemplateHeaderButton()
         {
             atlasBackground = CommonTextures.Atlas;
-            hoveredBgSprite = pressedBgSprite = focusedBgSprite = CommonTextures.HeaderHover;
+            SetBgSprite(new ModsCommon.UI.SpriteSet(string.Empty, CommonTextures.HeaderHover, CommonTextures.HeaderHover, CommonTextures.HeaderHover, string.Empty));
+
             clipChildren = true;
             textScale = 0.8f;
             textHorizontalAlignment = UIHorizontalAlignment.Left;
             foregroundSpriteMode = UIForegroundSpriteMode.Fill;
-        }
-        public void Init(UITextureAtlas atlas, string sprite, int size, int iconSize)
-        {
-            SetIcon(atlas, sprite);
-            SetSize(size, iconSize);
         }
         protected override void SetPopupStyle()
         {
@@ -87,13 +83,11 @@ namespace IMT.UI.Editors
         public void SetIcon(UITextureAtlas atlas, string sprite)
         {
             atlasForeground = atlas ?? TextureHelper.InGameAtlas;
-            normalFgSprite = sprite;
-            hoveredFgSprite = sprite;
-            pressedFgSprite = sprite;
+            SetFgSprite(new ModsCommon.UI.SpriteSet(sprite));
         }
         protected override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
             if (state == ButtonState.Focused)
                 state = ButtonState.Normal;
         }
