@@ -28,6 +28,13 @@ namespace IMT.UI.Editors
 
                 StopLayout();
                 {
+                    if (isExpand)
+                        verticalSpacing = 15;
+                    else
+                        verticalSpacing = 0;
+
+                    SetStyle();
+
                     foreach (var item in components.Where(i => i != Item))
                         item.isVisible = isExpand;
                 }
@@ -48,9 +55,8 @@ namespace IMT.UI.Editors
                 autoFitChildrenVertically = true;
 
                 atlas = CommonTextures.Atlas;
-                //foregroundSprite = CommonTextures.PanelBig;
-                //normalFgColor = new Color32(29, 77, 109, 255);
-                //spritePadding = new RectOffset(2, 2, 2, 2);
+                normalFgColor = IMTColors.itemGroupBackground;
+                foregroundSprite = CommonTextures.PanelBig;
 
                 AddGroupItem();
             }
@@ -71,6 +77,20 @@ namespace IMT.UI.Editors
             Item.text = groupName;
             IsExpand = false;
         }
+        private void SetStyle()
+        {
+            var padding = width >= 150 ? EditItemBase.ExpandedPadding : EditItemBase.CollapsedPadding;
+
+            if (isExpand)
+            {
+                spritePadding = new RectOffset(padding, padding, 4, 15);
+            }
+            else
+            {
+                spritePadding = new RectOffset(padding, padding, 4, 4);
+            }
+        }
+
         public virtual void Refresh()
         {
             foreach (var item in components.OfType<ItemType>())
@@ -80,6 +100,8 @@ namespace IMT.UI.Editors
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
+
+            SetStyle();
 
             foreach (var item in components)
                 item.width = width - autoLayoutPadding.horizontal - padding.horizontal;
@@ -93,19 +115,20 @@ namespace IMT.UI.Editors
             foreach (var component in components)
                 ComponentPool.Free(component);
 
-            StartLayout(false);
+            StartLayout(false, true);
         }
     }
 
     public class GroupItem : EditItemBase
     {
         public override ModsCommon.UI.SpriteSet BackgroundSprites => new ModsCommon.UI.SpriteSet(string.Empty);
+
         public override ModsCommon.UI.SpriteSet ForegroundSprites => new ModsCommon.UI.SpriteSet()
         {
-            normal = CommonTextures.PanelBig,
+            normal = string.Empty,
             hovered = CommonTextures.PanelBig,
             pressed = CommonTextures.PanelBig,
-            focused = CommonTextures.PanelBig,
+            focused = string.Empty,
             disabled = string.Empty,
         };
         public override ColorSet ForegroundColors
@@ -118,19 +141,18 @@ namespace IMT.UI.Editors
             }
         }
         public override ColorSet TextColor => new ColorSet(Color.white);
-        protected override float TextScale => 0.8f;
+        protected override float TextScale => 1f;
         protected override float DefaultHeight => 48f;
+        public override RectOffset SpritePadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 4, 4) : new RectOffset(CollapsedPadding, CollapsedPadding, 4, 4);
 
         public bool IsExpand { set => ExpandIcon.spriteName = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
 
         private CustomUISprite ExpandIcon { get; set; }
+        private static int ExpandPadding => 7;
 
         public GroupItem() : base()
         {
-            textPadding.right = 30;
             textPadding.top = 5;
-            textPadding.left = 8;
-
             normalBgSprite = CommonTextures.PanelSmall;
 
             AddExpandIcon();
@@ -156,9 +178,10 @@ namespace IMT.UI.Editors
             {
                 ExpandIcon.isVisible = width >= 100f;
                 var offset = (height - ExpandIcon.height) * 0.5f;
-                ExpandIcon.relativePosition = new Vector2(width - ExpandIcon.width - offset, offset);
+                ExpandIcon.relativePosition = new Vector2(width - spritePadding.right - ExpandIcon.width - ExpandPadding, offset);
 
-                textPadding.right = ExpandIcon.isVisible ? 30 : 5;
+                textPadding.left = 10 + spritePadding.left;
+                textPadding.right = (ExpandIcon.isVisible ? (int)ExpandIcon.width + ExpandPadding : 0) + spritePadding.right + TextPadding;
             }
         }
         protected override void OnSizeChanged()

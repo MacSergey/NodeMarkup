@@ -254,8 +254,8 @@ namespace IMT.UI.Editors
 
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-            ItemsPanel.HoverGroupObject?.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = 2f });
-            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = 2f });
+            ItemsPanel.HoverGroupObject?.Render(new OverlayData(cameraInfo) { Color = CommonColors.White, Width = 2f });
+            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = CommonColors.White, Width = 2f });
         }
     }
     public class PointsItemsPanel : ItemsGroupPanel<PointItem, MarkingEnterPoint, PointGroup, Entrance>

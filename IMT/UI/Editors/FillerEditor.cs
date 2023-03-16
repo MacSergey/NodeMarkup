@@ -206,12 +206,12 @@ namespace IMT.UI.Editors
 
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
 
             if (HoverGuideSelectButton != null)
             {
                 var guide = EditObject.Contour.GetGuide(HoverGuideSelectButton.Value.a, HoverGuideSelectButton.Value.b, HoverGuideSelectButton.Other.a, HoverGuideSelectButton.Other.b);
-                guide.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+                guide.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
             }
         }
 
@@ -248,7 +248,7 @@ namespace IMT.UI.Editors
         {
             FirstPoint = null;
             PointsSelector = GetPointsSelector();
-            LineSelector = new LinesSelector<GuideBound>(Contour.TrajectoriesProcessed.Select((t, i) => new GuideBound(t, 0.5f, i)), Colors.Orange);
+            LineSelector = new LinesSelector<GuideBound>(Contour.TrajectoriesProcessed.Select((t, i) => new GuideBound(t, 0.5f, i)), CommonColors.Orange);
         }
         public override void OnToolUpdate()
         {
@@ -295,14 +295,14 @@ namespace IMT.UI.Editors
             if (ignore != null)
                 ignore = ignore.ProcessedVertex;
 
-            return new PointsSelector<IFillerVertex>(Contour.RawVertices.Where(v => ignore == null || !v.ProcessedVertex.Equals(ignore)), Colors.Purple);
+            return new PointsSelector<IFillerVertex>(Contour.RawVertices.Where(v => ignore == null || !v.ProcessedVertex.Equals(ignore)), CommonColors.Purple);
         }
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (!IsFirstSelected)
             {
-                var overlayData = new OverlayData(cameraInfo) { Color = Colors.Hover };
+                var overlayData = new OverlayData(cameraInfo) { Color = CommonColors.Hover };
                 foreach (var part in Contour.RawEdges)
                 {
                     if (part.IsPoint)

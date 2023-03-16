@@ -168,10 +168,10 @@ namespace IMT.Manager
         {
             GetGuides(filler.Contour, out ITrajectory left, out ITrajectory right);
 
-            data.Color = Colors.Green;
+            data.Color = CommonColors.Green;
             left?.Render(data);
 
-            data.Color = Colors.Red;
+            data.Color = CommonColors.Red;
             right?.Render(data);
         }
 

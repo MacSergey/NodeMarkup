@@ -20,7 +20,7 @@ namespace IMT.UI.Editors
         {
             get
             {
-                var color = Colors.Hover;
+                var color = CommonColors.Hover;
                 color.a = 128;
                 return color;
             }
@@ -321,9 +321,9 @@ namespace IMT.UI.Editors
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             {
-                ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 2f, AlphaBlend = false });
+                ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover, Width = 2f, AlphaBlend = false });
                 HoverRulePanel?.Rule.Line.RenderRule(HoverRulePanel.Rule, new OverlayData(cameraInfo) { Color = HoverAlpha, Width = 2f, AlphaBlend = false });
-                HoverPartEdgeButton?.Value?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+                HoverPartEdgeButton?.Value?.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
             }
         }
 
@@ -334,7 +334,7 @@ namespace IMT.UI.Editors
         protected override bool IsHover => PointsSelector.IsHoverPoint;
         protected override ILinePartEdge Hover => PointsSelector.HoverPoint;
         public PointsSelector<ILinePartEdge> PointsSelector { get; set; }
-        protected override void OnSetButton() => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectButton.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
+        protected override void OnSetButton() => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectButton.Position == EdgePosition.Start ? CommonColors.Green : CommonColors.Red);
 
         public override void Deactivate()
         {

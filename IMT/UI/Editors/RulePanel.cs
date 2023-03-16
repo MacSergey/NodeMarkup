@@ -321,7 +321,7 @@ namespace IMT.UI.Editors
             StopLayout();
             {
                 var error = Rule.IsOverlapped;
-                color = !IsExpand && error ? Colors.Error : NormalColor;
+                color = !IsExpand && error ? CommonColors.Error : NormalColor;
                 Header.IsExpand = IsExpand;
                 Error.isVisible = IsExpand && error;
                 Warning.isVisible = IsExpand && Settings.ShowPanelTip && !Editor.CanDivide;

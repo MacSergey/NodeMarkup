@@ -40,7 +40,7 @@ namespace IMT.Tools
 
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
-            DragPoint.Enter.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 2f });
+            DragPoint.Enter.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover, Width = 2f });
             DragPoint.Render(new OverlayData(cameraInfo));
         }
     }

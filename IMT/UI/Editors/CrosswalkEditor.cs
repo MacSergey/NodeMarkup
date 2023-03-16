@@ -285,8 +285,8 @@ namespace IMT.UI.Editors
         }
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
-            HoverBorderButton?.Value?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
+            HoverBorderButton?.Value?.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
         }
 
         public void BorderSetup()
@@ -335,7 +335,7 @@ namespace IMT.UI.Editors
 
         protected override void OnSetButton()
         {
-            var color = SelectButton.Position == BorderPosition.Left ? Colors.Green : Colors.Red;
+            var color = SelectButton.Position == BorderPosition.Left ? CommonColors.Green : CommonColors.Red;
             LineSelector = new LinesSelector<MarkingLineBound>(SelectButton.Objects.Select(i => new MarkingLineBound(i, 0.5f)).ToArray(), color);
         }
 

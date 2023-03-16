@@ -10,8 +10,9 @@ namespace IMT.UI.Editors
 {
     public abstract class EditItemBase : CustomUIButton
     {
-        public virtual ModsCommon.UI.SpriteSet BackgroundSprites => new ModsCommon.UI.SpriteSet(CommonTextures.BorderBottom);
-        public virtual ColorSet BackgroundColors => new ColorSet(new Color32(39, 44, 47, 255));
+        public virtual ModsCommon.UI.SpriteSet BackgroundSprites => new ModsCommon.UI.SpriteSet(string.Empty);
+        public virtual ColorSet BackgroundColors => new ColorSet();
+
         public virtual ModsCommon.UI.SpriteSet ForegroundSprites => new ModsCommon.UI.SpriteSet()
         {
             normal = string.Empty,
@@ -25,18 +26,21 @@ namespace IMT.UI.Editors
         public virtual ColorSet ForegroundColors => new ColorSet()
         {
             normal = null,
-            hovered = new Color32(38, 100, 142, 255),
-            pressed = new Color32(79, 143, 192, 255),
+            hovered = IMTColors.itemHovered,
+            pressed = IMTColors.itemPressed,
             focused = null,
             disabled = null,
         };
-        public virtual ColorSet ForegroundSelectedColors => new ColorSet(new Color32(139, 181, 213, 255));
+        public virtual ColorSet ForegroundSelectedColors => new ColorSet(IMTColors.itemFocused);
 
         public virtual ColorSet TextColor => new ColorSet(Color.white);
         public virtual ColorSet TextSelectedColor => new ColorSet(Color.black);
+        public virtual RectOffset SpritePadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 2, 2) : new RectOffset(CollapsedPadding, CollapsedPadding, 2, 2);
+        protected static int TextPadding => 5;
+        public static int ExpandedPadding => 8;
+        public static int CollapsedPadding => 4;
 
         protected virtual float TextScale => 0.65f;
-        protected virtual int TextPaddingTop => 5;
         protected virtual float DefaultHeight => 32f;
 
         public EditItemBase()
@@ -70,8 +74,8 @@ namespace IMT.UI.Editors
             SetSelectedTextColor(TextSelectedColor);
 
             textScale = TextScale;
-            textPadding.top = TextPaddingTop;
-            spritePadding = new RectOffset(2, 2, 2, 3);
+            textPadding.top = 5;
+            spritePadding = SpritePadding;
         }
     }
     public abstract class EditItem<ObjectType> : EditItemBase, IReusable
@@ -155,12 +159,10 @@ namespace IMT.UI.Editors
             Icon.isVisible = ShowIcon;
             if (inGroup)
             {
-                spritePadding = new RectOffset(3, 3, 2, 2);
-                m_Size.y = DefaultHeight + spritePadding.vertical;
+                m_Size.y = DefaultHeight + SpritePadding.vertical;
             }
             else
             {
-                spritePadding = new RectOffset(0, 0, 0, 0);
                 m_Size.y = DefaultHeight;
             }
             base.Init(editor, editObject, inGroup);
@@ -171,27 +173,22 @@ namespace IMT.UI.Editors
 
             if (ShowIcon)
             {
-                var iconSize = 19f;
+                var iconSize = 19;
                 Icon.size = new Vector2(iconSize, iconSize);
-                var fixOffset = 5 + spritePadding.left;
-                var offset = (width - iconSize) * 0.5f;
-                if (offset <= 1.5f * fixOffset)
-                {
-                    Icon.relativePosition = new Vector2(offset, spritePadding.top + (height - spritePadding.vertical - iconSize) * 0.5f);
-                    textPadding.left = 50;
-                }
-                else
-                {
-                    Icon.relativePosition = new Vector2(fixOffset, spritePadding.top + (height - spritePadding.vertical - iconSize) * 0.5f);
-                    textPadding.left = fixOffset + (int)iconSize + 5;
-                }
+
+                var centerOffset = Mathf.FloorToInt(width - spritePadding.vertical - iconSize) / 2;
+                var fixOffset = TextPadding;
+                var widthOffset = spritePadding.left + Math.Min(fixOffset, centerOffset);
+                var heightOffset = spritePadding.top + (height - spritePadding.vertical - iconSize) * 0.5f;
+                Icon.relativePosition = new Vector3(widthOffset, heightOffset);
+                textPadding.left = centerOffset <= 1.5f * fixOffset ? 50 : spritePadding.left + fixOffset + iconSize + TextPadding;
             }
             else
-                textPadding.left = 5 + spritePadding.left;
+                textPadding.left = TextPadding + spritePadding.left;
 
             if (ShowDelete && width >= 120f)
             {
-                var buttonSize = 15f;
+                var buttonSize = 15;
                 DeleteButton.isVisible = true;
                 DeleteButton.size = new Vector2(buttonSize, buttonSize);
                 DeleteButton.relativePosition = new Vector2(size.x - buttonSize - 7 - spritePadding.right, spritePadding.top + (height - spritePadding.vertical - buttonSize) * 0.5f);
@@ -200,7 +197,7 @@ namespace IMT.UI.Editors
             else
             {
                 DeleteButton.isVisible = false;
-                textPadding.right = 7 + spritePadding.right;
+                textPadding.right = TextPadding + spritePadding.right;
             }
         }
         protected override void OnSizeChanged()

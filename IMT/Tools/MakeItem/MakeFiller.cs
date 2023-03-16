@@ -95,7 +95,7 @@ namespace IMT.Tools
 
         private void RenderFillerLines(RenderManager.CameraInfo cameraInfo)
         {
-            var color = IsHover && Hover.Equals(Contour.First) ? Colors.Green : Colors.Hover;
+            var color = IsHover && Hover.Equals(Contour.First) ? CommonColors.Green : CommonColors.Hover;
             Contour.Render(new OverlayData(cameraInfo) { Color = color });
         }
         private void RenderFillerConnectLine(RenderManager.CameraInfo cameraInfo)
@@ -107,15 +107,15 @@ namespace IMT.Tools
             {
                 var linePart = Contour.GetFillerLine(Contour.Last, Hover);
                 if (linePart.GetTrajectory(out ITrajectory trajectory))
-                    trajectory.Render(new OverlayData(cameraInfo) { Color = Colors.Green });
+                    trajectory.Render(new OverlayData(cameraInfo) { Color = CommonColors.Green });
             }
             else
             {
                 var bezier = new Line3(Contour.Last.Position, SingletonTool<IntersectionMarkingTool>.Instance.Ray.GetRayPosition(Marking.Position.y, out _)).GetBezier();
-                bezier.RenderBezier(new OverlayData(cameraInfo) { Color = Colors.Hover });
+                bezier.RenderBezier(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
             }
         }
 
-        private void GetFillerPoints() => FillerPointsSelector = new PointsSelector<IFillerVertex>(Contour.GetNextСandidates(), Colors.Red);
+        private void GetFillerPoints() => FillerPointsSelector = new PointsSelector<IFillerVertex>(Contour.GetNextСandidates(), CommonColors.Red);
     }
 }

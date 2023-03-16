@@ -159,12 +159,12 @@ namespace IMT.UI.Editors
 
             base.StopLayout();
         }
-        public override void StartLayout(bool layoutNow = true)
+        public override void StartLayout(bool layoutNow = true, bool force = false)
         {
             foreach (var group in Groups.Values)
-                group.StartLayout();
+                group.StartLayout(layoutNow, force);
 
-            base.StartLayout(layoutNow);
+            base.StartLayout(layoutNow, force);
         }
 
         #endregion

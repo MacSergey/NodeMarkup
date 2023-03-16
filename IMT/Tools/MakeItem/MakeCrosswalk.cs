@@ -116,7 +116,7 @@ namespace IMT.Tools
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
             if (IsHoverPoint)
-                HoverPoint.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 0.5f });
+                HoverPoint.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover, Width = 0.5f });
 
             RenderPointsOverlay(cameraInfo);
 
@@ -133,7 +133,7 @@ namespace IMT.Tools
         {
             var bezier = new Line3(SelectPoint.MarkerPosition, HoverPoint.MarkerPosition).GetBezier();
             var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
+            var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? CommonColors.Yellow : CommonColors.Red) : CommonColors.Green;
 
             bezier.RenderBezier(new OverlayData(cameraInfo) { Color = color, Width = MarkingCrosswalkPoint.Shift * 2, Cut = true });
         }
@@ -144,7 +144,7 @@ namespace IMT.Tools
             dir.Normalize();
             var bezier = new Line3(SelectPoint.MarkerPosition, SelectPoint.MarkerPosition + dir * Mathf.Max(lenght, 1f)).GetBezier();
 
-            bezier.RenderBezier(new OverlayData(cameraInfo) { Color = Colors.White, Width = MarkingCrosswalkPoint.Shift * 2, Cut = true });
+            bezier.RenderBezier(new OverlayData(cameraInfo) { Color = CommonColors.White, Width = MarkingCrosswalkPoint.Shift * 2, Cut = true });
         }
     }
 }
