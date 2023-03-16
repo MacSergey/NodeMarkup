@@ -41,15 +41,20 @@ namespace IMT.UI.Editors
 
         public EditGroup()
         {
-            autoLayoutDirection = LayoutDirection.Vertical;
-            autoLayoutPadding = new RectOffset(0, 0, 0, 0);
-            autoFitChildrenVertically = true;
+            StopLayout();
+            {
+                autoLayoutDirection = LayoutDirection.Vertical;
+                autoLayoutPadding = new RectOffset(0, 0, 0, 0);
+                autoFitChildrenVertically = true;
 
-            atlas = CommonTextures.Atlas;
-            backgroundSprite = CommonTextures.PanelSmall;
-            color = disabledColor = new Color32(29, 58, 77, 255);
+                atlas = CommonTextures.Atlas;
+                //foregroundSprite = CommonTextures.PanelBig;
+                //normalFgColor = new Color32(29, 77, 109, 255);
+                //spritePadding = new RectOffset(2, 2, 2, 2);
 
-            AddGroupItem();
+                AddGroupItem();
+            }
+            StartLayout();
         }
         private void AddGroupItem()
         {
@@ -77,7 +82,7 @@ namespace IMT.UI.Editors
             base.OnSizeChanged();
 
             foreach (var item in components)
-                item.width = width - autoLayoutPadding.horizontal;
+                item.width = width - autoLayoutPadding.horizontal - padding.horizontal;
         }
 
         public void DeInit()
@@ -94,12 +99,27 @@ namespace IMT.UI.Editors
 
     public class GroupItem : EditItemBase
     {
-        public override Color32 NormalColor => new Color32(114, 197, 255, 255);
-        public override Color32 HoveredColor => new Color32(97, 180, 239, 255);
-        public override Color32 PressedColor => new Color32(86, 167, 225, 255);
-        public override Color32 FocusColor => NormalColor;
-        protected override float TextScale => 0.65f;
-        protected override float DefaultHeight => 36f;
+        public override ModsCommon.UI.SpriteSet BackgroundSprites => new ModsCommon.UI.SpriteSet(string.Empty);
+        public override ModsCommon.UI.SpriteSet ForegroundSprites => new ModsCommon.UI.SpriteSet()
+        {
+            normal = CommonTextures.PanelBig,
+            hovered = CommonTextures.PanelBig,
+            pressed = CommonTextures.PanelBig,
+            focused = CommonTextures.PanelBig,
+            disabled = string.Empty,
+        };
+        public override ColorSet ForegroundColors
+        {
+            get
+            {
+                var colors = base.ForegroundColors;
+                colors.normal = colors.focused = new Color32(29, 75, 106, 255);
+                return colors;
+            }
+        }
+        public override ColorSet TextColor => new ColorSet(Color.white);
+        protected override float TextScale => 0.8f;
+        protected override float DefaultHeight => 48f;
 
         public bool IsExpand { set => ExpandIcon.spriteName = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
 
@@ -109,7 +129,7 @@ namespace IMT.UI.Editors
         {
             textPadding.right = 30;
             textPadding.top = 5;
-            textPadding.left = 5;
+            textPadding.left = 8;
 
             normalBgSprite = CommonTextures.PanelSmall;
 
@@ -130,7 +150,7 @@ namespace IMT.UI.Editors
         }
         private void Refresh()
         {
-            SetColors();
+            SetStyle();
 
             if (ExpandIcon != null)
             {

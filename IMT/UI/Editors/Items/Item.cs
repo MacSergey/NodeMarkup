@@ -10,61 +10,68 @@ namespace IMT.UI.Editors
 {
     public abstract class EditItemBase : CustomUIButton
     {
-        public virtual Color32 BackgroundColor => NormalColor;
-        public virtual Color32 NormalColor => new Color32(29, 58, 77, 255);
-        public virtual Color32 HoveredColor => new Color32(44, 87, 112, 255);
-        public virtual Color32 PressedColor => new Color32(51, 100, 132, 255);
-        public virtual Color32 FocusColor => new Color32(171, 185, 196, 255);
-        public virtual Color32 TextColor => Color.white;
-        protected virtual float TextScale => 0.55f;
-        protected virtual float DefaultHeight => 25f;
-
-        public bool IsSelect
+        public virtual ModsCommon.UI.SpriteSet BackgroundSprites => new ModsCommon.UI.SpriteSet(CommonTextures.BorderBottom);
+        public virtual ColorSet BackgroundColors => new ColorSet(new Color32(39, 44, 47, 255));
+        public virtual ModsCommon.UI.SpriteSet ForegroundSprites => new ModsCommon.UI.SpriteSet()
         {
-            get => state == ButtonState.Focused;
-            set
-            {
-                if (IsSelect != value)
-                {
-                    state = value ? ButtonState.Focused : ButtonState.Normal;
-                    SetColors();
-                }
-            }
-        }
+            normal = string.Empty,
+            hovered = CommonTextures.PanelSmall,
+            pressed = CommonTextures.PanelSmall,
+            focused = string.Empty,
+            disabled = CommonTextures.PanelSmall,
+        };
+        public virtual ModsCommon.UI.SpriteSet ForegroundSelectedSprites => new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+
+        public virtual ColorSet ForegroundColors => new ColorSet()
+        {
+            normal = null,
+            hovered = new Color32(38, 100, 142, 255),
+            pressed = new Color32(79, 143, 192, 255),
+            focused = null,
+            disabled = null,
+        };
+        public virtual ColorSet ForegroundSelectedColors => new ColorSet(new Color32(139, 181, 213, 255));
+
+        public virtual ColorSet TextColor => new ColorSet(Color.white);
+        public virtual ColorSet TextSelectedColor => new ColorSet(Color.black);
+
+        protected virtual float TextScale => 0.65f;
+        protected virtual int TextPaddingTop => 5;
+        protected virtual float DefaultHeight => 32f;
 
         public EditItemBase()
         {
             m_Size = new Vector2(100f, DefaultHeight);
             clipChildren = true;
             atlas = CommonTextures.Atlas;
-            normalBgSprite = CommonTextures.PanelSmall;
-            normalFgSprite = CommonTextures.PanelSmall;
 
             textHorizontalAlignment = UIHorizontalAlignment.Left;
             textVerticalAlignment = UIVerticalAlignment.Middle;
-            textScale = TextScale;
-            textPadding.top = 5;
             wordWrap = true;
         }
 
         public virtual void DeInit()
         {
-            IsSelect = false;
+            isSelected = false;
             isVisible = true;
         }
 
-        protected virtual void SetColors()
+        protected virtual void SetStyle()
         {
-            normalBgColor = hoveredBgColor = pressedBgColor = focusedBgColor = BackgroundColor;
+            SetBgSprite(BackgroundSprites);
+            SetBgColor(BackgroundColors);
 
-            normalFgColor = NormalColor;
-            hoveredFgColor = HoveredColor;
-            pressedFgColor = PressedColor;
-            focusedFgColor = FocusColor;
+            SetFgSprite(ForegroundSprites);
+            SetFgColor(ForegroundColors);
+            SetTextColor(TextColor);
 
-            disabledBgColor = disabledFgColor = NormalColor;
+            SetSelectedFgSprite(ForegroundSelectedSprites);
+            SetSelectedFgColor(ForegroundSelectedColors);
+            SetSelectedTextColor(TextSelectedColor);
 
-            textColor = TextColor;
+            textScale = TextScale;
+            textPadding.top = TextPaddingTop;
+            spritePadding = new RectOffset(2, 2, 2, 3);
         }
     }
     public abstract class EditItem<ObjectType> : EditItemBase, IReusable
@@ -129,7 +136,7 @@ namespace IMT.UI.Editors
         {
             DeleteButton.isVisible = ShowDelete && width >= 120f;
             text = EditObject.ToString();
-            SetColors();
+            SetStyle();
         }
     }
     public abstract class EditItem<ObjectType, IconType> : EditItem<ObjectType>
@@ -146,7 +153,7 @@ namespace IMT.UI.Editors
         public override void Init(Editor editor, ObjectType editObject, bool inGroup)
         {
             Icon.isVisible = ShowIcon;
-            if(inGroup)
+            if (inGroup)
             {
                 spritePadding = new RectOffset(3, 3, 2, 2);
                 m_Size.y = DefaultHeight + spritePadding.vertical;
@@ -164,19 +171,19 @@ namespace IMT.UI.Editors
 
             if (ShowIcon)
             {
-                var iconSize = size.y - 6 - spritePadding.vertical;
+                var iconSize = 19f;
                 Icon.size = new Vector2(iconSize, iconSize);
-                var fixOffset = 3 + spritePadding.left;
+                var fixOffset = 5 + spritePadding.left;
                 var offset = (width - iconSize) * 0.5f;
                 if (offset <= 1.5f * fixOffset)
                 {
-                    Icon.relativePosition = new Vector2(offset, (height - iconSize) * 0.5f);
+                    Icon.relativePosition = new Vector2(offset, spritePadding.top + (height - spritePadding.vertical - iconSize) * 0.5f);
                     textPadding.left = 50;
                 }
                 else
                 {
-                    Icon.relativePosition = new Vector2(fixOffset, (height - iconSize) * 0.5f);
-                    textPadding.left = 25 + spritePadding.left;
+                    Icon.relativePosition = new Vector2(fixOffset, spritePadding.top + (height - spritePadding.vertical - iconSize) * 0.5f);
+                    textPadding.left = fixOffset + (int)iconSize + 5;
                 }
             }
             else
@@ -184,16 +191,16 @@ namespace IMT.UI.Editors
 
             if (ShowDelete && width >= 120f)
             {
-                var buttonSize = size.y - 10 - spritePadding.vertical;
+                var buttonSize = 15f;
                 DeleteButton.isVisible = true;
                 DeleteButton.size = new Vector2(buttonSize, buttonSize);
-                DeleteButton.relativePosition = new Vector2(size.x - buttonSize - 5 - spritePadding.right, (height - buttonSize) * 0.5f);
+                DeleteButton.relativePosition = new Vector2(size.x - buttonSize - 7 - spritePadding.right, spritePadding.top + (height - spritePadding.vertical - buttonSize) * 0.5f);
                 textPadding.right = 19 + spritePadding.right;
             }
             else
             {
                 DeleteButton.isVisible = false;
-                textPadding.right = 5 + spritePadding.right;
+                textPadding.right = 7 + spritePadding.right;
             }
         }
         protected override void OnSizeChanged()

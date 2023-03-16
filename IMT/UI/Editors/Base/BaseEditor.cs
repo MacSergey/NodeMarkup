@@ -67,10 +67,10 @@ namespace IMT.UI.Editors
             {
                 if (!Settings.AutoCollapseItemsPanel)
                     return Mathf.Min(width * 0.3f, 300f);
-                else if ((ItemsPanel is IGroupItemPanel groupPanel) && groupPanel.GroupingEnable)
-                    return 40f;
+                //else if ((ItemsPanel is IGroupItemPanel groupPanel) && groupPanel.GroupingEnable)
+                //    return 40f;
                 else
-                    return 34f;
+                    return 38f;
             }
         }
         private float MaxItemSize => 250f;
@@ -99,6 +99,7 @@ namespace IMT.UI.Editors
                 {
                     availableItems = value;
                     ItemsBlur.opacity = value ? 0.0f : 1.0f;
+                    ItemsBlur.isVisible = !value;
                 }
             }
         }
@@ -111,6 +112,7 @@ namespace IMT.UI.Editors
                 {
                     availableContent = value;
                     ContentBlur.opacity = value ? 0.0f : 1.0f;
+                    ContentBlur.isVisible = !value;
                 }
             }
         }
@@ -128,10 +130,10 @@ namespace IMT.UI.Editors
             ItemsPanel.atlas = CommonTextures.Atlas;
             ItemsPanel.backgroundSprite = CommonTextures.PanelBig;
             ItemsPanel.foregroundSprite = CommonTextures.BorderTop;
-            ItemsPanel.color = ItemsPanel.disabledColor = new Color32(99, 107, 107, 255);
+            ItemsPanel.color = ItemsPanel.disabledColor = new Color32(26, 29, 31, 255);
             ItemsPanel.canFocus = true;
 
-            ItemsPanel.Content.autoLayoutPadding = new RectOffset(4, 4, 1, 2);
+            ItemsPanel.Content.autoLayoutPadding = new RectOffset(2, 2, 0, 0);
             ItemsPanel.Content.scrollPadding.top = 2;
             ItemsPanel.Content.scrollPadding.bottom = 2;
 
@@ -165,7 +167,7 @@ namespace IMT.UI.Editors
             ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
             ContentPanel.atlas = CommonTextures.Atlas;
             ContentPanel.backgroundSprite = CommonTextures.PanelBig;
-            ContentPanel.color = ContentPanel.disabledColor = new Color32(34, 38, 44, 255);
+            ContentPanel.color = ContentPanel.disabledColor = new Color32(39, 44, 47, 255);
             ContentPanel.zOrder = 0;
             ContentPanel.eventSizeChanged += (_, size) => ContentBlur.size = size;
             ContentPanel.eventPositionChanged += (_, position) => ContentBlur.position = position;

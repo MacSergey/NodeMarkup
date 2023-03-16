@@ -14,7 +14,7 @@ namespace IMT.UI
 
         public event Action<string> OnTextChanged;
 
-        protected override float DefaultHeight => TextPanel.LineCount * 20f + (TextPanel.LineCount - 1) * TextPanel.autoLayoutPadding.vertical + 10f;
+        protected override float DefaultHeight => TextPanel.LineCount * 20f + (TextPanel.LineCount - 1) * TextPanel.autoLayoutPadding.vertical + ItemsPadding * 2;
         public MultilineText TextPanel { get; set; }
 
         public MultilineTextProperty()

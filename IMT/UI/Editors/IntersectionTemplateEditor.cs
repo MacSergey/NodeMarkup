@@ -233,10 +233,35 @@ namespace IMT.UI.Editors
     {
         private bool IsLinked => Editor.Marking.Type == MarkingType.Segment && Editor.Marking.Id.GetSegment().Info is NetInfo info && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var preset) && preset == EditObject.Id;
 
-        public override Color32 NormalColor => IsLinked ? new Color32(255, 197, 0, 255) : base.NormalColor;
-        public override Color32 HoveredColor => IsLinked ? new Color32(255, 207, 51, 255) : base.HoveredColor;
-        public override Color32 PressedColor => IsLinked ? new Color32(255, 218, 72, 255) : base.PressedColor;
-        public override Color32 FocusColor => IsLinked ? new Color32(255, 228, 92, 255) : base.FocusColor;
+        public override ModsCommon.UI.SpriteSet ForegroundSprites => !IsLinked ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        {
+            normal = CommonTextures.BorderBig,
+            hovered = CommonTextures.PanelSmall,
+            pressed = CommonTextures.PanelSmall,
+            focused = CommonTextures.BorderBig,
+            disabled = CommonTextures.PanelSmall,
+        };
+        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !IsLinked ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+
+        public override ColorSet ForegroundColors => !IsLinked ? base.ForegroundColors : new ColorSet()
+        {
+            normal = new Color32(255, 208, 0, 255),
+            hovered = new Color32(255, 208, 0, 255),
+            pressed = new Color32(255, 170, 0, 255),
+            focused = new Color32(255, 208, 0, 255),
+            disabled = null,
+        };
+        public override ColorSet ForegroundSelectedColors => !IsLinked ? base.ForegroundSelectedColors : new ColorSet(new Color32(255, 162, 0, 255));
+
+        public override ColorSet TextColor => !IsLinked ? base.TextColor : new ColorSet()
+        {
+            normal = Color.white,
+            hovered = Color.black,
+            pressed = Color.black,
+            focused = Color.white,
+            disabled = Color.white,
+        };
+        public override ColorSet TextSelectedColor => !IsLinked ? base.TextSelectedColor : new ColorSet(Color.white);
 
         public override bool ShowDelete => EditObject != null && !EditObject.IsAsset;
 

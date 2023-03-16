@@ -118,7 +118,7 @@ namespace IMT.Manager
             decalProperty.Label = Localize.StyleOption_AssetDecal;
             decalProperty.SelectPredicate = IsValidDecal;
             decalProperty.SortPredicate = (objA, objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
-            decalProperty.Init(60f);
+            decalProperty.Init();
             decalProperty.Prefab = Decal;
             decalProperty.RawName = Decal.RawName;
             decalProperty.OnValueChanged += (value) =>

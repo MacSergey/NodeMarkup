@@ -257,7 +257,7 @@ namespace IMT.Manager
             prefabProperty.Label = AssetPropertyName;
             prefabProperty.SelectPredicate = IsValidPrefab;
             prefabProperty.SortPredicate = SortPredicate;
-            prefabProperty.Init(60f);
+            prefabProperty.Init();
             prefabProperty.Prefab = Prefab;
             prefabProperty.RawName = Prefab.RawName;
             prefabProperty.OnValueChanged += (newPrefab) =>

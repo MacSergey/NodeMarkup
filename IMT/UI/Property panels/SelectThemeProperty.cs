@@ -15,6 +15,7 @@ namespace IMT.UI
         public event Action<ThemeHelper.IThemeData> OnValueChanged;
         bool IReusable.InCache { get; set; }
         public override bool SupportEven => true;
+        protected override float DefaultHeight => 50f + ItemsPadding * 2;
 
         private ThemeDropDown DropDown { get; }
 
@@ -67,7 +68,7 @@ namespace IMT.UI
 
             if (DropDown != null)
             {
-                DropDown.size = new Vector2(230f, height - 10f);
+                DropDown.size = new Vector2(230f, height - ItemsPadding * 2);
                 DropDown.scaleFactor = 20f / DropDown.height;
             }
         }

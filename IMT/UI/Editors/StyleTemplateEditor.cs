@@ -3,6 +3,7 @@ using IMT.Manager;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -225,14 +226,37 @@ namespace IMT.UI.Editors
     public class StyleTemplateItem : EditItem<StyleTemplate, StyleTemplateIcon>
     {
         public override bool ShowDelete => EditObject != null && !EditObject.IsAsset;
-
         private bool IsDefault => EditObject?.IsDefault == true;
 
-        public override Color32 BackgroundColor => base.NormalColor;
-        public override Color32 NormalColor => IsDefault ? new Color32(255, 197, 0, 255) : base.NormalColor;
-        public override Color32 HoveredColor => IsDefault ? new Color32(255, 207, 51, 255) : base.HoveredColor;
-        public override Color32 PressedColor => IsDefault ? new Color32(255, 218, 72, 255) : base.PressedColor;
-        public override Color32 FocusColor => IsDefault ? new Color32(255, 166, 0, 255) : base.FocusColor;
+        public override ModsCommon.UI.SpriteSet ForegroundSprites => !IsDefault ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        {
+            normal = CommonTextures.BorderBig,
+            hovered = CommonTextures.PanelSmall,
+            pressed = CommonTextures.PanelSmall,
+            focused = CommonTextures.BorderBig,
+            disabled = CommonTextures.PanelSmall,
+        };
+        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !IsDefault ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+
+        public override ColorSet ForegroundColors => !IsDefault ? base.ForegroundColors : new ColorSet()
+        {
+            normal = new Color32(255, 208, 0, 255),
+            hovered = new Color32(255, 208, 0, 255),
+            pressed = new Color32(255, 170, 0, 255),
+            focused = new Color32(255, 208, 0, 255),
+            disabled = null,
+        };
+        public override ColorSet ForegroundSelectedColors => !IsDefault ? base.ForegroundSelectedColors : new ColorSet(new Color32(255, 162, 0, 255));
+
+        public override ColorSet TextColor => !IsDefault ? base.TextColor : new ColorSet()
+        {
+            normal = Color.white,
+            hovered = Color.black,
+            pressed = Color.black,
+            focused = Color.white,
+            disabled = Color.white,
+        };
+        public override ColorSet TextSelectedColor => !IsDefault ? base.TextSelectedColor : new ColorSet(Color.white);
 
         public override void Refresh()
         {
@@ -241,7 +265,7 @@ namespace IMT.UI.Editors
             Icon.StyleColor = EditObject.Style is IColorStyle ? EditObject.Style.Color : Color.white;
             wordWrap = !EditObject.IsAsset;
 
-            SetColors();
+            SetStyle();
         }
     }
     public class StyleTemplateIcon : StyleIcon

@@ -380,10 +380,30 @@ namespace IMT.UI.Editors
     public class LineItem : EditItem<MarkingLine, LineIcon>
     {
         private bool HasOverlapped { get; set; }
-        public override Color32 NormalColor => HasOverlapped ? new Color32(246, 85, 85, 255) : base.NormalColor;
-        public override Color32 HoveredColor => HasOverlapped ? new Color32(247, 100, 100, 255) : base.HoveredColor;
-        public override Color32 PressedColor => HasOverlapped ? new Color32(248, 114, 114, 255) : base.PressedColor;
-        public override Color32 FocusColor => HasOverlapped ? new Color32(249, 127, 127, 255) : base.FocusColor;
+
+        public override ModsCommon.UI.SpriteSet ForegroundSprites => !HasOverlapped ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        {
+            normal = CommonTextures.BorderBig,
+            hovered = CommonTextures.PanelSmall,
+            pressed = CommonTextures.PanelSmall,
+            focused = CommonTextures.BorderBig,
+            disabled = CommonTextures.PanelSmall,
+        };
+        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !HasOverlapped ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+
+        public override ColorSet ForegroundColors => !HasOverlapped ? base.ForegroundColors : new ColorSet()
+        {
+            normal = new Color32(246, 85, 85, 255),
+            hovered = new Color32(246, 85, 85, 255),
+            pressed = new Color32(248, 68, 68, 255),
+            focused = new Color32(246, 85, 85, 255),
+            disabled = null,
+        };
+        public override ColorSet ForegroundSelectedColors => !HasOverlapped ? base.ForegroundSelectedColors : new ColorSet(new Color32(225, 62, 62, 255));
+
+        public override ColorSet TextColor => !HasOverlapped ? base.TextColor : new ColorSet(Color.white);
+        public override ColorSet TextSelectedColor => !HasOverlapped ? base.TextSelectedColor : new ColorSet(Color.white);
+
         public override void Refresh()
         {
             base.Refresh();
@@ -391,7 +411,7 @@ namespace IMT.UI.Editors
             SetIcon();
 
             HasOverlapped = EditObject.HasOverlapped;
-            SetColors();
+            SetStyle();
         }
         private void SetIcon()
         {

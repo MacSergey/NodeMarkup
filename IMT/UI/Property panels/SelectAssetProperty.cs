@@ -45,7 +45,7 @@ namespace IMT.UI
         where PopupType : ObjectPopup<PrefabType, EntityType>
         where DropDownType : PrefabDropDown<PrefabType, EntityType, PopupType>
     {
-        protected override float DefaultHeight => 100f;
+        protected override float DefaultHeight => 50f + ItemsPadding * 2;
 
         private DropDownType DropDown { get; }
 
@@ -101,7 +101,7 @@ namespace IMT.UI
 
             if (DropDown != null)
             {
-                DropDown.size = new Vector2(230f, height - 10f);
+                DropDown.size = new Vector2(230f, height - ItemsPadding * 2);
                 DropDown.scaleFactor = 20f / DropDown.height;
             }
         }

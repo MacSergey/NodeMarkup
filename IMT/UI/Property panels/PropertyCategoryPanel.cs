@@ -89,8 +89,8 @@ namespace IMT.UI.Editors
 
         public BasePropertyCategoryPanel()
         {
-            foregroundSprite = CommonTextures.BorderBig;
-            normalFgColor = new Color32(0, 0, 0, 128);
+            //foregroundSprite = CommonTextures.BorderBig;
+            //normalFgColor = new Color32(0, 0, 0, 128);
 
             verticalSpacing = 3;
             padding = new RectOffset(0, 0, 2, 0);
@@ -303,9 +303,9 @@ namespace IMT.UI.Editors
     public abstract class BaseCategoryHeaderPanel : BaseHeaderPanel<CategoryHeaderContent>
     {
         protected override float DefaultHeight => 24f;
-        protected virtual Color32 Color => new Color32(177, 195, 94, 255);
-        protected virtual string BackgroundSprite => "ButtonWhite";
-        protected virtual UITextureAtlas Atlas => TextureHelper.InGameAtlas;
+        protected virtual Color32 Color => new Color32(155, 175, 86, 255);
+        protected virtual string BackgroundSprite => CommonTextures.PanelBig;
+        protected virtual UITextureAtlas Atlas => CommonTextures.Atlas;
 
         protected CustomUIButton ExpandButton { get; set; }
         protected CustomUILabel NameLabel { get; set; }

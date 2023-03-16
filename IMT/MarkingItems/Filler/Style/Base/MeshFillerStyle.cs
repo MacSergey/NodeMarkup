@@ -191,7 +191,7 @@ namespace IMT.Manager
         private void AddPavementThemeProperty(SelectThemeProperty themeProperty, EditorProvider provider)
         {
             themeProperty.Label = Localize.StyleOption_PavementTheme;
-            themeProperty.Init(60f);
+            themeProperty.Init();
             themeProperty.RawName = PavementTheme.RawName;
             themeProperty.TextureType = ThemeHelper.TextureType.Pavement;
             themeProperty.Theme = PavementTheme.Value;

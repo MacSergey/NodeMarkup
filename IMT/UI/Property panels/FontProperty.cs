@@ -200,7 +200,7 @@ namespace IMT.UI
                 else
                     FontFamilySelector.width = Width;
 
-                FontFamilySelector.height = height - 10f;
+                FontFamilySelector.height = height - ItemsPadding * 2f;
             }
         }
     }

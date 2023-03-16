@@ -141,10 +141,8 @@ namespace IMT
 
             LabelSettingsItem label = null;
             displayAndUsageGroup.AddToggle(Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
-            label = displayAndUsageGroup.AddLabel(Localize.Settings_ApplyAfterRestart.AddColor(new Color32(255, 215, 81, 255)), 0.8f);
+            label = displayAndUsageGroup.AddInfoLabel(Localize.Settings_ApplyAfterRestart.AddColor(new Color32(255, 215, 81, 255)), 0.8f);
             label.LabelItem.processMarkup = true;
-            label.Borders = SettingsContentItem.Border.None;
-            label.paddingTop = 0;
 
             var warning = $"{Localize.Settings_RailUnderMarkingWarning.AddColor(new Color32(255, 68, 68, 255))}\n{Localize.Settings_ApplyAfterRestart.AddColor(new Color32(255, 215, 81, 255))}";
 
@@ -152,14 +150,10 @@ namespace IMT
             displayAndUsageGroup.AddToggle(Localize.Settings_RailUnderMarking, RailUnderMarking);
             label = displayAndUsageGroup.AddLabel(warning, 0.8f);
             label.LabelItem.processMarkup = true;
-            label.Borders = SettingsContentItem.Border.None;
-            label.paddingTop = 0;
 
             displayAndUsageGroup.AddToggle(Localize.Settings_LevelCrossingUnderMarking, LevelCrossingUnderMarking);
-            label = displayAndUsageGroup.AddLabel(warning, 0.8f);
+            label = displayAndUsageGroup.AddInfoLabel(warning, 0.8f);
             label.LabelItem.processMarkup = true;
-            label.Borders = SettingsContentItem.Border.None;
-            label.paddingTop = 0;
 
             AddToolButton<IntersectionMarkingTool, NodeMarkingButton>(displayAndUsageGroup);
 
@@ -196,16 +190,13 @@ namespace IMT
         {
             var group = helper.AddOptionsGroup(Localize.Settings_Groupings);
 
-            var groupPointToggle = group.AddToggle(Localize.Settings_GroupPoints, GroupPoints);
-            groupPointToggle.Control.OnStateChanged += OnChanged;
+            var groupPointToggle = group.AddToggle(Localize.Settings_GroupPoints, GroupPoints, OnChanged);
 
-            var groupLineToggle = group.AddToggle(Localize.Settings_GroupLines, GroupLines);
-            groupLineToggle.Control.OnStateChanged += OnChanged;
+            var groupLineToggle = group.AddToggle(Localize.Settings_GroupLines, GroupLines, OnChanged);
 
-            group.AddTogglePanel(Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, () => OnChanged(false));
+            group.AddTogglePanel(Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnChanged);
 
-            var groupPresetToggle = group.AddToggle(Localize.Settings_GroupPresets, GroupPresets);
-            groupPresetToggle.Control.OnStateChanged += OnChanged;
+            var groupPresetToggle = group.AddToggle(Localize.Settings_GroupPresets, GroupPresets, OnChanged);
 
             group.AddTogglePanel(Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
 
@@ -221,7 +212,7 @@ namespace IMT
             group.AddToggle(Localize.Settings_SortApplyDefaultFirst, DefaultTemlatesFirst);
 
 
-            static void OnChanged() => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
+            static void OnChanged(int state) => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
         }
         private void AddOther(UIComponent helper)
         {

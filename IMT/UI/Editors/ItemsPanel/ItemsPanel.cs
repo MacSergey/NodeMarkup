@@ -52,12 +52,12 @@ namespace IMT.UI.Editors
             set
             {
                 if (selectItem != null)
-                    selectItem.IsSelect = false;
+                    selectItem.isSelected = false;
 
                 selectItem = value;
 
                 if (selectItem != null)
-                    selectItem.IsSelect = true;
+                    selectItem.isSelected = true;
 
                 OnSelectClick?.Invoke(selectItem?.EditObject);
             }
@@ -96,10 +96,12 @@ namespace IMT.UI.Editors
             return AddObjectImpl(editObject, index >= 0 ? index : ~index);
         }
         protected virtual ItemType AddObjectImpl(ObjectType editObject, int zOrder) => GetItem(editObject, false, Content, zOrder);
-        protected ItemType GetItem(ObjectType editObject, bool inGroup, UIComponent container, int zOrder = -1)
+        protected ItemType GetItem<ParentType>(ObjectType editObject, bool inGroup, ParentType container, int zOrder = -1)
+            where ParentType : UIComponent, IAutoLayoutPanel
         {
             var item = ComponentPool.Get<ItemType>(container, zOrder: zOrder);
             item.Init(Editor, editObject, inGroup);
+            item.width = container.ItemSize.x;
             item.eventClick += ItemClick;
             item.OnDelete += ItemDelete;
             item.eventMouseEnter += ItemHover;
@@ -184,14 +186,6 @@ namespace IMT.UI.Editors
 
             SelectItem = item;
             ScrollTo(item);
-        }
-        public override void Update()
-        {
-            //WAIT FPS BOOSTER FIX 
-            //base.Update();
-
-            if (SelectItem is ItemType item)
-                item.IsSelect = true;
         }
 
         #endregion
