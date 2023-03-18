@@ -53,7 +53,7 @@ namespace IMT.UI.Editors
 
         public LinesEditor()
         {
-            ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
+            ContentPanel.Content.AutoLayoutPadding = new RectOffset(10, 10, 10, 10);
             PartEdgeToolMode = Tool.CreateToolMode<PartEdgeToolMode>();
             PartEdgeToolMode.Init(this);
         }

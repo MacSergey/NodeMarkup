@@ -133,9 +133,9 @@ namespace IMT.UI.Editors
             ItemsPanel.color = ItemsPanel.disabledColor = IMTColors.ItemsBackground;
             ItemsPanel.canFocus = true;
 
-            ItemsPanel.Content.autoLayoutPadding = new RectOffset(0, 0, 0, 0);
-            ItemsPanel.Content.scrollPadding.top = 2;
-            ItemsPanel.Content.scrollPadding.bottom = 2;
+            ItemsPanel.Content.AutoLayoutPadding = new RectOffset(0, 0, 0, 0);
+            ItemsPanel.Content.ScrollPadding.top = 2;
+            ItemsPanel.Content.ScrollPadding.bottom = 2;
 
             ItemsPanel.Init(this);
             ItemsPanel.OnSelectClick += OnItemSelect;
@@ -164,7 +164,7 @@ namespace IMT.UI.Editors
 
             ContentPanel = AddUIComponent<AdvancedScrollablePanel>();
             ContentPanel.name = nameof(ContentPanel);
-            ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
+            ContentPanel.Content.AutoLayoutPadding = new RectOffset(10, 10, 0, 0);
             ContentPanel.Atlas = CommonTextures.Atlas;
             ContentPanel.BackgroundSprite = CommonTextures.PanelBig;
             ContentPanel.color = ContentPanel.disabledColor = IMTColors.ContentBackground;
@@ -382,7 +382,7 @@ namespace IMT.UI.Editors
 
         public SimpleEditor()
         {
-            ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
+            ContentPanel.Content.AutoLayoutPadding = new RectOffset(10, 10, 10, 10);
         }
 
         protected override void OnObjectSelect(ObjectType editObject)
