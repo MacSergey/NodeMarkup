@@ -4,6 +4,7 @@ using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace IMT.UI.Editors
@@ -15,9 +16,7 @@ namespace IMT.UI.Editors
 
         public CategoryItem()
         {
-            autoLayoutDirection = LayoutDirection.Vertical;
-            autoLayoutPadding = new RectOffset(3, 3, 3, 3);
-            verticalSpacing = 3;
+            autoLayout = AutoLayout.Vertical;
             autoFitChildrenVertically = true;
         }
 
@@ -42,7 +41,7 @@ namespace IMT.UI.Editors
             base.OnSizeChanged();
 
             if (CategoryPanel != null)
-                CategoryPanel.width = width - autoLayoutPadding.horizontal;
+                CategoryPanel.width = width - Padding.horizontal;
         }
     }
     public interface IPropertyCategoryPanel
@@ -53,9 +52,9 @@ namespace IMT.UI.Editors
     public abstract class BasePropertyCategoryPanel<TypeHeader> : PropertyGroupPanel, IPropertyCategoryPanel
         where TypeHeader : BaseCategoryHeaderPanel
     {
-        protected override UITextureAtlas Atlas => CommonTextures.Atlas;
-        protected override string BackgroundSprite => CommonTextures.PanelBig;
-        protected override Color32 Color => new Color32(58, 77, 92, 255);
+        protected override UITextureAtlas DefaultAtlas => CommonTextures.Atlas;
+        protected override string DefaultBackgroundSprite => string.Empty;
+        protected override Color32 DefaultColor => new Color32(58, 77, 92, 255);
 
         protected IPropertyContainer Editor { get; private set; }
         protected TypeHeader Header { get; private set; }
@@ -73,28 +72,30 @@ namespace IMT.UI.Editors
             {
                 if (value != null)
                 {
-                    Editor.ExpandList[Category.Name] = value.Value;
-                    Header.IsExpand = value.Value;
-
-                    foreach (var item in components)
+                    PauseLayout(() =>
                     {
-                        if (item is not TypeHeader && item is EditorItem editorItem)
-                            editorItem.IsCollapsed = !value.Value;
-                    }
+                        Editor.ExpandList[Category.Name] = value.Value;
+                        Header.IsExpand = value.Value;
+                        PaddingButtom = value.Value ? 0 : 5;
+
+                        foreach (var item in components)
+                        {
+                            if (item is EditorPropertyPanel property)
+                                property.IsCollapsed = !value.Value;
+                        }
+
+                        SetBorder();
+                    });
                 }
             }
         }
 
         public IPropertyCategoryInfo Category { get; private set; }
 
-        public BasePropertyCategoryPanel()
+        public BasePropertyCategoryPanel() : base()
         {
-            //foregroundSprite = CommonTextures.BorderBig;
-            //normalFgColor = new Color32(0, 0, 0, 128);
-
-            verticalSpacing = 3;
-            padding = new RectOffset(0, 0, 2, 0);
-            autoLayoutPadding = new RectOffset(2, 2, 0, 0);
+            ForegroundSprite = string.Empty;
+            PaddingButtom = 3;
         }
 
         public virtual void Init(IPropertyCategoryInfo category, IPropertyContainer editor)
@@ -126,10 +127,19 @@ namespace IMT.UI.Editors
         }
         protected override void OnComponentAdded(UIComponent child)
         {
-            base.OnComponentAdded(child);
+            if (child is EditorPropertyPanel property)
+                property.IsCollapsed = IsExpand != true;
 
-            if (child is not TypeHeader && child is EditorItem item)
-                item.IsCollapsed = IsExpand != true;
+            base.OnComponentAdded(child);
+        }
+
+        protected override void SetBorder()
+        {
+            var properties = components.OfType<EditorPropertyPanel>().Where(p => p.isVisible).ToArray();
+            for (int i = 0; i < properties.Length; i += 1)
+            {
+                properties[i].Borders = i == 0 ? PropertyBorder.None : PropertyBorder.Top;
+            }
         }
     }
     public class DefaultPropertyCategoryPanel : BasePropertyCategoryPanel<DefaultCategoryHeaderPanel> { }
@@ -302,10 +312,10 @@ namespace IMT.UI.Editors
 
     public abstract class BaseCategoryHeaderPanel : BaseHeaderPanel<CategoryHeaderContent>
     {
-        protected override float DefaultHeight => 24f;
-        protected virtual Color32 Color => new Color32(155, 175, 86, 255);
-        protected virtual string BackgroundSprite => CommonTextures.PanelBig;
-        protected virtual UITextureAtlas Atlas => CommonTextures.Atlas;
+        protected override float DefaultHeight => 26f;
+        protected virtual Color32 DefaultColor => new Color32(155, 175, 86, 255);
+        protected virtual string DefaultForegroundSprite => CommonTextures.PanelSmall;
+        protected virtual UITextureAtlas DefaultAtlas => CommonTextures.Atlas;
 
         protected CustomUIButton ExpandButton { get; set; }
         protected CustomUILabel NameLabel { get; set; }
@@ -320,31 +330,33 @@ namespace IMT.UI.Editors
 
         public BaseCategoryHeaderPanel()
         {
-            atlas = Atlas;
-            backgroundSprite = BackgroundSprite;
-            color = Color;
-            padding = new RectOffset(3, 5, 0, 0);
-
-            AddCollapseButton();
-            AddLabel();
+            Atlas = DefaultAtlas;
+            ForegroundSprite = DefaultForegroundSprite;
+            color = DefaultColor;
+            Padding = new RectOffset(8, 8, 0, 0);
+            SpritePadding = new RectOffset(5, 5, 0, 0);
         }
 
-        private void AddCollapseButton()
+        protected override void Fill()
         {
+            base.Fill();
+
             ExpandButton = AddUIComponent<CustomUIButton>();
             ExpandButton.atlas = CommonTextures.Atlas;
             ExpandButton.SetFgColor(new ColorSet(new Color32(0, 0, 0, 255)));
             ExpandButton.scaleFactor = 0.6f;
             ExpandButton.size = new Vector2(20, 20);
             ExpandButton.zOrder = 0;
-        }
-        private void AddLabel()
-        {
+
             NameLabel = AddUIComponent<CustomUILabel>();
             NameLabel.textScale = 0.8f;
             NameLabel.autoSize = true;
             NameLabel.padding = new RectOffset(0, 0, 2, 0);
             NameLabel.zOrder = 1;
+        }
+        protected override void FillContent()
+        {
+            Content.AutoLayoutStart = LayoutStart.TopRight;
         }
 
         public void Init(IPropertyEditor editor)
@@ -355,18 +367,11 @@ namespace IMT.UI.Editors
         public override void Refresh()
         {
             Content.Refresh();
-
-            autoLayout = true;
-            autoLayout = false;
-
             SetSize();
         }
         protected override void SetSize()
         {
-            ExpandButton.relativePosition = new Vector2(ExpandButton.relativePosition.x, (height - ExpandButton.height) * 0.5f);
-            NameLabel.relativePosition = new Vector2(NameLabel.relativePosition.x, (height - NameLabel.height) * 0.5f);
-            Content.height = height;
-            Content.relativePosition = new Vector2(width - Content.width - padding.right, 0);
+            Content.size = new Vector2(width - Content.relativePosition.x - PaddingRight, height);
         }
         public override void DeInit()
         {
@@ -392,8 +397,10 @@ namespace IMT.UI.Editors
         private HeaderButtonInfo<HeaderButton> ApplySameType { get; set; }
         private HeaderButtonInfo<HeaderButton> ApplyAll { get; set; }
 
-        public EffectCategoryHeaderPanel()
+        protected override void FillContent()
         {
+            base.FillContent();
+
             Copy = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyButtonIcon, IMT.Localize.HeaderPanel_CopyEffects, CopyClick);
             Content.AddButton(Copy);
 
@@ -412,7 +419,6 @@ namespace IMT.UI.Editors
             ApplyAll = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.ApplyAllButtonIcon, IMT.Localize.HeaderPanel_ApplyAll, ApplyAllClick);
             Content.AddButton(ApplyAll);
         }
-
         public override void DeInit()
         {
             base.DeInit();

@@ -14,10 +14,8 @@ namespace IMT.UI
     {
         public event Action<ThemeHelper.IThemeData> OnValueChanged;
         bool IReusable.InCache { get; set; }
-        public override bool SupportEven => true;
-        protected override float DefaultHeight => 50f + ItemsPadding * 2;
 
-        private ThemeDropDown DropDown { get; }
+        private ThemeDropDown DropDown { get; set; }
 
         public ThemeHelper.IThemeData Theme
         {
@@ -35,20 +33,20 @@ namespace IMT.UI
             set => DropDown.TextureType = value;
         }
 
-        public SelectThemeProperty()
+        protected override void FillContent()
         {
             DropDown = Content.AddUIComponent<ThemeDropDown>();
+            DropDown.name = nameof(DropDown);
             DropDown.DropDownDefaultStyle();
+            DropDown.size = new Vector2(230f, 50f);
+            DropDown.scaleFactor = 20f / DropDown.height;
             DropDown.OnSelectObject += ValueChanged;
         }
 
         private void ValueChanged(ThemeHelper.IThemeData theme) => OnValueChanged?.Invoke(Theme);
 
-        public override void Init() => Init(null);
-        public new void Init(float? height)
+        public override void Init()
         {
-            base.Init(height);
-
             DropDown.Clear();
             DropDown.AddItem(ThemeHelper.DefaultTheme);
             foreach (var theme in ThemeHelper.ThemeDatas)
@@ -60,17 +58,6 @@ namespace IMT.UI
             Theme = null;
             TextureType = default;
             OnValueChanged = null;
-        }
-
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-
-            if (DropDown != null)
-            {
-                DropDown.size = new Vector2(230f, height - ItemsPadding * 2);
-                DropDown.scaleFactor = 20f / DropDown.height;
-            }
         }
     }
 

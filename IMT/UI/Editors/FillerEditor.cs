@@ -125,10 +125,11 @@ namespace IMT.UI.Editors
         private void AfterStyleChanged()
         {
             RefreshSelectedItem();
-            PropertiesPanel.StopLayout();
-            this.ClearProperties();
-            AddStyleProperties();
-            PropertiesPanel.StartLayout();
+            PropertiesPanel.PauseLayout(() =>
+            {
+                this.ClearProperties();
+                AddStyleProperties();
+            });
         }
 
         private void ApplyStyle(BaseFillerStyle style)

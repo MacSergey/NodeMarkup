@@ -18,34 +18,34 @@ namespace IMT.UI
             set => defaultColor = value;
         }
 
-        private CustomUIButton CopyButton { get; }
-        private CustomUIButton PasteButton { get; }
+        private CustomUIButton CopyButton { get; set; }
+        private CustomUIButton PasteButton { get; set; }
 
         protected override Color32 PopupColor => new Color32(36, 44, 51, 255);
 
-        public ColorAdvancedPropertyPanel()
+        protected override void FillContent()
         {
+            base.FillContent();
+
             CopyButton = Content.AddUIComponent<CustomUIButton>();
+            CopyButton.name = nameof(CopyButton);
             CopyButton.SetDefaultStyle();
-            CopyButton.width = 20;
+            CopyButton.size = new Vector2(20f, 20f);
             CopyButton.atlasForeground = IMTTextures.Atlas;
             CopyButton.normalFgSprite = IMTTextures.CopyButtonIcon;
             CopyButton.tooltip = IMT.Localize.Editor_ColorCopy;
             CopyButton.eventClick += Copy;
 
             PasteButton = Content.AddUIComponent<CustomUIButton>();
+            PasteButton.name = nameof(PasteButton);
             PasteButton.SetDefaultStyle();
-            PasteButton.width = 20;
+            PasteButton.size = new Vector2(20f, 20f);
             PasteButton.atlasForeground = IMTTextures.Atlas;
             PasteButton.normalFgSprite = IMTTextures.PasteButtonIcon;
             PasteButton.tooltip = IMT.Localize.Editor_ColorPaste;
             PasteButton.eventClick += Paste;
         }
-        protected override void Init(float? height)
-        {
-            base.Init(height);
-            SetSize();
-        }
+
         public void Init(Color32? defaultColor = null)
         {
             this.defaultColor = defaultColor;
@@ -113,20 +113,6 @@ namespace IMT.UI
             }
         }
         private void SetDefault(UIComponent component, UIMouseEventParameter eventParam) => ValueChanged(DefaultColor, true, OnChangedValue);
-
-
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-            SetSize();
-        }
-        protected virtual void SetSize()
-        {
-            if (CopyButton != null)
-                CopyButton.height = Content.height - ItemsPadding * 2;
-            if (PasteButton != null)
-                PasteButton.height = Content.height - ItemsPadding * 2;
-        }
     }
 }
 

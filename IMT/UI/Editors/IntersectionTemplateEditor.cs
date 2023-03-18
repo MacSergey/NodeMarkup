@@ -298,7 +298,7 @@ namespace IMT.UI.Editors
     public class EditIntersectionTemplateMode : EditTemplateMode<IntersectionTemplate> { }
     public class PreviewPanel : PropertyGroupPanel
     {
-        protected override Color32 Color => new Color32(201, 211, 216, 255);
+        protected override Color32 DefaultColor => new Color32(201, 211, 216, 255);
 
         protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }

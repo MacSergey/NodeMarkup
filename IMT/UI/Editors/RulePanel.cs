@@ -56,7 +56,7 @@ namespace IMT.UI.Editors
             Rule = rule;
             this.isExpand = isExpand;
 
-            StopLayout();
+            PauseLayout(() =>
             {
                 AddHeader();
                 AddError();
@@ -69,8 +69,7 @@ namespace IMT.UI.Editors
                 AddStyleProperties();
 
                 Refresh();
-            }
-            StartLayout();
+            });
 
             base.Init();
         }
@@ -318,7 +317,7 @@ namespace IMT.UI.Editors
         }
         public void Refresh()
         {
-            StopLayout();
+            PauseLayout(() =>
             {
                 var error = Rule.IsOverlapped;
                 color = !IsExpand && error ? CommonColors.Error : NormalColor;
@@ -331,8 +330,7 @@ namespace IMT.UI.Editors
 
                 foreach (var category in (this as IPropertyContainer).CategoryItems.Values)
                     category.isVisible = IsExpand;
-            }
-            StartLayout();
+            });
 
             FillEdge(From, FromChanged, Rule.From);
             FillEdge(To, ToChanged, Rule.To);

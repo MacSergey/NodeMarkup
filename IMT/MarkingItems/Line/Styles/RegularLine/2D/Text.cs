@@ -465,19 +465,20 @@ namespace IMT.Manager
 
             protected override void FillItems(Func<TextDirection, bool> selector)
             {
-                Selector.StopLayout();
-                foreach (var value in GetValues())
+                Selector.PauseLayout(() =>
                 {
-                    if (selector?.Invoke(value) != false)
+                    foreach (var value in GetValues())
                     {
-                        var sprite = value.Sprite();
-                        if (string.IsNullOrEmpty(sprite))
-                            Selector.AddItem(value, new OptionData(GetDescription(value)));
-                        else
-                            Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
+                        if (selector?.Invoke(value) != false)
+                        {
+                            var sprite = value.Sprite();
+                            if (string.IsNullOrEmpty(sprite))
+                                Selector.AddItem(value, new OptionData(GetDescription(value)));
+                            else
+                                Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
+                        }
                     }
-                }
-                Selector.StartLayout();
+                });
             }
 
             public class TextDirectionSegmented : UIOnceSegmented<TextDirection> { }

@@ -61,13 +61,14 @@ namespace IMT.UI.Editors
         protected override IEnumerable<MarkingLine> GetObjects() => Marking.Lines;
         protected override void OnObjectSelect(MarkingLine editObject)
         {
-            ContentPanel.StopLayout();
-            GetRuleEdges(editObject);
+            ContentPanel.PauseLayout(() =>
+            {
+                GetRuleEdges(editObject);
 
-            AddLineProperties(EditObject);
-            AddRulePanels(editObject);
-            AddAddButton();
-            ContentPanel.StartLayout();
+                AddLineProperties(EditObject);
+                AddRulePanels(editObject);
+                AddAddButton();
+            });
         }
         protected override void OnObjectUpdate(MarkingLine editObject)
         {

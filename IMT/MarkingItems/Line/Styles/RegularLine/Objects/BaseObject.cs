@@ -88,7 +88,7 @@ namespace IMT.Manager
             base.CopyTo(target);
             if (target is IPrefabStyle<PrefabType> prefabTarget)
             {
-                if(prefabTarget.IsValidPrefab(Prefab))
+                if (prefabTarget.IsValidPrefab(Prefab))
                     prefabTarget.Prefab.Value = Prefab;
             }
             if (target is IObjectStyle objectTarget)
@@ -406,7 +406,7 @@ namespace IMT.Manager
             distributionProperty.Label = Localize.StyleOption_Distribution;
             distributionProperty.Selector.AutoButtonSize = false;
             distributionProperty.Selector.ButtonWidth = 57f;
-            distributionProperty.Selector.atlas = IMTTextures.Atlas;
+            distributionProperty.Selector.Atlas = IMTTextures.Atlas;
             distributionProperty.Init();
             distributionProperty.SelectedObject = Distribution;
             distributionProperty.OnSelectObjectChanged += (value) =>
@@ -424,7 +424,7 @@ namespace IMT.Manager
         {
             fixedEndProperty.Label = Localize.StyleOption_FixedEnd;
             fixedEndProperty.Selector.AutoButtonSize = true;
-            fixedEndProperty.Selector.atlas = IMTTextures.Atlas;
+            fixedEndProperty.Selector.Atlas = IMTTextures.Atlas;
             fixedEndProperty.Init();
             fixedEndProperty.SelectedObject = FixedEnd;
             fixedEndProperty.OnSelectObjectChanged += (value) => FixedEnd.Value = value;
@@ -725,19 +725,20 @@ namespace IMT.Manager
 
         protected override void FillItems(Func<DistributionType, bool> selector)
         {
-            Selector.StopLayout();
-            foreach (var value in GetValues())
+            Selector.PauseLayout(() =>
             {
-                if (selector?.Invoke(value) != false)
+                foreach (var value in GetValues())
                 {
-                    var sprite = value.Sprite();
-                    if (string.IsNullOrEmpty(sprite))
-                        Selector.AddItem(value, new OptionData(GetDescription(value)));
-                    else
-                        Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
+                    if (selector?.Invoke(value) != false)
+                    {
+                        var sprite = value.Sprite();
+                        if (string.IsNullOrEmpty(sprite))
+                            Selector.AddItem(value, new OptionData(GetDescription(value)));
+                        else
+                            Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
+                    }
                 }
-            }
-            Selector.StartLayout();
+            });
         }
 
         public class DistributionTypeSegmented : UIOnceSegmented<DistributionType> { }

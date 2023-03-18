@@ -26,19 +26,14 @@ namespace IMT.UI.Editors
                 isExpand = value;
                 Item.IsExpand = isExpand;
 
-                StopLayout();
+                PauseLayout(() =>
                 {
-                    if (isExpand)
-                        verticalSpacing = 15;
-                    else
-                        verticalSpacing = 0;
-
+                    PaddingButtom = isExpand ? 15 : 0;
                     SetStyle();
 
                     foreach (var item in components.Where(i => i != Item))
                         item.isVisible = isExpand;
-                }
-                StartLayout();
+                });
             }
         }
 
@@ -48,25 +43,20 @@ namespace IMT.UI.Editors
 
         public EditGroup()
         {
-            StopLayout();
+            autoLayout = AutoLayout.Vertical;
+            padding = new RectOffset(0, 0, 0, 0);
+            autoFitChildrenVertically = true;
+
+            atlas = CommonTextures.Atlas;
+            NormalFgColor = IMTColors.itemGroupBackground;
+            ForegroundSprite = CommonTextures.PanelBig;
+
+            PauseLayout(() =>
             {
-                autoLayoutDirection = LayoutDirection.Vertical;
-                autoLayoutPadding = new RectOffset(0, 0, 0, 0);
-                autoFitChildrenVertically = true;
-
-                atlas = CommonTextures.Atlas;
-                normalFgColor = IMTColors.itemGroupBackground;
-                foregroundSprite = CommonTextures.PanelBig;
-
-                AddGroupItem();
-            }
-            StartLayout();
-        }
-        private void AddGroupItem()
-        {
-            Item = AddUIComponent<GroupItem>();
-            Item.Init();
-            Item.eventClick += ItemClick;
+                Item = AddUIComponent<GroupItem>();
+                Item.Init();
+                Item.eventClick += ItemClick;
+            });
         }
 
         private void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => IsExpand = !IsExpand;
@@ -83,11 +73,11 @@ namespace IMT.UI.Editors
 
             if (isExpand)
             {
-                spritePadding = new RectOffset(padding, padding, 4, 15);
+                SpritePadding = new RectOffset(padding, padding, 4, 15);
             }
             else
             {
-                spritePadding = new RectOffset(padding, padding, 4, 4);
+                SpritePadding = new RectOffset(padding, padding, 4, 4);
             }
         }
 
@@ -104,17 +94,17 @@ namespace IMT.UI.Editors
             SetStyle();
 
             foreach (var item in components)
-                item.width = width - autoLayoutPadding.horizontal - padding.horizontal;
+                item.width = width - Padding.horizontal;
         }
 
         public void DeInit()
         {
             StopLayout();
-
-            var components = this.components.OfType<ItemType>().ToArray();
-            foreach (var component in components)
-                ComponentPool.Free(component);
-
+            {
+                var components = this.components.OfType<ItemType>().ToArray();
+                foreach (var component in components)
+                    ComponentPool.Free(component);
+            }
             StartLayout(false, true);
         }
     }

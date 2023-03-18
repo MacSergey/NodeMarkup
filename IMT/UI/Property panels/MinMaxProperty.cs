@@ -1,11 +1,5 @@
-﻿using ColossalFramework.UI;
-using ModsCommon.UI;
+﻿using ModsCommon.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Reflection;
-using System.Text;
 using UnityEngine;
 
 namespace IMT.UI
@@ -16,9 +10,9 @@ namespace IMT.UI
 
         public event Action<bool, int, int> OnValueChanged;
 
-        private CustomUIToggle UseCount { get; }
-        private IntUITextField MinField { get; }
-        private IntUITextField MaxField { get; }
+        private CustomUIToggle UseCount { get; set; }
+        private IntUITextField MinField { get; set; }
+        private IntUITextField MaxField { get; set; }
 
         public bool EnableCount
         {
@@ -85,9 +79,10 @@ namespace IMT.UI
             }
         }
 
-        public MinMaxProperty()
+        protected override void FillContent()
         {
             UseCount = Content.AddUIComponent<CustomUIToggle>();
+            UseCount.name = nameof(UseCount);
             UseCount.DefaultStyle();
             UseCount.OnStateChanged += UseChanged;
 
@@ -97,9 +92,9 @@ namespace IMT.UI
             min.padding = new RectOffset(0, 0, 2, 0);
 
             MinField = Content.AddUIComponent<IntUITextField>();
+            MinField.name = nameof(MinField);
             MinField.SetDefaultStyle();
             MinField.width = 50f;
-            MinField.name = nameof(MinField);
             MinField.OnValueChanged += MinChanged;
 
             var max = Content.AddUIComponent<CustomUILabel>();
@@ -108,14 +103,13 @@ namespace IMT.UI
             max.padding = new RectOffset(0, 0, 2, 0);
 
             MaxField = Content.AddUIComponent<IntUITextField>();
+            MaxField.name = nameof(MaxField);
             MaxField.SetDefaultStyle();
             MaxField.width = 50f;
-            MaxField.name = nameof(MaxField);
             MaxField.OnValueChanged += MaxChanged;
 
             SetDefault();
         }
-
         public override void DeInit()
         {
             base.DeInit();

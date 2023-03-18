@@ -16,9 +16,9 @@ namespace IMT.UI
         public event Action<SelectGuideButton> OnEnter;
         public event Action<SelectGuideButton> OnLeave;
 
-        private CustomUIToggle FollowGuide { get; }
-        protected SelectGuideButton LeftGuideSelector { get; set; }
-        protected SelectGuideButton RightGuideSelector { get; set; }
+        private CustomUIToggle FollowGuide { get; set; }
+        protected SelectGuideButton LeftGuideSelector { get; private set; }
+        protected SelectGuideButton RightGuideSelector { get; private set; }
         protected CustomUIButton TurnButton { get; set; }
 
         public int VertexCount { get; private set; }
@@ -59,13 +59,14 @@ namespace IMT.UI
             }
         }
 
-        public FillerGuidePropertyPanel()
+        protected override void FillContent()
         {
             FollowGuide = Content.AddUIComponent<CustomUIToggle>();
             FollowGuide.DefaultStyle();
             FollowGuide.OnStateChanged += FollowChanged;
 
             LeftGuideSelector = Content.AddUIComponent<SelectGuideButton>();
+            LeftGuideSelector.name = nameof(LeftGuideSelector);
             LeftGuideSelector.width = 80f;
             LeftGuideSelector.eventClick += ButtonClick;
             LeftGuideSelector.eventMouseEnter += ButtonMouseEnter;
@@ -73,6 +74,7 @@ namespace IMT.UI
             LeftGuideSelector.OnValueChanged += LeftGuideChanged;
 
             RightGuideSelector = Content.AddUIComponent<SelectGuideButton>();
+            RightGuideSelector.name = nameof(RightGuideSelector);
             RightGuideSelector.width = 80f;
             RightGuideSelector.eventClick += ButtonClick;
             RightGuideSelector.eventMouseEnter += ButtonMouseEnter;
@@ -80,6 +82,7 @@ namespace IMT.UI
             RightGuideSelector.OnValueChanged += RightGuideChanged;
 
             TurnButton = Content.AddUIComponent<CustomUIButton>();
+            TurnButton.name = nameof(TurnButton);
             TurnButton.SetDefaultStyle();
             TurnButton.size = new Vector2(20f, 20f);
             TurnButton.atlasForeground = IMTTextures.Atlas;
@@ -87,7 +90,6 @@ namespace IMT.UI
             TurnButton.tooltip = IMT.Localize.StyleOption_Turn;
             TurnButton.eventClick += TurnClick;
         }
-
         public void Init(int vertexCount)
         {
             base.Init();

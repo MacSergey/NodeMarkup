@@ -127,9 +127,9 @@ namespace IMT.UI.Editors
 
             ItemsPanel = AddUIComponent<ItemsPanelType>();
             ItemsPanel.name = nameof(ItemsPanel);
-            ItemsPanel.atlas = CommonTextures.Atlas;
-            ItemsPanel.backgroundSprite = CommonTextures.PanelBig;
-            ItemsPanel.foregroundSprite = CommonTextures.BorderTop;
+            ItemsPanel.Atlas = CommonTextures.Atlas;
+            ItemsPanel.BackgroundSprite = CommonTextures.PanelBig;
+            ItemsPanel.ForegroundSprite = CommonTextures.BorderTop;
             ItemsPanel.color = ItemsPanel.disabledColor = IMTColors.itemsBackground;
             ItemsPanel.canFocus = true;
 
@@ -165,8 +165,8 @@ namespace IMT.UI.Editors
             ContentPanel = AddUIComponent<AdvancedScrollablePanel>();
             ContentPanel.name = nameof(ContentPanel);
             ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
-            ContentPanel.atlas = CommonTextures.Atlas;
-            ContentPanel.backgroundSprite = CommonTextures.PanelBig;
+            ContentPanel.Atlas = CommonTextures.Atlas;
+            ContentPanel.BackgroundSprite = CommonTextures.PanelBig;
             ContentPanel.color = ContentPanel.disabledColor = IMTColors.contentBackground;
             ContentPanel.zOrder = 0;
             ContentPanel.eventSizeChanged += (_, size) => ContentBlur.size = size;
@@ -388,9 +388,7 @@ namespace IMT.UI.Editors
         protected override void OnObjectSelect(ObjectType editObject)
         {
             PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content, nameof(ContentPanel));
-            PropertiesPanel.StopLayout();
-            OnFillPropertiesPanel(editObject);
-            PropertiesPanel.StartLayout();
+            PropertiesPanel.PauseLayout(() => OnFillPropertiesPanel(editObject));
             PropertiesPanel.Init();
         }
         protected abstract void OnFillPropertiesPanel(ObjectType editObject);

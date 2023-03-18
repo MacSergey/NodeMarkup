@@ -13,11 +13,11 @@ namespace IMT.UI.Panel
 
         private BlurEffect Blur { get; set; }
 
-        private HeaderButtonInfo<HeaderButton> PasteButton { get; }
-        private HeaderButtonInfo<HeaderButton> EdgeLinesButton { get; }
-        private HeaderButtonInfo<HeaderButton> CutButton { get; }
-        private HeaderButtonInfo<HeaderButton> BeetwenIntersectionsButton { get; }
-        private HeaderButtonInfo<HeaderButton> WholeStreetButton { get; }
+        private HeaderButtonInfo<HeaderButton> PasteButton { get; set; }
+        private HeaderButtonInfo<HeaderButton> EdgeLinesButton { get; set; }
+        private HeaderButtonInfo<HeaderButton> CutButton { get; set; }
+        private HeaderButtonInfo<HeaderButton> BeetwenIntersectionsButton { get; set; }
+        private HeaderButtonInfo<HeaderButton> WholeStreetButton { get; set; }
 
         private bool available = true;
         public bool Available
@@ -33,14 +33,16 @@ namespace IMT.UI.Panel
             }
         }
 
-        public PanelHeader()
+        public PanelHeader() : base()
         {
             Blur = AddUIComponent<BlurEffect>();
             Blur.relativePosition = Vector3.zero;
             Blur.size = size;
             Blur.isVisible = false;
             Caption.zOrder = Blur.zOrder + 1;
-
+        }
+        protected override void FillContent()
+        {
             Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.AddTemplateHeaderButton, IMT.Localize.Panel_SaveAsPreset, IntersectionMarkingTool.SaveAsIntersectionTemplateShortcut));
 
             Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyHeaderButton, IMT.Localize.Panel_CopyMarking, IntersectionMarkingTool.CopyMarkingShortcut));
@@ -74,7 +76,7 @@ namespace IMT.UI.Panel
             base.Init(null);
         }
 
-        public override void Refresh()
+        public override void UpdateLayout()
         {
             PasteButton.Enable = !SingletonTool<IntersectionMarkingTool>.Instance.IsMarkingBufferEmpty;
 
@@ -84,7 +86,7 @@ namespace IMT.UI.Panel
             BeetwenIntersectionsButton.Visible = Type == MarkingType.Segment;
             WholeStreetButton.Visible = Type == MarkingType.Segment;
 
-            base.Refresh();
+            base.UpdateLayout();
         }
         protected override void OnSizeChanged()
         {

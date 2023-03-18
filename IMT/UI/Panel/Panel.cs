@@ -72,8 +72,8 @@ namespace IMT.UI.Panel
         {
             SingletonItem<IntersectionMarkingToolPanel>.Instance = this;
 
-            atlas = CommonTextures.Atlas;
-            backgroundSprite = CommonTextures.PanelBig;
+            Atlas = CommonTextures.Atlas;
+            BackgroundSprite = CommonTextures.PanelBig;
             color = ComponentStyle.PanelColor;
             name = nameof(IntersectionMarkingToolPanel);
 
@@ -174,7 +174,7 @@ namespace IMT.UI.Panel
             TabStrip.SelectedTab = -1;
             SelectEditor<LinesEditor>();
         }
-        public void RefreshHeader() => Header.Refresh();
+        public void RefreshHeader() => Header.UpdateLayout();
         public void RefreshProperties() => CurrentEditor?.RefreshEditor();
 
         #endregion

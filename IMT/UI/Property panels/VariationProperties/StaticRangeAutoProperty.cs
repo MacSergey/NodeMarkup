@@ -35,7 +35,7 @@ namespace IMT.UI
                 base.SelectorChangedImpl(index);
         }
 
-        protected override void RefreshImpl()
+        protected override void Refresh()
         {
             if (SelectedObject == AutoIndex)
             {
@@ -47,7 +47,7 @@ namespace IMT.UI
             else
             {
                 FieldA.isEnabled = true;
-                base.RefreshImpl();
+                base.Refresh();
             }
         }
 

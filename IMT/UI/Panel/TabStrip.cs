@@ -29,7 +29,7 @@ namespace IMT.UI.Panel
 
             this.DefaultStyle();
 
-            backgroundSprite = CommonTextures.Empty;
+            BackgroundSprite = CommonTextures.Empty;
 
             color = disabledColor = TabColor = new Color32(60, 64, 66, 255);
             TabHoveredColor = new Color32(132, 141, 145, 255);

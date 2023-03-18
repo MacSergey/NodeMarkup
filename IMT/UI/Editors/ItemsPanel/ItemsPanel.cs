@@ -79,15 +79,14 @@ namespace IMT.UI.Editors
 
         public void SetObjects(IEnumerable<ObjectType> editObjects)
         {
-            StopLayout();
+            PauseLayout(() =>
+            {
+                Clear();
 
-            Clear();
-
-            var objects = editObjects.OrderBy(o => o, this).ToArray();
-            foreach (var editObject in objects)
-                AddObjectImpl(editObject, -1);
-
-            StartLayout();
+                var objects = editObjects.OrderBy(o => o, this).ToArray();
+                foreach (var editObject in objects)
+                    AddObjectImpl(editObject, -1);
+            });
         }
         public void AddObject(ObjectType editObject) => AddObjectImpl(editObject);
         protected virtual ItemType AddObjectImpl(ObjectType editObject)

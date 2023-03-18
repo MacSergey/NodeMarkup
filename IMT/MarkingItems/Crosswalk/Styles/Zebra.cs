@@ -259,7 +259,7 @@ namespace IMT.Manager
             dashEndProperty.Label = Localize.StyleOption_ZebraDashesType;
             dashEndProperty.Selector.AutoButtonSize = false;
             dashEndProperty.Selector.ButtonWidth = 60f;
-            dashEndProperty.Selector.atlas = IMTTextures.Atlas;
+            dashEndProperty.Selector.Atlas = IMTTextures.Atlas;
             dashEndProperty.Init();
             dashEndProperty.SelectedObject = DashType;
             dashEndProperty.OnSelectObjectChanged += (value) => DashType.Value = value;
@@ -337,19 +337,20 @@ namespace IMT.Manager
 
             protected override void FillItems(Func<DashEnd, bool> selector)
             {
-                Selector.StopLayout();
-                foreach (var value in GetValues())
+                Selector.PauseLayout(() =>
                 {
-                    if (selector?.Invoke(value) != false)
+                    foreach (var value in GetValues())
                     {
-                        var sprite = value.Sprite();
-                        if (string.IsNullOrEmpty(sprite))
-                            Selector.AddItem(value, new OptionData(GetDescription(value)));
-                        else
-                            Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
+                        if (selector?.Invoke(value) != false)
+                        {
+                            var sprite = value.Sprite();
+                            if (string.IsNullOrEmpty(sprite))
+                                Selector.AddItem(value, new OptionData(GetDescription(value)));
+                            else
+                                Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
+                        }
                     }
-                }
-                Selector.StartLayout();
+                });
             }
 
             public class DashEndSegmented : UIOnceSegmented<DashEnd> { }

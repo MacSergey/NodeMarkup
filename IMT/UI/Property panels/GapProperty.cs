@@ -9,9 +9,9 @@ namespace IMT.UI
 
         public event Action<bool, float, int> OnValueChanged;
 
-        private CustomUIToggle UseToggle { get; }
-        private FloatUITextField LengthField { get; }
-        private IntUITextField PeriodField { get; }
+        private CustomUIToggle UseToggle { get; set; }
+        private FloatUITextField LengthField { get; set; }
+        private IntUITextField PeriodField { get; set; }
 
         public bool EnableGap
         {
@@ -81,27 +81,27 @@ namespace IMT.UI
             set => PeriodField.WheelStep = value;
         }
 
-        public GapProperty()
+        protected override void FillContent()
         {
             UseToggle = Content.AddUIComponent<CustomUIToggle>();
+            UseToggle.name = nameof(UseToggle);
             UseToggle.DefaultStyle();
             UseToggle.OnStateChanged += UseChanged;
 
             LengthField = Content.AddUIComponent<FloatUITextField>();
+            LengthField.name = nameof(LengthField);
             LengthField.SetDefaultStyle();
             LengthField.width = 50f;
-            LengthField.name = nameof(LengthField);
             LengthField.Format = IMT.Localize.NumberFormat_Meter;
             LengthField.OnValueChanged += LengthChanged;
 
             PeriodField = Content.AddUIComponent<IntUITextField>();
+            PeriodField.name = nameof(PeriodField);
             PeriodField.SetDefaultStyle();
             PeriodField.width = 80f;
-            PeriodField.name = nameof(PeriodField);
             PeriodField.Format = IMT.Localize.NumberFormat_Period;
             PeriodField.OnValueChanged += PeriodChanged;
         }
-
         public override void DeInit()
         {
             base.DeInit();

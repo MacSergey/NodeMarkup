@@ -16,7 +16,6 @@ namespace IMT.UI
     {
         public event Action<PrefabType> OnValueChanged;
         bool IReusable.InCache { get; set; }
-        public override bool SupportEven => true;
 
         public abstract PrefabType Prefab { get; set; }
         public abstract string RawName { get; set; }
@@ -31,12 +30,6 @@ namespace IMT.UI
             OnValueChanged = null;
         }
 
-        public override void Init() => Init(null);
-        public new virtual void Init(float? height)
-        {
-            base.Init(height);
-        }
-
         protected void ValueChanged(PrefabType prefab) => OnValueChanged?.Invoke(prefab);
     }
     public abstract class SelectPrefabProperty<PrefabType, EntityType, PopupType, DropDownType> : SelectPrefabProperty<PrefabType>
@@ -45,9 +38,7 @@ namespace IMT.UI
         where PopupType : ObjectPopup<PrefabType, EntityType>
         where DropDownType : PrefabDropDown<PrefabType, EntityType, PopupType>
     {
-        protected override float DefaultHeight => 50f + ItemsPadding * 2;
-
-        private DropDownType DropDown { get; }
+        private DropDownType DropDown { get; set; }
 
         public override PrefabType Prefab
         {
@@ -79,31 +70,21 @@ namespace IMT.UI
             };
         }
 
-        public SelectPrefabProperty()
+        protected override void FillContent()
         {
             DropDown = Content.AddUIComponent<DropDownType>();
+            DropDown.name = nameof(DropDown);
             DropDown.DropDownDefaultStyle();
+            DropDown.size = new Vector2(230f, 50f);
+            DropDown.scaleFactor = 20f / DropDown.height;
             DropDown.OnSelectObject += ValueChanged;
         }
-        public override void Init(float? height)
+        public override void Init()
         {
-            base.Init(height);
-
             DropDown.Clear();
             var count = PrefabCollection<PrefabType>.LoadedCount();
             for (uint i = 0; i < count; i += 1)
                 DropDown.AddItem(PrefabCollection<PrefabType>.GetLoaded(i));
-        }
-
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-
-            if (DropDown != null)
-            {
-                DropDown.size = new Vector2(230f, height - ItemsPadding * 2);
-                DropDown.scaleFactor = 20f / DropDown.height;
-            }
         }
     }
 

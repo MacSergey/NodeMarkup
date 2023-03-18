@@ -12,7 +12,6 @@ namespace IMT.UI
         protected CustomUIButton Button { get; set; }
         protected override float DefaultHeight => 24f;
 
-        public override bool SupportEven => true;
 
         public event Action OnButtonClick;
 

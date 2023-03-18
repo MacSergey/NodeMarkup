@@ -103,7 +103,7 @@ namespace IMT.UI.Editors
                 group.Item.eventMouseEnter += GroupHover;
                 group.Item.eventMouseLeave += GroupLeave;
 
-                if (Level > 0)
+                if (IsLayoutSuspended)
                     group.StopLayout();
 
                 Groups[groupType] = group;
@@ -152,6 +152,16 @@ namespace IMT.UI.Editors
 
         public abstract int Compare(GroupType x, GroupType y);
 
+        public override void PauseLayout(Action action)
+        {
+            foreach (var group in Groups.Values)
+                group.StopLayout();
+
+            base.PauseLayout(action);
+
+            foreach (var group in Groups.Values)
+                group.StartLayout();
+        }
         public override void StopLayout()
         {
             foreach (var group in Groups.Values)

@@ -205,10 +205,11 @@ namespace IMT.UI.Editors
         private void AfterStyleChanged()
         {
             RefreshSelectedItem();
-            PropertiesPanel.StopLayout();
-            this.AddProperties();
-            AddStyleProperties();
-            PropertiesPanel.StartLayout();
+            PropertiesPanel.PauseLayout(() =>
+            {
+                this.AddProperties();
+                AddStyleProperties();
+            });
         }
         private void ApplyStyle(BaseCrosswalkStyle style)
         {

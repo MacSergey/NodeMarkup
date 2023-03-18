@@ -60,23 +60,26 @@ namespace IMT.UI
             }
         }
 
-        private FontDropDown FontFamilySelector { get; }
-        private FontStyleSegmented FontStyleSelector { get; }
+        private FontDropDown FontFamilySelector { get; set; }
+        private FontStyleSegmented FontStyleSelector { get; set; }
 
-        public FontPropertyPanel()
+        protected override void FillContent()
         {
             FontFamilySelector = Content.AddUIComponent<FontDropDown>();
+            FontFamilySelector.name = nameof(FontFamilySelector);
             FontFamilySelector.DropDownDefaultStyle();
+            FontFamilySelector.height = 20f;
             FontFamilySelector.OnSelectObject += FontFamilyChanged;
 
             FontStyleSelector = Content.AddUIComponent<FontStyleSegmented>();
-            FontStyleSelector.StopLayout();
-            FontStyleSelector.AutoButtonSize = false;
-            FontStyleSelector.ButtonWidth = 20f;
-            FontStyleSelector.isVisible = false;
-            FontStyleSelector.StartLayout();
+            FontStyleSelector.name = nameof(FontStyleSelector);
+            FontStyleSelector.PauseLayout(() =>
+            {
+                FontStyleSelector.AutoButtonSize = false;
+                FontStyleSelector.ButtonWidth = 20f;
+                FontStyleSelector.isVisible = false;
+            });
             FontStyleSelector.OnSelectObject += FontStyleChanged;
-            FontStyleSelector.eventSizeChanged += ItemSizeChanged;
             FontFamilySelector.PopupWidth = Width;
         }
         public override void DeInit()
@@ -114,76 +117,73 @@ namespace IMT.UI
             OnValueChanged?.Invoke(Font);
         }
 
-        private void ItemSizeChanged(UIComponent component, Vector2 value) => Refresh();
-
         private void UpdateFont(string fontFamily, FontStyle fontStyle)
         {
             FontFamily = fontFamily;
 
-            FontStyleSelector.StopLayout();
-            FontStyleSelector.Clear();
-
-            if (string.IsNullOrEmpty(fontFamily))
+            FontStyleSelector.PauseLayout(() =>
             {
-                FontStyleSelector.isVisible = false;
-            }
-            else
-            {
-                var styles = new HashSet<FontStyle>();
-                foreach (var fontName in TextRenderHelper.InstalledFonts.Where(f => f.StartsWith(fontFamily)))
-                {
-                    if (fontName.EndsWith("Bold Italic"))
-                        styles.Add(FontStyle.BoldAndItalic);
-                    else if (fontName.EndsWith("Bold"))
-                        styles.Add(FontStyle.Bold);
-                    else if (fontName.EndsWith("Italic"))
-                        styles.Add(FontStyle.Italic);
-                    else
-                        styles.Add(FontStyle.Normal);
-                }
+                FontStyleSelector.Clear();
 
-                if (styles.Count >= 2)
-                {
-                    FontStyleSelector.isVisible = true;
-
-                    foreach (var style in EnumExtension.GetEnumValues<FontStyle>())
-                    {
-                        if (styles.Contains(style))
-                        {
-                            var label = style switch
-                            {
-                                FontStyle.Bold => IMT.Localize.StyleOption_FontStyleBold,
-                                FontStyle.Italic => IMT.Localize.StyleOption_FontStyleItalic,
-                                FontStyle.BoldAndItalic => IMT.Localize.StyleOption_FontStyleBoldItalic,
-                                _ => IMT.Localize.StyleOption_FontStyleRegular,
-                            };
-                            var sprite = style switch
-                            {
-                                FontStyle.Bold => IMTTextures.BoldButtonIcon,
-                                FontStyle.Italic => IMTTextures.ItalicButtonIcon,
-                                FontStyle.BoldAndItalic => IMTTextures.BoldItalicButtonIcon,
-                                _ => IMTTextures.RegularButtonIcon,
-                            };
-
-                            FontStyleSelector.AddItem(style, new OptionData(label, IMTTextures.Atlas, sprite));
-                        }
-
-                        if (styles.Contains(fontStyle))
-                            FontStyle = fontStyle;
-                        else
-                            FontStyle = FontStyle.Normal;
-                    }
-                }
-                else
+                if (string.IsNullOrEmpty(fontFamily))
                 {
                     FontStyleSelector.isVisible = false;
                 }
-            }
+                else
+                {
+                    var styles = new HashSet<FontStyle>();
+                    foreach (var fontName in TextRenderHelper.InstalledFonts.Where(f => f.StartsWith(fontFamily)))
+                    {
+                        if (fontName.EndsWith("Bold Italic"))
+                            styles.Add(FontStyle.BoldAndItalic);
+                        else if (fontName.EndsWith("Bold"))
+                            styles.Add(FontStyle.Bold);
+                        else if (fontName.EndsWith("Italic"))
+                            styles.Add(FontStyle.Italic);
+                        else
+                            styles.Add(FontStyle.Normal);
+                    }
 
-            FontStyleSelector.StartLayout();
+                    if (styles.Count >= 2)
+                    {
+                        FontStyleSelector.isVisible = true;
+
+                        foreach (var style in EnumExtension.GetEnumValues<FontStyle>())
+                        {
+                            if (styles.Contains(style))
+                            {
+                                var label = style switch
+                                {
+                                    FontStyle.Bold => IMT.Localize.StyleOption_FontStyleBold,
+                                    FontStyle.Italic => IMT.Localize.StyleOption_FontStyleItalic,
+                                    FontStyle.BoldAndItalic => IMT.Localize.StyleOption_FontStyleBoldItalic,
+                                    _ => IMT.Localize.StyleOption_FontStyleRegular,
+                                };
+                                var sprite = style switch
+                                {
+                                    FontStyle.Bold => IMTTextures.BoldButtonIcon,
+                                    FontStyle.Italic => IMTTextures.ItalicButtonIcon,
+                                    FontStyle.BoldAndItalic => IMTTextures.BoldItalicButtonIcon,
+                                    _ => IMTTextures.RegularButtonIcon,
+                                };
+
+                                FontStyleSelector.AddItem(style, new OptionData(label, IMTTextures.Atlas, sprite));
+                            }
+
+                            if (styles.Contains(fontStyle))
+                                FontStyle = fontStyle;
+                            else
+                                FontStyle = FontStyle.Normal;
+                        }
+                    }
+                    else
+                    {
+                        FontStyleSelector.isVisible = false;
+                    }
+                }
+            });
 
             SetSize();
-            Refresh();
         }
 
         protected override void OnSizeChanged()
@@ -195,12 +195,13 @@ namespace IMT.UI
         {
             if (FontFamilySelector != null)
             {
-                if (FontStyleSelector.isVisible)
-                    FontFamilySelector.width = Math.Max(100, Width - FontStyleSelector.width - Content.autoLayoutPadding.horizontal);
-                else
-                    FontFamilySelector.width = Width;
-
-                FontFamilySelector.height = height - ItemsPadding * 2f;
+                Content.PauseLayout(() =>
+                {
+                    if (FontStyleSelector.isVisible)
+                        FontFamilySelector.width = Mathf.Max(100f, Width - FontStyleSelector.width - Content.Padding.horizontal);
+                    else
+                        FontFamilySelector.width = Width;
+                });
             }
         }
     }

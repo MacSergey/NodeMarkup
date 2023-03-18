@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,8 @@ namespace IMT.UI
 
         public event Action<string> OnTextChanged;
 
-        protected override float DefaultHeight => TextPanel.LineCount * 20f + (TextPanel.LineCount - 1) * TextPanel.autoLayoutPadding.vertical + ItemsPadding * 2;
-        public MultilineText TextPanel { get; set; }
-
-        public MultilineTextProperty()
-        {
-            TextPanel = Content.AddUIComponent<MultilineText>();
-            TextPanel.OnTextChanged += TextChanged;
-        }
+        protected override float DefaultHeight => TextPanel.LineCount * 20f + (TextPanel.LineCount - 1) * TextPanel.Padding.vertical + ItemsPadding * 2;
+        private MultilineText TextPanel { get; set; }
 
         public string Text
         {
@@ -34,6 +29,12 @@ namespace IMT.UI
             set => TextPanel.FieldWidth = value;
         }
 
+        protected override void FillContent()
+        {
+            TextPanel = Content.AddUIComponent<MultilineText>();
+            TextPanel.name = nameof(TextPanel);
+            TextPanel.OnTextChanged += TextChanged;
+        }
         public override void DeInit()
         {
             base.DeInit();
@@ -81,17 +82,17 @@ namespace IMT.UI
 
             public MultilineText()
             {
-                autoLayoutDirection = LayoutDirection.Vertical;
-                autoFitChildrenHorizontally = true;
-                autoFitChildrenVertically = true;
-                autoLayoutStart = LayoutStart.TopRight;
-                autoLayoutPadding = new RectOffset(0, 0, 1, 1);
-                StopLayout();
+                PauseLayout(() =>
                 {
+                    autoLayout = AutoLayout.Vertical;
+                    autoFitChildrenHorizontally = true;
+                    autoFitChildrenVertically = true;
+                    autoLayoutStart = LayoutStart.TopRight;
+                    autoLayoutSpace = 2;
+
                     for (int i = 0; i < Lines.Length; i += 1)
                     {
                         var line = AddUIComponent<MultilineTextItem>();
-                        line.zOrder = 0;
 
                         line.Field.eventTextChanged += FieldTextChanged;
                         line.Field.OnValueChanged += FieldValueChanged;
@@ -99,8 +100,7 @@ namespace IMT.UI
 
                         Lines[i] = line;
                     }
-                }
-                StartLayout();
+                });
 
                 Refresh();
             }
@@ -135,26 +135,25 @@ namespace IMT.UI
         }
         public class MultilineTextItem : UIAutoLayoutPanel
         {
-            public CustomUILabel LabelItem { get; }
-            public StringUITextField Field { get; }
+            public CustomUILabel LabelItem { get; private set; }
+            public StringUITextField Field { get; private set; }
 
             public MultilineTextItem()
             {
-                autoLayoutDirection = LayoutDirection.Horizontal;
-                autoFitChildrenHorizontally = true;
-                autoFitChildrenVertically = true;
-                autoLayoutPadding = new UnityEngine.RectOffset(0, 0, 1, 1);
-
-                StopLayout();
+                PauseLayout(() => 
                 {
+                    autoLayout = AutoLayout.Horizontal;
+                    autoFitChildrenHorizontally = true;
+                    autoFitChildrenVertically = true;
+                    autoLayoutSpace = 2;
+
                     LabelItem = AddUIComponent<CustomUILabel>();
                     LabelItem.textScale = 0.7f;
                     LabelItem.padding = new RectOffset(0, 8, 5, 0);
 
                     Field = AddUIComponent<StringUITextField>();
                     Field.SetDefaultStyle();
-                }
-                StartLayout();
+                });
             }
         }
     }
