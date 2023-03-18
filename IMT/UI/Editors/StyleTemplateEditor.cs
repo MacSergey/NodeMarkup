@@ -33,7 +33,7 @@ namespace IMT.UI.Editors
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
         Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
-        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
+        List<BaseEditorPanel> IPropertyContainer.StyleProperties { get; } = new List<BaseEditorPanel>();
 
         protected override IEnumerable<StyleTemplate> GetObjects() => SingletonManager<StyleTemplateManager>.Instance.Templates;
 
@@ -223,7 +223,7 @@ namespace IMT.UI.Editors
 
         protected override Style.StyleType SelectGroup(StyleTemplate editObject) => Settings.GroupTemplatesType == 0 ? editObject.Style.Type.GetGroup() : editObject.Style.Type;
     }
-    public class StyleTemplateItem : EditItem<StyleTemplate, StyleTemplateIcon>
+    public class StyleTemplateItem : EditItem<StyleTemplate, StyleIcon>
     {
         public override bool ShowDelete => EditObject != null && !EditObject.IsAsset;
         private bool IsDefault => EditObject?.IsDefault == true;
@@ -240,13 +240,13 @@ namespace IMT.UI.Editors
 
         public override ColorSet ForegroundColors => !IsDefault ? base.ForegroundColors : new ColorSet()
         {
-            normal = new Color32(255, 208, 0, 255),
-            hovered = new Color32(255, 208, 0, 255),
-            pressed = new Color32(255, 170, 0, 255),
-            focused = new Color32(255, 208, 0, 255),
+            normal = IMTColors.ItemFavoriteNormal,
+            hovered = IMTColors.ItemFavoriteNormal,
+            pressed = IMTColors.ItemFavoritePressed,
+            focused = IMTColors.ItemFavoriteFocused,
             disabled = null,
         };
-        public override ColorSet ForegroundSelectedColors => !IsDefault ? base.ForegroundSelectedColors : new ColorSet(new Color32(255, 162, 0, 255));
+        public override ColorSet ForegroundSelectedColors => !IsDefault ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemFavoriteFocused);
 
         public override ColorSet TextColor => !IsDefault ? base.TextColor : new ColorSet()
         {
@@ -268,10 +268,7 @@ namespace IMT.UI.Editors
             SetStyle();
         }
     }
-    public class StyleTemplateIcon : StyleIcon
-    {
-        public bool IsDefault { set => BorderColor = value ? new Color32(255, 215, 0, 255) : (Color32)Color.white; }
-    }
+
     public class StyleTemplateGroup : EditGroup<Style.StyleType, StyleTemplateItem, StyleTemplate> { }
     public class EditStyleTemplateMode : EditTemplateMode<StyleTemplate> { }
 }

@@ -48,7 +48,7 @@ namespace IMT.UI.Editors
             autoFitChildrenVertically = true;
 
             atlas = CommonTextures.Atlas;
-            NormalFgColor = IMTColors.itemGroupBackground;
+            NormalFgColor = IMTColors.ItemGroupBackground;
             ForegroundSprite = CommonTextures.PanelBig;
 
             PauseLayout(() =>
@@ -99,13 +99,12 @@ namespace IMT.UI.Editors
 
         public void DeInit()
         {
-            StopLayout();
+            PauseLayout(() =>
             {
                 var components = this.components.OfType<ItemType>().ToArray();
                 foreach (var component in components)
                     ComponentPool.Free(component);
-            }
-            StartLayout(false, true);
+            }, false, true);
         }
     }
 
@@ -126,7 +125,7 @@ namespace IMT.UI.Editors
             get
             {
                 var colors = base.ForegroundColors;
-                colors.normal = colors.focused = new Color32(29, 75, 106, 255);
+                colors.normal = colors.focused = IMTColors.ItemGroup;
                 return colors;
             }
         }

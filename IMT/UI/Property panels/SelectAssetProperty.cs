@@ -267,9 +267,9 @@ namespace IMT.UI
             SetPosition();
         }
 
-        private Color32 FavoriteNormal => new Color32(255, 215, 0, 255);
-        private Color32 FavoriteHovered => new Color32(255, 200, 0, 255);
-        private Color32 FavoritePressed => new Color32(255, 190, 0, 255);
+        private Color32 FavoriteNormal => IMTColors.ItemFavoriteNormal;
+        private Color32 FavoriteHovered => IMTColors.ItemFavoriteHovered;
+        private Color32 FavoritePressed => IMTColors.ItemFavoritePressed;
         private void SetFavoriteButton()
         {
             if (IsFavorite)

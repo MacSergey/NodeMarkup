@@ -26,12 +26,12 @@ namespace IMT.UI.Editors
         public virtual ColorSet ForegroundColors => new ColorSet()
         {
             normal = null,
-            hovered = IMTColors.itemHovered,
-            pressed = IMTColors.itemPressed,
+            hovered = IMTColors.ItemHovered,
+            pressed = IMTColors.ItemPressed,
             focused = null,
             disabled = null,
         };
-        public virtual ColorSet ForegroundSelectedColors => new ColorSet(IMTColors.itemFocused);
+        public virtual ColorSet ForegroundSelectedColors => new ColorSet(IMTColors.ItemFocused);
 
         public virtual ColorSet TextColor => new ColorSet(Color.white);
         public virtual ColorSet TextSelectedColor => new ColorSet(Color.black);

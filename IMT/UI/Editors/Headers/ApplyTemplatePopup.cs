@@ -63,15 +63,17 @@ namespace IMT.UI.Editors
         protected override void SetPopupStyle()
         {
             Popup.PopupDefaultStyle(50f);
-            Popup.color = new Color32(29, 58, 77, 255);
+            Popup.Atlas = CommonTextures.Atlas;
+            Popup.BackgroundSprite = CommonTextures.PanelBig;
+            Popup.NormalBgColor = IMTColors.ItemsBackground;
         }
         protected override void InitPopup()
         {
             Popup.MaximumSize = new Vector2(width, 700f);
             Popup.width = 300f;
-            Popup.MaxVisibleItems = 25;
-            Popup.EntityHeight = 25f;
-            Popup.ItemsPadding = new RectOffset(4, 4, 4, 4);
+            Popup.MaxVisibleItems = 15;
+            Popup.EntityHeight = 36f;
+            Popup.ItemsPadding = new RectOffset(0, 0, 4, 6);
             base.InitPopup();
         }
         public void SetSize(int buttonSize, int iconSize)
@@ -107,6 +109,7 @@ namespace IMT.UI.Editors
         protected override string NotFoundText => IMT.Localize.HeaderPanel_NoTemplates;
         protected override string GetName(StyleTemplate value) => value.Name;
         protected override void SetEntityStyle(TemplateEntity entity) => entity.EntityStyle<StyleTemplate, TemplateEntity>();
+        protected override bool FilterSearch(StyleTemplate value) => base.FilterSearch(value) || (value.IsAsset && value.Asset.Author.ToLower().Contains(SearchText));
     }
     public class TemplateEntity : StyleTemplateItem, IPopupEntity<StyleTemplate>
     {

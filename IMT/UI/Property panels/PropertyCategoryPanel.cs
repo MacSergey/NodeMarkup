@@ -80,7 +80,7 @@ namespace IMT.UI.Editors
 
                         foreach (var item in components)
                         {
-                            if (item is EditorPropertyPanel property)
+                            if (item is BaseEditorPanel property)
                                 property.IsCollapsed = !value.Value;
                         }
 

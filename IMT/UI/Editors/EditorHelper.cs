@@ -21,7 +21,7 @@ namespace IMT.UI.Editors
         Dictionary<string, List<IPropertyInfo>> PropertyInfos { get; }
         Dictionary<string, IPropertyCategoryInfo> CategoryInfos { get; }
         Dictionary<string, CategoryItem> CategoryItems { get; }
-        List<EditorItem> StyleProperties { get; }
+        List<BaseEditorPanel> StyleProperties { get; }
         Dictionary<string, bool> ExpandList { get; }
     }
 

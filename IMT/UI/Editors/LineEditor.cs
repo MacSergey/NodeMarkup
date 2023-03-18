@@ -30,7 +30,7 @@ namespace IMT.UI.Editors
         public override Marking.SupportType Support => Marking.SupportType.Lines;
 
         private PropertyGroupPanel LineProperties { get; set; }
-        private AddRuleButton AddButton { get; set; }
+        private CustomUIButton AddRuleButton { get; set; }
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool SupportRules => EditObject is MarkingRegularLine;
@@ -97,7 +97,7 @@ namespace IMT.UI.Editors
             HoverRulePanel = null;
             LineProperties = null;
             LinePropertiesVisibleAction = null;
-            AddButton = null;
+            AddRuleButton = null;
         }
         private void GetRuleEdges(MarkingLine editObject)
         {
@@ -180,18 +180,22 @@ namespace IMT.UI.Editors
         }
         private void AddAddButton()
         {
-            AddButton = ComponentPool.Get<AddRuleButton>(ContentPanel.Content);
-            AddButton.Text = IMT.Localize.LineEditor_AddRuleButton;
-            AddButton.tooltip = IntersectionMarkingTool.AddRuleShortcut;
-            AddButton.Init();
-            AddButton.OnButtonClick += AddRule;
+            AddRuleButton = ContentPanel.Content.AddUIComponent<CustomUIButton>();
+            AddRuleButton.name = nameof(AddRuleButton);
+            AddRuleButton.SetDefaultStyle();
+            AddRuleButton.size = new Vector2(ContentPanel.Content.ItemSize.x, 30f);
+            AddRuleButton.text = IMT.Localize.LineEditor_AddRuleButton;
+            AddRuleButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
+            AddRuleButton.textPadding.top = 5;
+            AddRuleButton.tooltip = IntersectionMarkingTool.AddRuleShortcut;
+            AddRuleButton.eventClick += (_, _) => AddRule();
             SetAddButtonVisible();
         }
         private void SetLinePropertiesVisible() => LinePropertiesVisibleAction?.Invoke();
         private void SetAddButtonVisible()
         {
-            AddButton.zOrder = -1;
-            AddButton.isVisible = AddRuleAvailable;
+            AddRuleButton.zOrder = -1;
+            AddRuleButton.isVisible = AddRuleAvailable;
         }
 
         private void AddRule()
@@ -394,13 +398,13 @@ namespace IMT.UI.Editors
 
         public override ColorSet ForegroundColors => !HasOverlapped ? base.ForegroundColors : new ColorSet()
         {
-            normal = new Color32(246, 85, 85, 255),
-            hovered = new Color32(246, 85, 85, 255),
-            pressed = new Color32(248, 68, 68, 255),
-            focused = new Color32(246, 85, 85, 255),
+            normal = IMTColors.ItemErrorNormal,
+            hovered = IMTColors.ItemErrorNormal,
+            pressed = IMTColors.ItemErrorPressed,
+            focused = IMTColors.ItemErrorFocused,
             disabled = null,
         };
-        public override ColorSet ForegroundSelectedColors => !HasOverlapped ? base.ForegroundSelectedColors : new ColorSet(new Color32(225, 62, 62, 255));
+        public override ColorSet ForegroundSelectedColors => !HasOverlapped ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemErrorFocused);
 
         public override ColorSet TextColor => !HasOverlapped ? base.TextColor : new ColorSet(Color.white);
         public override ColorSet TextSelectedColor => !HasOverlapped ? base.TextSelectedColor : new ColorSet(Color.white);
@@ -429,12 +433,4 @@ namespace IMT.UI.Editors
         }
     }
     public class LineGroup : EditGroup<LineType, LineItem, MarkingLine> { }
-    public class AddRuleButton : ButtonPanel
-    {
-        public AddRuleButton()
-        {
-            Button.textScale = 1f;
-        }
-        protected override void SetSize() => Button.size = size;
-    }
 }

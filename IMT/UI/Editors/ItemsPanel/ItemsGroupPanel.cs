@@ -152,15 +152,15 @@ namespace IMT.UI.Editors
 
         public abstract int Compare(GroupType x, GroupType y);
 
-        public override void PauseLayout(Action action)
+        public override void PauseLayout(Action action, bool layoutNow = true, bool force = false)
         {
             foreach (var group in Groups.Values)
                 group.StopLayout();
 
-            base.PauseLayout(action);
+            base.PauseLayout(action, layoutNow, force);
 
             foreach (var group in Groups.Values)
-                group.StartLayout();
+                group.StartLayout(layoutNow, force);
         }
         public override void StopLayout()
         {

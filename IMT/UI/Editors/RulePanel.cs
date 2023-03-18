@@ -32,7 +32,7 @@ namespace IMT.UI.Editors
         public MarkingLineRawRule Rule { get; private set; }
 
         private RuleHeaderPanel Header { get; set; }
-        private ErrorTextProperty Error { get; set; }
+        private LabelProperty Error { get; set; }
         private WarningTextProperty Warning { get; set; }
         public RuleEdgeSelectPropertyPanel From { get; private set; }
         public RuleEdgeSelectPropertyPanel To { get; private set; }
@@ -47,7 +47,7 @@ namespace IMT.UI.Editors
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
         Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
-        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
+        List<BaseEditorPanel> IPropertyContainer.StyleProperties { get; } = new List<BaseEditorPanel>();
 
         public RulePanel() { }
         public void Init(LinesEditor editor, MarkingLineRawRule rule, bool isExpand)
@@ -108,6 +108,8 @@ namespace IMT.UI.Editors
             Header.OnApplySameType += ApplyStyleSameType;
             Header.OnExpand += Expand;
             Header.OnSelectTemplate += OnSelectTemplate;
+            Header.OnSelectTemplatePopupOpen += SelectTemplatePopupOpen;
+            Header.OnSelectTemplatePopupClose += SelectTemplatePopupClose;
         }
 
         private void Expand()
@@ -120,8 +122,9 @@ namespace IMT.UI.Editors
 
         private void AddError()
         {
-            Error = ComponentPool.Get<ErrorTextProperty>(this, nameof(Error));
+            Error = ComponentPool.Get<LabelProperty>(this, nameof(Error));
             Error.Text = IMT.Localize.LineEditor_RuleOverlappedWarning;
+            Error.BackgroundColor = ComponentStyle.ErrorFocusedColor;
             Error.Init();
         }
         private void AddWarning()
@@ -226,6 +229,9 @@ namespace IMT.UI.Editors
                 IsExpand = true;
             }
         }
+        private void SelectTemplatePopupOpen() => Editor.AvailableContent = false;
+        private void SelectTemplatePopupClose() => Editor.AvailableContent = true;
+
         private void CopyStyle() => Editor.Tool.ToStyleBuffer(Rule.Style.Value.Type.GetGroup(), Rule.Style.Value);
         private void PasteStyle()
         {
@@ -320,7 +326,7 @@ namespace IMT.UI.Editors
             PauseLayout(() =>
             {
                 var error = Rule.IsOverlapped;
-                color = !IsExpand && error ? CommonColors.Error : NormalColor;
+                color = !IsExpand && error ? ComponentStyle.ErrorFocusedColor : NormalColor;
                 Header.IsExpand = IsExpand;
                 Error.isVisible = IsExpand && error;
                 Warning.isVisible = IsExpand && Settings.ShowPanelTip && !Editor.CanDivide;

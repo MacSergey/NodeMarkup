@@ -35,7 +35,7 @@ namespace IMT.UI.Editors
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
         Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
-        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
+        List<BaseEditorPanel> IPropertyContainer.StyleProperties { get; } = new List<BaseEditorPanel>();
 
         #endregion
 
@@ -78,6 +78,8 @@ namespace IMT.UI.Editors
             header.OnApplySameStyle += ApplyStyleSameStyle;
             header.OnApplySameType += ApplyStyleSameType;
             header.OnSelectTemplate += SelectTemplate;
+            header.OnSelectTemplatePopupOpen += SelectTemplatePopupOpen;
+            header.OnSelectTemplatePopupClose += SelectTemplatePopupClose;
         }
         private void AddStyleTypeProperty()
         {
@@ -154,6 +156,9 @@ namespace IMT.UI.Editors
             if (template.Style is BaseFillerStyle style)
                 ApplyStyle(style);
         }
+        private void SelectTemplatePopupOpen() => AvailableContent = false;
+        private void SelectTemplatePopupClose() => AvailableContent = true;
+
         private void CopyStyle() => Tool.ToStyleBuffer(Manager.Style.StyleType.Filler, EditObject.Style.Value);
         private void PasteStyle()
         {

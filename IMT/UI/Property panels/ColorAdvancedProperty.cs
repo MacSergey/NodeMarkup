@@ -21,7 +21,7 @@ namespace IMT.UI
         private CustomUIButton CopyButton { get; set; }
         private CustomUIButton PasteButton { get; set; }
 
-        protected override Color32 PopupColor => new Color32(36, 44, 51, 255);
+        protected override Color32 PopupColor => IMTColors.ItemsBackground;
 
         protected override void FillContent()
         {
@@ -71,7 +71,8 @@ namespace IMT.UI
         {
             var width = (parent.width - (10 * (of + 1))) / of;
 
-            var button = AddButton(parent);
+            var button = parent.AddUIComponent<CustomUIButton>();
+            button.SetDefaultStyle();
             button.size = new Vector2(width, 20f);
             button.relativePosition = new Vector2(10 * count + width * (count - 1), 253f);
             button.textPadding = new RectOffset(0, 0, 5, 0);

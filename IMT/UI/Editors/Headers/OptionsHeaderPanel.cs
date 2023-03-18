@@ -29,6 +29,16 @@ namespace IMT.UI.Editors
             add => ApplyTemplate.Button.OnSelectObject += value;
             remove => ApplyTemplate.Button.OnSelectObject -= value;
         }
+        public event Action OnSelectTemplatePopupOpen
+        {
+            add => ApplyTemplate.Button.OnBeforePopupOpen += value;
+            remove => ApplyTemplate.Button.OnBeforePopupOpen -= value;
+        }
+        public event Action OnSelectTemplatePopupClose
+        {
+            add => ApplyTemplate.Button.OnAfterPopupClose += value;
+            remove => ApplyTemplate.Button.OnAfterPopupClose -= value;
+        }
 
         protected IPropertyEditor Editor { get; private set; }
         private Style.StyleType StyleGroup { get; set; }

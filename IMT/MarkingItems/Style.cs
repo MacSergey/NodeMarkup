@@ -781,7 +781,7 @@ namespace IMT.Manager
 
         bool EnableControl { get; set; }
 
-        EditorItem Create(EditorProvider editorProvider);
+        BaseEditorPanel Create(EditorProvider editorProvider);
         void Refresh(EditorProvider editorProvider);
         void Destroy(EditorProvider editorProvider);
     }
@@ -795,7 +795,7 @@ namespace IMT.Manager
     }
 
     public struct PropertyInfo<PropertyType> : IPropertyInfo
-        where PropertyType : EditorItem, IReusable
+        where PropertyType : BaseEditorPanel, IReusable
     {
         public delegate void InitItem(PropertyType property, EditorProvider editorProvider);
         public delegate void RefreshItem(PropertyType property, EditorProvider editorProvider);
@@ -848,7 +848,7 @@ namespace IMT.Manager
             this.instance = null;
         }
 
-        public EditorItem Create(EditorProvider editorProvider)
+        public BaseEditorPanel Create(EditorProvider editorProvider)
         {
             if (instance == null)
             {

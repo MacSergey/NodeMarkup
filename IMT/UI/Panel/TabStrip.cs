@@ -31,12 +31,11 @@ namespace IMT.UI.Panel
 
             BackgroundSprite = CommonTextures.Empty;
 
-            color = disabledColor = TabColor = new Color32(60, 64, 66, 255);
-            TabHoveredColor = new Color32(132, 141, 145, 255);
-            TabPressedColor = new Color32(104, 111, 115, 255);
-            TabFocusedColor = new Color32(155, 175, 86, 255);
-            TabDisabledColor = new Color32(36, 36, 36, 255);
-            TabFocusedDisabledColor = new Color32(111, 125, 61, 255);
+            color = disabledColor = TabColor = IMTColors.TabButtonNormal;
+            TabHoveredColor = IMTColors.TabButtonHovered;
+            TabPressedColor = IMTColors.TabButtonPressed;
+            TabFocusedColor = IMTColors.TabButtonFocused;
+            TabDisabledColor = IMTColors.TabButtonDisabled;
 
             Blur = AddUIComponent<BlurEffect>();
             Blur.relativePosition = Vector3.zero;

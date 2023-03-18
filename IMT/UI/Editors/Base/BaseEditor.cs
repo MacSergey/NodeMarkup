@@ -130,7 +130,7 @@ namespace IMT.UI.Editors
             ItemsPanel.Atlas = CommonTextures.Atlas;
             ItemsPanel.BackgroundSprite = CommonTextures.PanelBig;
             ItemsPanel.ForegroundSprite = CommonTextures.BorderTop;
-            ItemsPanel.color = ItemsPanel.disabledColor = IMTColors.itemsBackground;
+            ItemsPanel.color = ItemsPanel.disabledColor = IMTColors.ItemsBackground;
             ItemsPanel.canFocus = true;
 
             ItemsPanel.Content.autoLayoutPadding = new RectOffset(0, 0, 0, 0);
@@ -167,7 +167,7 @@ namespace IMT.UI.Editors
             ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
             ContentPanel.Atlas = CommonTextures.Atlas;
             ContentPanel.BackgroundSprite = CommonTextures.PanelBig;
-            ContentPanel.color = ContentPanel.disabledColor = IMTColors.contentBackground;
+            ContentPanel.color = ContentPanel.disabledColor = IMTColors.ContentBackground;
             ContentPanel.zOrder = 0;
             ContentPanel.eventSizeChanged += (_, size) => ContentBlur.size = size;
             ContentPanel.eventPositionChanged += (_, position) => ContentBlur.position = position;

@@ -25,7 +25,7 @@ namespace IMT.UI.Editors
         protected override string IsAssetWarningMessage => IMT.Localize.PresetEditor_IsAssetWarningMessage;
         protected override string IsWorkshopWarningMessage => IMT.Localize.PresetEditor_IsWorkshopWarningMessage;
 
-        private PropertyGroupPanel Screenshot { get; set; }
+        private PropertyGroupPanel InfoGroup { get; set; }
 
         protected override IEnumerable<IntersectionTemplate> GetObjects() => SingletonManager<IntersectionTemplateManager>.Instance.Templates;
         protected override void OnObjectSelect(IntersectionTemplate editObject)
@@ -34,14 +34,15 @@ namespace IMT.UI.Editors
 
             ItemsPanel.RemovePreview();
 
-            Screenshot = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content, nameof(Screenshot));
-            var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(Screenshot, "Info");
+            InfoGroup = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content, nameof(InfoGroup));
+            InfoGroup.Init();
+            var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(InfoGroup, "Info");
             info.Init(EditObject);
         }
         protected override void OnClear()
         {
             base.OnClear();
-            Screenshot = null;
+            InfoGroup = null;
         }
         protected override void OnObjectDelete(IntersectionTemplate template)
         {
@@ -115,14 +116,15 @@ namespace IMT.UI.Editors
             var root = GetRootContainer();
 
             Preview = ComponentPool.Get<PreviewPanel>(root, nameof(Preview));
-            Preview.Init(365f);
+            Preview.width = 400f;
+            Preview.Item = item;
 
             var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview, "Info");
             info.Init(item.EditObject);
 
-            var x = item.absolutePosition.x + item.width;
-            var y = Mathf.Min(item.absolutePosition.y, root.absolutePosition.y + root.height - Preview.height);
-            Preview.absolutePosition = new Vector2(x, y);
+            item.eventSizeChanged += OnItemSizeChanged;
+            item.eventPositionChanged += OnItemSizeChanged;
+            SetPreviewPosition();
         }
 
         public void RemovePreview()
@@ -130,10 +132,27 @@ namespace IMT.UI.Editors
             if (Preview == null)
                 return;
 
+            if (Preview.Item != null)
+            {
+                Preview.Item.eventSizeChanged -= OnItemSizeChanged;
+                Preview.Item.eventPositionChanged -= OnItemSizeChanged;
+            }
+
             Editor.AvailableContent = true;
             ComponentPool.Free(Preview);
             Preview = null;
         }
+        private void OnItemSizeChanged(UIComponent item, Vector2 size) => SetPreviewPosition();
+        private void SetPreviewPosition()
+        {
+            if(Preview != null)
+            {
+                var x = Preview.Item.absolutePosition.x + Preview.Item.width;
+                var y = Mathf.Min(Preview.Item.absolutePosition.y, Preview.parent.absolutePosition.y + Preview.parent.height - Preview.height);
+                Preview.absolutePosition = new Vector2(x, y);
+            }
+        }
+
         public override void RefreshItems()
         {
             base.RefreshItems();
@@ -245,13 +264,13 @@ namespace IMT.UI.Editors
 
         public override ColorSet ForegroundColors => !IsLinked ? base.ForegroundColors : new ColorSet()
         {
-            normal = new Color32(255, 208, 0, 255),
-            hovered = new Color32(255, 208, 0, 255),
-            pressed = new Color32(255, 170, 0, 255),
-            focused = new Color32(255, 208, 0, 255),
+            normal = IMTColors.ItemFavoriteNormal,
+            hovered = IMTColors.ItemFavoriteNormal,
+            pressed = IMTColors.ItemFavoritePressed,
+            focused = IMTColors.ItemFavoriteFocused,
             disabled = null,
         };
-        public override ColorSet ForegroundSelectedColors => !IsLinked ? base.ForegroundSelectedColors : new ColorSet(new Color32(255, 162, 0, 255));
+        public override ColorSet ForegroundSelectedColors => !IsLinked ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemFavoriteFocused);
 
         public override ColorSet TextColor => !IsLinked ? base.TextColor : new ColorSet()
         {
@@ -298,7 +317,8 @@ namespace IMT.UI.Editors
     public class EditIntersectionTemplateMode : EditTemplateMode<IntersectionTemplate> { }
     public class PreviewPanel : PropertyGroupPanel
     {
-        protected override Color32 DefaultColor => new Color32(201, 211, 216, 255);
+        public IntersectionTemplateItem Item { get; set; }
+        protected override Color32 DefaultColor => IMTColors.ItemGroupBackground;
 
         protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }
