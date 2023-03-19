@@ -29,7 +29,7 @@ namespace IMT.UI.Editors
         public void SelectObject(ObjectType editObject);
         public void RefreshSelectedItem();
     }
-    public abstract class ItemsPanel<ItemType, ObjectType> : AdvancedScrollablePanel, IItemPanel<ObjectType>, IComparer<ObjectType>
+    public abstract class ItemsPanel<ItemType, ObjectType> : CustomUIScrollablePanel, IItemPanel<ObjectType>, IComparer<ObjectType>
         where ItemType : EditItem<ObjectType>
         where ObjectType : class, IDeletable
     {
@@ -66,10 +66,19 @@ namespace IMT.UI.Editors
 
         protected ItemType HoverItem { get; set; }
         public ObjectType HoverObject => HoverItem?.EditObject;
-        public virtual bool IsEmpty => !Content.components.Any(c => c is ItemType);
+        public virtual bool IsEmpty => !components.Any(c => c is ItemType);
 
         #endregion
 
+        public ItemsPanel()
+        {
+            autoLayout = AutoLayout.Vertical;
+            autoFillChildren = true;
+            scrollOrientation = UIOrientation.Vertical;
+
+            Scrollbar.DefaultStyle();
+            scrollbarSize = 12f;
+        }
         public void Init(Editor editor)
         {
             Editor = editor;
@@ -94,7 +103,7 @@ namespace IMT.UI.Editors
             var index = FindIndex(editObject);
             return AddObjectImpl(editObject, index >= 0 ? index : ~index);
         }
-        protected virtual ItemType AddObjectImpl(ObjectType editObject, int zOrder) => GetItem(editObject, false, Content, zOrder);
+        protected virtual ItemType AddObjectImpl(ObjectType editObject, int zOrder) => GetItem(editObject, false, this, zOrder);
         protected ItemType GetItem<ParentType>(ObjectType editObject, bool inGroup, ParentType container, int zOrder = -1)
             where ParentType : UIComponent, IAutoLayoutPanel
         {
@@ -131,7 +140,7 @@ namespace IMT.UI.Editors
         }
         protected virtual void DeleteSelectedItem(ItemType item)
         {
-            var index = Math.Min(Content.components.IndexOf(item), Content.components.Count - 2);
+            var index = Math.Min(components.IndexOf(item), components.Count - 2);
             DeleteItem(item);
             Select(FindItem(index));
         }
@@ -149,10 +158,12 @@ namespace IMT.UI.Editors
             HoverItem = null;
             SelectItem = null;
 
-            var components = Content.components.ToArray();
+            var components = this.components.ToArray();
             foreach (var component in components)
             {
-                if (component is ItemType item)
+                if (component == Scrollbar)
+                    continue;
+                else if (component is ItemType item)
                     DeleteItem(item);
                 else
                     ComponentPool.Free(component);
@@ -225,22 +236,22 @@ namespace IMT.UI.Editors
 
         #region ADDITIONAL
 
-        protected virtual ItemType FindItem(ObjectType editObject) => Content.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.EditObject, editObject));
-        protected virtual ItemType FindItem(int index) => FindItem<ItemType>(index, Content);
+        protected virtual ItemType FindItem(ObjectType editObject) => components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.EditObject, editObject));
+        protected virtual ItemType FindItem(int index) => FindItem<ItemType>(index, this);
         protected T FindItem<T>(int index, UIComponent parent) where T : UIComponent => index >= 0 && parent.components.Count > index ? parent.components[index] as T : null;
 
-        protected virtual int FindIndex(ObjectType editObject) => FindIndex(editObject, Content);
+        protected virtual int FindIndex(ObjectType editObject) => FindIndex(editObject, this);
         protected int FindIndex(ObjectType editObject, UIComponent parent) => Array.BinarySearch(parent.components.OfType<ItemType>().Select(i => i.EditObject).ToArray(), editObject, this);
 
         public virtual void ScrollTo(ItemType item)
         {
-            Content.ScrollToBottom();
-            Content.ScrollIntoViewRecursive(item);
+            ScrollToEnd();
+            ScrollIntoView(item);
         }
         public void RefreshSelectedItem() => SelectItem?.Refresh();
         public virtual void RefreshItems()
         {
-            foreach (var item in Content.components.OfType<ItemType>())
+            foreach (var item in components.OfType<ItemType>())
                 item.Refresh();
         }
         public abstract int Compare(ObjectType x, ObjectType y);

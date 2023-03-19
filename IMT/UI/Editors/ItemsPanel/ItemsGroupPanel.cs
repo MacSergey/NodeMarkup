@@ -16,7 +16,7 @@ namespace IMT.UI.Editors
         where ObjectType : class, IDeletable
         where GroupItemType : EditGroup<GroupType, ItemType, ObjectType>
     {
-        public override bool IsEmpty => GroupingEnable ? !Content.components.Any(c => c is GroupItemType) : base.IsEmpty;
+        public override bool IsEmpty => GroupingEnable ? !components.Any(c => c is GroupItemType) : base.IsEmpty;
         public abstract bool GroupingEnable { get; }
         private Dictionary<GroupType, GroupItemType> Groups { get; } = new Dictionary<GroupType, GroupItemType>();
         protected GroupItemType HoverGroup { get; set; }
@@ -96,10 +96,10 @@ namespace IMT.UI.Editors
             var groupType = SelectGroup(editObject);
             if (!Groups.TryGetValue(groupType, out GroupItemType group) && add)
             {
-                var index = FindIndex(groupType, Content);
-                group = ComponentPool.Get<GroupItemType>(Content, zOrder: index >= 0 ? index : ~index);
+                var index = FindIndex(groupType, this);
+                group = ComponentPool.Get<GroupItemType>(this, zOrder: index >= 0 ? index : ~index);
                 group.Init(groupType, GroupName(groupType));
-                group.width = Content.width;
+                group.width = this.width;
                 group.Item.eventMouseEnter += GroupHover;
                 group.Item.eventMouseLeave += GroupLeave;
 
@@ -143,7 +143,7 @@ namespace IMT.UI.Editors
         {
             if (GroupingEnable)
             {
-                foreach (var group in Content.components.OfType<GroupItemType>())
+                foreach (var group in components.OfType<GroupItemType>())
                     group.Refresh();
             }
             else

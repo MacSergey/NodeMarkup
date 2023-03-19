@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class EditGroup<GroupType, ItemType, ObjectType> : UIAutoLayoutPanel, IReusable
+    public class EditGroup<GroupType, ItemType, ObjectType> : CustomUIPanel, IReusable
         where ItemType : EditItem<ObjectType>
         where ObjectType : class, IDeletable
     {
@@ -41,7 +41,7 @@ namespace IMT.UI.Editors
         public GroupType Selector { get; private set; }
         public bool IsEmpty => components.Count <= 1;
 
-        public EditGroup()
+        public EditGroup() : base()
         {
             autoLayout = AutoLayout.Vertical;
             padding = new RectOffset(0, 0, 0, 0);

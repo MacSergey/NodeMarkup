@@ -15,7 +15,7 @@ namespace IMT.UI.Editors
     }
     public interface IPropertyContainer : IPropertyEditor
     {
-        UIAutoLayoutPanel MainPanel { get; }
+        CustomUIPanel MainPanel { get; }
         Style Style { get; }
 
         Dictionary<string, List<IPropertyInfo>> PropertyInfos { get; }

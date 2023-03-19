@@ -5,9 +5,7 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 namespace IMT.UI.Editors
@@ -30,7 +28,7 @@ namespace IMT.UI.Editors
 
         object IPropertyEditor.EditObject => EditObject;
         bool IPropertyEditor.IsTemplate => false;
-        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
+        CustomUIPanel IPropertyContainer.MainPanel => PropertiesPanel;
         Style IPropertyContainer.Style => EditObject.Style.Value;
         Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
 

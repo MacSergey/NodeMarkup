@@ -40,7 +40,7 @@ namespace IMT.UI.Editors
 
         object IPropertyEditor.EditObject => Rule;
         bool IPropertyEditor.IsTemplate => false;
-        UIAutoLayoutPanel IPropertyContainer.MainPanel => this;
+        CustomUIPanel IPropertyContainer.MainPanel => this;
         Style IPropertyContainer.Style => Rule.Style;
         Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
 

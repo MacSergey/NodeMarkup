@@ -27,11 +27,11 @@ namespace IMT.UI.Editors
         {
             base.OnObjectSelect(point);
 
-            TemplatePanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
+            TemplatePanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
             TemplatePanel.PauseLayout(() => FillTemplatePanel(point));
             TemplatePanel.Init();
 #if DEBUG
-            DebugPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
+            DebugPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
             DebugPanel.PauseLayout(() => FillDebugPanel(point));
             DebugPanel.Init();
 #endif

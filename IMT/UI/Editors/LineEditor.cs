@@ -37,7 +37,7 @@ namespace IMT.UI.Editors
         public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
         private bool AddRuleAvailable => EditObject.IsSupportRules;
         public bool IsSplit => EditObject.PointPair.IsSplit;
-        public IEnumerable<RulePanel> RulePanels => ContentPanel.Content.components.OfType<RulePanel>();
+        public IEnumerable<RulePanel> RulePanels => ContentPanel.components.OfType<RulePanel>();
 
         private RuleEdgeSelectPropertyPanel.RuleEdgeSelectButton HoverPartEdgeButton { get; set; }
         private RulePanel HoverRulePanel { get; set; }
@@ -53,7 +53,7 @@ namespace IMT.UI.Editors
 
         public LinesEditor()
         {
-            ContentPanel.Content.AutoLayoutPadding = new RectOffset(10, 10, 10, 10);
+            ContentPanel.Padding = new RectOffset(10, 10, 10, 10);
             PartEdgeToolMode = Tool.CreateToolMode<PartEdgeToolMode>();
             PartEdgeToolMode.Init(this);
         }
@@ -106,7 +106,7 @@ namespace IMT.UI.Editors
         }
         private void AddLineProperties(MarkingLine editObject)
         {
-            LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
+            LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
             LineProperties.Init();
 
             if (editObject is MarkingRegularLine line)
@@ -165,7 +165,7 @@ namespace IMT.UI.Editors
 
         private RulePanel AddRulePanel(MarkingLineRawRule rule, bool isExpand)
         {
-            var rulePanel = ComponentPool.Get<RulePanel>(ContentPanel.Content);
+            var rulePanel = ComponentPool.Get<RulePanel>(ContentPanel);
             rulePanel.Init(this, rule, isExpand);
             rulePanel.OnEnter += RuleMouseEnter;
             rulePanel.OnLeave += RuleMouseLeave;
@@ -180,10 +180,10 @@ namespace IMT.UI.Editors
         }
         private void AddAddButton()
         {
-            AddRuleButton = ContentPanel.Content.AddUIComponent<CustomUIButton>();
+            AddRuleButton = ContentPanel.AddUIComponent<CustomUIButton>();
             AddRuleButton.name = nameof(AddRuleButton);
             AddRuleButton.SetDefaultStyle();
-            AddRuleButton.size = new Vector2(ContentPanel.Content.ItemSize.x, 30f);
+            AddRuleButton.size = new Vector2(ContentPanel.ItemSize.x, 30f);
             AddRuleButton.text = IMT.Localize.LineEditor_AddRuleButton;
             AddRuleButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
             AddRuleButton.textPadding.top = 5;
@@ -207,7 +207,7 @@ namespace IMT.UI.Editors
             var rulePanel = AddRulePanel(newRule, true);
             SetAddButtonVisible();
 
-            ContentPanel.Content.ScrollToBottom();
+            ContentPanel.ScrollToEnd();
 
             if (CanDivide && Settings.QuickRuleSetup)
                 SetupRule(rulePanel);
@@ -256,8 +256,8 @@ namespace IMT.UI.Editors
         {
             var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(EditObject.PointPair.NetworkType, EditObject.Type, RegularLineStyle.RegularLineType.Dashed);
             rulePanel.ApplyStyle(style);
-            ContentPanel.Content.ScrollToBottom();
-            ContentPanel.Content.ScrollIntoViewRecursive(rulePanel);
+            ContentPanel.ScrollToEnd();
+            ContentPanel.ScrollIntoView(rulePanel);
             return true;
         }
         public void DeleteRule(RulePanel rulePanel)

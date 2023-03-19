@@ -43,7 +43,7 @@ namespace IMT.UI
 
         private void TextChanged(string text) => OnTextChanged?.Invoke(text);
 
-        public class MultilineText : UIAutoLayoutPanel, IReusable
+        public class MultilineText : CustomUIPanel, IReusable
         {
             bool IReusable.InCache { get; set; }
 
@@ -133,7 +133,7 @@ namespace IMT.UI
             private void FieldValueChanged(string text) => OnTextChanged?.Invoke(Text);
             private void FieldTextChanged(UIComponent component, string value) => Refresh();
         }
-        public class MultilineTextItem : UIAutoLayoutPanel
+        public class MultilineTextItem : CustomUIPanel
         {
             public CustomUILabel LabelItem { get; private set; }
             public StringUITextField Field { get; private set; }

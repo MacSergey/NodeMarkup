@@ -28,7 +28,7 @@ namespace IMT.UI.Editors
 
         object IPropertyEditor.EditObject => EditObject;
         bool IPropertyEditor.IsTemplate => false;
-        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
+        CustomUIPanel IPropertyContainer.MainPanel => PropertiesPanel;
         Style IPropertyContainer.Style => EditObject.Style.Value;
         Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
 

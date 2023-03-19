@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class CategoryItem : UIAutoLayoutPanel, IReusable
+    public class CategoryItem : CustomUIPanel, IReusable
     {
         bool IReusable.InCache { get; set; }
         public PropertyGroupPanel CategoryPanel { get; private set; }

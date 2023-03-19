@@ -79,8 +79,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LoggerShared", "ModsCommon\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SingletonShared", "ModsCommon\SingletonShared\SingletonShared.shproj", "{32AEE23B-AF72-45B6-8011-5EC3B139D2DF}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AutoLayoutPanelShared", "ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.shproj", "{FC5E6F74-8408-4FD8-A46A-A7F549E30454}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SimpleMessageBoxShared", "ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.shproj", "{A3055CAA-4807-4C49-973C-7B92610C25C8}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WhatsNewMessageBoxShared", "ModsCommon\WhatsNewMessageBoxShared\WhatsNewMessageBoxShared.shproj", "{8431FA6D-34A1-4700-8D4F-09C9E65346E3}"
@@ -193,7 +191,6 @@ Global
 		{72AF2C58-94A6-4C9B-B474-DB7FF9DFB971} = {E46E4A51-A820-4E7E-B2D5-B1675CEE7E5F}
 		{FE0AF823-F63F-4441-B28D-C0890BC0BF6A} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
 		{32AEE23B-AF72-45B6-8011-5EC3B139D2DF} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
-		{FC5E6F74-8408-4FD8-A46A-A7F549E30454} = {4125F182-993C-4202-B831-6E2CF801EDBE}
 		{A3055CAA-4807-4C49-973C-7B92610C25C8} = {4125F182-993C-4202-B831-6E2CF801EDBE}
 		{8431FA6D-34A1-4700-8D4F-09C9E65346E3} = {4125F182-993C-4202-B831-6E2CF801EDBE}
 		{3E737FA1-6D80-4536-BFC6-2383B5462D65} = {72AF2C58-94A6-4C9B-B474-DB7FF9DFB971}
@@ -209,15 +206,14 @@ Global
 		{A7F303AF-C11E-4DD8-A195-6D0D459DEE53} = {78F18B58-7B26-46A8-B934-FFFE6DD7B29E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_RemoveEmptyEntries = False
-		RESX_ConfirmAddLanguageFile = True
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ExcelExportMode = MultipleSheets
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		RESX_ExcelExportMode = MultipleSheets
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ConfirmAddLanguageFile = True
+		RESX_RemoveEmptyEntries = False
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.projitems*{0a17b8bb-d66a-44be-bef5-98dae2964143}*SharedItemsImports = 5
 		ModsCommon\ColorsShared\ColorsShared.projitems*{0a17b8bb-d66a-44be-bef5-98dae2964143}*SharedItemsImports = 5
 		ModsCommon\DependencyShared\DependencyShared.projitems*{0a17b8bb-d66a-44be-bef5-98dae2964143}*SharedItemsImports = 5
 		ModsCommon\HeaderShared\HeaderShared.projitems*{0a17b8bb-d66a-44be-bef5-98dae2964143}*SharedItemsImports = 5
@@ -306,17 +302,7 @@ Global
 		ModsCommon\ToolShared\ModsToolShared.projitems*{ea585899-16c8-4ff0-ae8d-078f15a7a126}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.projitems*{f135cd5d-4cab-4347-bf44-1c6d0794a19d}*SharedItemsImports = 13
 		ModsCommon\XmlExtension\XmlExtension.projitems*{fada36db-c397-4128-9644-b477c4f50b26}*SharedItemsImports = 13
-		ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.projitems*{fc5e6f74-8408-4fd8-a46a-a7f549e30454}*SharedItemsImports = 13
 		ModsCommon\LoggerShared\LoggerShared.projitems*{fe0af823-f63f-4441-b28d-c0890bc0bf6a}*SharedItemsImports = 13
 		ModsCommon\TrajectoryShared\TrajectoryShared.projitems*{ffba673c-7990-421a-8dd3-87149c1f751b}*SharedItemsImports = 13
-	EndGlobalSection
-	GlobalSection(AutomaticVersions) = postSolution
-		UpdateAssemblyVersion.Beta Debug|Any CPU = True
-		UpdateAssemblyFileVersion.Beta Debug|Any CPU = False
-		UpdateAssemblyInfoVersion.Beta Debug|Any CPU = False
-		AssemblyVersionSettings.Beta Debug|Any CPU = None.None.None.Increment
-		UpdatePackageVersion.Beta Debug|Any CPU = False
-		AssemblyInfoVersionType.Beta Debug|Any CPU = SettingsVersion
-		InheritWinAppVersionFrom.Beta Debug|Any CPU = None
 	EndGlobalSection
 EndGlobal

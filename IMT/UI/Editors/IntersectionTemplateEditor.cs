@@ -34,7 +34,7 @@ namespace IMT.UI.Editors
 
             ItemsPanel.RemovePreview();
 
-            InfoGroup = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content, nameof(InfoGroup));
+            InfoGroup = ComponentPool.Get<PropertyGroupPanel>(ContentPanel, nameof(InfoGroup));
             InfoGroup.Init();
             var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(InfoGroup, "Info");
             info.Init(EditObject);

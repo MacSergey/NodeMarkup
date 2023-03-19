@@ -14,7 +14,7 @@ namespace IMT.UI.Editors
         void EditName();
     }
     public abstract class BaseTemplateEditor<ItemsPanelType, TemplateType, HeaderPanelType, EditToolMode> : SimpleEditor<ItemsPanelType, TemplateType>, ITemplateEditor<TemplateType>
-        where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<TemplateType>
+        where ItemsPanelType : CustomUIScrollablePanel, IItemPanel<TemplateType>
         where TemplateType : Template<TemplateType>
         where HeaderPanelType : TemplateHeaderPanel<TemplateType>
         where EditToolMode : EditTemplateMode<TemplateType>

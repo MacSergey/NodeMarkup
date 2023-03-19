@@ -55,7 +55,7 @@ namespace IMT.UI.Editors
         public virtual bool OnEscape() => false;
     }
     public abstract class Editor<ItemsPanelType, ObjectType> : Editor, IEditor<ObjectType>
-        where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<ObjectType>
+        where ItemsPanelType : CustomUIScrollablePanel, IItemPanel<ObjectType>
         where ObjectType : class, IDeletable
     {
         #region PROPERTIES
@@ -81,7 +81,7 @@ namespace IMT.UI.Editors
         public ObjectType EditObject => ItemsPanel.SelectedObject;
 
         public ItemsPanelType ItemsPanel { get; protected set; }
-        public AdvancedScrollablePanel ContentPanel { get; protected set; }
+        public CustomUIScrollablePanel ContentPanel { get; protected set; }
         protected CustomUILabel EmptyLabel { get; set; }
         private CustomUISprite ItemsShadow { get; }
 
@@ -133,9 +133,7 @@ namespace IMT.UI.Editors
             ItemsPanel.color = ItemsPanel.disabledColor = IMTColors.ItemsBackground;
             ItemsPanel.canFocus = true;
 
-            ItemsPanel.Content.AutoLayoutPadding = new RectOffset(0, 0, 0, 0);
-            ItemsPanel.Content.ScrollPadding.top = 2;
-            ItemsPanel.Content.ScrollPadding.bottom = 2;
+            ItemsPanel.Padding = new RectOffset(0, 0, 2, 2);
 
             ItemsPanel.Init(this);
             ItemsPanel.OnSelectClick += OnItemSelect;
@@ -162,15 +160,22 @@ namespace IMT.UI.Editors
             ItemsShadow.width = 20f;
             ItemsShadow.isVisible = false;
 
-            ContentPanel = AddUIComponent<AdvancedScrollablePanel>();
+            ContentPanel = AddUIComponent<CustomUIScrollablePanel>();
             ContentPanel.name = nameof(ContentPanel);
-            ContentPanel.Content.AutoLayoutPadding = new RectOffset(10, 10, 0, 0);
+            ContentPanel.Padding = new RectOffset(10, 10, 0, 0);
+            ContentPanel.AutoLayout = AutoLayout.Vertical;
+            ContentPanel.AutoLayoutSpace = 10;
+            ContentPanel.AutoFillChildren = true;
+            ContentPanel.ScrollOrientation = UIOrientation.Vertical;
             ContentPanel.Atlas = CommonTextures.Atlas;
             ContentPanel.BackgroundSprite = CommonTextures.PanelBig;
             ContentPanel.color = ContentPanel.disabledColor = IMTColors.ContentBackground;
             ContentPanel.zOrder = 0;
             ContentPanel.eventSizeChanged += (_, size) => ContentBlur.size = size;
             ContentPanel.eventPositionChanged += (_, position) => ContentBlur.position = position;
+
+            ContentPanel.ScrollbarSize = 12f;
+            ContentPanel.Scrollbar.DefaultStyle();
 
             ContentBlur = AddUIComponent<BlurEffect>();
             ContentBlur.position = ContentPanel.position;
@@ -352,8 +357,11 @@ namespace IMT.UI.Editors
         }
         protected virtual void OnClear()
         {
-            foreach (var component in ContentPanel.Content.components.ToArray())
-                ComponentPool.Free(component);
+            foreach (var component in ContentPanel.components.ToArray())
+            {
+                if (component != ContentPanel.Scrollbar)
+                    ComponentPool.Free(component);
+            }
         }
 
         #endregion
@@ -375,19 +383,19 @@ namespace IMT.UI.Editors
         #endregion
     }
     public abstract class SimpleEditor<ItemsPanelType, ObjectType> : Editor<ItemsPanelType, ObjectType>
-        where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<ObjectType>
+        where ItemsPanelType : CustomUIScrollablePanel, IItemPanel<ObjectType>
         where ObjectType : class, IDeletable
     {
         protected PropertyGroupPanel PropertiesPanel { get; private set; }
 
         public SimpleEditor()
         {
-            ContentPanel.Content.AutoLayoutPadding = new RectOffset(10, 10, 10, 10);
+            ContentPanel.Padding = new RectOffset(10, 10, 10, 10);
         }
 
         protected override void OnObjectSelect(ObjectType editObject)
         {
-            PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content, nameof(ContentPanel));
+            PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel, "PropertyPanel");
             PropertiesPanel.PauseLayout(() => OnFillPropertiesPanel(editObject));
             PropertiesPanel.Init();
         }
