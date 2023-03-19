@@ -37,7 +37,7 @@ namespace IMT.UI
         {
             PauseLayout(() =>
             {
-                AutoFitChildrenVertically = true;
+                AutoChildrenVertically = AutoLayoutChildren.Fit;
                 AutoLayoutCenter = true;
                 Padding = new RectOffset(5, 5, 5, 5);
 
@@ -49,7 +49,7 @@ namespace IMT.UI
                 Info.PauseLayout(() =>
                 {
                     Info.AutoLayout = AutoLayout.Horizontal;
-                    Info.AutoFitChildrenVertically = true;
+                    Info.AutoChildrenVertically = AutoLayoutChildren.Fit;
                     Info.AutoCenterPadding = true;
 
                     Titles = AddLabel(UIHorizontalAlignment.Right);

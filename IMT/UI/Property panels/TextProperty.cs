@@ -85,8 +85,8 @@ namespace IMT.UI
                 PauseLayout(() =>
                 {
                     autoLayout = AutoLayout.Vertical;
-                    autoFitChildrenHorizontally = true;
-                    autoFitChildrenVertically = true;
+                    autoChildrenHorizontally = AutoLayoutChildren.Fit;
+                    autoChildrenVertically = AutoLayoutChildren.Fit;
                     autoLayoutStart = LayoutStart.TopRight;
                     autoLayoutSpace = 2;
 
@@ -143,8 +143,8 @@ namespace IMT.UI
                 PauseLayout(() => 
                 {
                     autoLayout = AutoLayout.Horizontal;
-                    autoFitChildrenHorizontally = true;
-                    autoFitChildrenVertically = true;
+                    autoChildrenHorizontally = AutoLayoutChildren.Fit;
+                    autoChildrenVertically = AutoLayoutChildren.Fit;
                     autoLayoutSpace = 2;
 
                     LabelItem = AddUIComponent<CustomUILabel>();

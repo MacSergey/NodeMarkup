@@ -45,7 +45,7 @@ namespace IMT.UI.Editors
         {
             autoLayout = AutoLayout.Vertical;
             padding = new RectOffset(0, 0, 0, 0);
-            autoFitChildrenVertically = true;
+            autoChildrenVertically = AutoLayoutChildren.Fit;
 
             atlas = CommonTextures.Atlas;
             NormalFgColor = IMTColors.ItemGroupBackground;

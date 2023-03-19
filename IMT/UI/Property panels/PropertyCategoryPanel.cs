@@ -17,7 +17,7 @@ namespace IMT.UI.Editors
         public CategoryItem()
         {
             autoLayout = AutoLayout.Vertical;
-            autoFitChildrenVertically = true;
+            autoChildrenVertically = AutoLayoutChildren.Fit;
         }
 
         public TypePanel Init<TypePanel>(string name)
