@@ -60,7 +60,7 @@ namespace IMT
             new ModVersion(new Version("1.1"), new DateTime(2020, 7, 14)),
             new ModVersion(new Version("1.0"), new DateTime(2020, 7, 7)),
         };
-        protected override Version RequiredGameVersion => new Version(1, 16, 0, 3);
+        protected override Version RequiredGameVersion => new Version(1, 16, 1, 2);
 
         public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
@@ -282,9 +282,9 @@ namespace IMT
             return AddTranspiler(typeof(Mod), nameof(Mod.LoadingManagerLoadCustomContentTranspiler), nestedType, "MoveNext");
         }
 
-        private const int gameObjectVarIndex = 26;
-        private const int component7VarIndex = 33;
-        private const int flagVarIndex = 34;
+        private const int gameObjectVarIndex = 29;
+        private const int component7VarIndex = 35;
+        private const int flagVarIndex = 36;
         private static IEnumerable<CodeInstruction> LoadingManagerLoadCustomContentTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var newInstructions = new List<CodeInstruction>(instructions);
@@ -299,7 +299,7 @@ namespace IMT
                 {
                     markingLocal = generator.DeclareLocal(typeof(MarkingInfo));
                     newInstructions.Insert(++index, new CodeInstruction(OpCodes.Ldloc_S, gameObjectVarIndex));
-                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(UnityEngine.GameObject), nameof(UnityEngine.GameObject.GetComponent), new Type[0], new Type[] { typeof(MarkingInfo) })));
+                    newInstructions.Insert(++index, new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(GameObject), nameof(GameObject.GetComponent), new Type[0], new Type[] { typeof(MarkingInfo) })));
                     newInstructions.Insert(++index, new CodeInstruction(OpCodes.Stloc_S, markingLocal));
                     break;
                 }
