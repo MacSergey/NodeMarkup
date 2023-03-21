@@ -73,7 +73,7 @@ namespace IMT.UI.Editors
         public ItemsPanel()
         {
             autoLayout = AutoLayout.Vertical;
-            autoFillChildren = true;
+            autoChildrenHorizontally = AutoLayoutChildren.Fill;
             scrollOrientation = UIOrientation.Vertical;
 
             Scrollbar.DefaultStyle();

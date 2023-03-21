@@ -165,7 +165,7 @@ namespace IMT.UI.Editors
             ContentPanel.Padding = new RectOffset(10, 10, 0, 0);
             ContentPanel.AutoLayout = AutoLayout.Vertical;
             ContentPanel.AutoLayoutSpace = 10;
-            ContentPanel.AutoFillChildren = true;
+            ContentPanel.AutoChildrenHorizontally = AutoLayoutChildren.Fill;
             ContentPanel.ScrollOrientation = UIOrientation.Vertical;
             ContentPanel.Atlas = CommonTextures.Atlas;
             ContentPanel.BackgroundSprite = CommonTextures.PanelBig;

@@ -33,12 +33,12 @@ namespace IMT.UI
         private CustomUILabel Titles { get; set; }
         private CustomUILabel Values { get; set; }
 
-        public IntersectionTemplateInfoProperty()
+        public IntersectionTemplateInfoProperty() : base()
         {
             PauseLayout(() =>
             {
                 AutoChildrenVertically = AutoLayoutChildren.Fit;
-                AutoLayoutCenter = true;
+                AutoLayoutStart = ModsCommon.UI.LayoutStart.MiddleLeft;
                 Padding = new RectOffset(5, 5, 5, 5);
 
                 AddScreenshot();
