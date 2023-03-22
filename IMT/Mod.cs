@@ -67,7 +67,7 @@ namespace IMT
         protected override ulong StableWorkshopId => 2140418403ul;
         protected override ulong BetaWorkshopId => 2159934925ul;
         protected override string ModSupportUrl => TroubleshootingUrl;
-        public override string CrowdinUrl => "https://crowdin.com/translate/intersection-marking-tool/24";
+        public override string CrowdinUrl => "https://crowdin.com/translate/intersection-marking-tool/147";
 
 #if BETA
         public override bool IsBeta => true;
