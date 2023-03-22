@@ -25,7 +25,7 @@ namespace IMT.UI.Editors
         protected override string IsAssetWarningMessage => IMT.Localize.PresetEditor_IsAssetWarningMessage;
         protected override string IsWorkshopWarningMessage => IMT.Localize.PresetEditor_IsWorkshopWarningMessage;
 
-        private PropertyGroupPanel Screenshot { get; set; }
+        private PropertyGroupPanel InfoGroup { get; set; }
 
         protected override IEnumerable<IntersectionTemplate> GetObjects() => SingletonManager<IntersectionTemplateManager>.Instance.Templates;
         protected override void OnObjectSelect(IntersectionTemplate editObject)
@@ -34,14 +34,15 @@ namespace IMT.UI.Editors
 
             ItemsPanel.RemovePreview();
 
-            Screenshot = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content, nameof(Screenshot));
-            var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(Screenshot, "Info");
+            InfoGroup = ComponentPool.Get<PropertyGroupPanel>(ContentPanel, nameof(InfoGroup));
+            InfoGroup.Init();
+            var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(InfoGroup, "Info");
             info.Init(EditObject);
         }
         protected override void OnClear()
         {
             base.OnClear();
-            Screenshot = null;
+            InfoGroup = null;
         }
         protected override void OnObjectDelete(IntersectionTemplate template)
         {
@@ -115,14 +116,15 @@ namespace IMT.UI.Editors
             var root = GetRootContainer();
 
             Preview = ComponentPool.Get<PreviewPanel>(root, nameof(Preview));
-            Preview.Init(365f);
+            Preview.width = 400f;
+            Preview.Item = item;
 
             var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview, "Info");
-            info.Init(item.Object);
+            info.Init(item.EditObject);
 
-            var x = item.absolutePosition.x + item.width;
-            var y = Mathf.Min(item.absolutePosition.y, root.absolutePosition.y + root.height - Preview.height);
-            Preview.absolutePosition = new Vector2(x, y);
+            item.eventSizeChanged += OnItemSizeChanged;
+            item.eventPositionChanged += OnItemSizeChanged;
+            SetPreviewPosition();
         }
 
         public void RemovePreview()
@@ -130,10 +132,27 @@ namespace IMT.UI.Editors
             if (Preview == null)
                 return;
 
+            if (Preview.Item != null)
+            {
+                Preview.Item.eventSizeChanged -= OnItemSizeChanged;
+                Preview.Item.eventPositionChanged -= OnItemSizeChanged;
+            }
+
             Editor.AvailableContent = true;
             ComponentPool.Free(Preview);
             Preview = null;
         }
+        private void OnItemSizeChanged(UIComponent item, Vector2 size) => SetPreviewPosition();
+        private void SetPreviewPosition()
+        {
+            if(Preview != null)
+            {
+                var x = Preview.Item.absolutePosition.x + Preview.Item.width;
+                var y = Mathf.Min(Preview.Item.absolutePosition.y, Preview.parent.absolutePosition.y + Preview.parent.height - Preview.height);
+                Preview.absolutePosition = new Vector2(x, y);
+            }
+        }
+
         public override void RefreshItems()
         {
             base.RefreshItems();
@@ -231,20 +250,45 @@ namespace IMT.UI.Editors
 
     public class IntersectionTemplateItem : EditItem<IntersectionTemplate, IntersectionTemplateIcon>
     {
-        private bool IsLinked => Editor.Marking.Type == MarkingType.Segment && Editor.Marking.Id.GetSegment().Info is NetInfo info && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var preset) && preset == Object.Id;
+        private bool IsLinked => Editor.Marking.Type == MarkingType.Segment && Editor.Marking.Id.GetSegment().Info is NetInfo info && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var preset) && preset == EditObject.Id;
 
-        public override Color32 NormalColor => IsLinked ? new Color32(255, 197, 0, 255) : base.NormalColor;
-        public override Color32 HoveredColor => IsLinked ? new Color32(255, 207, 51, 255) : base.HoveredColor;
-        public override Color32 PressedColor => IsLinked ? new Color32(255, 218, 72, 255) : base.PressedColor;
-        public override Color32 FocusColor => IsLinked ? new Color32(255, 228, 92, 255) : base.FocusColor;
+        public override ModsCommon.UI.SpriteSet ForegroundSprites => !IsLinked ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        {
+            normal = CommonTextures.BorderBig,
+            hovered = CommonTextures.PanelSmall,
+            pressed = CommonTextures.PanelSmall,
+            focused = CommonTextures.BorderBig,
+            disabled = CommonTextures.PanelSmall,
+        };
+        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !IsLinked ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
 
-        public override bool ShowDelete => !Object.IsAsset;
+        public override ColorSet ForegroundColors => !IsLinked ? base.ForegroundColors : new ColorSet()
+        {
+            normal = IMTColors.ItemFavoriteNormal,
+            hovered = IMTColors.ItemFavoriteNormal,
+            pressed = IMTColors.ItemFavoritePressed,
+            focused = IMTColors.ItemFavoriteFocused,
+            disabled = null,
+        };
+        public override ColorSet ForegroundSelectedColors => !IsLinked ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemFavoriteFocused);
+
+        public override ColorSet TextColor => !IsLinked ? base.TextColor : new ColorSet()
+        {
+            normal = Color.white,
+            hovered = Color.black,
+            pressed = Color.black,
+            focused = Color.white,
+            disabled = Color.white,
+        };
+        public override ColorSet TextSelectedColor => !IsLinked ? base.TextSelectedColor : new ColorSet(Color.white);
+
+        public override bool ShowDelete => EditObject != null && !EditObject.IsAsset;
 
         public override void Refresh()
         {
             base.Refresh();
-            Icon.Count = Object.Roads;
-            Label.wordWrap = !Object.IsAsset;
+            Icon.Count = EditObject.Roads;
+            wordWrap = !EditObject.IsAsset;
         }
     }
     public class IntersectionTemplateIcon : ColorIcon
@@ -273,7 +317,8 @@ namespace IMT.UI.Editors
     public class EditIntersectionTemplateMode : EditTemplateMode<IntersectionTemplate> { }
     public class PreviewPanel : PropertyGroupPanel
     {
-        protected override Color32 Color => new Color32(201, 211, 216, 255);
+        public IntersectionTemplateItem Item { get; set; }
+        protected override Color32 DefaultColor => IMTColors.ItemGroupBackground;
 
         protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }

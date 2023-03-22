@@ -147,10 +147,10 @@ namespace IMT.Manager
 
         private void AddPrefabProperty(SelectNetworkProperty prefabProperty, EditorProvider provider)
         {
-            prefabProperty.Text = Localize.StyleOption_AssetNetwork;
-            prefabProperty.PrefabSelectPredicate = IsValidNetwork;
-            prefabProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
-            prefabProperty.Init(60f);
+            prefabProperty.Label = Localize.StyleOption_AssetNetwork;
+            prefabProperty.SelectPredicate = IsValidNetwork;
+            prefabProperty.SortPredicate = (objA, objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
+            prefabProperty.Init();
             prefabProperty.Prefab = Prefab;
             prefabProperty.RawName = Prefab.RawName;
             prefabProperty.OnValueChanged += (value) =>
@@ -166,7 +166,7 @@ namespace IMT.Manager
 
         private void AddNetworkColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(Prefab.Value?.m_color);
             colorProperty.OnValueChanged += (Color32 color) => NetworkColor.Value = color;
@@ -182,7 +182,7 @@ namespace IMT.Manager
 
         private void AddShiftProperty(FloatSingleDoubleInvertedProperty shiftProperty, EditorProvider provider)
         {
-            shiftProperty.Text = Localize.StyleOption_ObjectShift;
+            shiftProperty.Label = Localize.StyleOption_ObjectShift;
             shiftProperty.FieldWidth = 100f;
             shiftProperty.Format = Localize.NumberFormat_Meter;
             shiftProperty.UseWheel = true;
@@ -205,7 +205,7 @@ namespace IMT.Manager
 
         new private void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
-            elevationProperty.Text = Localize.LineStyle_Elevation;
+            elevationProperty.Label = Localize.LineStyle_Elevation;
             elevationProperty.Format = Localize.NumberFormat_Meter;
             elevationProperty.UseWheel = true;
             elevationProperty.WheelStep = 0.1f;
@@ -225,7 +225,7 @@ namespace IMT.Manager
 
         private void AddScaleProperty(FloatPropertyPanel scaleProperty, EditorProvider provider)
         {
-            scaleProperty.Text = Localize.StyleOption_NetWidthScale;
+            scaleProperty.Label = Localize.StyleOption_NetWidthScale;
             scaleProperty.Format = Localize.NumberFormat_Percent;
             scaleProperty.UseWheel = true;
             scaleProperty.WheelStep = 10f;
@@ -245,7 +245,7 @@ namespace IMT.Manager
 
         private void AddRepeatDistanceProperty(IntPropertyPanel repeatDistanceProperty, EditorProvider provider)
         {
-            repeatDistanceProperty.Text = Localize.StyleOption_NetRepeatDistance;
+            repeatDistanceProperty.Label = Localize.StyleOption_NetRepeatDistance;
             repeatDistanceProperty.Format = Localize.NumberFormat_Meter;
             repeatDistanceProperty.UseWheel = true;
             repeatDistanceProperty.WheelStep = 1;
@@ -265,7 +265,7 @@ namespace IMT.Manager
 
         private void AddOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Label = Localize.StyleOption_Offset;
             offsetProperty.FieldsWidth = 50f;
             offsetProperty.SetLabels(Localize.StyleOption_OffsetBeforeAbrv, Localize.StyleOption_OffsetAfterAbrv);
             offsetProperty.Format = Localize.NumberFormat_Meter;

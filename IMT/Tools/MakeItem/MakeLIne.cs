@@ -224,7 +224,7 @@ namespace IMT.Tools
                 if (Utility.CtrlIsPressed)
                     HoverPoint.Render(new OverlayData(cameraInfo) { Width = 0.53f });
                 else
-                    HoverPoint.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 0.53f });
+                    HoverPoint.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover, Width = 0.53f });
             }
 
             RenderPointsOverlay(cameraInfo, !Utility.CtrlIsPressed);
@@ -268,14 +268,14 @@ namespace IMT.Tools
             var bezier = new BezierTrajectory(startPos, startDir, endPos, endDir, true, smoothStart, smoothEnd);
 
             var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
+            var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? CommonColors.Yellow : CommonColors.Red) : CommonColors.Green;
 
             bezier.Render(new OverlayData(cameraInfo) { Color = color });
         }
         private void RenderNormalConnectLine(RenderManager.CameraInfo cameraInfo)
         {
             var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
-            var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Purple;
+            var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? CommonColors.Yellow : CommonColors.Red) : CommonColors.Purple;
 
             var lineBezier = new Bezier3()
             {
@@ -310,7 +310,7 @@ namespace IMT.Tools
                 };
 
                 var pointPair = new MarkingPointPair(pointA, pointB);
-                var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? Colors.Yellow : Colors.Red) : Colors.Green;
+                var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? CommonColors.Yellow : CommonColors.Red) : CommonColors.Green;
 
                 var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
                 points.RenderArea(triangles, new OverlayData(cameraInfo) { Color = color, AlphaBlend = false });
@@ -328,7 +328,7 @@ namespace IMT.Tools
             else
                 endPosition = SingletonTool<IntersectionMarkingTool>.Instance.Ray.GetRayPosition(Marking.Position.y, out _);
 
-            new BezierTrajectory(SelectPoint.MarkerPosition, SelectPoint.Direction, endPosition).Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+            new BezierTrajectory(SelectPoint.MarkerPosition, SelectPoint.Direction, endPosition).Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
         }
         private void RenderNotConnectedLane(RenderManager.CameraInfo cameraInfo)
         {
@@ -356,7 +356,7 @@ namespace IMT.Tools
                         d = endPosition + normal * halfWidth,
                     };
 
-                    area.RenderQuad(new OverlayData(cameraInfo) { Color = Colors.Hover, AlphaBlend = false });
+                    area.RenderQuad(new OverlayData(cameraInfo) { Color = CommonColors.Hover, AlphaBlend = false });
                 }
                 else
                 {
@@ -375,7 +375,7 @@ namespace IMT.Tools
                     };
 
                     var triangles = Triangulator.TriangulateSimple(trajectories, out var points, minAngle: 5, maxLength: 10f);
-                    points.RenderArea(triangles, new OverlayData(cameraInfo) { Color = Colors.Hover, AlphaBlend = false });
+                    points.RenderArea(triangles, new OverlayData(cameraInfo) { Color = CommonColors.Hover, AlphaBlend = false });
                 }
             }
         }

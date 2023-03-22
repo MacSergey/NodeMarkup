@@ -9,7 +9,13 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public abstract class OptionsHeaderPanel : BaseDeletableHeaderPanel<HeaderContent> { }
+    public abstract class OptionsHeaderPanel : BaseDeletableHeaderPanel<HeaderContent>
+    {
+        public OptionsHeaderPanel() : base()
+        {
+            Padding = new RectOffset(5, 10, 0, 0);
+        }
+    }
     public class StyleHeaderPanel : OptionsHeaderPanel
     {
         public event Action OnSaveTemplate;
@@ -18,15 +24,30 @@ namespace IMT.UI.Editors
         public event Action OnReset;
         public event Action OnApplySameStyle;
         public event Action OnApplySameType;
+        public event Action<StyleTemplate> OnSelectTemplate
+        {
+            add => ApplyTemplate.Button.OnSelectObject += value;
+            remove => ApplyTemplate.Button.OnSelectObject -= value;
+        }
+        public event Action OnSelectTemplatePopupOpen
+        {
+            add => ApplyTemplate.Button.OnBeforePopupOpen += value;
+            remove => ApplyTemplate.Button.OnBeforePopupOpen -= value;
+        }
+        public event Action OnSelectTemplatePopupClose
+        {
+            add => ApplyTemplate.Button.OnAfterPopupClose += value;
+            remove => ApplyTemplate.Button.OnAfterPopupClose -= value;
+        }
 
         protected IPropertyEditor Editor { get; private set; }
         private Style.StyleType StyleGroup { get; set; }
         private HeaderButtonInfo<HeaderButton> PasteButton { get; set; }
-        private HeaderButtonInfo<ApplyTemplateHeaderButton> ApplyTemplate { get; }
+        private HeaderButtonInfo<ApplyTemplateHeaderButton> ApplyTemplate { get; set; }
         private HeaderButtonInfo<HeaderButton> ApplySameStyle { get; set; }
         private HeaderButtonInfo<HeaderButton> ApplySameType { get; set; }
 
-        public StyleHeaderPanel()
+        protected override void FillContent()
         {
             Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.AddTemplateHeaderButton, IMT.Localize.HeaderPanel_SaveAsTemplate, SaveTemplateClick));
 
@@ -47,11 +68,11 @@ namespace IMT.UI.Editors
             Content.AddButton(ApplySameType);
         }
 
-        public virtual void Init(IPropertyEditor editor, Style.StyleType styleType, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
+        public virtual void Init(IPropertyEditor editor, Style.StyleType styleType, bool isDeletable = true)
         {
             Editor = editor;
             StyleGroup = styleType.GetGroup();
-            ApplyTemplate.Button.Init(StyleGroup, onSelectTemplate);
+            ApplyTemplate.Button.StyleGroup = StyleGroup;
 
             SetPasteEnabled();
             SingletonTool<IntersectionMarkingTool>.Instance.OnStyleToBuffer += StyleToBuffer;
@@ -79,7 +100,6 @@ namespace IMT.UI.Editors
 
             SingletonTool<IntersectionMarkingTool>.Instance.OnStyleToBuffer -= StyleToBuffer;
         }
-
         public override void Refresh()
         {
             switch (Editor.EditObject)
@@ -123,10 +143,10 @@ namespace IMT.UI.Editors
         protected CustomUISprite Icon { get; set; }
         protected CustomUISprite Separator { get; set; }
 
-        HeaderButtonInfo<HeaderButton> ApplyAllRules { get; }
+        private HeaderButtonInfo<HeaderButton> ApplyAllRules { get; set; }
 
-        public bool IsExpand { set => ExpandButton.normalBgSprite = value ? IMTTextures.ListItemCollapse : IMTTextures.ListItemExpand; }
-        public Style.StyleType Style
+        public bool IsExpand { set => ExpandButton.normalFgSprite = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
+        public Style.StyleType StyleType
         {
             get => (Style.StyleType)Enum.Parse(typeof(Style.StyleType), Icon.spriteName);
             set
@@ -135,19 +155,25 @@ namespace IMT.UI.Editors
                 Icon.parent.tooltip = value.Description();
             }
         }
-
-        public RuleHeaderPanel()
+        protected override void Fill()
         {
+            base.Fill();
+
             ExpandButton = AddUIComponent<CustomUIButton>();
+            ExpandButton.zOrder = Content.zOrder;
             ExpandButton.tooltip = string.Format(IMT.Localize.Header_ExpandTooltip, LocalizeExtension.Shift);
-            ExpandButton.atlas = IMTTextures.Atlas;
+            ExpandButton.atlas = CommonTextures.Atlas;
+            ExpandButton.SetFgColor(new ColorSet(new Color32(0, 0, 0, 255)));
+            ExpandButton.scaleFactor = 0.7f;
             ExpandButton.size = new Vector2(30, 30);
             ExpandButton.zOrder = 0;
             ExpandButton.eventClick += (_, _) => OnExpand?.Invoke();
 
             var iconCircle = AddUIComponent<CustomUISprite>();
+            iconCircle.zOrder = Content.zOrder;
             iconCircle.atlas = IMTTextures.Atlas;
             iconCircle.spriteName = IMTTextures.StyleCircle;
+            iconCircle.color = new Color32(177, 195, 94, 255);
             iconCircle.size = new Vector2(19f, 19f);
             iconCircle.zOrder = 1;
 
@@ -157,19 +183,24 @@ namespace IMT.UI.Editors
             Icon.relativePosition = Vector2.zero;
 
             Separator = AddUIComponent<CustomUISprite>();
+            Separator.zOrder = Content.zOrder;
             Separator.atlas = CommonTextures.Atlas;
             Separator.spriteName = CommonTextures.EmptyWithotBorder;
             Separator.size = new Vector2(2f, 30f);
             Separator.color = new Color32(0, 0, 0, 128);
             Separator.zOrder = 2;
+        }
+        protected override void FillContent()
+        {
+            base.FillContent();
 
             ApplyAllRules = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyStyleHeaderButton, IMT.Localize.HeaderPanel_ApplyAllRules, ApplyAllRulesClick);
             Content.AddButton(ApplyAllRules);
         }
-        public override void Init(IPropertyEditor editor, Style.StyleType styleType, Action<StyleTemplate> onSelectTemplate, bool isDeletable = true)
+        public override void Init(IPropertyEditor editor, Style.StyleType styleType, bool isDeletable = true)
         {
-            base.Init(editor, styleType, onSelectTemplate, isDeletable);
-            Style = styleType;
+            base.Init(editor, styleType, isDeletable);
+            StyleType = styleType;
         }
         public override void DeInit()
         {
@@ -181,13 +212,7 @@ namespace IMT.UI.Editors
         protected override void SetSize()
         {
             base.SetSize();
-            ExpandButton.relativePosition = new Vector3(5f, (height - ExpandButton.height) * 0.5f);
-            Icon.parent.relativePosition = new Vector3(38f, (height - Icon.height) * 0.5f);
-            Separator.relativePosition = new Vector3(64f, 0f);
             Separator.height = height;
-
-            Content.width -= 69f;
-            Content.relativePosition = new Vector3(69f, Content.relativePosition.y);
         }
         public override void Refresh()
         {
@@ -247,8 +272,7 @@ namespace IMT.UI.Editors
             }
         }
 
-        public TemplateHeaderPanel() => AddButtons();
-        protected virtual void AddButtons()
+        protected override void FillContent()
         {
             Edit = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.EditHeaderButton, IMT.Localize.HeaderPanel_Edit, EditClick);
             Content.AddButton(Edit);
@@ -318,7 +342,7 @@ namespace IMT.UI.Editors
 
         private bool IsDefault => Template.IsDefault;
 
-        protected override void AddButtons()
+        protected override void FillContent()
         {
             SetAsDefaultButton = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.SetDefaultHeaderButton, IMT.Localize.HeaderPanel_SetAsDefault, SetAsDefaultClick);
             Content.AddButton(SetAsDefaultButton);
@@ -335,7 +359,7 @@ namespace IMT.UI.Editors
             ApplySameType = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyToAllHeaderButton, string.Empty, ApplySameTypeClick);
             Content.AddButton(ApplySameType);
 
-            base.AddButtons();
+            base.FillContent();
         }
         public override void DeInit()
         {
@@ -394,7 +418,7 @@ namespace IMT.UI.Editors
         private HeaderButtonInfo<HeaderButton> Link { get; set; }
         private HeaderButtonInfo<HeaderButton> Unlink { get; set; }
 
-        protected override void AddButtons()
+        protected override void FillContent()
         {
             Apply = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyHeaderButton, IMT.Localize.PresetEditor_ApplyPreset, ApplyClick);
             Content.AddButton(Apply);
@@ -408,7 +432,7 @@ namespace IMT.UI.Editors
             Unlink = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.UnlinkHeaderButton, IMT.Localize.PresetEditor_UnlinkPreset, LinkClick);
             Content.AddButton(Unlink);
 
-            base.AddButtons();
+            base.FillContent();
         }
         public override void DeInit()
         {

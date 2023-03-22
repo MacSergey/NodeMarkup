@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace IMT.UI
 {
-    public class IntersectionTemplateInfoProperty : EditorItem, IReusable
+    public class IntersectionTemplateInfoProperty : BaseEditorPanel, IReusable
     {
         private static UIDynamicFont Font { get; } = GetFont();
         private static UIDynamicFont GetFont()
@@ -28,15 +28,34 @@ namespace IMT.UI
         private static Texture2D Empty { get; } = TextureHelper.CreateTexture(400, 400, Color.black);
         private UITextureSprite Screenshot { get; set; }
         private CustomUILabel NoScreenshot { get; set; }
+
+        private CustomUIPanel Info { get; set; }
         private CustomUILabel Titles { get; set; }
         private CustomUILabel Values { get; set; }
 
-        public IntersectionTemplateInfoProperty()
+        public IntersectionTemplateInfoProperty() : base()
         {
-            AddScreenshot();
-            AddNoScreenshot();
-            Titles = AddLabel(UIHorizontalAlignment.Right);
-            Values = AddLabel(UIHorizontalAlignment.Left);
+            PauseLayout(() =>
+            {
+                AutoChildrenVertically = AutoLayoutChildren.Fit;
+                AutoLayoutStart = ModsCommon.UI.LayoutStart.MiddleLeft;
+                Padding = new RectOffset(5, 5, 5, 5);
+
+                AddScreenshot();
+                AddNoScreenshot();
+
+                Info = AddUIComponent<CustomUIPanel>();
+                Info.name = nameof(Info);
+                Info.PauseLayout(() =>
+                {
+                    Info.AutoLayout = AutoLayout.Horizontal;
+                    Info.AutoChildrenVertically = AutoLayoutChildren.Fit;
+                    Info.AutoCenterPadding = true;
+
+                    Titles = AddLabel(UIHorizontalAlignment.Right);
+                    Values = AddLabel(UIHorizontalAlignment.Left);
+                });
+            });
         }
         public void Init(IntersectionTemplate template)
         {
@@ -99,7 +118,7 @@ namespace IMT.UI
         }
         private CustomUILabel AddLabel(UIHorizontalAlignment alignment)
         {
-            var label = AddUIComponent<CustomUILabel>();
+            var label = Info.AddUIComponent<CustomUILabel>();
             label.font = Font;
             label.autoSize = true;
             label.textScale = 0.65f;
@@ -107,27 +126,15 @@ namespace IMT.UI
             label.textColor = TextColor;
             label.textAlignment = alignment;
             label.verticalAlignment = UIVerticalAlignment.Bottom;
-            label.eventTextChanged += LabelTextChanged;
             return label;
         }
-
-        private void LabelTextChanged(UIComponent component, string value) => SetPosition();
 
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
-            SetPosition();
+            Info.width = width - Screenshot.width - Padding.horizontal - AutoLayoutSpace;
         }
-        private void SetPosition()
-        {
-            if (Screenshot != null && Titles != null && Values != null)
-            {
-                var space = Mathf.Max(width - Screenshot.width - Screenshot.relativePosition.x - Titles.width - Values.width, 0f) * 0.5f;
-                Values.relativePosition = new Vector2(width - Values.width - space, (height - Values.height) * 0.5f);
-                Titles.relativePosition = new Vector2(Values.relativePosition.x - Titles.width, (height - Titles.height) * 0.5f);
 
-            }
-        }
         private class CustomUITextureSprite : UITextureSprite
         {
             protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }

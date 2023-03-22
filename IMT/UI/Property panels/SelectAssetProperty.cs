@@ -16,234 +16,124 @@ namespace IMT.UI
     {
         public event Action<PrefabType> OnValueChanged;
         bool IReusable.InCache { get; set; }
-        public override bool SupportEven => true;
 
         public abstract PrefabType Prefab { get; set; }
         public abstract string RawName { get; set; }
-        public Func<PrefabType, bool> PrefabSelectPredicate { get; set; }
-        public Func<PrefabType, string> PrefabSortPredicate { get; set; }
+        public abstract Func<PrefabType, bool> SelectPredicate { get; set; }
+        public abstract Func<PrefabType, PrefabType, int> SortPredicate { get; set; }
 
         public override void DeInit()
         {
             base.DeInit();
             Prefab = null;
-            PrefabSelectPredicate = null;
+            SelectPredicate = null;
             OnValueChanged = null;
         }
 
-        public override void Init() => Init(null);
-        public void Init(float height)
-        {
-            base.Init(height);
-        }
-
-        protected void ValueChanged() => OnValueChanged?.Invoke(Prefab);
+        protected void ValueChanged(PrefabType prefab) => OnValueChanged?.Invoke(prefab);
     }
-    public abstract class SelectPrefabProperty<PrefabType, PanelType, EntityType, PopupType> : SelectPrefabProperty<PrefabType>
+    public abstract class SelectPrefabProperty<PrefabType, EntityType, PopupType, DropDownType> : SelectPrefabProperty<PrefabType>
         where PrefabType : PrefabInfo
-        where PanelType : PrefabPanel<PrefabType>
-        where EntityType : PrefabEntity<PrefabType, PanelType>
-        where PopupType : Popup<PrefabType, EntityType>
+        where EntityType : PrefabEntity<PrefabType>
+        where PopupType : ObjectPopup<PrefabType, EntityType>
+        where DropDownType : PrefabDropDown<PrefabType, EntityType, PopupType>
     {
+        private DropDownType DropDown { get; set; }
 
-        protected override float DefaultHeight => 100f;
-
-        private CustomUIButton Background { get; set; }
-        private PanelType Panel { get; set; }
-        private CustomUIButton Button { get; set; }
-        private PopupType Popup { get; set; }
-
-        private PrefabType _prefab;
         public override PrefabType Prefab
         {
-            get => _prefab;
-            set
-            {
-                if (value != _prefab)
-                {
-                    _prefab = value;
-                    Panel.Prefab = value;
-                }
-            }
+            get => DropDown.SelectedObject;
+            set => DropDown.SelectedObject = value;
         }
         public override string RawName
         {
-            get => Panel.RawName;
-            set => Panel.RawName = value;
+            get => DropDown.RawName;
+            set => DropDown.RawName = value;
         }
-
-        private IEnumerable<PrefabType> Prefabs
+        public override Func<PrefabType, bool> SelectPredicate
         {
-            get
+            get => DropDown.SelectPredicate;
+            set => DropDown.SelectPredicate = value;
+        }
+        public override Func<PrefabType, PrefabType, int> SortPredicate
+        {
+            get => DropDown.SortPredicate;
+            set => DropDown.SortPredicate = (objA, objB) =>
             {
-                var count = PrefabCollection<PrefabType>.LoadedCount();
-                for (uint i = 0; i < count; i += 1)
-                    yield return PrefabCollection<PrefabType>.GetLoaded(i);
-            }
+                var isFavoriteA = SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(objA.name);
+                var isFavoriteB = SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(objB.name);
+
+                if (isFavoriteA != isFavoriteB)
+                    return isFavoriteB.CompareTo(isFavoriteA);
+                else
+                    return value(objA, objB);
+            };
         }
 
-        public SelectPrefabProperty()
+        protected override void FillContent()
         {
-            Background = Content.AddUIComponent<CustomUIButton>();
-            Background.atlas = CommonTextures.Atlas;
-            Background.normalBgSprite = CommonTextures.FieldNormal;
-            Background.hoveredBgSprite = CommonTextures.FieldHovered;
-            Background.disabledBgSprite = CommonTextures.FieldDisabled;
-
-            Panel = Background.AddUIComponent<PanelType>();
-            Panel.relativePosition = new Vector3(0f, 0f);
-            Panel.ShowFavorite = false;
-
-            Button = Background.AddUIComponent<CustomUIButton>();
-            Button.atlas = TextureHelper.InGameAtlas;
-            Button.textVerticalAlignment = UIVerticalAlignment.Middle;
-            Button.textHorizontalAlignment = UIHorizontalAlignment.Left;
-            Button.normalFgSprite = "IconDownArrow";
-            Button.hoveredFgSprite = "IconDownArrowHovered";
-            Button.pressedFgSprite = "IconDownArrowPressed";
-            Button.focusedFgSprite = "IconDownArrow";
-            Button.disabledFgSprite = "IconDownArrowDisabled";
-            Button.foregroundSpriteMode = UIForegroundSpriteMode.Scale;
-            Button.horizontalAlignment = UIHorizontalAlignment.Right;
-            Button.verticalAlignment = UIVerticalAlignment.Middle;
-            Button.relativePosition = new Vector3(0f, 0f);
-            Button.eventClick += ButtonClick;
+            DropDown = Content.AddUIComponent<DropDownType>();
+            DropDown.name = nameof(DropDown);
+            DropDown.DropDownDefaultStyle();
+            DropDown.size = new Vector2(230f, 50f);
+            DropDown.scaleFactor = 20f / DropDown.height;
+            DropDown.OnSelectObject += ValueChanged;
         }
-        public override void Update()
+        public override void Init()
         {
-            base.Update();
-            CheckPopup();
-        }
-
-        private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
-        {
-            if (Popup == null)
-                OpenPopup();
-            else
-                ClosePopup();
-        }
-        protected void OpenPopup()
-        {
-            Button.isInteractive = false;
-
-            var root = GetRootContainer();
-            Popup = root.AddUIComponent<PopupType>();
-            Popup.canFocus = true;
-            Popup.atlas = CommonTextures.Atlas;
-            Popup.backgroundSprite = CommonTextures.FieldHovered;
-            Popup.ItemHover = CommonTextures.FieldNormal;
-            Popup.ItemSelected = CommonTextures.FieldFocused;
-            Popup.EntityHeight = 50f;
-            Popup.MaxVisibleItems = 10;
-            Popup.maximumSize = new Vector2(230f, 700f);
-            if (PrefabSortPredicate != null)
-                Popup.Init(Prefabs.OrderByDescending(p => SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(p.name)).ThenBy(PrefabSortPredicate), PrefabSelectPredicate);
-            else
-                Popup.Init(Prefabs.OrderByDescending(p => SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(p.name)), PrefabSelectPredicate);
-            Popup.Focus();
-            Popup.SelectedObject = Prefab;
-
-            Popup.eventKeyDown += OnPopupKeyDown;
-            Popup.eventLeaveFocus += OnPopupLeaveFocus;
-            Popup.OnSelectedChanged += OnSelectedChanged;
-
-            SetPopupPosition();
-            Popup.parent.eventPositionChanged += SetPopupPosition;
-        }
-
-        public virtual void ClosePopup()
-        {
-            Button.isInteractive = true;
-
-            if (Popup != null)
-            {
-                Popup.eventLeaveFocus -= OnPopupLeaveFocus;
-                Popup.eventKeyDown -= OnPopupKeyDown;
-
-                ComponentPool.Free(Popup);
-                Popup = null;
-            }
-        }
-        private void CheckPopup()
-        {
-            if (Popup == null)
-                return;
-
-            if (!Popup.containsFocus)
-            {
-                ClosePopup();
-                return;
-            }
-
-            if (Input.GetMouseButtonDown(0) && !Popup.Raycast(GetCamera().ScreenPointToRay(Input.mousePosition)))
-            {
-                ClosePopup();
-                return;
-            }
-        }
-
-        private void OnSelectedChanged(PrefabType prefab)
-        {
-            Prefab = prefab;
-            ValueChanged();
-            ClosePopup();
-        }
-        private void OnPopupLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => CheckPopup();
-        private void OnPopupKeyDown(UIComponent component, UIKeyEventParameter p)
-        {
-            if (p.keycode == KeyCode.Escape)
-            {
-                ClosePopup();
-                p.Use();
-            }
-        }
-        private void SetPopupPosition(UIComponent component = null, Vector2 value = default)
-        {
-            if (Popup != null)
-            {
-                UIView uiView = Popup.GetUIView();
-                var screen = uiView.GetScreenResolution();
-                var position = Button.absolutePosition + new Vector3(0, Button.height);
-                position.x = MathPos(position.x, Popup.width, screen.x);
-                position.y = MathPos(position.y, Popup.height, screen.y);
-
-                Popup.relativePosition = position - Popup.parent.absolutePosition;
-            }
-
-            static float MathPos(float pos, float size, float screen) => pos + size > screen ? (screen - size < 0 ? 0 : screen - size) : Mathf.Max(pos, 0);
-        }
-
-        protected override void OnSizeChanged()
-        {
-            SetSize();
-            base.OnSizeChanged();
-        }
-        private void SetSize()
-        {
-            if (Background != null)
-                Background.size = new Vector2(230f, height - 10f);
-            if (Panel != null)
-                Panel.size = new Vector2(200f, height - 10f);
-            if (Button != null)
-            {
-                Button.size = new Vector2(230f, height - 10f);
-                Button.scaleFactor = 20f / Button.height;
-            }
+            DropDown.Clear();
+            var count = PrefabCollection<PrefabType>.LoadedCount();
+            for (uint i = 0; i < count; i += 1)
+                DropDown.AddItem(PrefabCollection<PrefabType>.GetLoaded(i));
         }
     }
 
-    public class SelectPropProperty : SelectPrefabProperty<PropInfo, PropPanel, PropEntity, SelectPropPopup> { }
-    public class SelectTreeProperty : SelectPrefabProperty<TreeInfo, TreePanel, TreeEntity, SelectTreePopup> { }
-    public class SelectNetworkProperty : SelectPrefabProperty<NetInfo, NetPanel, NetEntity, SelectNetPopup> { }
+    public class SelectPropProperty : SelectPrefabProperty<PropInfo, PropEntity, PropPopup, PropDropDown> { }
+    public class SelectTreeProperty : SelectPrefabProperty<TreeInfo, TreeEntity, TreePopup, TreeDropDown> { }
+    public class SelectNetworkProperty : SelectPrefabProperty<NetInfo, NetEntity, NetPopup, NetDropDown> { }
 
-    public class SelectPropPopup : SearchPopup<PropInfo, PropEntity>
+    public abstract class PrefabDropDown<PrefabType, EntityType, PopupType> : SelectItemDropDown<PrefabType, EntityType, PopupType>
+        where PrefabType : PrefabInfo
+        where EntityType : PrefabEntity<PrefabType>
+        where PopupType : ObjectPopup<PrefabType, EntityType>
+    {
+        public string RawName
+        {
+            get => Entity.RawName;
+            set => Entity.RawName = value;
+        }
+        public Func<PrefabType, bool> SelectPredicate { get; set; }
+        public Func<PrefabType, PrefabType, int> SortPredicate { get; set; }
+        protected override Func<PrefabType, bool> Selector => SelectPredicate;
+        protected override Func<PrefabType, PrefabType, int> Sorter => SortPredicate;
+
+        public PrefabDropDown()
+        {
+            Entity.ShowFavorite = false;
+        }
+        protected override void SetPopupStyle() => Popup.PopupDefaultStyle(50f);
+        protected override void InitPopup()
+        {
+            Popup.MaximumSize = new Vector2(width, 700f);
+            Popup.width = width;
+            Popup.MaxVisibleItems = 10;
+            base.InitPopup();
+        }
+    }
+    public class PropDropDown : PrefabDropDown<PropInfo, PropEntity, PropPopup> { }
+    public class TreeDropDown : PrefabDropDown<TreeInfo, TreeEntity, TreePopup> { }
+    public class NetDropDown : PrefabDropDown<NetInfo, NetEntity, NetPopup> { }
+
+
+    public class PropPopup : SearchPopup<PropInfo, PropEntity>
     {
         protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchText { get; set; } = string.Empty;
-        public override void Init(IEnumerable<PropInfo> values, Func<PropInfo, bool> selector = null)
+
+        public override void Init(IEnumerable<PropInfo> values, Func<PropInfo, bool> selector, Func<PropInfo, PropInfo, int> sorter)
         {
             Search.text = SearchText;
-            base.Init(values, selector);
+            base.Init(values, selector, sorter);
         }
         public override void DeInit()
         {
@@ -251,15 +141,17 @@ namespace IMT.UI
             base.DeInit();
         }
         protected override string GetName(PropInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
+        protected override void SetEntityStyle(PropEntity entity) => entity.EntityStyle<PropInfo, PropEntity>();
     }
-    public class SelectTreePopup : SearchPopup<TreeInfo, TreeEntity>
+    public class TreePopup : SearchPopup<TreeInfo, TreeEntity>
     {
         protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchText { get; set; } = string.Empty;
-        public override void Init(IEnumerable<TreeInfo> values, Func<TreeInfo, bool> selector = null)
+
+        public override void Init(IEnumerable<TreeInfo> values, Func<TreeInfo, bool> selector, Func<TreeInfo, TreeInfo, int> sorter)
         {
             Search.text = SearchText;
-            base.Init(values, selector);
+            base.Init(values, selector, sorter);
         }
         public override void DeInit()
         {
@@ -268,14 +160,15 @@ namespace IMT.UI
         }
         protected override string GetName(TreeInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
     }
-    public class SelectNetPopup : SearchPopup<NetInfo, NetEntity>
+    public class NetPopup : SearchPopup<NetInfo, NetEntity>
     {
         protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchText { get; set; } = string.Empty;
-        public override void Init(IEnumerable<NetInfo> values, Func<NetInfo, bool> selector = null)
+
+        public override void Init(IEnumerable<NetInfo> values, Func<NetInfo, bool> selector, Func<NetInfo, NetInfo, int> sorter)
         {
             Search.text = SearchText;
-            base.Init(values, selector);
+            base.Init(values, selector, sorter);
         }
         public override void DeInit()
         {
@@ -285,58 +178,12 @@ namespace IMT.UI
         protected override string GetName(NetInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
     }
 
-    public abstract class PrefabEntity<PrefabType, PanelType> : PopupEntity<PrefabType>
-        where PrefabType : PrefabInfo
-        where PanelType : PrefabPanel<PrefabType>
-    {
-        private PanelType Panel { get; set; }
-
-        public override PrefabType Object
-        {
-            get => base.Object;
-            protected set
-            {
-                base.Object = value;
-                Panel.Prefab = value;
-            }
-        }
-        public PrefabEntity()
-        {
-            Panel = AddUIComponent<PanelType>();
-        }
-
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-            Panel.size = size;
-        }
-    }
-    public class PropEntity : PrefabEntity<PropInfo, PropPanel> { }
-    public class TreeEntity : PrefabEntity<TreeInfo, TreePanel> { }
-    public class NetEntity : PrefabEntity<NetInfo, NetPanel> { }
-
-    public abstract class PrefabPanel<PrefabType> : CustomUIPanel, IReusable
+    public abstract class PrefabEntity<PrefabType> : PopupEntity<PrefabType>
         where PrefabType : PrefabInfo
     {
-        bool IReusable.InCache { get; set; }
-
-        private PrefabType prefab;
         private string rawName;
         private bool showFavorite;
 
-        public PrefabType Prefab
-        {
-            get => prefab;
-            set
-            {
-                if (value != prefab)
-                {
-                    prefab = value;
-                    rawName = prefab?.name ?? string.Empty;
-                    Set();
-                }
-            }
-        }
         public string RawName
         {
             get => rawName;
@@ -363,10 +210,8 @@ namespace IMT.UI
         protected abstract string LocalizedTitle { get; }
         private bool IsFavorite => SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(RawName);
 
-        public PrefabPanel()
+        public PrefabEntity()
         {
-            autoLayout = true;
-
             Screenshot = AddUIComponent<CustomUISprite>();
             Screenshot.size = new Vector2(90f, 90f);
 
@@ -386,19 +231,22 @@ namespace IMT.UI
 
             Set();
         }
-
-        public void DeInit()
+        public override void DeInit()
         {
             Screenshot.atlas = null;
             Screenshot.spriteName = string.Empty;
-            prefab = null;
             showFavorite = true;
             RawName = string.Empty;
         }
-
+        public override void SetObject(int index, PrefabType prefab, bool selected)
+        {
+            base.SetObject(index, prefab, selected);
+            rawName = prefab?.name ?? string.Empty;
+            Set();
+        }
         private void Set()
         {
-            if (Prefab is PrefabType prefab)
+            if (EditObject is PrefabType prefab)
             {
                 Screenshot.atlas = prefab.m_Atlas;
                 Screenshot.spriteName = prefab.m_Thumbnail;
@@ -415,39 +263,26 @@ namespace IMT.UI
                 Favorite.isVisible = false;
                 Title.text = string.IsNullOrEmpty(RawName) ? IMT.Localize.StyleOption_AssetNotSet : string.Format(IMT.Localize.StyleOption_AssetMissed, RawName);
             }
-            autoLayoutPadding = Screenshot.isVisible ? new RectOffset(5, 5, 5, 5) : new RectOffset(8, 5, 5, 5);
 
             SetPosition();
         }
+
+        private Color32 FavoriteNormal => IMTColors.ItemFavoriteNormal;
+        private Color32 FavoriteHovered => IMTColors.ItemFavoriteHovered;
+        private Color32 FavoritePressed => IMTColors.ItemFavoritePressed;
         private void SetFavoriteButton()
         {
-            if(IsFavorite)
+            if (IsFavorite)
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_RemoveFromFavorites;
-
-                Favorite.normalFgSprite = IMTTextures.SetDefaultHeaderButton;
-                Favorite.hoveredFgSprite = IMTTextures.UnsetDefaultHeaderButton;
-                Favorite.pressedFgSprite = IMTTextures.UnsetDefaultHeaderButton;
-                Favorite.focusedFgSprite = IMTTextures.SetDefaultHeaderButton;
-
-                Favorite.color = new Color32(255, 215, 0, 255);
-                Favorite.hoveredColor = new Color32(255, 200, 0, 255);
-                Favorite.pressedColor = new Color32(255, 190, 0, 255);
-                Favorite.focusedColor = new Color32(255, 215, 0, 255);
+                Favorite.SetFgSprite(new ModsCommon.UI.SpriteSet(IMTTextures.SetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton));
+                Favorite.SetFgColor(new ColorSet(FavoriteNormal, FavoriteHovered, FavoritePressed, FavoriteNormal, FavoriteNormal));
             }
             else
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_AddToFavorites;
-
-                Favorite.normalFgSprite = IMTTextures.NotSetDefaultHeaderButton;
-                Favorite.hoveredFgSprite = IMTTextures.SetDefaultHeaderButton;
-                Favorite.pressedFgSprite = IMTTextures.SetDefaultHeaderButton;
-                Favorite.focusedFgSprite = IMTTextures.NotSetDefaultHeaderButton;
-
-                Favorite.color = new Color32(255, 255, 255, 255);
-                Favorite.hoveredColor = new Color32(255, 200, 0, 255);
-                Favorite.pressedColor = new Color32(255, 190, 0, 255);
-                Favorite.focusedColor = new Color32(255, 255, 255, 255);
+                Favorite.SetFgSprite(new ModsCommon.UI.SpriteSet(IMTTextures.NotSetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton));
+                Favorite.SetFgColor(new ColorSet(Color.white, FavoriteHovered, FavoritePressed, Color.white, Color.white));
             }
         }
 
@@ -460,15 +295,15 @@ namespace IMT.UI
         {
             if (Screenshot != null && Title != null)
             {
-                Screenshot.size = new Vector2(height - autoLayoutPadding.vertical, height - autoLayoutPadding.vertical);
-                Favorite.size = new Vector2(20f, height - autoLayoutPadding.vertical);
+                Screenshot.size = new Vector2(height - 10f, height - 10f);
+                Screenshot.relativePosition = new Vector2(5f, 5f);
+                Title.size = size;
+                Favorite.size = new Vector2(20f, height - 10f);
+                Favorite.relativePosition = new Vector2(width - Favorite.width - 5f, 5f);
 
-                var titleWidth = width - autoLayoutPadding.horizontal;
-                if (Screenshot.isVisible)
-                    titleWidth -= Screenshot.width + autoLayoutPadding.horizontal;
-                if (Favorite.isVisible)
-                    titleWidth -= Favorite.width + autoLayoutPadding.horizontal;
-                Title.size = new Vector2(titleWidth, height - autoLayoutPadding.vertical);
+                var left = Screenshot.isVisible ? Mathf.CeilToInt(Screenshot.relativePosition.x + Screenshot.width) + 5 : 8;
+                var right = Math.Max(Favorite.isVisible ? Mathf.CeilToInt(width - Favorite.relativePosition.x) + 5 : 8, Padding.right);
+                Title.padding = new RectOffset(left, right, 5, 5);
             }
         }
 
@@ -480,16 +315,16 @@ namespace IMT.UI
             SetFavoriteButton();
         }
     }
-    public class PropPanel : PrefabPanel<PropInfo>
+    public class PropEntity : PrefabEntity<PropInfo>
     {
-        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(Prefab);
+        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(EditObject);
     }
-    public class TreePanel : PrefabPanel<TreeInfo>
+    public class TreeEntity : PrefabEntity<TreeInfo>
     {
-        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(Prefab);
+        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(EditObject);
     }
-    public class NetPanel : PrefabPanel<NetInfo>
+    public class NetEntity : PrefabEntity<NetInfo>
     {
-        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(Prefab);
+        protected override string LocalizedTitle => Utilities.Utilities.GetPrefabName(EditObject);
     }
 }

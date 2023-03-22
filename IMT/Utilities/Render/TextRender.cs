@@ -74,7 +74,9 @@ namespace IMT.Utilities
 
                 var texture = new Texture2D(Get2Pow(Mathf.CeilToInt(textWidth)), Get2Pow(Mathf.CeilToInt(textHeight)))
                 {
-                    name = "Text",
+                    name = $"Text: {text}",
+                    anisoLevel = 4,
+                    filterMode = FilterMode.Bilinear,
                 };
                 var pixels = texture.GetPixels();
                 for (var i = 0; i < pixels.Length; i += 1)

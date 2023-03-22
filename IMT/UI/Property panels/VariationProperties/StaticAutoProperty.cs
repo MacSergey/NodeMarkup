@@ -135,7 +135,7 @@ namespace IMT.UI
                 OnValueChanged?.Invoke(value);
         }
 
-        protected override void RefreshImpl()
+        protected override void Refresh()
         {
             if (SelectedObject == StaticIndex)
                 Field.isEnabled = true;

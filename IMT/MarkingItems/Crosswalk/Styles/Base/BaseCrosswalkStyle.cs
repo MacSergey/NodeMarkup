@@ -73,7 +73,7 @@ namespace IMT.Manager
         {
             if (this is IDashedCrosswalk dashedStyle)
             {
-                lengthProperty.Text = Localize.StyleOption_Length;
+                lengthProperty.Label = Localize.StyleOption_Length;
                 lengthProperty.FieldsWidth = 50f;
                 lengthProperty.SetLabels(Localize.StyleOption_Dash, Localize.StyleOption_Space);
                 lengthProperty.Format = Localize.NumberFormat_Meter;

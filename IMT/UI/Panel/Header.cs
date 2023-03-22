@@ -3,22 +3,45 @@ using IMT.Tools;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
-using ModsCommon.Utilities;
+using UnityEngine;
 
 namespace IMT.UI.Panel
 {
     public class PanelHeader : HeaderMoveablePanel<PanelHeaderContent>
     {
         private MarkingType Type { get; set; }
-        public bool Available { set => Content.SetAvailable(value); }
 
-        private HeaderButtonInfo<HeaderButton> PasteButton { get; }
-        private HeaderButtonInfo<HeaderButton> EdgeLinesButton { get; }
-        private HeaderButtonInfo<HeaderButton> CutButton { get; }
-        private HeaderButtonInfo<HeaderButton> BeetwenIntersectionsButton { get; }
-        private HeaderButtonInfo<HeaderButton> WholeStreetButton { get; }
+        private BlurEffect Blur { get; set; }
 
-        public PanelHeader()
+        private HeaderButtonInfo<HeaderButton> PasteButton { get; set; }
+        private HeaderButtonInfo<HeaderButton> EdgeLinesButton { get; set; }
+        private HeaderButtonInfo<HeaderButton> CutButton { get; set; }
+        private HeaderButtonInfo<HeaderButton> BeetwenIntersectionsButton { get; set; }
+        private HeaderButtonInfo<HeaderButton> WholeStreetButton { get; set; }
+
+        private bool available = true;
+        public bool Available
+        {
+            get => available;
+            set
+            {
+                if (value != available)
+                {
+                    available = value;
+                    Blur.isVisible = !available;
+                }
+            }
+        }
+
+        public PanelHeader() : base()
+        {
+            Blur = AddUIComponent<BlurEffect>();
+            Blur.relativePosition = Vector3.zero;
+            Blur.size = size;
+            Blur.isVisible = false;
+            Caption.zOrder = Blur.zOrder + 1;
+        }
+        protected override void FillContent()
         {
             Content.AddButton(new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.AddTemplateHeaderButton, IMT.Localize.Panel_SaveAsPreset, IntersectionMarkingTool.SaveAsIntersectionTemplateShortcut));
 
@@ -53,7 +76,7 @@ namespace IMT.UI.Panel
             base.Init(null);
         }
 
-        public override void Refresh()
+        public override void UpdateLayout()
         {
             PasteButton.Enable = !SingletonTool<IntersectionMarkingTool>.Instance.IsMarkingBufferEmpty;
 
@@ -63,7 +86,12 @@ namespace IMT.UI.Panel
             BeetwenIntersectionsButton.Visible = Type == MarkingType.Segment;
             WholeStreetButton.Visible = Type == MarkingType.Segment;
 
-            base.Refresh();
+            base.UpdateLayout();
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            Blur.size = size;
         }
     }
 }

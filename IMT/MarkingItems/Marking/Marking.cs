@@ -69,6 +69,7 @@ namespace IMT.Manager
 
 
         private HashSet<IStyleItem> RecalculateList { get; set; } = new HashSet<IStyleItem>();
+        private bool NeedRecalculateRenderData { get; set; } = false;
         private MarkingRenderData RenderData { get; set; } = new MarkingRenderData();
         private MarkingRenderData TempRenderData { get; set; } = new MarkingRenderData();
         public int RenderLayers { get; private set; }
@@ -397,6 +398,8 @@ namespace IMT.Manager
             {
                 if (toRecalculate != null)
                     RecalculateList.Add(toRecalculate);
+
+                NeedRecalculateRenderData = true;
             }
         }
         public void RecalculateStyleData(HashSet<IStyleItem> toRecalculate)
@@ -404,6 +407,7 @@ namespace IMT.Manager
             lock (this)
             {
                 RecalculateList.AddRange(toRecalculate);
+                NeedRecalculateRenderData = true;
             }
         }
 
@@ -858,11 +862,13 @@ namespace IMT.Manager
 
         public void Render(RenderManager.CameraInfo cameraInfo, ref RenderManager.Instance data)
         {
-            if (RecalculateList.Count > 0)
+            var renderData = RenderData;
+            if (NeedRecalculateRenderData)
             {
                 lock(this)
                 {
-                    var renderData = TempRenderData;
+                    renderData = TempRenderData;
+                    renderData.Clear();
 
                     foreach (var item in RecalculateList)
                         item.RecalculateStyleData();
@@ -888,7 +894,6 @@ namespace IMT.Manager
                         lock (this)
                         {
                             TempRenderData = RenderData;
-                            TempRenderData.Clear();
 
                             RenderData = renderData;
                             RenderLayers = renderData.GetRenderLayers();
@@ -897,13 +902,14 @@ namespace IMT.Manager
                     });
 
                     RecalculateList.Clear();
+                    NeedRecalculateRenderData = false;
                 }
             }
 
             bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
 
-            foreach (var renderData in RenderData.Values)
-                renderData.Render(cameraInfo, data, infoView);
+            foreach (var renderDataItem in renderData.Values)
+                renderDataItem.Render(cameraInfo, data, infoView);
         }
 
         public void CalculateGroupData(ref bool result, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)

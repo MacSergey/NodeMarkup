@@ -16,10 +16,10 @@ namespace IMT.UI
         public event Action<SelectGuideButton> OnEnter;
         public event Action<SelectGuideButton> OnLeave;
 
-        private BoolSegmented FollowGuide { get; }
-        protected SelectGuideButton LeftGuideSelector { get; set; }
-        protected SelectGuideButton RightGuideSelector { get; set; }
-        protected MultyAtlasUIButton TurnButton { get; set; }
+        private CustomUIToggle FollowGuide { get; set; }
+        protected SelectGuideButton LeftGuideSelector { get; private set; }
+        protected SelectGuideButton RightGuideSelector { get; private set; }
+        protected CustomUIButton TurnButton { get; set; }
 
         public int VertexCount { get; private set; }
         public FillerGuide LeftGuide
@@ -29,7 +29,7 @@ namespace IMT.UI
             {
                 LeftGuideSelector.Value = value;
                 RightGuideSelector.Other = value;
-                OnValueChanged?.Invoke(FollowGuide.SelectedObject, LeftGuideSelector.Value, RightGuide);
+                OnValueChanged?.Invoke(FollowGuide.State, LeftGuideSelector.Value, RightGuide);
             }
         }
         public FillerGuide RightGuide
@@ -39,18 +39,18 @@ namespace IMT.UI
             {
                 RightGuideSelector.Value = value;
                 LeftGuideSelector.Other = value;
-                OnValueChanged?.Invoke(FollowGuide.SelectedObject, LeftGuide, RightGuideSelector.Value);
+                OnValueChanged?.Invoke(FollowGuide.State, LeftGuide, RightGuideSelector.Value);
             }
         }
         public bool? Follow
         {
-            get => FollowGuide.isVisible ? FollowGuide.SelectedObject : null;
+            get => FollowGuide.isVisible ? FollowGuide.State : null;
             set
             {
                 if (value != null)
                 {
                     FollowGuide.isVisible = true;
-                    FollowGuide.SelectedObject = value.Value;
+                    FollowGuide.State = value.Value;
                 }
                 else
                     FollowGuide.isVisible = false;
@@ -59,32 +59,30 @@ namespace IMT.UI
             }
         }
 
-        public FillerGuidePropertyPanel()
+        protected override void FillContent()
         {
-            FollowGuide = Content.AddUIComponent<BoolSegmented>();
-            FollowGuide.StopLayout();
-            FollowGuide.AutoButtonSize = false;
-            FollowGuide.ButtonWidth = 25f;
-            FollowGuide.AddItem(true, new OptionData("I"));
-            FollowGuide.AddItem(false, new OptionData("O"));
-            FollowGuide.StartLayout();
-            FollowGuide.OnSelectObjectChanged += FollowChanged;
+            FollowGuide = Content.AddUIComponent<CustomUIToggle>();
+            FollowGuide.DefaultStyle();
+            FollowGuide.OnStateChanged += FollowChanged;
 
             LeftGuideSelector = Content.AddUIComponent<SelectGuideButton>();
+            LeftGuideSelector.name = nameof(LeftGuideSelector);
             LeftGuideSelector.width = 80f;
-            LeftGuideSelector.Button.eventClick += ButtonClick;
-            LeftGuideSelector.Button.eventMouseEnter += ButtonMouseEnter;
-            LeftGuideSelector.Button.eventMouseLeave += ButtonMouseLeave;
+            LeftGuideSelector.eventClick += ButtonClick;
+            LeftGuideSelector.eventMouseEnter += ButtonMouseEnter;
+            LeftGuideSelector.eventMouseLeave += ButtonMouseLeave;
             LeftGuideSelector.OnValueChanged += LeftGuideChanged;
 
             RightGuideSelector = Content.AddUIComponent<SelectGuideButton>();
+            RightGuideSelector.name = nameof(RightGuideSelector);
             RightGuideSelector.width = 80f;
-            RightGuideSelector.Button.eventClick += ButtonClick;
-            RightGuideSelector.Button.eventMouseEnter += ButtonMouseEnter;
-            RightGuideSelector.Button.eventMouseLeave += ButtonMouseLeave;
+            RightGuideSelector.eventClick += ButtonClick;
+            RightGuideSelector.eventMouseEnter += ButtonMouseEnter;
+            RightGuideSelector.eventMouseLeave += ButtonMouseLeave;
             RightGuideSelector.OnValueChanged += RightGuideChanged;
 
-            TurnButton = Content.AddUIComponent<MultyAtlasUIButton>();
+            TurnButton = Content.AddUIComponent<CustomUIButton>();
+            TurnButton.name = nameof(TurnButton);
             TurnButton.SetDefaultStyle();
             TurnButton.size = new Vector2(20f, 20f);
             TurnButton.atlasForeground = IMTTextures.Atlas;
@@ -92,7 +90,6 @@ namespace IMT.UI
             TurnButton.tooltip = IMT.Localize.StyleOption_Turn;
             TurnButton.eventClick += TurnClick;
         }
-
         public void Init(int vertexCount)
         {
             base.Init();
@@ -129,7 +126,7 @@ namespace IMT.UI
 
         private void Refresh()
         {
-            var isEnabled = !FollowGuide.isVisible || FollowGuide.SelectedObject;
+            var isEnabled = !FollowGuide.isVisible || FollowGuide.State;
             LeftGuideSelector.isEnabled = isEnabled;
             RightGuideSelector.isEnabled = isEnabled;
             TurnButton.isEnabled = isEnabled;

@@ -20,7 +20,7 @@ namespace IMT.UI.Editors
         {
             get
             {
-                var color = Colors.Hover;
+                var color = CommonColors.Hover;
                 color.a = 128;
                 return color;
             }
@@ -30,14 +30,14 @@ namespace IMT.UI.Editors
         public override Marking.SupportType Support => Marking.SupportType.Lines;
 
         private PropertyGroupPanel LineProperties { get; set; }
-        private AddRuleButton AddButton { get; set; }
+        private CustomUIButton AddRuleButton { get; set; }
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
         public bool SupportRules => EditObject is MarkingRegularLine;
         public bool CanDivide => EditObject.IsSupportRules && SupportPoints.Count > 2;
         private bool AddRuleAvailable => EditObject.IsSupportRules;
         public bool IsSplit => EditObject.PointPair.IsSplit;
-        public IEnumerable<RulePanel> RulePanels => ContentPanel.Content.components.OfType<RulePanel>();
+        public IEnumerable<RulePanel> RulePanels => ContentPanel.components.OfType<RulePanel>();
 
         private RuleEdgeSelectPropertyPanel.RuleEdgeSelectButton HoverPartEdgeButton { get; set; }
         private RulePanel HoverRulePanel { get; set; }
@@ -53,7 +53,7 @@ namespace IMT.UI.Editors
 
         public LinesEditor()
         {
-            ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
+            ContentPanel.Padding = new RectOffset(10, 10, 10, 10);
             PartEdgeToolMode = Tool.CreateToolMode<PartEdgeToolMode>();
             PartEdgeToolMode.Init(this);
         }
@@ -61,13 +61,14 @@ namespace IMT.UI.Editors
         protected override IEnumerable<MarkingLine> GetObjects() => Marking.Lines;
         protected override void OnObjectSelect(MarkingLine editObject)
         {
-            ContentPanel.StopLayout();
-            GetRuleEdges(editObject);
+            ContentPanel.PauseLayout(() =>
+            {
+                GetRuleEdges(editObject);
 
-            AddLineProperties(EditObject);
-            AddRulePanels(editObject);
-            AddAddButton();
-            ContentPanel.StartLayout();
+                AddLineProperties(EditObject);
+                AddRulePanels(editObject);
+                AddAddButton();
+            });
         }
         protected override void OnObjectUpdate(MarkingLine editObject)
         {
@@ -96,7 +97,7 @@ namespace IMT.UI.Editors
             HoverRulePanel = null;
             LineProperties = null;
             LinePropertiesVisibleAction = null;
-            AddButton = null;
+            AddRuleButton = null;
         }
         private void GetRuleEdges(MarkingLine editObject)
         {
@@ -105,7 +106,7 @@ namespace IMT.UI.Editors
         }
         private void AddLineProperties(MarkingLine editObject)
         {
-            LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
+            LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
             LineProperties.Init();
 
             if (editObject is MarkingRegularLine line)
@@ -137,21 +138,21 @@ namespace IMT.UI.Editors
         {
             var alignment = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties, "LineAlignment");
 
-            alignment.Text = label;
+            alignment.Label = label;
             alignment.Init();
             alignment.SelectedObject = property;
             alignment.OnSelectObjectChanged += (value) => property.Value = value;
 
             return alignment;
         }
-        private BoolListPropertyPanel AddClipSidewalkProperty(MarkingRegularLine line)
+        private BoolPropertyPanel AddClipSidewalkProperty(MarkingRegularLine line)
         {
-            var clipSidewalk = ComponentPool.Get<BoolListPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
+            var clipSidewalk = ComponentPool.Get<BoolPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
 
-            clipSidewalk.Text = IMT.Localize.LineEditor_ClipSidewalk;
-            clipSidewalk.Init(IMT.Localize.StyleOption_No, IMT.Localize.StyleOption_Yes);
-            clipSidewalk.SelectedObject = line.ClipSidewalk;
-            clipSidewalk.OnSelectObjectChanged += (value) => line.ClipSidewalk.Value = value;
+            clipSidewalk.Label = IMT.Localize.LineEditor_ClipSidewalk;
+            clipSidewalk.Init();
+            clipSidewalk.Value = line.ClipSidewalk;
+            clipSidewalk.OnValueChanged += (value) => line.ClipSidewalk.Value = value;
 
             return clipSidewalk;
         }
@@ -164,7 +165,7 @@ namespace IMT.UI.Editors
 
         private RulePanel AddRulePanel(MarkingLineRawRule rule, bool isExpand)
         {
-            var rulePanel = ComponentPool.Get<RulePanel>(ContentPanel.Content);
+            var rulePanel = ComponentPool.Get<RulePanel>(ContentPanel);
             rulePanel.Init(this, rule, isExpand);
             rulePanel.OnEnter += RuleMouseEnter;
             rulePanel.OnLeave += RuleMouseLeave;
@@ -179,18 +180,22 @@ namespace IMT.UI.Editors
         }
         private void AddAddButton()
         {
-            AddButton = ComponentPool.Get<AddRuleButton>(ContentPanel.Content);
-            AddButton.Text = IMT.Localize.LineEditor_AddRuleButton;
-            AddButton.tooltip = IntersectionMarkingTool.AddRuleShortcut;
-            AddButton.Init();
-            AddButton.OnButtonClick += AddRule;
+            AddRuleButton = ContentPanel.AddUIComponent<CustomUIButton>();
+            AddRuleButton.name = nameof(AddRuleButton);
+            AddRuleButton.SetDefaultStyle();
+            AddRuleButton.size = new Vector2(ContentPanel.ItemSize.x, 30f);
+            AddRuleButton.text = IMT.Localize.LineEditor_AddRuleButton;
+            AddRuleButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
+            AddRuleButton.textPadding.top = 5;
+            AddRuleButton.tooltip = IntersectionMarkingTool.AddRuleShortcut;
+            AddRuleButton.eventClick += (_, _) => AddRule();
             SetAddButtonVisible();
         }
         private void SetLinePropertiesVisible() => LinePropertiesVisibleAction?.Invoke();
         private void SetAddButtonVisible()
         {
-            AddButton.zOrder = -1;
-            AddButton.isVisible = AddRuleAvailable;
+            AddRuleButton.zOrder = -1;
+            AddRuleButton.isVisible = AddRuleAvailable;
         }
 
         private void AddRule()
@@ -202,7 +207,7 @@ namespace IMT.UI.Editors
             var rulePanel = AddRulePanel(newRule, true);
             SetAddButtonVisible();
 
-            ContentPanel.Content.ScrollToBottom();
+            ContentPanel.ScrollToEnd();
 
             if (CanDivide && Settings.QuickRuleSetup)
                 SetupRule(rulePanel);
@@ -251,8 +256,8 @@ namespace IMT.UI.Editors
         {
             var style = Tool.GetStyleByModifier<RegularLineStyle, RegularLineStyle.RegularLineType>(EditObject.PointPair.NetworkType, EditObject.Type, RegularLineStyle.RegularLineType.Dashed);
             rulePanel.ApplyStyle(style);
-            ContentPanel.Content.ScrollToBottom();
-            ContentPanel.Content.ScrollIntoViewRecursive(rulePanel);
+            ContentPanel.ScrollToEnd();
+            ContentPanel.ScrollIntoView(rulePanel);
             return true;
         }
         public void DeleteRule(RulePanel rulePanel)
@@ -321,9 +326,9 @@ namespace IMT.UI.Editors
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
             {
-                ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = 2f, AlphaBlend = false });
+                ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover, Width = 2f, AlphaBlend = false });
                 HoverRulePanel?.Rule.Line.RenderRule(HoverRulePanel.Rule, new OverlayData(cameraInfo) { Color = HoverAlpha, Width = 2f, AlphaBlend = false });
-                HoverPartEdgeButton?.Value?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+                HoverPartEdgeButton?.Value?.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
             }
         }
 
@@ -334,7 +339,7 @@ namespace IMT.UI.Editors
         protected override bool IsHover => PointsSelector.IsHoverPoint;
         protected override ILinePartEdge Hover => PointsSelector.HoverPoint;
         public PointsSelector<ILinePartEdge> PointsSelector { get; set; }
-        protected override void OnSetButton() => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectButton.Position == EdgePosition.Start ? Colors.Green : Colors.Red);
+        protected override void OnSetButton() => PointsSelector = new PointsSelector<ILinePartEdge>(Editor.SupportPoints, SelectButton.Position == EdgePosition.Start ? CommonColors.Green : CommonColors.Red);
 
         public override void Deactivate()
         {
@@ -380,25 +385,45 @@ namespace IMT.UI.Editors
     public class LineItem : EditItem<MarkingLine, LineIcon>
     {
         private bool HasOverlapped { get; set; }
-        public override Color32 NormalColor => HasOverlapped ? new Color32(246, 85, 85, 255) : base.NormalColor;
-        public override Color32 HoveredColor => HasOverlapped ? new Color32(247, 100, 100, 255) : base.HoveredColor;
-        public override Color32 PressedColor => HasOverlapped ? new Color32(248, 114, 114, 255) : base.PressedColor;
-        public override Color32 FocusColor => HasOverlapped ? new Color32(249, 127, 127, 255) : base.FocusColor;
+
+        public override ModsCommon.UI.SpriteSet ForegroundSprites => !HasOverlapped ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        {
+            normal = CommonTextures.BorderBig,
+            hovered = CommonTextures.PanelSmall,
+            pressed = CommonTextures.PanelSmall,
+            focused = CommonTextures.BorderBig,
+            disabled = CommonTextures.PanelSmall,
+        };
+        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !HasOverlapped ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+
+        public override ColorSet ForegroundColors => !HasOverlapped ? base.ForegroundColors : new ColorSet()
+        {
+            normal = IMTColors.ItemErrorNormal,
+            hovered = IMTColors.ItemErrorNormal,
+            pressed = IMTColors.ItemErrorPressed,
+            focused = IMTColors.ItemErrorFocused,
+            disabled = null,
+        };
+        public override ColorSet ForegroundSelectedColors => !HasOverlapped ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemErrorFocused);
+
+        public override ColorSet TextColor => !HasOverlapped ? base.TextColor : new ColorSet(Color.white);
+        public override ColorSet TextSelectedColor => !HasOverlapped ? base.TextSelectedColor : new ColorSet(Color.white);
+
         public override void Refresh()
         {
             base.Refresh();
 
             SetIcon();
 
-            HasOverlapped = Object.HasOverlapped;
-            SetColors();
+            HasOverlapped = EditObject.HasOverlapped;
+            SetStyle();
         }
         private void SetIcon()
         {
             if (!ShowIcon)
                 return;
 
-            var rules = Object.Rules.ToArray();
+            var rules = EditObject.Rules.ToArray();
             Icon.Count = rules.Length;
             if (rules.Length == 1)
             {
@@ -408,12 +433,4 @@ namespace IMT.UI.Editors
         }
     }
     public class LineGroup : EditGroup<LineType, LineItem, MarkingLine> { }
-    public class AddRuleButton : ButtonPanel
-    {
-        public AddRuleButton()
-        {
-            Button.textScale = 1f;
-        }
-        protected override void SetSize() => Button.size = size;
-    }
 }

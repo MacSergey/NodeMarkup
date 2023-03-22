@@ -16,11 +16,11 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.14.0.199</AssemblyVersion>
+    <AssemblyVersion>1.14.0.814</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
-    <AssemblyVersion>1.13.1</AssemblyVersion>
+    <AssemblyVersion>1.13.1.1</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
@@ -109,6 +109,7 @@
     <None Remove="Resources\ButtonIcons\LeftToRightButtonIcons.png" />
     <None Remove="Resources\ButtonIcons\LockButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\PasteButtonIcon.png" />
+    <None Remove="Resources\ButtonIcons\RandomButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\RangeButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\RegularButtonIcon.png" />
     <None Remove="Resources\ButtonIcons\RegularButtonIcons.png" />
@@ -130,9 +131,11 @@
     <None Remove="Resources\imt-linux" />
     <None Remove="Resources\imt-macos" />
     <None Remove="Resources\imt-win" />
+    <None Remove="Resources\PreviewImage.png" />
     <None Remove="Resources\StyleCircle.png" />
     <None Remove="Resources\StylesCrosswalk\CrosswalkDecal.png" />
     <None Remove="Resources\StylesFiller\FillerDecal.png" />
+    <None Remove="Resources\StylesLine\LineDecal.png" />
     <None Remove="Resources\StylesLine\LineDoubleDashedAsym.png" />
     <None Remove="Resources\StylesLine\LineText.png" />
     <None Remove="Resources\StylesLine\LineZigZag.png" />
@@ -165,6 +168,7 @@
     <EmbeddedResource Include="Resources\ButtonIcons\LeftToRightButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\LockButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\PasteButtonIcon.png" />
+    <EmbeddedResource Include="Resources\ButtonIcons\RandomButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\RangeButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\RegularButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\RotateButtonIcon.png" />
@@ -184,6 +188,7 @@
     <EmbeddedResource Include="Resources\HeaderButtons\UnlinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PreviewImage.png" />
     <EmbeddedResource Include="Resources\imt-linux" />
     <EmbeddedResource Include="Resources\imt-macos" />
     <EmbeddedResource Include="Resources\imt-win" />
@@ -191,6 +196,7 @@
     <EmbeddedResource Include="Resources\StyleCircle.png" />
     <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkDecal.png" />
     <EmbeddedResource Include="Resources\StylesFiller\FillerDecal.png" />
+    <EmbeddedResource Include="Resources\StylesLine\LineDecal.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineDoubleDashedAsym.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineText.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineZigZag.png" />
@@ -430,7 +436,6 @@
   <Import Project="..\ModsCommon\DependencyShared\DependencyShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LoggerShared\LoggerShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\SingletonShared\SingletonShared.projitems" Label="Shared" />
-  <Import Project="..\ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\WhatsNewMessageBoxShared\WhatsNewMessageBoxShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\NetObjectMapShared\NetObjectMapShared.projitems" Label="Shared" />

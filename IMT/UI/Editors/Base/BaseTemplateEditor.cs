@@ -14,7 +14,7 @@ namespace IMT.UI.Editors
         void EditName();
     }
     public abstract class BaseTemplateEditor<ItemsPanelType, TemplateType, HeaderPanelType, EditToolMode> : SimpleEditor<ItemsPanelType, TemplateType>, ITemplateEditor<TemplateType>
-        where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<TemplateType>
+        where ItemsPanelType : CustomUIScrollablePanel, IItemPanel<TemplateType>
         where TemplateType : Template<TemplateType>
         where HeaderPanelType : TemplateHeaderPanel<TemplateType>
         where EditToolMode : EditTemplateMode<TemplateType>
@@ -104,7 +104,7 @@ namespace IMT.UI.Editors
             if (EditObject.IsAsset)
             {
                 var authorProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Author");
-                authorProperty.Text = IMT.Localize.TemplateEditor_Author;
+                authorProperty.Label = IMT.Localize.TemplateEditor_Author;
                 authorProperty.FieldWidth = 230;
                 authorProperty.EnableControl = false;
                 authorProperty.Init();
@@ -114,7 +114,7 @@ namespace IMT.UI.Editors
         private void AddTemplateName()
         {
             NameProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Name");
-            NameProperty.Text = IMT.Localize.TemplateEditor_Name;
+            NameProperty.Label = IMT.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
             NameProperty.SubmitOnFocusLost = true;
             NameProperty.Init();

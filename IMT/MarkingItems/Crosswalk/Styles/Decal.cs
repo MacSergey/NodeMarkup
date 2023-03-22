@@ -115,10 +115,10 @@ namespace IMT.Manager
 
         protected void AddDecalProperty(SelectPropProperty decalProperty, EditorProvider provider)
         {
-            decalProperty.Text = Localize.StyleOption_AssetDecal;
-            decalProperty.PrefabSelectPredicate = IsValidDecal;
-            decalProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
-            decalProperty.Init(60f);
+            decalProperty.Label = Localize.StyleOption_AssetDecal;
+            decalProperty.SelectPredicate = IsValidDecal;
+            decalProperty.SortPredicate = (objA, objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
+            decalProperty.Init();
             decalProperty.Prefab = Decal;
             decalProperty.RawName = Decal.RawName;
             decalProperty.OnValueChanged += (value) =>
@@ -134,7 +134,7 @@ namespace IMT.Manager
 
         private void AddDecalColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(Decal.Value?.m_color0);
             colorProperty.OnValueChanged += (Color32 color) => DecalColor.Value = color;
@@ -150,7 +150,7 @@ namespace IMT.Manager
 
         private void AddTilingProperty(FloatSingleDoubleProperty tilingProperty, EditorProvider provider)
         {
-            tilingProperty.Text = Localize.StyleOption_Scale;
+            tilingProperty.Label = Localize.StyleOption_Scale;
             tilingProperty.Format = Localize.NumberFormat_Percent;
             tilingProperty.FieldWidth = 100f;
             tilingProperty.CheckMax = true;
@@ -172,7 +172,7 @@ namespace IMT.Manager
 
         private void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            angleProperty.Text = Localize.StyleOption_ObjectAngle;
+            angleProperty.Label = Localize.StyleOption_ObjectAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;

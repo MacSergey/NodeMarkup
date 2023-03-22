@@ -8,12 +8,40 @@ namespace IMT.UI.Panel
 {
     public class PanelTabStrip : TabStrip<PanelTabStrip.PanelTab>
     {
-        private static Color32 NormalColor { get; } = new Color32(107, 113, 115, 255);
-        private static Color32 HoverColor { get; } = new Color32(143, 149, 150, 255);
-        private static Color32 PressedColor { get; } = new Color32(153, 159, 160, 255);
-        private static Color32 FocusColor { get; } = new Color32(177, 195, 94, 255);
+        private bool available = true;
+        public bool Available
+        {
+            get => available;
+            set
+            {
+                if (value != available)
+                {
+                    available = value;
+                    Blur.isVisible = !available;
+                }
+            }
+        }
+        private BlurEffect Blur { get; set; }
 
-        public PanelTabStrip() => isLocalized = true;
+        public PanelTabStrip()
+        {
+            isLocalized = true;
+
+            this.DefaultStyle();
+
+            BackgroundSprite = CommonTextures.Empty;
+
+            color = disabledColor = TabColor = IMTColors.TabButtonNormal;
+            TabHoveredColor = IMTColors.TabButtonHovered;
+            TabPressedColor = IMTColors.TabButtonPressed;
+            TabFocusedColor = IMTColors.TabButtonFocused;
+            TabDisabledColor = IMTColors.TabButtonDisabled;
+
+            Blur = AddUIComponent<BlurEffect>();
+            Blur.relativePosition = Vector3.zero;
+            Blur.size = size;
+            Blur.isVisible = false;
+        }
 
         protected override void OnLocalize()
         {
@@ -21,21 +49,6 @@ namespace IMT.UI.Panel
                 tab.text = tab.Editor.Name;
 
             ArrangeTabs();
-        }
-
-        protected override void SetStyle(PanelTab tabButton)
-        {
-            tabButton.atlas = CommonTextures.Atlas;
-
-            tabButton.normalBgSprite = CommonTextures.Tab;
-            tabButton.focusedBgSprite = CommonTextures.Tab;
-            tabButton.hoveredBgSprite = CommonTextures.Tab;
-            tabButton.disabledBgSprite = CommonTextures.Tab;
-
-            tabButton.color = NormalColor;
-            tabButton.hoveredColor = HoverColor;
-            tabButton.pressedColor = PressedColor;
-            tabButton.focusedColor = FocusColor;
         }
         public void SetVisible(Marking marking)
         {
@@ -46,8 +59,18 @@ namespace IMT.UI.Panel
         public void AddTab(Editor editor)
         {
             var tab = AddTabImpl(editor.Name);
+            tab.textPadding.top = 4;
             tab.Editor = editor;
+
+            Blur.zOrder = int.MaxValue;
         }
+
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            Blur.size = size;
+        }
+
         public class PanelTab : Tab
         {
             public Editor Editor { get; set; }

@@ -55,7 +55,7 @@ namespace IMT.Manager
         public int Id { get; }
         public abstract PointType Type { get; }
         public NetworkType NetworkType => Source.NetworkType;
-        public virtual Color32 Color => Colors.GetOverlayColor(Index - 1, byte.MaxValue);
+        public virtual Color32 Color => CommonColors.GetOverlayColor(Index - 1, byte.MaxValue);
         public virtual Vector3 Position
         {
             get => MarkerPosition;
@@ -192,7 +192,7 @@ namespace IMT.Manager
 
         public override bool IsSplit => Split;
         public override float SplitOffsetValue => SplitOffset;
-        public Color32 SplitColor => Colors.GetOverlayColor(Index - 1, byte.MaxValue, 128);
+        public Color32 SplitColor => CommonColors.GetOverlayColor(Index - 1, byte.MaxValue, 128);
 
         public PropertyBoolValue Split { get; }
         public PropertyValue<float> SplitOffset { get; }
@@ -346,7 +346,7 @@ namespace IMT.Manager
             set => Bounds = new Bounds(value, new Vector3(1f, 1f, Width));
         }
         public float Width => (SourcePointB.Position - SourcePointA.Position).MakeFlat().magnitude;
-        public override Color32 Color => Colors.GetOverlayColor(Index + Colors.OverlayColors.Length / 2, byte.MaxValue);
+        public override Color32 Color => CommonColors.GetOverlayColor(Index + CommonColors.OverlayColors.Length / 2, byte.MaxValue);
 
         public MarkingLanePoint(byte index, NetLanePointSource source) : base(index, source, false)
         {

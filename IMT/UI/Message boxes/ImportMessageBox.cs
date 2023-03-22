@@ -2,6 +2,7 @@
 using ModsCommon;
 using ModsCommon.UI;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace IMT.UI
@@ -14,7 +15,7 @@ namespace IMT.UI
 
         private CustomUIButton ImportButton { get; set; }
         private CustomUIButton CancelButton { get; set; }
-        protected FileDropDown DropDown { get; set; }
+        protected StringDropDown DropDown { get; set; }
         public ImportMessageBox()
         {
             ImportButton = AddButton(ImportClick);
@@ -27,33 +28,43 @@ namespace IMT.UI
         }
         private void AddFileList()
         {
-            DropDown = Panel.Content.AddUIComponent<FileDropDown>();
-            ComponentStyle.CustomSettingsStyle(DropDown, new Vector2(DefaultWidth - 2 * Padding, 38));
+            DropDown = Content.AddUIComponent<StringDropDown>();
+            ComponentStyle.DropDownMessageBoxStyle(DropDown, new Vector2(DefaultWidth - 2 * Padding, 38));
+            DropDown.EntityTextScale = 1f;
 
-            DropDown.listWidth = (int)DropDown.width;
-            DropDown.listHeight = 200;
-            DropDown.itemPadding = new RectOffset(14, 14, 0, 0);
             DropDown.textScale = 1.25f;
-            DropDown.clampListToScreen = true;
-            DropDown.eventSelectedIndexChanged += DropDownIndexChanged;
+            DropDown.OnSelectObject += DropDownValueChanged;
 
-            AddData();
-            DropDown.selectedIndex = 0;
+            var files = GetList();
+            foreach (var file in files)
+                DropDown.AddItem(file.Key, file.Value);
+
+            DropDown.SelectedObject = files.FirstOrDefault().Key;
+            DropDown.OnSetPopupStyle += SetPopupStyle;
+            DropDown.OnSetEntityStyle += SetEntityStyle;
+
+            DropDownValueChanged(DropDown.SelectedObject);
         }
 
-        private void DropDownIndexChanged(UIComponent component, int value)
+        private void SetPopupStyle(StringDropDown.StringPopup popup, ref bool overridden)
         {
-            if (DropDown.SelectedObject != null)
+            popup.PopupSettingsStyle<DropDownItem<string>, StringDropDown.StringEntity, StringDropDown.StringPopup>();
+            overridden = true;
+        }
+        private void SetEntityStyle(StringDropDown.StringEntity entity, ref bool overridden)
+        {
+            entity.EntitySettingsStyle<DropDownItem<string>, StringDropDown.StringEntity>();
+            overridden = true;
+        }
+
+        private void DropDownValueChanged(string obj)
+        {
+            if (!string.IsNullOrEmpty(obj))
                 ImportButton.Enable();
             else
                 ImportButton.Disable();
         }
 
-        private void AddData()
-        {
-            foreach (var file in GetList())
-                DropDown.AddItem(file.Key, new OptionData(file.Value));
-        }
         protected abstract Dictionary<string, string> GetList();
         private void ImportClick()
         {
@@ -68,8 +79,6 @@ namespace IMT.UI
         protected abstract bool Import(string file);
 
         protected virtual void CancelClick() => Close();
-
-        public class FileDropDown : UIDropDown<string> { }
     }
     public class ImportMarkingMessageBox : ImportMessageBox
     {

@@ -16,7 +16,7 @@ namespace IMT.Manager
         public float LineCurbSize => CurbSize.Value.x;
         public float MedianCurbSize => CurbSize.Value.y;
 
-        public CurbFillerStyle(Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(offset, elevation, cornerRadius)
+        public CurbFillerStyle(ThemeHelper.IThemeData pavementTheme, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize) : base(pavementTheme, offset, elevation, cornerRadius)
         {
             CurbSize = new PropertyVector2Value(StyleChanged, curbSize, "CS", "MCS");
         }
@@ -99,7 +99,7 @@ namespace IMT.Manager
         }
         private void AddCurbSizeProperty(FloatPropertyPanel curbSizeProperty, EditorProvider provider)
         {
-            curbSizeProperty.Text = Localize.FillerStyle_CurbSize;
+            curbSizeProperty.Label = Localize.FillerStyle_CurbSize;
             curbSizeProperty.Format = Localize.NumberFormat_Meter;
             curbSizeProperty.UseWheel = true;
             curbSizeProperty.WheelStep = 0.1f;
@@ -114,7 +114,7 @@ namespace IMT.Manager
         }
         private void AddMedianCurbSizeProperty(Vector2PropertyPanel curbSizeProperty, EditorProvider provider)
         {
-            curbSizeProperty.Text = Localize.FillerStyle_CurbSize;
+            curbSizeProperty.Label = Localize.FillerStyle_CurbSize;
             curbSizeProperty.FieldsWidth = 50f;
             curbSizeProperty.SetLabels(Localize.FillerStyle_CurbSizeAbrv, Localize.FillerStyle_CurbSizeMedianAbrv);
             curbSizeProperty.Format = Localize.NumberFormat_Meter;

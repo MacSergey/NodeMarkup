@@ -163,7 +163,7 @@ namespace IMT.Manager
 
         protected void AddOffsetBetweenProperty(FloatPropertyPanel offsetBetweenProperty, EditorProvider provider)
         {
-            offsetBetweenProperty.Text = Localize.StyleOption_OffsetBetween;
+            offsetBetweenProperty.Label = Localize.StyleOption_OffsetBetween;
             offsetBetweenProperty.Format = Localize.NumberFormat_Meter;
             offsetBetweenProperty.UseWheel = true;
             offsetBetweenProperty.WheelStep = 0.1f;

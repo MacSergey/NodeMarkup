@@ -5,13 +5,15 @@ using IMT.Manager;
 using IMT.Tools;
 using IMT.UI;
 using IMT.UI.Panel;
+using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static ModsCommon.SettingsHelper;
+using ModsCommon.Settings;
+using static ModsCommon.Settings.Helper;
 
 namespace IMT
 {
@@ -30,6 +32,7 @@ namespace IMT
         public static SavedBool ApplyMarkingFromAssets { get; } = new SavedBool(nameof(ApplyMarkingFromAssets), SettingsFile, true, true);
         public static SavedBool RailUnderMarking { get; } = new SavedBool(nameof(RailUnderMarking), SettingsFile, true, true);
         public static SavedBool LevelCrossingUnderMarking { get; } = new SavedBool(nameof(LevelCrossingUnderMarking), SettingsFile, true, true);
+        public static SavedBool AutoCollapseItemsPanel { get; } = new SavedBool(nameof(AutoCollapseItemsPanel), SettingsFile, true, true);
         public static SavedBool CollapseRules { get; } = new SavedBool(nameof(CollapseRules), SettingsFile, true, true);
         public static SavedBool ShowToolTip { get; } = new SavedBool(nameof(ShowToolTip), SettingsFile, true, true);
         public static SavedBool ShowPanelTip { get; } = new SavedBool(nameof(ShowPanelTip), SettingsFile, true, true);
@@ -65,10 +68,10 @@ namespace IMT
         public static SavedInt ToggleUndergroundMode { get; } = new SavedInt(nameof(ToggleUndergroundMode), SettingsFile, 0, true);
         public static SavedBool HoldCtrlToMovePoint { get; } = new SavedBool(nameof(HoldCtrlToMovePoint), SettingsFile, true, true);
 
-        protected UIAdvancedHelper ShortcutsTab => GetTab(nameof(ShortcutsTab));
-        protected UIAdvancedHelper BackupTab => GetTab(nameof(BackupTab));
+        protected UIComponent ShortcutsTab => GetTabContent(nameof(ShortcutsTab));
+        protected UIComponent BackupTab => GetTabContent(nameof(BackupTab));
 #if DEBUG
-        protected UIAdvancedHelper APITab => GetTab(nameof(APITab));
+        protected UIComponent APITab => GetTabContent(nameof(APITab));
 #endif
 
         public static bool IsUndergroundWithModifier => ToggleUndergroundMode == 0;
@@ -116,96 +119,115 @@ namespace IMT
         #region GENERAL
 
         #region DISPLAY&USAGE
-        private void AddGeneral(UIAdvancedHelper helper, out OptionPanelWithLabelData undergroundOptions)
+        private void AddGeneral(UIComponent helper, out OptionPanelWithLabelData undergroundOptions)
         {
-            var renderGroup = helper.AddGroup(Localize.Settings_Render);
+            var renderGroup = helper.AddOptionsGroup(Localize.Settings_Render);
 
-            AddFloatField(renderGroup, Localize.Settings_RenderDistance, RenderDistance, 700f, 0f);
-            AddFloatField(renderGroup, Localize.Settings_LODDistanceMarking, LODDistance, 300f, 0f);
-            AddFloatField(renderGroup, Localize.Settings_LODDistanceMesh, MeshLODDistance, 300f, 0f);
-            AddFloatField(renderGroup, Localize.Settings_LODDistanceNetwork, NetworkLODDistance, 500f, 0f);
-            AddFloatField(renderGroup, Localize.Settings_LODDistanceProp, PropLODDistance, 500f, 0f);
-            AddFloatField(renderGroup, Localize.Settings_LODDistanceTree, TreeLODDistance, 500f, 0f);
+            var renderDistance = renderGroup.AddFloatField(Localize.Settings_RenderDistance, RenderDistance, 0f);
+            renderDistance.Control.Format = Localize.NumberFormat_Meter;
+            var markingLOD = renderGroup.AddFloatField(Localize.Settings_LODDistanceMarking, LODDistance, 0f);
+            markingLOD.Control.Format = Localize.NumberFormat_Meter;
+            var meshLOD = renderGroup.AddFloatField(Localize.Settings_LODDistanceMesh, MeshLODDistance, 0f);
+            meshLOD.Control.Format = Localize.NumberFormat_Meter;
+            var networkLOD = renderGroup.AddFloatField(Localize.Settings_LODDistanceNetwork, NetworkLODDistance, 0f);
+            networkLOD.Control.Format = Localize.NumberFormat_Meter;
+            var propLOD = renderGroup.AddFloatField(Localize.Settings_LODDistanceProp, PropLODDistance, 0f);
+            propLOD.Control.Format = Localize.NumberFormat_Meter;
+            var treeLOD = renderGroup.AddFloatField(Localize.Settings_LODDistanceTree, TreeLODDistance, 0f);
+            treeLOD.Control.Format = Localize.NumberFormat_Meter;
 
 
-            var displayAndUsageGroup = helper.AddGroup(Localize.Settings_DisplayAndUsage);
+            var displayAndUsageGroup = helper.AddOptionsGroup(Localize.Settings_DisplayAndUsage);
 
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
-            AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_ApplyMarkingsFromAssets, ApplyMarkingFromAssets);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_RailUnderMarking, RailUnderMarking);
-            AddLabel(displayAndUsageGroup, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
-            AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_LevelCrossingUnderMarking, LevelCrossingUnderMarking);
-            AddLabel(displayAndUsageGroup, Localize.Settings_RailUnderMarkingWarning, 0.8f, new Color32(255, 68, 68, 255), 25);
-            AddLabel(displayAndUsageGroup, Localize.Settings_ApplyAfterRestart, 0.8f, new Color32(255, 215, 81, 255), 25);
+            LabelSettingsItem label = null;
+            displayAndUsageGroup.AddToggle(Localize.Settings_LoadMarkingAssets, LoadMarkingAssets);
+            label = displayAndUsageGroup.AddInfoLabel(Localize.Settings_ApplyAfterRestart.AddColor(new Color32(255, 215, 81, 255)), 0.8f);
+            label.LabelItem.processMarkup = true;
+
+            var warning = $"{Localize.Settings_RailUnderMarkingWarning.AddColor(new Color32(255, 68, 68, 255))}\n{Localize.Settings_ApplyAfterRestart.AddColor(new Color32(255, 215, 81, 255))}";
+
+            displayAndUsageGroup.AddToggle(Localize.Settings_ApplyMarkingsFromAssets, ApplyMarkingFromAssets);
+            displayAndUsageGroup.AddToggle(Localize.Settings_RailUnderMarking, RailUnderMarking);
+            label = displayAndUsageGroup.AddLabel(warning, 0.8f);
+            label.LabelItem.processMarkup = true;
+
+            displayAndUsageGroup.AddToggle(Localize.Settings_LevelCrossingUnderMarking, LevelCrossingUnderMarking);
+            label = displayAndUsageGroup.AddInfoLabel(warning, 0.8f);
+            label.LabelItem.processMarkup = true;
+
             AddToolButton<IntersectionMarkingTool, NodeMarkingButton>(displayAndUsageGroup);
-            undergroundOptions = AddCheckboxPanel(displayAndUsageGroup, Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, IntersectionMarkingTool.EnterUndergroundShortcut, IntersectionMarkingTool.ExitUndergroundShortcut) });
-            AddCheckBox(displayAndUsageGroup, string.Format(Localize.Setting_HoldToMovePoint, LocalizeExtension.Ctrl), HoldCtrlToMovePoint);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_CollapseRules, CollapseRules);
-            AddCheckBox(displayAndUsageGroup, CommonLocalize.Settings_ShowTooltips, ShowToolTip);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_ShowPaneltips, ShowPanelTip);
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_HideStreetName, HideStreetName);
 
-            UIPanel intensityField = null;
-            AddCheckBox(displayAndUsageGroup, Localize.Settings_IlluminationAtNight, IlluminationAtNight, OnIlluminationChanged);
-            intensityField = AddIntField(displayAndUsageGroup, Localize.Settings_IlluminationIntensity, IlluminationIntensity, 10, 1, 30, padding: 25);
-            OnIlluminationChanged();
+            undergroundOptions = displayAndUsageGroup.AddTogglePanel(Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, IntersectionMarkingTool.EnterUndergroundShortcut, IntersectionMarkingTool.ExitUndergroundShortcut) });
+            displayAndUsageGroup.AddToggle(string.Format(Localize.Setting_HoldToMovePoint, LocalizeExtension.Ctrl), HoldCtrlToMovePoint);
+            var autoCollapse = displayAndUsageGroup.AddToggle(Localize.Settings_AutoCollapseItemsPanel, AutoCollapseItemsPanel);
+            autoCollapse.Control.OnStateChanged += OnChanged;
+            displayAndUsageGroup.AddToggle(Localize.Settings_CollapseRules, CollapseRules);
+            displayAndUsageGroup.AddToggle(CommonLocalize.Settings_ShowTooltips, ShowToolTip);
+            displayAndUsageGroup.AddToggle(Localize.Settings_ShowPaneltips, ShowPanelTip);
+            displayAndUsageGroup.AddToggle(Localize.Settings_HideStreetName, HideStreetName);
+
+            IntSettingsItem intensityField = null;
+            var illuminationToggle = displayAndUsageGroup.AddToggle(Localize.Settings_IlluminationAtNight, IlluminationAtNight);
+            illuminationToggle.Control.OnStateChanged += OnIlluminationChanged;
+            intensityField = displayAndUsageGroup.AddIntField(Localize.Settings_IlluminationIntensity, IlluminationIntensity, 1, 30);
+            OnIlluminationChanged(IlluminationAtNight);
 
 
-            var gameplayGroup = helper.AddGroup(Localize.Settings_Gameplay);
+            var gameplayGroup = helper.AddOptionsGroup(Localize.Settings_Gameplay);
 
-            AddCheckboxPanel(gameplayGroup, Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
-            AddCheckBox(gameplayGroup, Localize.Settings_QuickRuleSetup, QuickRuleSetup);
-            AddCheckBox(gameplayGroup, Localize.Settings_CreateLaneEdgeLines, CreateLaneEdgeLines);
-            AddCheckBox(gameplayGroup, Localize.Settings_QuickBorderSetup, QuickBorderSetup);
-            AddCheckBox(gameplayGroup, Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
-            AddCheckBox(gameplayGroup, Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
-            AddCheckboxPanel(gameplayGroup, Localize.Settings_AutoApplyPasting, AutoApplyPasting, AutoApplyPastingType, new string[] { Localize.Settings_AutoApplyPastingDirectOnly, Localize.Settings_AutoApplyPastingDirectAndInvert });
+            gameplayGroup.AddTogglePanel(Localize.Settings_ShowDeleteWarnings, DeleteWarnings, DeleteWarningsType, new string[] { Localize.Settings_ShowDeleteWarningsAlways, Localize.Settings_ShowDeleteWarningsOnlyDependences });
+            gameplayGroup.AddToggle(Localize.Settings_QuickRuleSetup, QuickRuleSetup);
+            gameplayGroup.AddToggle(Localize.Settings_CreateLaneEdgeLines, CreateLaneEdgeLines);
+            gameplayGroup.AddToggle(Localize.Settings_QuickBorderSetup, QuickBorderSetup);
+            gameplayGroup.AddToggle(Localize.Settings_CutLineByCrosswalk, CutLineByCrosswalk);
+            gameplayGroup.AddToggle(Localize.Settings_DontCutBorderByCrosswalk, NotCutBordersByCrosswalk);
+            gameplayGroup.AddTogglePanel(Localize.Settings_AutoApplyPasting, AutoApplyPasting, AutoApplyPastingType, new string[] { Localize.Settings_AutoApplyPastingDirectOnly, Localize.Settings_AutoApplyPastingDirectAndInvert });
 
-            void OnIlluminationChanged()
-            {
-                intensityField.isVisible = IlluminationAtNight;
-            }
+            void OnIlluminationChanged(bool value) => intensityField.isVisible = value;
+            static void OnChanged(bool value) => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
         }
-        private void AddGrouping(UIAdvancedHelper helper)
+        private void AddGrouping(UIComponent helper)
         {
-            var group = helper.AddGroup(Localize.Settings_Groupings);
+            var group = helper.AddOptionsGroup(Localize.Settings_Groupings);
 
-            AddCheckBox(group, Localize.Settings_GroupPoints, GroupPoints, OnChanged);
-            AddCheckBox(group, Localize.Settings_GroupLines, GroupLines, OnChanged);
-            AddCheckboxPanel(group, Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnChanged);
-            AddCheckBox(group, Localize.Settings_GroupPresets, GroupPresets, OnChanged);
-            AddCheckboxPanel(group, Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
+            var groupPointToggle = group.AddToggle(Localize.Settings_GroupPoints, GroupPoints, OnChanged);
 
-            static void OnChanged() => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
+            var groupLineToggle = group.AddToggle(Localize.Settings_GroupLines, GroupLines, OnChanged);
+
+            group.AddTogglePanel(Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnChanged);
+
+            var groupPresetToggle = group.AddToggle(Localize.Settings_GroupPresets, GroupPresets, OnChanged);
+
+            group.AddTogglePanel(Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
+
+            static void OnChanged(bool value) => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
         }
-        private void AddSorting(UIAdvancedHelper helper)
+        private void AddSorting(UIComponent helper)
         {
-            var group = helper.AddGroup(Localize.Settings_Sortings);
+            var group = helper.AddOptionsGroup(Localize.Settings_Sortings);
 
-            AddCheckboxPanel(group, Localize.Settings_SortPresetType, SortPresetsType, new string[] { Localize.Settings_SortPresetByRoadCount, Localize.Settings_SortPresetByNames }, OnChanged);
-            AddCheckboxPanel(group, Localize.Settings_SortTemplateType, SortTemplatesType, new string[] { Localize.Settings_SortTemplateByAuthor, Localize.Settings_SortTemplateByType, Localize.Settings_SortTemplateByNames }, OnChanged);
-            AddCheckboxPanel(group, Localize.Settings_SortApplyType, SortApplyType, new string[] { Localize.Settings_SortApplyByAuthor, Localize.Settings_SortApplyByType, Localize.Settings_SortApplyByNames });
-            AddCheckBox(group, Localize.Settings_SortApplyDefaultFirst, DefaultTemlatesFirst);
+            group.AddTogglePanel(Localize.Settings_SortPresetType, SortPresetsType, new string[] { Localize.Settings_SortPresetByRoadCount, Localize.Settings_SortPresetByNames }, OnChanged);
+            group.AddTogglePanel(Localize.Settings_SortTemplateType, SortTemplatesType, new string[] { Localize.Settings_SortTemplateByAuthor, Localize.Settings_SortTemplateByType, Localize.Settings_SortTemplateByNames }, OnChanged);
+            group.AddTogglePanel(Localize.Settings_SortApplyType, SortApplyType, new string[] { Localize.Settings_SortApplyByAuthor, Localize.Settings_SortApplyByType, Localize.Settings_SortApplyByNames });
+            group.AddToggle(Localize.Settings_SortApplyDefaultFirst, DefaultTemlatesFirst);
 
 
-            static void OnChanged() => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
+            static void OnChanged(int state) => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
         }
-        private void AddOther(UIAdvancedHelper helper)
+        private void AddOther(UIComponent helper)
         {
-            var group = helper.AddGroup(Localize.Setting_Others);
-            var button = AddButton(group, Localize.Settings_InvertChevrons, InvertChevrons, 400);
+            var group = helper.AddOptionsGroup(Localize.Setting_Others);
+            var button = group.AddButtonPanel().AddButton(Localize.Settings_InvertChevrons, InvertChevrons, 400);
 
             static void InvertChevrons()
             {
-                for(int i = 0; i < NetManager.MAX_NODE_COUNT; i+= 1)
+                for (int i = 0; i < NetManager.MAX_NODE_COUNT; i += 1)
                 {
-                    if(SingletonManager<NodeMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                    if (SingletonManager<NodeMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
                     {
-                        foreach(var filler in marking.Fillers)
+                        foreach (var filler in marking.Fillers)
                         {
-                            if(filler.Style.Value is ChevronFillerStyle chevron)
+                            if (filler.Style.Value is ChevronFillerStyle chevron)
                                 chevron.Invert.Value = !chevron.Invert;
                         }
                     }
@@ -230,74 +252,96 @@ namespace IMT
         #endregion
 
         #region KEYMAPPING
-        private void AddKeyMapping(UIAdvancedHelper helper, OptionPanelWithLabelData undergroundOptions)
+        private void AddKeyMapping(UIComponent helper, OptionPanelWithLabelData undergroundOptions)
         {
-            var group = helper.AddGroup(CommonLocalize.Settings_Shortcuts);
-            var keymappings = AddKeyMappingPanel(group);
-            keymappings.AddKeymapping(IntersectionMarkingTool.ActivationShortcut);
-            foreach (var shortcut in IntersectionMarkingTool.ToolShortcuts)
-                keymappings.AddKeymapping(shortcut);
+            var group = helper.AddOptionsGroup(CommonLocalize.Settings_Shortcuts);
 
-            keymappings.BindingChanged += OnBindingChanged;
+            group.AddKeyMappingButton(IntersectionMarkingTool.ActivationShortcut);
+            foreach (var shortcut in IntersectionMarkingTool.ToolShortcuts)
+            {
+                var shortcutItem = group.AddKeyMappingButton(shortcut);
+                shortcutItem.BindingChanged += OnBindingChanged;
+            }
+
             void OnBindingChanged(Shortcut shortcut)
             {
                 if (shortcut == IntersectionMarkingTool.EnterUndergroundShortcut || shortcut == IntersectionMarkingTool.ExitUndergroundShortcut)
                     undergroundOptions.checkBoxes[1].label.text = string.Format(Localize.Settings_ToggleUndergroundButtons, IntersectionMarkingTool.EnterUndergroundShortcut, IntersectionMarkingTool.ExitUndergroundShortcut);
             }
 
-            AddModifier<RegularLineModifierPanel>(helper, Localize.Settings_RegularLinesModifier);
-            AddModifier<StopLineModifierPanel>(helper, Localize.Settings_StopLinesModifier);
-            AddModifier<CrosswalkModifierPanel>(helper, Localize.Settings_CrosswalksModifier);
-            AddModifier<FillerModifierPanel>(helper, Localize.Settings_FillersModifier);
+            AddModifier<RegularLineStyle.RegularLineType>(helper, Localize.Settings_RegularLinesModifier);
+            AddModifier<StopLineStyle.StopLineType>(helper, Localize.Settings_StopLinesModifier);
+            AddModifier<BaseCrosswalkStyle.CrosswalkType>(helper, Localize.Settings_CrosswalksModifier);
+            AddModifier<BaseFillerStyle.FillerType>(helper, Localize.Settings_FillersModifier);
         }
-        private void AddModifier<PanelType>(UIAdvancedHelper helper, string title)
-            where PanelType : StyleModifierPanel
+        private void AddModifier<StyleType>(UIComponent helper, string title)
+            where StyleType : Enum
         {
-            var panel = helper.AddGroup(title).self as UIPanel;
-            var modifier = panel.gameObject.AddComponent<PanelType>();
-            modifier.OnModifierChanged += ModifierChanged;
+            var group = helper.AddOptionsGroup(title);
 
-            static void ModifierChanged(Style.StyleType style, StyleModifier value) => IntersectionMarkingTool.StylesModifier[style].value = (int)value;
+            var items = new Dictionary<Style.StyleType, StyleModifierSettingsItem>();
+            foreach (var styleRaw in EnumExtension.GetEnumValues<StyleType>(v => true))
+            {
+                var style = styleRaw.ToEnum<Style.StyleType, StyleType>();
+                var item = group.AddUIComponent<StyleModifierSettingsItem>();
+                item.Label = style.Description();
+                item.Style = style;
+                item.OnModifierChanged += ModifierChanged;
+
+                items[style] = item;
+            }
+
+            void ModifierChanged(Style.StyleType style, StyleModifier value)
+            {
+                if (value != StyleModifier.NotSet)
+                {
+                    foreach (var pair in items)
+                    {
+                        if (pair.Key != style && pair.Value.Value == value)
+                            pair.Value.Value = StyleModifier.NotSet;
+                    }
+                }
+            }
         }
 
         #endregion
 
         #region BACKUP
-        private void AddBackupMarking(UIAdvancedHelper helper)
+        private void AddBackupMarking(UIComponent helper)
         {
             if (!Utility.InGame)
                 return;
 
-            var group = helper.AddGroup(Localize.Settings_BackupMarking);
+            var group = helper.AddOptionsGroup(Localize.Settings_BackupMarking);
 
             AddDeleteAll(group, Localize.Settings_DeleteMarkingButton, Localize.Settings_DeleteMarkingCaption, $"{Localize.Settings_DeleteMarkingMessage}\n{IntersectionMarkingToolMessageBox.CantUndone}", () => MarkingManager.Clear());
             AddDump(group, Localize.Settings_DumpMarkingButton, Localize.Settings_DumpMarkingCaption, Loader.DumpMarkingData);
             AddRestore<ImportMarkingMessageBox>(group, Localize.Settings_RestoreMarkingButton, Localize.Settings_RestoreMarkingCaption, $"{Localize.Settings_RestoreMarkingMessage}\n{IntersectionMarkingToolMessageBox.CantUndone}");
         }
-        private void AddBackupStyleTemplates(UIAdvancedHelper helper)
+        private void AddBackupStyleTemplates(UIComponent helper)
         {
-            var group = helper.AddGroup(Localize.Settings_BackupTemplates);
+            var group = helper.AddOptionsGroup(Localize.Settings_BackupTemplates);
 
             AddDeleteAll(group, Localize.Settings_DeleteTemplatesButton, Localize.Settings_DeleteTemplatesCaption, $"{Localize.Settings_DeleteTemplatesMessage}\n{IntersectionMarkingToolMessageBox.CantUndone}", () => SingletonManager<StyleTemplateManager>.Instance.DeleteAll());
             AddDump(group, Localize.Settings_DumpTemplatesButton, Localize.Settings_DumpTemplatesCaption, Loader.DumpStyleTemplatesData);
             AddRestore<ImportStyleTemplatesMessageBox>(group, Localize.Settings_RestoreTemplatesButton, Localize.Settings_RestoreTemplatesCaption, $"{Localize.Settings_RestoreTemplatesMessage}\n{IntersectionMarkingToolMessageBox.CantUndone}");
         }
 
-        private void AddBackupIntersectionTemplates(UIAdvancedHelper helper)
+        private void AddBackupIntersectionTemplates(UIComponent helper)
         {
-            var group = helper.AddGroup(Localize.Settings_BackupPresets);
+            var group = helper.AddOptionsGroup(Localize.Settings_BackupPresets);
 
             AddDeleteAll(group, Localize.Settings_DeletePresetsButton, Localize.Settings_DeletePresetsCaption, $"{Localize.Settings_DeletePresetsMessage}\n{IntersectionMarkingToolMessageBox.CantUndone}", () => SingletonManager<IntersectionTemplateManager>.Instance.DeleteAll());
             AddDump(group, Localize.Settings_DumpPresetsButton, Localize.Settings_DumpPresetsCaption, Loader.DumpIntersectionTemplatesData);
             AddRestore<ImportIntersectionTemplatesMessageBox>(group, Localize.Settings_RestorePresetsButton, Localize.Settings_RestorePresetsCaption, $"{Localize.Settings_RestorePresetsMessage}\n{IntersectionMarkingToolMessageBox.CantUndone}");
         }
 
-        private void AddDeleteAll(UIHelper group, string buttonText, string caption, string message, Action process)
+        private void AddDeleteAll(UIComponent group, string buttonText, string caption, string message, Action process)
         {
-            var button = AddButton(group, buttonText, Click, 600);
-            button.color = new Color32(255, 40, 40, 255);
-            button.hoveredColor = new Color32(224, 40, 40, 255);
-            button.pressedColor = new Color32(192, 40, 40, 255);
+            var button = group.AddButtonPanel().AddButton(buttonText, Click, 600);
+            button.color = new Color32(179, 45, 45, 255);
+            button.hoveredColor = new Color32(153, 38, 38, 255);
+            button.pressedColor = new Color32(128, 32, 32, 255);
             button.focusedColor = button.color;
 
             void Click()
@@ -314,9 +358,9 @@ namespace IMT
             }
         }
         private delegate bool Dump(out string path);
-        private void AddDump(UIHelper group, string buttonText, string caption, Dump dump)
+        private void AddDump(UIComponent group, string buttonText, string caption, Dump dump)
         {
-            AddButton(group, buttonText, Click, 600);
+            group.AddButtonPanel().AddButton(buttonText, Click, 600);
 
             void Click()
             {
@@ -346,10 +390,10 @@ namespace IMT
                 }
             }
         }
-        private void AddRestore<Modal>(UIHelper group, string buttonText, string caption, string message)
+        private void AddRestore<Modal>(UIComponent group, string buttonText, string caption, string message)
             where Modal : ImportMessageBox
         {
-            AddButton(group, buttonText, Click, 600);
+            group.AddButtonPanel().AddButton(buttonText, Click, 600);
 
             void Click()
             {
@@ -369,21 +413,21 @@ namespace IMT
         public static SavedFloat IlluminationDelta { get; } = new SavedFloat(nameof(IlluminationDelta), SettingsFile, 1f, true);
         public static SavedInt ShowFillerTriangulation { get; } = new SavedInt(nameof(ShowFillerTriangulation), SettingsFile, 0, true);
 
-        private void AddDebug(UIAdvancedHelper helper)
+        private void AddDebug(UIComponent helper)
         {
-            var overlayGroup = helper.AddGroup("Selection overlay");
+            var overlayGroup = helper.AddOptionsGroup("Selection overlay");
 
             Selection.AddAlphaBlendOverlay(overlayGroup);
             Selection.AddRenderOverlayCentre(overlayGroup);
             Selection.AddRenderOverlayBorders(overlayGroup);
             Selection.AddBorderOverlayWidth(overlayGroup);
 
-            var groupOther = helper.AddGroup("Nodes");
-            AddCheckBox(groupOther, "Show debug properties", ShowDebugProperties);
-            AddCheckBox(groupOther, "Show node contour", ShowNodeContour);
-            AddFloatField(groupOther, "Delta", IlluminationDelta, 1f);
+            var groupOther = helper.AddOptionsGroup("Nodes");
+            groupOther.AddToggle("Show debug properties", ShowDebugProperties);
+            groupOther.AddToggle("Show node contour", ShowNodeContour);
+            groupOther.AddFloatField("Delta", IlluminationDelta, 0f, 10f);
 
-            AddCheckboxPanel(groupOther, "Show filler triangulation", ShowFillerTriangulation, new string[] { "Dont show", "Original", "Splitted", "Both" });
+            groupOther.AddTogglePanel("Show filler triangulation", ShowFillerTriangulation, new string[] { "Dont show", "Original", "Splitted", "Both" });
         }
 
         private static IDataProviderV1 DataProvider { get; } = API.Helper.GetProvider("Test");
@@ -398,34 +442,36 @@ namespace IMT
         public static SavedString FillerPoints { get; } = new SavedString(nameof(FillerPoints), SettingsFile, string.Empty, true);
         public static SavedString FillerStyle { get; } = new SavedString(nameof(FillerStyle), SettingsFile, string.Empty, true);
 
-        private UILabel AddingLineResult { get; set; }
-        private UILabel AddingFillerResult { get; set; }
+        private LabelSettingsItem AddingLineResult { get; set; }
+        private LabelSettingsItem AddingFillerResult { get; set; }
 
-        private void AddAPI(UIAdvancedHelper helper)
+        private void AddAPI(UIComponent helper)
         {
-            var lineGroup = helper.AddGroup("Add line to node");
+            var lineGroup = helper.AddOptionsGroup("Add line to node");
 
-            AddIntField(lineGroup, "Node id", NodeId, 1, 1, NetManager.MAX_NODE_COUNT);
-            AddIntField(lineGroup, "Start segment id", StartSegmentEnterId, 1, 1, NetManager.MAX_SEGMENT_COUNT);
-            AddIntField(lineGroup, "End segment id", EndSegmentEnterId, 1, 1, NetManager.MAX_SEGMENT_COUNT);
-            AddIntField(lineGroup, "Start point index", StartPointIndex, 1, 1, 255);
-            AddIntField(lineGroup, "End point index", EndPointIndex, 1, 1, 255);
-            AddCheckboxPanel(lineGroup, "Lane type", LineType, new string[] { "Regular", "Stop", "Normal", "Lane", "Crosswalk" });
-            AddStringField(lineGroup, "Style", LineStyle);
+            lineGroup.AddIntField("Node id", NodeId, 1, NetManager.MAX_NODE_COUNT);
+            lineGroup.AddIntField("Start segment id", StartSegmentEnterId, 1, NetManager.MAX_SEGMENT_COUNT);
+            lineGroup.AddIntField("End segment id", EndSegmentEnterId, 1, NetManager.MAX_SEGMENT_COUNT);
+            lineGroup.AddIntField("Start point index", StartPointIndex, 1, 255);
+            lineGroup.AddIntField("End point index", EndPointIndex, 1, 255);
+            lineGroup.AddTogglePanel("Lane type", LineType, new string[] { "Regular", "Stop", "Normal", "Lane", "Crosswalk" });
+            lineGroup.AddStringField("Style", LineStyle);
 
-            AddButton(lineGroup, "Create line", CreateLine);
-            AddButton(lineGroup, "Remove line", RemoveLine);
-            AddButton(lineGroup, "Exist line", ExistLine);
-            AddingLineResult = AddLabel(lineGroup, string.Empty);
+            var lineButtonItem = lineGroup.AddButtonPanel();
+            lineButtonItem.AddButton("Create line", CreateLine, 150f);
+            lineButtonItem.AddButton("Remove line", RemoveLine, 150f);
+            lineButtonItem.AddButton("Exist line", ExistLine, 150f);
+            AddingLineResult = lineGroup.AddLabel(string.Empty);
 
 
-            var fillerGroup = helper.AddGroup("Add filler to node");
-            AddIntField(fillerGroup, "Node id", NodeId, 1, 1, NetManager.MAX_NODE_COUNT);
-            AddStringField(fillerGroup, "Points", FillerPoints);
-            AddStringField(fillerGroup, "Style", FillerStyle);
+            var fillerGroup = helper.AddOptionsGroup("Add filler to node");
+            fillerGroup.AddIntField("Node id", NodeId, 1, NetManager.MAX_NODE_COUNT);
+            fillerGroup.AddStringField("Points", FillerPoints);
+            fillerGroup.AddStringField("Style", FillerStyle);
 
-            AddButton(fillerGroup, "Create filler", CreateFiller);
-            AddingFillerResult = AddLabel(fillerGroup, string.Empty);
+            var fillerButtonItem = fillerGroup.AddButtonPanel();
+            fillerButtonItem.AddButton("Create filler", CreateFiller, 150f);
+            AddingFillerResult = fillerGroup.AddLabel(string.Empty);
         }
 
         private void CreateLine()
@@ -445,7 +491,7 @@ namespace IMT
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var style = provider.SolidLineStyle;
                             var line = nodeMarking.AddRegularLine(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Line {line} was added";
+                            AddingLineResult.Label = $"Line {line} was added";
                         }
                         break;
                     case 1:
@@ -454,7 +500,7 @@ namespace IMT
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var style = provider.SolidStopLineStyle;
                             var line = nodeMarking.AddStopLine(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Line {line} was added";
+                            AddingLineResult.Label = $"Line {line} was added";
                         }
                         break;
                     case 2:
@@ -463,7 +509,7 @@ namespace IMT
                             endEnter.GetNormalPoint((byte)StartPointIndex.value, out var endPoint);
                             var style = provider.SolidLineStyle;
                             var line = nodeMarking.AddNormalLine(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Line {line} was added";
+                            AddingLineResult.Label = $"Line {line} was added";
                         }
                         break;
                     case 3:
@@ -473,7 +519,7 @@ namespace IMT
                             var style = provider.PropLineStyle;
                             style.Prefab = PrefabCollection<PropInfo>.FindLoaded("Flowerpot 04");
                             var line = nodeMarking.AddLaneLine(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Line {line} was added";
+                            AddingLineResult.Label = $"Line {line} was added";
                         }
                         break;
                     case 4:
@@ -482,14 +528,14 @@ namespace IMT
                             endEnter.GetCrosswalkPoint((byte)EndPointIndex.value, out var endPoint);
                             var style = provider.ZebraCrosswalkStyle;
                             var crosswalk = nodeMarking.AddCrosswalk(startPoint, endPoint, style);
-                            AddingLineResult.text = $"Crosswalk {crosswalk} was added";
+                            AddingLineResult.Label = $"Crosswalk {crosswalk} was added";
                         }
                         break;
                 }
             }
             catch (Exception ex)
             {
-                AddingLineResult.text = ex.Message;
+                AddingLineResult.Label = ex.Message;
             }
         }
         private void RemoveLine()
@@ -508,7 +554,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var removed = nodeMarking.RemoveRegularLine(startPoint, endPoint);
-                            AddingLineResult.text = removed ? "Line was removed" : "Line does not exist";
+                            AddingLineResult.Label = removed ? "Line was removed" : "Line does not exist";
                         }
                         break;
                     case 1:
@@ -516,7 +562,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var removed = nodeMarking.RemoveStopLine(startPoint, endPoint);
-                            AddingLineResult.text = removed ? "Line was removed" : "Line does not exist";
+                            AddingLineResult.Label = removed ? "Line was removed" : "Line does not exist";
                         }
                         break;
                     case 2:
@@ -524,7 +570,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetNormalPoint((byte)StartPointIndex.value, out var endPoint);
                             var removed = nodeMarking.RemoveNormalLine(startPoint, endPoint);
-                            AddingLineResult.text = removed ? "Line was removed" : "Line does not exist";
+                            AddingLineResult.Label = removed ? "Line was removed" : "Line does not exist";
                         }
                         break;
                     case 3:
@@ -532,7 +578,7 @@ namespace IMT
                             startEnter.GetLanePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetLanePoint((byte)EndPointIndex.value, out var endPoint);
                             var removed = nodeMarking.RemoveLaneLine(startPoint, endPoint);
-                            AddingLineResult.text = removed ? "Line was removed" : "Line does not exist";
+                            AddingLineResult.Label = removed ? "Line was removed" : "Line does not exist";
                         }
                         break;
                     case 4:
@@ -540,14 +586,14 @@ namespace IMT
                             startEnter.GetCrosswalkPoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetCrosswalkPoint((byte)EndPointIndex.value, out var endPoint);
                             var removed = nodeMarking.RemoveCrosswalk(startPoint, endPoint);
-                            AddingLineResult.text = removed ? "Crosswalk was removed" : "Crosswalk does not exist";
+                            AddingLineResult.Label = removed ? "Crosswalk was removed" : "Crosswalk does not exist";
                         }
                         break;
                 }
             }
             catch (Exception ex)
             {
-                AddingLineResult.text = ex.Message;
+                AddingLineResult.Label = ex.Message;
             }
         }
         private void ExistLine()
@@ -566,7 +612,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var exist = nodeMarking.RegularLineExist(startPoint, endPoint);
-                            AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
+                            AddingLineResult.Label = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
                     case 1:
@@ -574,7 +620,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetEntrancePoint((byte)EndPointIndex.value, out var endPoint);
                             var exist = nodeMarking.StopLineExist(startPoint, endPoint);
-                            AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
+                            AddingLineResult.Label = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
                     case 2:
@@ -582,7 +628,7 @@ namespace IMT
                             startEnter.GetEntrancePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetNormalPoint((byte)EndPointIndex.value, out var endPoint);
                             var exist = nodeMarking.NormalLineExist(startPoint, endPoint);
-                            AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
+                            AddingLineResult.Label = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
                     case 3:
@@ -590,7 +636,7 @@ namespace IMT
                             startEnter.GetLanePoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetLanePoint((byte)EndPointIndex.value, out var endPoint);
                             var exist = nodeMarking.LaneLineExist(startPoint, endPoint);
-                            AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
+                            AddingLineResult.Label = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
                     case 4:
@@ -598,14 +644,14 @@ namespace IMT
                             startEnter.GetCrosswalkPoint((byte)StartPointIndex.value, out var startPoint);
                             endEnter.GetCrosswalkPoint((byte)EndPointIndex.value, out var endPoint);
                             var exist = nodeMarking.CrosswalkExist(startPoint, endPoint);
-                            AddingLineResult.text = exist ? "Line exist" : "Line does not exist";
+                            AddingLineResult.Label = exist ? "Line exist" : "Line does not exist";
                         }
                         break;
                 }
             }
             catch (Exception ex)
             {
-                AddingLineResult.text = ex.Message;
+                AddingLineResult.Label = ex.Message;
             }
         }
         private void CreateFiller()
@@ -634,11 +680,11 @@ namespace IMT
                 var style = provider.SolidFillerStyle;
                 style.Color = new Color32(255, 0, 0, 255);
                 var filler = nodeMarking.AddFiller(points, style);
-                AddingFillerResult.text = $"Filler {filler} was added";
+                AddingFillerResult.Label = $"Filler {filler} was added";
             }
             catch (Exception ex)
             {
-                AddingFillerResult.text = ex.Message;
+                AddingFillerResult.Label = ex.Message;
             }
         }
 #endif

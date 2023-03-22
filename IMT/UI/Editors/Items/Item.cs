@@ -10,71 +10,73 @@ namespace IMT.UI.Editors
 {
     public abstract class EditItemBase : CustomUIButton
     {
-        public virtual Color32 NormalColor => new Color32(29, 58, 77, 255);
-        public virtual Color32 HoveredColor => new Color32(44, 87, 112, 255);
-        public virtual Color32 PressedColor => new Color32(51, 100, 132, 255);
-        public virtual Color32 FocusColor => new Color32(171, 185, 196, 255);
-        public virtual Color32 TextColor => Color.white;
+        public virtual ModsCommon.UI.SpriteSet BackgroundSprites => new ModsCommon.UI.SpriteSet(string.Empty);
+        public virtual ColorSet BackgroundColors => new ColorSet();
 
-        public bool IsSelect
+        public virtual ModsCommon.UI.SpriteSet ForegroundSprites => new ModsCommon.UI.SpriteSet()
         {
-            get => state == ButtonState.Focused;
-            set
-            {
-                if (IsSelect != value)
-                {
-                    state = value ? ButtonState.Focused : ButtonState.Normal;
-                    SetColors();
-                }
-            }
-        }
+            normal = string.Empty,
+            hovered = CommonTextures.PanelSmall,
+            pressed = CommonTextures.PanelSmall,
+            focused = string.Empty,
+            disabled = CommonTextures.PanelSmall,
+        };
+        public virtual ModsCommon.UI.SpriteSet ForegroundSelectedSprites => new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
 
-        protected CustomUILabel Label { get; set; }
-        public string Text
+        public virtual ColorSet ForegroundColors => new ColorSet()
         {
-            get => Label.text;
-            set => Label.text = value;
-        }
+            normal = null,
+            hovered = IMTColors.ItemHovered,
+            pressed = IMTColors.ItemPressed,
+            focused = null,
+            disabled = null,
+        };
+        public virtual ColorSet ForegroundSelectedColors => new ColorSet(IMTColors.ItemFocused);
+
+        public virtual ColorSet TextColor => new ColorSet(Color.white);
+        public virtual ColorSet TextSelectedColor => new ColorSet(Color.black);
+        public virtual RectOffset SpritePadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 2, 2) : new RectOffset(CollapsedPadding, CollapsedPadding, 2, 2);
+        protected static int TextPadding => 5;
+        public static int ExpandedPadding => 8;
+        public static int CollapsedPadding => 4;
+
+        protected virtual float TextScale => 0.65f;
+        protected virtual float DefaultHeight => 32f;
 
         public EditItemBase()
         {
-            AddLable();
-
+            m_Size = new Vector2(100f, DefaultHeight);
             clipChildren = true;
-            atlas = IMTTextures.Atlas;
-            normalBgSprite = IMTTextures.ListItemBackground;
-            height = 25;
+            atlas = CommonTextures.Atlas;
+
+            textHorizontalAlignment = UIHorizontalAlignment.Left;
+            textVerticalAlignment = UIVerticalAlignment.Middle;
+            wordWrap = true;
         }
 
-        private void AddLable()
-        {
-            Label = AddUIComponent<CustomUILabel>();
-            Label.textAlignment = UIHorizontalAlignment.Left;
-            Label.verticalAlignment = UIVerticalAlignment.Middle;
-            Label.autoSize = false;
-            Label.textScale = 0.55f;
-            Label.padding = new RectOffset(0, 0, 3, 0);
-            Label.autoHeight = true;
-            Label.wordWrap = true;
-            Label.eventSizeChanged += (c, v) => LabelSizeChanged();
-        }
         public virtual void DeInit()
         {
-            IsSelect = false;
+            isSelected = false;
             isVisible = true;
         }
 
-        protected virtual void SetColors()
+        protected virtual void SetStyle()
         {
-            color = NormalColor;
-            hoveredColor = HoveredColor;
-            pressedColor = PressedColor;
-            focusedColor = FocusColor;
-            disabledColor = NormalColor;
+            SetBgSprite(BackgroundSprites);
+            SetBgColor(BackgroundColors);
 
-            Label.textColor = TextColor;
+            SetFgSprite(ForegroundSprites);
+            SetFgColor(ForegroundColors);
+            SetTextColor(TextColor);
+
+            SetSelectedFgSprite(ForegroundSelectedSprites);
+            SetSelectedFgColor(ForegroundSelectedColors);
+            SetSelectedTextColor(TextSelectedColor);
+
+            textScale = TextScale;
+            textPadding.top = 5;
+            spritePadding = SpritePadding;
         }
-        protected abstract void LabelSizeChanged();
     }
     public abstract class EditItem<ObjectType> : EditItemBase, IReusable
         where ObjectType : class, IDeletable
@@ -84,41 +86,40 @@ namespace IMT.UI.Editors
         bool IReusable.InCache { get; set; }
 
         protected Editor Editor { get; private set; }
-        private ObjectType _object;
-        public ObjectType Object
+        private ObjectType editObject;
+        public ObjectType EditObject
         {
-            get => _object;
+            get => editObject;
             private set
             {
-                _object = value;
-                if (_object != null)
+                editObject = value;
+                if (editObject != null)
                     Refresh();
             }
         }
-        protected bool Inited => Object != null;
+        protected bool Inited => EditObject != null;
         protected CustomUIButton DeleteButton { get; set; }
         public virtual bool ShowDelete => true;
 
-        public EditItem()
+        public EditItem() : base()
         {
             AddDeleteButton();
         }
 
-        public virtual void Init(Editor editor, ObjectType editObject)
+        public virtual void Init(Editor editor, ObjectType editObject, bool inGroup)
         {
             Editor = editor;
-            Object = editObject;
+            EditObject = editObject;
 
             Refresh();
-            OnSizeChanged();
         }
         public override void DeInit()
         {
             base.DeInit();
 
-            Text = string.Empty;
+            text = string.Empty;
             Editor = null;
-            Object = null;
+            EditObject = null;
             OnDelete = null;
         }
 
@@ -137,9 +138,9 @@ namespace IMT.UI.Editors
 
         public virtual void Refresh()
         {
-            DeleteButton.isVisible = ShowDelete;
-            Text = Object.ToString();
-            SetColors();
+            DeleteButton.isVisible = ShowDelete && width >= 120f;
+            text = EditObject.ToString();
+            SetStyle();
         }
     }
     public abstract class EditItem<ObjectType, IconType> : EditItem<ObjectType>
@@ -149,40 +150,61 @@ namespace IMT.UI.Editors
         public virtual bool ShowIcon => true;
         protected IconType Icon { get; set; }
 
-        public EditItem()
+        public EditItem() : base()
         {
             Icon = AddUIComponent<IconType>();
         }
-        public override void Init(Editor editor, ObjectType editObject)
+        public override void Init(Editor editor, ObjectType editObject, bool inGroup)
         {
             Icon.isVisible = ShowIcon;
-            base.Init(editor, editObject);
+            if (inGroup)
+            {
+                m_Size.y = DefaultHeight + SpritePadding.vertical;
+            }
+            else
+            {
+                m_Size.y = DefaultHeight;
+            }
+            base.Init(editor, editObject, inGroup);
+        }
+        public override void Refresh()
+        {
+            base.Refresh();
+
+            if (ShowIcon)
+            {
+                var iconSize = 19;
+                Icon.size = new Vector2(iconSize, iconSize);
+
+                var centerOffset = Mathf.FloorToInt(width - spritePadding.vertical - iconSize) / 2;
+                var fixOffset = TextPadding;
+                var widthOffset = spritePadding.left + Math.Min(fixOffset, centerOffset);
+                var heightOffset = spritePadding.top + (height - spritePadding.vertical - iconSize) * 0.5f;
+                Icon.relativePosition = new Vector3(widthOffset, heightOffset);
+                textPadding.left = centerOffset <= 1.5f * fixOffset ? 50 : spritePadding.left + fixOffset + iconSize + TextPadding;
+            }
+            else
+                textPadding.left = TextPadding + spritePadding.left;
+
+            if (ShowDelete && width >= 120f)
+            {
+                var buttonSize = 15;
+                DeleteButton.isVisible = true;
+                DeleteButton.size = new Vector2(buttonSize, buttonSize);
+                DeleteButton.relativePosition = new Vector2(size.x - buttonSize - 7 - spritePadding.right, spritePadding.top + (height - spritePadding.vertical - buttonSize) * 0.5f);
+                textPadding.right = 19 + spritePadding.right;
+            }
+            else
+            {
+                DeleteButton.isVisible = false;
+                textPadding.right = TextPadding + spritePadding.right;
+            }
         }
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
-
-            if (!Inited)
-                return;
-
-            var labelWidth = size.x;
-            if (ShowIcon)
-            {
-                Icon.size = new Vector2(size.y - 6, size.y - 6);
-                Icon.relativePosition = new Vector2(3, 3);
-                labelWidth -= 25;
-            }
-
-            if (ShowDelete)
-            {
-                DeleteButton.size = new Vector2(size.y - 10, size.y - 10);
-                DeleteButton.relativePosition = new Vector2(size.x - (size.y - 5), 5);
-                labelWidth -= 19;
-            }
-
-            Label.size = new Vector2(ShowIcon ? labelWidth : labelWidth - 3, size.y);
+            Refresh();
         }
-        protected override void LabelSizeChanged() => Label.relativePosition = new Vector3(ShowIcon ? size.y : 3, (size.y - Label.height) * 0.5f);
     }
 
     public class ColorIcon : CustomUISprite

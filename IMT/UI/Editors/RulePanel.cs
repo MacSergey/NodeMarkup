@@ -32,7 +32,7 @@ namespace IMT.UI.Editors
         public MarkingLineRawRule Rule { get; private set; }
 
         private RuleHeaderPanel Header { get; set; }
-        private ErrorTextProperty Error { get; set; }
+        private LabelProperty Error { get; set; }
         private WarningTextProperty Warning { get; set; }
         public RuleEdgeSelectPropertyPanel From { get; private set; }
         public RuleEdgeSelectPropertyPanel To { get; private set; }
@@ -40,14 +40,14 @@ namespace IMT.UI.Editors
 
         object IPropertyEditor.EditObject => Rule;
         bool IPropertyEditor.IsTemplate => false;
-        UIAutoLayoutPanel IPropertyContainer.MainPanel => this;
+        CustomUIPanel IPropertyContainer.MainPanel => this;
         Style IPropertyContainer.Style => Rule.Style;
         Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
 
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
         Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
-        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
+        List<BaseEditorPanel> IPropertyContainer.StyleProperties { get; } = new List<BaseEditorPanel>();
 
         public RulePanel() { }
         public void Init(LinesEditor editor, MarkingLineRawRule rule, bool isExpand)
@@ -56,7 +56,7 @@ namespace IMT.UI.Editors
             Rule = rule;
             this.isExpand = isExpand;
 
-            StopLayout();
+            PauseLayout(() =>
             {
                 AddHeader();
                 AddError();
@@ -69,8 +69,7 @@ namespace IMT.UI.Editors
                 AddStyleProperties();
 
                 Refresh();
-            }
-            StartLayout();
+            });
 
             base.Init();
         }
@@ -98,7 +97,7 @@ namespace IMT.UI.Editors
         private void AddHeader()
         {
             Header = ComponentPool.Get<RuleHeaderPanel>(this, nameof(Header));
-            Header.Init(this, Rule.Style.Value.Type, OnSelectTemplate, Line.IsSupportRules);
+            Header.Init(this, Rule.Style.Value.Type, Line.IsSupportRules);
             Header.OnDelete += () => Editor.DeleteRule(this);
             Header.OnSaveTemplate += OnSaveTemplate;
             Header.OnCopy += CopyStyle;
@@ -108,6 +107,9 @@ namespace IMT.UI.Editors
             Header.OnApplySameStyle += ApplyStyleSameStyle;
             Header.OnApplySameType += ApplyStyleSameType;
             Header.OnExpand += Expand;
+            Header.OnSelectTemplate += OnSelectTemplate;
+            Header.OnSelectTemplatePopupOpen += SelectTemplatePopupOpen;
+            Header.OnSelectTemplatePopupClose += SelectTemplatePopupClose;
         }
 
         private void Expand()
@@ -120,8 +122,9 @@ namespace IMT.UI.Editors
 
         private void AddError()
         {
-            Error = ComponentPool.Get<ErrorTextProperty>(this, nameof(Error));
+            Error = ComponentPool.Get<LabelProperty>(this, nameof(Error));
             Error.Text = IMT.Localize.LineEditor_RuleOverlappedWarning;
+            Error.BackgroundColor = ComponentStyle.ErrorFocusedColor;
             Error.Init();
         }
         private void AddWarning()
@@ -134,7 +137,7 @@ namespace IMT.UI.Editors
         private RuleEdgeSelectPropertyPanel AddEdgeProperty(EdgePosition position, string name, string text)
         {
             var edgeProperty = ComponentPool.Get<RuleEdgeSelectPropertyPanel>(this, name);
-            edgeProperty.Text = text;
+            edgeProperty.Label = text;
             edgeProperty.Selector.Position = position;
             edgeProperty.Init();
             edgeProperty.OnSelect += OnSelectPanel;
@@ -181,7 +184,7 @@ namespace IMT.UI.Editors
                     return;
             }
 
-            Style.Text = IMT.Localize.Editor_Style;
+            Style.Label = IMT.Localize.Editor_Style;
             Style.Init(StyleSelector);
             Style.UseWheel = true;
             Style.WheelTip = true;
@@ -226,6 +229,9 @@ namespace IMT.UI.Editors
                 IsExpand = true;
             }
         }
+        private void SelectTemplatePopupOpen() => Editor.AvailableContent = false;
+        private void SelectTemplatePopupClose() => Editor.AvailableContent = true;
+
         private void CopyStyle() => Editor.Tool.ToStyleBuffer(Rule.Style.Value.Type.GetGroup(), Rule.Style.Value);
         private void PasteStyle()
         {
@@ -313,14 +319,14 @@ namespace IMT.UI.Editors
         {
             Editor.RefreshEditor();
             AddStyleProperties();
-            Header.Style = Rule.Style.Value.Type;
+            Header.StyleType = Rule.Style.Value.Type;
         }
         public void Refresh()
         {
-            StopLayout();
+            PauseLayout(() =>
             {
                 var error = Rule.IsOverlapped;
-                color = !IsExpand && error ? Colors.Error : NormalColor;
+                color = !IsExpand && error ? ComponentStyle.ErrorFocusedColor : NormalColor;
                 Header.IsExpand = IsExpand;
                 Error.isVisible = IsExpand && error;
                 Warning.isVisible = IsExpand && Settings.ShowPanelTip && !Editor.CanDivide;
@@ -330,8 +336,7 @@ namespace IMT.UI.Editors
 
                 foreach (var category in (this as IPropertyContainer).CategoryItems.Values)
                     category.isVisible = IsExpand;
-            }
-            StartLayout();
+            });
 
             FillEdge(From, FromChanged, Rule.From);
             FillEdge(To, ToChanged, Rule.To);

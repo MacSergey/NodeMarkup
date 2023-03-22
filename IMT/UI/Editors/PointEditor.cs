@@ -19,7 +19,7 @@ namespace IMT.UI.Editors
 #endif
 
         private FloatPropertyPanel Offset { get; set; }
-        private BoolListPropertyPanel Split { get; set; }
+        private BoolPropertyPanel Split { get; set; }
         private FloatPropertyPanel Shift { get; set; }
 
         protected override IEnumerable<MarkingEnterPoint> GetObjects() => Marking.Enters.SelectMany(e => e.EnterPoints);
@@ -27,16 +27,12 @@ namespace IMT.UI.Editors
         {
             base.OnObjectSelect(point);
 
-            TemplatePanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
-            TemplatePanel.StopLayout();
-            FillTemplatePanel(point);
-            TemplatePanel.StartLayout();
+            TemplatePanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
+            TemplatePanel.PauseLayout(() => FillTemplatePanel(point));
             TemplatePanel.Init();
 #if DEBUG
-            DebugPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content);
-            DebugPanel.StopLayout();
-            FillDebugPanel(point);
-            DebugPanel.StartLayout();
+            DebugPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
+            DebugPanel.PauseLayout(() => FillDebugPanel(point));
             DebugPanel.Init();
 #endif
         }
@@ -57,26 +53,26 @@ namespace IMT.UI.Editors
         private void FillDebugPanel(MarkingEnterPoint point)
         {
             var position = ComponentPool.Get<FloatPropertyPanel>(DebugPanel, "Position");
-            position.Text = "Position";
+            position.Label = "Position";
             position.Format = IMT.Localize.NumberFormat_Meter;
             position.EnableControl = false;
             position.Init();
             position.Value = point.GetRelativePosition();
 
             var isInverted = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "isInverted");
-            isInverted.Text = "Is inverted";
+            isInverted.Label = "Is inverted";
             isInverted.EnableControl = false;
             isInverted.Init();
             isInverted.Value = point.Enter.IsLaneInvert.ToString();
 
             var location = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Location");
-            location.Text = "Location";
+            location.Label = "Location";
             location.EnableControl = false;
             location.Init();
             location.Value = point.Source.Location.ToString();
 
             var networkType = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "NetworkType");
-            networkType.Text = "Network type";
+            networkType.Label = "Network type";
             networkType.EnableControl = false;
             networkType.Init();
             networkType.Value = point.Source.NetworkType.ToString();
@@ -86,25 +82,25 @@ namespace IMT.UI.Editors
                 if (source.LeftLane != null)
                 {
                     var index = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Index");
-                    index.Text = "Left Index";
+                    index.Label = "Left Index";
                     index.EnableControl = false;
                     index.Init();
                     index.Value = source.LeftLane.Index.ToString();
 
                     var id = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Id");
-                    id.Text = "Left Id";
+                    id.Label = "Left Id";
                     id.EnableControl = false;
                     id.Init();
                     id.Value = source.LeftLane.LaneId.ToString();
 
                     var pos = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Position");
-                    pos.Text = "Left position";
+                    pos.Label = "Left position";
                     pos.EnableControl = false;
                     pos.Init();
                     pos.Value = source.LeftLane.Position.ToString();
 
                     var width = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Width");
-                    width.Text = "Left half width";
+                    width.Label = "Left half width";
                     width.EnableControl = false;
                     width.Init();
                     width.Value = source.LeftLane.HalfWidth.ToString();
@@ -113,25 +109,25 @@ namespace IMT.UI.Editors
                 if (source.RightLane != null)
                 {
                     var index = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Index");
-                    index.Text = "Right Index";
+                    index.Label = "Right Index";
                     index.EnableControl = false;
                     index.Init();
                     index.Value = source.RightLane.Index.ToString();
 
                     var id = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Id");
-                    id.Text = "Right Id";
+                    id.Label = "Right Id";
                     id.EnableControl = false;
                     id.Init();
                     id.Value = source.RightLane.LaneId.ToString();
 
                     var pos = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Position");
-                    pos.Text = "Right position";
+                    pos.Label = "Right position";
                     pos.EnableControl = false;
                     pos.Init();
                     pos.Value = source.RightLane.Position.ToString();
 
                     var width = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Width");
-                    width.Text = "Right half width";
+                    width.Label = "Right half width";
                     width.EnableControl = false;
                     width.Init();
                     width.Value = source.RightLane.HalfWidth.ToString();
@@ -142,7 +138,7 @@ namespace IMT.UI.Editors
         private void AddOffset(MarkingEnterPoint point)
         {
             Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Offset));
-            Offset.Text = IMT.Localize.PointEditor_Offset;
+            Offset.Label = IMT.Localize.PointEditor_Offset;
             Offset.Format = IMT.Localize.NumberFormat_Meter;
             Offset.UseWheel = true;
             Offset.WheelStep = 0.1f;
@@ -153,16 +149,16 @@ namespace IMT.UI.Editors
         }
         private void AddSplit(MarkingEnterPoint point)
         {
-            Split = ComponentPool.Get<BoolListPropertyPanel>(PropertiesPanel, nameof(Split));
-            Split.Text = IMT.Localize.PointEditor_SplitIntoTwo;
-            Split.Init(IMT.Localize.StyleOption_No, IMT.Localize.StyleOption_Yes);
-            Split.SelectedObject = point.Split;
-            Split.OnSelectObjectChanged += SplitChanged;
+            Split = ComponentPool.Get<BoolPropertyPanel>(PropertiesPanel, nameof(Split));
+            Split.Label = IMT.Localize.PointEditor_SplitIntoTwo;
+            Split.Init();
+            Split.Value = point.Split;
+            Split.OnValueChanged += SplitChanged;
         }
         private void AddShift(MarkingEnterPoint point)
         {
             Shift = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Shift));
-            Shift.Text = IMT.Localize.PointEditor_SplitOffset;
+            Shift.Label = IMT.Localize.PointEditor_SplitOffset;
             Shift.Format = IMT.Localize.NumberFormat_Meter;
             Shift.UseWheel = true;
             Shift.WheelStep = 0.1f;
@@ -177,7 +173,7 @@ namespace IMT.UI.Editors
         private void AddRoad(MarkingEnterPoint point)
         {
             var roadNameProperty = ComponentPool.Get<StringPropertyPanel>(TemplatePanel, "Road");
-            roadNameProperty.Text = IMT.Localize.PointEditor_RoadName;
+            roadNameProperty.Label = IMT.Localize.PointEditor_RoadName;
             roadNameProperty.FieldWidth = 230;
             roadNameProperty.EnableControl = false;
             roadNameProperty.Init();
@@ -254,8 +250,8 @@ namespace IMT.UI.Editors
 
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-            ItemsPanel.HoverGroupObject?.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = 2f });
-            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = 2f });
+            ItemsPanel.HoverGroupObject?.Render(new OverlayData(cameraInfo) { Color = CommonColors.White, Width = 2f });
+            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = CommonColors.White, Width = 2f });
         }
     }
     public class PointsItemsPanel : ItemsGroupPanel<PointItem, MarkingEnterPoint, PointGroup, Entrance>
@@ -273,10 +269,10 @@ namespace IMT.UI.Editors
     public class PointItem : EditItem<MarkingEnterPoint, ColorIcon>
     {
         public override bool ShowDelete => false;
-        public override void Init(Editor editor, MarkingEnterPoint editObject)
+        public override void Init(Editor editor, MarkingEnterPoint editObject, bool inGroup)
         {
-            base.Init(editor, editObject);
-            Icon.InnerColor = Object.Color;
+            base.Init(editor, editObject, inGroup);
+            Icon.InnerColor = EditObject.Color;
         }
     }
     public class PointGroup : EditGroup<Entrance, PointItem, MarkingEnterPoint> { }

@@ -18,35 +18,34 @@ namespace IMT.UI
 
         public string Font
         {
-            get => FontStyleSelector.SelectedObject switch
+            get => FontStyle switch
             {
-                UnityEngine.FontStyle.Bold => $"{FontFamily} Bold",
-                UnityEngine.FontStyle.Italic => $"{FontFamily} Italic",
-                UnityEngine.FontStyle.BoldAndItalic => $"{FontFamily} Bold Italic",
+                FontStyle.Bold => $"{FontFamily} Bold",
+                FontStyle.Italic => $"{FontFamily} Italic",
+                FontStyle.BoldAndItalic => $"{FontFamily} Bold Italic",
                 _ => FontFamily
             };
             set
             {
-                FontFamily = value;
-                Refresh();
-                RefreshFontStyle();
+                if (value.EndsWith("Bold Italic"))
+                    UpdateFont(value.Substring(0, value.Length - "Bold Italic".Length).Trim(), FontStyle.BoldAndItalic);
+                else if (value.EndsWith("Bold"))
+                    UpdateFont(value.Substring(0, value.Length - "Bold".Length).Trim(), FontStyle.Bold);
+                else if (value.EndsWith("Italic"))
+                    UpdateFont(value.Substring(0, value.Length - "Italic".Length).Trim(), FontStyle.Italic);
+                else
+                    UpdateFont(value, FontStyle.Normal);
             }
         }
-        public UnityEngine.FontStyle FontStyle
+        private FontStyle FontStyle
         {
             get => FontStyleSelector.SelectedObject;
             set => FontStyleSelector.SelectedObject = value;
         }
-
-        private string _fontFamily;
-        public string FontFamily
+        private string FontFamily
         {
-            get => _fontFamily;
-            private set
-            {
-                _fontFamily = value;
-                FontSelector.text = value ?? IMT.Localize.StyleOption_DefaultFont;
-            }
+            get => FontFamilySelector.SelectedObject;
+            set => FontFamilySelector.SelectedObject = value;
         }
 
         private float _width = 230f;
@@ -56,72 +55,32 @@ namespace IMT.UI
             set
             {
                 _width = value;
+                FontFamilySelector.PopupWidth = value;
                 SetSize();
             }
         }
 
-        private CustomUIButton FontSelector { get; }
-        private CustomUIButton Button { get; }
+        private FontDropDown FontFamilySelector { get; set; }
+        private FontStyleSegmented FontStyleSelector { get; set; }
 
-        private FontPopup Popup { get; set; }
-        private FontStyleSegmented FontStyleSelector { get; }
-
-        private static IEnumerable<string> AvailableFonts
+        protected override void FillContent()
         {
-            get
-            {
-                yield return null;
-
-                var fonts = TextRenderHelper.InstalledFonts;
-                foreach (var font in fonts.Where(f => !f.EndsWith("Bold") && !f.EndsWith("Italic")))
-                {
-                    yield return font;
-                }
-            }
-        }
-
-        public FontPropertyPanel()
-        {
-            FontSelector = Content.AddUIComponent<CustomUIButton>();
-            FontSelector.atlas = CommonTextures.Atlas;
-            FontSelector.normalBgSprite = CommonTextures.FieldNormal;
-            FontSelector.hoveredBgSprite = CommonTextures.FieldHovered;
-            FontSelector.disabledBgSprite = CommonTextures.FieldDisabled;
-            FontSelector.isInteractive = false;
-            FontSelector.enabled = true;
-            FontSelector.autoSize = false;
-            FontSelector.textHorizontalAlignment = UIHorizontalAlignment.Left;
-            FontSelector.textVerticalAlignment = UIVerticalAlignment.Middle;
-            FontSelector.height = 20;
-            FontSelector.textScale = 0.7f;
-            FontSelector.textPadding = new RectOffset(8, 0, 4, 0);
-            FontSelector.eventClick += ButtonClick;
-            FontSelector.eventSizeChanged += ItemSizeChanged;
-
-            Button = FontSelector.AddUIComponent<CustomUIButton>();
-            Button.atlas = TextureHelper.InGameAtlas;
-            Button.text = string.Empty;
-            Button.size = size;
-            Button.relativePosition = new Vector3(0f, 0f);
-            Button.textVerticalAlignment = UIVerticalAlignment.Middle;
-            Button.textHorizontalAlignment = UIHorizontalAlignment.Left;
-            Button.normalFgSprite = "IconDownArrow";
-            Button.hoveredFgSprite = "IconDownArrowHovered";
-            Button.pressedFgSprite = "IconDownArrowPressed";
-            Button.focusedFgSprite = "IconDownArrow";
-            Button.foregroundSpriteMode = UIForegroundSpriteMode.Scale;
-            Button.horizontalAlignment = UIHorizontalAlignment.Right;
-            Button.verticalAlignment = UIVerticalAlignment.Middle;
-            Button.textScale = 0.8f;
+            FontFamilySelector = Content.AddUIComponent<FontDropDown>();
+            FontFamilySelector.name = nameof(FontFamilySelector);
+            FontFamilySelector.DropDownDefaultStyle();
+            FontFamilySelector.height = 20f;
+            FontFamilySelector.OnSelectObject += FontFamilyChanged;
 
             FontStyleSelector = Content.AddUIComponent<FontStyleSegmented>();
-            FontStyleSelector.StopLayout();
-            FontStyleSelector.AutoButtonSize = false;
-            FontStyleSelector.ButtonWidth = 20f;
-            FontStyleSelector.isVisible = false;
-            FontStyleSelector.StartLayout();
-            FontStyleSelector.OnSelectObjectChanged += FontStyleChanged;
-            FontStyleSelector.eventSizeChanged += ItemSizeChanged;
+            FontStyleSelector.name = nameof(FontStyleSelector);
+            FontStyleSelector.PauseLayout(() =>
+            {
+                FontStyleSelector.AutoButtonSize = false;
+                FontStyleSelector.ButtonWidth = 20f;
+                FontStyleSelector.isVisible = false;
+            });
+            FontStyleSelector.OnSelectObject += FontStyleChanged;
+            FontFamilySelector.PopupWidth = Width;
         }
         public override void DeInit()
         {
@@ -129,183 +88,100 @@ namespace IMT.UI
 
             OnValueChanged = null;
 
+            FontFamilySelector.Clear();
             FontStyleSelector.Clear();
-            FontFamily = string.Empty;
+
             _width = 230f;
         }
-        public override void Update()
+
+        public override void Init() => Init(null);
+        public new void Init(float? height)
         {
-            base.Update();
-            CheckPopup();
+            base.Init(height);
+
+            FontFamilySelector.Clear();
+            FontFamilySelector.AddItem(string.Empty);
+
+            var fonts = TextRenderHelper.InstalledFonts;
+            foreach (var font in fonts.Where(f => !f.EndsWith("Bold") && !f.EndsWith("Italic")))
+                FontFamilySelector.AddItem(font);
         }
 
-        private void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
+        private void FontFamilyChanged(string fontFamily)
         {
-            if (Popup == null)
-                OpenPopup();
-            else
-                ClosePopup();
-        }
-        protected void OpenPopup()
-        {
-            Button.isInteractive = false;
-
-            var root = GetRootContainer();
-            Popup = root.AddUIComponent<FontPopup>();
-            Popup.canFocus = true;
-            Popup.atlas = CommonTextures.Atlas;
-            Popup.backgroundSprite = CommonTextures.FieldHovered;
-            Popup.ItemHover = CommonTextures.FieldNormal;
-            Popup.ItemSelected = CommonTextures.FieldFocused;
-            Popup.EntityHeight = 20f;
-            Popup.MaxVisibleItems = 25;
-            Popup.maximumSize = new Vector2(230f, 700f);
-            Popup.Init(AvailableFonts);
-            Popup.Focus();
-            Popup.SelectedObject = FontFamily;
-
-            Popup.eventKeyDown += OnPopupKeyDown;
-            Popup.eventLeaveFocus += OnPopupLeaveFocus;
-            Popup.OnSelectedChanged += OnFontSelected;
-
-            SetPopupPosition();
-            Popup.parent.eventPositionChanged += SetPopupPosition;
-        }
-
-        public virtual void ClosePopup()
-        {
-            Button.isInteractive = true;
-
-            if (Popup != null)
-            {
-                Popup.eventLeaveFocus -= OnPopupLeaveFocus;
-                Popup.eventKeyDown -= OnPopupKeyDown;
-
-                ComponentPool.Free(Popup);
-                Popup = null;
-            }
-        }
-        private void CheckPopup()
-        {
-            if (Popup == null)
-                return;
-
-            if (!Popup.containsFocus)
-            {
-                ClosePopup();
-                return;
-            }
-
-            if (Input.GetMouseButtonDown(0) && !Popup.Raycast(GetCamera().ScreenPointToRay(Input.mousePosition)))
-            {
-                ClosePopup();
-                return;
-            }
-        }
-        private void OnFontSelected(string font)
-        {
-            Font = font;
+            UpdateFont(fontFamily, FontStyle);
             OnValueChanged?.Invoke(Font);
-            ClosePopup();
         }
-        private void OnPopupLeaveFocus(UIComponent component, UIFocusEventParameter eventParam) => CheckPopup();
-        private void OnPopupKeyDown(UIComponent component, UIKeyEventParameter p)
-        {
-            if (p.keycode == KeyCode.Escape)
-            {
-                ClosePopup();
-                p.Use();
-            }
-        }
-        private void SetPopupPosition(UIComponent component = null, Vector2 value = default)
-        {
-            if (Popup != null)
-            {
-                UIView uiView = Popup.GetUIView();
-                var screen = uiView.GetScreenResolution();
-                var position = Button.absolutePosition + new Vector3(0, Button.height);
-                position.x = MathPos(position.x, Popup.width, screen.x);
-                position.y = MathPos(position.y, Popup.height, screen.y);
-
-                Popup.relativePosition = position - Popup.parent.absolutePosition;
-            }
-
-            static float MathPos(float pos, float size, float screen) => pos + size > screen ? (screen - size < 0 ? 0 : screen - size) : Mathf.Max(pos, 0);
-        }
-
-        private void ItemSizeChanged(UIComponent component, Vector2 value) => Refresh();
-
-        private void FontStyleChanged(UnityEngine.FontStyle style)
+        private void FontStyleChanged(FontStyle style)
         {
             OnValueChanged?.Invoke(Font);
         }
 
-        private void RefreshFontStyle()
+        private void UpdateFont(string fontFamily, FontStyle fontStyle)
         {
-            FontStyleSelector.StopLayout();
+            FontFamily = fontFamily;
 
-            var selectedStyle = FontStyleSelector.SelectedObject;
-            FontStyleSelector.Clear();
-
-            var font = FontFamily;
-            if (string.IsNullOrEmpty(font))
+            FontStyleSelector.PauseLayout(() =>
             {
-                FontStyleSelector.isVisible = false;
-            }
-            else
-            {
-                var styles = new HashSet<UnityEngine.FontStyle>();
-                foreach (var fontName in TextRenderHelper.InstalledFonts.Where(f => f.StartsWith(font)))
-                {
-                    if (fontName.EndsWith("Bold Italic"))
-                        styles.Add(UnityEngine.FontStyle.BoldAndItalic);
-                    else if (fontName.EndsWith("Bold"))
-                        styles.Add(UnityEngine.FontStyle.Bold);
-                    else if (fontName.EndsWith("Italic"))
-                        styles.Add(UnityEngine.FontStyle.Italic);
-                    else
-                        styles.Add(UnityEngine.FontStyle.Normal);
-                }
+                FontStyleSelector.Clear();
 
-                if (styles.Count >= 2)
-                {
-                    FontStyleSelector.isVisible = true;
-
-                    foreach (var style in EnumExtension.GetEnumValues<UnityEngine.FontStyle>())
-                    {
-                        if (styles.Contains(style))
-                        {
-                            var label = style switch
-                            {
-                                UnityEngine.FontStyle.Bold => IMT.Localize.StyleOption_FontStyleBold,
-                                UnityEngine.FontStyle.Italic => IMT.Localize.StyleOption_FontStyleItalic,
-                                UnityEngine.FontStyle.BoldAndItalic => IMT.Localize.StyleOption_FontStyleBoldItalic,
-                                _ => IMT.Localize.StyleOption_FontStyleRegular,
-                            };
-                            var sprite = style switch
-                            {
-                                UnityEngine.FontStyle.Bold => IMTTextures.BoldButtonIcon,
-                                UnityEngine.FontStyle.Italic => IMTTextures.ItalicButtonIcon,
-                                UnityEngine.FontStyle.BoldAndItalic => IMTTextures.BoldItalicButtonIcon,
-                                _ => IMTTextures.RegularButtonIcon,
-                            };
-
-                            FontStyleSelector.AddItem(style, new OptionData(label, IMTTextures.Atlas, sprite));
-                        }
-
-                        if (styles.Contains(selectedStyle))
-                            FontStyleSelector.SelectedObject = selectedStyle;
-                        else
-                            FontStyleSelector.SelectedObject = UnityEngine.FontStyle.Normal;
-                    }
-                }
-                else
+                if (string.IsNullOrEmpty(fontFamily))
                 {
                     FontStyleSelector.isVisible = false;
                 }
-            }
+                else
+                {
+                    var styles = new HashSet<FontStyle>();
+                    foreach (var fontName in TextRenderHelper.InstalledFonts.Where(f => f.StartsWith(fontFamily)))
+                    {
+                        if (fontName.EndsWith("Bold Italic"))
+                            styles.Add(FontStyle.BoldAndItalic);
+                        else if (fontName.EndsWith("Bold"))
+                            styles.Add(FontStyle.Bold);
+                        else if (fontName.EndsWith("Italic"))
+                            styles.Add(FontStyle.Italic);
+                        else
+                            styles.Add(FontStyle.Normal);
+                    }
 
-            FontStyleSelector.StartLayout();
+                    if (styles.Count >= 2)
+                    {
+                        FontStyleSelector.isVisible = true;
+
+                        foreach (var style in EnumExtension.GetEnumValues<FontStyle>())
+                        {
+                            if (styles.Contains(style))
+                            {
+                                var label = style switch
+                                {
+                                    FontStyle.Bold => IMT.Localize.StyleOption_FontStyleBold,
+                                    FontStyle.Italic => IMT.Localize.StyleOption_FontStyleItalic,
+                                    FontStyle.BoldAndItalic => IMT.Localize.StyleOption_FontStyleBoldItalic,
+                                    _ => IMT.Localize.StyleOption_FontStyleRegular,
+                                };
+                                var sprite = style switch
+                                {
+                                    FontStyle.Bold => IMTTextures.BoldButtonIcon,
+                                    FontStyle.Italic => IMTTextures.ItalicButtonIcon,
+                                    FontStyle.BoldAndItalic => IMTTextures.BoldItalicButtonIcon,
+                                    _ => IMTTextures.RegularButtonIcon,
+                                };
+
+                                FontStyleSelector.AddItem(style, new OptionData(label, IMTTextures.Atlas, sprite));
+                            }
+
+                            if (styles.Contains(fontStyle))
+                                FontStyle = fontStyle;
+                            else
+                                FontStyle = FontStyle.Normal;
+                        }
+                    }
+                    else
+                    {
+                        FontStyleSelector.isVisible = false;
+                    }
+                }
+            });
 
             SetSize();
         }
@@ -317,50 +193,75 @@ namespace IMT.UI
         }
         private void SetSize()
         {
-            if (FontSelector != null)
+            if (FontFamilySelector != null)
             {
-                if (FontStyleSelector.isVisible)
-                    FontSelector.width = Math.Max(100, Width - FontStyleSelector.width - Content.autoLayoutPadding.horizontal);
-                else
-                    FontSelector.width = Width;
-
-                FontSelector.height = height - 10f;
+                Content.PauseLayout(() =>
+                {
+                    if (FontStyleSelector.isVisible)
+                        FontFamilySelector.width = Mathf.Max(100f, Width - FontStyleSelector.width - Content.Padding.horizontal);
+                    else
+                        FontFamilySelector.width = Width;
+                });
             }
-            if (Button != null)
-                Button.size = FontSelector.size;
+        }
+    }
+
+    public class FontDropDown : SelectItemDropDown<string, FontEntity, FontPopup>
+    {
+        public float PopupWidth { get; set; }
+        protected override Func<string, bool> Selector => null;
+        protected override Func<string, string, int> Sorter => (nameA, nameB) => nameA.CompareTo(nameB);
+
+        public FontDropDown() : base()
+        {
+            Entity.TextScale = 0.7f;
         }
 
-        public class FontStyleSegmented : UIOnceSegmented<UnityEngine.FontStyle> { }
-
-        public class FontPopup : SearchPopup<string, FontEntity>
+        protected override void SetPopupStyle() => Popup.PopupDefaultStyle(20f);
+        protected override void InitPopup()
         {
-            protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
-            protected override string GetName(string value) => value ?? IMT.Localize.StyleOption_DefaultFont;
+            Popup.MaximumSize = new Vector2(PopupWidth, 700f);
+            Popup.width = PopupWidth;
+            Popup.MaxVisibleItems = 25;
+            base.InitPopup();
         }
-        public class FontEntity : PopupEntity<string>
+    }
+    public class FontStyleSegmented : UIOnceSegmented<FontStyle> { }
+
+    public class FontPopup : SearchPopup<string, FontEntity>
+    {
+        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
+        protected override string GetName(string value) => value ?? IMT.Localize.StyleOption_DefaultFont;
+        protected override void SetEntityStyle(FontEntity entity) => entity.EntityStyle<string, FontEntity>();
+    }
+    public class FontEntity : PopupEntity<string>
+    {
+        private CustomUILabel Label { get; }
+        public float TextScale
         {
-            private CustomUILabel Label { get; }
+            get => Label.textScale;
+            set => Label.textScale = value;
+        }
 
-            public override string Object
-            {
-                get => Label.text;
-                protected set => Label.text = value ?? IMT.Localize.StyleOption_DefaultFont;
-            }
+        public override void SetObject(int index, string font, bool selected)
+        {
+            base.SetObject(index, font, selected);
+            Label.text = string.IsNullOrEmpty(font) ? IMT.Localize.StyleOption_DefaultFont : font;
+        }
 
-            public FontEntity()
-            {
-                Label = AddUIComponent<CustomUILabel>();
-                Label.autoSize = false;
-                Label.textAlignment = UIHorizontalAlignment.Left;
-                Label.verticalAlignment = UIVerticalAlignment.Middle;
-                Label.padding = new RectOffset(5, 0, 3, 0);
-                Label.textScale = 0.9f;
-            }
-            protected override void OnSizeChanged()
-            {
-                base.OnSizeChanged();
-                Label.size = size;
-            }
+        public FontEntity()
+        {
+            Label = AddUIComponent<CustomUILabel>();
+            Label.autoSize = false;
+            Label.textAlignment = UIHorizontalAlignment.Left;
+            Label.verticalAlignment = UIVerticalAlignment.Middle;
+            Label.padding = new RectOffset(8, 0, 3, 0);
+            Label.textScale = 0.9f;
+        }
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            Label.size = size;
         }
     }
 }

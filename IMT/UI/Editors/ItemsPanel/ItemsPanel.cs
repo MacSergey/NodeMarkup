@@ -3,9 +3,11 @@ using IMT.Manager;
 using IMT.Tools;
 using ModsCommon;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace IMT.UI.Editors
 {
@@ -27,7 +29,7 @@ namespace IMT.UI.Editors
         public void SelectObject(ObjectType editObject);
         public void RefreshSelectedItem();
     }
-    public abstract class ItemsPanel<ItemType, ObjectType> : AdvancedScrollablePanel, IItemPanel<ObjectType>, IComparer<ObjectType>
+    public abstract class ItemsPanel<ItemType, ObjectType> : CustomUIScrollablePanel, IItemPanel<ObjectType>, IComparer<ObjectType>
         where ItemType : EditItem<ObjectType>
         where ObjectType : class, IDeletable
     {
@@ -43,31 +45,40 @@ namespace IMT.UI.Editors
         protected IntersectionMarkingTool Tool => SingletonTool<IntersectionMarkingTool>.Instance;
         protected Editor Editor { get; private set; }
 
-        private ItemType _selectItem;
+        private ItemType selectItem;
         protected ItemType SelectItem
         {
-            get => _selectItem;
+            get => selectItem;
             set
             {
-                if (_selectItem != null)
-                    _selectItem.IsSelect = false;
+                if (selectItem != null)
+                    selectItem.isSelected = false;
 
-                _selectItem = value;
+                selectItem = value;
 
-                if (_selectItem != null)
-                    _selectItem.IsSelect = true;
+                if (selectItem != null)
+                    selectItem.isSelected = true;
 
-                OnSelectClick?.Invoke(_selectItem?.Object);
+                OnSelectClick?.Invoke(selectItem?.EditObject);
             }
         }
-        public ObjectType SelectedObject => SelectItem?.Object;
+        public ObjectType SelectedObject => SelectItem?.EditObject;
 
         protected ItemType HoverItem { get; set; }
-        public ObjectType HoverObject => HoverItem?.Object;
-        public virtual bool IsEmpty => !Content.components.Any(c => c is ItemType);
+        public ObjectType HoverObject => HoverItem?.EditObject;
+        public virtual bool IsEmpty => !components.Any(c => c is ItemType);
 
         #endregion
 
+        public ItemsPanel()
+        {
+            autoLayout = AutoLayout.Vertical;
+            autoChildrenHorizontally = AutoLayoutChildren.Fill;
+            scrollOrientation = UIOrientation.Vertical;
+
+            Scrollbar.DefaultStyle();
+            scrollbarSize = 12f;
+        }
         public void Init(Editor editor)
         {
             Editor = editor;
@@ -77,15 +88,14 @@ namespace IMT.UI.Editors
 
         public void SetObjects(IEnumerable<ObjectType> editObjects)
         {
-            StopLayout();
+            PauseLayout(() =>
+            {
+                Clear();
 
-            Clear();
-
-            var objects = editObjects.OrderBy(o => o, this).ToArray();
-            foreach (var editObject in objects)
-                AddObjectImpl(editObject, -1);
-
-            StartLayout();
+                var objects = editObjects.OrderBy(o => o, this).ToArray();
+                foreach (var editObject in objects)
+                    AddObjectImpl(editObject, -1);
+            });
         }
         public void AddObject(ObjectType editObject) => AddObjectImpl(editObject);
         protected virtual ItemType AddObjectImpl(ObjectType editObject)
@@ -93,26 +103,19 @@ namespace IMT.UI.Editors
             var index = FindIndex(editObject);
             return AddObjectImpl(editObject, index >= 0 ? index : ~index);
         }
-        protected virtual ItemType AddObjectImpl(ObjectType editObject, int zOrder)
+        protected virtual ItemType AddObjectImpl(ObjectType editObject, int zOrder) => GetItem(editObject, false, this, zOrder);
+        protected ItemType GetItem<ParentType>(ObjectType editObject, bool inGroup, ParentType container, int zOrder = -1)
+            where ParentType : UIComponent, IAutoLayoutPanel
         {
-            var item = GetItem(Content, zOrder);
-            InitItem(item, editObject);
-            return item;
-        }
-        protected virtual ItemType GetItem(UIComponent parent, int zOrder = -1)
-        {
-            var newItem = ComponentPool.Get<ItemType>(parent, zOrder: zOrder);
-            newItem.width = parent.width;
-            return newItem;
-        }
-
-        protected void InitItem(ItemType item, ObjectType editObject)
-        {
-            item.Init(Editor, editObject);
+            var item = ComponentPool.Get<ItemType>(container, zOrder: zOrder);
+            item.Init(Editor, editObject, inGroup);
+            item.width = container.ItemSize.x;
             item.eventClick += ItemClick;
             item.OnDelete += ItemDelete;
             item.eventMouseEnter += ItemHover;
             item.eventMouseLeave += ItemLeave;
+
+            return item;
         }
 
         #endregion
@@ -137,7 +140,7 @@ namespace IMT.UI.Editors
         }
         protected virtual void DeleteSelectedItem(ItemType item)
         {
-            var index = Math.Min(Content.components.IndexOf(item), Content.components.Count - 2);
+            var index = Math.Min(components.IndexOf(item), components.Count - 2);
             DeleteItem(item);
             Select(FindItem(index));
         }
@@ -155,10 +158,12 @@ namespace IMT.UI.Editors
             HoverItem = null;
             SelectItem = null;
 
-            var components = Content.components.ToArray();
+            var components = this.components.ToArray();
             foreach (var component in components)
             {
-                if (component is ItemType item)
+                if (component == Scrollbar)
+                    continue;
+                else if (component is ItemType item)
                     DeleteItem(item);
                 else
                     ComponentPool.Free(component);
@@ -192,14 +197,6 @@ namespace IMT.UI.Editors
             SelectItem = item;
             ScrollTo(item);
         }
-        public override void Update()
-        {
-            //WAIT FPS BOOSTER FIX 
-            //base.Update();
-
-            if (SelectItem is ItemType item)
-                item.IsSelect = true;
-        }
 
         #endregion
 
@@ -213,7 +210,7 @@ namespace IMT.UI.Editors
                 ItemClick(item);
             }
         }
-        private void ItemDelete(EditItem<ObjectType> item) => OnDeleteClick?.Invoke(item.Object);
+        private void ItemDelete(EditItem<ObjectType> item) => OnDeleteClick?.Invoke(item.EditObject);
         private void ItemHover(UIComponent component, UIMouseEventParameter eventParam)
         {
             if (component is ItemType item)
@@ -239,25 +236,31 @@ namespace IMT.UI.Editors
 
         #region ADDITIONAL
 
-        protected virtual ItemType FindItem(ObjectType editObject) => Content.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
-        protected virtual ItemType FindItem(int index) => FindItem<ItemType>(index, Content);
+        protected virtual ItemType FindItem(ObjectType editObject) => components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.EditObject, editObject));
+        protected virtual ItemType FindItem(int index) => FindItem<ItemType>(index, this);
         protected T FindItem<T>(int index, UIComponent parent) where T : UIComponent => index >= 0 && parent.components.Count > index ? parent.components[index] as T : null;
 
-        protected virtual int FindIndex(ObjectType editObject) => FindIndex(editObject, Content);
-        protected int FindIndex(ObjectType editObject, UIComponent parent) => Array.BinarySearch(parent.components.OfType<ItemType>().Select(i => i.Object).ToArray(), editObject, this);
+        protected virtual int FindIndex(ObjectType editObject) => FindIndex(editObject, this);
+        protected int FindIndex(ObjectType editObject, UIComponent parent) => Array.BinarySearch(parent.components.OfType<ItemType>().Select(i => i.EditObject).ToArray(), editObject, this);
 
         public virtual void ScrollTo(ItemType item)
         {
-            Content.ScrollToBottom();
-            Content.ScrollIntoViewRecursive(item);
+            ScrollToEnd();
+            ScrollIntoView(item);
         }
         public void RefreshSelectedItem() => SelectItem?.Refresh();
         public virtual void RefreshItems()
         {
-            foreach (var item in Content.components.OfType<ItemType>())
+            foreach (var item in components.OfType<ItemType>())
                 item.Refresh();
         }
         public abstract int Compare(ObjectType x, ObjectType y);
+
+        protected override void OnSizeChanged()
+        {
+            base.OnSizeChanged();
+            ShowScroll = width >= 100f;
+        }
 
         #endregion
     }

@@ -122,13 +122,13 @@ namespace IMT.UI
 
                 foreach (var bound in PointsBounds.Values)
                 {
-                    bound.center.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.White, Width = PointSize + 0.1f });
-                    bound.center.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.White, Width = PointSize - 0.05f });
+                    bound.center.RenderCircle(new OverlayData(cameraInfo) { Color = CommonColors.White, Width = PointSize + 0.1f });
+                    bound.center.RenderCircle(new OverlayData(cameraInfo) { Color = CommonColors.White, Width = PointSize - 0.05f });
                     bound.center.RenderCircle(new OverlayData(cameraInfo) { Color = Color, Width = PointSize });
                 }
 
                 if (IsHoverPoint)
-                    PointsBounds[HoverPoint].center.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = PointSize + Space });
+                    PointsBounds[HoverPoint].center.RenderCircle(new OverlayData(cameraInfo) { Color = CommonColors.Hover, Width = PointSize + Space });
             }
             else
                 Position.RenderCircle(new OverlayData(cameraInfo) { Color = Color, Width = PointSize });
@@ -162,8 +162,8 @@ namespace IMT.UI
                 PointsBounds.Add(point, pointBounds);
             }
         }
-        protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => RenderGroup(new OverlayData(cameraInfo) { Color = Colors.White, Width = Width - 0.43f, AlphaBlend = false });
-        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => RenderGroup(new OverlayData(cameraInfo) { Color = Colors.Blue, Width = Width });
+        protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => RenderGroup(new OverlayData(cameraInfo) { Color = CommonColors.White, Width = Width - 0.43f, AlphaBlend = false });
+        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => RenderGroup(new OverlayData(cameraInfo) { Color = CommonColors.Blue, Width = Width });
         private void RenderGroup(OverlayData data)
         {
             if (Points.Count > 2)
@@ -193,8 +193,8 @@ namespace IMT.UI
             }
         }
 
-        protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(new OverlayData(cameraInfo) { Color = Colors.White, Width = LeaveBounds.Size - 0.43f, AlphaBlend = false });
-        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(new OverlayData(cameraInfo) { Color = Colors.Blue, Width = LeaveBounds.Size });
+        protected override void RenderGroupBG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(new OverlayData(cameraInfo) { Color = CommonColors.White, Width = LeaveBounds.Size - 0.43f, AlphaBlend = false });
+        protected override void RenderGroupFG(RenderManager.CameraInfo cameraInfo) => LeaveBounds.Render(new OverlayData(cameraInfo) { Color = CommonColors.Blue, Width = LeaveBounds.Size });
 
         protected override bool OnLeave(Ray ray) => LeaveBounds.IntersectRay(ray);
     }

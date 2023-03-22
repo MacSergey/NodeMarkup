@@ -41,7 +41,7 @@ namespace IMT.Utilities
         public float Width => size.z;
         public float Angle => rotation.eulerAngles.z * Mathf.Deg2Rad;
 
-        private DecalData(MaterialType materialType, MarkingLOD lod, Vector3 position, float angle, Color32 color, Vector3 size, TextureData textureData, EffectData effectData, params Vector2[] points)
+        public DecalData(MaterialType materialType, MarkingLOD lod, Vector3 position, float angle, Vector3 size, Color32 color,  TextureData textureData, EffectData effectData, params Vector2[] points)
         {
             LOD = lod;
             this.material = RenderHelper.MaterialLib[materialType];
@@ -66,18 +66,18 @@ namespace IMT.Utilities
 
         public DecalData(MaterialType materialType, MarkingLOD lod, Vector3 position, float angle, float length, float width, Color32 color, TextureData textureData, EffectData effectData)
         {
-            this = new DecalData(materialType, lod, position, angle, color, new Vector3(length, DefaultHeight, width), textureData, effectData);
+            this = new DecalData(materialType, lod, position, angle, new Vector3(length, DefaultHeight, width), color, textureData, effectData);
         }
         public DecalData(MaterialType materialType, MarkingLOD lod, Vector3 pos, Vector3 dir, float length, float width, Color32 color, TextureData textureData, EffectData effectData)
         {
-            this = new DecalData(materialType, lod, pos, dir.AbsoluteAngle(), color, new Vector3(length, DefaultHeight, width), textureData, effectData);
+            this = new DecalData(materialType, lod, pos, dir.AbsoluteAngle(), new Vector3(length, DefaultHeight, width), color, textureData, effectData);
         }
         public DecalData(MaterialType materialType, MarkingLOD lod, Vector3 startPos, Vector3 endPos, float width, Color32 color, TextureData textureData, EffectData effectData)
         {
             var pos = (startPos + endPos) * 0.5f;
             var angle = (endPos - startPos).AbsoluteAngle();
             var length = (endPos - startPos).magnitude;
-            this = new DecalData(materialType, lod, pos, angle, color, new Vector3(length, DefaultHeight, width), textureData, effectData);
+            this = new DecalData(materialType, lod, pos, angle, new Vector3(length, DefaultHeight, width), color, textureData, effectData);
         }
 
         public DecalData(DecalType type, MarkingLOD lod, Vector3[] points, Color32 color, TextureData textureData, EffectData effectData)
@@ -112,7 +112,7 @@ namespace IMT.Utilities
                 _ => MaterialType.Dash,
             };
 
-            this = new DecalData(materialType, lod, position, 0f, color, size, textureData, effectData, pointUVs);
+            this = new DecalData(materialType, lod, position, 0f, size, color, textureData, effectData, pointUVs);
         }
         public DecalData(DecalType type, MarkingLOD lod, Area area, Color32 color, TextureData textureData, EffectData effectData)
         {
@@ -139,7 +139,7 @@ namespace IMT.Utilities
                 _ => MaterialType.Dash,
             };
 
-            this = new DecalData(materialType, lod, position, 0f, color, size, textureData, effectData, pointUVs);
+            this = new DecalData(materialType, lod, position, 0f, size, color, textureData, effectData, pointUVs);
         }
 
         public static MaterialType GetFillerMaterial(int points)

@@ -7,12 +7,16 @@ using System.Linq;
 
 namespace IMT.UI.Editors
 {
-    public abstract class ItemsGroupPanel<ItemType, ObjectType, GroupItemType, GroupType> : ItemsPanel<ItemType, ObjectType>, IComparer<GroupType>
+    public interface IGroupItemPanel
+    {
+        bool GroupingEnable { get; }
+    }
+    public abstract class ItemsGroupPanel<ItemType, ObjectType, GroupItemType, GroupType> : ItemsPanel<ItemType, ObjectType>, IGroupItemPanel, IComparer<GroupType>
         where ItemType : EditItem<ObjectType>
         where ObjectType : class, IDeletable
         where GroupItemType : EditGroup<GroupType, ItemType, ObjectType>
     {
-        public override bool IsEmpty => GroupingEnable ? !Content.components.Any(c => c is GroupItemType) : base.IsEmpty;
+        public override bool IsEmpty => GroupingEnable ? !components.Any(c => c is GroupItemType) : base.IsEmpty;
         public abstract bool GroupingEnable { get; }
         private Dictionary<GroupType, GroupItemType> Groups { get; } = new Dictionary<GroupType, GroupItemType>();
         protected GroupItemType HoverGroup { get; set; }
@@ -34,8 +38,7 @@ namespace IMT.UI.Editors
             if (GroupingEnable)
             {
                 var group = GetGroup(editObject);
-                var item = GetItem(group, zOrder);
-                InitItem(item, editObject);
+                var item = GetItem(editObject, true, group, zOrder);
                 item.isVisible = group.IsExpand;
                 return item;
             }
@@ -44,14 +47,14 @@ namespace IMT.UI.Editors
         }
         protected override void DeleteSelectedItem(ItemType item)
         {
-            var group = SelectGroup(item.Object);
+            var group = SelectGroup(item.EditObject);
             var index = Math.Min(item.parent.components.IndexOf(item), item.parent.components.Count - 2);
             DeleteItem(item);
             Select(FindItem(index, group));
         }
         protected override void DeleteItem(ItemType item)
         {
-            var group = GetGroup(item.Object, false);
+            var group = GetGroup(item.EditObject, false);
 
             base.DeleteItem(item);
 
@@ -70,7 +73,7 @@ namespace IMT.UI.Editors
                 if (item == null)
                     return;
 
-                var group = SelectGroup(item.Object);
+                var group = SelectGroup(item.EditObject);
                 Groups[group].IsExpand = true;
             }
 
@@ -93,12 +96,16 @@ namespace IMT.UI.Editors
             var groupType = SelectGroup(editObject);
             if (!Groups.TryGetValue(groupType, out GroupItemType group) && add)
             {
-                var index = FindIndex(groupType, Content);
-                group = ComponentPool.Get<GroupItemType>(Content, zOrder: index >= 0 ? index : ~index);
+                var index = FindIndex(groupType, this);
+                group = ComponentPool.Get<GroupItemType>(this, zOrder: index >= 0 ? index : ~index);
                 group.Init(groupType, GroupName(groupType));
-                group.width = Content.width;
+                group.width = this.width;
                 group.Item.eventMouseEnter += GroupHover;
                 group.Item.eventMouseLeave += GroupLeave;
+
+                if (IsLayoutSuspended)
+                    group.StopLayout();
+
                 Groups[groupType] = group;
             }
             return group;
@@ -117,7 +124,7 @@ namespace IMT.UI.Editors
             {
                 var groupKey = SelectGroup(editObject);
                 if (Groups.TryGetValue(groupKey, out GroupItemType group))
-                    return group.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.Object, editObject));
+                    return group.components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.EditObject, editObject));
                 else
                     return null;
             }
@@ -136,7 +143,7 @@ namespace IMT.UI.Editors
         {
             if (GroupingEnable)
             {
-                foreach (var group in Content.components.OfType<GroupItemType>())
+                foreach (var group in components.OfType<GroupItemType>())
                     group.Refresh();
             }
             else
@@ -144,6 +151,31 @@ namespace IMT.UI.Editors
         }
 
         public abstract int Compare(GroupType x, GroupType y);
+
+        public override void PauseLayout(Action action, bool layoutNow = true, bool force = false)
+        {
+            foreach (var group in Groups.Values)
+                group.StopLayout();
+
+            base.PauseLayout(action, layoutNow, force);
+
+            foreach (var group in Groups.Values)
+                group.StartLayout(layoutNow, force);
+        }
+        public override void StopLayout()
+        {
+            foreach (var group in Groups.Values)
+                group.StopLayout();
+
+            base.StopLayout();
+        }
+        public override void StartLayout(bool layoutNow = true, bool force = false)
+        {
+            foreach (var group in Groups.Values)
+                group.StartLayout(layoutNow, force);
+
+            base.StartLayout(layoutNow, force);
+        }
 
         #endregion
     }

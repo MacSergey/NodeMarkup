@@ -148,7 +148,7 @@ namespace IMT.Manager
 
         public new void Render(OverlayData data)
         {
-            Crosswalk.Render(new OverlayData(data.CameraInfo) { Color = Colors.Hover });
+            Crosswalk.Render(new OverlayData(data.CameraInfo) { Color = CommonColors.Hover });
             CrosswalkLine.Render(data);
 
             switch (Border)

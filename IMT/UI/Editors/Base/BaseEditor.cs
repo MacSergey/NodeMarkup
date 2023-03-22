@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework;
+using ColossalFramework.UI;
 using IMT.Manager;
 using IMT.Tools;
 using IMT.UI.Panel;
@@ -54,31 +55,66 @@ namespace IMT.UI.Editors
         public virtual bool OnEscape() => false;
     }
     public abstract class Editor<ItemsPanelType, ObjectType> : Editor, IEditor<ObjectType>
-        where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<ObjectType>
+        where ItemsPanelType : CustomUIScrollablePanel, IItemPanel<ObjectType>
         where ObjectType : class, IDeletable
     {
         #region PROPERTIES
 
-        protected static float ItemsRatio => 0.3f;
-        protected static float ContentRatio => 1f - ItemsRatio;
+        private float ItemsSize
+        {
+            get
+
+            {
+                if (!Settings.AutoCollapseItemsPanel)
+                    return Mathf.Min(width * 0.3f, 300f);
+                //else if ((ItemsPanel is IGroupItemPanel groupPanel) && groupPanel.GroupingEnable)
+                //    return 40f;
+                else
+                    return 38f;
+            }
+        }
+        private float MaxItemSize => 250f;
+        private float ContentSize => width - ItemsSize;
 
         public IntersectionMarkingTool Tool => SingletonTool<IntersectionMarkingTool>.Instance;
         protected bool NeedUpdate { get; set; }
         public ObjectType EditObject => ItemsPanel.SelectedObject;
 
         public ItemsPanelType ItemsPanel { get; protected set; }
-        public AdvancedScrollablePanel ContentPanel { get; protected set; }
+        public CustomUIScrollablePanel ContentPanel { get; protected set; }
         protected CustomUILabel EmptyLabel { get; set; }
+        private CustomUISprite ItemsShadow { get; }
 
+        private BlurEffect ItemsBlur { get; }
+        private BlurEffect ContentBlur { get; }
+
+        private bool availableItems = true;
+        private bool availableContent = true;
         public sealed override bool AvailableItems
         {
-            get => ItemsPanel.isEnabled;
-            set => ItemsPanel.SetAvailable(value);
+            get => availableItems;
+            set
+            {
+                if (value != availableItems)
+                {
+                    availableItems = value;
+                    ItemsBlur.opacity = value ? 0.0f : 1.0f;
+                    ItemsBlur.isVisible = !value;
+                }
+            }
         }
         public sealed override bool AvailableContent
         {
-            get => ItemsPanel.isEnabled;
-            set => ContentPanel.SetAvailable(value);
+            get => availableContent;
+            set
+            {
+                if (value != availableContent)
+                {
+                    availableContent = value;
+                    ContentBlur.opacity = value ? 0.0f : 1.0f;
+                    ContentBlur.isVisible = !value;
+                }
+            }
         }
 
         #endregion
@@ -88,28 +124,65 @@ namespace IMT.UI.Editors
         public Editor()
         {
             clipChildren = true;
-            atlas = TextureHelper.InGameAtlas;
-            //backgroundSprite = "UnlockingItemBackground";
-            backgroundSprite = "TextFieldPanel";
-            color = new Color32(68, 68, 75, 255);
 
             ItemsPanel = AddUIComponent<ItemsPanelType>();
-            ItemsPanel.atlas = TextureHelper.InGameAtlas;
-            //ItemsPanel.backgroundSprite = "ScrollbarTrack";
-            ItemsPanel.backgroundSprite = "TextFieldPanel";
-            ItemsPanel.color = new Color32(142, 142, 142, 255);
             ItemsPanel.name = nameof(ItemsPanel);
+            ItemsPanel.Atlas = CommonTextures.Atlas;
+            ItemsPanel.BackgroundSprite = CommonTextures.PanelBig;
+            ItemsPanel.ForegroundSprite = CommonTextures.BorderTop;
+            ItemsPanel.color = ItemsPanel.disabledColor = IMTColors.ItemsBackground;
+            ItemsPanel.canFocus = true;
+
+            ItemsPanel.Padding = new RectOffset(0, 0, 2, 2);
+
             ItemsPanel.Init(this);
             ItemsPanel.OnSelectClick += OnItemSelect;
             ItemsPanel.OnDeleteClick += OnItemDelete;
+            ItemsPanel.eventMouseEnter += ItemsPanelEnter;
+            ItemsPanel.eventMouseLeave += ItemsPanelLeave;
+            ItemsPanel.eventSizeChanged += (_, size) =>
+            {
+                ItemsBlur.size = size;
+                ItemsShadow.height = size.y;
+                ItemsShadow.relativePosition = ItemsPanel.relativePosition + new Vector3(size.x, 0f);
+            };
+            ItemsPanel.eventPositionChanged += (_, position) => ItemsBlur.position = position;
 
-            ContentPanel = AddUIComponent<AdvancedScrollablePanel>();
-            ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 0, 0);
-            ContentPanel.atlas = TextureHelper.InGameAtlas;
-            //ContentPanel.backgroundSprite = "UnlockingItemBackground";
-            ContentPanel.backgroundSprite = "TextFieldPanel";
-            ContentPanel.color = new Color32(68, 68, 75, 255);
+            ItemsBlur = AddUIComponent<BlurEffect>();
+            ItemsBlur.position = Vector3.zero;
+            ItemsBlur.opacity = 0f;
+            ItemsBlur.size = ItemsPanel.size;
+
+            ItemsShadow = AddUIComponent<CustomUISprite>();
+            ItemsShadow.atlas = CommonTextures.Atlas;
+            ItemsShadow.spriteName = CommonTextures.PanelShadow;
+            ItemsShadow.color = new Color32(0, 0, 0, 224);
+            ItemsShadow.width = 20f;
+            ItemsShadow.isVisible = false;
+
+            ContentPanel = AddUIComponent<CustomUIScrollablePanel>();
             ContentPanel.name = nameof(ContentPanel);
+            ContentPanel.Padding = new RectOffset(10, 10, 0, 0);
+            ContentPanel.AutoLayout = AutoLayout.Vertical;
+            ContentPanel.AutoLayoutSpace = 10;
+            ContentPanel.AutoChildrenHorizontally = AutoLayoutChildren.Fill;
+            ContentPanel.ScrollOrientation = UIOrientation.Vertical;
+            ContentPanel.Atlas = CommonTextures.Atlas;
+            ContentPanel.BackgroundSprite = CommonTextures.PanelBig;
+            ContentPanel.color = ContentPanel.disabledColor = IMTColors.ContentBackground;
+            ContentPanel.zOrder = 0;
+            ContentPanel.eventSizeChanged += (_, size) => ContentBlur.size = size;
+            ContentPanel.eventPositionChanged += (_, position) => ContentBlur.position = position;
+
+            ContentPanel.ScrollbarSize = 12f;
+            ContentPanel.Scrollbar.DefaultStyle();
+
+            ContentBlur = AddUIComponent<BlurEffect>();
+            ContentBlur.position = ContentPanel.position;
+            ContentBlur.size = ContentPanel.size;
+            ContentBlur.color = new Color32(188, 220, 245, 255);
+            ContentBlur.opacity = 0f;
+            ContentBlur.zOrder = 1;
 
             AddEmptyLabel();
         }
@@ -142,7 +215,8 @@ namespace IMT.UI.Editors
             if (Active)
             {
                 AvailableItems = true;
-                AvailableContent = true;
+                AvailableContent = !ItemsExpanded;
+                PlaceItems();
 
                 var editObject = EditObject;
                 ItemsPanel.SetObjects(GetObjects());
@@ -157,6 +231,8 @@ namespace IMT.UI.Editors
         }
         public sealed override void RefreshEditor()
         {
+            PlaceItems();
+
             if (EditObject is ObjectType editObject)
                 OnObjectUpdate(editObject);
             else
@@ -188,14 +264,17 @@ namespace IMT.UI.Editors
         protected override void OnSizeChanged()
         {
             base.OnSizeChanged();
-
-            ItemsPanel.size = new Vector2(size.x * ItemsRatio, size.y);
+            PlaceItems();
+        }
+        private void PlaceItems()
+        {
+            ItemsPanel.size = new Vector2(ItemsSize, size.y);
             ItemsPanel.relativePosition = new Vector2(0, 0);
 
-            ContentPanel.size = new Vector2(size.x * ContentRatio, size.y);
-            ContentPanel.relativePosition = new Vector2(size.x * ItemsRatio, 0);
+            ContentPanel.size = new Vector2(ContentSize, size.y);
+            ContentPanel.relativePosition = new Vector2(ItemsSize, 0);
 
-            EmptyLabel.size = new Vector2(size.x * ContentRatio, size.y * 0.5f);
+            EmptyLabel.size = new Vector2(ContentSize, size.y * 0.5f);
             EmptyLabel.relativePosition = ContentPanel.relativePosition;
         }
         protected void OnItemSelect(ObjectType editObject)
@@ -207,6 +286,67 @@ namespace IMT.UI.Editors
         }
         private void OnItemDelete(ObjectType editObject) => Tool.DeleteItem(editObject, OnObjectDelete);
 
+        private string AnimationId => $"{nameof(ItemsPanel)}{ItemsPanel.GetHashCode()}";
+        private bool itemsExpanded;
+        private bool ItemsExpanded
+        {
+            get => itemsExpanded;
+            set
+            {
+                if (value != itemsExpanded)
+                {
+                    itemsExpanded = value;
+                    ItemsShadow.isVisible = value;
+                    AvailableContent = !value;
+                }
+            }
+        }
+        private void ItemsPanelEnter(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (!isEnabled || !AvailableItems || !Settings.AutoCollapseItemsPanel)
+                return;
+
+            ValueAnimator.Cancel(AnimationId);
+            ItemsPanel.Focus();
+
+            var current = ItemsPanel.width;
+            var min = ItemsSize;
+            var max = MaxItemSize;
+            var time = 0.2f * (max - current) / (max - min);
+
+            if (min < max && current != max)
+            {
+                ItemsExpanded = true;
+                ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, max, time, EasingType.CubicEaseOut));
+            }
+        }
+        private void ItemsPanelLeave(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (!AvailableItems || !Settings.AutoCollapseItemsPanel)
+                return;
+
+            ValueAnimator.Cancel(AnimationId);
+
+            var current = ItemsPanel.width;
+            var min = ItemsSize;
+            var max = MaxItemSize;
+            var time = 0.2f * (current - min) / (max - min);
+
+            if (current != min)
+            {
+                ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, min, time, EasingType.CubicEaseOut), AfterItemPanelCollapsed);
+            }
+        }
+        private void SetItemPanelWidth(float width)
+        {
+            ItemsPanel.width = width;
+            ContentBlur.opacity = width / MaxItemSize;
+        }
+        private void AfterItemPanelCollapsed()
+        {
+            ItemsExpanded = false;
+        }
+
         protected virtual void OnObjectSelect(ObjectType editObject) { }
         protected virtual void OnObjectUpdate(ObjectType editObject) { }
         protected virtual void OnObjectDelete(ObjectType editObject)
@@ -217,8 +357,11 @@ namespace IMT.UI.Editors
         }
         protected virtual void OnClear()
         {
-            foreach (var component in ContentPanel.Content.components.ToArray())
-                ComponentPool.Free(component);
+            foreach (var component in ContentPanel.components.ToArray())
+            {
+                if (component != ContentPanel.Scrollbar)
+                    ComponentPool.Free(component);
+            }
         }
 
         #endregion
@@ -240,22 +383,20 @@ namespace IMT.UI.Editors
         #endregion
     }
     public abstract class SimpleEditor<ItemsPanelType, ObjectType> : Editor<ItemsPanelType, ObjectType>
-        where ItemsPanelType : AdvancedScrollablePanel, IItemPanel<ObjectType>
+        where ItemsPanelType : CustomUIScrollablePanel, IItemPanel<ObjectType>
         where ObjectType : class, IDeletable
     {
         protected PropertyGroupPanel PropertiesPanel { get; private set; }
 
         public SimpleEditor()
         {
-            ContentPanel.Content.autoLayoutPadding = new RectOffset(10, 10, 10, 10);
+            ContentPanel.Padding = new RectOffset(10, 10, 10, 10);
         }
 
         protected override void OnObjectSelect(ObjectType editObject)
         {
-            PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel.Content, nameof(ContentPanel));
-            PropertiesPanel.StopLayout();
-            OnFillPropertiesPanel(editObject);
-            PropertiesPanel.StartLayout();
+            PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel, "PropertyPanel");
+            PropertiesPanel.PauseLayout(() => OnFillPropertiesPanel(editObject));
             PropertiesPanel.Init();
         }
         protected abstract void OnFillPropertiesPanel(ObjectType editObject);

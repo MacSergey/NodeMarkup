@@ -39,7 +39,7 @@ namespace IMT.UI
                 line.Render(new OverlayData(cameraInfo) { Color = Color, Width = LineSize });
 
             if (renderHover && IsHoverLine)
-                HoverLine.Render(new OverlayData(cameraInfo) { Color = Colors.Hover, Width = LineSize + Space });
+                HoverLine.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover, Width = LineSize + Space });
         }
     }
 }

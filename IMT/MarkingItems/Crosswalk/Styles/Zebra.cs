@@ -213,7 +213,7 @@ namespace IMT.Manager
         protected override void GetUIComponents(MarkingCrosswalk crosswalk, EditorProvider provider)
         {
             base.GetUIComponents(crosswalk, provider);
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<BoolPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
             provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), AdditionalCategory, AddSecondColorProperty, RefreshSecondColorProperty));
 
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), MainCategory, AddCrosswalkLengthProperty));
@@ -225,15 +225,15 @@ namespace IMT.Manager
         protected override void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
             base.RefreshColorProperty(colorProperty, provider);
-            colorProperty.Text = TwoColors.Value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
+            colorProperty.Label = TwoColors.Value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
         }
 
-        protected void AddUseSecondColorProperty(BoolListPropertyPanel useSecondColorProperty, EditorProvider provider)
+        protected void AddUseSecondColorProperty(BoolPropertyPanel useSecondColorProperty, EditorProvider provider)
         {
-            useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
-            useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
-            useSecondColorProperty.SelectedObject = TwoColors;
-            useSecondColorProperty.OnSelectObjectChanged += (value) =>
+            useSecondColorProperty.Label = Localize.StyleOption_UseSecondColor;
+            useSecondColorProperty.Init();
+            useSecondColorProperty.Value = TwoColors;
+            useSecondColorProperty.OnValueChanged += (value) =>
             {
                 TwoColors.Value = value;
                 provider.Refresh();
@@ -242,7 +242,7 @@ namespace IMT.Manager
 
         protected void AddSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init((GetDefault() as ZebraCrosswalkStyle)?.SecondColor);
             colorProperty.Value = SecondColor;
@@ -251,15 +251,15 @@ namespace IMT.Manager
         protected virtual void RefreshSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.IsHidden = !TwoColors.Value;
-            colorProperty.Text = TwoColors.Value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
+            colorProperty.Label = TwoColors.Value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
         }
 
         protected void AddDashEndProperty(DashEndPanel dashEndProperty, EditorProvider provider)
         {
-            dashEndProperty.Text = Localize.StyleOption_ZebraDashesType;
+            dashEndProperty.Label = Localize.StyleOption_ZebraDashesType;
             dashEndProperty.Selector.AutoButtonSize = false;
             dashEndProperty.Selector.ButtonWidth = 60f;
-            dashEndProperty.Selector.atlas = IMTTextures.Atlas;
+            dashEndProperty.Selector.Atlas = IMTTextures.Atlas;
             dashEndProperty.Init();
             dashEndProperty.SelectedObject = DashType;
             dashEndProperty.OnSelectObjectChanged += (value) => DashType.Value = value;
@@ -267,7 +267,7 @@ namespace IMT.Manager
 
         protected void AddGapProperty(GapProperty gapProperty, EditorProvider provider)
         {
-            gapProperty.Text = Localize.StyleOption_CrosswalkGap;
+            gapProperty.Label = Localize.StyleOption_CrosswalkGap;
             gapProperty.Init();
             gapProperty.UseWheel = true;
             gapProperty.WheelTip = Settings.ShowToolTip;
@@ -337,19 +337,20 @@ namespace IMT.Manager
 
             protected override void FillItems(Func<DashEnd, bool> selector)
             {
-                Selector.StopLayout();
-                foreach (var value in GetValues())
+                Selector.PauseLayout(() =>
                 {
-                    if (selector?.Invoke(value) != false)
+                    foreach (var value in GetValues())
                     {
-                        var sprite = value.Sprite();
-                        if (string.IsNullOrEmpty(sprite))
-                            Selector.AddItem(value, new OptionData(GetDescription(value)));
-                        else
-                            Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
+                        if (selector?.Invoke(value) != false)
+                        {
+                            var sprite = value.Sprite();
+                            if (string.IsNullOrEmpty(sprite))
+                                Selector.AddItem(value, new OptionData(GetDescription(value)));
+                            else
+                                Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
+                        }
                     }
-                }
-                Selector.StartLayout();
+                });
             }
 
             public class DashEndSegmented : UIOnceSegmented<DashEnd> { }

@@ -139,7 +139,7 @@ namespace IMT.Manager
 
         protected void AddStepProperty(FloatPropertyPanel stepProperty, EditorProvider provider)
         {
-            stepProperty.Text = Localize.StyleOption_ZigzagStep;
+            stepProperty.Label = Localize.StyleOption_ZigzagStep;
             stepProperty.Format = Localize.NumberFormat_Meter;
             stepProperty.UseWheel = true;
             stepProperty.WheelStep = 0.1f;
@@ -152,7 +152,7 @@ namespace IMT.Manager
         }
         new protected void AddOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.Text = Localize.StyleOption_ZigzagOffset;
+            offsetProperty.Label = Localize.StyleOption_ZigzagOffset;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
@@ -165,14 +165,14 @@ namespace IMT.Manager
         }
         protected void AddSideProperty(BoolListPropertyPanel sideProperty, EditorProvider provider)
         {
-            sideProperty.Text = Localize.StyleOption_ZigzagSide;
+            sideProperty.Label = Localize.StyleOption_ZigzagSide;
             sideProperty.Init(Localize.StyleOption_SideLeft, Localize.StyleOption_SideRight);
             sideProperty.SelectedObject = Side;
             sideProperty.OnSelectObjectChanged += (value) => Side.Value = value;
         }
         protected void AddStartFromProperty(BoolListPropertyPanel startFromProperty, EditorProvider provider)
         {
-            startFromProperty.Text = Localize.StyleOption_ZigzagStartFrom;
+            startFromProperty.Label = Localize.StyleOption_ZigzagStartFrom;
             startFromProperty.Init(Localize.StyleOption_ZigzagStartFromOutside, Localize.StyleOption_ZigzagStartFromLine);
             startFromProperty.SelectedObject = StartFrom;
             startFromProperty.OnSelectObjectChanged += (value) => StartFrom.Value = value;

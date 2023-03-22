@@ -140,25 +140,23 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<BoolPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
             provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), AdditionalCategory, AddSecondColorProperty, RefreshSecondColorProperty));
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), MainCategory, AddLengthProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), MainCategory, AddOffsetProperty));
             if (!provider.isTemplate)
             {
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(CenterSolid), MainCategory, AddCenterSolidProperty));
+                provider.AddProperty(new PropertyInfo<BoolPropertyPanel>(this, nameof(CenterSolid), MainCategory, AddCenterSolidProperty));
                 provider.AddProperty(new PropertyInfo<ButtonPanel>(this, nameof(Invert), MainCategory, AddInvertProperty));
             }
-
-            //UseSecondColorChanged(this, parent, TwoColors);
         }
 
-        protected void AddCenterSolidProperty(BoolListPropertyPanel centerSolidProperty, EditorProvider provider)
+        protected void AddCenterSolidProperty(BoolPropertyPanel centerSolidProperty, EditorProvider provider)
         {
-            centerSolidProperty.Text = Localize.StyleOption_SolidInCenter;
-            centerSolidProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
-            centerSolidProperty.SelectedObject = CenterSolid;
-            centerSolidProperty.OnSelectObjectChanged += (value) => CenterSolid.Value = value;
+            centerSolidProperty.Label = Localize.StyleOption_SolidInCenter;
+            centerSolidProperty.Init();
+            centerSolidProperty.Value = CenterSolid;
+            centerSolidProperty.OnValueChanged += (value) => CenterSolid.Value = value;
         }
 
         public override XElement ToXml()

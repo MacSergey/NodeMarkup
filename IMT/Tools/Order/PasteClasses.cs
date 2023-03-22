@@ -63,7 +63,7 @@ namespace IMT.Tools
             var hue = (byte)(toolMode.SelectedSource == this || toolMode.HoverSource == this ? 255 : 192);
             var position = toolMode.SelectedSource == this ? (toolMode.IsHoverTarget ? toolMode.HoverTarget.Position : SingletonTool<IntersectionMarkingTool>.Instance.MouseWorldPosition) : Position;
             var size = BoundsSize;
-            var color = Colors.GetOverlayColor(Index, 255, hue);
+            var color = CommonColors.GetOverlayColor(Index, 255, hue);
             while (size > 0)
             {
                 position.RenderCircle(new OverlayData(cameraInfo) { Color = color, Width = size });
@@ -136,13 +136,13 @@ namespace IMT.Tools
                 if (toolMode.IsSelectedSource)
                 {
                     if (toolMode.HoverTarget == this && toolMode.SelectedSource.Target != this)
-                        Position.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.Green, Width = BoundsSize + 0.43f });
+                        Position.RenderCircle(new OverlayData(cameraInfo) { Color = CommonColors.Green, Width = BoundsSize + 0.43f });
                     else if (toolMode.HoverTarget != this && toolMode.SelectedSource.Target == this)
-                        Position.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.Red, Width = BoundsSize + 0.43f });
+                        Position.RenderCircle(new OverlayData(cameraInfo) { Color = CommonColors.Red, Width = BoundsSize + 0.43f });
                 }
             }
             else
-                Position.RenderCircle(new OverlayData(cameraInfo) { Color = Colors.Gray192, Width = BoundsSize, AlphaBlend = false });
+                Position.RenderCircle(new OverlayData(cameraInfo) { Color = CommonColors.Gray192, Width = BoundsSize, AlphaBlend = false });
         }
         public abstract Vector3 GetSourcePosition(SourceType source);
     }

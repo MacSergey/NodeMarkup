@@ -13,85 +13,71 @@ using UnityEngine;
 
 namespace IMT.UI
 {
-    public abstract class StyleModifierPanel : UICustomControl
+    public class StyleModifierSettingsItem : ControlSettingsItem<ModifierDropDown>
     {
         public event Action<Style.StyleType, StyleModifier> OnModifierChanged;
 
-        private int count;
-
-        private Dictionary<ModifierDropDown, Style.StyleType> Modifiers { get; } = new Dictionary<ModifierDropDown, Style.StyleType>();
-
-        protected void Add(Style.StyleType style, string label = null)
+        Style.StyleType style;
+        public Style.StyleType Style
         {
-            var modifier = AddKeymapping((StyleModifier)IntersectionMarkingTool.StylesModifier[style].value, label ?? style.Description());
-            Modifiers[modifier] = style;
+            get => style;
+            set
+            {
+                if(value != style)
+                {
+                    style = value;
+                    Control.SelectedObject = Value;
+                }
+            }
         }
-        public ModifierDropDown AddKeymapping(StyleModifier value, string description)
+        public StyleModifier Value
         {
-            var panel = component.AttachUIComponent(UITemplateManager.GetAsGameObject("KeyBindingTemplate")) as UIPanel;
+            get => IntersectionMarkingTool.StylesModifier.TryGetValue(Style, out var modifier) ? (StyleModifier)modifier.value : StyleModifier.NotSet;
+            set
+            {
+                if(IntersectionMarkingTool.StylesModifier.ContainsKey(Style))
+                {
+                    IntersectionMarkingTool.StylesModifier[Style].value = (int)value;
+                    Control.SelectedObject = value;
+                }
+            }
+        }
 
-            if (count % 2 == 1)
-                panel.backgroundSprite = null;
-
-            count += 1;
-
-            var button = panel.Find<UIButton>("Binding");
-            panel.RemoveUIComponent(button);
-            Destroy(button);
-
-            var modifier = panel.AddUIComponent<ModifierDropDown>();
-            modifier.relativePosition = new Vector2(380, 6);
-            modifier.SelectedObject = value;
-            modifier.OnSelectObjectChanged += ModifierChanged;
-
-            var label = panel.Find<UILabel>("Name");
-            label.text = description;
-
-            return modifier;
+        public StyleModifierSettingsItem()
+        {
+            Control.OnValueChanged += ModifierChanged;
         }
 
         private void ModifierChanged(ModifierDropDown changedModifier, StyleModifier value)
         {
-            if (value != StyleModifier.NotSet)
-            {
-                foreach (var modifier in Modifiers.Keys.Where(m => m != changedModifier && m.SelectedObject == value))
-                    modifier.SelectedObject = StyleModifier.NotSet;
-            }
-
-            OnModifierChanged?.Invoke(Modifiers[changedModifier], value);
+            Value = value;
+            OnModifierChanged?.Invoke(Style, value);
         }
     }
-    public abstract class StyleModifierPanel<StyleType> : StyleModifierPanel
-        where StyleType : Enum
+
+    public class ModifierDropDown : SimpleDropDown<StyleModifier, ModifierDropDown.ModifierEntity, ModifierDropDown.ModifierPopup>
     {
-        public StyleModifierPanel()
-        {
-            foreach (var style in EnumExtension.GetEnumValues<StyleType>(v => true))
-                Add((Style.StyleType)(object)style);
-        }
-
-    }
-
-    public class RegularLineModifierPanel : StyleModifierPanel<RegularLineStyle.RegularLineType> { }
-    public class StopLineModifierPanel : StyleModifierPanel<StopLineStyle.StopLineType> { }
-    public class CrosswalkModifierPanel : StyleModifierPanel<BaseCrosswalkStyle.CrosswalkType> { }
-    public class FillerModifierPanel : StyleModifierPanel<BaseFillerStyle.FillerType> { }
-
-    public class ModifierDropDown : UIDropDown<StyleModifier>
-    {
-        public new event Action<ModifierDropDown, StyleModifier> OnSelectObjectChanged;
+        public event Action<ModifierDropDown, StyleModifier> OnValueChanged;
 
         public ModifierDropDown()
         {
-            ComponentStyle.CustomSettingsStyle(this, new Vector2(278, 31));
+            ComponentStyle.DropDownSettingsStyle(this, new Vector2(278, 31));
+            EntityTextScale = 1f;
 
             foreach (var modifier in EnumExtension.GetEnumValues<StyleModifier>())
-                AddItem(modifier, new OptionData(modifier.Description()));
+                AddItem(modifier, modifier.Description());
 
             SelectedObject = StyleModifier.NotSet;
         }
 
-        protected override void IndexChanged(UIComponent component, int value) => OnSelectObjectChanged?.Invoke(this, SelectedObject);
+        protected override void SelectObject(DropDownItem<StyleModifier> item) => OnValueChanged?.Invoke(this, item.value);
+        protected override void SetPopupStyle() => Popup.PopupSettingsStyle<DropDownItem<StyleModifier>, ModifierEntity, ModifierPopup>(height);
+
+        public class ModifierEntity : SimpleEntity<StyleModifier> { }
+        public class ModifierPopup : SimplePopup<StyleModifier, ModifierEntity> 
+        {
+            protected override void SetEntityStyle(ModifierEntity entity) => entity.EntitySettingsStyle<DropDownItem<StyleModifier>, ModifierEntity>();
+        }
     }
 
     public enum StyleModifier

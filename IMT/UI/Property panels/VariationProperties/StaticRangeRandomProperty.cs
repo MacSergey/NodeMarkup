@@ -4,40 +4,40 @@ using System;
 
 namespace IMT.UI
 {
-    public abstract class StaticRangeAutoProperty<ValueType, FieldType> : StaticRangeProperty<ValueType, FieldType>
+    public abstract class StaticRangeRandomProperty<ValueType, FieldType> : StaticRangeProperty<ValueType, FieldType>
         where FieldType : ComparableUITextField<ValueType>
         where ValueType : IComparable<ValueType>
     {
-        public event Action OnAutoValue;
+        public event Action OnRandomValue;
 
-        protected virtual int AutoIndex => 0;
+        protected virtual int RandomIndex => 0;
         protected override int FirstOptionIndex => 1;
         protected override int SecondOptionIndex => 2;
 
         protected override void AddSelectorItems()
         {
-            AddItem(AutoIndex, new OptionData(IMT.Localize.StyleOption_ObjectAuto, IMTTextures.Atlas, IMTTextures.AutoButtonIcon));
+            AddItem(RandomIndex, new OptionData(IMT.Localize.StyleOption_ObjectRandom, IMTTextures.Atlas, IMTTextures.RandomButtonIcon));
             base.AddSelectorItems();
         }
 
-        public void SetAuto()
+        public void SetRandom()
         {
             FieldA.Value = default;
             FieldB.Value = default;
-            SelectedObject = AutoIndex;
+            SelectedObject = RandomIndex;
             Refresh();
         }
         protected override void SelectorChangedImpl(int index)
         {
-            if (index == AutoIndex)
-                OnAutoValue?.Invoke();
+            if (index == RandomIndex)
+                OnRandomValue?.Invoke();
             else
                 base.SelectorChangedImpl(index);
         }
 
         protected override void Refresh()
         {
-            if (SelectedObject == AutoIndex)
+            if (SelectedObject == RandomIndex)
             {
                 FieldB.isVisible = false;
                 FieldA.isEnabled = false;
@@ -55,8 +55,8 @@ namespace IMT.UI
         {
             base.DeInit();
 
-            OnAutoValue = null;
+            OnRandomValue = null;
         }
     }
-    public class FloatStaticRangeAutoProperty : StaticRangeAutoProperty<float, FloatUITextField> { }
+    public class FloatStaticRangeRandomProperty : StaticRangeRandomProperty<float, FloatUITextField> { }
 }

@@ -36,7 +36,7 @@ namespace IMT.Tools
             else
                 return $"{Localize.Tool_SelectInfo}\n\n{string.Format(Localize.Tool_ExitUnderground, IntersectionMarkingTool.ExitUndergroundShortcut.AddInfoColor())}";
         }
-        private string GetStepOverInfo() => IntersectionMarkingTool.SelectionStepOverShortcut.NotSet ? string.Empty : "\n\n" + string.Format(CommonLocalize.Tool_InfoSelectionStepOver, Colors.AddInfoColor(IntersectionMarkingTool.SelectionStepOverShortcut));
+        private string GetStepOverInfo() => IntersectionMarkingTool.SelectionStepOverShortcut.NotSet ? string.Empty : "\n\n" + string.Format(CommonLocalize.Tool_InfoSelectionStepOver, CommonColors.AddInfoColor(IntersectionMarkingTool.SelectionStepOverShortcut));
 
         public override void OnPrimaryMouseClicked(Event e)
         {

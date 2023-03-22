@@ -15,13 +15,13 @@ namespace IMT.UI.Editors
     }
     public interface IPropertyContainer : IPropertyEditor
     {
-        UIAutoLayoutPanel MainPanel { get; }
+        CustomUIPanel MainPanel { get; }
         Style Style { get; }
 
         Dictionary<string, List<IPropertyInfo>> PropertyInfos { get; }
         Dictionary<string, IPropertyCategoryInfo> CategoryInfos { get; }
         Dictionary<string, CategoryItem> CategoryItems { get; }
-        List<EditorItem> StyleProperties { get; }
+        List<BaseEditorPanel> StyleProperties { get; }
         Dictionary<string, bool> ExpandList { get; }
     }
 
@@ -35,13 +35,13 @@ namespace IMT.UI.Editors
             editor.Style.GetUIComponents(provider);
             editor.Style.GetUICategories(provider);
 
-            editor.MainPanel.StopLayout();
+            editor.MainPanel.PauseLayout(() =>
             {
                 foreach (var category in editor.PropertyInfos)
                 {
                     category.Value.Sort(PropertyInfoComparer.Instance);
 
-                    if(!editor.CategoryInfos.ContainsKey(category.Key))
+                    if (!editor.CategoryInfos.ContainsKey(category.Key))
                         editor.CategoryInfos[category.Key] = new PropertyCategoryInfo<DefaultPropertyCategoryPanel>(category.Key, category.Key, false);
                 }
 
@@ -64,20 +64,18 @@ namespace IMT.UI.Editors
 
                             var categoryProvider = new EditorProvider(editor, categoryPanel, editor.IsTemplate, refresh: editor.RefreshProperties);
 
-                            categoryPanel.StopLayout();
+                            categoryPanel.PauseLayout(() =>
                             {
                                 foreach (var propertyInfo in propertyInfos)
                                 {
                                     var protertyItem = propertyInfo.Create(categoryProvider);
                                     editor.StyleProperties.Add(protertyItem);
                                 }
-                            }
-                            categoryPanel.StartLayout();
+                            });
                         }
                     }
                 }
-            }
-            editor.MainPanel.StartLayout();
+            });
 
             editor.RefreshProperties();
 
@@ -97,7 +95,7 @@ namespace IMT.UI.Editors
         }
         public static void RefreshProperties(this IPropertyContainer editor)
         {
-            editor.MainPanel.StopLayout();
+            editor.MainPanel.PauseLayout(() =>
             {
                 foreach (var category in editor.PropertyInfos)
                 {
@@ -112,7 +110,7 @@ namespace IMT.UI.Editors
                     {
                         var categoryProvider = new EditorProvider(editor, categoryPanel, editor.IsTemplate);
 
-                        categoryPanel.StopLayout();
+                        categoryPanel.PauseLayout(() =>
                         {
                             var visibleCount = 0;
                             foreach (var propertyInfo in category.Value)
@@ -122,19 +120,17 @@ namespace IMT.UI.Editors
                                     visibleCount += 1;
                             }
                             categoryPanel.isVisible = visibleCount > 0;
-                        }
-                        categoryPanel.StartLayout();
+                        });
                     }
                 }
-            }
-            editor.MainPanel.StartLayout();
+            });
         }
 
         public static void ClearProperties(this IPropertyContainer editor)
         {
             var provider = new EditorProvider(editor, editor.MainPanel, true);
 
-            editor.MainPanel.StopLayout();
+            editor.MainPanel.PauseLayout(() =>
             {
                 foreach (var category in editor.PropertyInfos)
                 {
@@ -144,23 +140,21 @@ namespace IMT.UI.Editors
                         foreach (var propertyInfo in category.Value)
                             propertyInfo.Destroy(categoryProvider);
                     }
-                    else if(editor.CategoryItems.TryGetValue(category.Key, out var categoryItem) && categoryItem.CategoryPanel is PropertyGroupPanel categoryPanel)
+                    else if (editor.CategoryItems.TryGetValue(category.Key, out var categoryItem) && categoryItem.CategoryPanel is PropertyGroupPanel categoryPanel)
                     {
                         var categoryProvider = new EditorProvider(editor, categoryPanel, editor.IsTemplate);
 
-                        categoryPanel.StopLayout();
+                        categoryPanel.PauseLayout(() =>
                         {
                             foreach (var propertyInfo in category.Value)
                                 propertyInfo.Destroy(categoryProvider);
-                        }
-                        categoryPanel.StartLayout();
+                        });
                     }
                 }
 
                 foreach (var categoryPanel in editor.CategoryItems.Values)
                     ComponentPool.Free(categoryPanel);
-            }
-            editor.MainPanel.StartLayout();
+            });
 
             editor.PropertyInfos.Clear();
             editor.CategoryItems.Clear();

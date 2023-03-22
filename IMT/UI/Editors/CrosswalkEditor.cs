@@ -5,9 +5,7 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using UnityEngine;
 
 namespace IMT.UI.Editors
@@ -30,14 +28,14 @@ namespace IMT.UI.Editors
 
         object IPropertyEditor.EditObject => EditObject;
         bool IPropertyEditor.IsTemplate => false;
-        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
+        CustomUIPanel IPropertyContainer.MainPanel => PropertiesPanel;
         Style IPropertyContainer.Style => EditObject.Style.Value;
         Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
 
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
         Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
-        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
+        List<BaseEditorPanel> IPropertyContainer.StyleProperties { get; } = new List<BaseEditorPanel>();
 
         #endregion
 
@@ -91,7 +89,7 @@ namespace IMT.UI.Editors
         private void AddHeader()
         {
             var header = ComponentPool.Get<CrosswalkHeaderPanel>(PropertiesPanel, "Header");
-            header.Init(this, EditObject.Style.Value.Type, SelectTemplate, false);
+            header.Init(this, EditObject.Style.Value.Type, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;
             header.OnPaste += PasteStyle;
@@ -99,6 +97,9 @@ namespace IMT.UI.Editors
             header.OnCut += CutLines;
             header.OnApplySameStyle += ApplyStyleSameStyle;
             header.OnApplySameType += ApplyStyleSameType;
+            header.OnSelectTemplate += SelectTemplate;
+            header.OnSelectTemplatePopupOpen += SelectTemplatePopupOpen;
+            header.OnSelectTemplatePopupClose += SelectTemplatePopupClose;
         }
         private void AddWarning()
         {
@@ -152,7 +153,7 @@ namespace IMT.UI.Editors
         private CrosswalkBorderSelectPropertyPanel AddBorderProperty(BorderPosition position, string name, string text)
         {
             var border = ComponentPool.Get<CrosswalkBorderSelectPropertyPanel>(PropertiesPanel, name);
-            border.Text = text;
+            border.Label = text;
             border.Selector.Position = position;
             border.Init();
             border.OnSelect += (panel) => SelectBorder(panel);
@@ -168,7 +169,7 @@ namespace IMT.UI.Editors
         private void AddStyleTypeProperty()
         {
             Style = ComponentPool.Get<CrosswalkPropertyPanel>(PropertiesPanel, nameof(Style));
-            Style.Text = IMT.Localize.Editor_Style;
+            Style.Label = IMT.Localize.Editor_Style;
             Style.Init();
             Style.UseWheel = true;
             Style.WheelTip = true;
@@ -204,10 +205,11 @@ namespace IMT.UI.Editors
         private void AfterStyleChanged()
         {
             RefreshSelectedItem();
-            PropertiesPanel.StopLayout();
-            this.AddProperties();
-            AddStyleProperties();
-            PropertiesPanel.StartLayout();
+            PropertiesPanel.PauseLayout(() =>
+            {
+                this.AddProperties();
+                AddStyleProperties();
+            });
         }
         private void ApplyStyle(BaseCrosswalkStyle style)
         {
@@ -231,6 +233,9 @@ namespace IMT.UI.Editors
             if (template.Style is BaseCrosswalkStyle style)
                 ApplyStyle(style);
         }
+        private void SelectTemplatePopupOpen() => AvailableContent = false;
+        private void SelectTemplatePopupClose() => AvailableContent = true;
+
         private void CopyStyle() => Tool.ToStyleBuffer(Manager.Style.StyleType.Crosswalk, EditObject.Style.Value);
         private void PasteStyle()
         {
@@ -284,8 +289,8 @@ namespace IMT.UI.Editors
         }
         public override void Render(RenderManager.CameraInfo cameraInfo)
         {
-            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
-            HoverBorderButton?.Value?.Render(new OverlayData(cameraInfo) { Color = Colors.Hover });
+            ItemsPanel.HoverObject?.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
+            HoverBorderButton?.Value?.Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
         }
 
         public void BorderSetup()
@@ -320,8 +325,8 @@ namespace IMT.UI.Editors
         {
             base.Refresh();
 
-            Icon.Type = Object.Style.Value.Type;
-            Icon.StyleColor = Object.Style.Value is IColorStyle ? Object.Style.Value.Color : Color.white;
+            Icon.Type = EditObject.Style.Value.Type;
+            Icon.StyleColor = EditObject.Style.Value is IColorStyle ? EditObject.Style.Value.Color : Color.white;
         }
     }
 
@@ -334,7 +339,7 @@ namespace IMT.UI.Editors
 
         protected override void OnSetButton()
         {
-            var color = SelectButton.Position == BorderPosition.Left ? Colors.Green : Colors.Red;
+            var color = SelectButton.Position == BorderPosition.Left ? CommonColors.Green : CommonColors.Red;
             LineSelector = new LinesSelector<MarkingLineBound>(SelectButton.Objects.Select(i => new MarkingLineBound(i, 0.5f)).ToArray(), color);
         }
 

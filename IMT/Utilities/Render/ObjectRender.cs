@@ -1,12 +1,11 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using IMT.Manager;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace IMT.Utilities
 {
-    public struct MarkingPropItemData
+    public struct MarkingObjectItemData
     {
         public Vector3 position;
         public float absoluteAngle;
@@ -23,9 +22,9 @@ namespace IMT.Utilities
         public abstract MarkingLODType LODType { get; }
         public abstract int RenderLayer { get; }
         public PrefabType Info { get; private set; }
-        protected MarkingPropItemData[] Items { get; private set; }
+        protected MarkingObjectItemData[] Items { get; private set; }
 
-        public BaseMarkingPrefabData(PrefabType info, MarkingPropItemData[] items)
+        public BaseMarkingPrefabData(PrefabType info, MarkingObjectItemData[] items)
         {
             Info = info;
             Items = items;
@@ -39,7 +38,7 @@ namespace IMT.Utilities
     {
         public override MarkingLODType LODType => MarkingLODType.Prop;
         public override int RenderLayer => Info.m_prefabDataLayer;
-        public MarkingPropData(PropInfo info, MarkingPropItemData[] items) : base(info, items) { }
+        public MarkingPropData(PropInfo info, MarkingObjectItemData[] items) : base(info, items) { }
 
         public override void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
@@ -176,7 +175,7 @@ namespace IMT.Utilities
         public override MarkingLODType LODType => MarkingLODType.Tree;
         public override int RenderLayer => Info.m_prefabDataLayer;
 
-        public MarkingTreeData(TreeInfo info, MarkingPropItemData[] items) : base(info, items) { }
+        public MarkingTreeData(TreeInfo info, MarkingObjectItemData[] items) : base(info, items) { }
 
         public override void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {

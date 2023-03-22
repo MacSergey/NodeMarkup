@@ -75,7 +75,7 @@ namespace IMT.Manager
         {
             if (this is IDoubleLine doubleStyle)
             {
-                offsetProperty.Text = Localize.StyleOption_OffsetBetween;
+                offsetProperty.Label = Localize.StyleOption_OffsetBetween;
                 offsetProperty.Format = Localize.NumberFormat_Meter;
                 offsetProperty.UseWheel = true;
                 offsetProperty.WheelStep = 0.1f;
@@ -93,7 +93,7 @@ namespace IMT.Manager
         {
             if (this is ISharkLine sharkTeethStyle)
             {
-                triangleProperty.Text = Localize.StyleOption_Triangle;
+                triangleProperty.Label = Localize.StyleOption_Triangle;
                 triangleProperty.FieldsWidth = 50f;
                 triangleProperty.SetLabels(Localize.StyleOption_SharkToothBaseAbrv, Localize.StyleOption_SharkToothHeightAbrv);
                 triangleProperty.Format = Localize.NumberFormat_Meter;
@@ -117,7 +117,7 @@ namespace IMT.Manager
         {
             if (this is ISharkLine sharkTeethStyle)
             {
-                spaceProperty.Text = Localize.StyleOption_SharkToothSpace;
+                spaceProperty.Label = Localize.StyleOption_SharkToothSpace;
                 spaceProperty.Format = Localize.NumberFormat_Meter;
                 spaceProperty.UseWheel = true;
                 spaceProperty.WheelStep = 0.1f;
@@ -135,7 +135,7 @@ namespace IMT.Manager
         {
             if (this is IDoubleAlignmentLine alignmentStyle)
             {
-                alignmentProperty.Text = Localize.StyleOption_Alignment;
+                alignmentProperty.Label = Localize.StyleOption_Alignment;
                 alignmentProperty.Init();
                 alignmentProperty.SelectedObject = alignmentStyle.Alignment;
                 alignmentProperty.OnSelectObjectChanged += (value) => alignmentStyle.Alignment.Value = value;
@@ -147,7 +147,7 @@ namespace IMT.Manager
         {
             if (this is I3DLine line3DStyle)
             {
-                elevationProperty.Text = Localize.LineStyle_Elevation;
+                elevationProperty.Label = Localize.LineStyle_Elevation;
                 elevationProperty.Format = Localize.NumberFormat_Meter;
                 elevationProperty.UseWheel = true;
                 elevationProperty.WheelStep = 0.1f;
@@ -163,14 +163,14 @@ namespace IMT.Manager
                 throw new NotSupportedException();
         }
 
-        protected void AddUseSecondColorProperty(BoolListPropertyPanel useSecondColorProperty, EditorProvider provider)
+        protected void AddUseSecondColorProperty(BoolPropertyPanel useSecondColorProperty, EditorProvider provider)
         {
             if (this is IDoubleLine doubleLine)
             {
-                useSecondColorProperty.Text = Localize.StyleOption_ColorCount;
-                useSecondColorProperty.Init(Localize.StyleOption_ColorCountOne, Localize.StyleOption_ColorCountTwo, false);
-                useSecondColorProperty.SelectedObject = doubleLine.TwoColors;
-                useSecondColorProperty.OnSelectObjectChanged += (value) =>
+                useSecondColorProperty.Label = Localize.StyleOption_UseSecondColor;
+                useSecondColorProperty.Init();
+                useSecondColorProperty.Value = doubleLine.TwoColors;
+                useSecondColorProperty.OnValueChanged += (value) =>
                     {
                         doubleLine.TwoColors.Value = value;
                         provider.Refresh();
@@ -184,7 +184,7 @@ namespace IMT.Manager
         {
             if (this is IDoubleLine doubleLine)
             {
-                colorProperty.Text = Localize.StyleOption_Color;
+                colorProperty.Label = Localize.StyleOption_Color;
                 colorProperty.WheelTip = Settings.ShowToolTip;
                 colorProperty.Init((GetDefault() as IDoubleLine)?.SecondColor);
                 colorProperty.Value = doubleLine.SecondColor;
@@ -198,7 +198,7 @@ namespace IMT.Manager
             if (this is IDoubleLine doubleLine)
             {
                 colorProperty.IsHidden = !doubleLine.TwoColors;
-                colorProperty.Text = doubleLine.TwoColors ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
+                colorProperty.Label = doubleLine.TwoColors ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;
             }
         }
 
@@ -206,7 +206,7 @@ namespace IMT.Manager
         {
             if (this is IDoubleLine doubleLine)
             {
-                colorProperty.Text = doubleLine.TwoColors ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
+                colorProperty.Label = doubleLine.TwoColors ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
             }
         }
     }

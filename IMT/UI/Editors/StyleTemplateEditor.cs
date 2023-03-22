@@ -1,7 +1,9 @@
-﻿using IMT.Manager;
+﻿using ColossalFramework.UI;
+using IMT.Manager;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
+using ModsCommon.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,14 +26,14 @@ namespace IMT.UI.Editors
 
         object IPropertyEditor.EditObject => EditObject;
         bool IPropertyEditor.IsTemplate => true;
-        UIAutoLayoutPanel IPropertyContainer.MainPanel => PropertiesPanel;
+        CustomUIPanel IPropertyContainer.MainPanel => PropertiesPanel;
         Style IPropertyContainer.Style => EditStyle;
         Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
 
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
         Dictionary<string, CategoryItem> IPropertyContainer.CategoryItems { get; } = new Dictionary<string, CategoryItem>();
-        List<EditorItem> IPropertyContainer.StyleProperties { get; } = new List<EditorItem>();
+        List<BaseEditorPanel> IPropertyContainer.StyleProperties { get; } = new List<BaseEditorPanel>();
 
         protected override IEnumerable<StyleTemplate> GetObjects() => SingletonManager<StyleTemplateManager>.Instance.Templates;
 
@@ -45,7 +47,7 @@ namespace IMT.UI.Editors
         private void AddStyleType()
         {
             var styleProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Style");
-            styleProperty.Text = IMT.Localize.Editor_Style;
+            styleProperty.Label = IMT.Localize.Editor_Style;
             styleProperty.FieldWidth = 230;
             styleProperty.EnableControl = false;
             styleProperty.Init();
@@ -221,30 +223,52 @@ namespace IMT.UI.Editors
 
         protected override Style.StyleType SelectGroup(StyleTemplate editObject) => Settings.GroupTemplatesType == 0 ? editObject.Style.Type.GetGroup() : editObject.Style.Type;
     }
-    public class StyleTemplateItem : EditItem<StyleTemplate, StyleTemplateIcon>
+    public class StyleTemplateItem : EditItem<StyleTemplate, StyleIcon>
     {
-        public override bool ShowDelete => !Object.IsAsset;
+        public override bool ShowDelete => EditObject != null && !EditObject.IsAsset;
+        private bool IsDefault => EditObject?.IsDefault == true;
 
-        private bool IsDefault => Object?.IsDefault == true;
-        public override Color32 NormalColor => IsDefault ? new Color32(255, 197, 0, 255) : base.NormalColor;
-        public override Color32 HoveredColor => IsDefault ? new Color32(255, 207, 51, 255) : base.HoveredColor;
-        public override Color32 PressedColor => IsDefault ? new Color32(255, 218, 72, 255) : base.PressedColor;
-        public override Color32 FocusColor => IsDefault ? new Color32(255, 228, 92, 255) : base.FocusColor;
+        public override ModsCommon.UI.SpriteSet ForegroundSprites => !IsDefault ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        {
+            normal = CommonTextures.BorderBig,
+            hovered = CommonTextures.PanelSmall,
+            pressed = CommonTextures.PanelSmall,
+            focused = CommonTextures.BorderBig,
+            disabled = CommonTextures.PanelSmall,
+        };
+        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !IsDefault ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+
+        public override ColorSet ForegroundColors => !IsDefault ? base.ForegroundColors : new ColorSet()
+        {
+            normal = IMTColors.ItemFavoriteNormal,
+            hovered = IMTColors.ItemFavoriteNormal,
+            pressed = IMTColors.ItemFavoritePressed,
+            focused = IMTColors.ItemFavoriteFocused,
+            disabled = null,
+        };
+        public override ColorSet ForegroundSelectedColors => !IsDefault ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemFavoriteFocused);
+
+        public override ColorSet TextColor => !IsDefault ? base.TextColor : new ColorSet()
+        {
+            normal = Color.white,
+            hovered = Color.black,
+            pressed = Color.black,
+            focused = Color.white,
+            disabled = Color.white,
+        };
+        public override ColorSet TextSelectedColor => !IsDefault ? base.TextSelectedColor : new ColorSet(Color.white);
 
         public override void Refresh()
         {
             base.Refresh();
-            Icon.Type = Object.Style.Type;
-            Icon.StyleColor = Object.Style is IColorStyle ? Object.Style.Color : Color.white;
-            Label.wordWrap = !Object.IsAsset;
+            Icon.Type = EditObject.Style.Type;
+            Icon.StyleColor = EditObject.Style is IColorStyle ? EditObject.Style.Color : Color.white;
+            wordWrap = !EditObject.IsAsset;
 
-            SetColors();
+            SetStyle();
         }
     }
-    public class StyleTemplateIcon : StyleIcon
-    {
-        public bool IsDefault { set => BorderColor = value ? new Color32(255, 215, 0, 255) : (Color32)Color.white; }
-    }
+
     public class StyleTemplateGroup : EditGroup<Style.StyleType, StyleTemplateItem, StyleTemplate> { }
     public class EditStyleTemplateMode : EditTemplateMode<StyleTemplate> { }
 }

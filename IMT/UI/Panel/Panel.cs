@@ -36,23 +36,30 @@ namespace IMT.UI.Panel
             }
         }
 
-        private float Width => 580f;
+        private float MinWidth => Settings.AutoCollapseItemsPanel ? 500f : 580f;
 
         public Marking Marking { get; private set; }
         private bool NeedRefreshOnVisible { get; set; }
 
         private PanelHeader Header { get; set; }
         private PanelTabStrip TabStrip { get; set; }
+
         public List<Editor> Editors { get; } = new List<Editor>();
         public Editor PrevEditor { get; set; }
         public Editor CurrentEditor { get; set; }
 
+        private bool available = true;
         public bool Available
         {
+            get => available;
             set
             {
-                Header.Available = value;
-                TabStrip.SetAvailable(value);
+                if (value != available)
+                {
+                    available = value;
+                    Header.Available = value;
+                    TabStrip.Available = value;
+                }
             }
         }
         protected override bool NeedRefresh => base.NeedRefresh && NeedRefreshOnVisible;
@@ -65,14 +72,33 @@ namespace IMT.UI.Panel
         {
             SingletonItem<IntersectionMarkingToolPanel>.Instance = this;
 
-            atlas = TextureHelper.InGameAtlas;
-            backgroundSprite = "MenuPanel2";
+            Atlas = CommonTextures.Atlas;
+            BackgroundSprite = CommonTextures.PanelBig;
+            color = ComponentStyle.PanelColor;
             name = nameof(IntersectionMarkingToolPanel);
 
-            CreateHeader();
-            CreateTabStrip();
-            CreateEditors();
-            CreateSizeChanger();
+            Header = AddUIComponent<PanelHeader>();
+            Header.relativePosition = new Vector2(0, 0);
+            Header.Target = parent;
+            Header.Init(HeaderHeight);
+
+            TabStrip = AddUIComponent<PanelTabStrip>();
+            TabStrip.relativePosition = new Vector3(0, HeaderHeight);
+            TabStrip.SelectedTabChanged += OnSelectedTabChanged;
+            TabStrip.SelectedTab = -1;
+
+            TabStrip.StopLayout();
+            {
+                CreateEditor<PointsEditor>();
+                CreateEditor<LinesEditor>();
+                CreateEditor<CrosswalksEditor>();
+                CreateEditor<FillerEditor>();
+                CreateEditor<StyleTemplateEditor>();
+                CreateEditor<IntersectionTemplateEditor>();
+            }
+            TabStrip.StartLayout();
+
+            AddUIComponent<SizeChanger>();
 
             minimumSize = GetSize(600);
 
@@ -83,7 +109,7 @@ namespace IMT.UI.Panel
             base.Start();
 
             SetDefaulSize();
-            minimumSize = GetSize(200);
+            SetMinimumSize();
         }
         public override void OnEnable()
         {
@@ -93,37 +119,19 @@ namespace IMT.UI.Panel
         private void SetDefaulSize()
         {
             SingletonMod<Mod>.Logger.Debug($"Set default panel size");
-            size = GetSize(400);
+            size = GetSize(600);
         }
-        private Vector2 GetSize(float additional) => new Vector2(Width, Header.height + TabStrip.height + additional);
+        public void SetMinimumSize()
+        {
+            minimumSize = GetSize(200);
+            size = size;
+        }
+        private Vector2 GetSize(float additional) => new Vector2(MinWidth, Header.height + TabStrip.height + additional);
 
         #endregion
 
         #region COMPONENTS
 
-        private void CreateHeader()
-        {
-            Header = AddUIComponent<PanelHeader>();
-            Header.relativePosition = new Vector2(0, 0);
-            Header.Target = parent;
-            Header.Init(HeaderHeight);
-        }
-        private void CreateTabStrip()
-        {
-            TabStrip = AddUIComponent<PanelTabStrip>();
-            TabStrip.relativePosition = new Vector3(0, HeaderHeight);
-            TabStrip.SelectedTabChanged += OnSelectedTabChanged;
-            TabStrip.SelectedTab = -1;
-        }
-        private void CreateEditors()
-        {
-            CreateEditor<PointsEditor>();
-            CreateEditor<LinesEditor>();
-            CreateEditor<CrosswalksEditor>();
-            CreateEditor<FillerEditor>();
-            CreateEditor<StyleTemplateEditor>();
-            CreateEditor<IntersectionTemplateEditor>();
-        }
         private void CreateEditor<EditorType>() where EditorType : Editor
         {
             var editor = AddUIComponent<EditorType>();
@@ -133,7 +141,6 @@ namespace IMT.UI.Panel
 
             Editors.Add(editor);
         }
-        private void CreateSizeChanger() => AddUIComponent<SizeChanger>();
 
         #endregion
 
@@ -151,6 +158,7 @@ namespace IMT.UI.Panel
         }
         public void UpdatePanel()
         {
+            SetMinimumSize();
             Available = true;
             foreach (var editor in Editors)
                 editor.UpdateEditor();
@@ -166,7 +174,7 @@ namespace IMT.UI.Panel
             TabStrip.SelectedTab = -1;
             SelectEditor<LinesEditor>();
         }
-        public void RefreshHeader() => Header.Refresh();
+        public void RefreshHeader() => Header.UpdateLayout();
         public void RefreshProperties() => CurrentEditor?.RefreshEditor();
 
         #endregion

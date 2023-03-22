@@ -63,7 +63,7 @@ namespace IMT.UI
                 ValueChanged(FieldA.Value, value);
         }
 
-        protected override void RefreshImpl()
+        protected override void Refresh()
         {
             if (SelectedObject == FirstOptionIndex)
             {
@@ -80,8 +80,8 @@ namespace IMT.UI
             else if (SelectedObject == SecondOptionIndex)
             {
                 FieldB.isVisible = true;
-                FieldA.width = (FieldWidth - Content.autoLayoutPadding.horizontal) * 0.5f;
-                FieldB.width = (FieldWidth - Content.autoLayoutPadding.horizontal) * 0.5f;
+                FieldA.width = (FieldWidth - Content.Padding.horizontal) * 0.5f;
+                FieldB.width = (FieldWidth - Content.Padding.horizontal) * 0.5f;
 
                 if (AllowInvert)
                 {

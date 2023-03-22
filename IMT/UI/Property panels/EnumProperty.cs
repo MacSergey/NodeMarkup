@@ -9,7 +9,9 @@ namespace IMT.UI
 {
     public abstract class StylePropertyPanel : EnumOncePropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown>
     {
-        public class StyleDropDown : UIDropDown<Style.StyleType> { }
+        public class StyleDropDown : SimpleDropDown<Style.StyleType, StyleEntity, StylePopup> { }
+        public class StyleEntity : SimpleEntity<Style.StyleType> { }
+        public class StylePopup : SimplePopup<Style.StyleType, StyleEntity> { }
     }
     public abstract class StylePropertyPanel<StyleType> : StylePropertyPanel
         where StyleType : Enum
@@ -28,18 +30,6 @@ namespace IMT.UI
     public class FillerStylePropertyPanel : StylePropertyPanel<BaseFillerStyle.FillerType> { }
 
 
-
-    public class MarkingLineListPropertyPanel : ListPropertyPanel<MarkingLine, MarkingLineListPropertyPanel.MarkingLineDropDown>
-    {
-        protected override bool IsEqual(MarkingLine first, MarkingLine second) => ReferenceEquals(first, second);
-        public class MarkingLineDropDown : UIDropDown<MarkingLine> { }
-    }
-    public class ChevronFromPropertyPanel : EnumOncePropertyPanel<ChevronFillerStyle.From, ChevronFromPropertyPanel.ChevronFromSegmented>
-    {
-        protected override bool IsEqual(ChevronFillerStyle.From first, ChevronFillerStyle.From second) => first == second;
-        public class ChevronFromSegmented : UIOnceSegmented<ChevronFillerStyle.From> { }
-        protected override string GetDescription(ChevronFillerStyle.From value) => value.Description();
-    }
     public class LineAlignmentPropertyPanel : EnumOncePropertyPanel<Alignment, LineAlignmentPropertyPanel.AlignmentSegmented>
     {
         protected override bool IsEqual(Alignment first, Alignment second) => first == second;
@@ -49,7 +39,11 @@ namespace IMT.UI
     public class PropColorPropertyPanel : EnumOncePropertyPanel<PropLineStyle.ColorOptionEnum, PropColorPropertyPanel.PropColorDropDown>
     {
         protected override bool IsEqual(PropLineStyle.ColorOptionEnum first, PropLineStyle.ColorOptionEnum second) => first == second;
-        public class PropColorDropDown : UIDropDown<PropLineStyle.ColorOptionEnum> { }
+
+        public class PropColorDropDown : SimpleDropDown<PropLineStyle.ColorOptionEnum, PropColorEntity, PropColorPopup> { }
+        public class PropColorEntity : SimpleEntity<PropLineStyle.ColorOptionEnum> { }
+        public class PropColorPopup : SimplePopup<PropLineStyle.ColorOptionEnum, PropColorEntity> { }
+
         protected override string GetDescription(PropLineStyle.ColorOptionEnum value) => value.Description();
     }
 }

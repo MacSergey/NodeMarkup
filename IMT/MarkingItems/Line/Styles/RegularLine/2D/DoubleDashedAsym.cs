@@ -168,7 +168,7 @@ namespace IMT.Manager
 
             provider.AddProperty(new PropertyInfo<FloatRangePropertyPanel>(this, nameof(DashLength), MainCategory, AddDashLengthProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(SpaceLength), MainCategory, AddSpaceLengthProperty));
-            provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<BoolPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
             provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), AdditionalCategory, AddSecondColorProperty, RefreshSecondColorProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Offset), MainCategory, AddOffsetProperty));
             if (!provider.isTemplate)
@@ -179,7 +179,7 @@ namespace IMT.Manager
         }
         protected void AddDashLengthProperty(FloatRangePropertyPanel dashLengthProperty, EditorProvider provider)
         {
-            dashLengthProperty.Text = Localize.StyleOption_DashedLength;
+            dashLengthProperty.Label = Localize.StyleOption_DashedLength;
             dashLengthProperty.Format = Localize.NumberFormat_Meter;
             dashLengthProperty.UseWheel = true;
             dashLengthProperty.WheelStep = 0.1f;

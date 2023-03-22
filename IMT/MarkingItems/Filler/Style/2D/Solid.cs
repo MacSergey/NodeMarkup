@@ -109,7 +109,7 @@ namespace IMT.Manager
 #if DEBUG
             if (!provider.isTemplate && Settings.ShowDebugProperties)
             {
-                provider.AddProperty(new PropertyInfo<BoolListPropertyPanel>(this, nameof(Debug), DebugCategory, GetDebug));
+                provider.AddProperty(new PropertyInfo<BoolPropertyPanel>(this, nameof(Debug), DebugCategory, GetDebug));
                 provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MinAngle), DebugCategory, GetMinAngle));
                 provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MinLength), DebugCategory, GetMinLength));
                 provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(MaxLength), DebugCategory, GetMaxLength));
@@ -119,16 +119,16 @@ namespace IMT.Manager
         }
 
 #if DEBUG
-        private void GetDebug(BoolListPropertyPanel debugProperty, EditorProvider provider)
+        private void GetDebug(BoolPropertyPanel debugProperty, EditorProvider provider)
         {
-            debugProperty.Text = "Debug";
-            debugProperty.Init(Localize.StyleOption_No, Localize.StyleOption_Yes);
-            debugProperty.SelectedObject = Debug;
-            debugProperty.OnSelectObjectChanged += (value) => Debug.Value = value;
+            debugProperty.Label = "Debug";
+            debugProperty.Init();
+            debugProperty.Value = Debug;
+            debugProperty.OnValueChanged += (value) => Debug.Value = value;
         }
         private void GetMinAngle(FloatPropertyPanel minAngleProperty, EditorProvider provider)
         {
-            minAngleProperty.Text = "Min angle";
+            minAngleProperty.Label = "Min angle";
             minAngleProperty.CanCollapse = true;
             minAngleProperty.CheckMax = true;
             minAngleProperty.CheckMin = true;
@@ -142,7 +142,7 @@ namespace IMT.Manager
         }
         private void GetMinLength(FloatPropertyPanel minLengthProperty, EditorProvider provider)
         {
-            minLengthProperty.Text = "Min length";
+            minLengthProperty.Label = "Min length";
             minLengthProperty.CanCollapse = true;
             minLengthProperty.CheckMax = true;
             minLengthProperty.CheckMin = true;
@@ -156,7 +156,7 @@ namespace IMT.Manager
         }
         private void GetMaxLength(FloatPropertyPanel maxLengthProperty, EditorProvider provider)
         {
-            maxLengthProperty.Text = "Max length";
+            maxLengthProperty.Label = "Max length";
             maxLengthProperty.CanCollapse = true;
             maxLengthProperty.CheckMax = true;
             maxLengthProperty.CheckMin = true;
@@ -170,7 +170,7 @@ namespace IMT.Manager
         }
         private void GetMaxHeight(FloatPropertyPanel maxHeightProperty, EditorProvider provider)
         {
-            maxHeightProperty.Text = "Max height";
+            maxHeightProperty.Label = "Max height";
             maxHeightProperty.CanCollapse = true;
             maxHeightProperty.CheckMax = true;
             maxHeightProperty.CheckMin = true;

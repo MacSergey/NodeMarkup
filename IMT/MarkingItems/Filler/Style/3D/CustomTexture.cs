@@ -29,6 +29,7 @@ namespace IMT.Manager
         {
             get
             {
+                yield return nameof(PavementTheme);
                 yield return nameof(Decal);
                 yield return nameof(DecalColor);
                 yield return nameof(Tiling);
@@ -51,7 +52,7 @@ namespace IMT.Manager
             }
         }
 
-        public CustomTextureFillerStyle(PropInfo decal, Color32? color, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize, Vector2 tiling, float angle) : base(offset, elevation, cornerRadius, curbSize)
+        public CustomTextureFillerStyle(ThemeHelper.IThemeData pavementTheme, PropInfo decal, Color32? color, Vector2 offset, float elevation, Vector2 cornerRadius, Vector2 curbSize, Vector2 tiling, float angle) : base(pavementTheme, offset, elevation, cornerRadius, curbSize)
         {
             Decal = new PropertyPrefabValue<PropInfo>("DCL", StyleChanged, decal);
             DecalColor = new PropertyNullableStructValue<Color32, PropertyColorValue>(new PropertyColorValue("DC", null), "DC", StyleChanged, color);
@@ -60,7 +61,7 @@ namespace IMT.Manager
         }
 
         protected bool IsValidDecal(PropInfo info) => info != null && !info.m_isMarker && info.m_isDecal;
-        public override BaseFillerStyle CopyStyle() => new CustomTextureFillerStyle(Decal, DecalColor, Offset, Elevation, CornerRadius, CurbSize, Tiling, Angle);
+        public override BaseFillerStyle CopyStyle() => new CustomTextureFillerStyle(PavementTheme.Value, Decal, DecalColor, Offset, Elevation, CornerRadius, CurbSize, Tiling, Angle);
 
         protected override bool GetCenterTexture(out DecalData.TextureData textureData, out Color color)
         {
@@ -108,10 +109,10 @@ namespace IMT.Manager
 
         protected void AddDecalProperty(SelectPropProperty decalProperty, EditorProvider provider)
         {
-            decalProperty.Text = Localize.StyleOption_AssetDecal;
-            decalProperty.PrefabSelectPredicate = IsValidDecal;
-            decalProperty.PrefabSortPredicate = Utilities.Utilities.GetPrefabName;
-            decalProperty.Init(60f);
+            decalProperty.Label = Localize.StyleOption_AssetDecal;
+            decalProperty.SelectPredicate = IsValidDecal;
+            decalProperty.SortPredicate = (objA, objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
+            decalProperty.Init();
             decalProperty.Prefab = Decal;
             decalProperty.RawName = Decal.RawName;
             decalProperty.OnValueChanged += (value) =>
@@ -127,7 +128,7 @@ namespace IMT.Manager
 
         private void AddDecalColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
         {
-            colorProperty.Text = Localize.StyleOption_Color;
+            colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(Decal.Value?.m_color0);
             colorProperty.OnValueChanged += (Color32 color) => DecalColor.Value = color;
@@ -143,7 +144,7 @@ namespace IMT.Manager
 
         private void AddTilingProperty(FloatSingleDoubleProperty tilingProperty, EditorProvider provider)
         {
-            tilingProperty.Text = Localize.StyleOption_Scale;
+            tilingProperty.Label = Localize.StyleOption_Scale;
             tilingProperty.Format = Localize.NumberFormat_Percent;
             tilingProperty.FieldWidth = 100f;
             tilingProperty.CheckMax = true;
@@ -165,7 +166,7 @@ namespace IMT.Manager
 
         private new void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            angleProperty.Text = Localize.StyleOption_ObjectAngle;
+            angleProperty.Label = Localize.StyleOption_ObjectAngle;
             angleProperty.Format = Localize.NumberFormat_Degree;
             angleProperty.UseWheel = true;
             angleProperty.WheelStep = 1f;

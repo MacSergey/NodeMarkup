@@ -123,7 +123,7 @@ namespace IMT.Manager
 
         protected void AddSquareSideProperty(FloatPropertyPanel squareSideProperty, EditorProvider provider)
         {
-            squareSideProperty.Text = Localize.StyleOption_SquareSide;
+            squareSideProperty.Label = Localize.StyleOption_SquareSide;
             squareSideProperty.Format = Localize.NumberFormat_Meter;
             squareSideProperty.UseWheel = true;
             squareSideProperty.WheelStep = 0.1f;
@@ -136,7 +136,7 @@ namespace IMT.Manager
         }
         protected void AddLineCountProperty(IntPropertyPanel lineCountProperty, EditorProvider provider)
         {
-            lineCountProperty.Text = Localize.StyleOption_LineCount;
+            lineCountProperty.Label = Localize.StyleOption_LineCount;
             lineCountProperty.UseWheel = true;
             lineCountProperty.WheelStep = 1;
             lineCountProperty.WheelTip = Settings.ShowToolTip;

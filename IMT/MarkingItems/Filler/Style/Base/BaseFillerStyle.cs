@@ -67,12 +67,12 @@ namespace IMT.Manager
             {FillerType.Chevron, new ChevronFillerStyle(DefaultMarkingColor, StripeDefaultWidth, DefaultEffect, DefaultEffect, DefaultTexture, DefaultOffset, DefaultAngleBetween, DefaultStepStripe)},
             {FillerType.Decal, new DecalFillerStyle(null, DefaultMarkingColor, DefaultOffset, Vector2.one, 0f)},
             {FillerType.Asphalt, new AsphaltFillerStyle(ThemeHelper.DefaultTheme, new Color32(170, 170, 170, 255), DefaultOffset)},
-            {FillerType.Pavement, new PavementFillerStyle(DefaultOffset, DefaultElevation, DefaultCornerRadius)},
-            {FillerType.Grass, new GrassFillerStyle(ThemeHelper.DefaultTheme, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
-            {FillerType.Gravel, new GravelFillerStyle(ThemeHelper.DefaultTheme,DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
-            {FillerType.Ruined, new RuinedFillerStyle(ThemeHelper.DefaultTheme,DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
-            {FillerType.Cliff, new CliffFillerStyle(ThemeHelper.DefaultTheme,DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
-            {FillerType.Texture, new CustomTextureFillerStyle(null, null, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize, Vector2.one, 0f)},
+            {FillerType.Pavement, new PavementFillerStyle(ThemeHelper.DefaultTheme, DefaultOffset, DefaultElevation, DefaultCornerRadius)},
+            {FillerType.Grass, new GrassFillerStyle(ThemeHelper.DefaultTheme, ThemeHelper.DefaultTheme, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Gravel, new GravelFillerStyle(ThemeHelper.DefaultTheme, ThemeHelper.DefaultTheme,DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Ruined, new RuinedFillerStyle(ThemeHelper.DefaultTheme, ThemeHelper.DefaultTheme,DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Cliff, new CliffFillerStyle(ThemeHelper.DefaultTheme, ThemeHelper.DefaultTheme,DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize)},
+            {FillerType.Texture, new CustomTextureFillerStyle(ThemeHelper.DefaultTheme, null, null, DefaultOffset, DefaultElevation, DefaultCornerRadius, DefaultCurbSize, Vector2.one, 0f)},
         };
         public static BaseFillerStyle GetDefault(FillerType type)
         {
@@ -155,7 +155,7 @@ namespace IMT.Manager
 
         protected void AddLineOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Label = Localize.StyleOption_Offset;
             offsetProperty.Format = Localize.NumberFormat_Meter;
             offsetProperty.UseWheel = true;
             offsetProperty.WheelStep = 0.1f;
@@ -168,7 +168,7 @@ namespace IMT.Manager
         }
         private void AddMedianOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.Text = Localize.StyleOption_Offset;
+            offsetProperty.Label = Localize.StyleOption_Offset;
             offsetProperty.FieldsWidth = 50f;
             offsetProperty.SetLabels(Localize.StyleOption_LineOffsetAbrv, Localize.StyleOption_MedianOffsetAbrv);
             offsetProperty.Format = Localize.NumberFormat_Meter;
@@ -185,7 +185,7 @@ namespace IMT.Manager
         {
             if (this is IRotateFiller rotateStyle)
             {
-                angleProperty.Text = Localize.StyleOption_Angle;
+                angleProperty.Label = Localize.StyleOption_Angle;
                 angleProperty.Format = Localize.NumberFormat_Degree;
                 angleProperty.UseWheel = true;
                 angleProperty.WheelStep = 1f;
