@@ -16,8 +16,10 @@ namespace IMT.UI
         private CustomUIButton ImportButton { get; set; }
         private CustomUIButton CancelButton { get; set; }
         protected StringDropDown DropDown { get; set; }
-        public ImportMessageBox()
+        public ImportMessageBox() : base()
         {
+            Message.color = ComponentStyle.WarningColor;
+
             ImportButton = AddButton(ImportClick);
             ImportButton.text = IMT.Localize.Settings_Restore;
             ImportButton.Disable();

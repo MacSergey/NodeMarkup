@@ -206,12 +206,12 @@ Global
 		{A7F303AF-C11E-4DD8-A195-6D0D459DEE53} = {78F18B58-7B26-46A8-B934-FFFE6DD7B29E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2000/1/1
-		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
-		RESX_ExcelExportMode = MultipleSheets
-		RESX_AutoCreateNewLanguageFiles = True
-		RESX_ConfirmAddLanguageFile = True
 		RESX_RemoveEmptyEntries = False
+		RESX_ConfirmAddLanguageFile = True
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_ExcelExportMode = MultipleSheets
+		SolutionGuid = {24C1D7AB-61EC-4A4D-8F34-0A0F96032B18}
+		BuildVersion_StartDate = 2000/1/1
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ModsCommon\ColorsShared\ColorsShared.projitems*{0a17b8bb-d66a-44be-bef5-98dae2964143}*SharedItemsImports = 5
@@ -304,5 +304,14 @@ Global
 		ModsCommon\XmlExtension\XmlExtension.projitems*{fada36db-c397-4128-9644-b477c4f50b26}*SharedItemsImports = 13
 		ModsCommon\LoggerShared\LoggerShared.projitems*{fe0af823-f63f-4441-b28d-c0890bc0bf6a}*SharedItemsImports = 13
 		ModsCommon\TrajectoryShared\TrajectoryShared.projitems*{ffba673c-7990-421a-8dd3-87149c1f751b}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(AutomaticVersions) = postSolution
+		UpdateAssemblyVersion.Beta Debug|Any CPU = True
+		UpdateAssemblyFileVersion.Beta Debug|Any CPU = False
+		UpdateAssemblyInfoVersion.Beta Debug|Any CPU = False
+		AssemblyVersionSettings.Beta Debug|Any CPU = None.None.None.Increment
+		UpdatePackageVersion.Beta Debug|Any CPU = False
+		AssemblyInfoVersionType.Beta Debug|Any CPU = SettingsVersion
+		InheritWinAppVersionFrom.Beta Debug|Any CPU = None
 	EndGlobalSection
 EndGlobal

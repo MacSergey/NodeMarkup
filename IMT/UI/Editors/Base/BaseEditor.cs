@@ -155,7 +155,7 @@ namespace IMT.UI.Editors
 
             ItemsShadow = AddUIComponent<CustomUISprite>();
             ItemsShadow.atlas = CommonTextures.Atlas;
-            ItemsShadow.spriteName = CommonTextures.PanelShadow;
+            ItemsShadow.spriteName = CommonTextures.ShadowVertical;
             ItemsShadow.color = new Color32(0, 0, 0, 224);
             ItemsShadow.width = 20f;
             ItemsShadow.isVisible = false;

@@ -28,7 +28,7 @@ namespace IMT.UI.Editors
 
                 PauseLayout(() =>
                 {
-                    PaddingButtom = isExpand ? 15 : 0;
+                    PaddingBottom = isExpand ? 15 : 0;
                     SetStyle();
 
                     foreach (var item in components.Where(i => i != Item))

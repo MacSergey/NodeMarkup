@@ -77,7 +77,7 @@ namespace IMT.UI.Editors
                     {
                         Editor.ExpandList[Category.Name] = value.Value;
                         Header.IsExpand = value.Value;
-                        PaddingButtom = value.Value ? 0 : 5;
+                        PaddingBottom = value.Value ? 0 : 5;
 
                         foreach (var item in components)
                         {
@@ -96,7 +96,7 @@ namespace IMT.UI.Editors
         public BasePropertyCategoryPanel() : base()
         {
             ForegroundSprite = string.Empty;
-            PaddingButtom = 3;
+            PaddingBottom = 3;
         }
 
         public virtual void Init(IPropertyCategoryInfo category, IPropertyContainer editor)
