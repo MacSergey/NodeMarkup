@@ -352,7 +352,7 @@ namespace IMT.UI.Editors
             NameLabel = AddUIComponent<CustomUILabel>();
             NameLabel.textScale = 0.8f;
             NameLabel.autoSize = true;
-            NameLabel.padding = new RectOffset(0, 0, 2, 0);
+            NameLabel.Padding = new RectOffset(0, 0, 2, 0);
             NameLabel.zOrder = 1;
         }
         protected override void FillContent()

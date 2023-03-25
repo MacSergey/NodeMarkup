@@ -137,6 +137,7 @@ namespace IMT.UI.Editors
         private RuleEdgeSelectPropertyPanel AddEdgeProperty(EdgePosition position, string name, string text)
         {
             var edgeProperty = ComponentPool.Get<RuleEdgeSelectPropertyPanel>(this, name);
+            edgeProperty.SetStyle(PropertyStyle.Default);
             edgeProperty.Label = text;
             edgeProperty.Selector.Position = position;
             edgeProperty.Init();
@@ -184,6 +185,7 @@ namespace IMT.UI.Editors
                     return;
             }
 
+            Style.SetStyle(PropertyStyle.Default);
             Style.Label = IMT.Localize.Editor_Style;
             Style.Init(StyleSelector);
             Style.UseWheel = true;

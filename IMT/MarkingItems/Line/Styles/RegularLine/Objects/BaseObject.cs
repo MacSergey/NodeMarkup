@@ -740,6 +740,10 @@ namespace IMT.Manager
                 }
             });
         }
+        public override void SetStyle(ControlStyle style)
+        {
+            Selector.SetStyle(style.Segmented);
+        }
 
         public class DistributionTypeSegmented : UIOnceSegmented<DistributionType> { }
     }
@@ -759,6 +763,10 @@ namespace IMT.Manager
     {
         protected override string GetDescription(FixedEndType value) => value.Description();
         protected override bool IsEqual(FixedEndType first, FixedEndType second) => first == second;
+        public override void SetStyle(ControlStyle style)
+        {
+            Selector.SetStyle(style.Segmented);
+        }
 
         public class FixedEndTypeSegmented : UIOnceSegmented<FixedEndType> { }
     }

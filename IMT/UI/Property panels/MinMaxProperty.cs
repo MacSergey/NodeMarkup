@@ -6,8 +6,6 @@ namespace IMT.UI
 {
     public class MinMaxProperty : EditorPropertyPanel, IReusable
     {
-        bool IReusable.InCache { get; set; }
-
         public event Action<bool, int, int> OnValueChanged;
 
         private CustomUIToggle UseCount { get; set; }
@@ -89,7 +87,7 @@ namespace IMT.UI
             var min = Content.AddUIComponent<CustomUILabel>();
             min.text = IMT.Localize.StyleOption_Min;
             min.textScale = 0.7f;
-            min.padding = new RectOffset(0, 0, 2, 0);
+            min.Padding = new RectOffset(0, 0, 2, 0);
 
             MinField = Content.AddUIComponent<IntUITextField>();
             MinField.name = nameof(MinField);
@@ -100,7 +98,7 @@ namespace IMT.UI
             var max = Content.AddUIComponent<CustomUILabel>();
             max.text = IMT.Localize.StyleOption_Max;
             max.textScale = 0.7f;
-            max.padding = new RectOffset(0, 0, 2, 0);
+            max.Padding = new RectOffset(0, 0, 2, 0);
 
             MaxField = Content.AddUIComponent<IntUITextField>();
             MaxField.name = nameof(MaxField);
@@ -159,6 +157,13 @@ namespace IMT.UI
         {
             MinField.isEnabled = EnableCount;
             MaxField.isEnabled = EnableCount;
+        }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            UseCount.SetStyle(style.Toggle);
+            MinField.SetStyle(style.TextField);
+            MaxField.SetStyle(style.TextField);
         }
     }
 }

@@ -137,7 +137,7 @@ namespace IMT.UI.Editors
         private LineAlignmentPropertyPanel AddAlignmentProperty(PropertyEnumValue<Alignment> property, string label)
         {
             var alignment = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties, "LineAlignment");
-
+            alignment.SetStyle(PropertyStyle.Default);
             alignment.Label = label;
             alignment.Init();
             alignment.SelectedObject = property;
@@ -148,7 +148,7 @@ namespace IMT.UI.Editors
         private BoolPropertyPanel AddClipSidewalkProperty(MarkingRegularLine line)
         {
             var clipSidewalk = ComponentPool.Get<BoolPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
-
+            clipSidewalk.SetStyle(PropertyStyle.Default);
             clipSidewalk.Label = IMT.Localize.LineEditor_ClipSidewalk;
             clipSidewalk.Init();
             clipSidewalk.Value = line.ClipSidewalk;

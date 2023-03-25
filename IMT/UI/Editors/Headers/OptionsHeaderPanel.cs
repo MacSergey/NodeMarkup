@@ -185,10 +185,11 @@ namespace IMT.UI.Editors
             Separator = AddUIComponent<CustomUISprite>();
             Separator.zOrder = Content.zOrder;
             Separator.atlas = CommonTextures.Atlas;
-            Separator.spriteName = CommonTextures.EmptyWithotBorder;
+            Separator.spriteName = CommonTextures.EmptyWithoutBorder;
             Separator.size = new Vector2(2f, 30f);
             Separator.color = new Color32(0, 0, 0, 128);
             Separator.zOrder = 2;
+            SetItemMargin(Separator, new RectOffset(10, 5, 0, 0));
         }
         protected override void FillContent()
         {
@@ -212,7 +213,7 @@ namespace IMT.UI.Editors
         protected override void SetSize()
         {
             base.SetSize();
-            Separator.height = height;
+            Separator.height = height - 10f;
         }
         public override void Refresh()
         {

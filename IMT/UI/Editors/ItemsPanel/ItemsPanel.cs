@@ -176,10 +176,17 @@ namespace IMT.UI.Editors
 
         public void EditObject(ObjectType editObject)
         {
+            ItemType item = null;
             if (editObject != null)
-                Select(FindItem(editObject) ?? AddObjectImpl(editObject));
+            {
+                item = FindItem(editObject);
+                if (item == null)
+                    PauseLayout(() => item = AddObjectImpl(editObject));
+            }
             else
-                Select(FindItem(0));
+                item = FindItem(0);
+
+            Select(item);
         }
         public void SelectObject(ObjectType editObject)
         {

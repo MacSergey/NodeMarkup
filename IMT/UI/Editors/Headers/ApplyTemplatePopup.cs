@@ -108,7 +108,7 @@ namespace IMT.UI.Editors
     {
         protected override string NotFoundText => IMT.Localize.HeaderPanel_NoTemplates;
         protected override string GetName(StyleTemplate value) => value.Name;
-        protected override void SetEntityStyle(TemplateEntity entity) => entity.EntityStyle<StyleTemplate, TemplateEntity>();
+        protected override void SetEntityStyle(TemplateEntity entity) => entity.EntityDefaultStyle<StyleTemplate, TemplateEntity>();
         protected override bool FilterSearch(StyleTemplate value) => base.FilterSearch(value) || (value.IsAsset && value.Asset.Author.ToLower().Contains(SearchText));
     }
     public class TemplateEntity : StyleTemplateItem, IPopupEntity<StyleTemplate>

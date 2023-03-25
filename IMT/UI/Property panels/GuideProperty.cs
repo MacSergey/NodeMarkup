@@ -9,8 +9,6 @@ namespace IMT.UI
 {
     public class FillerGuidePropertyPanel : EditorPropertyPanel, IReusable
     {
-        bool IReusable.InCache { get; set; }
-
         public event Action<bool, FillerGuide, FillerGuide> OnValueChanged;
         public event Action<SelectGuideButton> OnSelect;
         public event Action<SelectGuideButton> OnEnter;
@@ -143,6 +141,13 @@ namespace IMT.UI
                 LeftGuide = (LeftGuide + 1) % VertexCount;
                 RightGuide = (RightGuide + 1) % VertexCount;
             }
+        }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            FollowGuide.SetStyle(style.Toggle);
+            LeftGuideSelector.SetStyle(style.DropDown);
+            RightGuideSelector.SetStyle(style.DropDown);
         }
 
         public class SelectGuideButton : SelectItemPropertyButton<FillerGuide>

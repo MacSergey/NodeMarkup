@@ -74,7 +74,7 @@ namespace IMT.UI
             var button = parent.AddUIComponent<CustomUIButton>();
             button.SetDefaultStyle();
             button.size = new Vector2(width, 20f);
-            button.relativePosition = new Vector2(10 * count + width * (count - 1), 253f);
+            button.relativePosition = new Vector2(10 * count + width * (count - 1), 258f);
             button.textPadding = new RectOffset(0, 0, 5, 0);
             button.textScale = 0.6f;
             button.text = text;

@@ -140,5 +140,12 @@ namespace IMT.UI
             LengthField.isEnabled = EnableGap;
             PeriodField.isEnabled = EnableGap;
         }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            UseToggle.SetStyle(style.Toggle);
+            LengthField.SetStyle(style.TextField);
+            PeriodField.SetStyle(style.TextField);
+        }
     }
 }

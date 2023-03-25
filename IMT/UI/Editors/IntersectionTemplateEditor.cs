@@ -302,9 +302,9 @@ namespace IMT.UI.Editors
             CountLabel.textScale = 0.7f;
             CountLabel.relativePosition = new Vector3(0, 0);
             CountLabel.autoSize = false;
-            CountLabel.textAlignment = UIHorizontalAlignment.Center;
-            CountLabel.verticalAlignment = UIVerticalAlignment.Middle;
-            CountLabel.padding = new RectOffset(0, 0, 5, 0);
+            CountLabel.HorizontalAlignment = UIHorizontalAlignment.Center;
+            CountLabel.VerticalAlignment = UIVerticalAlignment.Middle;
+            CountLabel.Padding = new RectOffset(0, 0, 5, 0);
         }
         protected override void OnSizeChanged()
         {

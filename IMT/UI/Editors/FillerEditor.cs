@@ -84,6 +84,7 @@ namespace IMT.UI.Editors
         private void AddStyleTypeProperty()
         {
             Style = ComponentPool.Get<FillerStylePropertyPanel>(PropertiesPanel, nameof(Style));
+            Style.SetStyle(PropertyStyle.Default);
             Style.Label = IMT.Localize.Editor_Style;
             Style.Init();
             Style.UseWheel = true;

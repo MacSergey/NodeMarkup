@@ -108,13 +108,13 @@ namespace IMT.UI
             NoScreenshot.autoSize = false;
             NoScreenshot.size = new Vector2(Size, Size);
             NoScreenshot.position = new Vector2(0, 0);
-            NoScreenshot.wordWrap = true;
+            NoScreenshot.WordWrap = true;
 
             NoScreenshot.textScale = 1.2f;
             NoScreenshot.text = IMT.Localize.PresetInfo_NoScreenshot;
 
-            NoScreenshot.textAlignment = UIHorizontalAlignment.Center;
-            NoScreenshot.verticalAlignment = UIVerticalAlignment.Middle;
+            NoScreenshot.HorizontalAlignment = UIHorizontalAlignment.Center;
+            NoScreenshot.VerticalAlignment = UIVerticalAlignment.Middle;
         }
         private CustomUILabel AddLabel(UIHorizontalAlignment alignment)
         {
@@ -122,10 +122,10 @@ namespace IMT.UI
             label.font = Font;
             label.autoSize = true;
             label.textScale = 0.65f;
-            label.padding = new RectOffset(alignment == UIHorizontalAlignment.Left ? 2 : 0, alignment == UIHorizontalAlignment.Right ? 2 : 0, 1, 2);
+            label.Padding = new RectOffset(alignment == UIHorizontalAlignment.Left ? 2 : 0, alignment == UIHorizontalAlignment.Right ? 2 : 0, 1, 2);
             label.textColor = TextColor;
-            label.textAlignment = alignment;
-            label.verticalAlignment = UIVerticalAlignment.Bottom;
+            label.HorizontalAlignment = alignment;
+            label.VerticalAlignment = UIVerticalAlignment.Bottom;
             return label;
         }
 
@@ -133,6 +133,11 @@ namespace IMT.UI
         {
             base.OnSizeChanged();
             Info.width = width - Screenshot.width - Padding.horizontal - AutoLayoutSpace;
+        }
+
+        public override void SetStyle(ControlStyle style)
+        {
+
         }
 
         private class CustomUITextureSprite : UITextureSprite

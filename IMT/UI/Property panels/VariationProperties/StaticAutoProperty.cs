@@ -144,6 +144,12 @@ namespace IMT.UI
         }
 
         public void SimulateEnterValue(ValueType value) => Field.SimulateEnterValue(value);
+
+        public override void SetStyle(ControlStyle style)
+        {
+            base.SetStyle(style);
+            Field.SetStyle(style.TextField);
+        }
     }
     public class FloatStaticAutoProperty : StaticAutoProperty<float, FloatUITextField> { }
 }

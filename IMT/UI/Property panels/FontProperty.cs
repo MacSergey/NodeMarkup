@@ -11,10 +11,7 @@ namespace IMT.UI
 {
     public class FontPropertyPanel : EditorPropertyPanel, IReusable
     {
-        bool IReusable.InCache { get; set; }
-
         public event Action<string> OnValueChanged;
-
 
         public string Font
         {
@@ -204,6 +201,12 @@ namespace IMT.UI
                 });
             }
         }
+        public override void SetStyle(ControlStyle style)
+        {
+            FontFamilySelector.SetStyle(style.DropDown);
+            FontStyleSelector.SetStyle(style.Segmented);
+        }
+
     }
 
     public class FontDropDown : SelectItemDropDown<string, FontEntity, FontPopup>
@@ -217,12 +220,18 @@ namespace IMT.UI
             Entity.TextScale = 0.7f;
         }
 
-        protected override void SetPopupStyle() => Popup.PopupDefaultStyle(20f);
+        protected override void SetPopupStyle()
+        {
+            Popup.PopupDefaultStyle(20f);
+            if (Style != null)
+                Popup.color = Style.PopupColor;
+        }
         protected override void InitPopup()
         {
             Popup.MaximumSize = new Vector2(PopupWidth, 700f);
             Popup.width = PopupWidth;
             Popup.MaxVisibleItems = 25;
+            Popup.Style = Style;
             base.InitPopup();
         }
     }
@@ -232,7 +241,15 @@ namespace IMT.UI
     {
         protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
         protected override string GetName(string value) => value ?? IMT.Localize.StyleOption_DefaultFont;
-        protected override void SetEntityStyle(FontEntity entity) => entity.EntityStyle<string, FontEntity>();
+        protected override void SetEntityStyle(FontEntity entity)
+        {
+            entity.EntityDefaultStyle<string, FontEntity>();
+            if (Style != null)
+            {
+                entity.hoveredBgColor = Style.EntityHoveredColor;
+                entity.focusedBgColor = Style.EntitySelectedColor;
+            }
+        }
     }
     public class FontEntity : PopupEntity<string>
     {
@@ -253,9 +270,9 @@ namespace IMT.UI
         {
             Label = AddUIComponent<CustomUILabel>();
             Label.autoSize = false;
-            Label.textAlignment = UIHorizontalAlignment.Left;
-            Label.verticalAlignment = UIVerticalAlignment.Middle;
-            Label.padding = new RectOffset(8, 0, 3, 0);
+            Label.HorizontalAlignment = UIHorizontalAlignment.Left;
+            Label.VerticalAlignment = UIVerticalAlignment.Middle;
+            Label.Padding = new RectOffset(8, 0, 3, 0);
             Label.textScale = 0.9f;
         }
         protected override void OnSizeChanged()

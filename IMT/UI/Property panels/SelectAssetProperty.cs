@@ -15,7 +15,6 @@ namespace IMT.UI
         where PrefabType : PrefabInfo
     {
         public event Action<PrefabType> OnValueChanged;
-        bool IReusable.InCache { get; set; }
 
         public abstract PrefabType Prefab { get; set; }
         public abstract string RawName { get; set; }
@@ -86,6 +85,11 @@ namespace IMT.UI
             for (uint i = 0; i < count; i += 1)
                 DropDown.AddItem(PrefabCollection<PrefabType>.GetLoaded(i));
         }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            DropDown.SetStyle(style.DropDown);
+        }
     }
 
     public class SelectPropProperty : SelectPrefabProperty<PropInfo, PropEntity, PropPopup, PropDropDown> { }
@@ -111,12 +115,19 @@ namespace IMT.UI
         {
             Entity.ShowFavorite = false;
         }
-        protected override void SetPopupStyle() => Popup.PopupDefaultStyle(50f);
+        protected override void SetPopupStyle()
+        {
+            Popup.PopupDefaultStyle(50f);
+            if (Style != null)
+                Popup.color = Style.PopupColor;
+        }
+
         protected override void InitPopup()
         {
             Popup.MaximumSize = new Vector2(width, 700f);
             Popup.width = width;
             Popup.MaxVisibleItems = 10;
+            Popup.Style = Style;
             base.InitPopup();
         }
     }
@@ -124,55 +135,67 @@ namespace IMT.UI
     public class TreeDropDown : PrefabDropDown<TreeInfo, TreeEntity, TreePopup> { }
     public class NetDropDown : PrefabDropDown<NetInfo, NetEntity, NetPopup> { }
 
-
-    public class PropPopup : SearchPopup<PropInfo, PropEntity>
+    public abstract class PrefabPopup<PrefabType, EntityType> : SearchPopup<PrefabType, EntityType>
+        where PrefabType : PrefabInfo
+        where EntityType : PrefabEntity<PrefabType>
+    {
+        protected override void SetEntityStyle(EntityType entity)
+        {
+            entity.EntityDefaultStyle<PrefabType, EntityType>();
+            if (Style != null)
+            {
+                entity.hoveredBgColor = Style.EntityHoveredColor;
+                entity.focusedBgColor = Style.EntitySelectedColor;
+            }
+        }
+    }
+    public class PropPopup : PrefabPopup<PropInfo, PropEntity>
     {
         protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
-        private static string SearchText { get; set; } = string.Empty;
+        private static string SearchCache { get; set; } = string.Empty;
 
         public override void Init(IEnumerable<PropInfo> values, Func<PropInfo, bool> selector, Func<PropInfo, PropInfo, int> sorter)
         {
-            Search.text = SearchText;
+            Search.text = SearchCache;
             base.Init(values, selector, sorter);
         }
         public override void DeInit()
         {
-            SearchText = Search.text;
+            SearchCache = Search.text;
             base.DeInit();
         }
         protected override string GetName(PropInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
-        protected override void SetEntityStyle(PropEntity entity) => entity.EntityStyle<PropInfo, PropEntity>();
     }
-    public class TreePopup : SearchPopup<TreeInfo, TreeEntity>
+    public class TreePopup : PrefabPopup<TreeInfo, TreeEntity>
     {
         protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
-        private static string SearchText { get; set; } = string.Empty;
+        private static string SearchCache { get; set; } = string.Empty;
 
         public override void Init(IEnumerable<TreeInfo> values, Func<TreeInfo, bool> selector, Func<TreeInfo, TreeInfo, int> sorter)
         {
-            Search.text = SearchText;
+            Search.text = SearchCache;
             base.Init(values, selector, sorter);
         }
         public override void DeInit()
         {
-            SearchText = Search.text;
+            SearchCache = Search.text;
             base.DeInit();
         }
         protected override string GetName(TreeInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
     }
-    public class NetPopup : SearchPopup<NetInfo, NetEntity>
+    public class NetPopup : PrefabPopup<NetInfo, NetEntity>
     {
         protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
-        private static string SearchText { get; set; } = string.Empty;
+        private static string SearchCache { get; set; } = string.Empty;
 
         public override void Init(IEnumerable<NetInfo> values, Func<NetInfo, bool> selector, Func<NetInfo, NetInfo, int> sorter)
         {
-            Search.text = SearchText;
+            Search.text = SearchCache;
             base.Init(values, selector, sorter);
         }
         public override void DeInit()
         {
-            SearchText = Search.text;
+            SearchCache = Search.text;
             base.DeInit();
         }
         protected override string GetName(NetInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
@@ -217,9 +240,9 @@ namespace IMT.UI
 
             Title = AddUIComponent<CustomUILabel>();
             Title.autoSize = false;
-            Title.wordWrap = true;
+            Title.WordWrap = true;
             Title.textScale = 0.7f;
-            Title.verticalAlignment = UIVerticalAlignment.Middle;
+            Title.VerticalAlignment = UIVerticalAlignment.Middle;
 
             Favorite = AddUIComponent<CustomUIButton>();
             Favorite.atlas = IMTTextures.Atlas;
@@ -303,7 +326,7 @@ namespace IMT.UI
 
                 var left = Screenshot.isVisible ? Mathf.CeilToInt(Screenshot.relativePosition.x + Screenshot.width) + 5 : 8;
                 var right = Math.Max(Favorite.isVisible ? Mathf.CeilToInt(width - Favorite.relativePosition.x) + 5 : 8, Padding.right);
-                Title.padding = new RectOffset(left, right, 5, 5);
+                Title.Padding = new RectOffset(left, right, 5, 5);
             }
         }
 

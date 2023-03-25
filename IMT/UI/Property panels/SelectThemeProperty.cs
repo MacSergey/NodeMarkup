@@ -13,7 +13,6 @@ namespace IMT.UI
     public class SelectThemeProperty : EditorPropertyPanel, IReusable
     {
         public event Action<ThemeHelper.IThemeData> OnValueChanged;
-        bool IReusable.InCache { get; set; }
 
         private ThemeDropDown DropDown { get; set; }
 
@@ -59,6 +58,11 @@ namespace IMT.UI
             TextureType = default;
             OnValueChanged = null;
         }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            DropDown.SetStyle(style.DropDown);
+        }
     }
 
     public class ThemeDropDown : SelectItemDropDown<ThemeHelper.IThemeData, ThemeEntity, ThemePopup>
@@ -85,13 +89,20 @@ namespace IMT.UI
             set => Entity.RawName = value;
         }
 
-        protected override void SetPopupStyle() => Popup.PopupDefaultStyle(50f);
+        protected override void SetPopupStyle()
+        {
+            Popup.PopupDefaultStyle(50f);
+            if (Style != null)
+                Popup.color = Style.PopupColor;
+        }
+
         protected override void InitPopup()
         {
             Popup.MaximumSize = new Vector2(width, 700f);
             Popup.width = width;
             Popup.MaxVisibleItems = 10;
             Popup.TextureType = TextureType;
+            Popup.Style = Style;
             base.InitPopup();
         }
     }
@@ -99,18 +110,18 @@ namespace IMT.UI
     public class ThemePopup : SearchPopup<ThemeHelper.IThemeData, ThemeEntity>
     {
         protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
-        private static string SearchText { get; set; } = string.Empty;
+        private static string SearchCache { get; set; } = string.Empty;
         public ThemeHelper.TextureType TextureType { get; set; }
 
         public override void Init(IEnumerable<ThemeHelper.IThemeData> values, Func<ThemeHelper.IThemeData, bool> selector, Func<ThemeHelper.IThemeData, ThemeHelper.IThemeData, int> sorter)
         {
-            Search.text = SearchText;
+            Search.text = SearchCache;
             base.Init(values, selector, sorter);
         }
         public override void DeInit()
         {
             TextureType = default;
-            SearchText = Search.text;
+            SearchCache = Search.text;
             base.DeInit();
         }
         protected override void SetEntityValue(ThemeEntity entity, int index, ThemeHelper.IThemeData value, bool selected)
@@ -120,7 +131,15 @@ namespace IMT.UI
         }
 
         protected override string GetName(ThemeHelper.IThemeData value) => value.Name;
-        protected override void SetEntityStyle(ThemeEntity entity) => entity.EntityStyle<ThemeHelper.IThemeData, ThemeEntity>();
+        protected override void SetEntityStyle(ThemeEntity entity)
+        {
+            entity.EntityDefaultStyle<ThemeHelper.IThemeData, ThemeEntity>();
+            if (Style != null)
+            {
+                entity.hoveredBgColor = Style.EntityHoveredColor;
+                entity.focusedBgColor = Style.EntitySelectedColor;
+            }
+        }
     }
 
     public class ThemeEntity : PopupEntity<ThemeHelper.IThemeData>
@@ -161,9 +180,9 @@ namespace IMT.UI
 
             Title = AddUIComponent<CustomUILabel>();
             Title.autoSize = false;
-            Title.wordWrap = true;
+            Title.WordWrap = true;
             Title.textScale = 0.7f;
-            Title.verticalAlignment = UIVerticalAlignment.Middle;
+            Title.VerticalAlignment = UIVerticalAlignment.Middle;
 
             Set();
         }
@@ -219,7 +238,7 @@ namespace IMT.UI
 
                 var left = Screenshot.isVisible ? Mathf.CeilToInt(Screenshot.relativePosition.x + Screenshot.width) + 5 : 8;
                 var right = Math.Max(Padding.right, 8);
-                Title.padding = new RectOffset(left, right, 5, 5);
+                Title.Padding = new RectOffset(left, right, 5, 5);
             }
         }
     }

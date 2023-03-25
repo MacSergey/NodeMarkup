@@ -12,8 +12,6 @@ namespace IMT.UI
 {
     public class MultilineTextProperty : EditorPropertyPanel, IReusable
     {
-        bool IReusable.InCache { get; set; }
-
         public event Action<string> OnTextChanged;
 
         protected override float DefaultHeight => TextPanel.LineCount * 20f + (TextPanel.LineCount - 1) * TextPanel.Padding.vertical + ItemsPadding * 2;
@@ -43,6 +41,11 @@ namespace IMT.UI
         }
 
         private void TextChanged(string text) => OnTextChanged?.Invoke(text);
+
+        public override void SetStyle(ControlStyle style)
+        {
+            TextPanel.SetStyle(style);
+        }
 
         public class MultilineText : CustomUIPanel, IReusable
         {
@@ -133,6 +136,12 @@ namespace IMT.UI
 
             private void FieldValueChanged(string text) => OnTextChanged?.Invoke(Text);
             private void FieldTextChanged(UIComponent component, string value) => Refresh();
+
+            public void SetStyle(ControlStyle style)
+            {
+                foreach (var line in Lines)
+                    line.Field.SetStyle(style.TextField);
+            }
         }
         public class MultilineTextItem : CustomUIPanel
         {
@@ -150,7 +159,7 @@ namespace IMT.UI
 
                     LabelItem = AddUIComponent<CustomUILabel>();
                     LabelItem.textScale = 0.7f;
-                    LabelItem.padding = new RectOffset(0, 8, 5, 0);
+                    LabelItem.Padding = new RectOffset(0, 8, 5, 0);
 
                     Field = AddUIComponent<StringUITextField>();
                     Field.SetDefaultStyle();

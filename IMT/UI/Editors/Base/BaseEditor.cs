@@ -190,10 +190,10 @@ namespace IMT.UI.Editors
         private void AddEmptyLabel()
         {
             EmptyLabel = AddUIComponent<CustomUILabel>();
-            EmptyLabel.textAlignment = UIHorizontalAlignment.Center;
-            EmptyLabel.verticalAlignment = UIVerticalAlignment.Middle;
-            EmptyLabel.padding = new RectOffset(10, 10, 0, 0);
-            EmptyLabel.wordWrap = true;
+            EmptyLabel.HorizontalAlignment = UIHorizontalAlignment.Center;
+            EmptyLabel.VerticalAlignment = UIVerticalAlignment.Middle;
+            EmptyLabel.Padding = new RectOffset(10, 10, 0, 0);
+            EmptyLabel.WordWrap = true;
             EmptyLabel.autoSize = false;
 
             SwitchEmptyMessage();
