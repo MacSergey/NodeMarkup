@@ -50,7 +50,7 @@ namespace IMT.UI
                 {
                     Info.AutoLayout = AutoLayout.Horizontal;
                     Info.AutoChildrenVertically = AutoLayoutChildren.Fit;
-                    Info.AutoCenterPadding = true;
+                    Info.AutoLayoutStart = ModsCommon.UI.LayoutStart.MiddleCentre;
 
                     Titles = AddLabel(UIHorizontalAlignment.Right);
                     Values = AddLabel(UIHorizontalAlignment.Left);

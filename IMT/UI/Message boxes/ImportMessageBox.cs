@@ -31,7 +31,7 @@ namespace IMT.UI
         private void AddFileList()
         {
             DropDown = Content.AddUIComponent<StringDropDown>();
-            ComponentStyle.DropDownMessageBoxStyle(DropDown, new Vector2(DefaultWidth - 2 * Padding, 38));
+            ComponentStyle.DropDownMessageBoxStyle(DropDown, new Vector2(DefaultWidth - 2 * DefaultPadding, 38));
             DropDown.EntityTextScale = 1f;
 
             DropDown.textScale = 1.25f;

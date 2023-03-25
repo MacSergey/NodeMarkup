@@ -220,7 +220,7 @@ namespace IMT
         private void AddOther(UIComponent helper)
         {
             var section = helper.AddOptionsSection(Localize.Setting_Others);
-            var button = section.AddButtonPanel().AddButton(Localize.Settings_InvertChevrons, InvertChevrons, 400);
+            var button = section.AddButtonPanel().AddButton(Localize.Settings_InvertChevrons, InvertChevrons, 600);
 
             static void InvertChevrons()
             {
