@@ -109,7 +109,7 @@ namespace IMT.UI
 
     public class ThemePopup : SearchPopup<ThemeHelper.IThemeData, ThemeEntity>
     {
-        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
+        protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchCache { get; set; } = string.Empty;
         public ThemeHelper.TextureType TextureType { get; set; }
 

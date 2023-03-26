@@ -5,9 +5,6 @@ namespace IMT.UI
 {
     public static class PropertyStyle
     {
-        //public static Color32 Normal => new Color32(169, 179, 188, 255);
-        //public static Color32 Hovered => new Color32(184, 192, 199, 255);
-        //public static Color32 Disabled => new Color32(116, 139, 164, 255);
         public static Color32 Normal => new Color32(45, 51, 57, 255);
         public static Color32 Hovered => new Color32(61, 69, 77, 255);
         public static Color32 Disabled => new Color32(116, 139, 164, 255);
@@ -45,7 +42,7 @@ namespace IMT.UI
             DropDown = new DropDownStyle()
             {
                 BgColors = new ColorSet(Normal, Hovered, Hovered, Normal, Disabled),
-                FgColors = new ColorSet(Color.black),
+                FgColors = new ColorSet(Color.white),
                 TextColors = new ColorSet(Color.white),
 
                 PopupColor = Hovered,

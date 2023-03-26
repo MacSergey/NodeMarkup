@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class ApplyTemplateHeaderButton : ObjectDropDown<StyleTemplate, TemplatePopup, TemplateEntity>, IHeaderButton, IReusable
+    public class ApplyTemplateHeaderButton : ObjectDropDown<StyleTemplate, TemplateEntity, TemplatePopup>, IHeaderButton, IReusable
     {
         bool IReusable.InCache { get; set; }
 
@@ -90,8 +90,8 @@ namespace IMT.UI.Editors
         protected override void OnUpdate()
         {
             base.OnUpdate();
-            if (state == UIButton.ButtonState.Focused)
-                state = UIButton.ButtonState.Normal;
+            if (State == UIButton.ButtonState.Focused)
+                State = UIButton.ButtonState.Normal;
         }
         public virtual void DeInit()
         {
@@ -106,7 +106,7 @@ namespace IMT.UI.Editors
 
     public class TemplatePopup : SearchPopup<StyleTemplate, TemplateEntity>
     {
-        protected override string NotFoundText => IMT.Localize.HeaderPanel_NoTemplates;
+        protected override string EmptyText => IMT.Localize.HeaderPanel_NoTemplates;
         protected override string GetName(StyleTemplate value) => value.Name;
         protected override void SetEntityStyle(TemplateEntity entity) => entity.EntityDefaultStyle<StyleTemplate, TemplateEntity>();
         protected override bool FilterSearch(StyleTemplate value) => base.FilterSearch(value) || (value.IsAsset && value.Asset.Author.ToLower().Contains(SearchText));
@@ -115,15 +115,9 @@ namespace IMT.UI.Editors
     {
         public event Action<int, StyleTemplate> OnSelected;
 
-        public bool Selected { get; set; }
         public int Index { get; set; }
         public RectOffset Padding { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool ShowDelete => false;
-
-        public void PerformWidth()
-        {
-            AutoWidth();
-        }
 
         public void SetObject(int index, StyleTemplate template, bool selected)
         {

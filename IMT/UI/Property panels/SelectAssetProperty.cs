@@ -151,7 +151,7 @@ namespace IMT.UI
     }
     public class PropPopup : PrefabPopup<PropInfo, PropEntity>
     {
-        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
+        protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchCache { get; set; } = string.Empty;
 
         public override void Init(IEnumerable<PropInfo> values, Func<PropInfo, bool> selector, Func<PropInfo, PropInfo, int> sorter)
@@ -168,7 +168,7 @@ namespace IMT.UI
     }
     public class TreePopup : PrefabPopup<TreeInfo, TreeEntity>
     {
-        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
+        protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchCache { get; set; } = string.Empty;
 
         public override void Init(IEnumerable<TreeInfo> values, Func<TreeInfo, bool> selector, Func<TreeInfo, TreeInfo, int> sorter)
@@ -185,7 +185,7 @@ namespace IMT.UI
     }
     public class NetPopup : PrefabPopup<NetInfo, NetEntity>
     {
-        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
+        protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchCache { get; set; } = string.Empty;
 
         public override void Init(IEnumerable<NetInfo> values, Func<NetInfo, bool> selector, Func<NetInfo, NetInfo, int> sorter)

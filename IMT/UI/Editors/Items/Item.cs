@@ -51,7 +51,7 @@ namespace IMT.UI.Editors
 
             TextHorizontalAlignment = UIHorizontalAlignment.Left;
             TextVerticalAlignment = UIVerticalAlignment.Middle;
-            wordWrap = true;
+            WordWrap = true;
         }
 
         public virtual void DeInit()

@@ -342,7 +342,7 @@ namespace IMT
         private void AddDeleteAll(UIComponent section, string buttonText, string caption, string message, Action process)
         {
             var button = section.AddButtonPanel().AddButton(buttonText, Click, 600);
-            button.FgColors = new ColorSet(new Color32(179, 45, 45, 255), new Color32(153, 38, 38, 255), new Color32(128, 32, 32, 255), new Color32(179, 45, 45, 255), default);
+            button.AllBgColors = new ColorSet(new Color32(179, 45, 45, 255), new Color32(153, 38, 38, 255), new Color32(128, 32, 32, 255), new Color32(179, 45, 45, 255), default);
 
             void Click()
             {

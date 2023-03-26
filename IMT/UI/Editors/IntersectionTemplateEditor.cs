@@ -288,7 +288,7 @@ namespace IMT.UI.Editors
         {
             base.Refresh();
             Icon.Count = EditObject.Roads;
-            wordWrap = !EditObject.IsAsset;
+            WordWrap = !EditObject.IsAsset;
         }
     }
     public class IntersectionTemplateIcon : ColorIcon

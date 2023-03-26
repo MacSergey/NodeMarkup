@@ -264,7 +264,7 @@ namespace IMT.UI.Editors
             base.Refresh();
             Icon.Type = EditObject.Style.Type;
             Icon.StyleColor = EditObject.Style is IColorStyle ? EditObject.Style.Color : Color.white;
-            wordWrap = !EditObject.IsAsset;
+            WordWrap = !EditObject.IsAsset;
 
             SetStyle();
         }

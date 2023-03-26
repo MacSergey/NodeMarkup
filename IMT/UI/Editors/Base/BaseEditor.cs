@@ -67,8 +67,6 @@ namespace IMT.UI.Editors
             {
                 if (!Settings.AutoCollapseItemsPanel)
                     return Mathf.Min(width * 0.3f, 300f);
-                //else if ((ItemsPanel is IGroupItemPanel groupPanel) && groupPanel.GroupingEnable)
-                //    return 40f;
                 else
                     return 38f;
             }
@@ -164,7 +162,7 @@ namespace IMT.UI.Editors
             ContentPanel.name = nameof(ContentPanel);
             ContentPanel.Padding = new RectOffset(10, 10, 0, 0);
             ContentPanel.AutoLayout = AutoLayout.Vertical;
-            ContentPanel.AutoLayoutSpace = 10;
+            ContentPanel.AutoLayoutSpace = 15;
             ContentPanel.AutoChildrenHorizontally = AutoLayoutChildren.Fill;
             ContentPanel.ScrollOrientation = UIOrientation.Vertical;
             ContentPanel.Atlas = CommonTextures.Atlas;

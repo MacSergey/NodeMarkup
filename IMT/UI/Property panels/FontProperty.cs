@@ -239,7 +239,7 @@ namespace IMT.UI
 
     public class FontPopup : SearchPopup<string, FontEntity>
     {
-        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
+        protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
         protected override string GetName(string value) => value ?? IMT.Localize.StyleOption_DefaultFont;
         protected override void SetEntityStyle(FontEntity entity)
         {
