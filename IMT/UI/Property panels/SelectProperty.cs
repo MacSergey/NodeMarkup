@@ -8,7 +8,7 @@ namespace IMT.UI.Editors
         protected override float Width => 230f;
         public override void SetStyle(ControlStyle style)
         {
-            Selector.SetStyle(style.DropDown);
+            Selector.SelectorStyle = style.DropDown;
         }
 
         public class RuleEdgeSelectButton : SelectListPropertyButton<ILinePartEdge>
@@ -25,7 +25,7 @@ namespace IMT.UI.Editors
         protected override float Width => 150f;
         public override void SetStyle(ControlStyle style)
         {
-            Selector.SetStyle(style.DropDown);
+            Selector.SelectorStyle = style.DropDown;
         }
 
         public class CrosswalkBorderSelectButton : SelectListPropertyButton<MarkingRegularLine>

@@ -65,7 +65,7 @@ namespace IMT.UI.Editors
             Popup.PopupDefaultStyle(50f);
             Popup.Atlas = CommonTextures.Atlas;
             Popup.BackgroundSprite = CommonTextures.PanelBig;
-            Popup.NormalBgColor = IMTColors.ItemsBackground;
+            Popup.BgColors = UIStyle.PopupBackground;
         }
         protected override void InitPopup()
         {

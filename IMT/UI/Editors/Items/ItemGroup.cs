@@ -48,7 +48,7 @@ namespace IMT.UI.Editors
             autoChildrenVertically = AutoLayoutChildren.Fit;
 
             atlas = CommonTextures.Atlas;
-            NormalFgColor = IMTColors.ItemGroupBackground;
+            FgColors = UIStyle.ItemGroupBackground;
             ForegroundSprite = CommonTextures.PanelBig;
 
             PauseLayout(() =>
@@ -125,7 +125,7 @@ namespace IMT.UI.Editors
             get
             {
                 var colors = base.ForegroundColors;
-                colors.normal = colors.focused = IMTColors.ItemGroup;
+                colors.normal = colors.focused = UIStyle.ItemGroup;
                 return colors;
             }
         }

@@ -21,7 +21,7 @@ namespace IMT.UI
         private CustomUIButton CopyButton { get; set; }
         private CustomUIButton PasteButton { get; set; }
 
-        protected override Color32 PopupColor => IMTColors.ItemsBackground;
+        protected override Color32 PopupColor => UIStyle.PopupBackground;
 
         protected override void FillContent()
         {
@@ -32,7 +32,7 @@ namespace IMT.UI
             CopyButton.SetDefaultStyle();
             CopyButton.size = new Vector2(20f, 20f);
             CopyButton.FgAtlas = IMTTextures.Atlas;
-            CopyButton.NormalFgSprite = IMTTextures.CopyButtonIcon;
+            CopyButton.FgSprites = IMTTextures.CopyButtonIcon;
             CopyButton.tooltip = IMT.Localize.Editor_ColorCopy;
             CopyButton.eventClick += Copy;
 
@@ -41,7 +41,7 @@ namespace IMT.UI
             PasteButton.SetDefaultStyle();
             PasteButton.size = new Vector2(20f, 20f);
             PasteButton.FgAtlas = IMTTextures.Atlas;
-            PasteButton.NormalFgSprite = IMTTextures.PasteButtonIcon;
+            PasteButton.FgSprites = IMTTextures.PasteButtonIcon;
             PasteButton.tooltip = IMT.Localize.Editor_ColorPaste;
             PasteButton.eventClick += Paste;
         }

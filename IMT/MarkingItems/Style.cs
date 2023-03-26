@@ -853,7 +853,7 @@ namespace IMT.Manager
             if (instance == null)
             {
                 var property = editorProvider.GetItem<PropertyType>(Name);
-                property.SetStyle(PropertyStyle.Default);
+                property.SetStyle(UIStyle.Default);
                 init(property, editorProvider);
                 instance = property;
             }

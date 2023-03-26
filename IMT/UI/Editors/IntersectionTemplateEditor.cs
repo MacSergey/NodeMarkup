@@ -264,13 +264,13 @@ namespace IMT.UI.Editors
 
         public override ColorSet ForegroundColors => !IsLinked ? base.ForegroundColors : new ColorSet()
         {
-            normal = IMTColors.ItemFavoriteNormal,
-            hovered = IMTColors.ItemFavoriteNormal,
-            pressed = IMTColors.ItemFavoritePressed,
-            focused = IMTColors.ItemFavoriteFocused,
+            normal = UIStyle.ItemFavoriteNormal,
+            hovered = UIStyle.ItemFavoriteNormal,
+            pressed = UIStyle.ItemFavoritePressed,
+            focused = UIStyle.ItemFavoriteFocused,
             disabled = default,
         };
-        public override ColorSet ForegroundSelectedColors => !IsLinked ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemFavoriteFocused);
+        public override ColorSet ForegroundSelectedColors => !IsLinked ? base.ForegroundSelectedColors : new ColorSet(UIStyle.ItemFavoriteFocused);
 
         public override ColorSet DefaultTextColor => !IsLinked ? base.DefaultTextColor : new ColorSet()
         {
@@ -318,7 +318,7 @@ namespace IMT.UI.Editors
     public class PreviewPanel : PropertyGroupPanel
     {
         public IntersectionTemplateItem Item { get; set; }
-        protected override Color32 DefaultColor => IMTColors.ItemGroupBackground;
+        protected override Color32 DefaultColor => UIStyle.ItemGroupBackground;
 
         protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }

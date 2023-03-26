@@ -74,7 +74,7 @@ namespace IMT.UI.Panel
 
             Atlas = CommonTextures.Atlas;
             BackgroundSprite = CommonTextures.PanelBig;
-            color = ComponentStyle.PanelColor;
+            BgColors = ComponentStyle.PanelColor;
             name = nameof(IntersectionMarkingToolPanel);
 
             Header = AddUIComponent<PanelHeader>();

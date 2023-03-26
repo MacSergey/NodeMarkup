@@ -153,7 +153,7 @@ namespace IMT.UI.Editors
         private CrosswalkBorderSelectPropertyPanel AddBorderProperty(BorderPosition position, string name, string text)
         {
             var border = ComponentPool.Get<CrosswalkBorderSelectPropertyPanel>(PropertiesPanel, name);
-            border.SetStyle(PropertyStyle.Default);
+            border.SetStyle(UIStyle.Default);
             border.Label = text;
             border.Selector.Position = position;
             border.Init();
@@ -170,7 +170,7 @@ namespace IMT.UI.Editors
         private void AddStyleTypeProperty()
         {
             Style = ComponentPool.Get<CrosswalkPropertyPanel>(PropertiesPanel, nameof(Style));
-            Style.SetStyle(PropertyStyle.Default);
+            Style.SetStyle(UIStyle.Default);
             Style.Label = IMT.Localize.Editor_Style;
             Style.Init();
             Style.UseWheel = true;

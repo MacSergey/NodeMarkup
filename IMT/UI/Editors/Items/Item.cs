@@ -26,12 +26,12 @@ namespace IMT.UI.Editors
         public virtual ColorSet ForegroundColors => new ColorSet()
         {
             normal = default,
-            hovered = IMTColors.ItemHovered,
-            pressed = IMTColors.ItemPressed,
+            hovered = UIStyle.ItemHovered,
+            pressed = UIStyle.ItemPressed,
             focused = default,
             disabled = default,
         };
-        public virtual ColorSet ForegroundSelectedColors => new ColorSet(IMTColors.ItemFocused);
+        public virtual ColorSet ForegroundSelectedColors => new ColorSet(UIStyle.ItemFocused);
 
         public virtual ColorSet DefaultTextColor => Color.white;
         public virtual ColorSet DefaultSelTextColor => Color.black;

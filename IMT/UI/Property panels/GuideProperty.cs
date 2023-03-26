@@ -84,7 +84,7 @@ namespace IMT.UI
             TurnButton.SetDefaultStyle();
             TurnButton.size = new Vector2(20f, 20f);
             TurnButton.FgAtlas = IMTTextures.Atlas;
-            TurnButton.NormalFgSprite = IMTTextures.RotateButtonIcon;
+            TurnButton.FgSprites = IMTTextures.RotateButtonIcon;
             TurnButton.tooltip = IMT.Localize.StyleOption_Turn;
             TurnButton.eventClick += TurnClick;
         }
@@ -146,8 +146,8 @@ namespace IMT.UI
         public override void SetStyle(ControlStyle style)
         {
             FollowGuide.ToggleStyle = style.Toggle;
-            LeftGuideSelector.SetStyle(style.DropDown);
-            RightGuideSelector.SetStyle(style.DropDown);
+            LeftGuideSelector.SelectorStyle = style.DropDown;
+            RightGuideSelector.SelectorStyle = style.DropDown;
         }
 
         public class SelectGuideButton : SelectItemPropertyButton<FillerGuide>

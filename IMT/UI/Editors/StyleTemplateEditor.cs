@@ -47,7 +47,7 @@ namespace IMT.UI.Editors
         private void AddStyleType()
         {
             var styleProperty = ComponentPool.Get<StringPropertyPanel>(PropertiesPanel, "Style");
-            styleProperty.SetStyle(PropertyStyle.Default);
+            styleProperty.SetStyle(UIStyle.Default);
             styleProperty.Label = IMT.Localize.Editor_Style;
             styleProperty.FieldWidth = 230;
             styleProperty.EnableControl = false;
@@ -229,7 +229,7 @@ namespace IMT.UI.Editors
         public override bool ShowDelete => EditObject != null && !EditObject.IsAsset;
         private bool IsDefault => EditObject?.IsDefault == true;
 
-        public override ModsCommon.UI.SpriteSet ForegroundSprites => !IsDefault ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        public override SpriteSet ForegroundSprites => !IsDefault ? base.ForegroundSprites : new SpriteSet()
         {
             normal = CommonTextures.BorderBig,
             hovered = CommonTextures.PanelSmall,
@@ -237,17 +237,17 @@ namespace IMT.UI.Editors
             focused = CommonTextures.BorderBig,
             disabled = CommonTextures.PanelSmall,
         };
-        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !IsDefault ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+        public override SpriteSet ForegroundSelectedSprites => !IsDefault ? base.ForegroundSelectedSprites : new SpriteSet(CommonTextures.PanelSmall);
 
         public override ColorSet ForegroundColors => !IsDefault ? base.ForegroundColors : new ColorSet()
         {
-            normal = IMTColors.ItemFavoriteNormal,
-            hovered = IMTColors.ItemFavoriteNormal,
-            pressed = IMTColors.ItemFavoritePressed,
-            focused = IMTColors.ItemFavoriteFocused,
+            normal = UIStyle.ItemFavoriteNormal,
+            hovered = UIStyle.ItemFavoriteNormal,
+            pressed = UIStyle.ItemFavoritePressed,
+            focused = UIStyle.ItemFavoriteFocused,
             disabled = default,
         };
-        public override ColorSet ForegroundSelectedColors => !IsDefault ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemFavoriteFocused);
+        public override ColorSet ForegroundSelectedColors => !IsDefault ? base.ForegroundSelectedColors : new ColorSet(UIStyle.ItemFavoriteFocused);
 
         public override ColorSet DefaultTextColor => !IsDefault ? base.DefaultTextColor : new ColorSet()
         {

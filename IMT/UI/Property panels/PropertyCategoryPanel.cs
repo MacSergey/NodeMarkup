@@ -315,7 +315,7 @@ namespace IMT.UI.Editors
     {
         protected override float DefaultHeight => 26f;
         protected virtual Color32 DefaultColor => new Color32(155, 175, 86, 255);
-        protected virtual string DefaultForegroundSprite => CommonTextures.PanelSmall;
+        protected virtual string DefaultForegroundSprite => CommonTextures.PanelBig;
         protected virtual UITextureAtlas DefaultAtlas => CommonTextures.Atlas;
 
         protected CustomUIButton ExpandButton { get; set; }
@@ -327,13 +327,13 @@ namespace IMT.UI.Editors
             get => NameLabel.text;
             set => NameLabel.text = value;
         }
-        public bool IsExpand { set => ExpandButton.NormalFgSprite = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
+        public bool IsExpand { set => ExpandButton.FgSprites = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
 
         public BaseCategoryHeaderPanel()
         {
             Atlas = DefaultAtlas;
             ForegroundSprite = DefaultForegroundSprite;
-            color = DefaultColor;
+            FgColors = DefaultColor;
             Padding = new RectOffset(8, 8, 0, 0);
             SpritePadding = new RectOffset(5, 5, 0, 0);
         }

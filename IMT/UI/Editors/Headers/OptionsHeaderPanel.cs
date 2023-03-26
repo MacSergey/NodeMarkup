@@ -145,7 +145,7 @@ namespace IMT.UI.Editors
 
         private HeaderButtonInfo<HeaderButton> ApplyAllRules { get; set; }
 
-        public bool IsExpand { set => ExpandButton.NormalFgSprite = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
+        public bool IsExpand { set => ExpandButton.FgSprites = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
         public Style.StyleType StyleType
         {
             get => (Style.StyleType)Enum.Parse(typeof(Style.StyleType), Icon.spriteName);

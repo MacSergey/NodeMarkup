@@ -137,7 +137,7 @@ namespace IMT.UI.Editors
         private LineAlignmentPropertyPanel AddAlignmentProperty(PropertyEnumValue<Alignment> property, string label)
         {
             var alignment = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties, "LineAlignment");
-            alignment.SetStyle(PropertyStyle.Default);
+            alignment.SetStyle(UIStyle.Default);
             alignment.Label = label;
             alignment.Init();
             alignment.SelectedObject = property;
@@ -148,7 +148,7 @@ namespace IMT.UI.Editors
         private BoolPropertyPanel AddClipSidewalkProperty(MarkingRegularLine line)
         {
             var clipSidewalk = ComponentPool.Get<BoolPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
-            clipSidewalk.SetStyle(PropertyStyle.Default);
+            clipSidewalk.SetStyle(UIStyle.Default);
             clipSidewalk.Label = IMT.Localize.LineEditor_ClipSidewalk;
             clipSidewalk.Init();
             clipSidewalk.Value = line.ClipSidewalk;
@@ -398,13 +398,13 @@ namespace IMT.UI.Editors
 
         public override ColorSet ForegroundColors => !HasOverlapped ? base.ForegroundColors : new ColorSet()
         {
-            normal = IMTColors.ItemErrorNormal,
-            hovered = IMTColors.ItemErrorNormal,
-            pressed = IMTColors.ItemErrorPressed,
-            focused = IMTColors.ItemErrorFocused,
+            normal = UIStyle.ItemErrorNormal,
+            hovered = UIStyle.ItemErrorNormal,
+            pressed = UIStyle.ItemErrorPressed,
+            focused = UIStyle.ItemErrorFocused,
             disabled = default,
         };
-        public override ColorSet ForegroundSelectedColors => !HasOverlapped ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemErrorFocused);
+        public override ColorSet ForegroundSelectedColors => !HasOverlapped ? base.ForegroundSelectedColors : new ColorSet(UIStyle.ItemErrorFocused);
 
         public override ColorSet DefaultTextColor => !HasOverlapped ? base.DefaultTextColor : new ColorSet(Color.white);
         public override ColorSet DefaultSelTextColor => !HasOverlapped ? base.DefaultSelTextColor : new ColorSet(Color.white);

@@ -16,6 +16,10 @@ namespace IMT.UI.Editors
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
         public event Action<RulePanel, UIMouseEventParameter> OnLeave;
 
+        protected override Color32 DefaultColor => UIStyle.PropertyPanel;
+        protected override string DefaultBackgroundSprite => CommonTextures.PanelLarge;
+
+
         private bool isExpand;
         public bool IsExpand
         {
@@ -137,7 +141,7 @@ namespace IMT.UI.Editors
         private RuleEdgeSelectPropertyPanel AddEdgeProperty(EdgePosition position, string name, string text)
         {
             var edgeProperty = ComponentPool.Get<RuleEdgeSelectPropertyPanel>(this, name);
-            edgeProperty.SetStyle(PropertyStyle.Default);
+            edgeProperty.SetStyle(UIStyle.Default);
             edgeProperty.Label = text;
             edgeProperty.Selector.Position = position;
             edgeProperty.Init();
@@ -185,7 +189,7 @@ namespace IMT.UI.Editors
                     return;
             }
 
-            Style.SetStyle(PropertyStyle.Default);
+            Style.SetStyle(UIStyle.Default);
             Style.Label = IMT.Localize.Editor_Style;
             Style.Init(StyleSelector);
             Style.UseWheel = true;
@@ -328,7 +332,7 @@ namespace IMT.UI.Editors
             PauseLayout(() =>
             {
                 var error = Rule.IsOverlapped;
-                color = !IsExpand && error ? ComponentStyle.ErrorFocusedColor : NormalColor;
+                BgColors = !IsExpand && error ? ComponentStyle.ErrorFocusedColor : DefaultColor;
                 Header.IsExpand = IsExpand;
                 Error.isVisible = IsExpand && error;
                 Warning.isVisible = IsExpand && Settings.ShowPanelTip && !Editor.CanDivide;

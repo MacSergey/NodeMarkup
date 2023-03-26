@@ -128,7 +128,7 @@ namespace IMT.UI.Editors
             ItemsPanel.Atlas = CommonTextures.Atlas;
             ItemsPanel.BackgroundSprite = CommonTextures.PanelBig;
             ItemsPanel.ForegroundSprite = CommonTextures.BorderTop;
-            ItemsPanel.color = ItemsPanel.disabledColor = IMTColors.ItemsBackground;
+            ItemsPanel.color = ItemsPanel.disabledColor = UIStyle.ItemsBackground;
             ItemsPanel.canFocus = true;
 
             ItemsPanel.Padding = new RectOffset(0, 0, 2, 2);
@@ -167,7 +167,7 @@ namespace IMT.UI.Editors
             ContentPanel.ScrollOrientation = UIOrientation.Vertical;
             ContentPanel.Atlas = CommonTextures.Atlas;
             ContentPanel.BackgroundSprite = CommonTextures.PanelBig;
-            ContentPanel.color = ContentPanel.disabledColor = IMTColors.ContentBackground;
+            ContentPanel.color = ContentPanel.disabledColor = UIStyle.ContentBackground;
             ContentPanel.zOrder = 0;
             ContentPanel.eventSizeChanged += (_, size) => ContentBlur.size = size;
             ContentPanel.eventPositionChanged += (_, position) => ContentBlur.position = position;
@@ -394,6 +394,7 @@ namespace IMT.UI.Editors
         protected override void OnObjectSelect(ObjectType editObject)
         {
             PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel, "PropertyPanel");
+            PropertiesPanel.BgColors = UIStyle.PropertyPanel;
             PropertiesPanel.PauseLayout(() => OnFillPropertiesPanel(editObject));
             PropertiesPanel.Init();
         }
