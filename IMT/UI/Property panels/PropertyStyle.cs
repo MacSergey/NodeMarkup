@@ -16,7 +16,7 @@ namespace IMT.UI
         {
             TextField = new TextFieldStyle()
             {
-                Colors = new ColorSet(Normal, Hovered, Hovered, ComponentStyle.NormalBlue, Disabled),
+                BgColors = new ColorSet(Normal, Hovered, Hovered, ComponentStyle.NormalBlue, Disabled),
                 TextColor = Color.white,
                 SelectionColor = Color.black,
             },
