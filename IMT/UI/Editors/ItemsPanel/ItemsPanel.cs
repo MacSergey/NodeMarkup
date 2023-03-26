@@ -52,12 +52,12 @@ namespace IMT.UI.Editors
             set
             {
                 if (selectItem != null)
-                    selectItem.isSelected = false;
+                    selectItem.IsSelected = false;
 
                 selectItem = value;
 
                 if (selectItem != null)
-                    selectItem.isSelected = true;
+                    selectItem.IsSelected = true;
 
                 OnSelectClick?.Invoke(selectItem?.EditObject);
             }

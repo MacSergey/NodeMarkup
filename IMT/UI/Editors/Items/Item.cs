@@ -10,10 +10,10 @@ namespace IMT.UI.Editors
 {
     public abstract class EditItemBase : CustomUIButton
     {
-        public virtual ModsCommon.UI.SpriteSet BackgroundSprites => new ModsCommon.UI.SpriteSet(string.Empty);
+        public virtual SpriteSet BackgroundSprites => new SpriteSet(string.Empty);
         public virtual ColorSet BackgroundColors => new ColorSet();
 
-        public virtual ModsCommon.UI.SpriteSet ForegroundSprites => new ModsCommon.UI.SpriteSet()
+        public virtual SpriteSet ForegroundSprites => new SpriteSet()
         {
             normal = string.Empty,
             hovered = CommonTextures.PanelSmall,
@@ -21,61 +21,61 @@ namespace IMT.UI.Editors
             focused = string.Empty,
             disabled = CommonTextures.PanelSmall,
         };
-        public virtual ModsCommon.UI.SpriteSet ForegroundSelectedSprites => new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+        public virtual SpriteSet ForegroundSelectedSprites => new SpriteSet(CommonTextures.PanelSmall);
 
         public virtual ColorSet ForegroundColors => new ColorSet()
         {
-            normal = null,
+            normal = default,
             hovered = IMTColors.ItemHovered,
             pressed = IMTColors.ItemPressed,
-            focused = null,
-            disabled = null,
+            focused = default,
+            disabled = default,
         };
         public virtual ColorSet ForegroundSelectedColors => new ColorSet(IMTColors.ItemFocused);
 
-        public virtual ColorSet TextColor => new ColorSet(Color.white);
-        public virtual ColorSet TextSelectedColor => new ColorSet(Color.black);
-        public virtual RectOffset SpritePadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 2, 2) : new RectOffset(CollapsedPadding, CollapsedPadding, 2, 2);
-        protected static int TextPadding => 5;
+        public virtual ColorSet DefaultTextColor => Color.white;
+        public virtual ColorSet DefaultSelTextColor => Color.black;
+        public virtual RectOffset DefaultSpritePadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 2, 2) : new RectOffset(CollapsedPadding, CollapsedPadding, 2, 2);
+        protected static int DefaultTextPadding => 5;
         public static int ExpandedPadding => 8;
         public static int CollapsedPadding => 4;
 
-        protected virtual float TextScale => 0.65f;
+        protected virtual float DefaultTextScale => 0.65f;
         protected virtual float DefaultHeight => 32f;
 
         public EditItemBase()
         {
             m_Size = new Vector2(100f, DefaultHeight);
             clipChildren = true;
-            atlas = CommonTextures.Atlas;
+            Atlas = CommonTextures.Atlas;
 
-            textHorizontalAlignment = UIHorizontalAlignment.Left;
-            textVerticalAlignment = UIVerticalAlignment.Middle;
+            TextHorizontalAlignment = UIHorizontalAlignment.Left;
+            TextVerticalAlignment = UIVerticalAlignment.Middle;
             wordWrap = true;
         }
 
         public virtual void DeInit()
         {
-            isSelected = false;
+            IsSelected = false;
             isVisible = true;
         }
 
         protected virtual void SetStyle()
         {
-            SetBgSprite(BackgroundSprites);
-            SetBgColor(BackgroundColors);
+            BgSprites = BackgroundSprites;
+            bgColors = BackgroundColors;
 
-            SetFgSprite(ForegroundSprites);
-            SetFgColor(ForegroundColors);
-            SetTextColor(TextColor);
+            FgSprites = ForegroundSprites;
+            fgColors = ForegroundColors;
+            TextColors = DefaultTextColor;
 
-            SetSelectedFgSprite(ForegroundSelectedSprites);
-            SetSelectedFgColor(ForegroundSelectedColors);
-            SetSelectedTextColor(TextSelectedColor);
+            SelFgSprites = ForegroundSelectedSprites;
+            SelFgColors = ForegroundSelectedColors;
+            SelTextColors = DefaultSelTextColor;
 
-            textScale = TextScale;
-            textPadding.top = 5;
-            spritePadding = SpritePadding;
+            textScale = DefaultTextScale;
+            TextPadding.top = 5;
+            SpritePadding = DefaultSpritePadding;
         }
     }
     public abstract class EditItem<ObjectType> : EditItemBase, IReusable
@@ -126,11 +126,9 @@ namespace IMT.UI.Editors
         private void AddDeleteButton()
         {
             DeleteButton = AddUIComponent<CustomUIButton>();
-            DeleteButton.atlas = CommonTextures.Atlas;
-            DeleteButton.normalFgSprite = CommonTextures.CloseButtonNormal;
-            DeleteButton.hoveredFgSprite = CommonTextures.CloseButtonHovered;
-            DeleteButton.pressedFgSprite = CommonTextures.CloseButtonPressed;
-            DeleteButton.foregroundSpriteMode = UIForegroundSpriteMode.Stretch;
+            DeleteButton.Atlas = CommonTextures.Atlas;
+            DeleteButton.FgSprites = new SpriteSet(CommonTextures.CloseButtonNormal, CommonTextures.CloseButtonHovered, CommonTextures.CloseButtonPressed, string.Empty, string.Empty);
+            DeleteButton.ForegroundSpriteMode = UIForegroundSpriteMode.Stretch;
             DeleteButton.size = new Vector2(20, 20);
             DeleteButton.eventClick += DeleteClick;
         }
@@ -159,7 +157,7 @@ namespace IMT.UI.Editors
             Icon.isVisible = ShowIcon;
             if (inGroup)
             {
-                m_Size.y = DefaultHeight + SpritePadding.vertical;
+                m_Size.y = DefaultHeight + DefaultSpritePadding.vertical;
             }
             else
             {
@@ -176,28 +174,28 @@ namespace IMT.UI.Editors
                 var iconSize = 19;
                 Icon.size = new Vector2(iconSize, iconSize);
 
-                var centerOffset = Mathf.FloorToInt(width - spritePadding.vertical - iconSize) / 2;
-                var fixOffset = TextPadding;
-                var widthOffset = spritePadding.left + Math.Min(fixOffset, centerOffset);
-                var heightOffset = spritePadding.top + (height - spritePadding.vertical - iconSize) * 0.5f;
+                var centerOffset = Mathf.FloorToInt(width - DefaultSpritePadding.vertical - iconSize) / 2;
+                var fixOffset = DefaultTextPadding;
+                var widthOffset = DefaultSpritePadding.left + Math.Min(fixOffset, centerOffset);
+                var heightOffset = DefaultSpritePadding.top + (height - DefaultSpritePadding.vertical - iconSize) * 0.5f;
                 Icon.relativePosition = new Vector3(widthOffset, heightOffset);
-                textPadding.left = centerOffset <= 1.5f * fixOffset ? 50 : spritePadding.left + fixOffset + iconSize + TextPadding;
+                TextPadding.left = centerOffset <= 1.5f * fixOffset ? 50 : DefaultSpritePadding.left + fixOffset + iconSize + DefaultTextPadding;
             }
             else
-                textPadding.left = TextPadding + spritePadding.left;
+                TextPadding.left = DefaultTextPadding + DefaultSpritePadding.left;
 
             if (ShowDelete && width >= 120f)
             {
                 var buttonSize = 15;
                 DeleteButton.isVisible = true;
                 DeleteButton.size = new Vector2(buttonSize, buttonSize);
-                DeleteButton.relativePosition = new Vector2(size.x - buttonSize - 7 - spritePadding.right, spritePadding.top + (height - spritePadding.vertical - buttonSize) * 0.5f);
-                textPadding.right = 19 + spritePadding.right;
+                DeleteButton.relativePosition = new Vector2(size.x - buttonSize - 7 - DefaultSpritePadding.right, DefaultSpritePadding.top + (height - DefaultSpritePadding.vertical - buttonSize) * 0.5f);
+                TextPadding.right = 19 + DefaultSpritePadding.right;
             }
             else
             {
                 DeleteButton.isVisible = false;
-                textPadding.right = TextPadding + spritePadding.right;
+                TextPadding.right = DefaultTextPadding + DefaultSpritePadding.right;
             }
         }
         protected override void OnSizeChanged()

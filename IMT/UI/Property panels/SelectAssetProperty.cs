@@ -75,7 +75,7 @@ namespace IMT.UI
             DropDown.name = nameof(DropDown);
             DropDown.DropDownDefaultStyle();
             DropDown.size = new Vector2(230f, 50f);
-            DropDown.scaleFactor = 20f / DropDown.height;
+            DropDown.ScaleFactor = 20f / DropDown.height;
             DropDown.OnSelectObject += ValueChanged;
         }
         public override void Init()
@@ -144,8 +144,8 @@ namespace IMT.UI
             entity.EntityDefaultStyle<PrefabType, EntityType>();
             if (Style != null)
             {
-                entity.hoveredBgColor = Style.EntityHoveredColor;
-                entity.focusedBgColor = Style.EntitySelectedColor;
+                entity.HoveredBgColor = Style.EntityHoveredColor;
+                entity.FocusedBgColor = Style.EntitySelectedColor;
             }
         }
     }
@@ -245,8 +245,8 @@ namespace IMT.UI
             Title.VerticalAlignment = UIVerticalAlignment.Middle;
 
             Favorite = AddUIComponent<CustomUIButton>();
-            Favorite.atlas = IMTTextures.Atlas;
-            Favorite.foregroundSpriteMode = UIForegroundSpriteMode.Fill;
+            Favorite.Atlas = IMTTextures.Atlas;
+            Favorite.ForegroundSpriteMode = UIForegroundSpriteMode.Fill;
             Favorite.size = new Vector2(20, 90);
             Favorite.eventClick += FavoriteClick;
 
@@ -298,14 +298,14 @@ namespace IMT.UI
             if (IsFavorite)
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_RemoveFromFavorites;
-                Favorite.SetFgSprite(new ModsCommon.UI.SpriteSet(IMTTextures.SetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton));
-                Favorite.SetFgColor(new ColorSet(FavoriteNormal, FavoriteHovered, FavoritePressed, FavoriteNormal, FavoriteNormal));
+                Favorite.FgSprites = new SpriteSet(IMTTextures.SetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton);
+                Favorite.FgColors = new ColorSet(FavoriteNormal, FavoriteHovered, FavoritePressed, FavoriteNormal, FavoriteNormal);
             }
             else
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_AddToFavorites;
-                Favorite.SetFgSprite(new ModsCommon.UI.SpriteSet(IMTTextures.NotSetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton));
-                Favorite.SetFgColor(new ColorSet(Color.white, FavoriteHovered, FavoritePressed, Color.white, Color.white));
+                Favorite.FgSprites = new SpriteSet(IMTTextures.NotSetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton);
+                Favorite.FgColors = new ColorSet(Color.white, FavoriteHovered, FavoritePressed, Color.white, Color.white);
             }
         }
 

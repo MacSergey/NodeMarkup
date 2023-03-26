@@ -38,7 +38,7 @@ namespace IMT.UI
             DropDown.name = nameof(DropDown);
             DropDown.DropDownDefaultStyle();
             DropDown.size = new Vector2(230f, 50f);
-            DropDown.scaleFactor = 20f / DropDown.height;
+            DropDown.ScaleFactor = 20f / DropDown.height;
             DropDown.OnSelectObject += ValueChanged;
         }
 
@@ -136,8 +136,8 @@ namespace IMT.UI
             entity.EntityDefaultStyle<ThemeHelper.IThemeData, ThemeEntity>();
             if (Style != null)
             {
-                entity.hoveredBgColor = Style.EntityHoveredColor;
-                entity.focusedBgColor = Style.EntitySelectedColor;
+                entity.HoveredBgColor = Style.EntityHoveredColor;
+                entity.FocusedBgColor = Style.EntitySelectedColor;
             }
         }
     }

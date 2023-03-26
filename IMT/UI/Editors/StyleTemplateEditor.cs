@@ -245,11 +245,11 @@ namespace IMT.UI.Editors
             hovered = IMTColors.ItemFavoriteNormal,
             pressed = IMTColors.ItemFavoritePressed,
             focused = IMTColors.ItemFavoriteFocused,
-            disabled = null,
+            disabled = default,
         };
         public override ColorSet ForegroundSelectedColors => !IsDefault ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemFavoriteFocused);
 
-        public override ColorSet TextColor => !IsDefault ? base.TextColor : new ColorSet()
+        public override ColorSet DefaultTextColor => !IsDefault ? base.DefaultTextColor : new ColorSet()
         {
             normal = Color.white,
             hovered = Color.black,
@@ -257,7 +257,7 @@ namespace IMT.UI.Editors
             focused = Color.white,
             disabled = Color.white,
         };
-        public override ColorSet TextSelectedColor => !IsDefault ? base.TextSelectedColor : new ColorSet(Color.white);
+        public override ColorSet DefaultSelTextColor => !IsDefault ? base.DefaultSelTextColor : new ColorSet(Color.white);
 
         public override void Refresh()
         {

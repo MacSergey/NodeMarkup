@@ -59,7 +59,7 @@ namespace IMT.UI.Panel
         public void AddTab(Editor editor)
         {
             var tab = AddTabImpl(editor.Name);
-            tab.textPadding.top = 4;
+            tab.TextPadding.top = 4;
             tab.Editor = editor;
 
             Blur.zOrder = int.MaxValue;

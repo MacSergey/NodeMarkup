@@ -25,7 +25,7 @@ namespace IMT.Tools
                 if (selectButton != null)
                 {
                     selectButton.eventLeaveFocus -= SelectButtonLeaveFocus;
-                    selectButton.isSelected = false;
+                    selectButton.IsSelected = false;
                 }
 
                 selectButton = value;
@@ -34,7 +34,7 @@ namespace IMT.Tools
                 {
                     OnSetButton();
                     selectButton.eventLeaveFocus += SelectButtonLeaveFocus;
-                    selectButton.isSelected = true;
+                    selectButton.IsSelected = true;
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace IMT.Tools
         public void Update()
         {
             if (SelectButton is ButtonType button)
-                button.isSelected = true;
+                button.IsSelected = true;
         }
         public override void Deactivate()
         {

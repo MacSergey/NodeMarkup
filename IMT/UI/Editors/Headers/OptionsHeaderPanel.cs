@@ -145,7 +145,7 @@ namespace IMT.UI.Editors
 
         private HeaderButtonInfo<HeaderButton> ApplyAllRules { get; set; }
 
-        public bool IsExpand { set => ExpandButton.normalFgSprite = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
+        public bool IsExpand { set => ExpandButton.NormalFgSprite = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
         public Style.StyleType StyleType
         {
             get => (Style.StyleType)Enum.Parse(typeof(Style.StyleType), Icon.spriteName);
@@ -162,9 +162,9 @@ namespace IMT.UI.Editors
             ExpandButton = AddUIComponent<CustomUIButton>();
             ExpandButton.zOrder = Content.zOrder;
             ExpandButton.tooltip = string.Format(IMT.Localize.Header_ExpandTooltip, LocalizeExtension.Shift);
-            ExpandButton.atlas = CommonTextures.Atlas;
-            ExpandButton.SetFgColor(new ColorSet(new Color32(0, 0, 0, 255)));
-            ExpandButton.scaleFactor = 0.7f;
+            ExpandButton.Atlas = CommonTextures.Atlas;
+            ExpandButton.FgColors = Color.black;
+            ExpandButton.ScaleFactor = 0.7f;
             ExpandButton.size = new Vector2(30, 30);
             ExpandButton.zOrder = 0;
             ExpandButton.eventClick += (_, _) => OnExpand?.Invoke();

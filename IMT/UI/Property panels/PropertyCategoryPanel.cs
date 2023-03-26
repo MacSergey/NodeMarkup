@@ -327,7 +327,7 @@ namespace IMT.UI.Editors
             get => NameLabel.text;
             set => NameLabel.text = value;
         }
-        public bool IsExpand { set => ExpandButton.normalFgSprite = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
+        public bool IsExpand { set => ExpandButton.NormalFgSprite = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
 
         public BaseCategoryHeaderPanel()
         {
@@ -343,9 +343,9 @@ namespace IMT.UI.Editors
             base.Fill();
 
             ExpandButton = AddUIComponent<CustomUIButton>();
-            ExpandButton.atlas = CommonTextures.Atlas;
-            ExpandButton.SetFgColor(new ColorSet(new Color32(0, 0, 0, 255)));
-            ExpandButton.scaleFactor = 0.6f;
+            ExpandButton.Atlas = CommonTextures.Atlas;
+            ExpandButton.FgColors = Color.black;
+            ExpandButton.ScaleFactor = 0.6f;
             ExpandButton.size = new Vector2(20, 20);
             ExpandButton.zOrder = 0;
 

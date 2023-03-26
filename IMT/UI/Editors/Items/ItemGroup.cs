@@ -129,10 +129,10 @@ namespace IMT.UI.Editors
                 return colors;
             }
         }
-        public override ColorSet TextColor => new ColorSet(Color.white);
-        protected override float TextScale => 1f;
+        public override ColorSet DefaultTextColor => new ColorSet(Color.white);
+        protected override float DefaultTextScale => 1f;
         protected override float DefaultHeight => 48f;
-        public override RectOffset SpritePadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 4, 4) : new RectOffset(CollapsedPadding, CollapsedPadding, 4, 4);
+        public override RectOffset DefaultSpritePadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 4, 4) : new RectOffset(CollapsedPadding, CollapsedPadding, 4, 4);
 
         public bool IsExpand { set => ExpandIcon.spriteName = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
 
@@ -141,8 +141,8 @@ namespace IMT.UI.Editors
 
         public GroupItem() : base()
         {
-            textPadding.top = 5;
-            normalBgSprite = CommonTextures.PanelSmall;
+            TextPadding.top = 5;
+            NormalBgSprite = CommonTextures.PanelSmall;
 
             AddExpandIcon();
         }
@@ -167,10 +167,10 @@ namespace IMT.UI.Editors
             {
                 ExpandIcon.isVisible = width >= 100f;
                 var offset = (height - ExpandIcon.height) * 0.5f;
-                ExpandIcon.relativePosition = new Vector2(width - spritePadding.right - ExpandIcon.width - ExpandPadding, offset);
+                ExpandIcon.relativePosition = new Vector2(width - DefaultSpritePadding.right - ExpandIcon.width - ExpandPadding, offset);
 
-                textPadding.left = 10 + spritePadding.left;
-                textPadding.right = (ExpandIcon.isVisible ? (int)ExpandIcon.width + ExpandPadding : 0) + spritePadding.right + TextPadding;
+                TextPadding.left = 10 + DefaultSpritePadding.left;
+                TextPadding.right = (ExpandIcon.isVisible ? (int)ExpandIcon.width + ExpandPadding : 0) + DefaultSpritePadding.right + DefaultTextPadding;
             }
         }
         protected override void OnSizeChanged()

@@ -16,37 +16,37 @@ namespace IMT.UI
         {
             TextField = new TextFieldStyle()
             {
-                Colors = new ControlStyle.ColorSet(Normal, Hovered, Hovered, ComponentStyle.NormalBlue, Disabled),
+                Colors = new ColorSet(Normal, Hovered, Hovered, ComponentStyle.NormalBlue, Disabled),
                 TextColor = Color.white,
                 SelectionColor = Color.black,
             },
             Segmented = new ButtonStyle()
             {
-                BgColors = new ControlStyle.ColorSet(Normal, Hovered, Hovered, ComponentStyle.NormalBlue, Disabled),
-                SelBgColors = new ControlStyle.ColorSet(ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.FieldDisabledFocusedColor),
+                BgColors = new ColorSet(Normal, Hovered, Hovered, ComponentStyle.NormalBlue, Disabled),
+                SelBgColors = new ColorSet(ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.FieldDisabledFocusedColor),
 
-                FgColors = new ControlStyle.ColorSet(Color.white),
-                SelFgColors = new ControlStyle.ColorSet(Color.white),
+                FgColors = new ColorSet(Color.white),
+                SelFgColors = new ColorSet(Color.white),
 
-                TextColors = new ControlStyle.ColorSet(Color.white),
-                SelTextColors = new ControlStyle.ColorSet(Color.white),
+                TextColors = new ColorSet(Color.white),
+                SelTextColors = new ColorSet(Color.white),
             },
             Button = new ButtonStyle()
             {
-                BgColors = new ControlStyle.ColorSet(ComponentStyle.ButtonNormal, ComponentStyle.ButtonHovered, ComponentStyle.ButtonPressed, ComponentStyle.ButtonNormal, ComponentStyle.ButtonFocused),
-                SelBgColors = new ControlStyle.ColorSet(),
+                BgColors = new ColorSet(ComponentStyle.ButtonNormal, ComponentStyle.ButtonHovered, ComponentStyle.ButtonPressed, ComponentStyle.ButtonNormal, ComponentStyle.ButtonFocused),
+                SelBgColors = new ColorSet(),
 
-                FgColors = new ControlStyle.ColorSet(ComponentStyle.ButtonNormal),
-                SelFgColors = new ControlStyle.ColorSet(),
+                FgColors = new ColorSet(ComponentStyle.ButtonNormal),
+                SelFgColors = new ColorSet(),
 
-                TextColors = new ControlStyle.ColorSet(Color.black, Color.black, Color.white, Color.black, Color.white),
-                SelTextColors = new ControlStyle.ColorSet(),
+                TextColors = new ColorSet(Color.black, Color.black, Color.white, Color.black, Color.white),
+                SelTextColors = new ColorSet(),
             },
             DropDown = new DropDownStyle()
             {
-                BgColors = new ControlStyle.ColorSet(Normal, Hovered, Hovered, Normal, Disabled),
-                FgColors = new ControlStyle.ColorSet(Color.black),
-                TextColors = new ControlStyle.ColorSet(Color.white),
+                BgColors = new ColorSet(Normal, Hovered, Hovered, Normal, Disabled),
+                FgColors = new ColorSet(Color.black),
+                TextColors = new ColorSet(Color.white),
 
                 PopupColor = Hovered,
 
@@ -55,8 +55,8 @@ namespace IMT.UI
             },
             Toggle = new ToggleStyle()
             {
-                OnColors = new ControlStyle.ColorSet(ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.FieldDisabledFocusedColor),
-                OffColors = new ControlStyle.ColorSet(Normal, Hovered, Hovered, Normal, Disabled)
+                OnColors = new ColorSet(ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.FieldDisabledFocusedColor),
+                OffColors = new ColorSet(Normal, Hovered, Hovered, Normal, Disabled)
             },
         };
     }

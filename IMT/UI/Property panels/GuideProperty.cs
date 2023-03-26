@@ -83,8 +83,8 @@ namespace IMT.UI
             TurnButton.name = nameof(TurnButton);
             TurnButton.SetDefaultStyle();
             TurnButton.size = new Vector2(20f, 20f);
-            TurnButton.atlasForeground = IMTTextures.Atlas;
-            TurnButton.normalFgSprite = IMTTextures.RotateButtonIcon;
+            TurnButton.AtlasForeground = IMTTextures.Atlas;
+            TurnButton.NormalFgSprite = IMTTextures.RotateButtonIcon;
             TurnButton.tooltip = IMT.Localize.StyleOption_Turn;
             TurnButton.eventClick += TurnClick;
         }

@@ -185,8 +185,8 @@ namespace IMT.UI.Editors
             AddRuleButton.SetDefaultStyle();
             AddRuleButton.size = new Vector2(ContentPanel.ItemSize.x, 30f);
             AddRuleButton.text = IMT.Localize.LineEditor_AddRuleButton;
-            AddRuleButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
-            AddRuleButton.textPadding.top = 5;
+            AddRuleButton.TextHorizontalAlignment = UIHorizontalAlignment.Center;
+            AddRuleButton.TextPadding.top = 5;
             AddRuleButton.tooltip = IntersectionMarkingTool.AddRuleShortcut;
             AddRuleButton.eventClick += (_, _) => AddRule();
             SetAddButtonVisible();
@@ -402,12 +402,12 @@ namespace IMT.UI.Editors
             hovered = IMTColors.ItemErrorNormal,
             pressed = IMTColors.ItemErrorPressed,
             focused = IMTColors.ItemErrorFocused,
-            disabled = null,
+            disabled = default,
         };
         public override ColorSet ForegroundSelectedColors => !HasOverlapped ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemErrorFocused);
 
-        public override ColorSet TextColor => !HasOverlapped ? base.TextColor : new ColorSet(Color.white);
-        public override ColorSet TextSelectedColor => !HasOverlapped ? base.TextSelectedColor : new ColorSet(Color.white);
+        public override ColorSet DefaultTextColor => !HasOverlapped ? base.DefaultTextColor : new ColorSet(Color.white);
+        public override ColorSet DefaultSelTextColor => !HasOverlapped ? base.DefaultSelTextColor : new ColorSet(Color.white);
 
         public override void Refresh()
         {

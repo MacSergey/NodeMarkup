@@ -246,8 +246,8 @@ namespace IMT.UI
             entity.EntityDefaultStyle<string, FontEntity>();
             if (Style != null)
             {
-                entity.hoveredBgColor = Style.EntityHoveredColor;
-                entity.focusedBgColor = Style.EntitySelectedColor;
+                entity.HoveredBgColor = Style.EntityHoveredColor;
+                entity.FocusedBgColor = Style.EntitySelectedColor;
             }
         }
     }
