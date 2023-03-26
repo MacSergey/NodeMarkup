@@ -52,7 +52,7 @@ namespace IMT.UI.Editors
 
         public ApplyTemplateHeaderButton()
         {
-            AtlasBackground = CommonTextures.Atlas;
+            BgAtlas = CommonTextures.Atlas;
             BgSprites = new SpriteSet(string.Empty, CommonTextures.HeaderHover, CommonTextures.HeaderHover, CommonTextures.HeaderHover, string.Empty);
 
             clipChildren = true;
@@ -84,7 +84,7 @@ namespace IMT.UI.Editors
         }
         public void SetIcon(UITextureAtlas atlas, string sprite)
         {
-            AtlasForeground = atlas ?? TextureHelper.InGameAtlas;
+            FgAtlas = atlas ?? TextureHelper.InGameAtlas;
             FgSprites = sprite;
         }
         protected override void OnUpdate()
@@ -130,6 +130,22 @@ namespace IMT.UI.Editors
             base.OnClick(p);
             if (!p.used)
                 Select();
+        }
+
+        public DropDownStyle EntityStyle
+        {
+            set
+            {
+                bgAtlas = value.EntityAtlas;
+
+                bgSprites = value.EntitySprites;
+                selBgSprites = value.EntitySelSprites;
+
+                bgColors = value.EntityColors;
+                selBgColors = value.EntitySelColors;
+
+                Invalidate();
+            }
         }
     }
 }

@@ -227,8 +227,8 @@ namespace IMT.UI
         public override void SetStyle(ControlStyle style)
         {
             base.SetStyle(style);
-            FieldA.SetStyle(style.TextField);
-            FieldB.SetStyle(style.TextField);
+            FieldA.TextFieldStyle = style.TextField;
+            FieldB.TextFieldStyle = style.TextField;
         }
     }
 }

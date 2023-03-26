@@ -14,10 +14,10 @@ namespace IMT.UI
 
         public bool EnableCount
         {
-            get => UseCount.State;
+            get => UseCount.Value;
             set
             {
-                UseCount.State = value;
+                UseCount.Value = value;
                 Refresh();
             }
         }
@@ -82,7 +82,7 @@ namespace IMT.UI
             UseCount = Content.AddUIComponent<CustomUIToggle>();
             UseCount.name = nameof(UseCount);
             UseCount.DefaultStyle();
-            UseCount.OnStateChanged += UseChanged;
+            UseCount.OnValueChanged += UseChanged;
 
             var min = Content.AddUIComponent<CustomUILabel>();
             min.text = IMT.Localize.StyleOption_Min;
@@ -161,9 +161,9 @@ namespace IMT.UI
 
         public override void SetStyle(ControlStyle style)
         {
-            UseCount.SetStyle(style.Toggle);
-            MinField.SetStyle(style.TextField);
-            MaxField.SetStyle(style.TextField);
+            UseCount.ToggleStyle = style.Toggle;
+            MinField.TextFieldStyle = style.TextField;
+            MaxField.TextFieldStyle = style.TextField;
         }
     }
 }

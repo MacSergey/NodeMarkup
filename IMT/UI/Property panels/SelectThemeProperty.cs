@@ -61,7 +61,7 @@ namespace IMT.UI
 
         public override void SetStyle(ControlStyle style)
         {
-            DropDown.SetStyle(style.DropDown);
+            DropDown.DropDownStyle = style.DropDown;
         }
     }
 
@@ -92,8 +92,8 @@ namespace IMT.UI
         protected override void SetPopupStyle()
         {
             Popup.PopupDefaultStyle(50f);
-            if (Style != null)
-                Popup.color = Style.PopupColor;
+            if (DropDownStyle != null)
+                Popup.PopupStyle = DropDownStyle;
         }
 
         protected override void InitPopup()
@@ -102,7 +102,6 @@ namespace IMT.UI
             Popup.width = width;
             Popup.MaxVisibleItems = 10;
             Popup.TextureType = TextureType;
-            Popup.Style = Style;
             base.InitPopup();
         }
     }
@@ -134,11 +133,8 @@ namespace IMT.UI
         protected override void SetEntityStyle(ThemeEntity entity)
         {
             entity.EntityDefaultStyle<ThemeHelper.IThemeData, ThemeEntity>();
-            if (Style != null)
-            {
-                entity.HoveredBgColor = Style.EntityHoveredColor;
-                entity.FocusedBgColor = Style.EntitySelectedColor;
-            }
+            if (PopupStyle != null)
+                entity.EntityStyle = PopupStyle;
         }
     }
 

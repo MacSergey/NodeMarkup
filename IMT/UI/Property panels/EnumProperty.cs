@@ -15,7 +15,7 @@ namespace IMT.UI
 
         public override void SetStyle(ControlStyle style)
         {
-            Selector.SetStyle(style.DropDown);
+            Selector.DropDownStyle = style.DropDown;
         }
     }
     public abstract class StylePropertyPanel<StyleType> : StylePropertyPanel
@@ -54,7 +54,7 @@ namespace IMT.UI
         public class PropColorPopup : SimplePopup<PropLineStyle.ColorOptionEnum, PropColorEntity> { }
         public override void SetStyle(ControlStyle style)
         {
-            Selector.SetStyle(style.DropDown);
+            Selector.DropDownStyle = style.DropDown;
         }
 
         protected override string GetDescription(PropLineStyle.ColorOptionEnum value) => value.Description();

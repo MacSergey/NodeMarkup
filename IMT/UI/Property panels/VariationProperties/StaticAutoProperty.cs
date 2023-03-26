@@ -148,7 +148,7 @@ namespace IMT.UI
         public override void SetStyle(ControlStyle style)
         {
             base.SetStyle(style);
-            Field.SetStyle(style.TextField);
+            Field.TextFieldStyle = style.TextField;
         }
     }
     public class FloatStaticAutoProperty : StaticAutoProperty<float, FloatUITextField> { }

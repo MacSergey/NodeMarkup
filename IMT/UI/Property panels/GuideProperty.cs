@@ -27,7 +27,7 @@ namespace IMT.UI
             {
                 LeftGuideSelector.Value = value;
                 RightGuideSelector.Other = value;
-                OnValueChanged?.Invoke(FollowGuide.State, LeftGuideSelector.Value, RightGuide);
+                OnValueChanged?.Invoke(FollowGuide.Value, LeftGuideSelector.Value, RightGuide);
             }
         }
         public FillerGuide RightGuide
@@ -37,18 +37,18 @@ namespace IMT.UI
             {
                 RightGuideSelector.Value = value;
                 LeftGuideSelector.Other = value;
-                OnValueChanged?.Invoke(FollowGuide.State, LeftGuide, RightGuideSelector.Value);
+                OnValueChanged?.Invoke(FollowGuide.Value, LeftGuide, RightGuideSelector.Value);
             }
         }
         public bool? Follow
         {
-            get => FollowGuide.isVisible ? FollowGuide.State : null;
+            get => FollowGuide.isVisible ? FollowGuide.Value : null;
             set
             {
                 if (value != null)
                 {
                     FollowGuide.isVisible = true;
-                    FollowGuide.State = value.Value;
+                    FollowGuide.Value = value.Value;
                 }
                 else
                     FollowGuide.isVisible = false;
@@ -61,7 +61,7 @@ namespace IMT.UI
         {
             FollowGuide = Content.AddUIComponent<CustomUIToggle>();
             FollowGuide.DefaultStyle();
-            FollowGuide.OnStateChanged += FollowChanged;
+            FollowGuide.OnValueChanged += FollowChanged;
 
             LeftGuideSelector = Content.AddUIComponent<SelectGuideButton>();
             LeftGuideSelector.name = nameof(LeftGuideSelector);
@@ -83,7 +83,7 @@ namespace IMT.UI
             TurnButton.name = nameof(TurnButton);
             TurnButton.SetDefaultStyle();
             TurnButton.size = new Vector2(20f, 20f);
-            TurnButton.AtlasForeground = IMTTextures.Atlas;
+            TurnButton.FgAtlas = IMTTextures.Atlas;
             TurnButton.NormalFgSprite = IMTTextures.RotateButtonIcon;
             TurnButton.tooltip = IMT.Localize.StyleOption_Turn;
             TurnButton.eventClick += TurnClick;
@@ -124,7 +124,7 @@ namespace IMT.UI
 
         private void Refresh()
         {
-            var isEnabled = !FollowGuide.isVisible || FollowGuide.State;
+            var isEnabled = !FollowGuide.isVisible || FollowGuide.Value;
             LeftGuideSelector.isEnabled = isEnabled;
             RightGuideSelector.isEnabled = isEnabled;
             TurnButton.isEnabled = isEnabled;
@@ -145,7 +145,7 @@ namespace IMT.UI
 
         public override void SetStyle(ControlStyle style)
         {
-            FollowGuide.SetStyle(style.Toggle);
+            FollowGuide.ToggleStyle = style.Toggle;
             LeftGuideSelector.SetStyle(style.DropDown);
             RightGuideSelector.SetStyle(style.DropDown);
         }

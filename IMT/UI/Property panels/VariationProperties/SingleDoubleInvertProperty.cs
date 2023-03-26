@@ -16,7 +16,7 @@ namespace IMT.UI
             Invert = Content.AddUIComponent<CustomUIButton>();
             Invert.SetDefaultStyle();
             Invert.width = 20;
-            Invert.AtlasForeground = CommonTextures.Atlas;
+            Invert.FgAtlas = CommonTextures.Atlas;
             Invert.FgSprites = CommonTextures.PlusMinusButton;
             Invert.eventClick += InvertClick;
         }

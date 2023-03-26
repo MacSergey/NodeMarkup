@@ -15,10 +15,10 @@ namespace IMT.UI
 
         public bool EnableGap
         {
-            get => UseToggle.State;
+            get => UseToggle.Value;
             set
             {
-                UseToggle.State = value;
+                UseToggle.Value = value;
                 Refresh();
             }
         }
@@ -86,7 +86,7 @@ namespace IMT.UI
             UseToggle = Content.AddUIComponent<CustomUIToggle>();
             UseToggle.name = nameof(UseToggle);
             UseToggle.DefaultStyle();
-            UseToggle.OnStateChanged += UseChanged;
+            UseToggle.OnValueChanged += UseChanged;
 
             LengthField = Content.AddUIComponent<FloatUITextField>();
             LengthField.name = nameof(LengthField);
@@ -143,9 +143,9 @@ namespace IMT.UI
 
         public override void SetStyle(ControlStyle style)
         {
-            UseToggle.SetStyle(style.Toggle);
-            LengthField.SetStyle(style.TextField);
-            PeriodField.SetStyle(style.TextField);
+            UseToggle.ToggleStyle = style.Toggle;
+            LengthField.TextFieldStyle = style.TextField;
+            PeriodField.TextFieldStyle = style.TextField;
         }
     }
 }

@@ -166,7 +166,7 @@ namespace IMT
             undergroundOptions = displayAndUsageSection.AddTogglePanel(Localize.Settings_ToggleUnderground, ToggleUndergroundMode, new string[] { string.Format(Localize.Settings_ToggleUndergroundHold, UndergroundModifier), string.Format(Localize.Settings_ToggleUndergroundButtons, IntersectionMarkingTool.EnterUndergroundShortcut, IntersectionMarkingTool.ExitUndergroundShortcut) });
             displayAndUsageSection.AddToggle(string.Format(Localize.Setting_HoldToMovePoint, LocalizeExtension.Ctrl), HoldCtrlToMovePoint);
             var autoCollapse = displayAndUsageSection.AddToggle(Localize.Settings_AutoCollapseItemsPanel, AutoCollapseItemsPanel);
-            autoCollapse.Control.OnStateChanged += OnChanged;
+            autoCollapse.Control.OnValueChanged += OnChanged;
             displayAndUsageSection.AddToggle(Localize.Settings_CollapseRules, CollapseRules);
             displayAndUsageSection.AddToggle(CommonLocalize.Settings_ShowTooltips, ShowToolTip);
             displayAndUsageSection.AddToggle(Localize.Settings_ShowPaneltips, ShowPanelTip);
@@ -174,7 +174,7 @@ namespace IMT
 
             IntSettingsItem intensityField = null;
             var illuminationToggle = displayAndUsageSection.AddToggle(Localize.Settings_IlluminationAtNight, IlluminationAtNight);
-            illuminationToggle.Control.OnStateChanged += OnIlluminationChanged;
+            illuminationToggle.Control.OnValueChanged += OnIlluminationChanged;
             intensityField = displayAndUsageSection.AddIntField(Localize.Settings_IlluminationIntensity, IlluminationIntensity, 1, 30);
             intensityField.Control.width = 60f;
             OnIlluminationChanged(IlluminationAtNight);

@@ -203,7 +203,7 @@ namespace IMT.UI
         }
         public override void SetStyle(ControlStyle style)
         {
-            FontFamilySelector.SetStyle(style.DropDown);
+            FontFamilySelector.DropDownStyle = style.DropDown;
             FontStyleSelector.SetStyle(style.Segmented);
         }
 
@@ -223,15 +223,14 @@ namespace IMT.UI
         protected override void SetPopupStyle()
         {
             Popup.PopupDefaultStyle(20f);
-            if (Style != null)
-                Popup.color = Style.PopupColor;
+            if (DropDownStyle != null)
+                Popup.PopupStyle = DropDownStyle;
         }
         protected override void InitPopup()
         {
             Popup.MaximumSize = new Vector2(PopupWidth, 700f);
             Popup.width = PopupWidth;
             Popup.MaxVisibleItems = 25;
-            Popup.Style = Style;
             base.InitPopup();
         }
     }
@@ -244,11 +243,8 @@ namespace IMT.UI
         protected override void SetEntityStyle(FontEntity entity)
         {
             entity.EntityDefaultStyle<string, FontEntity>();
-            if (Style != null)
-            {
-                entity.HoveredBgColor = Style.EntityHoveredColor;
-                entity.FocusedBgColor = Style.EntitySelectedColor;
-            }
+            if (PopupStyle != null)
+                entity.EntityStyle = PopupStyle;
         }
     }
     public class FontEntity : PopupEntity<string>

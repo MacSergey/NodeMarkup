@@ -140,7 +140,7 @@ namespace IMT.UI
             public void SetStyle(ControlStyle style)
             {
                 foreach (var line in Lines)
-                    line.Field.SetStyle(style.TextField);
+                    line.Field.TextFieldStyle = style.TextField;
             }
         }
         public class MultilineTextItem : CustomUIPanel

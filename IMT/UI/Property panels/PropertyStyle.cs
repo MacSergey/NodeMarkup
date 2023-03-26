@@ -1,5 +1,8 @@
 ﻿using ModsCommon.UI;
+using ModsCommon.Utilities;
 using UnityEngine;
+using static ModsCommon.UI.ComponentStyle;
+using static ModsCommon.Utilities.CommonTextures;
 
 namespace IMT.UI
 {
@@ -13,14 +16,21 @@ namespace IMT.UI
         {
             TextField = new TextFieldStyle()
             {
-                BgColors = new ColorSet(Normal, Hovered, Hovered, ComponentStyle.NormalBlue, Disabled),
+                BgAtlas = Atlas,
+                FgAtlas = Atlas,
+
+                BgSprites = FieldSingle,
+                BgColors = new ColorSet(Normal, Hovered, Hovered, NormalBlue, Disabled),
+
                 TextColor = Color.white,
+
+                SelectionSprite = Empty,
                 SelectionColor = Color.black,
             },
             Segmented = new ButtonStyle()
             {
-                BgColors = new ColorSet(Normal, Hovered, Hovered, ComponentStyle.NormalBlue, Disabled),
-                SelBgColors = new ColorSet(ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.FieldDisabledFocusedColor),
+                BgColors = new ColorSet(Normal, Hovered, Hovered, NormalBlue, Disabled),
+                SelBgColors = new ColorSet(NormalBlue, NormalBlue, NormalBlue, NormalBlue, FieldDisabledFocusedColor),
 
                 FgColors = new ColorSet(Color.white),
                 SelFgColors = new ColorSet(Color.white),
@@ -30,10 +40,10 @@ namespace IMT.UI
             },
             Button = new ButtonStyle()
             {
-                BgColors = new ColorSet(ComponentStyle.ButtonNormal, ComponentStyle.ButtonHovered, ComponentStyle.ButtonPressed, ComponentStyle.ButtonNormal, ComponentStyle.ButtonFocused),
+                BgColors = new ColorSet(ButtonNormal, ButtonHovered, ButtonPressed, ButtonNormal, ButtonFocused),
                 SelBgColors = new ColorSet(),
 
-                FgColors = new ColorSet(ComponentStyle.ButtonNormal),
+                FgColors = new ColorSet(ButtonNormal),
                 SelFgColors = new ColorSet(),
 
                 TextColors = new ColorSet(Color.black, Color.black, Color.white, Color.black, Color.white),
@@ -41,19 +51,49 @@ namespace IMT.UI
             },
             DropDown = new DropDownStyle()
             {
-                BgColors = new ColorSet(Normal, Hovered, Hovered, Normal, Disabled),
-                FgColors = new ColorSet(Color.white),
-                TextColors = new ColorSet(Color.white),
+                BgAtlas = Atlas,
+                FgAtlas = Atlas,
 
+                BgSprites = FieldSingle,
+                AllBgColors = new ColorSet(Normal, Hovered, Hovered, Normal, Disabled),
+
+                FgSprites = ArrowDown,
+                AllFgColors = Color.white,
+
+                AllTextColors = Color.white,
+
+
+                PopupAtlas = Atlas,
+                PopupSprite = FieldSingle,
                 PopupColor = Hovered,
 
-                EntityHoveredColor = Normal,
-                EntitySelectedColor = ComponentStyle.NormalBlue,
+
+                EntityAtlas = Atlas,
+
+                EntitySprites = new SpriteSet(default, FieldSingle, default, default, default),
+                EntitySelSprites = FieldSingle,
+
+                EntityColors = Normal,
+                EntitySelColors = NormalBlue,
             },
             Toggle = new ToggleStyle()
             {
-                OnColors = new ColorSet(ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.NormalBlue, ComponentStyle.FieldDisabledFocusedColor),
-                OffColors = new ColorSet(Normal, Hovered, Hovered, Normal, Disabled)
+                BgAtlas = Atlas,
+                MarkAtlas = Atlas,
+
+                OnBgSprites = ToggleBackgroundSmall,
+                OffBgSprites = ToggleBackgroundSmall,
+
+                OnMarkSprites = ToggleCircle,
+                OffMarkSprites = ToggleCircle,
+
+                OnBgColors = new ColorSet(NormalBlue, NormalBlue, NormalBlue, NormalBlue, FieldDisabledFocusedColor),
+                OffBgColors = new ColorSet(Normal, Hovered, Hovered, Normal, Disabled),
+
+                OnMarkColors = Color.white,
+                OffMarkColors = Color.white,
+
+                AllTextColors = Color.white,
             },
         };
     }
