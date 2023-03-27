@@ -25,7 +25,7 @@ namespace IMT.UI.Editors
         protected override string IsAssetWarningMessage => IMT.Localize.PresetEditor_IsAssetWarningMessage;
         protected override string IsWorkshopWarningMessage => IMT.Localize.PresetEditor_IsWorkshopWarningMessage;
 
-        private PropertyGroupPanel InfoGroup { get; set; }
+        private IMTPropertyPanel InfoGroup { get; set; }
 
         protected override IEnumerable<IntersectionTemplate> GetObjects() => SingletonManager<IntersectionTemplateManager>.Instance.Templates;
         protected override void OnObjectSelect(IntersectionTemplate editObject)
@@ -34,7 +34,7 @@ namespace IMT.UI.Editors
 
             ItemsPanel.RemovePreview();
 
-            InfoGroup = ComponentPool.Get<PropertyGroupPanel>(ContentPanel, nameof(InfoGroup));
+            InfoGroup = ComponentPool.Get<IMTPropertyPanel>(ContentPanel, nameof(InfoGroup));
             InfoGroup.Init();
             var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(InfoGroup, "Info");
             info.Init(EditObject);
@@ -319,6 +319,7 @@ namespace IMT.UI.Editors
     {
         public IntersectionTemplateItem Item { get; set; }
         protected override Color32 DefaultColor => UIStyle.ItemGroupBackground;
+        protected override string DefaultBackgroundSprite => CommonTextures.PanelLarge;
 
         protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }

@@ -29,7 +29,7 @@ namespace IMT.UI.Editors
         public override string EmptyMessage => IMT.Localize.LineEditor_EmptyMessage;
         public override Marking.SupportType Support => Marking.SupportType.Lines;
 
-        private PropertyGroupPanel LineProperties { get; set; }
+        private IMTPropertyPanel LineProperties { get; set; }
         private CustomUIButton AddRuleButton { get; set; }
 
         public List<ILinePartEdge> SupportPoints { get; } = new List<ILinePartEdge>();
@@ -106,7 +106,7 @@ namespace IMT.UI.Editors
         }
         private void AddLineProperties(MarkingLine editObject)
         {
-            LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
+            LineProperties = ComponentPool.Get<IMTPropertyPanel>(ContentPanel);
             LineProperties.Init();
 
             if (editObject is MarkingRegularLine line)

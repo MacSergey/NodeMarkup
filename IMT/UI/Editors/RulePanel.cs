@@ -11,13 +11,10 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class RulePanel : PropertyGroupPanel, IPropertyContainer
+    public class RulePanel : IMTPropertyPanel, IPropertyContainer
     {
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
         public event Action<RulePanel, UIMouseEventParameter> OnLeave;
-
-        protected override Color32 DefaultColor => UIStyle.PropertyPanel;
-        protected override string DefaultBackgroundSprite => CommonTextures.PanelLarge;
 
 
         private bool isExpand;

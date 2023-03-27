@@ -384,7 +384,7 @@ namespace IMT.UI.Editors
         where ItemsPanelType : CustomUIScrollablePanel, IItemPanel<ObjectType>
         where ObjectType : class, IDeletable
     {
-        protected PropertyGroupPanel PropertiesPanel { get; private set; }
+        protected IMTPropertyPanel PropertiesPanel { get; private set; }
 
         public SimpleEditor()
         {
@@ -393,7 +393,7 @@ namespace IMT.UI.Editors
 
         protected override void OnObjectSelect(ObjectType editObject)
         {
-            PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel, "PropertyPanel");
+            PropertiesPanel = ComponentPool.Get<IMTPropertyPanel>(ContentPanel, "PropertyPanel");
             PropertiesPanel.BgColors = UIStyle.PropertyPanel;
             PropertiesPanel.PauseLayout(() => OnFillPropertiesPanel(editObject));
             PropertiesPanel.Init();
@@ -432,5 +432,11 @@ namespace IMT.UI.Editors
 
         public T GetItem<T>(string name) where T : UIComponent, IReusable => ComponentPool.Get<T>(parent, name);
         public void DestroyItem<T>(T item) where T : UIComponent, IReusable => ComponentPool.Free(item);
+    }
+
+    public class IMTPropertyPanel : PropertyGroupPanel
+    {
+        protected override Color32 DefaultColor => UIStyle.PropertyPanel;
+        protected override string DefaultBackgroundSprite => CommonTextures.PanelLarge;
     }
 }

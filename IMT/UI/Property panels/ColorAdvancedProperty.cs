@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace IMT.UI
 {
-    public class ColorAdvancedPropertyPanel : ColorPropertyPanel
+    public class ColorAdvancedPropertyPanel : NewColorPropertyPanel
     {
         private static Color32? Buffer { get; set; }
 
@@ -21,7 +21,7 @@ namespace IMT.UI
         private CustomUIButton CopyButton { get; set; }
         private CustomUIButton PasteButton { get; set; }
 
-        protected override Color32 PopupColor => UIStyle.PopupBackground;
+        //protected override Color32 PopupColor => UIStyle.PopupBackground;
 
         protected override void FillContent()
         {
@@ -57,16 +57,16 @@ namespace IMT.UI
             defaultColor = null;
         }
 
-        protected override void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
-        {
-            base.ColorPickerOpen(dropdown, popup, ref overridden);
+        //protected override void ColorPickerOpen(UIColorField dropdown, UIColorPicker popup, ref bool overridden)
+        //{
+        //    base.ColorPickerOpen(dropdown, popup, ref overridden);
 
-            Popup.component.size += new Vector2(0, 30);
+        //    Popup.component.size += new Vector2(0, 30);
 
-            AddCopyButton();
-            AddPasteButton();
-            AddSetDefaultButton();
-        }
+        //    AddCopyButton();
+        //    AddPasteButton();
+        //    AddSetDefaultButton();
+        //}
         private CustomUIButton CreateButton(UIComponent parent, string text, int count, int of)
         {
             var width = (parent.width - (10 * (of + 1))) / of;
@@ -81,36 +81,36 @@ namespace IMT.UI
             return button;
         }
 
-        private void AddCopyButton()
-        {
-            var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorCopy, 1, 3);
-            button.eventClick += Copy;
-        }
-        private void AddPasteButton()
-        {
-            var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorPaste, 2, 3);
-            button.isEnabled = Buffer.HasValue;
-            button.eventClick += Paste;
-        }
-        private void AddSetDefaultButton()
-        {
-            var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorDefault, 3, 3);
-            button.eventClick += SetDefault;
-        }
+        //private void AddCopyButton()
+        //{
+        //    var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorCopy, 1, 3);
+        //    button.eventClick += Copy;
+        //}
+        //private void AddPasteButton()
+        //{
+        //    var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorPaste, 2, 3);
+        //    button.isEnabled = Buffer.HasValue;
+        //    button.eventClick += Paste;
+        //}
+        //private void AddSetDefaultButton()
+        //{
+        //    var button = CreateButton(Popup.component, IMT.Localize.Editor_ColorDefault, 3, 3);
+        //    button.eventClick += SetDefault;
+        //}
 
         private void Copy(UIComponent component, UIMouseEventParameter eventParam)
         {
             Buffer = Value;
-            if (Popup != null)
-                Popup.component.Hide();
+            //if (Popup != null)
+            //    Popup.component.Hide();
         }
         private void Paste(UIComponent component, UIMouseEventParameter eventParam)
         {
             if (Buffer != null)
             {
                 ValueChanged(Buffer.Value, true, OnChangedValue);
-                if (Popup != null)
-                    Popup.component.Hide();
+                //if (Popup != null)
+                //    Popup.component.Hide();
             }
         }
         private void SetDefault(UIComponent component, UIMouseEventParameter eventParam) => ValueChanged(DefaultColor, true, OnChangedValue);
