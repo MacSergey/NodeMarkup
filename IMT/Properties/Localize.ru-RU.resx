@@ -2064,4 +2064,10 @@
   <data name="StyleOption_LineNumber" xml:space="preserve">
     <value>Строка #{0}</value>
   </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>Раскачивание на ветру</value>
+  </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Удерживайте {0} чтобы свернуть/развернуть все группы</value>
+  </data>
 </root>

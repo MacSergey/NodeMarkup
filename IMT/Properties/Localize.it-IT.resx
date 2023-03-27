@@ -2062,4 +2062,7 @@ Può volerci del tempo se ci sono molti segmenti.</value>
   <data name="StyleOption_LineNumber" xml:space="preserve">
     <value>Linea ({0})</value>
   </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>Ondeggiando al vento</value>
+  </data>
 </root>

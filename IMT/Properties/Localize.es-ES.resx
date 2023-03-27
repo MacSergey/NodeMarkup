@@ -1876,4 +1876,10 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
   <data name="StyleOption_LineNumber" xml:space="preserve">
     <value>Línea #{0}</value>
   </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>Meciéndose en el viento</value>
+  </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Mantener presionada la tecla {0} para colapsar/expandir todos los grupos</value>
+  </data>
 </root>

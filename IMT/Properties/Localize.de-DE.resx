@@ -1938,10 +1938,16 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
   <data name="StyleOption_Tiling" xml:space="preserve">
     <value>Raster</value>
   </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Gehweg</value>
+  </data>
   <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
     <value>Liste automatisch einklappen</value>
   </data>
   <data name="StyleOption_LineNumber" xml:space="preserve">
     <value>Linie #{0}</value>
+  </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>Bewegung durch Wind</value>
   </data>
 </root>

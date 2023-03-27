@@ -1873,4 +1873,7 @@ Het kan even duren als er veel segmenten zijn.</value>
   <data name="StyleOption_LineNumber" xml:space="preserve">
     <value>Lijn #{0}</value>
   </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>Deinend met de wind</value>
+  </data>
 </root>

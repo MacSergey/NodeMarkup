@@ -2038,4 +2038,7 @@
   <data name="StyleOption_LineNumber" xml:space="preserve">
     <value>线段 #{0}</value>
   </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>随风摇摆</value>
+  </data>
 </root>

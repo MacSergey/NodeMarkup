@@ -2067,4 +2067,7 @@
   <data name="StyleOption_LineNumber" xml:space="preserve">
     <value>ライン #{0}</value>
   </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>風に揺れる</value>
+  </data>
 </root>

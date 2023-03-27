@@ -2066,4 +2066,7 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
   <data name="StyleOption_LineNumber" xml:space="preserve">
     <value>Ligne n°{0}</value>
   </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>Se balancer avec le vent</value>
+  </data>
 </root>
