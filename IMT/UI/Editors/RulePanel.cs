@@ -207,7 +207,7 @@ namespace IMT.UI.Editors
 
             foreach (var property in (this as IPropertyContainer).StyleProperties)
             {
-                if (property is ColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
+                if (property is IMTColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
                     colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
             }
         }

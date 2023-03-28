@@ -105,7 +105,7 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
 
-            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(DecalColor), MainCategory, AddDecalColorProperty, RefreshDecalColorProperty));
+            provider.AddProperty(new PropertyInfo<IMTColorPropertyPanel>(this, nameof(DecalColor), MainCategory, AddDecalColorProperty, RefreshDecalColorProperty));
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Size), MainCategory, AddSizeProperty, RefreshSizeProperty));
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Tiling), MainCategory, AddTilingProperty, RefreshTilingProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Height), MainCategory, AddHeightProperty, RefreshHeightProperty));
@@ -119,14 +119,14 @@ namespace IMT.Manager
                 DecalColor.Value = newDecal.m_color0;
         }
 
-        private void AddDecalColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        private void AddDecalColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(Prefab.Value?.m_color0);
             colorProperty.OnValueChanged += (Color32 color) => DecalColor.Value = color;
         }
-        private void RefreshDecalColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        private void RefreshDecalColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.Value = DecalColor.Value ?? Prefab.Value?.m_color0 ?? new Color32(127, 127, 127, 255);
             colorProperty.IsHidden = !IsValid;

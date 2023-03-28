@@ -214,7 +214,7 @@ namespace IMT.Manager
         {
             base.GetUIComponents(crosswalk, provider);
             provider.AddProperty(new PropertyInfo<BoolPropertyPanel>(this, nameof(TwoColors), AdditionalCategory, AddUseSecondColorProperty));
-            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(SecondColor), AdditionalCategory, AddSecondColorProperty, RefreshSecondColorProperty));
+            provider.AddProperty(new PropertyInfo<IMTColorPropertyPanel>(this, nameof(SecondColor), AdditionalCategory, AddSecondColorProperty, RefreshSecondColorProperty));
 
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Length), MainCategory, AddCrosswalkLengthProperty));
             provider.AddProperty(new PropertyInfo<DashEndPanel>(this, nameof(DashType), MainCategory, AddDashEndProperty));
@@ -222,7 +222,7 @@ namespace IMT.Manager
             provider.AddProperty(new PropertyInfo<GapProperty>(this, nameof(Gap), AdditionalCategory, AddGapProperty));
         }
 
-        protected override void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        protected override void RefreshColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             base.RefreshColorProperty(colorProperty, provider);
             colorProperty.Label = TwoColors.Value ? Localize.StyleOption_MainColor : Localize.StyleOption_Color;
@@ -240,7 +240,7 @@ namespace IMT.Manager
             };
         }
 
-        protected void AddSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        protected void AddSecondColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
@@ -248,7 +248,7 @@ namespace IMT.Manager
             colorProperty.Value = SecondColor;
             colorProperty.OnValueChanged += (Color32 color) => SecondColor.Value = color;
         }
-        protected virtual void RefreshSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        protected virtual void RefreshSecondColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.IsHidden = !TwoColors.Value;
             colorProperty.Label = TwoColors.Value ? Localize.StyleOption_SecondColor : Localize.StyleOption_Color;

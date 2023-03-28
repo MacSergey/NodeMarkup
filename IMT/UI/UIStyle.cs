@@ -133,6 +133,16 @@ namespace IMT.UI
 
                 AllTextColors = Color.white,
             },
+            ColorPicker = new ColorPickerStyle()
+            {
+                BgAtlas = Atlas,
+                FgAtlas = Atlas,
+
+                BgSprites = PanelSmall,
+                BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyNormal, PropertyNormal),
+
+                FgSprites = PanelSmall,
+            }
         };
     }
 }

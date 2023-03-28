@@ -136,7 +136,7 @@ namespace IMT.Manager
             base.GetUIComponents(line, provider);
 
             provider.AddProperty(new PropertyInfo<SelectNetworkProperty>(this, nameof(Prefab), MainCategory, AddPrefabProperty));
-            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(NetworkColor), AdditionalCategory, AddNetworkColorProperty, RefreshNetworkColorProperty));
+            provider.AddProperty(new PropertyInfo<IMTColorPropertyPanel>(this, nameof(NetworkColor), AdditionalCategory, AddNetworkColorProperty, RefreshNetworkColorProperty));
             provider.AddProperty(new PropertyInfo<FloatSingleDoubleInvertedProperty>(this, nameof(Shift), MainCategory, AddShiftProperty, RefreshShiftProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), AdditionalCategory, AddScaleProperty, RefreshScaleProperty));
@@ -164,14 +164,14 @@ namespace IMT.Manager
             };
         }
 
-        private void AddNetworkColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        private void AddNetworkColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
             colorProperty.Init(Prefab.Value?.m_color);
             colorProperty.OnValueChanged += (Color32 color) => NetworkColor.Value = color;
         }
-        private void RefreshNetworkColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        private void RefreshNetworkColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.Value = NetworkColor.Value ?? Prefab.Value?.m_color ?? new Color32(127, 127, 127, 255);
             colorProperty.IsHidden = !IsValid;

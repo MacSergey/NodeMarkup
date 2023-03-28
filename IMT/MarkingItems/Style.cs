@@ -200,7 +200,7 @@ namespace IMT.Manager
         public virtual void GetUIComponents(EditorProvider provider)
         {
             if (this is IColorStyle)
-                provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(Color), MainCategory, AddColorProperty, RefreshColorProperty));
+                provider.AddProperty(new PropertyInfo<IMTColorPropertyPanel>(this, nameof(Color), MainCategory, AddColorProperty, RefreshColorProperty));
             if (this is IWidthStyle)
                 provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Width), MainCategory, AddWidthProperty, RefreshWidthProperty));
             if (this is IEffectStyle)
@@ -228,7 +228,7 @@ namespace IMT.Manager
                 return int.MaxValue;
         }
 
-        private void AddColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        private void AddColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
@@ -236,7 +236,7 @@ namespace IMT.Manager
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (Color32 color) => Color.Value = color;
         }
-        protected virtual void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        protected virtual void RefreshColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.Value = Color;
         }
