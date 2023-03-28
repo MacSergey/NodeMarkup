@@ -223,7 +223,6 @@ namespace IMT.UI
         }
 
         private CustomUISprite Screenshot { get; set; }
-        private CustomUILabel Title { get; set; }
         private CustomUIButton Favorite { get; set; }
 
         protected abstract string LocalizedTitle { get; }
@@ -234,11 +233,9 @@ namespace IMT.UI
             Screenshot = AddUIComponent<CustomUISprite>();
             Screenshot.size = new Vector2(90f, 90f);
 
-            Title = AddUIComponent<CustomUILabel>();
-            Title.autoSize = false;
-            Title.WordWrap = true;
-            Title.textScale = 0.7f;
-            Title.VerticalAlignment = UIVerticalAlignment.Middle;
+            WordWrap = true;
+            textScale = 0.7f;
+            TextVerticalAlignment = UIVerticalAlignment.Middle;
 
             Favorite = AddUIComponent<CustomUIButton>();
             Favorite.Atlas = IMTTextures.Atlas;
@@ -272,7 +269,7 @@ namespace IMT.UI
                 Screenshot.isVisible = !string.IsNullOrEmpty(Screenshot.spriteName);
                 Favorite.isVisible = ShowFavorite;
                 SetFavoriteButton();
-                Title.text = LocalizedTitle;
+                text = LocalizedTitle;
             }
             else
             {
@@ -280,7 +277,7 @@ namespace IMT.UI
                 Screenshot.spriteName = string.Empty;
                 Screenshot.isVisible = false;
                 Favorite.isVisible = false;
-                Title.text = string.IsNullOrEmpty(RawName) ? IMT.Localize.StyleOption_AssetNotSet : string.Format(IMT.Localize.StyleOption_AssetMissed, RawName);
+                text = string.IsNullOrEmpty(RawName) ? IMT.Localize.StyleOption_AssetNotSet : string.Format(IMT.Localize.StyleOption_AssetMissed, RawName);
             }
 
             SetPosition();
@@ -295,7 +292,7 @@ namespace IMT.UI
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_RemoveFromFavorites;
                 Favorite.FgSprites = new SpriteSet(IMTTextures.SetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton);
-                Favorite.FgColors = new ColorSet(FavoriteNormal, FavoriteHovered, FavoritePressed, FavoriteNormal, FavoriteNormal);
+                Favorite.FgColors = new ColorSet(FavoriteNormal, FavoriteNormal, FavoriteHovered, FavoriteNormal, FavoriteNormal);
             }
             else
             {
@@ -312,17 +309,16 @@ namespace IMT.UI
         }
         private void SetPosition()
         {
-            if (Screenshot != null && Title != null)
+            if (Screenshot != null)
             {
                 Screenshot.size = new Vector2(height - 10f, height - 10f);
                 Screenshot.relativePosition = new Vector2(5f, 5f);
-                Title.size = size;
                 Favorite.size = new Vector2(20f, height - 10f);
                 Favorite.relativePosition = new Vector2(width - Favorite.width - 5f, 5f);
 
                 var left = Screenshot.isVisible ? Mathf.CeilToInt(Screenshot.relativePosition.x + Screenshot.width) + 5 : 8;
                 var right = Math.Max(Favorite.isVisible ? Mathf.CeilToInt(width - Favorite.relativePosition.x) + 5 : 8, Padding.right);
-                Title.Padding = new RectOffset(left, right, 5, 5);
+                TextPadding = new RectOffset(left, right, 5, 5);
             }
         }
 

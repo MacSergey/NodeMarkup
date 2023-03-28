@@ -84,7 +84,7 @@ namespace IMT.UI
             TurnButton.SetDefaultStyle();
             TurnButton.size = new Vector2(20f, 20f);
             TurnButton.FgAtlas = IMTTextures.Atlas;
-            TurnButton.FgSprites = IMTTextures.RotateButtonIcon;
+            TurnButton.AllFgSprites = IMTTextures.RotateButtonIcon;
             TurnButton.tooltip = IMT.Localize.StyleOption_Turn;
             TurnButton.eventClick += TurnClick;
         }
@@ -130,9 +130,9 @@ namespace IMT.UI
             TurnButton.isEnabled = isEnabled;
         }
 
-        protected virtual void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(component.parent as SelectGuideButton);
-        protected virtual void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnEnter?.Invoke(component.parent as SelectGuideButton);
-        protected virtual void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(component.parent as SelectGuideButton);
+        protected virtual void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(component as SelectGuideButton);
+        protected virtual void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnEnter?.Invoke(component as SelectGuideButton);
+        protected virtual void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(component as SelectGuideButton);
 
         protected virtual void TurnClick(UIComponent component, UIMouseEventParameter eventParam)
         {
@@ -148,6 +148,10 @@ namespace IMT.UI
             FollowGuide.ToggleStyle = style.Toggle;
             LeftGuideSelector.SelectorStyle = style.DropDown;
             RightGuideSelector.SelectorStyle = style.DropDown;
+
+            TurnButton.ButtonStyle = style.Button;
+            TurnButton.FgAtlas = IMTTextures.Atlas;
+            TurnButton.AllFgSprites = IMTTextures.RotateButtonIcon;
         }
 
         public class SelectGuideButton : SelectItemPropertyButton<FillerGuide>

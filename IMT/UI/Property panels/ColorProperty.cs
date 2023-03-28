@@ -3,6 +3,8 @@ using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace IMT.UI
@@ -10,6 +12,7 @@ namespace IMT.UI
     public class IMTColorPropertyPanel : ColorPropertyPanel<IMTColorPicker, IMTColorPickerPopup>
     {
         private static Color32? Buffer { get; set; }
+        //private static Queue<Color32> History = new Queue<Color32>();
 
         Color32? defaultColor;
         public Color32 DefaultColor
@@ -30,7 +33,7 @@ namespace IMT.UI
             CopyButton.SetDefaultStyle();
             CopyButton.size = new Vector2(20f, 20f);
             CopyButton.FgAtlas = IMTTextures.Atlas;
-            CopyButton.FgSprites = IMTTextures.CopyButtonIcon;
+            CopyButton.AllFgSprites = IMTTextures.CopyButtonIcon;
             CopyButton.tooltip = IMT.Localize.Editor_ColorCopy;
             CopyButton.eventClick += (_, _) => Copy();
 
@@ -39,11 +42,12 @@ namespace IMT.UI
             PasteButton.SetDefaultStyle();
             PasteButton.size = new Vector2(20f, 20f);
             PasteButton.FgAtlas = IMTTextures.Atlas;
-            PasteButton.FgSprites = IMTTextures.PasteButtonIcon;
+            PasteButton.AllFgSprites = IMTTextures.PasteButtonIcon;
             PasteButton.tooltip = IMT.Localize.Editor_ColorPaste;
             PasteButton.eventClick += (_, _) => Paste();
 
             ColorPicker.OnAfterPopupOpen += ColorPickerPopupOpen;
+            ColorPicker.OnBeforePopupClose += ColorPickerPopupClose;
         }
 
         private void ColorPickerPopupOpen(IMTColorPickerPopup popup)
@@ -53,6 +57,21 @@ namespace IMT.UI
             popup.OnDefault += SetDefault;
 
             popup.CanPaste = Buffer.HasValue;
+
+            //popup.FillColorHistory(History.ToArray());
+        }
+        private void ColorPickerPopupClose(IMTColorPickerPopup popup)
+        {
+            //foreach (var item in History)
+            //{
+            //    if (Equals(item, popup.SelectedColor))
+            //        return;
+            //}
+
+            //History.Enqueue(popup.SelectedColor);
+
+            //if (History.Count > 10)
+            //    History.Dequeue();
         }
 
         public void Init(Color32? defaultColor = null)
@@ -78,6 +97,19 @@ namespace IMT.UI
                 ValueChanged(Buffer.Value, true, OnChangedValue);
         }
         private void SetDefault() => ValueChanged(DefaultColor, true, OnChangedValue);
+
+        public override void SetStyle(ControlStyle style)
+        {
+            base.SetStyle(style);
+
+            CopyButton.ButtonStyle = style.Button;
+            CopyButton.FgAtlas = IMTTextures.Atlas;
+            CopyButton.AllFgSprites = IMTTextures.CopyButtonIcon;
+
+            PasteButton.ButtonStyle = style.Button;
+            PasteButton.FgAtlas = IMTTextures.Atlas;
+            PasteButton.AllFgSprites = IMTTextures.PasteButtonIcon;
+        }
     }
 
     public class IMTColorPicker : ColorPickerButton<IMTColorPickerPopup> { }
@@ -88,6 +120,8 @@ namespace IMT.UI
         public event Action OnDefault;
 
         private CustomUIButton PasteButton { get; set; }
+        //private CustomUIPanel SamplesPanel { get; set; }
+
         public bool CanPaste
         {
             set => PasteButton.isEnabled = value;
@@ -96,6 +130,17 @@ namespace IMT.UI
         protected override void FillPopup()
         {
             base.FillPopup();
+
+            //SamplesPanel = AddUIComponent<CustomUIPanel>();
+            //SamplesPanel.AutoLayout = AutoLayout.Horizontal;
+            //SamplesPanel.AutoChildrenHorizontally = AutoLayoutChildren.Fit;
+            //SamplesPanel.AutoChildrenVertically = AutoLayoutChildren.Fit;
+            //SamplesPanel.AutoLayoutSpace = 8;
+            //SamplesPanel.Padding = new RectOffset(10, 10, 10, 10);
+
+            //SamplesPanel.Atlas = CommonTextures.Atlas;
+            //SamplesPanel.BackgroundSprite = CommonTextures.PanelBig;
+            //SamplesPanel.BgColors = ComponentStyle.DarkPrimaryColor25;
 
             var buttonPanel = AddUIComponent<CustomUIPanel>();
             buttonPanel.PauseLayout(() =>
@@ -115,6 +160,7 @@ namespace IMT.UI
                 defaultButton.eventClick += SetDefault;
             });
         }
+
         public override void DeInit()
         {
             base.DeInit();
@@ -122,6 +168,15 @@ namespace IMT.UI
             OnCopy = null;
             OnPaste = null;
             OnDefault = null;
+
+            //SamplesPanel.PauseLayout(() =>
+            //{
+            //    foreach (var item in SamplesPanel.components.ToArray())
+            //    {
+            //        SamplesPanel.RemoveUIComponent(item);
+            //        Destroy(item);
+            //    }
+            //}, false);
         }
 
         private CustomUIButton CreateButton(UIComponent parent, string text)
@@ -138,6 +193,29 @@ namespace IMT.UI
         private void Copy(UIComponent component, UIMouseEventParameter eventParam) => OnCopy?.Invoke();
         private void Paste(UIComponent component, UIMouseEventParameter eventParam) => OnPaste?.Invoke();
         private void SetDefault(UIComponent component, UIMouseEventParameter eventParam) => OnDefault?.Invoke();
+
+
+        //public void FillColorHistory(Color32[] colors)
+        //{
+        //    SamplesPanel.PauseLayout(() =>
+        //    {
+        //        foreach (var color in colors)
+        //        {
+        //            var button = SamplesPanel.AddUIComponent<CustomUIButton>();
+        //            button.size = new Vector2(20f, 20f);
+        //            button.SpritePadding = new RectOffset(2, 2, 2, 2);
+
+        //            button.Atlas = CommonTextures.Atlas;
+        //            button.BgSprites = new SpriteSet(default, CommonTextures.Circle, CommonTextures.Circle, default, default);
+        //            button.FgSprites = CommonTextures.Circle;
+
+        //            var fgColor = color;
+        //            fgColor.a = 255;
+        //            button.FgColors = fgColor;
+        //            button.eventClick += (_, _) => ColorChanged(color, true, OnValueChanged);
+        //        }
+        //    });
+        //}
     }
 }
 

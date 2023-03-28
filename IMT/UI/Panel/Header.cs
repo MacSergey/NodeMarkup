@@ -33,13 +33,22 @@ namespace IMT.UI.Panel
             }
         }
 
-        public PanelHeader() : base()
+        protected override void PlaceItems()
         {
+            base.PlaceItems();
+
+            autoLayoutStart = LayoutStart.MiddleRight;
+
             Blur = AddUIComponent<BlurEffect>();
             Blur.relativePosition = Vector3.zero;
             Blur.size = size;
             Blur.isVisible = false;
-            Caption.zOrder = Blur.zOrder + 1;
+            Blur.zOrder = Caption.zOrder + 1;
+            Ignore(Blur, true);
+
+            Content.zOrder = 0;
+            Blur.zOrder = 1;
+            Caption.zOrder = 2;
         }
         protected override void FillContent()
         {
@@ -76,7 +85,7 @@ namespace IMT.UI.Panel
             base.Init(null);
         }
 
-        public override void UpdateLayout()
+        public override void Refresh()
         {
             PasteButton.Enable = !SingletonTool<IntersectionMarkingTool>.Instance.IsMarkingBufferEmpty;
 
@@ -86,7 +95,7 @@ namespace IMT.UI.Panel
             BeetwenIntersectionsButton.Visible = Type == MarkingType.Segment;
             WholeStreetButton.Visible = Type == MarkingType.Segment;
 
-            base.UpdateLayout();
+            base.Refresh();
         }
         protected override void OnSizeChanged()
         {

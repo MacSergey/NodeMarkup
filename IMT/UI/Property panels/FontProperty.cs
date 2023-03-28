@@ -217,7 +217,7 @@ namespace IMT.UI
 
         public FontDropDown() : base()
         {
-            Entity.TextScale = 0.7f;
+            Entity.textScale = 0.7f;
         }
 
         protected override void SetPopupStyle()
@@ -249,32 +249,18 @@ namespace IMT.UI
     }
     public class FontEntity : PopupEntity<string>
     {
-        private CustomUILabel Label { get; }
-        public float TextScale
-        {
-            get => Label.textScale;
-            set => Label.textScale = value;
-        }
-
         public override void SetObject(int index, string font, bool selected)
         {
             base.SetObject(index, font, selected);
-            Label.text = string.IsNullOrEmpty(font) ? IMT.Localize.StyleOption_DefaultFont : font;
+            text = string.IsNullOrEmpty(font) ? IMT.Localize.StyleOption_DefaultFont : font;
         }
 
         public FontEntity()
         {
-            Label = AddUIComponent<CustomUILabel>();
-            Label.autoSize = false;
-            Label.HorizontalAlignment = UIHorizontalAlignment.Left;
-            Label.VerticalAlignment = UIVerticalAlignment.Middle;
-            Label.Padding = new RectOffset(8, 0, 3, 0);
-            Label.textScale = 0.9f;
-        }
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-            Label.size = size;
+            TextHorizontalAlignment = UIHorizontalAlignment.Left;
+            TextVerticalAlignment = UIVerticalAlignment.Middle;
+            TextPadding = new RectOffset(8, 0, 3, 0);
+            textScale = 0.9f;
         }
     }
 }

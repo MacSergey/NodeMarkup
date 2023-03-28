@@ -166,7 +166,6 @@ namespace IMT.UI
         }
 
         private CustomUITextureSprite Screenshot { get; set; }
-        private CustomUILabel Title { get; set; }
 
         public ThemeEntity()
         {
@@ -174,11 +173,9 @@ namespace IMT.UI
             Screenshot.material = RenderHelper.ThemeTexture;
             Screenshot.size = new Vector2(90f, 90f);
 
-            Title = AddUIComponent<CustomUILabel>();
-            Title.autoSize = false;
-            Title.WordWrap = true;
-            Title.textScale = 0.7f;
-            Title.VerticalAlignment = UIVerticalAlignment.Middle;
+            WordWrap = true;
+            textScale = 0.7f;
+            TextVerticalAlignment = UIVerticalAlignment.Middle;
 
             Set();
         }
@@ -203,7 +200,7 @@ namespace IMT.UI
             {
                 Screenshot.texture = theme.GetTexture(TextureType).texture;
                 Screenshot.isVisible = true;
-                Title.text = theme.Name;
+                text = theme.Name;
             }
             else
             {
@@ -211,9 +208,9 @@ namespace IMT.UI
                 Screenshot.isVisible = false;
 
                 if (string.IsNullOrEmpty(RawName))
-                    Title.text = IMT.Localize.StyleOption_AssetNotSet;
+                    text = IMT.Localize.StyleOption_AssetNotSet;
                 else
-                    Title.text = string.Format(IMT.Localize.StyleOption_ThemeMissed, RawName);
+                    text = string.Format(IMT.Localize.StyleOption_ThemeMissed, RawName);
             }
 
             SetPosition();
@@ -226,15 +223,14 @@ namespace IMT.UI
         }
         private void SetPosition()
         {
-            if (Screenshot != null && Title != null)
+            if (Screenshot != null)
             {
                 Screenshot.size = new Vector2(height - 10f, height - 10f);
                 Screenshot.relativePosition = new Vector2(5f, 5f);
-                Title.size = size;
 
                 var left = Screenshot.isVisible ? Mathf.CeilToInt(Screenshot.relativePosition.x + Screenshot.width) + 5 : 8;
                 var right = Math.Max(Padding.right, 8);
-                Title.Padding = new RectOffset(left, right, 5, 5);
+                TextPadding = new RectOffset(left, right, 5, 5);
             }
         }
     }

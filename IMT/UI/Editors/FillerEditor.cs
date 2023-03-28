@@ -206,7 +206,7 @@ namespace IMT.UI.Editors
                 FillerGuideToolMode.Contour = EditObject.Contour;
                 FillerGuideToolMode.SelectButton = selectButton;
                 FillerGuideToolMode.AfterSelectButton = afterAction;
-                selectButton.Focus();
+                selectButton?.Focus();
                 return false;
             }
         }
