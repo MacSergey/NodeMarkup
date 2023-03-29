@@ -2066,6 +2066,6 @@ It can take time if there are a lot of segments.</value>
     <value>Line #{0}</value>
   </data>
   <data name="StyleOption_Wind" xml:space="preserve">
-    <value>Affected by wind</value>
+    <value>Swaying in the wind</value>
   </data>
 </root>
