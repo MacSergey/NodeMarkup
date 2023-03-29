@@ -14,6 +14,7 @@ namespace IMT.Utilities
         public float slope;
         public float scale;
         public Color32 color;
+        public bool wind;
     }
     public abstract class BaseMarkingPrefabData<PrefabType> : IStyleData
         where PrefabType : PrefabInfo
@@ -44,13 +45,13 @@ namespace IMT.Utilities
         {
             var instance = new InstanceID();
 
-            foreach (var item in Items)
+            for(var i = 0; i < Items.Length; i += 1)
             {
-                RenderInstance(cameraInfo, Info, instance, item.position, item.scale, item.absoluteAngle, item.angle, item.tilt, item.slope, item.color, new Vector4(), true);
+                RenderInstance(cameraInfo, Info, instance, ref Items[i], new Vector4(), true);
             }
         }
 
-        public static void RenderInstance(RenderManager.CameraInfo cameraInfo, PropInfo info, InstanceID id, Vector3 position, float scale, float absoluteAngle, float angle, float tilt, float slope, Color color, Vector4 objectIndex, bool active)
+        public static void RenderInstance(RenderManager.CameraInfo cameraInfo, PropInfo info, InstanceID id, ref MarkingObjectItemData data, Vector4 objectIndex, bool active)
         {
             if (!info.m_prefabInitialized)
                 return;
@@ -58,7 +59,7 @@ namespace IMT.Utilities
             if (info.m_hasEffects && (active || info.m_alwaysActive))
             {
                 var matrix = default(Matrix4x4);
-                matrix.SetTRS(position, Quaternion.AngleAxis((absoluteAngle + angle) * Mathf.Rad2Deg, Vector3.down), new Vector3(scale, scale, scale));
+                matrix.SetTRS(data.position, Quaternion.AngleAxis((data.absoluteAngle + data.angle) * Mathf.Rad2Deg, Vector3.down), new Vector3(data.scale, data.scale, data.scale));
                 var simulationTimeDelta = Singleton<SimulationManager>.instance.m_simulationTimeDelta;
                 for (int i = 0; i < info.m_effects.Length; i++)
                 {
@@ -95,18 +96,18 @@ namespace IMT.Utilities
                     objectIndex.z = 1f;
             }
 
-            if (cameraInfo == null || cameraInfo.CheckRenderDistance(position, Settings.PropLODDistance))
+            if (cameraInfo == null || cameraInfo.CheckRenderDistance(data.position, Settings.PropLODDistance))
             {
                 var matrix = default(Matrix4x4);
-                var rotation = Quaternion.AngleAxis(absoluteAngle * Mathf.Rad2Deg, Vector3.down);
-                rotation *= Quaternion.AngleAxis(slope * Mathf.Rad2Deg, Vector3.forward);
-                rotation *= Quaternion.AngleAxis(tilt * Mathf.Rad2Deg, Vector3.right);
-                rotation *= Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down);
-                matrix.SetTRS(position, rotation, new Vector3(scale, scale, scale));
+                var rotation = Quaternion.AngleAxis(data.absoluteAngle * Mathf.Rad2Deg, Vector3.down);
+                rotation *= Quaternion.AngleAxis(data.slope * Mathf.Rad2Deg, Vector3.forward);
+                rotation *= Quaternion.AngleAxis(data.tilt * Mathf.Rad2Deg, Vector3.right);
+                rotation *= Quaternion.AngleAxis(data.angle * Mathf.Rad2Deg, Vector3.down);
+                matrix.SetTRS(data.position, rotation, new Vector3(data.scale, data.scale, data.scale));
                 var instance = Singleton<PropManager>.instance;
                 var materialBlock = instance.m_materialBlock;
                 materialBlock.Clear();
-                materialBlock.SetColor(instance.ID_Color, color);
+                materialBlock.SetColor(instance.ID_Color, data.color);
                 materialBlock.SetVector(instance.ID_ObjectIndex, objectIndex);
                 if (info.m_rollLocation != null)
                 {
@@ -119,15 +120,15 @@ namespace IMT.Utilities
             else if (info.m_lodMaterialCombined == null)
             {
                 var matrix = default(Matrix4x4);
-                var rotation = Quaternion.AngleAxis(absoluteAngle * Mathf.Rad2Deg, Vector3.down);
-                rotation *= Quaternion.AngleAxis(slope * Mathf.Rad2Deg, Vector3.forward);
-                rotation *= Quaternion.AngleAxis(tilt * Mathf.Rad2Deg, Vector3.right);
-                rotation *= Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down);
-                matrix.SetTRS(position, rotation, new Vector3(scale, scale, scale));
+                var rotation = Quaternion.AngleAxis(data.absoluteAngle * Mathf.Rad2Deg, Vector3.down);
+                rotation *= Quaternion.AngleAxis(data.slope * Mathf.Rad2Deg, Vector3.forward);
+                rotation *= Quaternion.AngleAxis(data.tilt * Mathf.Rad2Deg, Vector3.right);
+                rotation *= Quaternion.AngleAxis(data.angle * Mathf.Rad2Deg, Vector3.down);
+                matrix.SetTRS(data.position, rotation, new Vector3(data.scale, data.scale, data.scale));
                 var instance = Singleton<PropManager>.instance;
                 var materialBlock = instance.m_materialBlock;
                 materialBlock.Clear();
-                materialBlock.SetColor(instance.ID_Color, color);
+                materialBlock.SetColor(instance.ID_Color, data.color);
                 materialBlock.SetVector(instance.ID_ObjectIndex, objectIndex);
                 if (info.m_rollLocation != null)
                 {
@@ -139,12 +140,12 @@ namespace IMT.Utilities
             }
             else
             {
-                objectIndex.w = scale;
-                info.m_lodLocations[info.m_lodCount] = new Vector4(position.x, position.y, position.z, absoluteAngle + angle);
+                objectIndex.w = data.scale;
+                info.m_lodLocations[info.m_lodCount] = new Vector4(data.position.x, data.position.y, data.position.z, data.absoluteAngle + data.angle);
                 info.m_lodObjectIndices[info.m_lodCount] = objectIndex;
-                info.m_lodColors[info.m_lodCount] = color.linear;
-                info.m_lodMin = Vector3.Min(info.m_lodMin, position);
-                info.m_lodMax = Vector3.Max(info.m_lodMax, position);
+                info.m_lodColors[info.m_lodCount] = ((Color)data.color).linear;
+                info.m_lodMin = Vector3.Min(info.m_lodMin, data.position);
+                info.m_lodMax = Vector3.Max(info.m_lodMax, data.position);
                 if (++info.m_lodCount == info.m_lodLocations.Length)
                     PropInstance.RenderLod(cameraInfo, info);
             }
@@ -179,29 +180,29 @@ namespace IMT.Utilities
 
         public override void Render(RenderManager.CameraInfo cameraInfo, RenderManager.Instance data, bool infoView)
         {
-            foreach (var item in Items)
+            for (var i = 0; i < Items.Length; i += 1)
             {
-                RenderInstance(cameraInfo, Info, item.position, item.scale, item.absoluteAngle, item.angle, item.tilt, item.slope, 1f, new Vector4());
+                RenderInstance(cameraInfo, Info, ref Items[i], 1f, new Vector4());
             }
         }
 
-        public static void RenderInstance(RenderManager.CameraInfo cameraInfo, TreeInfo info, Vector3 position, float scale, float absoluteAngle, float angle, float tilt, float slope, float brightness, Vector4 objectIndex)
+        public static void RenderInstance(RenderManager.CameraInfo cameraInfo, TreeInfo info, ref MarkingObjectItemData data, float brightness, Vector4 objectIndex)
         {
             if (!info.m_prefabInitialized)
                 return;
 
-            if (cameraInfo == null || info.m_lodMesh1 == null || cameraInfo.CheckRenderDistance(position, Settings.TreeLODDistance))
+            if (cameraInfo == null || info.m_lodMesh1 == null || cameraInfo.CheckRenderDistance(data.position, Settings.TreeLODDistance))
             {
                 var instance = Singleton<TreeManager>.instance;
                 var materialBlock = instance.m_materialBlock;
                 var matrix = default(Matrix4x4);
-                var rotation = Quaternion.AngleAxis(absoluteAngle * Mathf.Rad2Deg, Vector3.down);
-                rotation *= Quaternion.AngleAxis(slope * Mathf.Rad2Deg, Vector3.forward);
-                rotation *= Quaternion.AngleAxis(tilt * Mathf.Rad2Deg, Vector3.right);
-                rotation *= Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.down);
-                matrix.SetTRS(position, rotation, new Vector3(scale, scale, scale));
+                var rotation = Quaternion.AngleAxis(data.absoluteAngle * Mathf.Rad2Deg, Vector3.down);
+                rotation *= Quaternion.AngleAxis(data.slope * Mathf.Rad2Deg, Vector3.forward);
+                rotation *= Quaternion.AngleAxis(data.tilt * Mathf.Rad2Deg, Vector3.right);
+                rotation *= Quaternion.AngleAxis(data.angle * Mathf.Rad2Deg, Vector3.down);
+                matrix.SetTRS(data.position, rotation, new Vector3(data.scale, data.scale, data.scale));
                 var color = info.m_defaultColor * brightness;
-                color.a = Singleton<WeatherManager>.instance.GetWindSpeed(position);
+                color.a = data.wind ? Singleton<WeatherManager>.instance.GetWindSpeed(data.position) : 0f;
                 materialBlock.Clear();
                 materialBlock.SetColor(instance.ID_Color, color);
                 materialBlock.SetVector(instance.ID_ObjectIndex, objectIndex);
@@ -210,10 +211,11 @@ namespace IMT.Utilities
             }
             else
             {
-                position.y += info.m_generatedInfo.m_center.y * (scale - 1f);
+                var position = data.position;
+                position.y += info.m_generatedInfo.m_center.y * (data.scale - 1f);
                 var color = info.m_defaultColor * brightness;
-                color.a = Singleton<WeatherManager>.instance.GetWindSpeed(position);
-                info.m_lodLocations[info.m_lodCount] = new Vector4(position.x, position.y, position.z, scale);
+                color.a = data.wind ? Singleton<WeatherManager>.instance.GetWindSpeed(position) : 0f;
+                info.m_lodLocations[info.m_lodCount] = new Vector4(position.x, position.y, position.z, data.scale);
                 info.m_lodColors[info.m_lodCount] = color.linear;
                 info.m_lodObjectIndices[info.m_lodCount] = objectIndex;
                 info.m_lodMin = Vector3.Min(info.m_lodMin, position);

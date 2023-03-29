@@ -151,6 +151,13 @@ namespace IMT.UI
                 NormalTextColor = Color.white,
                 DisabledTextColor = Color.black,
             },
+            PropertyPanel = new PropertyPanelStyle()
+            {
+                BgAtlas = Atlas,
+                BgSprites = PanelLarge,
+                BgColors = PropertyPanel,
+                MaskSprite = OpacitySliderMask,
+            }
         };
 
         private static ButtonStyle GetSegmentedStyle(string background, string border)

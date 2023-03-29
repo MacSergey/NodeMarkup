@@ -103,7 +103,13 @@ namespace IMT.UI.Editors
 
         public EditItem() : base()
         {
-            AddDeleteButton();
+            DeleteButton = AddUIComponent<CustomUIButton>();
+            DeleteButton.name = nameof(DeleteButton);
+            DeleteButton.Atlas = CommonTextures.Atlas;
+            DeleteButton.FgSprites = new SpriteSet(CommonTextures.CloseButtonNormal, CommonTextures.CloseButtonHovered, CommonTextures.CloseButtonPressed, string.Empty, string.Empty);
+            DeleteButton.ForegroundSpriteMode = UIForegroundSpriteMode.Stretch;
+            DeleteButton.size = new Vector2(20, 20);
+            DeleteButton.eventClick += DeleteClick;
         }
 
         public virtual void Init(Editor editor, ObjectType editObject, bool inGroup)
@@ -123,15 +129,6 @@ namespace IMT.UI.Editors
             OnDelete = null;
         }
 
-        private void AddDeleteButton()
-        {
-            DeleteButton = AddUIComponent<CustomUIButton>();
-            DeleteButton.Atlas = CommonTextures.Atlas;
-            DeleteButton.FgSprites = new SpriteSet(CommonTextures.CloseButtonNormal, CommonTextures.CloseButtonHovered, CommonTextures.CloseButtonPressed, string.Empty, string.Empty);
-            DeleteButton.ForegroundSpriteMode = UIForegroundSpriteMode.Stretch;
-            DeleteButton.size = new Vector2(20, 20);
-            DeleteButton.eventClick += DeleteClick;
-        }
         private void DeleteClick(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke(this);
 
         public virtual void Refresh()
@@ -219,6 +216,7 @@ namespace IMT.UI.Editors
             color = Color.white;
 
             InnerCircule = AddUIComponent<CustomUISprite>();
+            InnerCircule.name = nameof(InnerCircule);
             InnerCircule.atlas = TextureHelper.InGameAtlas;
             InnerCircule.spriteName = "PieChartWhiteBg";
             InnerCircule.relativePosition = new Vector3(Border, Border);
@@ -244,6 +242,7 @@ namespace IMT.UI.Editors
         public StyleIcon()
         {
             Thumbnail = AddUIComponent<CustomUISprite>();
+            Thumbnail.name = nameof(Thumbnail);
             Thumbnail.atlas = IMTTextures.Atlas;
             Thumbnail.relativePosition = new Vector3(0, 0);
             Thumbnail.isInteractive = false;
@@ -272,10 +271,11 @@ namespace IMT.UI.Editors
         public LineIcon()
         {
             CountLabel = AddUIComponent<CustomUILabel>();
+            CountLabel.name = nameof(CountLabel);
             CountLabel.textColor = Color.white;
             CountLabel.textScale = 0.7f;
             CountLabel.relativePosition = new Vector3(0, 0);
-            CountLabel.autoSize = false;
+            CountLabel.AutoSize = AutoSize.None;
             CountLabel.HorizontalAlignment = UIHorizontalAlignment.Center;
             CountLabel.VerticalAlignment = UIVerticalAlignment.Middle;
             CountLabel.Padding = new RectOffset(0, 0, 5, 0);

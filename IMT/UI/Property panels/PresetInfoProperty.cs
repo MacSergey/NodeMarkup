@@ -28,6 +28,7 @@ namespace IMT.UI
         private static Texture2D Empty { get; } = TextureHelper.CreateTexture(400, 400, Color.black);
         private UITextureSprite Screenshot { get; set; }
         private CustomUILabel NoScreenshot { get; set; }
+        public CustomUISlicedSprite ScreenshotMask { get; set; }
 
         private CustomUIPanel Info { get; set; }
         private CustomUILabel Titles { get; set; }
@@ -98,14 +99,21 @@ namespace IMT.UI
         private void AddScreenshot()
         {
             Screenshot = AddUIComponent<CustomUITextureSprite>();
+            Screenshot.name = nameof(Screenshot);
             Screenshot.material = Material;
             Screenshot.size = new Vector2(Size, Size);
             Screenshot.relativePosition = new Vector2(ItemsPadding, 5);
+
+            ScreenshotMask = Screenshot.AddUIComponent<CustomUISlicedSprite>();
+            ScreenshotMask.name = nameof(ScreenshotMask);
+            ScreenshotMask.size = Screenshot.size;
+            ScreenshotMask.relativePosition = Vector3.zero;
         }
         private void AddNoScreenshot()
         {
             NoScreenshot = Screenshot.AddUIComponent<CustomUILabel>();
-            NoScreenshot.autoSize = false;
+            NoScreenshot.name = nameof(NoScreenshot);
+            NoScreenshot.AutoSize = AutoSize.None;
             NoScreenshot.size = new Vector2(Size, Size);
             NoScreenshot.position = new Vector2(0, 0);
             NoScreenshot.WordWrap = true;
@@ -120,7 +128,7 @@ namespace IMT.UI
         {
             var label = Info.AddUIComponent<CustomUILabel>();
             label.font = Font;
-            label.autoSize = true;
+            label.AutoSize = AutoSize.All;
             label.textScale = 0.65f;
             label.Padding = new RectOffset(alignment == UIHorizontalAlignment.Left ? 2 : 0, alignment == UIHorizontalAlignment.Right ? 2 : 0, 1, 2);
             label.textColor = TextColor;
@@ -137,7 +145,9 @@ namespace IMT.UI
 
         public override void SetStyle(ControlStyle style)
         {
-
+            ScreenshotMask.atlas = style.PropertyPanel.BgAtlas;
+            ScreenshotMask.spriteName = style.PropertyPanel.MaskSprite;
+            ScreenshotMask.color = style.PropertyPanel.BgColors.normal;
         }
 
         private class CustomUITextureSprite : UITextureSprite

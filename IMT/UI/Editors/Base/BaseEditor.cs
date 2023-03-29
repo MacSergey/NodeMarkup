@@ -182,17 +182,13 @@ namespace IMT.UI.Editors
             ContentBlur.opacity = 0f;
             ContentBlur.zOrder = 1;
 
-            AddEmptyLabel();
-        }
-
-        private void AddEmptyLabel()
-        {
-            EmptyLabel = AddUIComponent<CustomUILabel>();
+            EmptyLabel = ContentPanel.AddUIComponent<CustomUILabel>();
             EmptyLabel.HorizontalAlignment = UIHorizontalAlignment.Center;
             EmptyLabel.VerticalAlignment = UIVerticalAlignment.Middle;
             EmptyLabel.Padding = new RectOffset(10, 10, 0, 0);
             EmptyLabel.WordWrap = true;
-            EmptyLabel.autoSize = false;
+            EmptyLabel.AutoSize = AutoSize.None;
+            ContentPanel.Ignore(EmptyLabel, true);
 
             SwitchEmptyMessage();
         }
@@ -272,7 +268,7 @@ namespace IMT.UI.Editors
             ContentPanel.size = new Vector2(ContentSize, size.y);
             ContentPanel.relativePosition = new Vector2(ItemsSize, 0);
 
-            EmptyLabel.size = new Vector2(ContentSize, size.y * 0.5f);
+            EmptyLabel.size = new Vector2(ContentSize, size.y * 0.667f);
             EmptyLabel.relativePosition = ContentPanel.relativePosition;
         }
         protected void OnItemSelect(ObjectType editObject)

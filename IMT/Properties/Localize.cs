@@ -2849,5 +2849,10 @@ namespace IMT
 		/// Line #{0}
 		/// </summary>
 		public static string StyleOption_LineNumber => LocaleManager.GetString("StyleOption_LineNumber", Culture);
+
+		/// <summary>
+		/// Affected by wind
+		/// </summary>
+		public static string StyleOption_Wind => LocaleManager.GetString("StyleOption_Wind", Culture);
 	}
 }

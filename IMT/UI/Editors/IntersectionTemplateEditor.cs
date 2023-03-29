@@ -38,6 +38,7 @@ namespace IMT.UI.Editors
             InfoGroup.Init();
             var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(InfoGroup, "Info");
             info.Init(EditObject);
+            info.SetStyle(UIStyle.Default);
         }
         protected override void OnClear()
         {
@@ -121,6 +122,8 @@ namespace IMT.UI.Editors
 
             var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview, "Info");
             info.Init(item.EditObject);
+            info.SetStyle(ComponentStyle.Default);
+            info.ScreenshotMask.color = Preview.NormalBgColor;
 
             item.eventSizeChanged += OnItemSizeChanged;
             item.eventPositionChanged += OnItemSizeChanged;
@@ -301,7 +304,7 @@ namespace IMT.UI.Editors
             CountLabel.textColor = Color.white;
             CountLabel.textScale = 0.7f;
             CountLabel.relativePosition = new Vector3(0, 0);
-            CountLabel.autoSize = false;
+            CountLabel.AutoSize = AutoSize.None;
             CountLabel.HorizontalAlignment = UIHorizontalAlignment.Center;
             CountLabel.VerticalAlignment = UIVerticalAlignment.Middle;
             CountLabel.Padding = new RectOffset(0, 0, 5, 0);

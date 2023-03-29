@@ -351,7 +351,7 @@ namespace IMT.UI.Editors
 
             NameLabel = AddUIComponent<CustomUILabel>();
             NameLabel.textScale = 0.8f;
-            NameLabel.autoSize = true;
+            NameLabel.AutoSize = AutoSize.All;
             NameLabel.Padding = new RectOffset(0, 0, 2, 0);
             NameLabel.zOrder = 1;
         }

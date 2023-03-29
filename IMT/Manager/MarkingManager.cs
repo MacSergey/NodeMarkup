@@ -207,7 +207,7 @@ namespace IMT.Manager
                 SingletonMod<Mod>.Logger.Error($"Error while populating group data {Type} #{id} marking", error);
             }
         }
-        public int GetRenderLayer(ushort id) => TryGetMarking(id, out TypeMarking marking) ? marking.RenderLayers : 0;
+        public int GetRenderLayer(ushort id) => TryGetMarking(id, out TypeMarking marking) ? marking.SimulationRenderLayers : 0;
 
         public virtual void Remove(ushort id) => Markings.Remove(id);
         public void Clear()
