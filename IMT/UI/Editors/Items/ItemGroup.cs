@@ -1,8 +1,10 @@
 ﻿using ColossalFramework.UI;
 using IMT.Manager;
 using IMT.Utilities;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -13,6 +15,8 @@ namespace IMT.UI.Editors
         where ObjectType : class, IDeletable
     {
         bool IReusable.InCache { get; set; }
+
+        public event Action<bool> OnExpandChanged;
 
         private bool isExpand = true;
         public bool IsExpand
@@ -62,7 +66,13 @@ namespace IMT.UI.Editors
 
         protected abstract string GetName(GroupType group);
         protected abstract string GetSprite(GroupType group);
-        private void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => IsExpand = !IsExpand;
+        private void ItemClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (Utility.ShiftIsPressed)
+                OnExpandChanged?.Invoke(!IsExpand);
+            else
+                IsExpand = !IsExpand;
+        }
 
         public virtual void Init(GroupType selector)
         {
@@ -158,9 +168,9 @@ namespace IMT.UI.Editors
         protected override float DefaultHeight => 48f;
         public override RectOffset DefaultBackgroundPadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 4, 4) : new RectOffset(CollapsedPadding, CollapsedPadding, 4, 4);
 
-        public bool IsExpand { set => ExpandIcon.spriteName = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
+        public bool IsExpand { set => ExpandButton.spriteName = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
 
-        private CustomUISprite ExpandIcon { get; set; }
+        private CustomUISprite ExpandButton { get; set; }
         private static int ExpandPadding => 7;
 
         public GroupItem() : base()
@@ -173,10 +183,11 @@ namespace IMT.UI.Editors
 
             WordWrap = false;
 
-            ExpandIcon = AddUIComponent<CustomUISprite>();
-            ExpandIcon.atlas = CommonTextures.Atlas;
-            ExpandIcon.color = Color.white;
-            ExpandIcon.size = new Vector2(16, 16);
+            ExpandButton = AddUIComponent<CustomUISprite>();
+            ExpandButton.atlas = CommonTextures.Atlas;
+            ExpandButton.color = Color.white;
+            ExpandButton.size = new Vector2(16, 16);
+            ExpandButton.tooltip = string.Format(IMT.Localize.Header_ExpandGroupTooltip, LocalizeExtension.Shift);
             IsExpand = true;
         }
 
@@ -188,13 +199,13 @@ namespace IMT.UI.Editors
         {
             SetStyle();
 
-            if (ExpandIcon != null)
+            if (ExpandButton != null)
             {
-                ExpandIcon.isVisible = width >= 100f;
-                var offset = (height - ExpandIcon.height) * 0.5f;
-                ExpandIcon.relativePosition = new Vector2(width - DefaultBackgroundPadding.right - ExpandIcon.width - ExpandPadding, offset);
+                ExpandButton.isVisible = width >= 100f;
+                var offset = (height - ExpandButton.height) * 0.5f;
+                ExpandButton.relativePosition = new Vector2(width - DefaultBackgroundPadding.right - ExpandButton.width - ExpandPadding, offset);
 
-                TextPadding.right = (ExpandIcon.isVisible ? (int)ExpandIcon.width + ExpandPadding : 0) + DefaultBackgroundPadding.right + DefaultTextPadding;
+                TextPadding.right = (ExpandButton.isVisible ? (int)ExpandButton.width + ExpandPadding : 0) + DefaultBackgroundPadding.right + DefaultTextPadding;
             }
         }
         protected override void OnSizeChanged()

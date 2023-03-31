@@ -53,10 +53,6 @@ namespace IMT.UI.Editors
     public abstract class BasePropertyCategoryPanel<TypeHeader> : PropertyGroupPanel, IPropertyCategoryPanel
         where TypeHeader : BaseCategoryHeaderPanel
     {
-        protected override UITextureAtlas DefaultAtlas => CommonTextures.Atlas;
-        protected override string DefaultBackgroundSprite => string.Empty;
-        protected override Color32 DefaultColor => new Color32(58, 77, 92, 255);
-
         protected IPropertyContainer Editor { get; private set; }
         protected TypeHeader Header { get; private set; }
 
@@ -110,6 +106,8 @@ namespace IMT.UI.Editors
             Header.eventClick += HeaderClick;
 
             IsExpand ??= category.IsExpand;
+
+            BackgroundSprite = string.Empty;
 
             base.Init();
         }

@@ -145,6 +145,24 @@ namespace IMT.UI
                 BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyNormal, PropertyNormal),
 
                 FgSprites = PanelSmall,
+
+                TextField = new TextFieldStyle()
+                {
+                    BgColors = new ColorSet(DarkPrimaryColor60, DarkPrimaryColor70, DarkPrimaryColor70, PropertyFocused, DarkPrimaryColor60),
+                    TextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
+
+                    SelectionColor = Color.black,
+                },
+                Button = new ButtonStyle()
+                {
+                    BgAtlas = Atlas,
+                    FgAtlas = Atlas,
+
+                    BgSprites = new SpriteSet(FieldSingle, FieldSingle, FieldSingle, FieldSingle, BorderSmall),
+                    BgColors = new ColorSet(DarkPrimaryColor60, DarkPrimaryColor70, DarkPrimaryColor75, DarkPrimaryColor60, DarkPrimaryColor40),
+
+                    TextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.white),
+                },
             },
             Label = new LabelStyle()
             {

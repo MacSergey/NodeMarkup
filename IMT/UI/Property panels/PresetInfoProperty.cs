@@ -100,12 +100,14 @@ namespace IMT.UI
         {
             Screenshot = AddUIComponent<CustomUITextureSprite>();
             Screenshot.name = nameof(Screenshot);
+            Screenshot.isInteractive = false;
             Screenshot.material = Material;
             Screenshot.size = new Vector2(Size, Size);
             Screenshot.relativePosition = new Vector2(ItemsPadding, 5);
 
             ScreenshotMask = Screenshot.AddUIComponent<CustomUISlicedSprite>();
             ScreenshotMask.name = nameof(ScreenshotMask);
+            ScreenshotMask.isInteractive = false;
             ScreenshotMask.size = Screenshot.size;
             ScreenshotMask.relativePosition = Vector3.zero;
         }
@@ -113,6 +115,7 @@ namespace IMT.UI
         {
             NoScreenshot = Screenshot.AddUIComponent<CustomUILabel>();
             NoScreenshot.name = nameof(NoScreenshot);
+            NoScreenshot.isInteractive = false;
             NoScreenshot.AutoSize = AutoSize.None;
             NoScreenshot.size = new Vector2(Size, Size);
             NoScreenshot.position = new Vector2(0, 0);
@@ -127,6 +130,7 @@ namespace IMT.UI
         private CustomUILabel AddLabel(UIHorizontalAlignment alignment)
         {
             var label = Info.AddUIComponent<CustomUILabel>();
+            label.isInteractive = false;
             label.font = Font;
             label.AutoSize = AutoSize.All;
             label.textScale = 0.65f;

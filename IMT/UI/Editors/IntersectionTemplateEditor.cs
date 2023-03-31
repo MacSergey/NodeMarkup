@@ -25,7 +25,7 @@ namespace IMT.UI.Editors
         protected override string IsAssetWarningMessage => IMT.Localize.PresetEditor_IsAssetWarningMessage;
         protected override string IsWorkshopWarningMessage => IMT.Localize.PresetEditor_IsWorkshopWarningMessage;
 
-        private IMTPropertyPanel InfoGroup { get; set; }
+        private PropertyGroupPanel InfoGroup { get; set; }
 
         protected override IEnumerable<IntersectionTemplate> GetObjects() => SingletonManager<IntersectionTemplateManager>.Instance.Templates;
         protected override void OnObjectSelect(IntersectionTemplate editObject)
@@ -34,8 +34,10 @@ namespace IMT.UI.Editors
 
             ItemsPanel.RemovePreview();
 
-            InfoGroup = ComponentPool.Get<IMTPropertyPanel>(ContentPanel, nameof(InfoGroup));
+            InfoGroup = ComponentPool.Get<PropertyGroupPanel>(ContentPanel, nameof(InfoGroup));
             InfoGroup.Init();
+            InfoGroup.PanelStyle = UIStyle.Default.PropertyPanel;
+
             var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(InfoGroup, "Info");
             info.Init(EditObject);
             info.SetStyle(UIStyle.Default);
@@ -78,6 +80,13 @@ namespace IMT.UI.Editors
 
     public class IntersectionTemplateItemsPanel : ItemsGroupPanel<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateGroup, IntersectionTemplateFit>
     {
+        private static PropertyPanelStyle PreviewStyle { get; } = new PropertyPanelStyle()
+        {
+            BgAtlas = CommonTextures.Atlas,
+            BgSprites = CommonTextures.PanelLarge,
+            BgColors = UIStyle.ItemGroupBackground,
+            MaskSprite = CommonTextures.OpacitySliderMask,
+        };
         private PreviewPanel Preview { get; set; }
 
         public override bool GroupingEnable => Settings.GroupPresets.value;
@@ -112,15 +121,19 @@ namespace IMT.UI.Editors
             if (item == SelectItem || Preview != null)
                 return;
 
-            Editor.AvailableContent = false;
+            if(!Settings.AutoCollapseItemsPanel)
+                Editor.AvailableContent = false;
 
             var root = GetRootContainer();
 
             Preview = ComponentPool.Get<PreviewPanel>(root, nameof(Preview));
+            Preview.name = nameof(Preview);
+            Preview.PanelStyle = PreviewStyle;
             Preview.width = 400f;
             Preview.Item = item;
 
             var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview, "Info");
+            info.isInteractive = false;
             info.Init(item.EditObject);
             info.SetStyle(ComponentStyle.Default);
             info.ScreenshotMask.color = Preview.NormalBgColor;
@@ -141,7 +154,9 @@ namespace IMT.UI.Editors
                 Preview.Item.eventPositionChanged -= OnItemSizeChanged;
             }
 
-            Editor.AvailableContent = true;
+            if (!Settings.AutoCollapseItemsPanel)
+                Editor.AvailableContent = true;
+
             ComponentPool.Free(Preview);
             Preview = null;
         }
@@ -330,8 +345,6 @@ namespace IMT.UI.Editors
     public class PreviewPanel : PropertyGroupPanel
     {
         public IntersectionTemplateItem Item { get; set; }
-        protected override Color32 DefaultColor => UIStyle.ItemGroupBackground;
-        protected override string DefaultBackgroundSprite => CommonTextures.PanelLarge;
 
         protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }

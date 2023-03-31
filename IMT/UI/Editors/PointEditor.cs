@@ -13,9 +13,9 @@ namespace IMT.UI.Editors
         public override string EmptyMessage => string.Empty;
         public override Marking.SupportType Support => Marking.SupportType.Points;
 
-        protected IMTPropertyPanel TemplatePanel { get; private set; }
+        protected PropertyGroupPanel TemplatePanel { get; private set; }
 #if DEBUG
-        protected IMTPropertyPanel DebugPanel { get; private set; }
+        protected PropertyGroupPanel DebugPanel { get; private set; }
 #endif
 
         private FloatPropertyPanel Offset { get; set; }
@@ -27,13 +27,15 @@ namespace IMT.UI.Editors
         {
             base.OnObjectSelect(point);
 
-            TemplatePanel = ComponentPool.Get<IMTPropertyPanel>(ContentPanel);
+            TemplatePanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
             TemplatePanel.PauseLayout(() => FillTemplatePanel(point));
             TemplatePanel.Init();
+            TemplatePanel.PanelStyle = UIStyle.Default.PropertyPanel;
 #if DEBUG
-            DebugPanel = ComponentPool.Get<IMTPropertyPanel>(ContentPanel);
+            DebugPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
             DebugPanel.PauseLayout(() => FillDebugPanel(point));
             DebugPanel.Init();
+            DebugPanel.PanelStyle = UIStyle.Default.PropertyPanel;
 #endif
         }
 

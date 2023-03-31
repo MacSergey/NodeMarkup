@@ -100,6 +100,7 @@ namespace IMT.UI.Editors
                 group.width = this.width;
                 group.Header.eventMouseEnter += GroupHover;
                 group.Header.eventMouseLeave += GroupLeave;
+                group.OnExpandChanged += GroupExpandChanged;
 
                 if (IsLayoutSuspended)
                     group.StopLayout();
@@ -111,6 +112,14 @@ namespace IMT.UI.Editors
 
         private void GroupHover(UIComponent component, UIMouseEventParameter eventParam) => HoverGroup = component.parent as GroupItemType;
         private void GroupLeave(UIComponent component, UIMouseEventParameter eventParam) => HoverGroup = null;
+        private void GroupExpandChanged(bool isExpand)
+        {
+            PauseLayout(() =>
+            {
+                foreach(var group in Groups.Values)
+                    group.IsExpand = isExpand;
+            });
+        }
 
         #endregion
 

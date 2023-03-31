@@ -119,12 +119,26 @@ namespace IMT.UI
         public event Action OnPaste;
         public event Action OnDefault;
 
+        private CustomUIButton CopyButton { get; set; }
         private CustomUIButton PasteButton { get; set; }
+        private CustomUIButton DefaultButton { get; set; }
         //private CustomUIPanel SamplesPanel { get; set; }
 
         public bool CanPaste
         {
             set => PasteButton.isEnabled = value;
+        }
+
+        public override ColorPickerStyle ColorPickerStyle
+        {
+            set
+            {
+                base.ColorPickerStyle = value;
+
+                CopyButton.ButtonStyle = value.Button;
+                PasteButton.ButtonStyle = value.Button;
+                DefaultButton.ButtonStyle = value.Button;
+            }
         }
 
         protected override void FillPopup()
@@ -150,14 +164,14 @@ namespace IMT.UI
                 buttonPanel.AutoChildrenVertically = AutoLayoutChildren.Fit;
                 buttonPanel.AutoLayoutSpace = 10;
 
-                var copyButton = CreateButton(buttonPanel, IMT.Localize.Editor_ColorCopy);
-                copyButton.eventClick += Copy;
+                CopyButton = CreateButton(buttonPanel, IMT.Localize.Editor_ColorCopy);
+                CopyButton.eventClick += Copy;
 
                 PasteButton = CreateButton(buttonPanel, IMT.Localize.Editor_ColorPaste);
                 PasteButton.eventClick += Paste;
 
-                var defaultButton = CreateButton(buttonPanel, IMT.Localize.Editor_ColorDefault);
-                defaultButton.eventClick += SetDefault;
+                DefaultButton = CreateButton(buttonPanel, IMT.Localize.Editor_ColorDefault);
+                DefaultButton.eventClick += SetDefault;
             });
         }
 

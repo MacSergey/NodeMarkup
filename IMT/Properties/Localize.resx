@@ -2068,4 +2068,7 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_Wind" xml:space="preserve">
     <value>Swaying in the wind</value>
   </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Hold {0} to collapse/expand all groups</value>
+  </data>
 </root>

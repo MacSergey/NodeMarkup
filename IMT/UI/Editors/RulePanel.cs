@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class RulePanel : IMTPropertyPanel, IPropertyContainer
+    public class RulePanel : PropertyGroupPanel, IPropertyContainer
     {
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
         public event Action<RulePanel, UIMouseEventParameter> OnLeave;
@@ -71,6 +71,8 @@ namespace IMT.UI.Editors
 
                 Refresh();
             });
+
+            PanelStyle = UIStyle.Default.PropertyPanel;
 
             base.Init();
         }
@@ -329,7 +331,7 @@ namespace IMT.UI.Editors
             PauseLayout(() =>
             {
                 var error = Rule.IsOverlapped;
-                BgColors = !IsExpand && error ? ComponentStyle.ErrorFocusedColor : DefaultColor;
+                BgColors = !IsExpand && error ? ComponentStyle.ErrorFocusedColor : UIStyle.Default.PropertyPanel.BgColors;
                 Header.IsExpand = IsExpand;
                 Error.isVisible = IsExpand && error;
                 Warning.isVisible = IsExpand && Settings.ShowPanelTip && !Editor.CanDivide;
