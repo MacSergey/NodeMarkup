@@ -2859,5 +2859,10 @@ namespace IMT
 		/// Hold {0} to collapse/expand all groups
 		/// </summary>
 		public static string Header_ExpandGroupTooltip => LocaleManager.GetString("Header_ExpandGroupTooltip", Culture);
+
+		/// <summary>
+		/// [UPDATED] Huge update of UI Style.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14 => LocaleManager.GetString("Mod_WhatsNewMessage1_14", Culture);
 	}
 }
