@@ -10,10 +10,7 @@ namespace IMT.UI.Editors
 {
     public abstract class EditItemBase : CustomUIButton
     {
-        public virtual SpriteSet BackgroundSprites => new SpriteSet(string.Empty);
-        public virtual ColorSet BackgroundColors => new ColorSet();
-
-        public virtual SpriteSet ForegroundSprites => new SpriteSet()
+        public virtual SpriteSet BackgroundSprites => new SpriteSet()
         {
             normal = string.Empty,
             hovered = CommonTextures.PanelSmall,
@@ -21,9 +18,9 @@ namespace IMT.UI.Editors
             focused = string.Empty,
             disabled = CommonTextures.PanelSmall,
         };
-        public virtual SpriteSet ForegroundSelectedSprites => new SpriteSet(CommonTextures.PanelSmall);
+        public virtual SpriteSet BackgroundSelectedSprites => new SpriteSet(CommonTextures.PanelSmall);
 
-        public virtual ColorSet ForegroundColors => new ColorSet()
+        public virtual ColorSet BackgroundColors => new ColorSet()
         {
             normal = default,
             hovered = UIStyle.ItemHovered,
@@ -31,11 +28,11 @@ namespace IMT.UI.Editors
             focused = default,
             disabled = default,
         };
-        public virtual ColorSet ForegroundSelectedColors => new ColorSet(UIStyle.ItemFocused);
+        public virtual ColorSet BackgroundSelectedColors => new ColorSet(UIStyle.ItemFocused);
 
         public virtual ColorSet DefaultTextColor => Color.white;
         public virtual ColorSet DefaultSelTextColor => Color.black;
-        public virtual RectOffset DefaultSpritePadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 2, 2) : new RectOffset(CollapsedPadding, CollapsedPadding, 2, 2);
+        public virtual RectOffset DefaultBackgroundPadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 2, 2) : new RectOffset(CollapsedPadding, CollapsedPadding, 2, 2);
         protected static int DefaultTextPadding => 5;
         public static int ExpandedPadding => 8;
         public static int CollapsedPadding => 4;
@@ -48,6 +45,9 @@ namespace IMT.UI.Editors
             m_Size = new Vector2(100f, DefaultHeight);
             clipChildren = true;
             Atlas = CommonTextures.Atlas;
+
+            VerticalAlignment = UIVerticalAlignment.Middle;
+            HorizontalAlignment = UIHorizontalAlignment.Center;
 
             TextHorizontalAlignment = UIHorizontalAlignment.Left;
             TextVerticalAlignment = UIVerticalAlignment.Middle;
@@ -62,20 +62,17 @@ namespace IMT.UI.Editors
 
         protected virtual void SetStyle()
         {
-            BgSprites = BackgroundSprites;
+            bgSprites = BackgroundSprites;
             bgColors = BackgroundColors;
+            selBgSprites = BackgroundSelectedSprites;
+            selBgColors = BackgroundSelectedColors;
 
-            FgSprites = ForegroundSprites;
-            fgColors = ForegroundColors;
-            TextColors = DefaultTextColor;
-
-            SelFgSprites = ForegroundSelectedSprites;
-            SelFgColors = ForegroundSelectedColors;
-            SelTextColors = DefaultSelTextColor;
+            textColors = DefaultTextColor;
+            selTextColors = DefaultSelTextColor;
 
             textScale = DefaultTextScale;
             TextPadding.top = 5;
-            SpritePadding = DefaultSpritePadding;
+            BackgroundPadding = DefaultBackgroundPadding;
         }
     }
     public abstract class EditItem<ObjectType> : EditItemBase, IReusable
@@ -107,7 +104,7 @@ namespace IMT.UI.Editors
             DeleteButton.name = nameof(DeleteButton);
             DeleteButton.Atlas = CommonTextures.Atlas;
             DeleteButton.FgSprites = new SpriteSet(CommonTextures.CloseButtonNormal, CommonTextures.CloseButtonHovered, CommonTextures.CloseButtonPressed, string.Empty, string.Empty);
-            DeleteButton.ForegroundSpriteMode = UIForegroundSpriteMode.Stretch;
+            DeleteButton.ForegroundSpriteMode = SpriteMode.Stretch;
             DeleteButton.size = new Vector2(20, 20);
             DeleteButton.eventClick += DeleteClick;
         }
@@ -154,7 +151,7 @@ namespace IMT.UI.Editors
             Icon.isVisible = ShowIcon;
             if (inGroup)
             {
-                m_Size.y = DefaultHeight + DefaultSpritePadding.vertical;
+                m_Size.y = DefaultHeight + DefaultBackgroundPadding.vertical;
             }
             else
             {
@@ -171,28 +168,28 @@ namespace IMT.UI.Editors
                 var iconSize = 19;
                 Icon.size = new Vector2(iconSize, iconSize);
 
-                var centerOffset = Mathf.FloorToInt(width - DefaultSpritePadding.vertical - iconSize) / 2;
+                var centerOffset = Mathf.FloorToInt(width - DefaultBackgroundPadding.vertical - iconSize) / 2;
                 var fixOffset = DefaultTextPadding;
-                var widthOffset = DefaultSpritePadding.left + Math.Min(fixOffset, centerOffset);
-                var heightOffset = DefaultSpritePadding.top + (height - DefaultSpritePadding.vertical - iconSize) * 0.5f;
+                var widthOffset = DefaultBackgroundPadding.left + Math.Min(fixOffset, centerOffset);
+                var heightOffset = DefaultBackgroundPadding.top + (height - DefaultBackgroundPadding.vertical - iconSize) * 0.5f;
                 Icon.relativePosition = new Vector3(widthOffset, heightOffset);
-                TextPadding.left = centerOffset <= 1.5f * fixOffset ? 50 : DefaultSpritePadding.left + fixOffset + iconSize + DefaultTextPadding;
+                TextPadding.left = centerOffset <= 1.5f * fixOffset ? 50 : DefaultBackgroundPadding.left + fixOffset + iconSize + DefaultTextPadding;
             }
             else
-                TextPadding.left = DefaultTextPadding + DefaultSpritePadding.left;
+                TextPadding.left = DefaultTextPadding + DefaultBackgroundPadding.left;
 
             if (ShowDelete && width >= 120f)
             {
                 var buttonSize = 15;
                 DeleteButton.isVisible = true;
                 DeleteButton.size = new Vector2(buttonSize, buttonSize);
-                DeleteButton.relativePosition = new Vector2(size.x - buttonSize - 7 - DefaultSpritePadding.right, DefaultSpritePadding.top + (height - DefaultSpritePadding.vertical - buttonSize) * 0.5f);
-                TextPadding.right = 19 + DefaultSpritePadding.right;
+                DeleteButton.relativePosition = new Vector2(size.x - buttonSize - 7 - DefaultBackgroundPadding.right, DefaultBackgroundPadding.top + (height - DefaultBackgroundPadding.vertical - buttonSize) * 0.5f);
+                TextPadding.right = 19 + DefaultBackgroundPadding.right;
             }
             else
             {
                 DeleteButton.isVisible = false;
-                TextPadding.right = DefaultTextPadding + DefaultSpritePadding.right;
+                TextPadding.right = DefaultTextPadding + DefaultBackgroundPadding.right;
             }
         }
         protected override void OnSizeChanged()

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class EditGroup<GroupType, ItemType, ObjectType> : CustomUIPanel, IReusable
+    public abstract class EditGroup<GroupType, ItemType, ObjectType> : CustomUIPanel, IReusable
         where ItemType : EditItem<ObjectType>
         where ObjectType : class, IDeletable
     {
@@ -24,22 +24,23 @@ namespace IMT.UI.Editors
                     return;
 
                 isExpand = value;
-                Item.IsExpand = isExpand;
+                Header.IsExpand = isExpand;
 
                 PauseLayout(() =>
                 {
                     PaddingBottom = isExpand ? 15 : 0;
                     SetStyle();
 
-                    foreach (var item in components.Where(i => i != Item))
+                    foreach (var item in components.Where(i => i != Header))
                         item.isVisible = isExpand;
                 });
             }
         }
 
-        public GroupItem Item { get; private set; }
+        public GroupItem Header { get; private set; }
         public GroupType Selector { get; private set; }
         public bool IsEmpty => components.Count <= 1;
+        protected abstract bool ShowIcon { get; }
 
         public EditGroup() : base()
         {
@@ -48,37 +49,62 @@ namespace IMT.UI.Editors
             autoChildrenVertically = AutoLayoutChildren.Fit;
 
             atlas = CommonTextures.Atlas;
-            FgColors = UIStyle.ItemGroupBackground;
-            ForegroundSprite = CommonTextures.PanelBig;
+            BgColors = UIStyle.ItemGroupBackground;
+            BackgroundSprite = CommonTextures.PanelBig;
 
             PauseLayout(() =>
             {
-                Item = AddUIComponent<GroupItem>();
-                Item.Init();
-                Item.eventClick += ItemClick;
+                Header = AddUIComponent<GroupItem>();
+                Header.Init();
+                Header.eventClick += ItemClick;
             });
         }
 
+        protected abstract string GetName(GroupType group);
+        protected abstract string GetSprite(GroupType group);
         private void ItemClick(UIComponent component, UIMouseEventParameter eventParam) => IsExpand = !IsExpand;
 
-        public void Init(GroupType selector, string groupName)
+        public virtual void Init(GroupType selector)
         {
             Selector = selector;
-            Item.text = groupName;
+            Header.text = GetName(selector);
+            Header.FgAtlas = IMTTextures.Atlas;
+            Header.FgSprites = ShowIcon ? GetSprite(selector) : string.Empty;
             IsExpand = false;
         }
-        private void SetStyle()
+        protected virtual void SetStyle()
         {
             var padding = width >= 150 ? EditItemBase.ExpandedPadding : EditItemBase.CollapsedPadding;
 
             if (isExpand)
+                BackgroundPadding = new RectOffset(padding, padding, 4, 15);
+            else
+                BackgroundPadding = new RectOffset(padding, padding, 4, 4);
+
+            if (ShowIcon)
             {
-                SpritePadding = new RectOffset(padding, padding, 4, 15);
+                if (width >= 100)
+                {
+                    Header.TextPadding.left = Header.DefaultBackgroundPadding.left + 5 + (int)Header.SpriteSize.x + 10;
+                }
+                else
+                {
+                    Header.TextPadding.left = 100;
+                }
+
+                if (width >= (Header.DefaultBackgroundPadding.left + 5) * 2)
+                {
+                    Header.SpritePadding.left = Header.DefaultBackgroundPadding.left + 5;
+                    Header.HorizontalAlignment = UIHorizontalAlignment.Left;
+                }
+                else
+                {
+                    Header.SpritePadding.left = 0;
+                    Header.HorizontalAlignment = UIHorizontalAlignment.Center;
+                }
             }
             else
-            {
-                SpritePadding = new RectOffset(padding, padding, 4, 4);
-            }
+                Header.TextPadding.left = Header.DefaultBackgroundPadding.left + 10;
         }
 
         public virtual void Refresh()
@@ -110,9 +136,7 @@ namespace IMT.UI.Editors
 
     public class GroupItem : EditItemBase
     {
-        public override ModsCommon.UI.SpriteSet BackgroundSprites => new ModsCommon.UI.SpriteSet(string.Empty);
-
-        public override ModsCommon.UI.SpriteSet ForegroundSprites => new ModsCommon.UI.SpriteSet()
+        public override SpriteSet BackgroundSprites => new SpriteSet()
         {
             normal = string.Empty,
             hovered = CommonTextures.PanelBig,
@@ -120,19 +144,19 @@ namespace IMT.UI.Editors
             focused = string.Empty,
             disabled = string.Empty,
         };
-        public override ColorSet ForegroundColors
+        public override ColorSet BackgroundColors
         {
             get
             {
-                var colors = base.ForegroundColors;
+                var colors = base.BackgroundColors;
                 colors.normal = colors.focused = UIStyle.ItemGroup;
                 return colors;
             }
         }
         public override ColorSet DefaultTextColor => new ColorSet(Color.white);
-        protected override float DefaultTextScale => 1f;
+        protected override float DefaultTextScale => 0.9f;
         protected override float DefaultHeight => 48f;
-        public override RectOffset DefaultSpritePadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 4, 4) : new RectOffset(CollapsedPadding, CollapsedPadding, 4, 4);
+        public override RectOffset DefaultBackgroundPadding => width >= 150f ? new RectOffset(ExpandedPadding, ExpandedPadding, 4, 4) : new RectOffset(CollapsedPadding, CollapsedPadding, 4, 4);
 
         public bool IsExpand { set => ExpandIcon.spriteName = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
 
@@ -144,20 +168,21 @@ namespace IMT.UI.Editors
             TextPadding.top = 5;
             NormalBgSprite = CommonTextures.PanelSmall;
 
-            AddExpandIcon();
-        }
+            ForegroundSpriteMode = SpriteMode.FixedSize;
+            SpriteSize = new Vector2(20, 20f);
 
-        public void Init()
-        {
-            Refresh();
-        }
-        private void AddExpandIcon()
-        {
+            WordWrap = false;
+
             ExpandIcon = AddUIComponent<CustomUISprite>();
             ExpandIcon.atlas = CommonTextures.Atlas;
             ExpandIcon.color = Color.white;
             ExpandIcon.size = new Vector2(16, 16);
             IsExpand = true;
+        }
+
+        public void Init()
+        {
+            Refresh();
         }
         private void Refresh()
         {
@@ -167,10 +192,9 @@ namespace IMT.UI.Editors
             {
                 ExpandIcon.isVisible = width >= 100f;
                 var offset = (height - ExpandIcon.height) * 0.5f;
-                ExpandIcon.relativePosition = new Vector2(width - DefaultSpritePadding.right - ExpandIcon.width - ExpandPadding, offset);
+                ExpandIcon.relativePosition = new Vector2(width - DefaultBackgroundPadding.right - ExpandIcon.width - ExpandPadding, offset);
 
-                TextPadding.left = 10 + DefaultSpritePadding.left;
-                TextPadding.right = (ExpandIcon.isVisible ? (int)ExpandIcon.width + ExpandPadding : 0) + DefaultSpritePadding.right + DefaultTextPadding;
+                TextPadding.right = (ExpandIcon.isVisible ? (int)ExpandIcon.width + ExpandPadding : 0) + DefaultBackgroundPadding.right + DefaultTextPadding;
             }
         }
         protected override void OnSizeChanged()

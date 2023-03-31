@@ -220,8 +220,6 @@ namespace IMT.UI.Editors
         }
         public override int Compare(Style.StyleType x, Style.StyleType y) => x.CompareTo(y);
 
-        protected override string GroupName(Style.StyleType group) => Settings.GroupTemplatesType == 0 ? group.Description() : $"{group.GetGroup().Description()}\n{group.Description()}";
-
         protected override Style.StyleType SelectGroup(StyleTemplate editObject) => Settings.GroupTemplatesType == 0 ? editObject.Style.Type.GetGroup() : editObject.Style.Type;
     }
     public class StyleTemplateItem : EditItem<StyleTemplate, StyleIcon>
@@ -229,7 +227,7 @@ namespace IMT.UI.Editors
         public override bool ShowDelete => EditObject != null && !EditObject.IsAsset;
         private bool IsDefault => EditObject?.IsDefault == true;
 
-        public override SpriteSet ForegroundSprites => !IsDefault ? base.ForegroundSprites : new SpriteSet()
+        public override SpriteSet BackgroundSprites => !IsDefault ? base.BackgroundSprites : new SpriteSet()
         {
             normal = CommonTextures.BorderBig,
             hovered = CommonTextures.PanelSmall,
@@ -237,9 +235,9 @@ namespace IMT.UI.Editors
             focused = CommonTextures.BorderBig,
             disabled = CommonTextures.PanelSmall,
         };
-        public override SpriteSet ForegroundSelectedSprites => !IsDefault ? base.ForegroundSelectedSprites : new SpriteSet(CommonTextures.PanelSmall);
+        public override SpriteSet BackgroundSelectedSprites => !IsDefault ? base.BackgroundSelectedSprites : new SpriteSet(CommonTextures.PanelSmall);
 
-        public override ColorSet ForegroundColors => !IsDefault ? base.ForegroundColors : new ColorSet()
+        public override ColorSet BackgroundColors => !IsDefault ? base.BackgroundColors : new ColorSet()
         {
             normal = UIStyle.ItemFavoriteNormal,
             hovered = UIStyle.ItemFavoriteNormal,
@@ -247,7 +245,7 @@ namespace IMT.UI.Editors
             focused = UIStyle.ItemFavoriteFocused,
             disabled = default,
         };
-        public override ColorSet ForegroundSelectedColors => !IsDefault ? base.ForegroundSelectedColors : new ColorSet(UIStyle.ItemFavoriteFocused);
+        public override ColorSet BackgroundSelectedColors => !IsDefault ? base.BackgroundSelectedColors : new ColorSet(UIStyle.ItemFavoriteFocused);
 
         public override ColorSet DefaultTextColor => !IsDefault ? base.DefaultTextColor : new ColorSet()
         {
@@ -270,6 +268,12 @@ namespace IMT.UI.Editors
         }
     }
 
-    public class StyleTemplateGroup : EditGroup<Style.StyleType, StyleTemplateItem, StyleTemplate> { }
+    public class StyleTemplateGroup : EditGroup<Style.StyleType, StyleTemplateItem, StyleTemplate>
+    {
+        protected override bool ShowIcon => true;
+
+        protected override string GetName(Style.StyleType group) => Settings.GroupTemplatesType == 0 ? group.Description() : $"{group.GetGroup().Description()}\n{group.Description()}";
+        protected override string GetSprite(Style.StyleType group) => group.Sprite("Group");
+    }
     public class EditStyleTemplateMode : EditTemplateMode<StyleTemplate> { }
 }

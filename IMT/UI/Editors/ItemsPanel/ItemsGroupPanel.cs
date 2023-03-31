@@ -60,8 +60,8 @@ namespace IMT.UI.Editors
 
             if (group?.IsEmpty == true)
             {
-                group.Item.eventMouseEnter -= GroupHover;
-                group.Item.eventMouseLeave -= GroupLeave;
+                group.Header.eventMouseEnter -= GroupHover;
+                group.Header.eventMouseLeave -= GroupLeave;
                 Groups.Remove(group.Selector);
                 ComponentPool.Free(group);
             }
@@ -89,8 +89,6 @@ namespace IMT.UI.Editors
         #region GROUP
 
         protected abstract GroupType SelectGroup(ObjectType editObject);
-        protected abstract string GroupName(GroupType group);
-
         private GroupItemType GetGroup(ObjectType editObject, bool add = true)
         {
             var groupType = SelectGroup(editObject);
@@ -98,10 +96,10 @@ namespace IMT.UI.Editors
             {
                 var index = FindIndex(groupType, this);
                 group = ComponentPool.Get<GroupItemType>(this, zOrder: index >= 0 ? index : ~index);
-                group.Init(groupType, GroupName(groupType));
+                group.Init(groupType);
                 group.width = this.width;
-                group.Item.eventMouseEnter += GroupHover;
-                group.Item.eventMouseLeave += GroupLeave;
+                group.Header.eventMouseEnter += GroupHover;
+                group.Header.eventMouseLeave += GroupLeave;
 
                 if (IsLayoutSuspended)
                     group.StopLayout();

@@ -165,15 +165,15 @@ namespace IMT.UI.Editors
         protected override IntersectionTemplateFit SelectGroup(IntersectionTemplate editObject)
         {
             if (Editor.Marking.Type == MarkingType.Segment && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Marking.Id.GetSegment().Info.name, out var preset) && preset == editObject.Id)
-                return IntersectionTemplateFit.Link;
+                return IntersectionTemplateFit.LinkFit;
             if (editObject.Enters.Length != Tool.Marking.EntersCount)
-                return IntersectionTemplateFit.Poor;
+                return IntersectionTemplateFit.PoorFit;
             else if (PointsMatch(editObject, Tool.Marking))
-                return IntersectionTemplateFit.Close;
+                return IntersectionTemplateFit.CloseFit;
             else if (SimilarWidth(editObject, Tool.Marking))
-                return IntersectionTemplateFit.Possible;
+                return IntersectionTemplateFit.PossibleFit;
             else
-                return IntersectionTemplateFit.Poor;
+                return IntersectionTemplateFit.PoorFit;
         }
         private bool PointsMatch(IntersectionTemplate template, Marking marking)
         {
@@ -229,33 +229,36 @@ namespace IMT.UI.Editors
             return false;
         }
 
-        protected override string GroupName(IntersectionTemplateFit group) => group.Description();
-
         public override int Compare(IntersectionTemplateFit x, IntersectionTemplateFit y) => x.CompareTo(y);
     }
     public enum IntersectionTemplateFit
     {
         [Description(nameof(Localize.PresetEditor_PresetFit_Linked))]
-        Link,
+        [Sprite(nameof(LinkFit))]
+        LinkFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Perfect))]
-        Perfect,
+        [Sprite(nameof(PerfectFit))]
+        PerfectFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Close))]
-        Close,
+        [Sprite(nameof(CloseFit))]
+        CloseFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Possible))]
-        Possible,
+        [Sprite(nameof(PossibleFit))]
+        PossibleFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Poor))]
-        Poor,
+        [Sprite(nameof(PoorFit))]
+        PoorFit,
     }
 
     public class IntersectionTemplateItem : EditItem<IntersectionTemplate, IntersectionTemplateIcon>
     {
         private bool IsLinked => Editor.Marking.Type == MarkingType.Segment && Editor.Marking.Id.GetSegment().Info is NetInfo info && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var preset) && preset == EditObject.Id;
 
-        public override ModsCommon.UI.SpriteSet ForegroundSprites => !IsLinked ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        public override SpriteSet BackgroundSprites => !IsLinked ? base.BackgroundSprites : new SpriteSet()
         {
             normal = CommonTextures.BorderBig,
             hovered = CommonTextures.PanelSmall,
@@ -263,9 +266,9 @@ namespace IMT.UI.Editors
             focused = CommonTextures.BorderBig,
             disabled = CommonTextures.PanelSmall,
         };
-        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !IsLinked ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+        public override SpriteSet BackgroundSelectedSprites => !IsLinked ? base.BackgroundSelectedSprites : new SpriteSet(CommonTextures.PanelSmall);
 
-        public override ColorSet ForegroundColors => !IsLinked ? base.ForegroundColors : new ColorSet()
+        public override ColorSet BackgroundColors => !IsLinked ? base.BackgroundColors : new ColorSet()
         {
             normal = UIStyle.ItemFavoriteNormal,
             hovered = UIStyle.ItemFavoriteNormal,
@@ -273,7 +276,7 @@ namespace IMT.UI.Editors
             focused = UIStyle.ItemFavoriteFocused,
             disabled = default,
         };
-        public override ColorSet ForegroundSelectedColors => !IsLinked ? base.ForegroundSelectedColors : new ColorSet(UIStyle.ItemFavoriteFocused);
+        public override ColorSet BackgroundSelectedColors => !IsLinked ? base.BackgroundSelectedColors : new ColorSet(UIStyle.ItemFavoriteFocused);
 
         public override ColorSet DefaultTextColor => !IsLinked ? base.DefaultTextColor : new ColorSet()
         {
@@ -316,7 +319,13 @@ namespace IMT.UI.Editors
                 CountLabel.size = size;
         }
     }
-    public class IntersectionTemplateGroup : EditGroup<IntersectionTemplateFit, IntersectionTemplateItem, IntersectionTemplate> { }
+    public class IntersectionTemplateGroup : EditGroup<IntersectionTemplateFit, IntersectionTemplateItem, IntersectionTemplate> 
+    {
+        protected override bool ShowIcon => true;
+
+        protected override string GetName(IntersectionTemplateFit group) => group.Description();
+        protected override string GetSprite(IntersectionTemplateFit group) => group.Sprite();
+    }
     public class EditIntersectionTemplateMode : EditTemplateMode<IntersectionTemplate> { }
     public class PreviewPanel : PropertyGroupPanel
     {

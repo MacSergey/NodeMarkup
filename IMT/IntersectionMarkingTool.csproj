@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.14.0.1016</AssemblyVersion>
+    <AssemblyVersion>1.14.0.1050</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -120,6 +120,61 @@
     <None Remove="Resources\ButtonIcons\UnlockButtonIcon.png" />
     <None Remove="Resources\ButtonWhite.png" />
     <None Remove="Resources\ButtonWhiteBorder.png" />
+    <None Remove="Resources\GroupIcons\CrosswalkLineType.png" />
+    <None Remove="Resources\GroupIcons\Crosswalks\CrosswalkChessBoardGroup.png" />
+    <None Remove="Resources\GroupIcons\Crosswalks\CrosswalkDecalGroup.png" />
+    <None Remove="Resources\GroupIcons\Crosswalks\CrosswalkDoubleZebraGroup.png" />
+    <None Remove="Resources\GroupIcons\Crosswalks\CrosswalkExistentGroup.png" />
+    <None Remove="Resources\GroupIcons\Crosswalks\CrosswalkLadderGroup.png" />
+    <None Remove="Resources\GroupIcons\Crosswalks\CrosswalkParallelDashedLinesGroup.png" />
+    <None Remove="Resources\GroupIcons\Crosswalks\CrosswalkParallelDashedLinesGroups.png" />
+    <None Remove="Resources\GroupIcons\Crosswalks\CrosswalkParallelSolidLinesGroup.png" />
+    <None Remove="Resources\GroupIcons\Crosswalks\CrosswalkSolidGroup.png" />
+    <None Remove="Resources\GroupIcons\Crosswalks\CrosswalkZebraGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerAsphaltGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerChevronGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerCliffGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerDecalGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerGrassGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerGravelGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerGridGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerPavementGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerRuinedGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerSolidGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerStripeGroup.png" />
+    <None Remove="Resources\GroupIcons\Fillers\FillerTextureGroup.png" />
+    <None Remove="Resources\GroupIcons\ItemType\CrosswalkGroup.png" />
+    <None Remove="Resources\GroupIcons\ItemType\FillerGroup.png" />
+    <None Remove="Resources\GroupIcons\ItemType\RegularLineGroup.png" />
+    <None Remove="Resources\GroupIcons\ItemType\StopLineGroup.png" />
+    <None Remove="Resources\GroupIcons\LaneLineType.png" />
+    <None Remove="Resources\GroupIcons\Preset\CloseFit.png" />
+    <None Remove="Resources\GroupIcons\Preset\LinkFit.png" />
+    <None Remove="Resources\GroupIcons\Preset\PerfectFit.png" />
+    <None Remove="Resources\GroupIcons\Preset\PoorFit.png" />
+    <None Remove="Resources\GroupIcons\Preset\PossibleFit.png" />
+    <None Remove="Resources\GroupIcons\RegularLineType.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineDashedGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineDoubleDashedAsymGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineDoubleDashedGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineDoubleSolidGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineNetworkGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LinePavementGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LinePropGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineSharkTeethGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineSolidAndDashedGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineSolidGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineTextGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineTreeGroup.png" />
+    <None Remove="Resources\GroupIcons\Regular\LineZigZagGroup.png" />
+    <None Remove="Resources\GroupIcons\StopLineType.png" />
+    <None Remove="Resources\GroupIcons\Stop\StopLineDashedGroup.png" />
+    <None Remove="Resources\GroupIcons\Stop\StopLineDoubleDashedGroup.png" />
+    <None Remove="Resources\GroupIcons\Stop\StopLineDoubleSolidGroup.png" />
+    <None Remove="Resources\GroupIcons\Stop\StopLinePavementGroup.png" />
+    <None Remove="Resources\GroupIcons\Stop\StopLineSharkTeethGroup.png" />
+    <None Remove="Resources\GroupIcons\Stop\StopLineSolidAndDashedGroup.png" />
+    <None Remove="Resources\GroupIcons\Stop\StopLineSolidGroup.png" />
     <None Remove="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\ApplyStyleHeaderButton.png" />
     <None Remove="Resources\HeaderButtons\CopyToAllHeaderButton.png" />
@@ -134,7 +189,9 @@
     <None Remove="Resources\PreviewImage.png" />
     <None Remove="Resources\StyleCircle.png" />
     <None Remove="Resources\StylesCrosswalk\CrosswalkDecal.png" />
+    <None Remove="Resources\StylesFiller\FillerAsphalt.png" />
     <None Remove="Resources\StylesFiller\FillerDecal.png" />
+    <None Remove="Resources\StylesFiller\FillerTexture.png" />
     <None Remove="Resources\StylesLine\LineDecal.png" />
     <None Remove="Resources\StylesLine\LineDoubleDashedAsym.png" />
     <None Remove="Resources\StylesLine\LineText.png" />
@@ -176,6 +233,56 @@
     <EmbeddedResource Include="Resources\ButtonIcons\TopToBottomButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonIcons\UnlockButtonIcon.png" />
     <EmbeddedResource Include="Resources\ButtonWhiteBorder.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Crosswalks\CrosswalkChessBoardGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Crosswalks\CrosswalkDecalGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Crosswalks\CrosswalkDoubleZebraGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Crosswalks\CrosswalkExistentGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Crosswalks\CrosswalkLadderGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Crosswalks\CrosswalkParallelDashedLinesGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Crosswalks\CrosswalkParallelSolidLinesGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Crosswalks\CrosswalkSolidGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Crosswalks\CrosswalkZebraGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerAsphaltGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerChevronGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerCliffGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerDecalGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerGrassGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerGravelGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerGridGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerPavementGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerRuinedGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerSolidGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerStripeGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Fillers\FillerTextureGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\ItemType\CrosswalkGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\ItemType\FillerGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\ItemType\RegularLineGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\ItemType\StopLineGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Preset\CloseFit.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Preset\LinkFit.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Preset\PerfectFit.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Preset\PoorFit.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Preset\PossibleFit.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineDashedGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineDoubleDashedAsymGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineDoubleDashedGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineDoubleSolidGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineNetworkGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LinePavementGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LinePropGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineSharkTeethGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineSolidAndDashedGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineSolidGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineTextGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineTreeGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Regular\LineZigZagGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Stop\StopLineDashedGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Stop\StopLineDoubleDashedGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Stop\StopLineDoubleSolidGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Stop\StopLinePavementGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Stop\StopLineSharkTeethGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Stop\StopLineSolidAndDashedGroup.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\Stop\StopLineSolidGroup.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyAllHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyStyleHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\CopyToAllHeaderButton.png" />
@@ -188,14 +295,19 @@
     <EmbeddedResource Include="Resources\HeaderButtons\UnlinkHeaderButton.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\GroupIcons\LineType\CrosswalkLineType.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\LineType\LaneLineType.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\LineType\RegularLineType.png" />
+    <EmbeddedResource Include="Resources\GroupIcons\LineType\StopLineType.png" />
     <EmbeddedResource Include="Resources\PreviewImage.png" />
     <EmbeddedResource Include="Resources\imt-linux" />
     <EmbeddedResource Include="Resources\imt-macos" />
     <EmbeddedResource Include="Resources\imt-win" />
-    <EmbeddedResource Include="Resources\ListItem\ListItemBackground.png" />
     <EmbeddedResource Include="Resources\StyleCircle.png" />
     <EmbeddedResource Include="Resources\StylesCrosswalk\CrosswalkDecal.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerAsphalt.png" />
     <EmbeddedResource Include="Resources\StylesFiller\FillerDecal.png" />
+    <EmbeddedResource Include="Resources\StylesFiller\FillerTexture.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineDecal.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineDoubleDashedAsym.png" />
     <EmbeddedResource Include="Resources\StylesLine\LineText.png" />
@@ -237,9 +349,6 @@
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineProp.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewLineTree.png" />
     <EmbeddedResource Include="Resources\StylesPreview\StylesPreviewStopLinePavement.png" />
-
-    <EmbeddedResource Include="Resources\ListItem\ListItemCollapse.png" />
-    <EmbeddedResource Include="Resources\ListItem\ListItemExpand.png" />
 
     <EmbeddedResource Include="Resources\HeaderButtons\AddTemplateHeaderButton.png" />
     <EmbeddedResource Include="Resources\HeaderButtons\ApplyHeaderButton.png" />

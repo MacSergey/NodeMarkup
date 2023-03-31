@@ -239,7 +239,7 @@ namespace IMT.UI
 
             Favorite = AddUIComponent<CustomUIButton>();
             Favorite.Atlas = IMTTextures.Atlas;
-            Favorite.ForegroundSpriteMode = UIForegroundSpriteMode.Fill;
+            Favorite.ForegroundSpriteMode = SpriteMode.Fill;
             Favorite.size = new Vector2(20, 90);
             Favorite.eventClick += FavoriteClick;
 

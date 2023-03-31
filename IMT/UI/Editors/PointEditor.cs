@@ -274,12 +274,8 @@ namespace IMT.UI.Editors
     public class PointsItemsPanel : ItemsGroupPanel<PointItem, MarkingEnterPoint, PointGroup, Entrance>
     {
         public override bool GroupingEnable => Settings.GroupPoints.value;
-
         public override int Compare(MarkingEnterPoint x, MarkingEnterPoint y) => 0;
-
         public override int Compare(Entrance x, Entrance y) => 0;
-
-        protected override string GroupName(Entrance group) => group.ToString();
 
         protected override Entrance SelectGroup(MarkingEnterPoint point) => point.Enter;
     }
@@ -292,5 +288,11 @@ namespace IMT.UI.Editors
             Icon.InnerColor = EditObject.Color;
         }
     }
-    public class PointGroup : EditGroup<Entrance, PointItem, MarkingEnterPoint> { }
+    public class PointGroup : EditGroup<Entrance, PointItem, MarkingEnterPoint>
+    {
+        protected override bool ShowIcon => false;
+
+        protected override string GetName(Entrance group) => group.ToString();
+        protected override string GetSprite(Entrance group) => string.Empty;
+    }
 }

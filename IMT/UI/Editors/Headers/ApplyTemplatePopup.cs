@@ -58,7 +58,7 @@ namespace IMT.UI.Editors
             clipChildren = true;
             textScale = 0.8f;
             TextHorizontalAlignment = UIHorizontalAlignment.Left;
-            ForegroundSpriteMode = UIForegroundSpriteMode.Fill;
+            ForegroundSpriteMode = SpriteMode.Fill;
         }
         protected override void SetPopupStyle()
         {

@@ -353,7 +353,7 @@ namespace IMT.UI.Editors
         {
             foreach (var component in ContentPanel.components.ToArray())
             {
-                if (component != ContentPanel.Scrollbar)
+                if (component != ContentPanel.Scrollbar && component != EmptyLabel)
                     ComponentPool.Free(component);
             }
         }

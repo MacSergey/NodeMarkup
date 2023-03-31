@@ -379,14 +379,13 @@ namespace IMT.UI.Editors
         }
         public override int Compare(LineType x, LineType y) => x.CompareTo(y);
 
-        protected override string GroupName(LineType group) => group.Description();
         protected override LineType SelectGroup(MarkingLine editObject) => editObject.Type;
     }
     public class LineItem : EditItem<MarkingLine, LineIcon>
     {
         private bool HasOverlapped { get; set; }
 
-        public override ModsCommon.UI.SpriteSet ForegroundSprites => !HasOverlapped ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        public override SpriteSet BackgroundSprites => !HasOverlapped ? base.BackgroundSprites : new SpriteSet()
         {
             normal = CommonTextures.BorderBig,
             hovered = CommonTextures.PanelSmall,
@@ -394,9 +393,9 @@ namespace IMT.UI.Editors
             focused = CommonTextures.BorderBig,
             disabled = CommonTextures.PanelSmall,
         };
-        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !HasOverlapped ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+        public override SpriteSet BackgroundSelectedSprites => !HasOverlapped ? base.BackgroundSelectedSprites : new SpriteSet(CommonTextures.PanelSmall);
 
-        public override ColorSet ForegroundColors => !HasOverlapped ? base.ForegroundColors : new ColorSet()
+        public override ColorSet BackgroundColors => !HasOverlapped ? base.BackgroundColors : new ColorSet()
         {
             normal = UIStyle.ItemErrorNormal,
             hovered = UIStyle.ItemErrorNormal,
@@ -404,7 +403,7 @@ namespace IMT.UI.Editors
             focused = UIStyle.ItemErrorFocused,
             disabled = default,
         };
-        public override ColorSet ForegroundSelectedColors => !HasOverlapped ? base.ForegroundSelectedColors : new ColorSet(UIStyle.ItemErrorFocused);
+        public override ColorSet BackgroundSelectedColors => !HasOverlapped ? base.BackgroundSelectedColors : new ColorSet(UIStyle.ItemErrorFocused);
 
         public override ColorSet DefaultTextColor => !HasOverlapped ? base.DefaultTextColor : new ColorSet(Color.white);
         public override ColorSet DefaultSelTextColor => !HasOverlapped ? base.DefaultSelTextColor : new ColorSet(Color.white);
@@ -432,5 +431,11 @@ namespace IMT.UI.Editors
             }
         }
     }
-    public class LineGroup : EditGroup<LineType, LineItem, MarkingLine> { }
+    public class LineGroup : EditGroup<LineType, LineItem, MarkingLine>
+    {
+        protected override bool ShowIcon => true;
+
+        protected override string GetName(LineType group) => group.Description();
+        protected override string GetSprite(LineType group) => group.Sprite();
+    }
 }

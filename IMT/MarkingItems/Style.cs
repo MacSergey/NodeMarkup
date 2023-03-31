@@ -502,46 +502,63 @@ namespace IMT.Manager
 
             [NotItem]
             [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
+            [Sprite(nameof(RegularLine), "Group")]
             RegularLine = Marking.Item.RegularLine,
 
             [Description(nameof(Localize.LineStyle_Solid))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk)]
+            [Sprite(nameof(LineSolid))]
+            [Sprite(nameof(LineSolid), "Group")]
             LineSolid,
 
             [Description(nameof(Localize.LineStyle_Dashed))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk)]
+            [Sprite(nameof(LineDashed))]
+            [Sprite(nameof(LineDashed), "Group")]
             LineDashed,
 
             [Description(nameof(Localize.LineStyle_DoubleSolid))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk)]
+            [Sprite(nameof(LineDoubleSolid))]
+            [Sprite(nameof(LineDoubleSolid), "Group")]
             LineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_DoubleDashed))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk)]
+            [Sprite(nameof(LineDoubleDashed))]
+            [Sprite(nameof(LineDoubleDashed), "Group")]
             LineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_SolidAndDashed))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk)]
+            [Sprite(nameof(LineSolidAndDashed))]
+            [Sprite(nameof(LineSolidAndDashed), "Group")]
             LineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_SharkTeeth))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk)]
+            [Sprite(nameof(LineSharkTeeth))]
+            [Sprite(nameof(LineSharkTeeth), "Group")]
             LineSharkTeeth,
 
             [Description(nameof(Localize.LineStyle_DoubleDashedAsym))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk)]
+            [Sprite(nameof(LineDoubleDashedAsym))]
+            [Sprite(nameof(LineDoubleDashedAsym), "Group")]
             LineDoubleDashedAsym,
 
             [Description(nameof(Localize.LineStyle_ZigZag))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular)]
+            [Sprite(nameof(LineZigZag))]
+            [Sprite(nameof(LineZigZag), "Group")]
             LineZigZag,
 
 
@@ -551,6 +568,8 @@ namespace IMT.Manager
             [Description(nameof(Localize.LineStyle_Pavement))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk)]
+            [Sprite(nameof(LinePavement))]
+            [Sprite(nameof(LinePavement), "Group")]
             LinePavement,
 
 
@@ -560,21 +579,29 @@ namespace IMT.Manager
             [Description(nameof(Localize.LineStyle_Prop))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
+            [Sprite(nameof(LineProp))]
+            [Sprite(nameof(LineProp), "Group")]
             LineProp,
 
             [Description(nameof(Localize.LineStyle_Tree))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
+            [Sprite(nameof(LineTree))]
+            [Sprite(nameof(LineTree), "Group")]
             LineTree,
 
             [Description(nameof(Localize.LineStyle_Text))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
+            [Sprite(nameof(LineText))]
+            [Sprite(nameof(LineText), "Group")]
             LineText,
 
             [Description(nameof(Localize.LineStyle_Decal))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
+            [Sprite(nameof(LineDecal))]
+            [Sprite(nameof(LineDecal), "Group")]
             LineDecal,
 
 
@@ -584,6 +611,8 @@ namespace IMT.Manager
             [Description(nameof(Localize.LineStyle_Network))]
             [NetworkType(NetworkType.All)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
+            [Sprite(nameof(LineNetwork))]
+            [Sprite(nameof(LineNetwork), "Group")]
             LineNetwork,
 
             [Description(nameof(Localize.LineStyle_Empty))]
@@ -605,34 +634,50 @@ namespace IMT.Manager
             [NotItem]
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(StopLine))]
+            [Sprite(nameof(StopLine), "Group")]
             StopLine = Marking.Item.StopLine,
 
             [Description(nameof(Localize.LineStyle_StopSolid))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(StopLineSolid))]
+            [Sprite(nameof(StopLineSolid), "Group")]
             StopLineSolid,
 
             [Description(nameof(Localize.LineStyle_StopDashed))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(StopLineDashed))]
+            [Sprite(nameof(StopLineDashed), "Group")]
             StopLineDashed,
 
             [Description(nameof(Localize.LineStyle_StopDouble))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(StopLineDoubleSolid))]
+            [Sprite(nameof(StopLineDoubleSolid), "Group")]
             StopLineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(StopLineDoubleDashed))]
+            [Sprite(nameof(StopLineDoubleDashed), "Group")]
             StopLineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_StopSolidAndDashed))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(StopLineSolidAndDashed))]
+            [Sprite(nameof(StopLineSolidAndDashed), "Group")]
             StopLineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(StopLineSharkTeeth))]
+            [Sprite(nameof(StopLineSharkTeeth), "Group")]
             StopLineSharkTeeth,
 
             [Description(nameof(Localize.LineStyle_StopPavement))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(StopLinePavement))]
+            [Sprite(nameof(StopLinePavement), "Group")]
             StopLinePavement,
 
             [Description(nameof(Localize.Style_FromClipboard))]
@@ -646,30 +691,43 @@ namespace IMT.Manager
 
             [NotItem]
             [Description(nameof(Localize.FillerStyle_Group))]
+            [Sprite(nameof(Filler), "Group")]
             Filler = Marking.Item.Filler,
 
             [Description(nameof(Localize.FillerStyle_Stripe))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [Sprite(nameof(FillerStripe))]
+            [Sprite(nameof(FillerStripe), "Group")]
             FillerStripe,
 
             [Description(nameof(Localize.FillerStyle_Grid))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [Sprite(nameof(FillerGrid))]
+            [Sprite(nameof(FillerGrid), "Group")]
             FillerGrid,
 
             [Description(nameof(Localize.FillerStyle_Solid))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [Sprite(nameof(FillerSolid))]
+            [Sprite(nameof(FillerSolid), "Group")]
             FillerSolid,
 
             [Description(nameof(Localize.FillerStyle_Chevron))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [Sprite(nameof(FillerChevron))]
+            [Sprite(nameof(FillerChevron), "Group")]
             FillerChevron,
 
             [Description(nameof(Localize.FillerStyle_Decal))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [Sprite(nameof(FillerDecal))]
+            [Sprite(nameof(FillerDecal), "Group")]
             FillerDecal,
 
             [Description(nameof(Localize.FillerStyle_Asphalt))]
             [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [Sprite(nameof(FillerAsphalt))]
+            [Sprite(nameof(FillerAsphalt), "Group")]
             FillerAsphalt,
 
             [NotItem]
@@ -677,26 +735,38 @@ namespace IMT.Manager
 
             [Description(nameof(Localize.FillerStyle_PavementIsland))]
             [NetworkType(NetworkType.All)]
+            [Sprite(nameof(FillerPavement))]
+            [Sprite(nameof(FillerPavement), "Group")]
             FillerPavement,
 
             [Description(nameof(Localize.FillerStyle_GrassIsland))]
             [NetworkType(NetworkType.All)]
+            [Sprite(nameof(FillerGrass))]
+            [Sprite(nameof(FillerGrass), "Group")]
             FillerGrass,
 
             [Description(nameof(Localize.FillerStyle_GravelIsland))]
             [NetworkType(NetworkType.All)]
+            [Sprite(nameof(FillerGravel))]
+            [Sprite(nameof(FillerGravel), "Group")]
             FillerGravel,
 
             [Description(nameof(Localize.FillerStyle_RuinedIsland))]
             [NetworkType(NetworkType.All)]
+            [Sprite(nameof(FillerRuined))]
+            [Sprite(nameof(FillerRuined), "Group")]
             FillerRuined,
 
             [Description(nameof(Localize.FillerStyle_CliffIsland))]
             [NetworkType(NetworkType.All)]
+            [Sprite(nameof(FillerCliff))]
+            [Sprite(nameof(FillerCliff), "Group")]
             FillerCliff,
 
             [Description(nameof(Localize.FillerStyle_TextureIsland))]
             [NetworkType(NetworkType.All)]
+            [Sprite(nameof(FillerTexture))]
+            [Sprite(nameof(FillerTexture), "Group")]
             FillerTexture,
 
             [Description(nameof(Localize.Style_FromClipboard))]
@@ -710,42 +780,61 @@ namespace IMT.Manager
 
             [NotItem]
             [Description(nameof(Localize.CrosswalkStyle_Group))]
+            [Sprite(nameof(Crosswalk), "Group")]
             Crosswalk = Marking.Item.Crosswalk,
 
             [Description(nameof(Localize.CrosswalkStyle_Existent))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(CrosswalkExistent))]
+            [Sprite(nameof(CrosswalkExistent), "Group")]
             CrosswalkExistent,
 
             [Description(nameof(Localize.CrosswalkStyle_Zebra))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(CrosswalkZebra))]
+            [Sprite(nameof(CrosswalkZebra), "Group")]
             CrosswalkZebra,
 
             [Description(nameof(Localize.CrosswalkStyle_DoubleZebra))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(CrosswalkDoubleZebra))]
+            [Sprite(nameof(CrosswalkDoubleZebra), "Group")]
             CrosswalkDoubleZebra,
 
             [Description(nameof(Localize.CrosswalkStyle_ParallelSolidLines))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(CrosswalkParallelSolidLines))]
+            [Sprite(nameof(CrosswalkParallelSolidLines), "Group")]
             CrosswalkParallelSolidLines,
 
             [Description(nameof(Localize.CrosswalkStyle_ParallelDashedLines))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(CrosswalkParallelDashedLines))]
+            [Sprite(nameof(CrosswalkParallelDashedLines), "Group")]
             CrosswalkParallelDashedLines,
 
             [Description(nameof(Localize.CrosswalkStyle_Ladder))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(CrosswalkLadder))]
+            [Sprite(nameof(CrosswalkLadder), "Group")]
             CrosswalkLadder,
 
             [Description(nameof(Localize.CrosswalkStyle_Solid))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(CrosswalkSolid))]
+            [Sprite(nameof(CrosswalkSolid), "Group")]
             CrosswalkSolid,
 
             [Description(nameof(Localize.CrosswalkStyle_ChessBoard))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(CrosswalkChessBoard))]
+            [Sprite(nameof(CrosswalkChessBoard), "Group")]
             CrosswalkChessBoard,
 
             [Description(nameof(Localize.CrosswalkStyle_Decal))]
             [NetworkType(NetworkType.Road)]
+            [Sprite(nameof(CrosswalkDecal))]
+            [Sprite(nameof(CrosswalkDecal), "Group")]
             CrosswalkDecal,
 
             [Description(nameof(Localize.Style_FromClipboard))]
