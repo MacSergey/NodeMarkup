@@ -2067,6 +2067,35 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
     <value>Ligne n°{0}</value>
   </data>
   <data name="StyleOption_Wind" xml:space="preserve">
-    <value>Se balancer avec le vent</value>
+    <value>Se balance avec le vent</value>
+  </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Maintenez {0} pour réduire/étendre tous les groupes</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14" xml:space="preserve">
+    <value>[UPDATED] Importante mise à jour du style de l'interface utilisateur.
+[NEW] Le panneau des éléments se cache automatiquement pour économiser de la place. Peut être désactivé dans les paramètres du mod.
+[NEW] Ajout du remplissage décalque : possibilité de définir n'importe quel décalque comme texture de remplissage.
+[NEW] Ajout du remplissage îlot de texture : possibilité de définir n'importe quel décalque comme texture de remplissage 3D.
+[NEW] Ajout du passage piéton décalque : possibilité de définir n'importe quel décalque comme texture de passage piéton.
+[NEW] Ajout du remplissage asphalte.
+[NEW] Ajout de la possibilité de sélectionner le thème de la carte pour l'herbe, le gravier, le détérioré et les falaises.
+[NEW] Ajout de la possibilité de sélectionner un thème de béton/trotoire.
+[NEW] Ajout d'un style séparé pour les décalques. Il fournit des options supplémentaires pour les décalques, comme la mosaïque et la tolérance de pente. Les décalques sont toujours disponibles en tant qu'accessoires pour des raisons de compatibilité.
+[NEW] Les arbres et les réseaux qui ont été ajoutés avec IMT sont visibles de n'importe quelle distance comme les arbres et les réseaux normaux.
+[NEW] Ajout de la possibilité de définir des réseaux/accessoires/arbres favoris, ils seront affichés en haut de la liste.
+[NEW] Conservation du nom de la ressource si le réseau/accessoire/arbre est manquant : il ne sera pas réinitialisé à "non défini" et l'élément apparaîtra à nouveau lorsque la ressource sera de retour.
+[UPDATED] Ajout d'une recherche dans le panneau d'application des modèles.
+[NEW] Transmission à LSM des données relatives aux réseaux/accessoires/arbres utilisés, de manière à ce que LSM puisse indiquer les ressources manquantes qui ne sont utilisées que par IMT.
+[UPDATED] Ajout de la prise en charge du texte multiligne (jusqu'à 3 lignes).
+[UPDATED] Maintenez ALT enfoncé pour modifier simultanément toutes les composantes de la couleur (RVB) tout en faisant défiler la molette.
+[UPDATED] Maintenez MAJ pour développer/réduire tous les groupes.
+[UPDATED] Ajout d'une option permettant de définir un angle aléatoire pour les arbres et les accessoires.
+[NEW] Ajout de la possibilité de désactiver le balancement des arbres dans le vent.
+[UPDATED] Ajout de l'icône du style dans l'en-tête du panneau des règles.
+[UPDATED] Ajout d'icônes à tous les groupes.
+[NEW] Ajout d'un bouton "Inverser tous les chevrons" dans les paramètres du mod.
+[FIXED] Correction de la valeur "À partir de" des zigzags qui n'était pas sauvegardée.
+[FIXED] Correction du fait que les raccourcis pour tourner/inverser le marquage ne fonctionnent pas lors du collage du marquage.</value>
   </data>
 </root>

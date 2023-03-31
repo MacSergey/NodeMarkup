@@ -1877,9 +1877,35 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
     <value>Línea #{0}</value>
   </data>
   <data name="StyleOption_Wind" xml:space="preserve">
-    <value>Meciéndose en el viento</value>
+    <value>Efecto de movimiento de viento</value>
   </data>
   <data name="Header_ExpandGroupTooltip" xml:space="preserve">
     <value>Mantener presionada la tecla {0} para colapsar/expandir todos los grupos</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14" xml:space="preserve">
+    <value>[UPDATED] Gran actualizacion de la UI
+[NEW] Elementos del panel se esconden automáticamente para ahorrar espacio. Puede ser desactivado en la configuración. 
+[NEW] Relleno con "decals": Se puede utilizar cualquier "decal" como relleno.
+[NEW] Relleno de isla con textura: Se puede utilizar cualquier "decal" como textura de relleno 3D.
+[NEW] Decal para paso de peatones: Se puede utilizar cualquier "decal" como textura para paso de peatones.
+[NEW] Relleno de asfalto.
+[NEW] Selecciona un relleno de tema de mapa para pasto, grava, arruinado y acantilado.
+[NEW] Seleccionar el tema de acera/bordillo.
+[NEW] Estilo separado para "decals". Provee opciones adicionales para "decals", como tolerancia de repetición y pendiente. Los "decals" continúan estando disponibles como decoraciones para compatibilidad de versiones anteriores.
+[NEW] Los árboles y redes agregados con IMT son visibles desde cualquier distancia como cualquier otro árbol o red.
+[NEW] Establece redes/árboles/decoraciones como favoritos, se muestran en la parte superior de la lista.
+[NEW] Mantiene el nombre del recurso si falta una decoración/árbol/red: no será restablecido a "no seleccionado" y el elemento aparecerá otra vez cuando el recurso sea agregado.
+[UPDATED] Búsqueda en el panel de plantillas.
+[NEW] Agrega datos de redes/decoraciones/árboles utilizados a LSM, asi LSM puede mostrar recursos que se perdieron que solo son usados por IMT.
+[UPDATED] Soporte de texto multi linea, hasta 3 líneas.
+[UPDATED] Mantener presionado ALT para cambiar todos los colores (RGB) simultáneamente al utilizar la rueda del mouse.
+[UPDATED] Mantener SHIFT para expandir/colapsar todos los grupos.
+[UPDATED] Opción de establecer ángulos aleatorios para árboles y decoraciones.
+[NEW] Desactivar el movimiento de los árboles con el viento.
+[UPDATED] Estilo de iconos en la cabecera del panel de reglas.
+[UPDATED] Iconos a todos los grupos.
+[NEW] Botón de "invertir todos los cebreados" en la configuracion.
+[FIXED] Valores no guardados de "comenzar desde" de los zigzag.
+[FIXED] Atajos para voltear/reflejar no funcionaban al pegar marcas.</value>
   </data>
 </root>

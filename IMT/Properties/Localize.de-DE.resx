@@ -1950,4 +1950,7 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
   <data name="StyleOption_Wind" xml:space="preserve">
     <value>Bewegung durch Wind</value>
   </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Halte {0} zum ein-/ausklappen aller Gruppen</value>
+  </data>
 </root>
