@@ -2071,4 +2071,30 @@ It can take time if there are a lot of segments.</value>
   <data name="Header_ExpandGroupTooltip" xml:space="preserve">
     <value>Hold {0} to collapse/expand all groups</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14" xml:space="preserve">
+    <value>[UPDATED] Huge update of UI Style.
+[NEW] Items panel auto hides to save place on panel. Can be disabled in the mod settings.
+[NEW] Added decal filler: the ability to set any decal as filler texture.
+[NEW] Added texture island filler: the ability to set any decal as texture of 3D filler.
+[NEW] Added decal crosswalk: the ability to set any decal as crosswalk texture.
+[NEW] Added asphalt filler.
+[NEW] Added the ability to select map theme for grass, gravel, ruined and cliff fillers.
+[NEW] Added the ability to select pavement/curb theme.
+[NEW] Added separate style for decals. It provides additional options for decal like tiling and slope tolerance. Decals are still available as props for backward compatibility.
+[NEW] Trees and networks that were added with IMT are visible from any distance like regular trees and networks.
+[NEW] Added the ability to set favorite networks/props/trees, they will be shown in the top of list.
+[NEW] Keep asset name if prop/tree/network is missed: it will not be reset to "not set" and item appear again when asset is back.
+[UPDATED] Added search to apply template panel.
+[NEW] Push data of used networks/props/trees to LSM, so that LSM can show missed asset that are used only by IMT.
+[UPDATED] Added support of multiline text (up to 3 lines).
+[UPDATED] Hold ALT to change all color components (RGB) simultaneously while scrolling the wheel.
+[UPDATED] Hold Shift to expand/colapse all groups.
+[UPDATED] Added option to set random angle to trees and props.
+[NEW] Added the ability to disable swaying trees in the wind.
+[UPDATED] Added style icons to rule panel header.
+[UPDATED] Added icons to all groups.
+[NEW] Added "invert all chevrons" button to the mod settings.
+[FIXED] Fixed zigzag "start from" value does not save.
+[FIXED] Fixed that shortcuts for turning/mirroring marking do not work while pasting marking.</value>
+  </data>
 </root>

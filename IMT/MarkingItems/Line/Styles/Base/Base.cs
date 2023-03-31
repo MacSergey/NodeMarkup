@@ -180,7 +180,7 @@ namespace IMT.Manager
                 throw new NotSupportedException();
         }
 
-        protected void AddSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        protected void AddSecondColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             if (this is IDoubleLine doubleLine)
             {
@@ -193,7 +193,7 @@ namespace IMT.Manager
             else
                 throw new NotSupportedException();
         }
-        protected void RefreshSecondColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        protected void RefreshSecondColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             if (this is IDoubleLine doubleLine)
             {
@@ -202,7 +202,7 @@ namespace IMT.Manager
             }
         }
 
-        protected override void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        protected override void RefreshColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             if (this is IDoubleLine doubleLine)
             {

@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class ApplyTemplateHeaderButton : ObjectDropDown<StyleTemplate, TemplatePopup, TemplateEntity>, IHeaderButton, IReusable
+    public class ApplyTemplateHeaderButton : ObjectDropDown<StyleTemplate, TemplateEntity, TemplatePopup>, IHeaderButton, IReusable
     {
         bool IReusable.InCache { get; set; }
 
@@ -52,20 +52,20 @@ namespace IMT.UI.Editors
 
         public ApplyTemplateHeaderButton()
         {
-            atlasBackground = CommonTextures.Atlas;
-            SetBgSprite(new ModsCommon.UI.SpriteSet(string.Empty, CommonTextures.HeaderHover, CommonTextures.HeaderHover, CommonTextures.HeaderHover, string.Empty));
+            BgAtlas = CommonTextures.Atlas;
+            BgSprites = new SpriteSet(string.Empty, CommonTextures.HeaderHover, CommonTextures.HeaderHover, CommonTextures.HeaderHover, string.Empty);
 
             clipChildren = true;
             textScale = 0.8f;
-            textHorizontalAlignment = UIHorizontalAlignment.Left;
-            foregroundSpriteMode = UIForegroundSpriteMode.Fill;
+            TextHorizontalAlignment = UIHorizontalAlignment.Left;
+            ForegroundSpriteMode = SpriteMode.Fill;
         }
         protected override void SetPopupStyle()
         {
             Popup.PopupDefaultStyle(50f);
             Popup.Atlas = CommonTextures.Atlas;
             Popup.BackgroundSprite = CommonTextures.PanelBig;
-            Popup.NormalBgColor = IMTColors.ItemsBackground;
+            Popup.BgColors = UIStyle.PopupBackground;
         }
         protected override void InitPopup()
         {
@@ -80,18 +80,18 @@ namespace IMT.UI.Editors
         {
             size = new Vector2(buttonSize, buttonSize);
             minimumSize = size;
-            textPadding = new RectOffset(iconSize + 5, 5, 5, 0);
+            TextPadding = new RectOffset(iconSize + 5, 5, 5, 0);
         }
         public void SetIcon(UITextureAtlas atlas, string sprite)
         {
-            atlasForeground = atlas ?? TextureHelper.InGameAtlas;
-            SetFgSprite(new ModsCommon.UI.SpriteSet(sprite));
+            FgAtlas = atlas ?? TextureHelper.InGameAtlas;
+            FgSprites = sprite;
         }
         protected override void OnUpdate()
         {
             base.OnUpdate();
-            if (state == ButtonState.Focused)
-                state = ButtonState.Normal;
+            if (State == UIButton.ButtonState.Focused)
+                State = UIButton.ButtonState.Normal;
         }
         public virtual void DeInit()
         {
@@ -106,24 +106,18 @@ namespace IMT.UI.Editors
 
     public class TemplatePopup : SearchPopup<StyleTemplate, TemplateEntity>
     {
-        protected override string NotFoundText => IMT.Localize.HeaderPanel_NoTemplates;
+        protected override string EmptyText => IMT.Localize.HeaderPanel_NoTemplates;
         protected override string GetName(StyleTemplate value) => value.Name;
-        protected override void SetEntityStyle(TemplateEntity entity) => entity.EntityStyle<StyleTemplate, TemplateEntity>();
+        protected override void SetEntityStyle(TemplateEntity entity) => entity.EntityDefaultStyle<StyleTemplate, TemplateEntity>();
         protected override bool FilterSearch(StyleTemplate value) => base.FilterSearch(value) || (value.IsAsset && value.Asset.Author.ToLower().Contains(SearchText));
     }
     public class TemplateEntity : StyleTemplateItem, IPopupEntity<StyleTemplate>
     {
         public event Action<int, StyleTemplate> OnSelected;
 
-        public bool Selected { get; set; }
         public int Index { get; set; }
         public RectOffset Padding { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool ShowDelete => false;
-
-        public void PerformWidth()
-        {
-            AutoWidth();
-        }
 
         public void SetObject(int index, StyleTemplate template, bool selected)
         {
@@ -136,6 +130,22 @@ namespace IMT.UI.Editors
             base.OnClick(p);
             if (!p.used)
                 Select();
+        }
+
+        public DropDownStyle EntityStyle
+        {
+            set
+            {
+                bgAtlas = value.EntityAtlas;
+
+                bgSprites = value.EntitySprites;
+                selBgSprites = value.EntitySelSprites;
+
+                bgColors = value.EntityColors;
+                selBgColors = value.EntitySelColors;
+
+                Invalidate();
+            }
         }
     }
 }

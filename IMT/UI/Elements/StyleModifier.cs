@@ -17,6 +17,8 @@ namespace IMT.UI
     {
         public event Action<Style.StyleType, StyleModifier> OnModifierChanged;
 
+        protected override RectOffset ItemsPadding => new RectOffset(20, 20, 10, 10);
+
         Style.StyleType style;
         public Style.StyleType Style
         {

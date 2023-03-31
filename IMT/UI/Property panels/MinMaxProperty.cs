@@ -6,20 +6,21 @@ namespace IMT.UI
 {
     public class MinMaxProperty : EditorPropertyPanel, IReusable
     {
-        bool IReusable.InCache { get; set; }
-
         public event Action<bool, int, int> OnValueChanged;
 
         private CustomUIToggle UseCount { get; set; }
         private IntUITextField MinField { get; set; }
         private IntUITextField MaxField { get; set; }
 
+        private CustomUILabel MinLabel { get; set; }
+        private CustomUILabel MaxLabel { get; set; }
+
         public bool EnableCount
         {
-            get => UseCount.State;
+            get => UseCount.Value;
             set
             {
-                UseCount.State = value;
+                UseCount.Value = value;
                 Refresh();
             }
         }
@@ -84,12 +85,12 @@ namespace IMT.UI
             UseCount = Content.AddUIComponent<CustomUIToggle>();
             UseCount.name = nameof(UseCount);
             UseCount.DefaultStyle();
-            UseCount.OnStateChanged += UseChanged;
+            UseCount.OnValueChanged += UseChanged;
 
-            var min = Content.AddUIComponent<CustomUILabel>();
-            min.text = IMT.Localize.StyleOption_Min;
-            min.textScale = 0.7f;
-            min.padding = new RectOffset(0, 0, 2, 0);
+            MinLabel = Content.AddUIComponent<CustomUILabel>();
+            MinLabel.text = IMT.Localize.StyleOption_Min;
+            MinLabel.textScale = 0.7f;
+            MinLabel.Padding = new RectOffset(0, 0, 2, 0);
 
             MinField = Content.AddUIComponent<IntUITextField>();
             MinField.name = nameof(MinField);
@@ -97,10 +98,10 @@ namespace IMT.UI
             MinField.width = 50f;
             MinField.OnValueChanged += MinChanged;
 
-            var max = Content.AddUIComponent<CustomUILabel>();
-            max.text = IMT.Localize.StyleOption_Max;
-            max.textScale = 0.7f;
-            max.padding = new RectOffset(0, 0, 2, 0);
+            MaxLabel = Content.AddUIComponent<CustomUILabel>();
+            MaxLabel.text = IMT.Localize.StyleOption_Max;
+            MaxLabel.textScale = 0.7f;
+            MaxLabel.Padding = new RectOffset(0, 0, 2, 0);
 
             MaxField = Content.AddUIComponent<IntUITextField>();
             MaxField.name = nameof(MaxField);
@@ -159,6 +160,15 @@ namespace IMT.UI
         {
             MinField.isEnabled = EnableCount;
             MaxField.isEnabled = EnableCount;
+        }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            UseCount.ToggleStyle = style.Toggle;
+            MinField.TextFieldStyle = style.TextField;
+            MaxField.TextFieldStyle = style.TextField;
+            MinLabel.LabelStyle = style.Label;
+            MaxLabel.LabelStyle = style.Label;
         }
     }
 }

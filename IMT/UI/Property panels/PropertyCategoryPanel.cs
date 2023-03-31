@@ -53,10 +53,6 @@ namespace IMT.UI.Editors
     public abstract class BasePropertyCategoryPanel<TypeHeader> : PropertyGroupPanel, IPropertyCategoryPanel
         where TypeHeader : BaseCategoryHeaderPanel
     {
-        protected override UITextureAtlas DefaultAtlas => CommonTextures.Atlas;
-        protected override string DefaultBackgroundSprite => string.Empty;
-        protected override Color32 DefaultColor => new Color32(58, 77, 92, 255);
-
         protected IPropertyContainer Editor { get; private set; }
         protected TypeHeader Header { get; private set; }
 
@@ -77,7 +73,7 @@ namespace IMT.UI.Editors
                     {
                         Editor.ExpandList[Category.Name] = value.Value;
                         Header.IsExpand = value.Value;
-                        PaddingButtom = value.Value ? 0 : 5;
+                        PaddingBottom = value.Value ? 0 : 5;
 
                         foreach (var item in components)
                         {
@@ -96,7 +92,7 @@ namespace IMT.UI.Editors
         public BasePropertyCategoryPanel() : base()
         {
             ForegroundSprite = string.Empty;
-            PaddingButtom = 3;
+            PaddingBottom = 3;
         }
 
         public virtual void Init(IPropertyCategoryInfo category, IPropertyContainer editor)
@@ -110,6 +106,8 @@ namespace IMT.UI.Editors
             Header.eventClick += HeaderClick;
 
             IsExpand ??= category.IsExpand;
+
+            BackgroundSprite = string.Empty;
 
             base.Init();
         }
@@ -315,7 +313,7 @@ namespace IMT.UI.Editors
     {
         protected override float DefaultHeight => 26f;
         protected virtual Color32 DefaultColor => new Color32(155, 175, 86, 255);
-        protected virtual string DefaultForegroundSprite => CommonTextures.PanelSmall;
+        protected virtual string DefaultForegroundSprite => CommonTextures.PanelBig;
         protected virtual UITextureAtlas DefaultAtlas => CommonTextures.Atlas;
 
         protected CustomUIButton ExpandButton { get; set; }
@@ -327,13 +325,13 @@ namespace IMT.UI.Editors
             get => NameLabel.text;
             set => NameLabel.text = value;
         }
-        public bool IsExpand { set => ExpandButton.normalFgSprite = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
+        public bool IsExpand { set => ExpandButton.FgSprites = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
 
         public BaseCategoryHeaderPanel()
         {
             Atlas = DefaultAtlas;
             ForegroundSprite = DefaultForegroundSprite;
-            color = DefaultColor;
+            FgColors = DefaultColor;
             Padding = new RectOffset(8, 8, 0, 0);
             SpritePadding = new RectOffset(5, 5, 0, 0);
         }
@@ -343,16 +341,16 @@ namespace IMT.UI.Editors
             base.Fill();
 
             ExpandButton = AddUIComponent<CustomUIButton>();
-            ExpandButton.atlas = CommonTextures.Atlas;
-            ExpandButton.SetFgColor(new ColorSet(new Color32(0, 0, 0, 255)));
-            ExpandButton.scaleFactor = 0.6f;
+            ExpandButton.Atlas = CommonTextures.Atlas;
+            ExpandButton.FgColors = Color.black;
+            ExpandButton.ScaleFactor = 0.6f;
             ExpandButton.size = new Vector2(20, 20);
             ExpandButton.zOrder = 0;
 
             NameLabel = AddUIComponent<CustomUILabel>();
             NameLabel.textScale = 0.8f;
-            NameLabel.autoSize = true;
-            NameLabel.padding = new RectOffset(0, 0, 2, 0);
+            NameLabel.AutoSize = AutoSize.All;
+            NameLabel.Padding = new RectOffset(0, 0, 2, 0);
             NameLabel.zOrder = 1;
         }
         protected override void FillContent()

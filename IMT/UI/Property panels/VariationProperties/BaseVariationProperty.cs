@@ -223,5 +223,12 @@ namespace IMT.UI
             Refresh();
         }
         protected abstract void OnSetValue();
+
+        public override void SetStyle(ControlStyle style)
+        {
+            base.SetStyle(style);
+            FieldA.TextFieldStyle = style.TextField;
+            FieldB.TextFieldStyle = style.TextField;
+        }
     }
 }

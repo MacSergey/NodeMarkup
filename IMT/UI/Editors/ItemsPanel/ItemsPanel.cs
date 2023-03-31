@@ -52,12 +52,12 @@ namespace IMT.UI.Editors
             set
             {
                 if (selectItem != null)
-                    selectItem.isSelected = false;
+                    selectItem.IsSelected = false;
 
                 selectItem = value;
 
                 if (selectItem != null)
-                    selectItem.isSelected = true;
+                    selectItem.IsSelected = true;
 
                 OnSelectClick?.Invoke(selectItem?.EditObject);
             }
@@ -176,10 +176,17 @@ namespace IMT.UI.Editors
 
         public void EditObject(ObjectType editObject)
         {
+            ItemType item = null;
             if (editObject != null)
-                Select(FindItem(editObject) ?? AddObjectImpl(editObject));
+            {
+                item = FindItem(editObject);
+                if (item == null)
+                    PauseLayout(() => item = AddObjectImpl(editObject));
+            }
             else
-                Select(FindItem(0));
+                item = FindItem(0);
+
+            Select(item);
         }
         public void SelectObject(ObjectType editObject)
         {

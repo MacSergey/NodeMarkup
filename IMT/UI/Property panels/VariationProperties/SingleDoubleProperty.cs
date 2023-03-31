@@ -67,8 +67,8 @@ namespace IMT.UI
             else if (SelectedObject == SecondOptionIndex)
             {
                 FieldB.isVisible = true;
-                FieldA.width = (FieldWidth - Content.Padding.horizontal) * 0.5f;
-                FieldB.width = (FieldWidth - Content.Padding.horizontal) * 0.5f;
+                FieldA.width = (FieldWidth - Content.AutoLayoutSpace) * 0.5f;
+                FieldB.width = (FieldWidth - Content.AutoLayoutSpace) * 0.5f;
 
                 FieldA.CheckMin = CheckMin;
                 FieldA.CheckMax = CheckMax;

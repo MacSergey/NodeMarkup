@@ -107,6 +107,8 @@ namespace IMT.UI.Editors
         private void AddLineProperties(MarkingLine editObject)
         {
             LineProperties = ComponentPool.Get<PropertyGroupPanel>(ContentPanel);
+            LineProperties.name = nameof(LineProperties);
+            LineProperties.PanelStyle = UIStyle.Default.PropertyPanel;
             LineProperties.Init();
 
             if (editObject is MarkingRegularLine line)
@@ -137,7 +139,7 @@ namespace IMT.UI.Editors
         private LineAlignmentPropertyPanel AddAlignmentProperty(PropertyEnumValue<Alignment> property, string label)
         {
             var alignment = ComponentPool.Get<LineAlignmentPropertyPanel>(LineProperties, "LineAlignment");
-
+            alignment.SetStyle(UIStyle.Default);
             alignment.Label = label;
             alignment.Init();
             alignment.SelectedObject = property;
@@ -148,7 +150,7 @@ namespace IMT.UI.Editors
         private BoolPropertyPanel AddClipSidewalkProperty(MarkingRegularLine line)
         {
             var clipSidewalk = ComponentPool.Get<BoolPropertyPanel>(LineProperties, nameof(line.ClipSidewalk));
-
+            clipSidewalk.SetStyle(UIStyle.Default);
             clipSidewalk.Label = IMT.Localize.LineEditor_ClipSidewalk;
             clipSidewalk.Init();
             clipSidewalk.Value = line.ClipSidewalk;
@@ -185,8 +187,8 @@ namespace IMT.UI.Editors
             AddRuleButton.SetDefaultStyle();
             AddRuleButton.size = new Vector2(ContentPanel.ItemSize.x, 30f);
             AddRuleButton.text = IMT.Localize.LineEditor_AddRuleButton;
-            AddRuleButton.textHorizontalAlignment = UIHorizontalAlignment.Center;
-            AddRuleButton.textPadding.top = 5;
+            AddRuleButton.TextHorizontalAlignment = UIHorizontalAlignment.Center;
+            AddRuleButton.TextPadding.top = 5;
             AddRuleButton.tooltip = IntersectionMarkingTool.AddRuleShortcut;
             AddRuleButton.eventClick += (_, _) => AddRule();
             SetAddButtonVisible();
@@ -379,14 +381,13 @@ namespace IMT.UI.Editors
         }
         public override int Compare(LineType x, LineType y) => x.CompareTo(y);
 
-        protected override string GroupName(LineType group) => group.Description();
         protected override LineType SelectGroup(MarkingLine editObject) => editObject.Type;
     }
     public class LineItem : EditItem<MarkingLine, LineIcon>
     {
         private bool HasOverlapped { get; set; }
 
-        public override ModsCommon.UI.SpriteSet ForegroundSprites => !HasOverlapped ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        public override SpriteSet BackgroundSprites => !HasOverlapped ? base.BackgroundSprites : new SpriteSet()
         {
             normal = CommonTextures.BorderBig,
             hovered = CommonTextures.PanelSmall,
@@ -394,20 +395,20 @@ namespace IMT.UI.Editors
             focused = CommonTextures.BorderBig,
             disabled = CommonTextures.PanelSmall,
         };
-        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !HasOverlapped ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+        public override SpriteSet BackgroundSelectedSprites => !HasOverlapped ? base.BackgroundSelectedSprites : new SpriteSet(CommonTextures.PanelSmall);
 
-        public override ColorSet ForegroundColors => !HasOverlapped ? base.ForegroundColors : new ColorSet()
+        public override ColorSet BackgroundColors => !HasOverlapped ? base.BackgroundColors : new ColorSet()
         {
-            normal = IMTColors.ItemErrorNormal,
-            hovered = IMTColors.ItemErrorNormal,
-            pressed = IMTColors.ItemErrorPressed,
-            focused = IMTColors.ItemErrorFocused,
-            disabled = null,
+            normal = UIStyle.ItemErrorNormal,
+            hovered = UIStyle.ItemErrorNormal,
+            pressed = UIStyle.ItemErrorPressed,
+            focused = UIStyle.ItemErrorFocused,
+            disabled = default,
         };
-        public override ColorSet ForegroundSelectedColors => !HasOverlapped ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemErrorFocused);
+        public override ColorSet BackgroundSelectedColors => !HasOverlapped ? base.BackgroundSelectedColors : new ColorSet(UIStyle.ItemErrorFocused);
 
-        public override ColorSet TextColor => !HasOverlapped ? base.TextColor : new ColorSet(Color.white);
-        public override ColorSet TextSelectedColor => !HasOverlapped ? base.TextSelectedColor : new ColorSet(Color.white);
+        public override ColorSet DefaultTextColor => !HasOverlapped ? base.DefaultTextColor : new ColorSet(Color.white);
+        public override ColorSet DefaultSelTextColor => !HasOverlapped ? base.DefaultSelTextColor : new ColorSet(Color.white);
 
         public override void Refresh()
         {
@@ -432,5 +433,11 @@ namespace IMT.UI.Editors
             }
         }
     }
-    public class LineGroup : EditGroup<LineType, LineItem, MarkingLine> { }
+    public class LineGroup : EditGroup<LineType, LineItem, MarkingLine>
+    {
+        protected override bool ShowIcon => true;
+
+        protected override string GetName(LineType group) => group.Description();
+        protected override string GetSprite(LineType group) => group.Sprite();
+    }
 }

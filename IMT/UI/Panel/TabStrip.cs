@@ -31,11 +31,12 @@ namespace IMT.UI.Panel
 
             BackgroundSprite = CommonTextures.Empty;
 
-            color = disabledColor = TabColor = IMTColors.TabButtonNormal;
-            TabHoveredColor = IMTColors.TabButtonHovered;
-            TabPressedColor = IMTColors.TabButtonPressed;
-            TabFocusedColor = IMTColors.TabButtonFocused;
-            TabDisabledColor = IMTColors.TabButtonDisabled;
+            BgColors = UIStyle.TabButtonNormal;
+            TabColor = UIStyle.TabButtonNormal;
+            TabHoveredColor = UIStyle.TabButtonHovered;
+            TabPressedColor = UIStyle.TabButtonPressed;
+            TabFocusedColor = UIStyle.TabButtonFocused;
+            TabDisabledColor = UIStyle.TabButtonDisabled;
 
             Blur = AddUIComponent<BlurEffect>();
             Blur.relativePosition = Vector3.zero;
@@ -59,7 +60,7 @@ namespace IMT.UI.Panel
         public void AddTab(Editor editor)
         {
             var tab = AddTabImpl(editor.Name);
-            tab.textPadding.top = 4;
+            tab.TextPadding.top = 4;
             tab.Editor = editor;
 
             Blur.zOrder = int.MaxValue;

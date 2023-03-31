@@ -28,6 +28,7 @@ namespace IMT.UI
         private static Texture2D Empty { get; } = TextureHelper.CreateTexture(400, 400, Color.black);
         private UITextureSprite Screenshot { get; set; }
         private CustomUILabel NoScreenshot { get; set; }
+        public CustomUISlicedSprite ScreenshotMask { get; set; }
 
         private CustomUIPanel Info { get; set; }
         private CustomUILabel Titles { get; set; }
@@ -50,7 +51,7 @@ namespace IMT.UI
                 {
                     Info.AutoLayout = AutoLayout.Horizontal;
                     Info.AutoChildrenVertically = AutoLayoutChildren.Fit;
-                    Info.AutoCenterPadding = true;
+                    Info.AutoLayoutStart = ModsCommon.UI.LayoutStart.MiddleCentre;
 
                     Titles = AddLabel(UIHorizontalAlignment.Right);
                     Values = AddLabel(UIHorizontalAlignment.Left);
@@ -98,34 +99,45 @@ namespace IMT.UI
         private void AddScreenshot()
         {
             Screenshot = AddUIComponent<CustomUITextureSprite>();
+            Screenshot.name = nameof(Screenshot);
+            Screenshot.isInteractive = false;
             Screenshot.material = Material;
             Screenshot.size = new Vector2(Size, Size);
             Screenshot.relativePosition = new Vector2(ItemsPadding, 5);
+
+            ScreenshotMask = Screenshot.AddUIComponent<CustomUISlicedSprite>();
+            ScreenshotMask.name = nameof(ScreenshotMask);
+            ScreenshotMask.isInteractive = false;
+            ScreenshotMask.size = Screenshot.size;
+            ScreenshotMask.relativePosition = Vector3.zero;
         }
         private void AddNoScreenshot()
         {
             NoScreenshot = Screenshot.AddUIComponent<CustomUILabel>();
-            NoScreenshot.autoSize = false;
+            NoScreenshot.name = nameof(NoScreenshot);
+            NoScreenshot.isInteractive = false;
+            NoScreenshot.AutoSize = AutoSize.None;
             NoScreenshot.size = new Vector2(Size, Size);
             NoScreenshot.position = new Vector2(0, 0);
-            NoScreenshot.wordWrap = true;
+            NoScreenshot.WordWrap = true;
 
             NoScreenshot.textScale = 1.2f;
             NoScreenshot.text = IMT.Localize.PresetInfo_NoScreenshot;
 
-            NoScreenshot.textAlignment = UIHorizontalAlignment.Center;
-            NoScreenshot.verticalAlignment = UIVerticalAlignment.Middle;
+            NoScreenshot.HorizontalAlignment = UIHorizontalAlignment.Center;
+            NoScreenshot.VerticalAlignment = UIVerticalAlignment.Middle;
         }
         private CustomUILabel AddLabel(UIHorizontalAlignment alignment)
         {
             var label = Info.AddUIComponent<CustomUILabel>();
+            label.isInteractive = false;
             label.font = Font;
-            label.autoSize = true;
+            label.AutoSize = AutoSize.All;
             label.textScale = 0.65f;
-            label.padding = new RectOffset(alignment == UIHorizontalAlignment.Left ? 2 : 0, alignment == UIHorizontalAlignment.Right ? 2 : 0, 1, 2);
+            label.Padding = new RectOffset(alignment == UIHorizontalAlignment.Left ? 2 : 0, alignment == UIHorizontalAlignment.Right ? 2 : 0, 1, 2);
             label.textColor = TextColor;
-            label.textAlignment = alignment;
-            label.verticalAlignment = UIVerticalAlignment.Bottom;
+            label.HorizontalAlignment = alignment;
+            label.VerticalAlignment = UIVerticalAlignment.Bottom;
             return label;
         }
 
@@ -133,6 +145,13 @@ namespace IMT.UI
         {
             base.OnSizeChanged();
             Info.width = width - Screenshot.width - Padding.horizontal - AutoLayoutSpace;
+        }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            ScreenshotMask.atlas = style.PropertyPanel.BgAtlas;
+            ScreenshotMask.spriteName = style.PropertyPanel.MaskSprite;
+            ScreenshotMask.color = style.PropertyPanel.BgColors.normal;
         }
 
         private class CustomUITextureSprite : UITextureSprite

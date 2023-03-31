@@ -10,8 +10,13 @@ namespace IMT.UI
     public abstract class StylePropertyPanel : EnumOncePropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown>
     {
         public class StyleDropDown : SimpleDropDown<Style.StyleType, StyleEntity, StylePopup> { }
-        public class StyleEntity : SimpleEntity<Style.StyleType> { }
         public class StylePopup : SimplePopup<Style.StyleType, StyleEntity> { }
+        public class StyleEntity : SimpleEntity<Style.StyleType> { }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            Selector.DropDownStyle = style.DropDown;
+        }
     }
     public abstract class StylePropertyPanel<StyleType> : StylePropertyPanel
         where StyleType : Enum
@@ -35,6 +40,10 @@ namespace IMT.UI
         protected override bool IsEqual(Alignment first, Alignment second) => first == second;
         public class AlignmentSegmented : UIOnceSegmented<Alignment> { }
         protected override string GetDescription(Alignment value) => value.Description();
+        public override void SetStyle(ControlStyle style)
+        {
+            Selector.SetStyle(style.Segmented);
+        }
     }
     public class PropColorPropertyPanel : EnumOncePropertyPanel<PropLineStyle.ColorOptionEnum, PropColorPropertyPanel.PropColorDropDown>
     {
@@ -43,6 +52,10 @@ namespace IMT.UI
         public class PropColorDropDown : SimpleDropDown<PropLineStyle.ColorOptionEnum, PropColorEntity, PropColorPopup> { }
         public class PropColorEntity : SimpleEntity<PropLineStyle.ColorOptionEnum> { }
         public class PropColorPopup : SimplePopup<PropLineStyle.ColorOptionEnum, PropColorEntity> { }
+        public override void SetStyle(ControlStyle style)
+        {
+            Selector.DropDownStyle = style.DropDown;
+        }
 
         protected override string GetDescription(PropLineStyle.ColorOptionEnum value) => value.Description();
     }

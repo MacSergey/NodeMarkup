@@ -15,7 +15,6 @@ namespace IMT.UI
         where PrefabType : PrefabInfo
     {
         public event Action<PrefabType> OnValueChanged;
-        bool IReusable.InCache { get; set; }
 
         public abstract PrefabType Prefab { get; set; }
         public abstract string RawName { get; set; }
@@ -76,7 +75,7 @@ namespace IMT.UI
             DropDown.name = nameof(DropDown);
             DropDown.DropDownDefaultStyle();
             DropDown.size = new Vector2(230f, 50f);
-            DropDown.scaleFactor = 20f / DropDown.height;
+            DropDown.ScaleFactor = 20f / DropDown.height;
             DropDown.OnSelectObject += ValueChanged;
         }
         public override void Init()
@@ -85,6 +84,11 @@ namespace IMT.UI
             var count = PrefabCollection<PrefabType>.LoadedCount();
             for (uint i = 0; i < count; i += 1)
                 DropDown.AddItem(PrefabCollection<PrefabType>.GetLoaded(i));
+        }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            DropDown.DropDownStyle = style.DropDown;
         }
     }
 
@@ -111,7 +115,13 @@ namespace IMT.UI
         {
             Entity.ShowFavorite = false;
         }
-        protected override void SetPopupStyle() => Popup.PopupDefaultStyle(50f);
+        protected override void SetPopupStyle()
+        {
+            Popup.PopupDefaultStyle(50f);
+            if (DropDownStyle != null)
+                Popup.PopupStyle = DropDownStyle;
+        }
+
         protected override void InitPopup()
         {
             Popup.MaximumSize = new Vector2(width, 700f);
@@ -124,55 +134,64 @@ namespace IMT.UI
     public class TreeDropDown : PrefabDropDown<TreeInfo, TreeEntity, TreePopup> { }
     public class NetDropDown : PrefabDropDown<NetInfo, NetEntity, NetPopup> { }
 
-
-    public class PropPopup : SearchPopup<PropInfo, PropEntity>
+    public abstract class PrefabPopup<PrefabType, EntityType> : SearchPopup<PrefabType, EntityType>
+        where PrefabType : PrefabInfo
+        where EntityType : PrefabEntity<PrefabType>
     {
-        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
-        private static string SearchText { get; set; } = string.Empty;
+        protected override void SetEntityStyle(EntityType entity)
+        {
+            entity.EntityDefaultStyle<PrefabType, EntityType>();
+            if (PopupStyle != null)
+                entity.EntityStyle = PopupStyle;
+        }
+    }
+    public class PropPopup : PrefabPopup<PropInfo, PropEntity>
+    {
+        protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
+        private static string SearchCache { get; set; } = string.Empty;
 
         public override void Init(IEnumerable<PropInfo> values, Func<PropInfo, bool> selector, Func<PropInfo, PropInfo, int> sorter)
         {
-            Search.text = SearchText;
+            Search.text = SearchCache;
             base.Init(values, selector, sorter);
         }
         public override void DeInit()
         {
-            SearchText = Search.text;
+            SearchCache = Search.text;
             base.DeInit();
         }
         protected override string GetName(PropInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
-        protected override void SetEntityStyle(PropEntity entity) => entity.EntityStyle<PropInfo, PropEntity>();
     }
-    public class TreePopup : SearchPopup<TreeInfo, TreeEntity>
+    public class TreePopup : PrefabPopup<TreeInfo, TreeEntity>
     {
-        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
-        private static string SearchText { get; set; } = string.Empty;
+        protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
+        private static string SearchCache { get; set; } = string.Empty;
 
         public override void Init(IEnumerable<TreeInfo> values, Func<TreeInfo, bool> selector, Func<TreeInfo, TreeInfo, int> sorter)
         {
-            Search.text = SearchText;
+            Search.text = SearchCache;
             base.Init(values, selector, sorter);
         }
         public override void DeInit()
         {
-            SearchText = Search.text;
+            SearchCache = Search.text;
             base.DeInit();
         }
         protected override string GetName(TreeInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
     }
-    public class NetPopup : SearchPopup<NetInfo, NetEntity>
+    public class NetPopup : PrefabPopup<NetInfo, NetEntity>
     {
-        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
-        private static string SearchText { get; set; } = string.Empty;
+        protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
+        private static string SearchCache { get; set; } = string.Empty;
 
         public override void Init(IEnumerable<NetInfo> values, Func<NetInfo, bool> selector, Func<NetInfo, NetInfo, int> sorter)
         {
-            Search.text = SearchText;
+            Search.text = SearchCache;
             base.Init(values, selector, sorter);
         }
         public override void DeInit()
         {
-            SearchText = Search.text;
+            SearchCache = Search.text;
             base.DeInit();
         }
         protected override string GetName(NetInfo prefab) => Utilities.Utilities.GetPrefabName(prefab);
@@ -204,7 +223,6 @@ namespace IMT.UI
         }
 
         private CustomUISprite Screenshot { get; set; }
-        private CustomUILabel Title { get; set; }
         private CustomUIButton Favorite { get; set; }
 
         protected abstract string LocalizedTitle { get; }
@@ -215,15 +233,13 @@ namespace IMT.UI
             Screenshot = AddUIComponent<CustomUISprite>();
             Screenshot.size = new Vector2(90f, 90f);
 
-            Title = AddUIComponent<CustomUILabel>();
-            Title.autoSize = false;
-            Title.wordWrap = true;
-            Title.textScale = 0.7f;
-            Title.verticalAlignment = UIVerticalAlignment.Middle;
+            WordWrap = true;
+            textScale = 0.7f;
+            TextVerticalAlignment = UIVerticalAlignment.Middle;
 
             Favorite = AddUIComponent<CustomUIButton>();
-            Favorite.atlas = IMTTextures.Atlas;
-            Favorite.foregroundSpriteMode = UIForegroundSpriteMode.Fill;
+            Favorite.Atlas = IMTTextures.Atlas;
+            Favorite.ForegroundSpriteMode = SpriteMode.Fill;
             Favorite.size = new Vector2(20, 90);
             Favorite.eventClick += FavoriteClick;
 
@@ -253,7 +269,7 @@ namespace IMT.UI
                 Screenshot.isVisible = !string.IsNullOrEmpty(Screenshot.spriteName);
                 Favorite.isVisible = ShowFavorite;
                 SetFavoriteButton();
-                Title.text = LocalizedTitle;
+                text = LocalizedTitle;
             }
             else
             {
@@ -261,28 +277,28 @@ namespace IMT.UI
                 Screenshot.spriteName = string.Empty;
                 Screenshot.isVisible = false;
                 Favorite.isVisible = false;
-                Title.text = string.IsNullOrEmpty(RawName) ? IMT.Localize.StyleOption_AssetNotSet : string.Format(IMT.Localize.StyleOption_AssetMissed, RawName);
+                text = string.IsNullOrEmpty(RawName) ? IMT.Localize.StyleOption_AssetNotSet : string.Format(IMT.Localize.StyleOption_AssetMissed, RawName);
             }
 
             SetPosition();
         }
 
-        private Color32 FavoriteNormal => IMTColors.ItemFavoriteNormal;
-        private Color32 FavoriteHovered => IMTColors.ItemFavoriteHovered;
-        private Color32 FavoritePressed => IMTColors.ItemFavoritePressed;
+        private Color32 FavoriteNormal => UIStyle.ItemFavoriteNormal;
+        private Color32 FavoriteHovered => UIStyle.ItemFavoriteHovered;
+        private Color32 FavoritePressed => UIStyle.ItemFavoritePressed;
         private void SetFavoriteButton()
         {
             if (IsFavorite)
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_RemoveFromFavorites;
-                Favorite.SetFgSprite(new ModsCommon.UI.SpriteSet(IMTTextures.SetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton));
-                Favorite.SetFgColor(new ColorSet(FavoriteNormal, FavoriteHovered, FavoritePressed, FavoriteNormal, FavoriteNormal));
+                Favorite.FgSprites = new SpriteSet(IMTTextures.SetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton);
+                Favorite.FgColors = new ColorSet(FavoriteNormal, FavoriteNormal, FavoriteHovered, FavoriteNormal, FavoriteNormal);
             }
             else
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_AddToFavorites;
-                Favorite.SetFgSprite(new ModsCommon.UI.SpriteSet(IMTTextures.NotSetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton));
-                Favorite.SetFgColor(new ColorSet(Color.white, FavoriteHovered, FavoritePressed, Color.white, Color.white));
+                Favorite.FgSprites = new SpriteSet(IMTTextures.NotSetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton);
+                Favorite.FgColors = new ColorSet(Color.white, FavoriteHovered, FavoritePressed, Color.white, Color.white);
             }
         }
 
@@ -293,17 +309,16 @@ namespace IMT.UI
         }
         private void SetPosition()
         {
-            if (Screenshot != null && Title != null)
+            if (Screenshot != null)
             {
                 Screenshot.size = new Vector2(height - 10f, height - 10f);
                 Screenshot.relativePosition = new Vector2(5f, 5f);
-                Title.size = size;
                 Favorite.size = new Vector2(20f, height - 10f);
                 Favorite.relativePosition = new Vector2(width - Favorite.width - 5f, 5f);
 
                 var left = Screenshot.isVisible ? Mathf.CeilToInt(Screenshot.relativePosition.x + Screenshot.width) + 5 : 8;
                 var right = Math.Max(Favorite.isVisible ? Mathf.CeilToInt(width - Favorite.relativePosition.x) + 5 : 8, Padding.right);
-                Title.padding = new RectOffset(left, right, 5, 5);
+                TextPadding = new RectOffset(left, right, 5, 5);
             }
         }
 

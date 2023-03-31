@@ -67,8 +67,6 @@ namespace IMT.UI.Editors
             {
                 if (!Settings.AutoCollapseItemsPanel)
                     return Mathf.Min(width * 0.3f, 300f);
-                //else if ((ItemsPanel is IGroupItemPanel groupPanel) && groupPanel.GroupingEnable)
-                //    return 40f;
                 else
                     return 38f;
             }
@@ -130,7 +128,7 @@ namespace IMT.UI.Editors
             ItemsPanel.Atlas = CommonTextures.Atlas;
             ItemsPanel.BackgroundSprite = CommonTextures.PanelBig;
             ItemsPanel.ForegroundSprite = CommonTextures.BorderTop;
-            ItemsPanel.color = ItemsPanel.disabledColor = IMTColors.ItemsBackground;
+            ItemsPanel.color = ItemsPanel.disabledColor = UIStyle.ItemsBackground;
             ItemsPanel.canFocus = true;
 
             ItemsPanel.Padding = new RectOffset(0, 0, 2, 2);
@@ -155,7 +153,7 @@ namespace IMT.UI.Editors
 
             ItemsShadow = AddUIComponent<CustomUISprite>();
             ItemsShadow.atlas = CommonTextures.Atlas;
-            ItemsShadow.spriteName = CommonTextures.PanelShadow;
+            ItemsShadow.spriteName = CommonTextures.ShadowVertical;
             ItemsShadow.color = new Color32(0, 0, 0, 224);
             ItemsShadow.width = 20f;
             ItemsShadow.isVisible = false;
@@ -164,12 +162,12 @@ namespace IMT.UI.Editors
             ContentPanel.name = nameof(ContentPanel);
             ContentPanel.Padding = new RectOffset(10, 10, 0, 0);
             ContentPanel.AutoLayout = AutoLayout.Vertical;
-            ContentPanel.AutoLayoutSpace = 10;
+            ContentPanel.AutoLayoutSpace = 15;
             ContentPanel.AutoChildrenHorizontally = AutoLayoutChildren.Fill;
             ContentPanel.ScrollOrientation = UIOrientation.Vertical;
             ContentPanel.Atlas = CommonTextures.Atlas;
             ContentPanel.BackgroundSprite = CommonTextures.PanelBig;
-            ContentPanel.color = ContentPanel.disabledColor = IMTColors.ContentBackground;
+            ContentPanel.color = ContentPanel.disabledColor = UIStyle.ContentBackground;
             ContentPanel.zOrder = 0;
             ContentPanel.eventSizeChanged += (_, size) => ContentBlur.size = size;
             ContentPanel.eventPositionChanged += (_, position) => ContentBlur.position = position;
@@ -184,17 +182,13 @@ namespace IMT.UI.Editors
             ContentBlur.opacity = 0f;
             ContentBlur.zOrder = 1;
 
-            AddEmptyLabel();
-        }
-
-        private void AddEmptyLabel()
-        {
-            EmptyLabel = AddUIComponent<CustomUILabel>();
-            EmptyLabel.textAlignment = UIHorizontalAlignment.Center;
-            EmptyLabel.verticalAlignment = UIVerticalAlignment.Middle;
-            EmptyLabel.padding = new RectOffset(10, 10, 0, 0);
-            EmptyLabel.wordWrap = true;
-            EmptyLabel.autoSize = false;
+            EmptyLabel = ContentPanel.AddUIComponent<CustomUILabel>();
+            EmptyLabel.HorizontalAlignment = UIHorizontalAlignment.Center;
+            EmptyLabel.VerticalAlignment = UIVerticalAlignment.Middle;
+            EmptyLabel.Padding = new RectOffset(10, 10, 0, 0);
+            EmptyLabel.WordWrap = true;
+            EmptyLabel.AutoSize = AutoSize.None;
+            ContentPanel.Ignore(EmptyLabel, true);
 
             SwitchEmptyMessage();
         }
@@ -274,7 +268,7 @@ namespace IMT.UI.Editors
             ContentPanel.size = new Vector2(ContentSize, size.y);
             ContentPanel.relativePosition = new Vector2(ItemsSize, 0);
 
-            EmptyLabel.size = new Vector2(ContentSize, size.y * 0.5f);
+            EmptyLabel.size = new Vector2(ContentSize, size.y * 0.667f);
             EmptyLabel.relativePosition = ContentPanel.relativePosition;
         }
         protected void OnItemSelect(ObjectType editObject)
@@ -359,7 +353,7 @@ namespace IMT.UI.Editors
         {
             foreach (var component in ContentPanel.components.ToArray())
             {
-                if (component != ContentPanel.Scrollbar)
+                if (component != ContentPanel.Scrollbar && component != EmptyLabel)
                     ComponentPool.Free(component);
             }
         }
@@ -396,6 +390,7 @@ namespace IMT.UI.Editors
         protected override void OnObjectSelect(ObjectType editObject)
         {
             PropertiesPanel = ComponentPool.Get<PropertyGroupPanel>(ContentPanel, "PropertyPanel");
+            PropertiesPanel.PanelStyle = UIStyle.Default.PropertyPanel;
             PropertiesPanel.PauseLayout(() => OnFillPropertiesPanel(editObject));
             PropertiesPanel.Init();
         }

@@ -11,10 +11,7 @@ namespace IMT.UI
 {
     public class FontPropertyPanel : EditorPropertyPanel, IReusable
     {
-        bool IReusable.InCache { get; set; }
-
         public event Action<string> OnValueChanged;
-
 
         public string Font
         {
@@ -204,6 +201,12 @@ namespace IMT.UI
                 });
             }
         }
+        public override void SetStyle(ControlStyle style)
+        {
+            FontFamilySelector.DropDownStyle = style.DropDown;
+            FontStyleSelector.SetStyle(style.Segmented);
+        }
+
     }
 
     public class FontDropDown : SelectItemDropDown<string, FontEntity, FontPopup>
@@ -214,10 +217,15 @@ namespace IMT.UI
 
         public FontDropDown() : base()
         {
-            Entity.TextScale = 0.7f;
+            Entity.textScale = 0.7f;
         }
 
-        protected override void SetPopupStyle() => Popup.PopupDefaultStyle(20f);
+        protected override void SetPopupStyle()
+        {
+            Popup.PopupDefaultStyle(20f);
+            if (DropDownStyle != null)
+                Popup.PopupStyle = DropDownStyle;
+        }
         protected override void InitPopup()
         {
             Popup.MaximumSize = new Vector2(PopupWidth, 700f);
@@ -230,38 +238,29 @@ namespace IMT.UI
 
     public class FontPopup : SearchPopup<string, FontEntity>
     {
-        protected override string NotFoundText => IMT.Localize.AssetPopup_NothingFound;
+        protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
         protected override string GetName(string value) => value ?? IMT.Localize.StyleOption_DefaultFont;
-        protected override void SetEntityStyle(FontEntity entity) => entity.EntityStyle<string, FontEntity>();
+        protected override void SetEntityStyle(FontEntity entity)
+        {
+            entity.EntityDefaultStyle<string, FontEntity>();
+            if (PopupStyle != null)
+                entity.EntityStyle = PopupStyle;
+        }
     }
     public class FontEntity : PopupEntity<string>
     {
-        private CustomUILabel Label { get; }
-        public float TextScale
-        {
-            get => Label.textScale;
-            set => Label.textScale = value;
-        }
-
         public override void SetObject(int index, string font, bool selected)
         {
             base.SetObject(index, font, selected);
-            Label.text = string.IsNullOrEmpty(font) ? IMT.Localize.StyleOption_DefaultFont : font;
+            text = string.IsNullOrEmpty(font) ? IMT.Localize.StyleOption_DefaultFont : font;
         }
 
         public FontEntity()
         {
-            Label = AddUIComponent<CustomUILabel>();
-            Label.autoSize = false;
-            Label.textAlignment = UIHorizontalAlignment.Left;
-            Label.verticalAlignment = UIVerticalAlignment.Middle;
-            Label.padding = new RectOffset(8, 0, 3, 0);
-            Label.textScale = 0.9f;
-        }
-        protected override void OnSizeChanged()
-        {
-            base.OnSizeChanged();
-            Label.size = size;
+            TextHorizontalAlignment = UIHorizontalAlignment.Left;
+            TextVerticalAlignment = UIVerticalAlignment.Middle;
+            TextPadding = new RectOffset(8, 0, 3, 0);
+            textScale = 0.9f;
         }
     }
 }

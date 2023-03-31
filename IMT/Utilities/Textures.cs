@@ -57,10 +57,6 @@ namespace IMT.Utilities
         public static string NotApplyOrderButton => nameof(NotApplyOrderButton);
         public static string ResetOrderButton => nameof(ResetOrderButton);
 
-        public static string ListItemBackground { get; } = nameof(ListItemBackground);
-        public static string ListItemCollapse { get; } = nameof(ListItemCollapse);
-        public static string ListItemExpand { get; } = nameof(ListItemExpand);
-
         public static string AutoButtonIcon { get; } = nameof(AutoButtonIcon);
         public static string SingleButtonIcon { get; } = nameof(SingleButtonIcon);
         public static string RangeButtonIcon { get; } = nameof(RangeButtonIcon);
@@ -189,22 +185,31 @@ namespace IMT.Utilities
             spriteParams[CopyToAllButtonIcon] = new RectOffset();
             spriteParams[CopyToSameButtonIcon] = new RectOffset();
 
-            //ListItem
-            spriteParams[ListItemBackground] = new RectOffset(4, 4, 4, 4);
-            spriteParams[ListItemCollapse] = new RectOffset();
-            spriteParams[ListItemExpand] = new RectOffset();
 
-            foreach (var item in EnumExtension.GetEnumValues<RegularLineStyle.RegularLineType>())
-                spriteParams.Add(item.ToEnum<Style.StyleType, RegularLineStyle.RegularLineType>().ToString(), new RectOffset());
+            foreach(var item in EnumExtension.GetEnumValues<Style.StyleType>())
+            {
+                var sprite = item.Sprite();
+                if (!string.IsNullOrEmpty(sprite))
+                    spriteParams.Add(sprite, new RectOffset());
 
-            foreach (var item in EnumExtension.GetEnumValues<StopLineStyle.StopLineType>())
-                spriteParams.Add(item.ToEnum<Style.StyleType, StopLineStyle.StopLineType>().ToString(), new RectOffset());
+                sprite = item.Sprite("Group");
+                if (!string.IsNullOrEmpty(sprite))
+                    spriteParams.Add(sprite, new RectOffset());
+            }
 
-            foreach (var item in EnumExtension.GetEnumValues<BaseCrosswalkStyle.CrosswalkType>())
-                spriteParams.Add(item.ToEnum<Style.StyleType, BaseCrosswalkStyle.CrosswalkType>().ToString(), new RectOffset());
+            foreach (var item in EnumExtension.GetEnumValues<LineType>())
+            {
+                var sprite = item.Sprite();
+                if (!string.IsNullOrEmpty(sprite))
+                    spriteParams.Add(sprite, new RectOffset());
+            }
 
-            foreach (var item in EnumExtension.GetEnumValues<BaseFillerStyle.FillerType>())
-                spriteParams.Add(item.ToEnum<Style.StyleType, BaseFillerStyle.FillerType>().ToString(), new RectOffset());
+            foreach (var item in EnumExtension.GetEnumValues<UI.Editors.IntersectionTemplateFit>())
+            {
+                var sprite = item.Sprite();
+                if (!string.IsNullOrEmpty(sprite))
+                    spriteParams.Add(sprite, new RectOffset());
+            }
 
             Atlas = TextureHelper.CreateAtlas(nameof(IMT), spriteParams);
         }

@@ -145,7 +145,7 @@ namespace IMT.UI.Editors
 
         private HeaderButtonInfo<HeaderButton> ApplyAllRules { get; set; }
 
-        public bool IsExpand { set => ExpandButton.normalFgSprite = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
+        public bool IsExpand { set => ExpandButton.FgSprites = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
         public Style.StyleType StyleType
         {
             get => (Style.StyleType)Enum.Parse(typeof(Style.StyleType), Icon.spriteName);
@@ -162,9 +162,9 @@ namespace IMT.UI.Editors
             ExpandButton = AddUIComponent<CustomUIButton>();
             ExpandButton.zOrder = Content.zOrder;
             ExpandButton.tooltip = string.Format(IMT.Localize.Header_ExpandTooltip, LocalizeExtension.Shift);
-            ExpandButton.atlas = CommonTextures.Atlas;
-            ExpandButton.SetFgColor(new ColorSet(new Color32(0, 0, 0, 255)));
-            ExpandButton.scaleFactor = 0.7f;
+            ExpandButton.Atlas = CommonTextures.Atlas;
+            ExpandButton.FgColors = Color.black;
+            ExpandButton.ScaleFactor = 0.7f;
             ExpandButton.size = new Vector2(30, 30);
             ExpandButton.zOrder = 0;
             ExpandButton.eventClick += (_, _) => OnExpand?.Invoke();
@@ -185,10 +185,11 @@ namespace IMT.UI.Editors
             Separator = AddUIComponent<CustomUISprite>();
             Separator.zOrder = Content.zOrder;
             Separator.atlas = CommonTextures.Atlas;
-            Separator.spriteName = CommonTextures.EmptyWithotBorder;
+            Separator.spriteName = CommonTextures.EmptyWithoutBorder;
             Separator.size = new Vector2(2f, 30f);
             Separator.color = new Color32(0, 0, 0, 128);
             Separator.zOrder = 2;
+            SetItemMargin(Separator, new RectOffset(10, 5, 0, 0));
         }
         protected override void FillContent()
         {
@@ -212,7 +213,7 @@ namespace IMT.UI.Editors
         protected override void SetSize()
         {
             base.SetSize();
-            Separator.height = height;
+            Separator.height = height - 10f;
         }
         public override void Refresh()
         {

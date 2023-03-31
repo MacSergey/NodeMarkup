@@ -16,6 +16,7 @@ namespace IMT.UI.Editors
         public event Action<RulePanel, UIMouseEventParameter> OnEnter;
         public event Action<RulePanel, UIMouseEventParameter> OnLeave;
 
+
         private bool isExpand;
         public bool IsExpand
         {
@@ -70,6 +71,8 @@ namespace IMT.UI.Editors
 
                 Refresh();
             });
+
+            PanelStyle = UIStyle.Default.PropertyPanel;
 
             base.Init();
         }
@@ -137,6 +140,7 @@ namespace IMT.UI.Editors
         private RuleEdgeSelectPropertyPanel AddEdgeProperty(EdgePosition position, string name, string text)
         {
             var edgeProperty = ComponentPool.Get<RuleEdgeSelectPropertyPanel>(this, name);
+            edgeProperty.SetStyle(UIStyle.Default);
             edgeProperty.Label = text;
             edgeProperty.Selector.Position = position;
             edgeProperty.Init();
@@ -184,6 +188,7 @@ namespace IMT.UI.Editors
                     return;
             }
 
+            Style.SetStyle(UIStyle.Default);
             Style.Label = IMT.Localize.Editor_Style;
             Style.Init(StyleSelector);
             Style.UseWheel = true;
@@ -204,7 +209,7 @@ namespace IMT.UI.Editors
 
             foreach (var property in (this as IPropertyContainer).StyleProperties)
             {
-                if (property is ColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
+                if (property is IMTColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
                     colorProperty.OnValueChanged += (Color32 c) => Editor.RefreshSelectedItem();
             }
         }
@@ -326,7 +331,7 @@ namespace IMT.UI.Editors
             PauseLayout(() =>
             {
                 var error = Rule.IsOverlapped;
-                color = !IsExpand && error ? ComponentStyle.ErrorFocusedColor : NormalColor;
+                BgColors = !IsExpand && error ? ComponentStyle.ErrorFocusedColor : UIStyle.Default.PropertyPanel.BgColors;
                 Header.IsExpand = IsExpand;
                 Error.isVisible = IsExpand && error;
                 Warning.isVisible = IsExpand && Settings.ShowPanelTip && !Editor.CanDivide;

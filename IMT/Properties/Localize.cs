@@ -2849,5 +2849,20 @@ namespace IMT
 		/// Line #{0}
 		/// </summary>
 		public static string StyleOption_LineNumber => LocaleManager.GetString("StyleOption_LineNumber", Culture);
+
+		/// <summary>
+		/// Swaying in the wind
+		/// </summary>
+		public static string StyleOption_Wind => LocaleManager.GetString("StyleOption_Wind", Culture);
+
+		/// <summary>
+		/// Hold {0} to collapse/expand all groups
+		/// </summary>
+		public static string Header_ExpandGroupTooltip => LocaleManager.GetString("Header_ExpandGroupTooltip", Culture);
+
+		/// <summary>
+		/// [UPDATED] Huge update of UI Style.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14 => LocaleManager.GetString("Mod_WhatsNewMessage1_14", Culture);
 	}
 }

@@ -36,8 +36,11 @@ namespace IMT.UI.Editors
 
             InfoGroup = ComponentPool.Get<PropertyGroupPanel>(ContentPanel, nameof(InfoGroup));
             InfoGroup.Init();
+            InfoGroup.PanelStyle = UIStyle.Default.PropertyPanel;
+
             var info = ComponentPool.Get<IntersectionTemplateInfoProperty>(InfoGroup, "Info");
             info.Init(EditObject);
+            info.SetStyle(UIStyle.Default);
         }
         protected override void OnClear()
         {
@@ -77,6 +80,13 @@ namespace IMT.UI.Editors
 
     public class IntersectionTemplateItemsPanel : ItemsGroupPanel<IntersectionTemplateItem, IntersectionTemplate, IntersectionTemplateGroup, IntersectionTemplateFit>
     {
+        private static PropertyPanelStyle PreviewStyle { get; } = new PropertyPanelStyle()
+        {
+            BgAtlas = CommonTextures.Atlas,
+            BgSprites = CommonTextures.PanelLarge,
+            BgColors = UIStyle.ItemGroupBackground,
+            MaskSprite = CommonTextures.OpacitySliderMask,
+        };
         private PreviewPanel Preview { get; set; }
 
         public override bool GroupingEnable => Settings.GroupPresets.value;
@@ -111,16 +121,22 @@ namespace IMT.UI.Editors
             if (item == SelectItem || Preview != null)
                 return;
 
-            Editor.AvailableContent = false;
+            if(!Settings.AutoCollapseItemsPanel)
+                Editor.AvailableContent = false;
 
             var root = GetRootContainer();
 
             Preview = ComponentPool.Get<PreviewPanel>(root, nameof(Preview));
+            Preview.name = nameof(Preview);
+            Preview.PanelStyle = PreviewStyle;
             Preview.width = 400f;
             Preview.Item = item;
 
             var info = ComponentPool.Get<PreviewIntersectionTemplateInfo>(Preview, "Info");
+            info.isInteractive = false;
             info.Init(item.EditObject);
+            info.SetStyle(ComponentStyle.Default);
+            info.ScreenshotMask.color = Preview.NormalBgColor;
 
             item.eventSizeChanged += OnItemSizeChanged;
             item.eventPositionChanged += OnItemSizeChanged;
@@ -138,7 +154,9 @@ namespace IMT.UI.Editors
                 Preview.Item.eventPositionChanged -= OnItemSizeChanged;
             }
 
-            Editor.AvailableContent = true;
+            if (!Settings.AutoCollapseItemsPanel)
+                Editor.AvailableContent = true;
+
             ComponentPool.Free(Preview);
             Preview = null;
         }
@@ -162,15 +180,15 @@ namespace IMT.UI.Editors
         protected override IntersectionTemplateFit SelectGroup(IntersectionTemplate editObject)
         {
             if (Editor.Marking.Type == MarkingType.Segment && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(Editor.Marking.Id.GetSegment().Info.name, out var preset) && preset == editObject.Id)
-                return IntersectionTemplateFit.Link;
+                return IntersectionTemplateFit.LinkFit;
             if (editObject.Enters.Length != Tool.Marking.EntersCount)
-                return IntersectionTemplateFit.Poor;
+                return IntersectionTemplateFit.PoorFit;
             else if (PointsMatch(editObject, Tool.Marking))
-                return IntersectionTemplateFit.Close;
+                return IntersectionTemplateFit.CloseFit;
             else if (SimilarWidth(editObject, Tool.Marking))
-                return IntersectionTemplateFit.Possible;
+                return IntersectionTemplateFit.PossibleFit;
             else
-                return IntersectionTemplateFit.Poor;
+                return IntersectionTemplateFit.PoorFit;
         }
         private bool PointsMatch(IntersectionTemplate template, Marking marking)
         {
@@ -226,33 +244,36 @@ namespace IMT.UI.Editors
             return false;
         }
 
-        protected override string GroupName(IntersectionTemplateFit group) => group.Description();
-
         public override int Compare(IntersectionTemplateFit x, IntersectionTemplateFit y) => x.CompareTo(y);
     }
     public enum IntersectionTemplateFit
     {
         [Description(nameof(Localize.PresetEditor_PresetFit_Linked))]
-        Link,
+        [Sprite(nameof(LinkFit))]
+        LinkFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Perfect))]
-        Perfect,
+        [Sprite(nameof(PerfectFit))]
+        PerfectFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Close))]
-        Close,
+        [Sprite(nameof(CloseFit))]
+        CloseFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Possible))]
-        Possible,
+        [Sprite(nameof(PossibleFit))]
+        PossibleFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Poor))]
-        Poor,
+        [Sprite(nameof(PoorFit))]
+        PoorFit,
     }
 
     public class IntersectionTemplateItem : EditItem<IntersectionTemplate, IntersectionTemplateIcon>
     {
         private bool IsLinked => Editor.Marking.Type == MarkingType.Segment && Editor.Marking.Id.GetSegment().Info is NetInfo info && SingletonManager<RoadTemplateManager>.Instance.TryGetPreset(info.name, out var preset) && preset == EditObject.Id;
 
-        public override ModsCommon.UI.SpriteSet ForegroundSprites => !IsLinked ? base.ForegroundSprites : new ModsCommon.UI.SpriteSet()
+        public override SpriteSet BackgroundSprites => !IsLinked ? base.BackgroundSprites : new SpriteSet()
         {
             normal = CommonTextures.BorderBig,
             hovered = CommonTextures.PanelSmall,
@@ -260,19 +281,19 @@ namespace IMT.UI.Editors
             focused = CommonTextures.BorderBig,
             disabled = CommonTextures.PanelSmall,
         };
-        public override ModsCommon.UI.SpriteSet ForegroundSelectedSprites => !IsLinked ? base.ForegroundSelectedSprites : new ModsCommon.UI.SpriteSet(CommonTextures.PanelSmall);
+        public override SpriteSet BackgroundSelectedSprites => !IsLinked ? base.BackgroundSelectedSprites : new SpriteSet(CommonTextures.PanelSmall);
 
-        public override ColorSet ForegroundColors => !IsLinked ? base.ForegroundColors : new ColorSet()
+        public override ColorSet BackgroundColors => !IsLinked ? base.BackgroundColors : new ColorSet()
         {
-            normal = IMTColors.ItemFavoriteNormal,
-            hovered = IMTColors.ItemFavoriteNormal,
-            pressed = IMTColors.ItemFavoritePressed,
-            focused = IMTColors.ItemFavoriteFocused,
-            disabled = null,
+            normal = UIStyle.ItemFavoriteNormal,
+            hovered = UIStyle.ItemFavoriteNormal,
+            pressed = UIStyle.ItemFavoritePressed,
+            focused = UIStyle.ItemFavoriteFocused,
+            disabled = default,
         };
-        public override ColorSet ForegroundSelectedColors => !IsLinked ? base.ForegroundSelectedColors : new ColorSet(IMTColors.ItemFavoriteFocused);
+        public override ColorSet BackgroundSelectedColors => !IsLinked ? base.BackgroundSelectedColors : new ColorSet(UIStyle.ItemFavoriteFocused);
 
-        public override ColorSet TextColor => !IsLinked ? base.TextColor : new ColorSet()
+        public override ColorSet DefaultTextColor => !IsLinked ? base.DefaultTextColor : new ColorSet()
         {
             normal = Color.white,
             hovered = Color.black,
@@ -280,7 +301,7 @@ namespace IMT.UI.Editors
             focused = Color.white,
             disabled = Color.white,
         };
-        public override ColorSet TextSelectedColor => !IsLinked ? base.TextSelectedColor : new ColorSet(Color.white);
+        public override ColorSet DefaultSelTextColor => !IsLinked ? base.DefaultSelTextColor : new ColorSet(Color.white);
 
         public override bool ShowDelete => EditObject != null && !EditObject.IsAsset;
 
@@ -288,7 +309,7 @@ namespace IMT.UI.Editors
         {
             base.Refresh();
             Icon.Count = EditObject.Roads;
-            wordWrap = !EditObject.IsAsset;
+            WordWrap = !EditObject.IsAsset;
         }
     }
     public class IntersectionTemplateIcon : ColorIcon
@@ -301,10 +322,10 @@ namespace IMT.UI.Editors
             CountLabel.textColor = Color.white;
             CountLabel.textScale = 0.7f;
             CountLabel.relativePosition = new Vector3(0, 0);
-            CountLabel.autoSize = false;
-            CountLabel.textAlignment = UIHorizontalAlignment.Center;
-            CountLabel.verticalAlignment = UIVerticalAlignment.Middle;
-            CountLabel.padding = new RectOffset(0, 0, 5, 0);
+            CountLabel.AutoSize = AutoSize.None;
+            CountLabel.HorizontalAlignment = UIHorizontalAlignment.Center;
+            CountLabel.VerticalAlignment = UIVerticalAlignment.Middle;
+            CountLabel.Padding = new RectOffset(0, 0, 5, 0);
         }
         protected override void OnSizeChanged()
         {
@@ -313,12 +334,17 @@ namespace IMT.UI.Editors
                 CountLabel.size = size;
         }
     }
-    public class IntersectionTemplateGroup : EditGroup<IntersectionTemplateFit, IntersectionTemplateItem, IntersectionTemplate> { }
+    public class IntersectionTemplateGroup : EditGroup<IntersectionTemplateFit, IntersectionTemplateItem, IntersectionTemplate> 
+    {
+        protected override bool ShowIcon => true;
+
+        protected override string GetName(IntersectionTemplateFit group) => group.Description();
+        protected override string GetSprite(IntersectionTemplateFit group) => group.Sprite();
+    }
     public class EditIntersectionTemplateMode : EditTemplateMode<IntersectionTemplate> { }
     public class PreviewPanel : PropertyGroupPanel
     {
         public IntersectionTemplateItem Item { get; set; }
-        protected override Color32 DefaultColor => IMTColors.ItemGroupBackground;
 
         protected override void OnTooltipEnter(UIMouseEventParameter p) { return; }
         protected override void OnTooltipHover(UIMouseEventParameter p) { return; }

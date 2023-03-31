@@ -9,8 +9,6 @@ namespace IMT.UI
 {
     public class FillerGuidePropertyPanel : EditorPropertyPanel, IReusable
     {
-        bool IReusable.InCache { get; set; }
-
         public event Action<bool, FillerGuide, FillerGuide> OnValueChanged;
         public event Action<SelectGuideButton> OnSelect;
         public event Action<SelectGuideButton> OnEnter;
@@ -29,7 +27,7 @@ namespace IMT.UI
             {
                 LeftGuideSelector.Value = value;
                 RightGuideSelector.Other = value;
-                OnValueChanged?.Invoke(FollowGuide.State, LeftGuideSelector.Value, RightGuide);
+                OnValueChanged?.Invoke(FollowGuide.Value, LeftGuideSelector.Value, RightGuide);
             }
         }
         public FillerGuide RightGuide
@@ -39,18 +37,18 @@ namespace IMT.UI
             {
                 RightGuideSelector.Value = value;
                 LeftGuideSelector.Other = value;
-                OnValueChanged?.Invoke(FollowGuide.State, LeftGuide, RightGuideSelector.Value);
+                OnValueChanged?.Invoke(FollowGuide.Value, LeftGuide, RightGuideSelector.Value);
             }
         }
         public bool? Follow
         {
-            get => FollowGuide.isVisible ? FollowGuide.State : null;
+            get => FollowGuide.isVisible ? FollowGuide.Value : null;
             set
             {
                 if (value != null)
                 {
                     FollowGuide.isVisible = true;
-                    FollowGuide.State = value.Value;
+                    FollowGuide.Value = value.Value;
                 }
                 else
                     FollowGuide.isVisible = false;
@@ -63,7 +61,7 @@ namespace IMT.UI
         {
             FollowGuide = Content.AddUIComponent<CustomUIToggle>();
             FollowGuide.DefaultStyle();
-            FollowGuide.OnStateChanged += FollowChanged;
+            FollowGuide.OnValueChanged += FollowChanged;
 
             LeftGuideSelector = Content.AddUIComponent<SelectGuideButton>();
             LeftGuideSelector.name = nameof(LeftGuideSelector);
@@ -85,8 +83,8 @@ namespace IMT.UI
             TurnButton.name = nameof(TurnButton);
             TurnButton.SetDefaultStyle();
             TurnButton.size = new Vector2(20f, 20f);
-            TurnButton.atlasForeground = IMTTextures.Atlas;
-            TurnButton.normalFgSprite = IMTTextures.RotateButtonIcon;
+            TurnButton.FgAtlas = IMTTextures.Atlas;
+            TurnButton.AllFgSprites = IMTTextures.RotateButtonIcon;
             TurnButton.tooltip = IMT.Localize.StyleOption_Turn;
             TurnButton.eventClick += TurnClick;
         }
@@ -126,15 +124,15 @@ namespace IMT.UI
 
         private void Refresh()
         {
-            var isEnabled = !FollowGuide.isVisible || FollowGuide.State;
+            var isEnabled = !FollowGuide.isVisible || FollowGuide.Value;
             LeftGuideSelector.isEnabled = isEnabled;
             RightGuideSelector.isEnabled = isEnabled;
             TurnButton.isEnabled = isEnabled;
         }
 
-        protected virtual void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(component.parent as SelectGuideButton);
-        protected virtual void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnEnter?.Invoke(component.parent as SelectGuideButton);
-        protected virtual void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(component.parent as SelectGuideButton);
+        protected virtual void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(component as SelectGuideButton);
+        protected virtual void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnEnter?.Invoke(component as SelectGuideButton);
+        protected virtual void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(component as SelectGuideButton);
 
         protected virtual void TurnClick(UIComponent component, UIMouseEventParameter eventParam)
         {
@@ -143,6 +141,17 @@ namespace IMT.UI
                 LeftGuide = (LeftGuide + 1) % VertexCount;
                 RightGuide = (RightGuide + 1) % VertexCount;
             }
+        }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            FollowGuide.ToggleStyle = style.Toggle;
+            LeftGuideSelector.SelectorStyle = style.DropDown;
+            RightGuideSelector.SelectorStyle = style.DropDown;
+
+            TurnButton.ButtonStyle = style.Button;
+            TurnButton.FgAtlas = IMTTextures.Atlas;
+            TurnButton.AllFgSprites = IMTTextures.RotateButtonIcon;
         }
 
         public class SelectGuideButton : SelectItemPropertyButton<FillerGuide>

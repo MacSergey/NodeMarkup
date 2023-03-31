@@ -112,7 +112,7 @@ namespace IMT.Manager
         {
             base.GetUIComponents(line, provider);
             provider.AddProperty(new PropertyInfo<PropColorPropertyPanel>(this, nameof(ColorOption), AdditionalCategory, AddColorOptionProperty, RefreshColorOptionProperty));
-            provider.AddProperty(new PropertyInfo<ColorAdvancedPropertyPanel>(this, nameof(Color), AdditionalCategory, AddColorProperty, RefreshColorProperty));
+            provider.AddProperty(new PropertyInfo<IMTColorPropertyPanel>(this, nameof(Color), AdditionalCategory, AddColorProperty, RefreshColorProperty));
         }
 
         private void AddColorOptionProperty(PropColorPropertyPanel colorOptionProperty, EditorProvider provider)
@@ -132,7 +132,7 @@ namespace IMT.Manager
             colorOptionProperty.IsHidden = !IsValid;
         }
 
-        private void AddColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        private void AddColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.Label = Localize.StyleOption_Color;
             colorProperty.WheelTip = Settings.ShowToolTip;
@@ -140,7 +140,7 @@ namespace IMT.Manager
             colorProperty.Value = Color;
             colorProperty.OnValueChanged += (color) => Color.Value = color;
         }
-        private new void RefreshColorProperty(ColorAdvancedPropertyPanel colorProperty, EditorProvider provider)
+        private new void RefreshColorProperty(IMTColorPropertyPanel colorProperty, EditorProvider provider)
         {
             colorProperty.IsHidden = !IsValid || !(ColorOption == ColorOptionEnum.Custom);
         }

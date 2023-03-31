@@ -25,11 +25,8 @@ namespace IMT.UI
         {
             Button = AddUIComponent<CustomUIButton>();
             Button.textScale = 0.8f;
-            Button.textColor = CommonColors.White;
-            Button.hoveredTextColor = CommonColors.Gray224;
-            Button.pressedTextColor = CommonColors.Gray192;
-            Button.disabledTextColor = CommonColors.Gray128;
-            Button.textPadding = new RectOffset(0, 0, 3, 0);
+            Button.TextColors = new ColorSet(CommonColors.White, CommonColors.Gray224, CommonColors.Gray192, CommonColors.White, CommonColors.Gray128);
+            Button.TextPadding = new RectOffset(0, 0, 3, 0);
             Button.isEnabled = EnableControl;
             Button.eventClick += ButtonClick;
         }

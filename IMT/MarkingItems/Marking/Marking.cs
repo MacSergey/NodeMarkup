@@ -71,8 +71,8 @@ namespace IMT.Manager
         private HashSet<IStyleItem> RecalculateList { get; set; } = new HashSet<IStyleItem>();
         private bool NeedRecalculateRenderData { get; set; } = false;
         private MarkingRenderData RenderData { get; set; } = new MarkingRenderData();
-        private MarkingRenderData TempRenderData { get; set; } = new MarkingRenderData();
-        public int RenderLayers { get; private set; }
+        private MarkingRenderData SimulationRenderData { get; set; } = new MarkingRenderData();
+        public int SimulationRenderLayers { get; private set; }
 
 
         private bool needSetOrder;
@@ -862,49 +862,44 @@ namespace IMT.Manager
 
         public void Render(RenderManager.CameraInfo cameraInfo, ref RenderManager.Instance data)
         {
-            var renderData = RenderData;
+            MarkingRenderData renderData;
+
             if (NeedRecalculateRenderData)
             {
-                lock(this)
+                renderData = new MarkingRenderData();
+
+                foreach (var item in RecalculateList)
+                    item.RecalculateStyleData();
+
+                foreach (var line in Lines)
                 {
-                    renderData = TempRenderData;
-                    renderData.Clear();
-
-                    foreach (var item in RecalculateList)
-                        item.RecalculateStyleData();
-
-                    foreach (var line in Lines)
-                    {
-                        foreach (var styleData in line.StyleData)
-                            renderData[styleData.LODType][styleData.LOD].Add(styleData);
-                    }
-                    foreach (var fillers in Fillers)
-                    {
-                        foreach (var styleData in fillers.StyleData)
-                            renderData[styleData.LODType][styleData.LOD].Add(styleData);
-                    }
-                    foreach (var crosswalk in Crosswalks)
-                    {
-                        foreach (var styleData in crosswalk.StyleData)
-                            renderData[styleData.LODType][styleData.LOD].Add(styleData);
-                    }
-
-                    SimulationManager.instance.AddAction(() =>
-                    {
-                        lock (this)
-                        {
-                            TempRenderData = RenderData;
-
-                            RenderData = renderData;
-                            RenderLayers = renderData.GetRenderLayers();
-                        }
-                        UpdateRenderer();
-                    });
-
-                    RecalculateList.Clear();
-                    NeedRecalculateRenderData = false;
+                    foreach (var styleData in line.StyleData)
+                        renderData[styleData.LODType][styleData.LOD].Add(styleData);
                 }
+                foreach (var fillers in Fillers)
+                {
+                    foreach (var styleData in fillers.StyleData)
+                        renderData[styleData.LODType][styleData.LOD].Add(styleData);
+                }
+                foreach (var crosswalk in Crosswalks)
+                {
+                    foreach (var styleData in crosswalk.StyleData)
+                        renderData[styleData.LODType][styleData.LOD].Add(styleData);
+                }
+
+                SimulationManager.instance.AddAction(() =>
+                {
+                    SimulationRenderData = RenderData;
+                    SimulationRenderLayers = SimulationRenderData.GetRenderLayers();
+                    UpdateRenderer();
+                });
+
+                RenderData = renderData;
+                RecalculateList.Clear();
+                NeedRecalculateRenderData = false;
             }
+            else
+                renderData = RenderData;
 
             bool infoView = (cameraInfo.m_layerMask & (3 << 24)) == 0;
 
@@ -912,9 +907,10 @@ namespace IMT.Manager
                 renderDataItem.Render(cameraInfo, data, infoView);
         }
 
+
         public void CalculateGroupData(ref bool result, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
         {
-            foreach (var renderData in RenderData.Values)
+            foreach (var renderData in SimulationRenderData.Values)
             {
                 result |= renderData.CalculateGroupData(layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays);
             }
@@ -922,7 +918,7 @@ namespace IMT.Manager
 
         public void PopulateGroupData(int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance, ref bool requireSurfaceMaps)
         {
-            foreach (var renderData in RenderData.Values)
+            foreach (var renderData in SimulationRenderData.Values)
             {
                 renderData.PopulateGroupData(layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance, ref requireSurfaceMaps);
             }

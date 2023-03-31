@@ -84,6 +84,7 @@ namespace IMT.UI.Editors
         private void AddStyleTypeProperty()
         {
             Style = ComponentPool.Get<FillerStylePropertyPanel>(PropertiesPanel, nameof(Style));
+            Style.SetStyle(UIStyle.Default);
             Style.Label = IMT.Localize.Editor_Style;
             Style.Init();
             Style.UseWheel = true;
@@ -98,7 +99,7 @@ namespace IMT.UI.Editors
 
             foreach (var property in (this as IPropertyContainer).StyleProperties)
             {
-                if (property is ColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
+                if (property is IMTColorPropertyPanel colorProperty && colorProperty.name == nameof(Manager.Style.Color))
                     colorProperty.OnValueChanged += (Color32 c) => RefreshSelectedItem();
                 else if (property is FillerGuidePropertyPanel guideProperty)
                 {
@@ -205,7 +206,7 @@ namespace IMT.UI.Editors
                 FillerGuideToolMode.Contour = EditObject.Contour;
                 FillerGuideToolMode.SelectButton = selectButton;
                 FillerGuideToolMode.AfterSelectButton = afterAction;
-                selectButton.Focus();
+                selectButton?.Focus();
                 return false;
             }
         }

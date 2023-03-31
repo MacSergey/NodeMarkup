@@ -74,7 +74,7 @@ namespace IMT.UI.Panel
 
             Atlas = CommonTextures.Atlas;
             BackgroundSprite = CommonTextures.PanelBig;
-            color = ComponentStyle.PanelColor;
+            BgColors = ComponentStyle.PanelColor;
             name = nameof(IntersectionMarkingToolPanel);
 
             Header = AddUIComponent<PanelHeader>();
@@ -174,7 +174,7 @@ namespace IMT.UI.Panel
             TabStrip.SelectedTab = -1;
             SelectEditor<LinesEditor>();
         }
-        public void RefreshHeader() => Header.UpdateLayout();
+        public void RefreshHeader() => Header.Refresh();
         public void RefreshProperties() => CurrentEditor?.RefreshEditor();
 
         #endregion

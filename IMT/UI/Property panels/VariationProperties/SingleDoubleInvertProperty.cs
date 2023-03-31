@@ -16,8 +16,8 @@ namespace IMT.UI
             Invert = Content.AddUIComponent<CustomUIButton>();
             Invert.SetDefaultStyle();
             Invert.width = 20;
-            Invert.atlasForeground = CommonTextures.Atlas;
-            Invert.normalFgSprite = CommonTextures.PlusMinusButton;
+            Invert.FgAtlas = CommonTextures.Atlas;
+            Invert.AllFgSprites = CommonTextures.PlusMinusButton;
             Invert.eventClick += InvertClick;
         }
 
@@ -43,6 +43,15 @@ namespace IMT.UI
         {
             if (Invert != null)
                 Invert.height = Content.height - ItemsPadding * 2;
+        }
+
+        public override void SetStyle(ControlStyle style)
+        {
+            base.SetStyle(style);
+
+            Invert.ButtonStyle = style.Button;
+            Invert.FgAtlas = CommonTextures.Atlas;
+            Invert.AllFgSprites = CommonTextures.PlusMinusButton;
         }
     }
     public class FloatSingleDoubleInvertedProperty : SingleDoubleInvertedProperty<float, FloatUITextField>

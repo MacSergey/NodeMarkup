@@ -6,6 +6,10 @@ namespace IMT.UI.Editors
     public class RuleEdgeSelectPropertyPanel : SelectPropertyPanel<ILinePartEdge, RuleEdgeSelectPropertyPanel.RuleEdgeSelectButton>
     {
         protected override float Width => 230f;
+        public override void SetStyle(ControlStyle style)
+        {
+            Selector.SelectorStyle = style.DropDown;
+        }
 
         public class RuleEdgeSelectButton : SelectListPropertyButton<ILinePartEdge>
         {
@@ -19,6 +23,11 @@ namespace IMT.UI.Editors
     {
         protected override string ResetToolTip => IMT.Localize.CrosswalkStyle_ResetBorder;
         protected override float Width => 150f;
+        public override void SetStyle(ControlStyle style)
+        {
+            Selector.SelectorStyle = style.DropDown;
+            ResetButton.ButtonStyle = style.Button;
+        }
 
         public class CrosswalkBorderSelectButton : SelectListPropertyButton<MarkingRegularLine>
         {
