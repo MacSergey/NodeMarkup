@@ -1757,7 +1757,7 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
     <value>Invertir red</value>
   </data>
   <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
-    <value>Dos diferentes</value>
+    <value>Independiente</value>
   </data>
   <data name="Header_ExpandTooltip" xml:space="preserve">
     <value>Mantener presionada la tecla {0} para colapsar/expandir todas las reglas</value>

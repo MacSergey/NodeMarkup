@@ -2065,4 +2065,7 @@ Può volerci del tempo se ci sono molti segmenti.</value>
   <data name="StyleOption_Wind" xml:space="preserve">
     <value>Ondeggiando al vento</value>
   </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Tieni premuto {0} per ridurre/espandere tutti i gruppi</value>
+  </data>
 </root>

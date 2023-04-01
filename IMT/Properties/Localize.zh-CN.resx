@@ -1837,13 +1837,13 @@
     <value>纹理密度</value>
   </data>
   <data name="StyleOptionCategory_Additional" xml:space="preserve">
-    <value>附加</value>
+    <value>高级选项</value>
   </data>
   <data name="StyleOptionCategory_Effect" xml:space="preserve">
     <value>图形效果：</value>
   </data>
   <data name="StyleOptionCategory_Main" xml:space="preserve">
-    <value>主要的</value>
+    <value>主要选项</value>
   </data>
   <data name="HeaderPanel_ApplyAll" xml:space="preserve">
     <value>应用于所有项目</value>
