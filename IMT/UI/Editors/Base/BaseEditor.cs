@@ -60,7 +60,7 @@ namespace IMT.UI.Editors
     {
         #region PROPERTIES
 
-        private float ItemsSize
+        private float MinItemsSize
         {
             get
 
@@ -71,8 +71,9 @@ namespace IMT.UI.Editors
                     return 38f;
             }
         }
-        private float MaxItemSize => 250f;
-        private float ContentSize => width - ItemsSize;
+        private float MaxItemsSize => 250f;
+        private float ItemsSize => ItemsExpanded ? MaxItemsSize : MinItemsSize;
+        private float ContentSize => width - MinItemsSize;
 
         public IntersectionMarkingTool Tool => SingletonTool<IntersectionMarkingTool>.Instance;
         protected bool NeedUpdate { get; set; }
@@ -87,7 +88,6 @@ namespace IMT.UI.Editors
         private BlurEffect ContentBlur { get; }
 
         private bool availableItems = true;
-        private bool availableContent = true;
         public sealed override bool AvailableItems
         {
             get => availableItems;
@@ -101,6 +101,8 @@ namespace IMT.UI.Editors
                 }
             }
         }
+
+        private bool availableContent = true;
         public sealed override bool AvailableContent
         {
             get => availableContent;
@@ -114,6 +116,42 @@ namespace IMT.UI.Editors
                 }
             }
         }
+
+
+        private bool itemsExpanded;
+        private bool ItemsExpanded
+        {
+            get => itemsExpanded;
+            set
+            {
+                if(value != itemsExpanded && AvailableItems && Settings.AutoCollapseItemsPanel)
+                {
+                    itemsExpanded = value;
+                    ItemsShadow.isVisible = value;
+                    AvailableContent = !value;
+
+                    ValueAnimator.Cancel(AnimationId);
+                    var current = ItemsPanel.width;
+                    var min = MinItemsSize;
+                    var max = MaxItemsSize;
+
+                    if(value)
+                    {
+                        ItemsPanel.Focus();
+                        var time = 0.2f * (max - current) / (max - min);
+                        if (min < max && current != max)
+                            ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, max, time, EasingType.CubicEaseOut));
+                    }
+                    else
+                    {
+                        var time = 0.2f * (current - min) / (max - min);
+                        if (current != min)
+                            ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, min, time, EasingType.CubicEaseOut));
+                    }
+                }
+            }
+        }
+        private string AnimationId => $"{nameof(ItemsPanel)}{ItemsPanel.GetHashCode()}";
 
         #endregion
 
@@ -183,12 +221,13 @@ namespace IMT.UI.Editors
             ContentBlur.zOrder = 1;
 
             EmptyLabel = ContentPanel.AddUIComponent<CustomUILabel>();
+            ContentPanel.Ignore(EmptyLabel, true);
             EmptyLabel.HorizontalAlignment = UIHorizontalAlignment.Center;
             EmptyLabel.VerticalAlignment = UIVerticalAlignment.Middle;
             EmptyLabel.Padding = new RectOffset(10, 10, 0, 0);
             EmptyLabel.WordWrap = true;
             EmptyLabel.AutoSize = AutoSize.None;
-            ContentPanel.Ignore(EmptyLabel, true);
+            EmptyLabel.relativePosition = Vector3.zero;
 
             SwitchEmptyMessage();
         }
@@ -266,10 +305,9 @@ namespace IMT.UI.Editors
             ItemsPanel.relativePosition = new Vector2(0, 0);
 
             ContentPanel.size = new Vector2(ContentSize, size.y);
-            ContentPanel.relativePosition = new Vector2(ItemsSize, 0);
+            ContentPanel.relativePosition = new Vector2(MinItemsSize, 0);
 
             EmptyLabel.size = new Vector2(ContentSize, size.y * 0.667f);
-            EmptyLabel.relativePosition = ContentPanel.relativePosition;
         }
         protected void OnItemSelect(ObjectType editObject)
         {
@@ -280,65 +318,12 @@ namespace IMT.UI.Editors
         }
         private void OnItemDelete(ObjectType editObject) => Tool.DeleteItem(editObject, OnObjectDelete);
 
-        private string AnimationId => $"{nameof(ItemsPanel)}{ItemsPanel.GetHashCode()}";
-        private bool itemsExpanded;
-        private bool ItemsExpanded
-        {
-            get => itemsExpanded;
-            set
-            {
-                if (value != itemsExpanded)
-                {
-                    itemsExpanded = value;
-                    ItemsShadow.isVisible = value;
-                    AvailableContent = !value;
-                }
-            }
-        }
-        private void ItemsPanelEnter(UIComponent component, UIMouseEventParameter eventParam)
-        {
-            if (!isEnabled || !AvailableItems || !Settings.AutoCollapseItemsPanel)
-                return;
-
-            ValueAnimator.Cancel(AnimationId);
-            ItemsPanel.Focus();
-
-            var current = ItemsPanel.width;
-            var min = ItemsSize;
-            var max = MaxItemSize;
-            var time = 0.2f * (max - current) / (max - min);
-
-            if (min < max && current != max)
-            {
-                ItemsExpanded = true;
-                ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, max, time, EasingType.CubicEaseOut));
-            }
-        }
-        private void ItemsPanelLeave(UIComponent component, UIMouseEventParameter eventParam)
-        {
-            if (!AvailableItems || !Settings.AutoCollapseItemsPanel)
-                return;
-
-            ValueAnimator.Cancel(AnimationId);
-
-            var current = ItemsPanel.width;
-            var min = ItemsSize;
-            var max = MaxItemSize;
-            var time = 0.2f * (current - min) / (max - min);
-
-            if (current != min)
-            {
-                ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, min, time, EasingType.CubicEaseOut), AfterItemPanelCollapsed);
-            }
-        }
+        private void ItemsPanelEnter(UIComponent component, UIMouseEventParameter eventParam) => ItemsExpanded = true;
+        private void ItemsPanelLeave(UIComponent component, UIMouseEventParameter eventParam) => ItemsExpanded = false;
         private void SetItemPanelWidth(float width)
         {
             ItemsPanel.width = width;
-            ContentBlur.opacity = width / MaxItemSize;
-        }
-        private void AfterItemPanelCollapsed()
-        {
-            ItemsExpanded = false;
+            ContentBlur.opacity = width / MaxItemsSize;
         }
 
         protected virtual void OnObjectSelect(ObjectType editObject) { }
