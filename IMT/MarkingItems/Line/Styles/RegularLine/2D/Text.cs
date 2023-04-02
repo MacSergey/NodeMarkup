@@ -482,7 +482,7 @@ namespace IMT.Manager
             }
             public override void SetStyle(ControlStyle style)
             {
-                Selector.SetStyle(style.Segmented);
+                Selector.SegmentedStyle = style.Segmented;
             }
 
             public class TextDirectionSegmented : UIOnceSegmented<TextDirection> { }
@@ -493,7 +493,7 @@ namespace IMT.Manager
             protected override string GetDescription(TextAlignment value) => value.Description();
             public override void SetStyle(ControlStyle style)
             {
-                Selector.SetStyle(style.Segmented);
+                Selector.SegmentedStyle = style.Segmented;
             }
 
             public class TextAlignmentSegmented : UIOnceSegmented<TextAlignment> { }

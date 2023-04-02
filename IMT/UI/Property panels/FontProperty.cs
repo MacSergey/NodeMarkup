@@ -204,7 +204,7 @@ namespace IMT.UI
         public override void SetStyle(ControlStyle style)
         {
             FontFamilySelector.DropDownStyle = style.DropDown;
-            FontStyleSelector.SetStyle(style.Segmented);
+            FontStyleSelector.SegmentedStyle = style.Segmented;
         }
 
     }
