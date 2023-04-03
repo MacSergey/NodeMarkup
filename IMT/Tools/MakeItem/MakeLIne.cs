@@ -265,7 +265,8 @@ namespace IMT.Tools
             var endDir = HoverPoint.Enter == SelectPoint.Enter ? SelectPoint.MarkerPosition - HoverPoint.MarkerPosition : HoverPoint.Direction;
             var smoothStart = SelectPoint.Enter.IsSmooth;
             var smoothEnd = HoverPoint.Enter.IsSmooth;
-            var bezier = new BezierTrajectory(startPos, startDir, endPos, endDir, true, smoothStart, smoothEnd);
+            var data = new BezierTrajectory.Data(true, smoothStart, smoothEnd);
+            var bezier = new BezierTrajectory(startPos, startDir, endPos, endDir, data);
 
             var pointPair = new MarkingPointPair(SelectPoint, HoverPoint);
             var color = Tool.Marking.ExistLine(pointPair) ? (Utility.OnlyCtrlIsPressed ? CommonColors.Yellow : CommonColors.Red) : CommonColors.Green;
@@ -301,12 +302,14 @@ namespace IMT.Tools
         {
             if (SelectPoint is MarkingLanePoint pointA && HoverPoint is MarkingLanePoint pointB)
             {
+                var dataA = new BezierTrajectory.Data(false, pointA.Enter.IsSmooth, pointB.Enter.IsSmooth);
+                var dataB = new BezierTrajectory.Data(false, pointB.Enter.IsSmooth, pointA.Enter.IsSmooth);
                 var trajectories = new List<ITrajectory>()
                 {
                     new StraightTrajectory(pointA.SourcePointA.Position, pointA.SourcePointB.Position),
-                    new BezierTrajectory(pointA.SourcePointB.Position, pointA.SourcePointB.Direction, pointB.SourcePointA.Position, pointB.SourcePointA.Direction, false, pointA.Enter.IsSmooth, pointB.Enter.IsSmooth),
+                    new BezierTrajectory(pointA.SourcePointB.Position, pointA.SourcePointB.Direction, pointB.SourcePointA.Position, pointB.SourcePointA.Direction, dataA),
                     new StraightTrajectory(pointB.SourcePointA.Position, pointB.SourcePointB.Position),
-                    new BezierTrajectory(pointB.SourcePointB.Position, pointB.SourcePointB.Direction, pointA.SourcePointA.Position, pointA.SourcePointA.Direction, false, pointB.Enter.IsSmooth, pointA.Enter.IsSmooth),
+                    new BezierTrajectory(pointB.SourcePointB.Position, pointB.SourcePointB.Direction, pointA.SourcePointA.Position, pointA.SourcePointA.Direction, dataB),
                 };
 
                 var pointPair = new MarkingPointPair(pointA, pointB);
@@ -328,7 +331,7 @@ namespace IMT.Tools
             else
                 endPosition = SingletonTool<IntersectionMarkingTool>.Instance.Ray.GetRayPosition(Marking.Position.y, out _);
 
-            new BezierTrajectory(SelectPoint.MarkerPosition, SelectPoint.Direction, endPosition).Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
+            new BezierTrajectory(SelectPoint.MarkerPosition, SelectPoint.Direction, endPosition, BezierTrajectory.Data.Default).Render(new OverlayData(cameraInfo) { Color = CommonColors.Hover });
         }
         private void RenderNotConnectedLane(RenderManager.CameraInfo cameraInfo)
         {
@@ -360,17 +363,18 @@ namespace IMT.Tools
                 }
                 else
                 {
-                    var trajectory = new BezierTrajectory(lanePoint.MarkerPosition, lanePoint.Direction, endPosition);
+                    var trajectory = new BezierTrajectory(lanePoint.MarkerPosition, lanePoint.Direction, endPosition, BezierTrajectory.Data.Default);
 
                     var normal = trajectory.EndDirection.MakeFlatNormalized().Turn90(false);
                     var pointA = lanePoint.Marking.Type == MarkingType.Node ? lanePoint.SourcePointA : lanePoint.SourcePointB;
                     var pointB = lanePoint.Marking.Type == MarkingType.Node ? lanePoint.SourcePointB : lanePoint.SourcePointA;
+                    var data = new BezierTrajectory.Data(false, true, true);
 
                     var trajectories = new List<ITrajectory>()
                     {
-                        new BezierTrajectory(pointA.Position, pointA.Direction, trajectory.EndPosition + normal * halfWidth, trajectory.EndDirection, false, true, true),
+                        new BezierTrajectory(pointA.Position, pointA.Direction, trajectory.EndPosition + normal * halfWidth, trajectory.EndDirection, data),
                         new StraightTrajectory(trajectory.EndPosition + normal * halfWidth, trajectory.EndPosition - normal * halfWidth),
-                        new BezierTrajectory(trajectory.EndPosition - normal * halfWidth, trajectory.EndDirection, pointB.Position, pointB.Direction, false, true, true),
+                        new BezierTrajectory(trajectory.EndPosition - normal * halfWidth, trajectory.EndDirection, pointB.Position, pointB.Direction, data),
                         new StraightTrajectory(pointB.Position, pointA.Position),
                     };
 

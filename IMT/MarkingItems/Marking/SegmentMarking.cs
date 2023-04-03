@@ -39,7 +39,8 @@ namespace IMT.Manager
             var firstEnter = EntersList[0];
             var lastEnter = EntersList[1];
 
-            Trajectory = new BezierTrajectory(firstEnter.Position, firstEnter.NormalDir, lastEnter.Position, lastEnter.NormalDir, false, firstEnter.IsSmooth, lastEnter.IsSmooth);
+            var data = new BezierTrajectory.Data(false, firstEnter.IsSmooth, lastEnter.IsSmooth);
+            Trajectory = new BezierTrajectory(firstEnter.Position, firstEnter.NormalDir, lastEnter.Position, lastEnter.NormalDir, data);
         }
 
         public override string ToString() => $"S:{base.ToString()}";

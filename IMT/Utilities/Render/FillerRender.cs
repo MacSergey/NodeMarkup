@@ -62,16 +62,9 @@ namespace IMT.Utilities
         }
         public readonly struct TextureData
         {
-            public static TextureData Default => new TextureData(null);
-
             public readonly Texture2D mainTexture;
             public readonly Vector4 tiling;
 
-            public TextureData(Texture2D mainTexture)
-            {
-                this.mainTexture = mainTexture;
-                this.tiling = new Vector4(1f, 0f, 1f, 1f);
-            }
             public TextureData(Texture2D mainTexture, Vector2 tiling, float angle)
             {
                 this.mainTexture = mainTexture;
@@ -203,7 +196,7 @@ namespace IMT.Utilities
             {
                 materialBlock.Clear();
 
-                if (!infoView)
+                if (!infoView && Datas[i].textureData.mainTexture != null)
                     materialBlock.SetTexture(mainTexId, Datas[i].textureData.mainTexture);
 
                 materialBlock.SetVector(colorId, infoView ? new Color(0.4f, 0.4f, 0.4f, 0f) : Datas[i].color);

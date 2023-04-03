@@ -539,8 +539,9 @@ namespace IMT.Manager
                     }
                 }
 
-                var guidString = templateConfig.GetAttrValue("P", string.Empty);
-                var preset = string.IsNullOrEmpty(guidString) ? Guid.Empty : new Guid(guidString);
+                Guid preset;
+                try { preset = new Guid(templateConfig.GetAttrValue("P", string.Empty)); }
+                catch { preset = Guid.Empty; }
                 var flip = templateConfig.GetAttrValue("F", 0) == 1;
                 var invert = templateConfig.GetAttrValue("I", 0) == 1;
 

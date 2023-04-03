@@ -87,12 +87,21 @@ namespace IMT.Manager
             if (Decal.Value is PropInfo decal)
             {
                 var mainTexture = decal.m_material.mainTexture as Texture2D;
-                var size = decal.m_material.GetVector("_DecalSize");
-                var tiling = new Vector2(1f / (Tiling.Value.x * size.x), 1f / (Tiling.Value.y * size.z));
-                var angle = Angle * Mathf.Deg2Rad;
-                color = DecalColor.Value ?? decal.m_color0;
-                textureData = new FillerMeshData.TextureData(mainTexture, tiling, angle);
-                return true;
+                if (mainTexture != null)
+                {
+                    var size = decal.m_material.GetVector("_DecalSize");
+                    var tiling = new Vector2(1f / (Tiling.Value.x * size.x), 1f / (Tiling.Value.y * size.z));
+                    var angle = Angle * Mathf.Deg2Rad;
+                    color = DecalColor.Value ?? decal.m_color0;
+                    textureData = new FillerMeshData.TextureData(mainTexture, tiling, angle);
+                    return true;
+                }
+                else
+                {
+                    textureData = default;
+                    color = default;
+                    return false;
+                }
             }
             else
                 return base.GetTopTexture(out textureData, out color);

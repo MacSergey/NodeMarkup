@@ -35,7 +35,8 @@ namespace IMT.Manager
         public StraightTrajectory Line { get; private set; }
         public bool LanesChanged => GetSegment().m_lanes != FirstLane;
         public string RoadName => GetSegment().Info.name;
-        public abstract bool IsSmooth { get; }
+        protected abstract bool CanBeSmooth { get; }
+        public bool IsSmooth { get; private set; }
 
         private static VehicleInfo.VehicleType RoadType { get; } =
             VehicleInfo.VehicleType.Car |
@@ -179,7 +180,7 @@ namespace IMT.Manager
 
         public abstract ushort GetSegmentId();
         public abstract ref NetSegment GetSegment();
-        public abstract bool GetIsStartSide();
+        protected abstract bool GetIsStartSide();
         public virtual bool TryGetPoint(byte index, MarkingPoint.PointType type, out MarkingPoint point)
         {
             switch (type)
@@ -225,18 +226,21 @@ namespace IMT.Manager
             Vector3 rightPos;
             Vector3 leftDir;
             Vector3 rightDir;
+            bool leftSmooth;
+            bool rightSmooth;
 
             if (IsStartSide)
             {
-                segment.CalculateCorner(segmentId, true, true, true, out leftPos, out leftDir, out _);
-                segment.CalculateCorner(segmentId, true, true, false, out rightPos, out rightDir, out _);
+                segment.CalculateCorner(segmentId, true, true, true, out leftPos, out leftDir, out leftSmooth);
+                segment.CalculateCorner(segmentId, true, true, false, out rightPos, out rightDir, out rightSmooth);
             }
             else
             {
-                segment.CalculateCorner(segmentId, true, false, true, out leftPos, out leftDir, out _);
-                segment.CalculateCorner(segmentId, true, false, false, out rightPos, out rightDir, out _);
+                segment.CalculateCorner(segmentId, true, false, true, out leftPos, out leftDir, out leftSmooth);
+                segment.CalculateCorner(segmentId, true, false, false, out rightPos, out rightDir, out rightSmooth);
             }
 
+            IsSmooth = (leftSmooth || rightSmooth) && CanBeSmooth;
             CornerDir = (rightPos - leftPos).normalized;
             CornerAngle = CornerDir.AbsoluteAngle();
 

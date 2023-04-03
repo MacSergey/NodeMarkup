@@ -32,7 +32,10 @@ namespace IMT.Utilities
         public override void FromXml(XElement config, ThemeHelper.IThemeData defaultValue)
         {
             RawName = config.GetAttrValue(Label, string.Empty);
-            Value = ThemeHelper.TryGetTheme(RawName, out var theme) ? theme : defaultValue;
+            if (string.IsNullOrEmpty(RawName))
+                Value = defaultValue;
+            else
+                Value = ThemeHelper.TryGetTheme(RawName, out var theme) ? theme : null;
         }
     }
 }

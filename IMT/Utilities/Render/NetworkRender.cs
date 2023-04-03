@@ -1,5 +1,7 @@
 ﻿using ColossalFramework;
+using ModsCommon;
 using ModsCommon.Utilities;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -93,7 +95,9 @@ namespace IMT.Utilities
                     }
                     else if (data.segment.m_requireHeightMap)
                     {
-                        instance.m_materialBlock.SetTexture(instance.ID_HeightMap, data.heightMap);
+                        if (data.heightMap != null)
+                            instance.m_materialBlock.SetTexture(instance.ID_HeightMap, data.heightMap);
+
                         instance.m_materialBlock.SetVector(instance.ID_HeightMapping, data.heightMapping);
                         instance.m_materialBlock.SetVector(instance.ID_SurfaceMapping, data.surfaceMapping);
                     }
@@ -105,6 +109,9 @@ namespace IMT.Utilities
                 {
                     if (data.segment.m_requireSurfaceMaps && data.surfaceTexA != combinedLod.m_surfaceTexA)
                     {
+                        if (data.surfaceTexA == null || data.surfaceTexB == null)
+                            return;
+
                         if (combinedLod.m_lodCount != 0)
                             NetSegment.RenderLod(cameraInfo, combinedLod);
 
@@ -114,6 +121,9 @@ namespace IMT.Utilities
                     }
                     else if (data.segment.m_requireHeightMap && data.heightMap != combinedLod.m_heightMap)
                     {
+                        if (data.heightMap == null)
+                            return;
+
                         if (combinedLod.m_lodCount != 0)
                             NetSegment.RenderLod(cameraInfo, combinedLod);
 
