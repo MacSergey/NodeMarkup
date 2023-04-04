@@ -43,8 +43,9 @@ namespace IMT.Utilities
                 endT = null;
             }
 
-            var bezierL = new BezierTrajectory(trajectory.StartPosition - startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition - endNormal * halfWidth, trajectory.EndDirection, startT, endT).Trajectory;
-            var bezierR = new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidth, trajectory.EndDirection, startT, endT).Trajectory;
+            var data = new BezierTrajectory.Data(startT, endT);
+            var bezierL = new BezierTrajectory(trajectory.StartPosition - startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition - endNormal * halfWidth, trajectory.EndDirection, data).Trajectory;
+            var bezierR = new BezierTrajectory(trajectory.StartPosition + startNormal * halfWidth, trajectory.StartDirection, trajectory.EndPosition + endNormal * halfWidth, trajectory.EndDirection, data).Trajectory;
 
             left = NetSegment.CalculateControlMatrix(bezierL.a, bezierL.b, bezierL.c, bezierL.d, bezierR.a, bezierR.b, bezierR.c, bezierR.d, position, 0.05f);
             right = NetSegment.CalculateControlMatrix(bezierR.a, bezierR.b, bezierR.c, bezierR.d, bezierL.a, bezierL.b, bezierL.c, bezierL.d, position, 0.05f);

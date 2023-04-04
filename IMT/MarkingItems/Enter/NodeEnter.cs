@@ -1,4 +1,5 @@
 ﻿using ModsCommon.Utilities;
+using UnityEngine;
 
 namespace IMT.Manager
 {
@@ -8,7 +9,7 @@ namespace IMT.Manager
 
         public override int SideSign => IsStartSide ? 1 : -1;
         public override int NormalSign => 1;
-        public override bool IsSmooth => (Id.GetNode().flags & NetNode.FlagsLong.Middle) != 0;
+        protected override bool CanBeSmooth => (Id.GetNode().flags & NetNode.FlagsLong.Middle) != 0;
 
         protected override bool IsExist => Id.ExistNode();
 
@@ -16,7 +17,7 @@ namespace IMT.Manager
 
         public override ushort GetSegmentId() => Marking.Id;
         public override ref NetSegment GetSegment() => ref Marking.Id.GetSegment();
-        public override bool GetIsStartSide() => GetSegment().m_startNode == Id;
+        protected override bool GetIsStartSide() => GetSegment().m_startNode == Id;
 
     }
 }

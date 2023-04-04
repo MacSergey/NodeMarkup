@@ -48,8 +48,10 @@ namespace IMT.Manager
                 var roundedContour = contour.SetCornerRadius(LineCornerRadius, MedianCornerRadius);
                 if (Triangulate(roundedContour, lod, out var points, out var groups, out var triangles))
                 {
-                    GetTopTexture(out var topTexture, out var topColor);
-                    GetSideTexture(out var sideTexture, out var sideColor);
+                    if (!GetTopTexture(out var topTexture, out var topColor))
+                        return;
+                    if (!GetSideTexture(out var sideTexture, out var sideColor))
+                        return;
 
                     var top = FillerMeshData.RawData.GetTop(points, triangles, topColor, topTexture);
                     var side = FillerMeshData.RawData.GetSide(groups, points, sideColor, sideTexture);
@@ -69,9 +71,19 @@ namespace IMT.Manager
         private bool GetTexture(out FillerMeshData.TextureData textureData, out Color color)
         {
             var theme = (PavementTheme.Value is ThemeHelper.IThemeData themeData ? themeData : ThemeHelper.DefaultTheme).GetTexture(ThemeHelper.TextureType.Pavement);
-            textureData = new FillerMeshData.TextureData(theme.texture, theme.tiling, 0f);
-            color = UnityEngine.Color.white;
-            return true;
+
+            if (theme.texture != null)
+            {
+                textureData = new FillerMeshData.TextureData(theme.texture, theme.tiling, 0f);
+                color = UnityEngine.Color.white;
+                return true;
+            }
+            else
+            {
+                textureData = default;
+                color = default;
+                return false;
+            }
         }
 
         protected bool Triangulate(Contour contour, MarkingLOD lod, out Vector3[] points, out int[] groups, out int[] triangles)
@@ -261,7 +273,7 @@ namespace IMT.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
-            PavementTheme.FromXml(config, null);
+            PavementTheme.FromXml(config, ThemeHelper.DefaultTheme);
             Elevation.FromXml(config, DefaultElevation);
             CornerRadius.FromXml(config, DefaultCornerRadius);
         }

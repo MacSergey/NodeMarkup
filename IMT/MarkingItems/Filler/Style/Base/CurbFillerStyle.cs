@@ -39,7 +39,8 @@ namespace IMT.Manager
                 base.CalculateImpl(filler, contours, lod, addData);
             else
             {
-                GetSideTexture(out var curbTexture, out var curbColor);
+                if (!GetSideTexture(out var curbTexture, out var curbColor))
+                    return;
 
                 foreach (var contour in contours)
                 {

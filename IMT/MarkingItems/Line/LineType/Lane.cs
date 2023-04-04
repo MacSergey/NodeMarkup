@@ -30,9 +30,9 @@ namespace IMT.Manager
                 lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
                 trajectories = new ITrajectory[]
                 {
-                    new BezierTrajectory(leftPointS.Position, leftPointS.Direction, rightPointE.Position, rightPointE.Direction),
+                    new BezierTrajectory(leftPointS.Position, leftPointS.Direction, rightPointE.Position, rightPointE.Direction, BezierTrajectory.Data.Default),
                     new StraightTrajectory(rightPointE.Position, leftPointE.Position),
-                    new BezierTrajectory(leftPointE.Position, leftPointE.Direction, rightPointS.Position, rightPointS.Direction),
+                    new BezierTrajectory(leftPointE.Position, leftPointE.Direction, rightPointS.Position, rightPointS.Direction, BezierTrajectory.Data.Default),
                     new StraightTrajectory(rightPointS.Position, leftPointS.Position),
                 };
             }
@@ -41,8 +41,8 @@ namespace IMT.Manager
                 lanePointS.Source.GetPoints(out var leftPointS, out var rightPointS);
                 trajectories = new ITrajectory[]
                 {
-                    new BezierTrajectory(leftPointS.Position, leftPointS.Direction, PointPair.Second.Position, PointPair.Second.Direction),
-                    new BezierTrajectory(PointPair.Second.Position, PointPair.Second.Direction, rightPointS.Position, rightPointS.Direction),
+                    new BezierTrajectory(leftPointS.Position, leftPointS.Direction, PointPair.Second.Position, PointPair.Second.Direction, BezierTrajectory.Data.Default),
+                    new BezierTrajectory(PointPair.Second.Position, PointPair.Second.Direction, rightPointS.Position, rightPointS.Direction, BezierTrajectory.Data.Default),
                     new StraightTrajectory(rightPointS.Position, leftPointS.Position),
                 };
             }
@@ -51,9 +51,9 @@ namespace IMT.Manager
                 lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
                 trajectories = new ITrajectory[]
                 {
-                    new BezierTrajectory(PointPair.First.Position, PointPair.First.Direction, rightPointE.Position, rightPointE.Direction),
+                    new BezierTrajectory(PointPair.First.Position, PointPair.First.Direction, rightPointE.Position, rightPointE.Direction, BezierTrajectory.Data.Default),
                     new StraightTrajectory(rightPointE.Position, leftPointE.Position),
-                    new BezierTrajectory(leftPointE.Position, leftPointE.Direction, PointPair.First.Position, PointPair.First.Direction),
+                    new BezierTrajectory(leftPointE.Position, leftPointE.Direction, PointPair.First.Position, PointPair.First.Direction, BezierTrajectory.Data.Default),
                 };
             }
             else
@@ -78,8 +78,8 @@ namespace IMT.Manager
                 lanePointE.Source.GetPoints(out var leftPointE, out var rightPointE);
 
                 trajectories = new ITrajectory[4];
-                trajectories[0] = new BezierTrajectory(leftPointS.Position, leftPointS.Direction, rightPointE.Position, rightPointE.Direction).Cut(fromT, toT);
-                trajectories[2] = new BezierTrajectory(leftPointE.Position, leftPointE.Direction, rightPointS.Position, rightPointS.Direction).Cut(1f - toT, 1f - fromT);
+                trajectories[0] = new BezierTrajectory(leftPointS.Position, leftPointS.Direction, rightPointE.Position, rightPointE.Direction, BezierTrajectory.Data.Default).Cut(fromT, toT);
+                trajectories[2] = new BezierTrajectory(leftPointE.Position, leftPointE.Direction, rightPointS.Position, rightPointS.Direction, BezierTrajectory.Data.Default).Cut(1f - toT, 1f - fromT);
                 trajectories[1] = new StraightTrajectory(trajectories[0].EndPosition, trajectories[2].StartPosition);
                 trajectories[3] = new StraightTrajectory(trajectories[2].EndPosition, trajectories[0].StartPosition);
             }

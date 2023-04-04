@@ -39,9 +39,18 @@ namespace IMT.Manager
         protected override bool GetTopTexture(out FillerMeshData.TextureData textureData, out Color color)
         {
             var theme = (Theme.Value is ThemeHelper.IThemeData themeData ? themeData : ThemeHelper.DefaultTheme).GetTexture(TextureType);
-            textureData = new FillerMeshData.TextureData(theme.texture, theme.tiling, 0f);
-            color = UnityEngine.Color.white;
-            return true;
+            if (theme.texture != null)
+            {
+                textureData = new FillerMeshData.TextureData(theme.texture, theme.tiling, 0f);
+                color = UnityEngine.Color.white;
+                return true;
+            }
+            else
+            {
+                textureData = default;
+                color = default;
+                return false;
+            }
         }
 
         protected override void GetUIComponents(MarkingFiller filler, EditorProvider provider)
@@ -66,7 +75,7 @@ namespace IMT.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
-            Theme.FromXml(config, null);
+            Theme.FromXml(config, ThemeHelper.DefaultTheme);
         }
         public override XElement ToXml()
         {

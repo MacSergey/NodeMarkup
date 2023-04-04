@@ -49,9 +49,24 @@ namespace IMT.Manager
             var startDir = PointPair.First.Direction;
             var endDir = PointPair.Second.Direction;
 
+            var isStraight = Marking.Type == MarkingType.Segment && Marking.Id.GetSegment().IsStraight();
+            //if (Marking.Type == MarkingType.Segment)
+            //{
+            //    isStraight = Marking.Id.GetSegment().IsStraight();
+            //    //var startSegmentPos = PointPair.First.Enter.Position;
+            //    //var startSegmentDir = PointPair.First.Enter.NormalDir;
+            //    //var endSegmentPos = PointPair.Second.Enter.Position;
+            //    //var endSegmentDir = PointPair.Second.Enter.NormalDir;
+
+            //    ////Marking.Id.GetSegment().IsStraight.IsStartNode(PointPair.First.Enter.Id);
+
+            //    //isStraight = NetSegment.IsStraight(startSegmentPos, startSegmentDir, endSegmentPos, endSegmentDir);
+            //}
+            //else
+            //    isStraight = false;
+
             float startT;
             float endT;
-            var isStraight = Marking.Type == MarkingType.Segment && NetSegment.IsStraight(PointPair.First.Enter.Position, PointPair.First.Enter.NormalDir, PointPair.Second.Enter.Position, PointPair.Second.Enter.NormalDir);
             if (isStraight)
             {
                 startT = PointPair.First.Enter.IsSmooth ? BezierTrajectory.curveT : BezierTrajectory.straightT;
@@ -63,7 +78,8 @@ namespace IMT.Manager
                 endT = BezierTrajectory.curveT;
             }
 
-            var trajectory = new BezierTrajectory(startPos, startDir, endPos, endDir, startT, endT);
+            var data = new BezierTrajectory.Data(startT, endT, forceStraight: isStraight);
+            var trajectory = new BezierTrajectory(startPos, startDir, endPos, endDir, data);
 
             if (Marking.Type == MarkingType.Node || isStraight)
                 return trajectory;
@@ -94,9 +110,10 @@ namespace IMT.Manager
                 d = endPos,
             };
 
-            BezierTrajectory.GetMiddlePoints(startPos, startDir, endPos, endDir, startT, endT, startT, endT, out bezier.b, out bezier.c, out _, out _);
-            BezierTrajectory.GetMiddlePoints(startPos, startDir, endPosF, endDir, startT, endT, startT, endT, out bezierL.b, out bezierL.c, out _, out _);
-            BezierTrajectory.GetMiddlePoints(startPosF, startDir, endPos, endDir, startT, endT, startT, endT, out bezierR.b, out bezierR.c, out _, out _);
+            data = new BezierTrajectory.Data(startT, endT, startT, endT, false);
+            BezierTrajectory.GetMiddlePoints(startPos, startDir, endPos, endDir, data, out bezier.b, out bezier.c, out _, out _);
+            BezierTrajectory.GetMiddlePoints(startPos, startDir, endPosF, endDir, data, out bezierL.b, out bezierL.c, out _, out _);
+            BezierTrajectory.GetMiddlePoints(startPosF, startDir, endPos, endDir, data, out bezierR.b, out bezierR.c, out _, out _);
 
             var middlePos = (bezierL.Position(0.5f) + bezierR.Position(0.5f)) * 0.5f;
             var middleDir = VectorUtils.NormalizeXZ(bezier.Tangent(0.5f));
@@ -104,8 +121,10 @@ namespace IMT.Manager
             middleDir.y = middleDirLR.y;
             middleDir.Normalize();
 
-            BezierTrajectory.GetMiddleDistance(startPos, startDir, middlePos, -middleDir, startT, BezierTrajectory.curveT, startT, BezierTrajectory.curveT, out var startDis, out var middleDis1, out _, out _);
-            BezierTrajectory.GetMiddleDistance(middlePos, middleDir, endPos, endDir, BezierTrajectory.curveT, endT, BezierTrajectory.curveT, endT, out var middleDis2, out var endDis, out _, out _);
+            data = new BezierTrajectory.Data(startT, BezierTrajectory.curveT, startT, BezierTrajectory.curveT, false);
+            BezierTrajectory.GetMiddleDistance(startPos, startDir, middlePos, -middleDir, data, out var startDis, out var middleDis1, out _, out _);
+            data = new BezierTrajectory.Data(BezierTrajectory.curveT, endT, BezierTrajectory.curveT, endT, false);
+            BezierTrajectory.GetMiddleDistance(middlePos, middleDir, endPos, endDir, data, out var middleDis2, out var endDis, out _, out _);
 
             var middleDis = (middleDis1 + middleDis2) * 0.5f;
 
@@ -253,7 +272,7 @@ namespace IMT.Manager
 
         public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
         {
-            foreach(var rule in Rules)
+            foreach (var rule in Rules)
                 rule.Style.Value.GetUsedAssets(networks, props, trees);
         }
     }

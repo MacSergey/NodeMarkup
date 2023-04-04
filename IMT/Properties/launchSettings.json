@@ -3,7 +3,7 @@
     "Normal": {
       "commandName": "Executable",
       "executablePath": "C:\\Program Files (x86)\\Steam\\steam.exe",
-      "commandLineArgs": "-applaunch 255710 --enable-dev-ui"
+      "commandLineArgs": "-applaunch 255710 --enable-dev-ui --refreshWorkshop"
     },
     "No Workshop": {
       "commandName": "Executable",

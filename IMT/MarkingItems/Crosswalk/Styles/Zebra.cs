@@ -354,7 +354,7 @@ namespace IMT.Manager
             }
             public override void SetStyle(ControlStyle style)
             {
-                Selector.SetStyle(style.Segmented);
+                Selector.SegmentedStyle = style.Segmented;
             }
 
             public class DashEndSegmented : UIOnceSegmented<DashEnd> { }

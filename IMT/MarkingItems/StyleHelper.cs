@@ -354,7 +354,7 @@ namespace IMT.Manager
             parts[i] = new ContourEdge(parts[i].trajectory.Cut(0f, firstT), parts[i].isEnter);
             parts[j] = new ContourEdge(parts[j].trajectory.Cut(secondT, 1f), parts[j].isEnter);
 
-            parts.Insert(j, new ContourEdge(new BezierTrajectory(startPos, startDir, endPos, endDir)));
+            parts.Insert(j, new ContourEdge(new BezierTrajectory(startPos, startDir, endPos, endDir, BezierTrajectory.Data.Default)));
 
             return true;
         }

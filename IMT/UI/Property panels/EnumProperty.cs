@@ -42,7 +42,7 @@ namespace IMT.UI
         protected override string GetDescription(Alignment value) => value.Description();
         public override void SetStyle(ControlStyle style)
         {
-            Selector.SetStyle(style.Segmented);
+            Selector.SegmentedStyle = style.Segmented;
         }
     }
     public class PropColorPropertyPanel : EnumOncePropertyPanel<PropLineStyle.ColorOptionEnum, PropColorPropertyPanel.PropColorDropDown>

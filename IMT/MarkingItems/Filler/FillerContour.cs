@@ -482,7 +482,7 @@ namespace IMT.Manager
             {
                 var first = trajectories[a];
                 var second = trajectories[(b - 1 + trajectories.Length) % trajectories.Length];
-                return new BezierTrajectory(first.StartPosition, first.StartDirection, second.EndPosition, second.EndDirection);
+                return new BezierTrajectory(first.StartPosition, first.StartDirection, second.EndPosition, second.EndDirection, BezierTrajectory.Data.Default);
             }
         }
         public int GetCorrectIndex(int value) => value >= 0 ? value % ProcessedCount : value % ProcessedCount + ProcessedCount;

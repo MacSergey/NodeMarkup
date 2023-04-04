@@ -236,6 +236,7 @@ namespace IMT.UI
             WordWrap = true;
             textScale = 0.7f;
             TextVerticalAlignment = UIVerticalAlignment.Middle;
+            TextHorizontalAlignment = UIHorizontalAlignment.Left;
 
             Favorite = AddUIComponent<CustomUIButton>();
             Favorite.Atlas = IMTTextures.Atlas;

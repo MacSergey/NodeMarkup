@@ -221,7 +221,7 @@ namespace IMT.Manager
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
-            DecalColor.ToXml(config);
+            DecalColor.FromXml(config, Prefab.Value?.m_color0);
             Size.FromXml(config, null);
             Tiling.FromXml(config, Vector2.one);
             Height.FromXml(config, DecalData.DefaultHeight);
@@ -229,7 +229,7 @@ namespace IMT.Manager
         public override XElement ToXml()
         {
             var config = base.ToXml();
-            DecalColor.FromXml(config, Prefab.Value?.m_color0);
+            DecalColor.ToXml(config);
             Size.ToXml(config);
             Tiling.ToXml(config);
             Height.ToXml(config);
