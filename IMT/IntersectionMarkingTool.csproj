@@ -16,11 +16,11 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.14.0.1091</AssemblyVersion>
+    <AssemblyVersion>1.14.0.1092</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
-    <AssemblyVersion>1.14</AssemblyVersion>
+    <AssemblyVersion>1.14.0.1</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stable Release|AnyCPU'">
