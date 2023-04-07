@@ -494,13 +494,17 @@ namespace IMT.Manager
         public enum StyleType
         {
             [NotItem]
+            [NotVisible]
             ItemMask = 0xFF,
+
             [NotItem]
+            [NotVisible]
             GroupMask = ~ItemMask,
 
             #region REGULAR
 
             [NotItem]
+            [NotVisible]
             [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
             [Sprite(nameof(RegularLine), "Group")]
             RegularLine = Marking.Item.RegularLine,
@@ -563,6 +567,7 @@ namespace IMT.Manager
 
 
             [NotItem]
+            [NotVisible]
             Regular3DLine = Marking.Item.RegularLine + 0x80,
 
             [Description(nameof(Localize.LineStyle_Pavement))]
@@ -574,6 +579,7 @@ namespace IMT.Manager
 
 
             [NotItem]
+            [NotVisible]
             RegularObjectLine = Regular3DLine + 0x10,
 
             [Description(nameof(Localize.LineStyle_Prop))]
@@ -606,6 +612,7 @@ namespace IMT.Manager
 
 
             [NotItem]
+            [NotVisible]
             RegularNetworkLine = Regular3DLine + 0x20,
 
             [Description(nameof(Localize.LineStyle_Network))]
@@ -632,6 +639,7 @@ namespace IMT.Manager
             #region STOP
 
             [NotItem]
+            [NotVisible]
             [Description(nameof(Localize.LineStyle_StopLinesGroup))]
             [NetworkType(NetworkType.Road)]
             [Sprite(nameof(StopLine))]
@@ -690,6 +698,7 @@ namespace IMT.Manager
             #region FILLER
 
             [NotItem]
+            [NotVisible]
             [Description(nameof(Localize.FillerStyle_Group))]
             [Sprite(nameof(Filler), "Group")]
             Filler = Marking.Item.Filler,
@@ -731,6 +740,7 @@ namespace IMT.Manager
             FillerAsphalt,
 
             [NotItem]
+            [NotVisible]
             Filler3D = Filler + 0x80,
 
             [Description(nameof(Localize.FillerStyle_PavementIsland))]
@@ -779,6 +789,7 @@ namespace IMT.Manager
             #region CROSSWALK
 
             [NotItem]
+            [NotVisible]
             [Description(nameof(Localize.CrosswalkStyle_Group))]
             [Sprite(nameof(Crosswalk), "Group")]
             Crosswalk = Marking.Item.Crosswalk,

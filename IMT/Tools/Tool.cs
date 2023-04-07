@@ -83,7 +83,7 @@ namespace IMT.Tools
             }
         }
 
-        public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>(v => v.IsItem()).ToDictionary(i => i, i => GetSavedStylesModifier(i));
+        public static Dictionary<Style.StyleType, SavedInt> StylesModifier { get; } = EnumExtension.GetEnumValues<Style.StyleType>().IsItem().ToDictionary(i => i, i => GetSavedStylesModifier(i));
 
         #endregion
 
@@ -849,7 +849,7 @@ namespace IMT.Tools
         {
             var modifier = EnumExtension.GetEnumValues<StyleModifier>().FirstOrDefault(i => i.GetAttr<InputKeyAttribute, StyleModifier>() is InputKeyAttribute ik && ik.IsPressed);
 
-            foreach (var style in EnumExtension.GetEnumValues<TStyleType>(i => true).Select(i => i.ToEnum<Style.StyleType, TStyleType>()))
+            foreach (var style in EnumExtension.GetEnumValues<TStyleType>().ToEnum<Style.StyleType, TStyleType>())
             {
                 if ((style.GetNetworkType() & networkType) == 0 || (style.GetLineType() & lineType) == 0)
                     continue;
@@ -874,7 +874,7 @@ namespace IMT.Tools
                 var defaultStyle = ifNotFound.ToEnum<Style.StyleType, TStyleType>();
                 if ((defaultStyle.GetNetworkType() & networkType) == 0 && (defaultStyle.GetLineType() & lineType) == 0)
                 {
-                    foreach (var style in EnumExtension.GetEnumValues<TStyleType>(i => true).Select(i => i.ToEnum<Style.StyleType, TStyleType>()))
+                    foreach (var style in EnumExtension.GetEnumValues<TStyleType>().ToEnum<Style.StyleType, TStyleType>())
                     {
                         if ((style.GetNetworkType() & networkType) != 0 && (style.GetLineType() & lineType) != 0)
                         {
@@ -920,7 +920,7 @@ namespace IMT.Tools
         private IEnumerable<string> GetStylesModifier<StyleType>(NetworkType networkType, LineType lineType)
             where StyleType : Enum
         {
-            foreach (var style in EnumExtension.GetEnumValues<StyleType>(i => true))
+            foreach (var style in EnumExtension.GetEnumValues<StyleType>())
             {
                 if ((style.GetNetworkType() & networkType) == 0 && (style.GetLineType() & lineType) == 0)
                     continue;

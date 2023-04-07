@@ -187,7 +187,7 @@ namespace IMT.Manager
 
             if ((defaultStyle.GetNetworkType() & PointPair.NetworkType) == 0 || (defaultStyle.GetLineType() & Type) == 0)
             {
-                foreach (var style in EnumExtension.GetEnumValues<RegularLineStyle.RegularLineType>(i => true).Select(i => i.ToEnum<Style.StyleType, RegularLineStyle.RegularLineType>()))
+                foreach (var style in EnumExtension.GetEnumValues<RegularLineStyle.RegularLineType>().ToEnum<Style.StyleType, RegularLineStyle.RegularLineType>())
                 {
                     if ((style.GetNetworkType() & PointPair.NetworkType) != 0 && (style.GetLineType() & Type) != 0)
                     {
