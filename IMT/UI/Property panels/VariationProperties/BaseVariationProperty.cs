@@ -34,11 +34,11 @@ namespace IMT.UI
         }
         public bool SubmitOnFocusLost
         {
-            get => FieldA.submitOnFocusLost && FieldB.submitOnFocusLost;
+            get => FieldA.SubmitOnFocusLost && FieldB.SubmitOnFocusLost;
             set
             {
-                FieldA.submitOnFocusLost = value;
-                FieldB.submitOnFocusLost = value;
+                FieldA.SubmitOnFocusLost = value;
+                FieldB.SubmitOnFocusLost = value;
             }
         }
         public ValueType ValueA

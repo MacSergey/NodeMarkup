@@ -7,12 +7,15 @@ using System;
 using System.Linq;
 using UnityEngine;
 using LayoutStart = ModsCommon.UI.LayoutStart;
+using static ModsCommon.UI.ComponentStyle;
 
 namespace IMT.UI.Editors
 {
     public class CategoryItem : CustomUIPanel, IReusable
     {
         bool IReusable.InCache { get; set; }
+        Transform IReusable.CachedTransform { get => m_CachedTransform; set => m_CachedTransform = value; }
+
         public PropertyGroupPanel CategoryPanel { get; private set; }
 
         public CategoryItem()
@@ -55,6 +58,13 @@ namespace IMT.UI.Editors
     {
         protected IPropertyContainer Editor { get; private set; }
         protected TypeHeader Header { get; private set; }
+        private static HeaderStyle HeaderStyle { get; } = new HeaderStyle()
+        {
+            MainBgColors = new ColorSet(default, DarkPrimaryColor10, Color.black, default, default),
+            MainIconColors = new ColorSet(Color.white, Color.white, DarkPrimaryColor90, Color.white, DarkPrimaryColor10),
+            AdditionalBgColors = new ColorSet(default, DarkPrimaryColor45, DarkPrimaryColor45, default, default),
+            AdditionalIconColors = new ColorSet(Color.white, Color.white, DarkPrimaryColor90, Color.white, DarkPrimaryColor55),
+        };
 
         public bool? IsExpand
         {
@@ -101,6 +111,7 @@ namespace IMT.UI.Editors
             Editor = editor;
 
             Header = ComponentPool.Get<TypeHeader>(this, nameof(Header));
+            Header.ContentStyle = HeaderStyle;
             Header.Category = category.Text;
             Header.Init(editor);
             Header.eventClick += HeaderClick;
@@ -325,7 +336,7 @@ namespace IMT.UI.Editors
             get => NameLabel.text;
             set => NameLabel.text = value;
         }
-        public bool IsExpand { set => ExpandButton.FgSprites = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
+        public bool IsExpand { set => ExpandButton.IconSprites = value ? CommonTextures.ArrowDown : CommonTextures.ArrowRight; }
 
         public BaseCategoryHeaderPanel()
         {
@@ -342,7 +353,7 @@ namespace IMT.UI.Editors
 
             ExpandButton = AddUIComponent<CustomUIButton>();
             ExpandButton.Atlas = CommonTextures.Atlas;
-            ExpandButton.FgColors = Color.black;
+            ExpandButton.IconColors = Color.black;
             ExpandButton.ScaleFactor = 0.6f;
             ExpandButton.size = new Vector2(20, 20);
             ExpandButton.zOrder = 0;
@@ -400,22 +411,22 @@ namespace IMT.UI.Editors
         {
             base.FillContent();
 
-            Copy = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyButtonIcon, IMT.Localize.HeaderPanel_CopyEffects, CopyClick);
+            Copy = new HeaderButtonInfo<HeaderButton>("Copy", HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.CopyButtonIcon, IMT.Localize.HeaderPanel_CopyEffects, CopyClick);
             Content.AddButton(Copy);
 
-            Paste = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.PasteButtonIcon, IMT.Localize.HeaderPanel_PasteEffects, PasteClick);
+            Paste = new HeaderButtonInfo<HeaderButton>("Paste", HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.PasteButtonIcon, IMT.Localize.HeaderPanel_PasteEffects, PasteClick);
             Content.AddButton(Paste);
 
-            ApplyAllRules = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, IMT.Localize.HeaderPanel_ApplyAllRules, ApplyAllRulesClick);
+            ApplyAllRules = new HeaderButtonInfo<HeaderButton>("Apply to all rules", HeaderButtonState.Main, IMTTextures.Atlas, IMTTextures.ApplyButtonIcon, IMT.Localize.HeaderPanel_ApplyAllRules, ApplyAllRulesClick);
             Content.AddButton(ApplyAllRules);
 
-            ApplySameStyle = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToSameButtonIcon, string.Empty, ApplySameStyleClick);
+            ApplySameStyle = new HeaderButtonInfo<HeaderButton>("Appy the same style", HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToSameButtonIcon, string.Empty, ApplySameStyleClick);
             Content.AddButton(ApplySameStyle);
 
-            ApplySameType = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToAllButtonIcon, string.Empty, ApplySameTypeClick);
+            ApplySameType = new HeaderButtonInfo<HeaderButton>("Apply to the same type", HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.CopyToAllButtonIcon, string.Empty, ApplySameTypeClick);
             Content.AddButton(ApplySameType);
 
-            ApplyAll = new HeaderButtonInfo<HeaderButton>(HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.ApplyAllButtonIcon, IMT.Localize.HeaderPanel_ApplyAll, ApplyAllClick);
+            ApplyAll = new HeaderButtonInfo<HeaderButton>("Apply to all", HeaderButtonState.Additional, IMTTextures.Atlas, IMTTextures.ApplyAllButtonIcon, IMT.Localize.HeaderPanel_ApplyAll, ApplyAllClick);
             Content.AddButton(ApplyAll);
         }
         public override void DeInit()
@@ -517,15 +528,5 @@ namespace IMT.UI.Editors
         protected override int AdditionalButtonSize => 24;
         protected override UITextureAtlas AdditionalButtonAtlas => IMTTextures.Atlas;
         protected override string AdditionalButtonSprite => IMTTextures.AdditionalButtonIcon;
-
-        protected override Color32 ButtonHoveredColor => new Color32(32, 32, 32, 255);
-        protected override Color32 ButtonPressedColor => Color.black;
-        protected override Color32 AdditionalButtonHoveredColor => new Color32(112, 112, 112, 255);
-        protected override Color32 AdditionalButtonPressedColor => new Color32(144, 144, 144, 255);
-
-        protected override Color32 IconNormalColor => Color.white;
-        protected override Color32 IconHoverColor => Color.white;
-        protected override Color32 IconPressedColor => new Color32(224, 224, 224, 255);
-        protected override Color32 IconDisabledColor => new Color32(144, 144, 144, 255);
     }
 }

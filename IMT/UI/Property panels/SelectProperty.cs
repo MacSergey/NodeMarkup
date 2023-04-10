@@ -26,7 +26,7 @@ namespace IMT.UI.Editors
         public override void SetStyle(ControlStyle style)
         {
             Selector.SelectorStyle = style.DropDown;
-            ResetButton.ButtonStyle = style.Button;
+            ResetButton.ButtonStyle = style.SmallButton;
         }
 
         public class CrosswalkBorderSelectButton : SelectListPropertyButton<MarkingRegularLine>

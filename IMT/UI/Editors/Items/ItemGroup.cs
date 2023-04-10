@@ -15,6 +15,8 @@ namespace IMT.UI.Editors
         where ObjectType : class, IDeletable
     {
         bool IReusable.InCache { get; set; }
+        Transform IReusable.CachedTransform { get => m_CachedTransform; set => m_CachedTransform = value; }
+
 
         public event Action<bool> OnExpandChanged;
 
@@ -78,8 +80,8 @@ namespace IMT.UI.Editors
         {
             Selector = selector;
             Header.text = GetName(selector);
-            Header.FgAtlas = IMTTextures.Atlas;
-            Header.FgSprites = ShowIcon ? GetSprite(selector) : string.Empty;
+            Header.IconAtlas = IMTTextures.Atlas;
+            Header.IconSprites = ShowIcon ? GetSprite(selector) : string.Empty;
             IsExpand = false;
         }
         protected virtual void SetStyle()
@@ -95,7 +97,7 @@ namespace IMT.UI.Editors
             {
                 if (width >= 100)
                 {
-                    Header.TextPadding.left = Header.DefaultBackgroundPadding.left + 5 + (int)Header.SpriteSize.x + 10;
+                    Header.TextPadding.left = Header.DefaultBackgroundPadding.left + 5 + (int)Header.IconSize.x + 10;
                 }
                 else
                 {
@@ -104,12 +106,12 @@ namespace IMT.UI.Editors
 
                 if (width >= (Header.DefaultBackgroundPadding.left + 5) * 2)
                 {
-                    Header.SpritePadding.left = Header.DefaultBackgroundPadding.left + 5;
+                    Header.IconPadding.left = Header.DefaultBackgroundPadding.left + 5;
                     Header.HorizontalAlignment = UIHorizontalAlignment.Left;
                 }
                 else
                 {
-                    Header.SpritePadding.left = 0;
+                    Header.IconPadding.left = 0;
                     Header.HorizontalAlignment = UIHorizontalAlignment.Center;
                 }
             }
@@ -178,8 +180,8 @@ namespace IMT.UI.Editors
             TextPadding.top = 5;
             NormalBgSprite = CommonTextures.PanelSmall;
 
-            ForegroundSpriteMode = SpriteMode.FixedSize;
-            SpriteSize = new Vector2(20, 20f);
+            IconMode = SpriteMode.FixedSize;
+            IconSize = new Vector2(20, 20f);
 
             WordWrap = false;
 

@@ -50,6 +50,8 @@ namespace IMT.UI
         public class MultilineText : CustomUIPanel, IReusable
         {
             bool IReusable.InCache { get; set; }
+            Transform IReusable.CachedTransform { get => m_CachedTransform; set => m_CachedTransform = value; }
+
 
             public event Action<string> OnTextChanged;
 
@@ -98,7 +100,7 @@ namespace IMT.UI
                     {
                         var line = AddUIComponent<MultilineTextItem>();
 
-                        line.Field.eventTextChanged += FieldTextChanged;
+                        line.Field.OnTextChanged += FieldTextChanged;
                         line.Field.OnValueChanged += FieldValueChanged;
                         line.LabelItem.text = string.Format(IMT.Localize.StyleOption_LineNumber, i + 1);
 
@@ -135,7 +137,7 @@ namespace IMT.UI
             }
 
             private void FieldValueChanged(string text) => OnTextChanged?.Invoke(Text);
-            private void FieldTextChanged(UIComponent component, string value) => Refresh();
+            private void FieldTextChanged(string value) => Refresh();
 
             public void SetStyle(ControlStyle style)
             {

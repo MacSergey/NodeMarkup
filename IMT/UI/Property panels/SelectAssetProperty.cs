@@ -240,7 +240,7 @@ namespace IMT.UI
 
             Favorite = AddUIComponent<CustomUIButton>();
             Favorite.Atlas = IMTTextures.Atlas;
-            Favorite.ForegroundSpriteMode = SpriteMode.Fill;
+            Favorite.IconMode = SpriteMode.Fill;
             Favorite.size = new Vector2(20, 90);
             Favorite.eventClick += FavoriteClick;
 
@@ -292,14 +292,14 @@ namespace IMT.UI
             if (IsFavorite)
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_RemoveFromFavorites;
-                Favorite.FgSprites = new SpriteSet(IMTTextures.SetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton);
-                Favorite.FgColors = new ColorSet(FavoriteNormal, FavoriteNormal, FavoriteHovered, FavoriteNormal, FavoriteNormal);
+                Favorite.IconSprites = new SpriteSet(IMTTextures.SetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.UnsetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton);
+                Favorite.IconColors = new ColorSet(FavoriteNormal, FavoriteNormal, FavoriteHovered, FavoriteNormal, FavoriteNormal);
             }
             else
             {
                 Favorite.tooltip = IMT.Localize.StyleOption_AddToFavorites;
-                Favorite.FgSprites = new SpriteSet(IMTTextures.NotSetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton);
-                Favorite.FgColors = new ColorSet(Color.white, FavoriteHovered, FavoritePressed, Color.white, Color.white);
+                Favorite.IconSprites = new SpriteSet(IMTTextures.NotSetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.SetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton, IMTTextures.NotSetDefaultHeaderButton);
+                Favorite.IconColors = new ColorSet(Color.white, FavoriteHovered, FavoritePressed, Color.white, Color.white);
             }
         }
 

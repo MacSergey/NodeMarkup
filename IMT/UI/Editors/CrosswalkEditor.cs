@@ -89,6 +89,7 @@ namespace IMT.UI.Editors
         private void AddHeader()
         {
             var header = ComponentPool.Get<CrosswalkHeaderPanel>(PropertiesPanel, "Header");
+            header.ContentStyle = UIStyle.Default.HeaderContent;
             header.Init(this, EditObject.Style.Value.Type, false);
             header.OnSaveTemplate += SaveTemplate;
             header.OnCopy += CopyStyle;

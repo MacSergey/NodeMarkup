@@ -9,6 +9,8 @@ namespace IMT.UI
     public class MoreOptionsPanel : EditorItem, IReusable
     {
         bool IReusable.InCache { get; set; }
+        Transform IReusable.CachedTransform { get => m_CachedTransform; set => m_CachedTransform = value; }
+
         protected CustomUIButton Button { get; set; }
         protected override float DefaultHeight => 24f;
 

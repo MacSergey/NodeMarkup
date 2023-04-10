@@ -32,8 +32,8 @@ namespace IMT.UI
             CopyButton.name = nameof(CopyButton);
             CopyButton.SetDefaultStyle();
             CopyButton.size = new Vector2(20f, 20f);
-            CopyButton.FgAtlas = IMTTextures.Atlas;
-            CopyButton.AllFgSprites = IMTTextures.CopyButtonIcon;
+            CopyButton.IconAtlas = IMTTextures.Atlas;
+            CopyButton.AllIconSprites = IMTTextures.CopyButtonIcon;
             CopyButton.tooltip = IMT.Localize.Editor_ColorCopy;
             CopyButton.eventClick += (_, _) => Copy();
 
@@ -41,8 +41,8 @@ namespace IMT.UI
             PasteButton.name = nameof(PasteButton);
             PasteButton.SetDefaultStyle();
             PasteButton.size = new Vector2(20f, 20f);
-            PasteButton.FgAtlas = IMTTextures.Atlas;
-            PasteButton.AllFgSprites = IMTTextures.PasteButtonIcon;
+            PasteButton.IconAtlas = IMTTextures.Atlas;
+            PasteButton.AllIconSprites = IMTTextures.PasteButtonIcon;
             PasteButton.tooltip = IMT.Localize.Editor_ColorPaste;
             PasteButton.eventClick += (_, _) => Paste();
 
@@ -102,13 +102,13 @@ namespace IMT.UI
         {
             base.SetStyle(style);
 
-            CopyButton.ButtonStyle = style.Button;
-            CopyButton.FgAtlas = IMTTextures.Atlas;
-            CopyButton.AllFgSprites = IMTTextures.CopyButtonIcon;
+            CopyButton.ButtonStyle = style.SmallButton;
+            CopyButton.IconAtlas = IMTTextures.Atlas;
+            CopyButton.AllIconSprites = IMTTextures.CopyButtonIcon;
 
-            PasteButton.ButtonStyle = style.Button;
-            PasteButton.FgAtlas = IMTTextures.Atlas;
-            PasteButton.AllFgSprites = IMTTextures.PasteButtonIcon;
+            PasteButton.ButtonStyle = style.SmallButton;
+            PasteButton.IconAtlas = IMTTextures.Atlas;
+            PasteButton.AllIconSprites = IMTTextures.PasteButtonIcon;
         }
     }
 

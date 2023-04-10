@@ -78,6 +78,7 @@ namespace IMT.UI.Panel
             name = nameof(IntersectionMarkingToolPanel);
 
             Header = AddUIComponent<PanelHeader>();
+            Header.ContentStyle = ComponentStyle.Default.HeaderContent;
             Header.relativePosition = new Vector2(0, 0);
             Header.Target = parent;
             Header.Init(HeaderHeight);

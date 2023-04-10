@@ -20,8 +20,8 @@ namespace IMT.UI
 
         public bool SubmitOnFocusLost
         {
-            get => Field.submitOnFocusLost;
-            set => Field.submitOnFocusLost = value;
+            get => Field.SubmitOnFocusLost;
+            set => Field.SubmitOnFocusLost = value;
         }
         public ValueType Value
         {
