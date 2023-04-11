@@ -1576,4 +1576,19 @@ Kliknij aby edytować oznaczenia</value>
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>Koniec</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Początek</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Maks</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Limity</value>
+  </data>
 </root>

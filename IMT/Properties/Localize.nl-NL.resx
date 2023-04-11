@@ -1876,4 +1876,7 @@ Het kan even duren als er veel segmenten zijn.</value>
   <data name="StyleOption_Wind" xml:space="preserve">
     <value>Deinend met de wind</value>
   </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Houd {0} ingedrukt om alle groepen in/uit te klappen</value>
+  </data>
 </root>
