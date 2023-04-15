@@ -65,6 +65,7 @@ namespace IMT.UI
 
                 TextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
 
+                SelAtlas = Atlas,
                 SelectionSprite = Empty,
                 SelectionColor = new Color32(255, 64, 0, 255),
             },
