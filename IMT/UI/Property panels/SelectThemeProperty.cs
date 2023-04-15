@@ -54,9 +54,9 @@ namespace IMT.UI
         public override void DeInit()
         {
             base.DeInit();
-            Theme = null;
-            TextureType = default;
             OnValueChanged = null;
+            DropDown.Clear();
+            TextureType = default;
         }
 
         public override void SetStyle(ControlStyle style)

@@ -3,15 +3,13 @@ using IMT.Manager;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
-using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace IMT.UI
 {
-    public abstract class SelectPrefabProperty<PrefabType> : EditorPropertyPanel, IReusable
+    public  interface ISelectPrefabProperty<PrefabType>
         where PrefabType : PrefabInfo
     {
         public event Action<PrefabType> OnValueChanged;
@@ -21,40 +19,32 @@ namespace IMT.UI
         public abstract Func<PrefabType, bool> SelectPredicate { get; set; }
         public abstract Func<PrefabType, PrefabType, int> SortPredicate { get; set; }
 
-        public override void DeInit()
-        {
-            base.DeInit();
-            Prefab = null;
-            SelectPredicate = null;
-            OnValueChanged = null;
-        }
-
-        protected void ValueChanged(PrefabType prefab) => OnValueChanged?.Invoke(prefab);
     }
-    public abstract class SelectPrefabProperty<PrefabType, EntityType, PopupType, DropDownType> : SelectPrefabProperty<PrefabType>
+    public abstract class SelectPrefabProperty<PrefabType, EntityType, PopupType, DropDownType> : EditorPropertyPanel, IReusable, ISelectPrefabProperty<PrefabType>
         where PrefabType : PrefabInfo
         where EntityType : PrefabEntity<PrefabType>
         where PopupType : ObjectPopup<PrefabType, EntityType>
         where DropDownType : PrefabDropDown<PrefabType, EntityType, PopupType>
     {
+        public event Action<PrefabType> OnValueChanged;
         private DropDownType DropDown { get; set; }
 
-        public override PrefabType Prefab
+        public PrefabType Prefab
         {
             get => DropDown.SelectedObject;
             set => DropDown.SelectedObject = value;
         }
-        public override string RawName
+        public string RawName
         {
             get => DropDown.RawName;
             set => DropDown.RawName = value;
         }
-        public override Func<PrefabType, bool> SelectPredicate
+        public Func<PrefabType, bool> SelectPredicate
         {
             get => DropDown.SelectPredicate;
             set => DropDown.SelectPredicate = value;
         }
-        public override Func<PrefabType, PrefabType, int> SortPredicate
+        public Func<PrefabType, PrefabType, int> SortPredicate
         {
             get => DropDown.SortPredicate;
             set => DropDown.SortPredicate = (objA, objB) =>
@@ -85,6 +75,15 @@ namespace IMT.UI
             for (uint i = 0; i < count; i += 1)
                 DropDown.AddItem(PrefabCollection<PrefabType>.GetLoaded(i));
         }
+        public override void DeInit()
+        {
+            base.DeInit();
+            OnValueChanged = null;
+            DropDown.Clear();
+            SelectPredicate = null;
+        }
+
+        protected void ValueChanged(PrefabType prefab) => OnValueChanged?.Invoke(prefab);
 
         public override void SetStyle(ControlStyle style)
         {
