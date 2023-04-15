@@ -42,7 +42,7 @@ namespace IMT.Manager
 
     public abstract class BaseObjectStyle<PrefabType, SelectPrefabType> : RegularLineStyle, IObjectStyle, IPrefabStyle<PrefabType>
         where PrefabType : PrefabInfo
-        where SelectPrefabType : SelectPrefabProperty<PrefabType>
+        where SelectPrefabType : EditorPropertyPanel, ISelectPrefabProperty<PrefabType>
     {
         public override bool CanOverlap => true;
 
@@ -522,7 +522,7 @@ namespace IMT.Manager
     }
     public abstract class BaseObject3DObjectStyle<PrefabType, SelectPrefabType> : BaseObjectStyle<PrefabType, SelectPrefabType>, I3DObject
         where PrefabType : PrefabInfo
-        where SelectPrefabType : SelectPrefabProperty<PrefabType>
+        where SelectPrefabType : EditorPropertyPanel, ISelectPrefabProperty<PrefabType>
     {
         public PropertyVector2Value Tilt { get; }
         public PropertyNullableStructValue<Vector2, PropertyVector2Value> Slope { get; }
