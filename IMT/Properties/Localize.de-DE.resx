@@ -1953,4 +1953,38 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
   <data name="Header_ExpandGroupTooltip" xml:space="preserve">
     <value>Halte {0} zum ein-/ausklappen aller Gruppen</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14" xml:space="preserve">
+    <value>[UPDATED] Großes Update des UI-Stils.
+[NEW] Das Elementfeld wird automatisch ausgeblendet, um Platz zu sparen. Kann in den Mod-Einstellungen deaktiviert werden.
+[NEW] Bodenfliesen-Füllungen hinzugefügt: Die Möglichkeit, jede Bodenfliese als Füll-Textur festzulegen.
+[NEW] Texturinsel-Füllungen hinzugefügt: Die Möglichkeit, jede Bodenfliese als Textur des 3D-Füllung festzulegen.
+[NEW] Bodenfliesen-Zebrastreifen hinzugefügt: Die Möglichkeit, jede Bodenfliese als Zebrastreifen-Textur festzulegen.
+[NEW] Asphalt-Füllung hinzugefügt.
+[NEW] Möglichkeit hinzugefügt, Kartenthemen für Gras, Kies, Ruiniert und Klippen auszuwählen.
+[NEW] Möglichkeit hinzugefügt, das Thema für den Gehweg/Bordstein auszuwählen.
+[NEW] Separater Stil für Bodenfliesen hinzugefügt. Es bietet zusätzliche Optionen für Bodenfliesen wie Kachelung und Neigungstoleranz. Bodenfliesen sind weiterhin als Dekorationen für die Abwärtskompatibilität verfügbar.
+[NEW] Bäume und Netzwerke, die mit IMT hinzugefügt wurden, sind aus jeder Entfernung sichtbar, wie normale Bäume und Netzwerke.
+[NEW] Möglichkeit hinzugefügt, bevorzugte Netzwerke/Dekorationen/Bäume festzulegen. Diese werden oben in der Liste angezeigt.
+[NEW] Behalte den Asset-Namen bei, wenn eine Dekoration/Baum/Netzwerk fehlt: Er wird nicht auf „nicht gesetzt“ zurückgesetzt und das Element wird erneut angezeigt, wenn das Asset wieder vorhanden ist.
+[UPDATED] Suche für das Vorlagenfenster hinzugefügt.
+[NEW] Daten von verwendeten Netzwerken/Dekorationen/Bäumen an LSMR weiterleiten, damit LSMR fehlende Gegenstände anzeigen kann, die nur von IMT verwendet werden.
+[UPDATED] Unterstützung für mehrzeiligen Text (bis zu 3 Zeilen) hinzugefügt.
+[UPDATED] Halte ALT gedrückt, um alle Farbkomponenten (RGB) gleichzeitig zu ändern, während das Mausrad scrollt.
+[UPDATED] Halte die Umschalttaste gedrückt, um alle Gruppen zu erweitern/zu reduzieren.
+[UPDATED] Option hinzugefügt, um zufällige Winkel für Bäume und Dekorationen festzulegen.
+[NEW] Möglichkeit hinzugefügt, die Bewegung der Bäume im Wind zu deaktivieren.
+[UPDATED] Stilsymbole zur Kopfzeile des Regelfelds hinzugefügt.
+[UPDATED] Symbole zu allen Gruppen hinzugefügt.
+[NEW] Schaltfläche „Alle Chevrons umkehren“ zu den Mod-Einstellungen hinzugefügt.
+[FIXED] Fester Zick-Zack-Wert „Start ab“ wird nicht gespeichert.
+[FIXED] Es wurde behoben, dass Shortcuts zum Drehen/Spiegeln von Markierungen beim Einfügen von Markierungen nicht funktionierten.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_1" xml:space="preserve">
+    <value>[UPDATED] Aufpolierte neue Benutzeroberfläche.
+[FIXED] Das Scrollen mit dem Rad über ein Dropdown ändert den Dropdown-Wert nicht.
+[FIXED] Dropdown-Popups können nicht geschlossen werden.
+[FIXED] Fehler beim Rendern einiger Netzwerke und Füllungen.
+[FIXED] Dekorationen/Bäume/Netzwerke folgen Segmenten nicht richtig.
+[FIXED] Bodenfliesen speichern die Farbeinstellungen nicht.</value>
+  </data>
 </root>

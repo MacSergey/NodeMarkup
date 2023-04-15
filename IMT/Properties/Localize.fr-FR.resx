@@ -2098,4 +2098,12 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
 [FIXED] Correction de la valeur "À partir de" des zigzags qui n'était pas sauvegardée.
 [FIXED] Correction du fait que les raccourcis pour tourner/inverser le marquage ne fonctionnent pas lors du collage du marquage.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_1" xml:space="preserve">
+    <value>[UPDATED] Peaufinage de la nouvelle interface.
+[FIXED] Le défilement de la molette sur une liste déroulante ne modifie pas la valeur.
+[FIXED] Les fenêtres déroulantes ne peuvent pas être fermées.
+[FIXED] Erreur lors du rendu de certains réseaux et remplisseurs.
+[FIXED] Les accessoires/arbres/réseaux ne suivent pas correctement le segment.
+[FIXED] Les décalques n'enregistrent pas les paramètres de couleur.</value>
+  </data>
 </root>

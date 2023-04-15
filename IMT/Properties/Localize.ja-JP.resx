@@ -2099,4 +2099,12 @@
 [FIXED] Fixed zigzag "start from" value does not save.
 [FIXED] Fixed that shortcuts for turning/mirroring marking do not work while pasting marking.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_1" xml:space="preserve">
+    <value>[UPDATED] Polishing new UI.
+[FIXED] Scrolling wheel over dropdown does not change dropdown value.
+[FIXED] Dropdown popups can not be closed.
+[FIXED] Error while rendering some networks and fillers.
+[FIXED] Props/trees/networks do not follow segment properly.
+[FIXED] Decal does not save color settings.</value>
+  </data>
 </root>
