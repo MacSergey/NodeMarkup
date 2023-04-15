@@ -23,7 +23,7 @@ namespace IMT.UI
     {
         protected override IEnumerable<Style.StyleType> GetValues()
         {
-            foreach (var value in EnumExtension.GetEnumValues<StyleType>())
+            foreach (var value in EnumExtension.GetEnumValues<StyleType>().IsVisible().Order())
                 yield return value.ToEnum<Style.StyleType, StyleType>();
         }
         protected override bool IsEqual(Style.StyleType first, Style.StyleType second) => first == second;

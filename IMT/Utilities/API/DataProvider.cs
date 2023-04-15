@@ -29,22 +29,16 @@ namespace IMT.Utilities.API
         {
             get
             {
-                foreach (var type in EnumExtension.GetEnumValues<CrosswalkType>())
-                {
-                    if (type.IsVisible())
-                        yield return type.ToString();
-                }
+                foreach (var type in EnumExtension.GetEnumValues<CrosswalkType>().IsVisible())
+                    yield return type.ToString();
             }
         }
         public IEnumerable<string> FillerStyles
         {
             get
             {
-                foreach (var type in EnumExtension.GetEnumValues<FillerType>())
-                {
-                    if (type.IsVisible())
-                        yield return type.ToString();
-                }
+                foreach (var type in EnumExtension.GetEnumValues<FillerType>().IsVisible())
+                    yield return type.ToString();
             }
         }
 
@@ -95,9 +89,9 @@ namespace IMT.Utilities.API
         private IEnumerable<string> GetStyles<StyleType>(LineType lineType)
             where StyleType : Enum
         {
-            foreach (var type in EnumExtension.GetEnumValues<StyleType>())
+            foreach (var type in EnumExtension.GetEnumValues<StyleType>().IsVisible())
             {
-                if (type.IsVisible() && (type.GetLineType() & lineType) != 0)
+                if ((type.GetLineType() & lineType) != 0)
                     yield return type.ToString();
             }
         }

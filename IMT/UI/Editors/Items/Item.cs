@@ -81,6 +81,7 @@ namespace IMT.UI.Editors
         public event Action<EditItem<ObjectType>> OnDelete;
 
         bool IReusable.InCache { get; set; }
+        Transform IReusable.CachedTransform { get => m_CachedTransform; set => m_CachedTransform = value; }
 
         protected Editor Editor { get; private set; }
         private ObjectType editObject;
@@ -103,8 +104,8 @@ namespace IMT.UI.Editors
             DeleteButton = AddUIComponent<CustomUIButton>();
             DeleteButton.name = nameof(DeleteButton);
             DeleteButton.Atlas = CommonTextures.Atlas;
-            DeleteButton.FgSprites = new SpriteSet(CommonTextures.CloseButtonNormal, CommonTextures.CloseButtonHovered, CommonTextures.CloseButtonPressed, string.Empty, string.Empty);
-            DeleteButton.ForegroundSpriteMode = SpriteMode.Stretch;
+            DeleteButton.IconSprites = new SpriteSet(CommonTextures.CloseButtonNormal, CommonTextures.CloseButtonHovered, CommonTextures.CloseButtonPressed, string.Empty, string.Empty);
+            DeleteButton.IconMode = SpriteMode.Stretch;
             DeleteButton.size = new Vector2(20, 20);
             DeleteButton.eventClick += DeleteClick;
         }

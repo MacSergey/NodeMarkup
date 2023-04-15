@@ -1,4 +1,5 @@
 ﻿using ModsCommon.UI;
+using ModsCommon.Utilities;
 using UnityEngine;
 using static ModsCommon.UI.ComponentStyle;
 using static ModsCommon.Utilities.CommonTextures;
@@ -36,10 +37,13 @@ namespace IMT.UI
 
 
         public static Color32 PropertyPanel => new Color32(132, 152, 90, 255);
+        public static Color32 PropertyPanelDisabled => PropertyPanel.Overlap(PropertyDisabled);
+
         public static Color32 PropertyNormal => DarkPrimaryColor20;
         public static Color32 PropertyHovered => DarkPrimaryColor30;
         public static Color32 PropertyPressed => DarkPrimaryColor35;
         public static Color32 PropertyFocused => NormalBlue;
+        public static Color32 PropertyDisabled => new Color32(255, 255, 255, 32);
 
         public static Color32 PopupBackground => DarkPrimaryColor15;
         public static Color32 PopupEntitySelected => NormalBlue;
@@ -53,16 +57,17 @@ namespace IMT.UI
                 BgAtlas = Atlas,
                 FgAtlas = Atlas,
 
-                BgSprites = new SpriteSet(FieldSingle, FieldSingle, FieldSingle, FieldSingle, BorderSmall),
-                BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyNormal, PropertyNormal),
+                BgSprites = FieldSingle,
+                BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyNormal, PropertyDisabled),
 
-                FgSprites = new SpriteSet(default, default, default, BorderSmall, default),
-                FgColors = new ColorSet(default, default, default, PropertyFocused, default),
+                FgSprites = new SpriteSet(default, default, default, BorderSmall, BorderSmall),
+                FgColors = new ColorSet(default, default, default, PropertyFocused, PropertyNormal),
 
                 TextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
 
+                SelAtlas = Atlas,
                 SelectionSprite = Empty,
-                SelectionColor = PropertyFocused,
+                SelectionColor = new Color32(255, 64, 0, 255),
             },
             Segmented = new SegmentedStyle()
             {
@@ -71,18 +76,42 @@ namespace IMT.UI
                 Middle = GetSegmentedStyle(FieldMiddle, FieldBorderMiddle),
                 Right = GetSegmentedStyle(FieldRight, FieldBorderRight),
             },
-            Button = new ButtonStyle()
+            SmallButton = new ButtonStyle()
             {
                 BgAtlas = Atlas,
                 FgAtlas = Atlas,
 
-                BgSprites = new SpriteSet(FieldSingle, FieldSingle, FieldSingle, FieldSingle, BorderSmall),
-                BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyPressed, PropertyNormal, PropertyNormal),
+                BgSprites = FieldSingle,
+                BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyPressed, PropertyNormal, PropertyDisabled),
                 SelBgColors = new ColorSet(),
 
-                FgSprites = default,
-                FgColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
+                FgSprites = new SpriteSet(default, default, default, default, BorderSmall),
+                FgColors = new ColorSet(default, default, default, default, PropertyNormal),
                 SelFgColors = default,
+
+                IconSprites = default,
+                IconColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
+                SelIconColors = default,
+
+                TextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
+                SelTextColors = default,
+            },
+            LargeButton = new ButtonStyle()
+            {
+                BgAtlas = Atlas,
+                FgAtlas = Atlas,
+
+                BgSprites = PanelLarge,
+                BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyPressed, PropertyNormal, PropertyDisabled),
+                SelBgColors = new ColorSet(),
+
+                FgSprites = new SpriteSet(default, default, default, default, BorderLarge),
+                FgColors = new ColorSet(default, default, default, default, PropertyNormal),
+                SelFgColors = default,
+
+                IconSprites = default,
+                IconColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
+                SelIconColors = default,
 
                 TextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
                 SelTextColors = default,
@@ -91,13 +120,19 @@ namespace IMT.UI
             {
                 BgAtlas = Atlas,
                 FgAtlas = Atlas,
+                IconAtlas = Atlas,
 
-                AllBgSprites = new SpriteSet(FieldSingle, FieldSingle, FieldSingle, FieldSingle, BorderSmall),
-                BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyNormal, PropertyNormal),
+                AllBgSprites = FieldSingle,
+                BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyNormal, PropertyDisabled),
                 SelBgColors = PropertyFocused,
 
-                FgSprites = new SpriteSet(VectorDown, VectorDown, VectorDown, VectorDown, default),
-                FgColors = Color.white,
+                FgSprites = new SpriteSet(default, default, default, default, BorderSmall),
+                FgColors = new ColorSet(default, default, default, default, PropertyNormal),
+                SelFgSprites = BorderSmall,
+                SelFgColors = PropertyNormal,
+
+                AllIconSprites = new SpriteSet(VectorDown, VectorDown, VectorDown, VectorDown, default),
+                AllIconColors = Color.white,
 
                 AllTextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
 
@@ -119,21 +154,28 @@ namespace IMT.UI
             Toggle = new ToggleStyle()
             {
                 BgAtlas = Atlas,
+                FgAtlas = Atlas,
                 MarkAtlas = Atlas,
 
                 OnBgSprites = ToggleBackgroundSmall,
-                OffBgSprites = new SpriteSet(ToggleBackgroundSmall, ToggleBackgroundSmall, ToggleBackgroundSmall, ToggleBackgroundSmall, ToggleBorderSmall),
+                OnBgColors = new ColorSet(PropertyFocused, PropertyFocused, PropertyFocused, PropertyFocused, PropertyNormal),
+
+                OnFgSprites = ToggleBorderSmall,
+                OnFgColors = new ColorSet(PropertyNormal, PropertyNormal, PropertyNormal, PropertyNormal, PropertyNormal),
 
                 OnMarkSprites = ToggleCircle,
+                OnMarkColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyPanelDisabled),
+
+                OffBgSprites = ToggleBackgroundSmall,
+                OffBgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyNormal, PropertyDisabled),
+
+                OffFgSprites = ToggleBackgroundSmall,
+                OffFgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyNormal, PropertyNormal),
+
                 OffMarkSprites = ToggleCircle,
-
-                OnBgColors = new ColorSet(PropertyFocused, PropertyFocused, PropertyFocused, PropertyFocused, PropertyNormal),
-                OffBgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyNormal, PropertyNormal),
-
-                OnMarkColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyPanel),
                 OffMarkColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyNormal),
 
-                OnTextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyPanel),
+                OnTextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyPanelDisabled),
                 OffTextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
             },
             ColorPicker = new ColorPickerStyle()
@@ -175,6 +217,13 @@ namespace IMT.UI
                 BgSprites = PanelLarge,
                 BgColors = PropertyPanel,
                 MaskSprite = OpacitySliderMask,
+            },
+            HeaderContent = new HeaderStyle()
+            {
+                MainBgColors = new ColorSet(default, DarkPrimaryColor10, Color.black, default, default),
+                MainIconColors = new ColorSet(Color.white, Color.white, DarkPrimaryColor90, Color.white, DarkPrimaryColor10),
+                AdditionalBgColors = new ColorSet(default, DarkPrimaryColor45, DarkPrimaryColor45, default, default),
+                AdditionalIconColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, DarkPrimaryColor55),
             }
         };
 
@@ -185,16 +234,21 @@ namespace IMT.UI
                 BgAtlas = Atlas,
                 FgAtlas = Atlas,
 
-                BgSprites = new SpriteSet(background, background, background, background, border),
-                BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyFocused, PropertyNormal),
+                BgSprites = background,
+                BgColors = new ColorSet(PropertyNormal, PropertyHovered, PropertyHovered, PropertyFocused, PropertyDisabled),
                 SelBgSprites = background,
                 SelBgColors = new ColorSet(PropertyFocused, PropertyFocused, PropertyFocused, PropertyFocused, PropertyNormal),
 
-                FgColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyNormal),
-                SelFgColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyPanel),
+                FgSprites = new SpriteSet(default, default, default, default, border),
+                FgColors = new ColorSet(default, default, default, default, PropertyNormal),
+                SelFgSprites = new SpriteSet(border, border, border, border, default),
+                SelFgColors = new ColorSet(PropertyNormal, PropertyNormal, PropertyNormal, PropertyNormal, default),
+
+                IconColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyNormal),
+                SelIconColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyPanelDisabled),
 
                 TextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, Color.black),
-                SelTextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyPanel),
+                SelTextColors = new ColorSet(Color.white, Color.white, Color.white, Color.white, PropertyPanelDisabled),
             };
         }
     }

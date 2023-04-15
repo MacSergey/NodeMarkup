@@ -13,6 +13,7 @@ namespace IMT.UI.Editors
     public class ApplyTemplateHeaderButton : ObjectDropDown<StyleTemplate, TemplateEntity, TemplatePopup>, IHeaderButton, IReusable
     {
         bool IReusable.InCache { get; set; }
+        Transform IReusable.CachedTransform { get => m_CachedTransform; set => m_CachedTransform = value; }
 
         public Style.StyleType StyleGroup { get; set; }
 
@@ -58,7 +59,7 @@ namespace IMT.UI.Editors
             clipChildren = true;
             textScale = 0.8f;
             TextHorizontalAlignment = UIHorizontalAlignment.Left;
-            ForegroundSpriteMode = SpriteMode.Fill;
+            IconMode = SpriteMode.Fill;
         }
         protected override void SetPopupStyle()
         {
@@ -84,8 +85,8 @@ namespace IMT.UI.Editors
         }
         public void SetIcon(UITextureAtlas atlas, string sprite)
         {
-            FgAtlas = atlas ?? TextureHelper.InGameAtlas;
-            FgSprites = sprite;
+            IconAtlas = atlas ?? TextureHelper.InGameAtlas;
+            IconSprites = sprite;
         }
         protected override void OnUpdate()
         {

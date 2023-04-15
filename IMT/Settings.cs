@@ -283,7 +283,7 @@ namespace IMT
             var section = helper.AddOptionsSection(title);
 
             var items = new Dictionary<Style.StyleType, StyleModifierSettingsItem>();
-            foreach (var styleRaw in EnumExtension.GetEnumValues<StyleType>(v => true))
+            foreach (var styleRaw in EnumExtension.GetEnumValues<StyleType>().Order())
             {
                 var style = styleRaw.ToEnum<Style.StyleType, StyleType>();
                 var item = section.AddUIComponent<StyleModifierSettingsItem>();

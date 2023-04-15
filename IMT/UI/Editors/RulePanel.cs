@@ -100,6 +100,7 @@ namespace IMT.UI.Editors
         private void AddHeader()
         {
             Header = ComponentPool.Get<RuleHeaderPanel>(this, nameof(Header));
+            Header.ContentStyle = UIStyle.Default.HeaderContent;
             Header.Init(this, Rule.Style.Value.Type, Line.IsSupportRules);
             Header.OnDelete += () => Editor.DeleteRule(this);
             Header.OnSaveTemplate += OnSaveTemplate;

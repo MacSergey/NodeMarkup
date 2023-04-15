@@ -83,8 +83,8 @@ namespace IMT.UI
             TurnButton.name = nameof(TurnButton);
             TurnButton.SetDefaultStyle();
             TurnButton.size = new Vector2(20f, 20f);
-            TurnButton.FgAtlas = IMTTextures.Atlas;
-            TurnButton.AllFgSprites = IMTTextures.RotateButtonIcon;
+            TurnButton.IconAtlas = IMTTextures.Atlas;
+            TurnButton.AllIconSprites = IMTTextures.RotateButtonIcon;
             TurnButton.tooltip = IMT.Localize.StyleOption_Turn;
             TurnButton.eventClick += TurnClick;
         }
@@ -149,9 +149,9 @@ namespace IMT.UI
             LeftGuideSelector.SelectorStyle = style.DropDown;
             RightGuideSelector.SelectorStyle = style.DropDown;
 
-            TurnButton.ButtonStyle = style.Button;
-            TurnButton.FgAtlas = IMTTextures.Atlas;
-            TurnButton.AllFgSprites = IMTTextures.RotateButtonIcon;
+            TurnButton.ButtonStyle = style.SmallButton;
+            TurnButton.IconAtlas = IMTTextures.Atlas;
+            TurnButton.AllIconSprites = IMTTextures.RotateButtonIcon;
         }
 
         public class SelectGuideButton : SelectItemPropertyButton<FillerGuide>

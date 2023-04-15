@@ -2864,5 +2864,10 @@ namespace IMT
 		/// [UPDATED] Huge update of UI Style.
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_14 => LocaleManager.GetString("Mod_WhatsNewMessage1_14", Culture);
+
+		/// <summary>
+		/// [FIXED] Scrolling wheel over dropdown does not change dropdown value.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14_1 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_1", Culture);
 	}
 }

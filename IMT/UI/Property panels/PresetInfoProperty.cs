@@ -18,6 +18,7 @@ namespace IMT.UI
             return font;
         }
         bool IReusable.InCache { get; set; }
+        Transform IReusable.CachedTransform { get => m_CachedTransform; set => m_CachedTransform = value; }
 
         private float Size => 200f;
         protected override float DefaultHeight => Size + 10;

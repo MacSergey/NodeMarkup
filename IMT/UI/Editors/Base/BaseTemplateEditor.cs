@@ -86,6 +86,7 @@ namespace IMT.UI.Editors
         protected virtual void AddHeader()
         {
             HeaderPanel = ComponentPool.Get<HeaderPanelType>(PropertiesPanel, nameof(HeaderPanel));
+            HeaderPanel.ContentStyle = UIStyle.Default.HeaderContent;
             HeaderPanel.Init(this, EditObject);
             HeaderPanel.OnSaveAsset += SaveAsset;
             HeaderPanel.OnEdit += StartEditTemplate;

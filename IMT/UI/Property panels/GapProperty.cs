@@ -1,11 +1,14 @@
 ﻿using ModsCommon.UI;
 using System;
+using UnityEngine;
 
 namespace IMT.UI
 {
     public class GapProperty : EditorPropertyPanel, IReusable
     {
         bool IReusable.InCache { get; set; }
+        Transform IReusable.CachedTransform { get => m_CachedTransform; set => m_CachedTransform = value; }
+
 
         public event Action<bool, float, int> OnValueChanged;
 

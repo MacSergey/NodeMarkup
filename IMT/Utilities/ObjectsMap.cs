@@ -22,7 +22,7 @@ namespace IMT.Utilities
 
         public void AddPoint(ushort enter, byte source, byte target)
         {
-            foreach (var pointType in EnumExtension.GetEnumValues<PointType>(i => i.IsItem()))
+            foreach (var pointType in EnumExtension.GetEnumValues<PointType>().IsItem())
             {
                 if (pointType == PointType.Lane && Invert)
                     target = (byte)(target - 1);
