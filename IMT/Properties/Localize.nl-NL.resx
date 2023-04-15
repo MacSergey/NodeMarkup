@@ -1811,7 +1811,7 @@ Het kan even duren als er veel segmenten zijn.</value>
     <value>Decal asset</value>
   </data>
   <data name="Settings_InvertChevrons" xml:space="preserve">
-    <value>Alle visgraten omkren</value>
+    <value>Alle visgraten omkeren</value>
   </data>
   <data name="Setting_Others" xml:space="preserve">
     <value>Overig</value>
@@ -1878,5 +1878,39 @@ Het kan even duren als er veel segmenten zijn.</value>
   </data>
   <data name="Header_ExpandGroupTooltip" xml:space="preserve">
     <value>Houd {0} ingedrukt om alle groepen in/uit te klappen</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14" xml:space="preserve">
+    <value>[UPDATED] Grote update van de UI stijl.
+[NEW] Het items paneel wordt automatisch verborgen om ruimte te besparen. Kan worden uitgeschakeld in de mod instellingen.
+[NEW] Decalopvulling toegevoegd: Mogelijkheid om elke decal in te stellen als opvulling.
+[NEW] Textuur verkeerseiland opvulling toegevoegd: De mogelijkheid om elke decal in te stellen als een 3D opvulling.
+[NEW] Decal zebrastrepen toegevoegd: De mogelijkheid om elke decal in te stellen als een zebrastreep textuur.
+[NEW] Asfaltopvulling toegevoegd.
+[NEW] Mogelijkheid toegevoegd om kaartthema te selecteren voor gras-, grind-, verdord gras- en klifopvullingen.
+[NEW] Mogelijkheid toegevoegd om bestrating/stoep thema te selecteren.
+[NEW] Aparte stijl toegevoegd voor decals. Het biedt extra opties voor decals zoals betegeling en hellingtolerantie. Decals zijn nog steeds beschikbaar als props voor achterwaartse compatibiliteit.
+[NEW] Bomen en netwerken die zijn toegevoegd met IMT zijn van elke afstand zichtbaar, zoals gewone bomen en netwerken.
+[NEW] Mogelijkheid toegevoegd om favoriete netwerken/props/bomen in te stellen. Deze worden bovenaan de lijst getoond.
+[NEW] Behoud assetnaam als prop/boom/netwerk ontbreekt: het wordt niet teruggezet naar "niet ingesteld" en het item verschijnt weer als de asset terug is.
+[UPDATED] Zoekfunctie toegevoegd voor het sjabloonvenster.
+[NEW] Gegevens van gebruikte netwerken/props/bomen doorgestuurd naar LSM, zodat LSM ontbrekende assets kan tonen die alleen door IMT worden gebruikt.
+[UPDATED] Ondersteuning toegevoegd voor meerregelige tekst (tot 3 regels).
+[UPDATED] Houd ALT ingedrukt om alle kleurcomponenten (RGB) tegelijk te veranderen terwijl je scrolt.
+[UPDATED] Houd SHIFT ingedrukt om alle groepen in/uit te klappen.
+[UPDATED] Optie toegevoegd om willekeurige hoeken in te stellen voor bomen en props.
+[NEW] Optie toegevoegd om beweging van bomen in de wind uit te schakelen.
+[UPDATED] Stijl iconen toegevoegd aan de regel paneel hoofding.
+[UPDATED] Pictogrammen toegevoegd aan alle groepen.
+[NEW] "Alle visgraten omkeren" knop toegevoegd aan mod instellingen.
+[FIXED] Zigzag "start vanaf" waarde slaat niet op.
+[FIXED] Sneltoetsen voor draaien/spiegelen van markering werken niet tijdens het plakken van markering.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_1" xml:space="preserve">
+    <value>[UPDATED] Gepolijste nieuwe gebruikersinterface.
+[FIXED] Scrollen met het wiel over een dropdown verandert de dropdown waarde niet.
+[FIXED] Dropdown popups kunnen niet gesloten worden.
+[FIXED] Fout bij het renderen van sommige netwerken en opvullingen.
+[FIXED] Props/bomen/netwerken volgen segmenten niet correct.
+[FIXED] Decal slaat kleurinstellingen niet op.</value>
   </data>
 </root>

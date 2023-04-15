@@ -2068,4 +2068,38 @@ Può volerci del tempo se ci sono molti segmenti.</value>
   <data name="Header_ExpandGroupTooltip" xml:space="preserve">
     <value>Tieni premuto {0} per ridurre/espandere tutti i gruppi</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14" xml:space="preserve">
+    <value>[UPDATED] Enorme aggiornamento dello stile dell'interfaccia utente.
+[NEW] Il pannello degli oggetti si nasconde automaticamente per risparmiare spazio sul pannello. Può essere disabilitato nelle impostazioni della mod.
+[NEW] Aggiunto decal filler: possibilità di impostare qualsiasi decal come texture di riempimento.
+[NEW] Aggiunta texture isola di riempimento: possibilità di impostare qualsiasi decal come texture di riempimento 3D.
+[NEW] Aggiunta decal crosswalk: possibilità di impostare qualsiasi decal come texture del crosswalk.
+[NEW] Aggiunto il riempimento dell'asfalto.
+[NEW] Aggiunta la possibilità di selezionare il tema della mappa per i riempimenti erba, ghiaia, rovina e scogliera.
+[NEW] Aggiunta la possibilità di selezionare il tema dei marciapiedi.
+[NEW] Aggiunto uno stile separato per le decalcomanie. Fornisce opzioni aggiuntive per le decalcomanie, come la piastrellatura e la tolleranza della pendenza. Le decalcomanie sono ancora disponibili come oggetti di scena per la retrocompatibilità.
+[NEW] Gli alberi e le reti aggiunti con IMT sono visibili da qualsiasi distanza come gli alberi e le reti normali.
+[NEW] Aggiunta la possibilità di impostare reti/prop/alberi preferiti, che verranno mostrati in cima all'elenco.
+[NEW] Mantenuto il nome dell'asset se si perde un oggetto/albero/rete: non sarà reimpostato su "non impostato" e l'elemento apparirà di nuovo quando l'asset tornerà.
+[UPDATED] Aggiunta la ricerca al pannello di applicazione dei modelli.
+[NEW] Invia i dati delle reti/archivi/alberi utilizzati a LSM, in modo che LSM possa mostrare gli asset mancanti che sono utilizzati solo da IMT.
+[UPDATED] Aggiunto il supporto del testo multilinea (fino a 3 righe).
+[UPDATED] Tenete premuto ALT per cambiare simultaneamente tutti i componenti del colore (RGB) durante lo scorrimento della ruota.
+[UPDATED] Tenete premuto Shift per espandere/accorciare tutti i gruppi.
+[UPDATED] Aggiunta l'opzione per impostare un angolo casuale agli alberi e agli oggetti di scena.
+[NEW] Aggiunta la possibilità di disabilitare l'oscillazione degli alberi nel vento.
+[UPDATED] Aggiunte icone di stile all'intestazione del pannello delle regole.
+[UPDATED] Aggiunte icone a tutti i gruppi.
+[NEW] Aggiunto il pulsante "inverti tutti gli chevron" alle impostazioni della mod.
+[FIXED] Corretto il valore "inizio da" dello zigzag che non viene salvato.
+[FIXED] Corretto il fatto che le scorciatoie per girare/mirrorare la marcatura non funzionano quando si incolla la marcatura.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_1" xml:space="preserve">
+    <value>[UPDATED] Rifinitura della nuova UI.
+[FIXED] Lo scorrimento della rotella sul menu a tendina non modifica il valore del menu a tendina.
+[FIXED] Le finestre a comparsa non possono essere chiuse.
+[FIXED] Errore durante il rendering di alcune reti e riempimenti.
+[FIXED] Oggetti di scena/alberi/reti non seguono correttamente il segmento.
+[FIXED] La decalcomania non salva le impostazioni del colore.</value>
+  </data>
 </root>

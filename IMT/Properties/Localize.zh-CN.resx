@@ -1915,7 +1915,7 @@
     <value>虚线类型</value>
   </data>
   <data name="StyleOption_InvertNetwork" xml:space="preserve">
-    <value>反转网络</value>
+    <value>反转该网络</value>
   </data>
   <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
     <value>两个不同的</value>
@@ -2071,5 +2071,13 @@
 [FIXED] 修复了粘贴标线时翻转/镜像功能的快捷键失效的问题。
  
 </value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_1" xml:space="preserve">
+    <value>[UPDATED] 优化了新的用户界面。
+[FIXED] 修复了鼠标指针在下拉列表上方时，滚轮无法改变列表中选择的项目的问题。
+[FIXED] 修复了无法关闭弹出的下拉列表的问题。
+[FIXED] 修复了渲染某些网络和填充图案时出错的问题。
+[FIXED] 修复了摆件/树木/网络没有正确地跟随段落的问题。
+[FIXED] 修复了对贴花设置的颜色没有保存的问题。</value>
   </data>
 </root>

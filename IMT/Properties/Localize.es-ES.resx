@@ -1908,4 +1908,12 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
 [FIXED] Valores no guardados de "comenzar desde" de los zigzag.
 [FIXED] Atajos para voltear/reflejar no funcionaban al pegar marcas.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_1" xml:space="preserve">
+    <value>[UPDATED] Puliendo la Interfaz de Usuario.
+[FIXED] Rueda del ratón no funciona al cambiar valores en el menú desplegable.
+[FIXED] Ventanas emergentes de menú desplegable no se cierran.
+[FIXED] Error al renderizar algunas redes y rellenos.
+[FIXED] Elementos/árboles/reder no siguen el segmento de forma correcta.
+[FIXED] Decal no guarda la configuración de cambio de color.</value>
+  </data>
 </root>

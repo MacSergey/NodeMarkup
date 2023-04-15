@@ -1053,6 +1053,9 @@ Klik untuk mengedit markah</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Pilih titik kedua pemandu</value>
   </data>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Gunakan warna alternatif</value>
+  </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Dari salinan</value>
   </data>
@@ -1571,5 +1574,29 @@ mode bawah tanah</value>
   </data>
   <data name="Tool_NotLink" xml:space="preserve">
     <value>Jangan hubungkan</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>Setel ulang ke awal</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Kerapatan</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Ukuran</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Retakan</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Kepadatan tekstur</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Batasan</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Tipe marka jalan</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>Lainnya</value>
   </data>
 </root>

@@ -1060,6 +1060,9 @@ Clique para editar marcações</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Selecione o segundo ponto do carril</value>
   </data>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Usar cor secundária</value>
+  </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Da área de transferência</value>
   </data>
@@ -1260,6 +1263,12 @@ Clique para editar marcações</value>
   </data>
   <data name="StyleOption_SharkToothAngle" xml:space="preserve">
     <value>Ângulo</value>
+  </data>
+  <data name="LineStyle_Network" xml:space="preserve">
+    <value>Rede decorativa</value>
+  </data>
+  <data name="StyleOption_NetRepeatDistance" xml:space="preserve">
+    <value>Repetir distância</value>
   </data>
   <data name="StyleOption_AssetNotSet" xml:space="preserve">
     <value>Não definido</value>
