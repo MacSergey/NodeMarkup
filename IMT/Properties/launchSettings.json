@@ -12,12 +12,12 @@
     },
     "Release": {
       "commandName": "Executable",
-      "executablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\255710\\2953447919\\Tool\\LoadOrderToolTwo.exe",
+      "executablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\255710\\2953447919\\App\\Skyve.exe",
       "commandLineArgs": " -launch -noWindow -profile Release"
     },
     "Debug": {
       "commandName": "Executable",
-      "executablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\255710\\2953447919\\Tool\\LoadOrderToolTwo.exe",
+      "executablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\workshop\\content\\255710\\2953447919\\App\\Skyve.exe",
       "commandLineArgs": "-launch -noWindow -profile Debug"
     }
   }
