@@ -1,13 +1,12 @@
 ﻿using ColossalFramework.UI;
 using IMT.Tools;
 using IMT.Utilities;
-using ModsCommon;
 using ModsCommon.UI;
 using UnityEngine;
 
 namespace IMT.UI
 {
-    public class NodeMarkingButton : UUINetToolButton<Mod, IntersectionMarkingTool>
+    public class NodeMarkingButton : ToolButton<IntersectionMarkingTool>
     {
         protected override Vector2 ButtonPosition => new Vector3(59, 38);
 
