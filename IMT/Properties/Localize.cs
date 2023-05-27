@@ -2866,8 +2866,13 @@ namespace IMT
 		public static string Mod_WhatsNewMessage1_14 => LocaleManager.GetString("Mod_WhatsNewMessage1_14", Culture);
 
 		/// <summary>
-		/// [FIXED] Scrolling wheel over dropdown does not change dropdown value.
+		/// [UPDATED] Polishing new UI.
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_14_1 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_1", Culture);
+
+		/// <summary>
+		/// [UPDATED] Added Hotels&Retreats DLC support.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14_2 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_2", Culture);
 	}
 }
