@@ -2107,4 +2107,8 @@
 [FIXED] Реквизит/деревья/сети не следовали сегменту в некоторых случаях.
 [FIXED] Цвет декалей не сохранялся.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[UPDATED] Добавлена поддержка Hotels&amp;Retreats DLC.
+[TRANSLATION] Добавлен перевод на Бразильский.</value>
+  </data>
 </root>

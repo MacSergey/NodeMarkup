@@ -2106,4 +2106,9 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
 [FIXED] Les accessoires/arbres/réseaux ne suivent pas correctement le segment.
 [FIXED] Les décalques n'enregistrent pas les paramètres de couleur.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[UPDATED] Ajout de la prise en charge du DLC Hotels&amp;Retreats.
+[TRANSLATION] Ajout de la traduction brésilienne.
+</value>
+  </data>
 </root>

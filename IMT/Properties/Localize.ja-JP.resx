@@ -2107,4 +2107,9 @@
 [FIXED] Props/trees/networks do not follow segment properly.
 [FIXED] Decal does not save color settings.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[UPDATED] Added Hotels&amp;Retreats DLC support.
+[TRANSLATION] Added Brazilian translation.
+</value>
+  </data>
 </root>
