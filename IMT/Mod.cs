@@ -32,6 +32,7 @@ namespace IMT
         protected override string IdRaw => "IntersectionMarkingTool";
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version(1,14,2), new DateTime(2023, 5, 27)),
             new ModVersion(new Version(1,14,1), new DateTime(2023, 4, 15)),
             new ModVersion(new Version(1,14), new DateTime(2023, 4, 1)),
             new ModVersion(new Version(1,13,1), new DateTime(2023, 2, 19)),
@@ -633,7 +634,7 @@ namespace IMT
     {
         public static IEnumerable<CodeInstruction> ToolControllerAwakeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.ToolControllerAwakeTranspiler<Mod, IntersectionMarkingTool>(generator, instructions);
 
-        public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result) => ModsCommon.Patcher.GeneratedScrollPanelCreateOptionPanelPostfix<Mod, NodeMarkingButton>(templateName, ref __result, ModsCommon.Patcher.RoadsOptionPanel);
+        public static void GeneratedScrollPanelCreateOptionPanelPostfix(string templateName, ref OptionPanelBase __result) => SingletonTool<IntersectionMarkingTool>.Instance.CreateButton<NodeMarkingButton>(templateName, ref __result, ModsCommon.Patcher.RoadsOptionPanel);
 
         public static IEnumerable<CodeInstruction> GameKeyShortcutsEscapeTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions) => ModsCommon.Patcher.GameKeyShortcutsEscapeTranspiler<Mod, IntersectionMarkingTool>(generator, instructions);
 
