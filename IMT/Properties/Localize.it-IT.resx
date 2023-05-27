@@ -2102,4 +2102,9 @@ Può volerci del tempo se ci sono molti segmenti.</value>
 [FIXED] Oggetti di scena/alberi/reti non seguono correttamente il segmento.
 [FIXED] La decalcomania non salva le impostazioni del colore.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[UPDATED] Aggiunto il supporto per il DLC Hotels&amp;Retreats.
+[TRANSLATION] Aggiunta la traduzione in Brasiliano.
+</value>
+  </data>
 </root>

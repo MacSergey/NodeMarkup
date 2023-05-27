@@ -154,10 +154,10 @@
     <value>De</value>
   </data>
   <data name="LineEditor_InfoSelectFrom" xml:space="preserve">
-    <value>Seleccione o ponto "De" da regra</value>
+    <value>Selecione o ponto "De" da regra</value>
   </data>
   <data name="LineEditor_InfoSelectTo" xml:space="preserve">
-    <value>Seleccione o ponto "Para" da regra</value>
+    <value>Selecione o ponto "Para" da regra</value>
   </data>
   <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
     <value>linha</value>
@@ -1804,5 +1804,10 @@ Pode demorar um pouco se tiver muitos segmentos.</value>
 [FIXED] Erro quando renderizava algumas redes e preenchimentos
 [FIXED] Objetos/Redes/Árvores não seguindo o seguimento corretamente.
 [FIXED] Decalque não salvando a cor configurada.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[ATUALIZADO] Adicionado suporte ao DLC Hotéis e Retiros.
+[TRADUÇÃO] Adicionada tradução para o português do Brasil.
+</value>
   </data>
 </root>

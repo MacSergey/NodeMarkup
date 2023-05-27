@@ -1917,4 +1917,9 @@
 [FIXED] 프롭/나무/네트워크가 구간을 정확하게 따라가지 않는 현상을 고쳤습니다.
 [FIXED] 데칼 색상 설정이 저장되지 않는 현상을 고쳤습니다.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[UPDATED] Hotels&amp;Retreats DLC를 지원합니다.
+[TRANSLATION] 브라질어 번역을 추가했습니다.
+</value>
+  </data>
 </root>

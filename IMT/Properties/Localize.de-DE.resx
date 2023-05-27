@@ -1987,4 +1987,9 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
 [FIXED] Dekorationen/Bäume/Netzwerke folgen Segmenten nicht richtig.
 [FIXED] Bodenfliesen speichern die Farbeinstellungen nicht.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[UPDATED] Hotels&amp;Retreats DLC-Unterstützung hinzugefügt.
+[TRANSLATION] Brasilianische Übersetzung hinzugefügt.
+</value>
+  </data>
 </root>

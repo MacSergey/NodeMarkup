@@ -1916,4 +1916,8 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
 [FIXED] Elementos/árboles/reder no siguen el segmento de forma correcta.
 [FIXED] Decal no guarda la configuración de cambio de color.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[UPDATED] Se ha añadido el soporte DLC de Hotels&amp;Retreats.
+[TRANSLATION] Se han añadido traducciones al chino tradicional y tailandés.</value>
+  </data>
 </root>

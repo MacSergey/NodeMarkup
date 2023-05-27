@@ -2080,4 +2080,8 @@
 [FIXED] 修复了摆件/树木/网络没有正确地跟随段落的问题。
 [FIXED] 修复了对贴花设置的颜色没有保存的问题。</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[UPDATED] 新增了对 Hotels &amp; Retreats DLC 更新的支持。
+[TRANSLATION] 新增了巴西葡萄牙语翻译。</value>
+  </data>
 </root>

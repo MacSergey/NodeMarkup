@@ -1913,4 +1913,9 @@ Het kan even duren als er veel segmenten zijn.</value>
 [FIXED] Props/bomen/netwerken volgen segmenten niet correct.
 [FIXED] Decal slaat kleurinstellingen niet op.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[UPDATED] Ondersteuning toegevoegd voor Hotels &amp; Retreats DLC.
+[TRANSLATION] Braziliaanse vertaling toegevoegd.
+</value>
+  </data>
 </root>

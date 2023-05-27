@@ -655,7 +655,7 @@ Nepodařilo se načíst značení pro {0} křižovatek.</value>
     <value>Kopírovat</value>
   </data>
   <data name="StyleOption_Edge" xml:space="preserve">
-    <value>Strana</value>
+    <value>Krajnice</value>
   </data>
   <data name="StyleOption_Vertex" xml:space="preserve">
     <value>Vrchol</value>
@@ -861,6 +861,12 @@ Pro vytvoření předvolby, vyberte «{0}» v hlavičce panelu.</value>
   <data name="Preset_NewPreset" xml:space="preserve">
     <value>Nová předvolba</value>
   </data>
+  <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
+    <value>Opustit režim aplikování předvolby</value>
+  </data>
+  <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
+    <value>Opravdu chcete aplikovat předvolbu?</value>
+  </data>
   <data name="TemplateEditor_Author" xml:space="preserve">
     <value>Autor</value>
   </data>
@@ -1021,6 +1027,12 @@ Nepodařilo se načíst značení pro všechny křižovatky.</value>
   <data name="Panel_SegmentCaption" xml:space="preserve">
     <value>Upravit značení silnice #{0}</value>
   </data>
+  <data name="FillerStyle_GrassIsland" xml:space="preserve">
+    <value>Travnatý ostrůvek</value>
+  </data>
+  <data name="FillerStyle_PavementIsland" xml:space="preserve">
+    <value>Chodníkový ostrůvek</value>
+  </data>
   <data name="FillerStyle_Elevation" xml:space="preserve">
     <value>Vyvýšení</value>
   </data>
@@ -1053,6 +1065,9 @@ Klikněte pro změnu značení</value>
 [FIXED] Opraven konflikt s jinými mody kvůli kterému se nezobrazovalo tlačítko modu.
 [FIXED] Opravena chyba se scrollováním a používáním kolečka myši pro změnu hodnot.
 [UPDATED] Při zadávání hodnot již není rozlišována tečka od čárky.</value>
+  </data>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>Použít druhou barvu</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Ze schránky</value>
@@ -1119,6 +1134,15 @@ Klikněte pro změnu značení</value>
   </data>
   <data name="Tool_InfoSelectLine" xml:space="preserve">
     <value>Klikněte s {0} pro výběr čáry</value>
+  </data>
+  <data name="FillerStyle_GravelIsland" xml:space="preserve">
+    <value>Štěrkový ostrůvek</value>
+  </data>
+  <data name="FillerStyle_CliffIsland" xml:space="preserve">
+    <value>Útesový ostrůvek</value>
+  </data>
+  <data name="FillerStyle_RuinedIsland" xml:space="preserve">
+    <value>Zničený ostrůvek</value>
   </data>
   <data name="FillerStyle_CornerRadius" xml:space="preserve">
     <value>Poloměr rohu</value>
@@ -1383,11 +1407,20 @@ Klikněte pro změnu značení</value>
   <data name="Editor_MoreOptions" xml:space="preserve">
     <value>Více možností</value>
   </data>
+  <data name="Settings_CollapseRules" xml:space="preserve">
+    <value>Sbalení panelů s pravidly pro čáry</value>
+  </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Hlavní barva</value>
   </data>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Druhá barva</value>
+  </data>
+  <data name="LineStyle_DoubleDashedAsym" xml:space="preserve">
+    <value>Dvojitá přerušovaná asymetrická</value>
+  </data>
+  <data name="NumberFormat_Period" xml:space="preserve">
+    <value>Každý {0}</value>
   </data>
   <data name="StyleOption_CrosswalkGap" xml:space="preserve">
     <value>Mezera</value>
@@ -1403,6 +1436,9 @@ Klikněte pro změnu značení</value>
   </data>
   <data name="FillerStyle_CurbSizeMedianAbrv" xml:space="preserve">
     <value>Medián</value>
+  </data>
+  <data name="StyleOption_Dash" xml:space="preserve">
+    <value>Mezera</value>
   </data>
   <data name="StyleOption_Length" xml:space="preserve">
     <value>Délka</value>
@@ -1421,6 +1457,9 @@ Klikněte pro změnu značení</value>
   </data>
   <data name="StyleOption_Space" xml:space="preserve">
     <value>Mezera</value>
+  </data>
+  <data name="StyleOption_Rails" xml:space="preserve">
+    <value>Průvodci</value>
   </data>
   <data name="StyleOption_SharkToothBaseAbrv" xml:space="preserve">
     <value>Základna</value>
@@ -1488,6 +1527,9 @@ Klikněte pro změnu značení</value>
   <data name="Tool_InfoSelectLane" xml:space="preserve">
     <value>Klikněte s {0} pro výběr čáry</value>
   </data>
+  <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
+    <value>Automatické vytváření krajnice</value>
+  </data>
   <data name="StyleOption_Distribution" xml:space="preserve">
     <value>Distribuce</value>
   </data>
@@ -1530,13 +1572,181 @@ Klikněte pro změnu značení</value>
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>Začátek</value>
   </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Propojené</value>
+  </data>
   <data name="Setting_HoldToMovePoint" xml:space="preserve">
     <value>Podržte {0} pro přesun bodu</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Chcete ukončit režim propojení předvoleb a propojit tuto předvolbu s objektem?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Odkázat</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Neodkazovat</value>
+  </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>Použít předvolbu na všechny segmenty v tomto objektu</value>
   </data>
   <data name="HeaderPanel_StyleReset" xml:space="preserve">
     <value>Obnovit výchozí nastavení</value>
   </data>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
     <value>Chcete použít značení?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Hustota</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Měřítko</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Praskliny</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Prázdná místa</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Hustota textury</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Další</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Grafické efekty</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Hlavní</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>Použít na všechny položky</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>Použít na všechna pravidla</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>Použít na všechny přechody</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>Použít na všechny "{0}" přechody</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>Použít na všechny výplně</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>Použít na všechny "{0}" výplně</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>Použít na všechny čáry</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>Použít na všechny "{0}" čáry</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>Použít na všechny stop čáry</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>Použít na všechny "{0}" stop čáry</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>Kopírovat efekty</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>Vložit efekty</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>Oba</value>
+  </data>
+  <data name="StyleOption_FixedEndEnd" xml:space="preserve">
+    <value>Konec</value>
+  </data>
+  <data name="StyleOption_FixedEndStart" xml:space="preserve">
+    <value>Začátek</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Opravený konec</value>
+  </data>
+  <data name="StyleOption_Max" xml:space="preserve">
+    <value>Maximum</value>
+  </data>
+  <data name="StyleOption_Min" xml:space="preserve">
+    <value>Minimum</value>
+  </data>
+  <data name="StyleOption_ObjectLimits" xml:space="preserve">
+    <value>Limity</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>Neparalelní</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Typ mezery</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Obrátit silnici</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Dva odlišné</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>Podlaha</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>Objekt podlaha</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>Otočit všechny zámky</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>Ostatní</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>Podlaha</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>Zachovat poměry</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>Vlastní poměry</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>Motivy mapy</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>Přidat do oblíbených</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>Odebrat z oblíbených</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>Asfalt</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>Výchozí motiv mapy</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Náhodný</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Podlaha</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Velikost</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Tolerance sklonu</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Dlaždice</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Chodník</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Čára #{0}</value>
+  </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Podržením {0} sbalíte/rozbalíte všechny skupiny</value>
   </data>
 </root>

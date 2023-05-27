@@ -268,6 +268,21 @@ Pôvodné dáta prepíšu všetky existujúce značenia.</value>
   <data name="Settings_ShowDeleteWarnings" xml:space="preserve">
     <value>Pred odstránením potvrdiť</value>
   </data>
+  <data name="TemplateEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>šablóna</value>
+  </data>
+  <data name="TemplateEditor_Name" xml:space="preserve">
+    <value>Názov</value>
+  </data>
+  <data name="TemplateEditor_Templates" xml:space="preserve">
+    <value>Šablóny</value>
+  </data>
+  <data name="Template_NewTemplate" xml:space="preserve">
+    <value>Nová šablóna</value>
+  </data>
+  <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
+    <value>Odstrániť všetky značenia z tejto križovatky</value>
+  </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Existujúci priechod</value>
   </data>
