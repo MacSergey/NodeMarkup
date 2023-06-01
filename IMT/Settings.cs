@@ -123,17 +123,17 @@ namespace IMT
         {
             var renderSection = helper.AddOptionsSection(Localize.Settings_Render);
 
-            var renderDistance = renderSection.AddFloatField(Localize.Settings_RenderDistance, RenderDistance, 0f);
+            var renderDistance = renderSection.AddFloatField(Localize.Settings_RenderDistance, RenderDistance, 100f, 10000f);
             renderDistance.Control.Format = Localize.NumberFormat_Meter;
-            var markingLOD = renderSection.AddFloatField(Localize.Settings_LODDistanceMarking, LODDistance, 0f);
+            var markingLOD = renderSection.AddFloatField(Localize.Settings_LODDistanceMarking, LODDistance, 0f, 10000f);
             markingLOD.Control.Format = Localize.NumberFormat_Meter;
-            var meshLOD = renderSection.AddFloatField(Localize.Settings_LODDistanceMesh, MeshLODDistance, 0f);
+            var meshLOD = renderSection.AddFloatField(Localize.Settings_LODDistanceMesh, MeshLODDistance, 0f, 10000f);
             meshLOD.Control.Format = Localize.NumberFormat_Meter;
-            var networkLOD = renderSection.AddFloatField(Localize.Settings_LODDistanceNetwork, NetworkLODDistance, 0f);
+            var networkLOD = renderSection.AddFloatField(Localize.Settings_LODDistanceNetwork, NetworkLODDistance, 0f, 10000f);
             networkLOD.Control.Format = Localize.NumberFormat_Meter;
-            var propLOD = renderSection.AddFloatField(Localize.Settings_LODDistanceProp, PropLODDistance, 0f);
+            var propLOD = renderSection.AddFloatField(Localize.Settings_LODDistanceProp, PropLODDistance, 0f, 10000f);
             propLOD.Control.Format = Localize.NumberFormat_Meter;
-            var treeLOD = renderSection.AddFloatField(Localize.Settings_LODDistanceTree, TreeLODDistance, 0f);
+            var treeLOD = renderSection.AddFloatField(Localize.Settings_LODDistanceTree, TreeLODDistance, 0f, 10000f);
             treeLOD.Control.Format = Localize.NumberFormat_Meter;
 
 
@@ -219,8 +219,12 @@ namespace IMT
         }
         private void AddOther(UIComponent helper)
         {
+            if (!Utility.InGame)
+                return;
+
             var section = helper.AddOptionsSection(Localize.Setting_Others);
-            var button = section.AddButtonPanel().AddButton(Localize.Settings_InvertChevrons, InvertChevrons, 600);
+            section.AddButtonPanel().AddButton(Localize.Settings_InvertChevrons, InvertChevrons, 600);
+            section.AddButtonPanel().AddButton(Localize.Settings_RecalculateMarkings, RecalculateMarkings, 600);
 
             static void InvertChevrons()
             {
@@ -246,6 +250,21 @@ namespace IMT
                                 chevron.Invert.Value = !chevron.Invert;
                         }
                     }
+                }
+            }
+
+            static void RecalculateMarkings()
+            {
+                for (int i = 0; i < NetManager.MAX_NODE_COUNT; i += 1)
+                {
+                    if (SingletonManager<NodeMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                        marking.RecalculateAllStyleData();
+                }
+
+                for (int i = 0; i < NetManager.MAX_SEGMENT_COUNT; i += 1)
+                {
+                    if (SingletonManager<SegmentMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                        marking.RecalculateAllStyleData();
                 }
             }
         }
