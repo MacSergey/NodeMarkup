@@ -1922,4 +1922,7 @@
 [TRANSLATION] 브라질어 번역을 추가했습니다.
 </value>
   </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>모든 마킹 재계산</value>
+  </data>
 </root>

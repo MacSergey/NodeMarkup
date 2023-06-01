@@ -223,7 +223,7 @@
     <value>全ての交差点からマーキングを削除</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
-    <value>マップ上にある全てのマーキングを削除</value>
+    <value>全てのマーキングを削除</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
     <value>マップ上にある、全てのマーキングを削除してもよろしいですか？</value>
@@ -2111,5 +2111,8 @@
     <value>[UPDATED] Added Hotels&amp;Retreats DLC support.
 [TRANSLATION] Added Brazilian translation.
 </value>
+  </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>全てのマーキングを再計算</value>
   </data>
 </root>

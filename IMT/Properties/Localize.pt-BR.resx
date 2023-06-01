@@ -1810,4 +1810,7 @@ Pode demorar um pouco se tiver muitos segmentos.</value>
 [TRADUÇÃO] Adicionada tradução para o português do Brasil.
 </value>
   </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Recalcular todas as marcações</value>
+  </data>
 </root>

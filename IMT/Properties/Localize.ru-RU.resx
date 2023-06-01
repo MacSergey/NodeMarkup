@@ -2111,4 +2111,7 @@
     <value>[UPDATED] Добавлена поддержка Hotels&amp;Retreats DLC.
 [TRANSLATION] Добавлен перевод на Бразильский.</value>
   </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Пересчитать всю разметку</value>
+  </data>
 </root>

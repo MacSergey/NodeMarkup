@@ -1918,4 +1918,7 @@ Het kan even duren als er veel segmenten zijn.</value>
 [TRANSLATION] Braziliaanse vertaling toegevoegd.
 </value>
   </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Alle markeringen herberekenen</value>
+  </data>
 </root>

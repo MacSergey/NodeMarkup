@@ -1576,11 +1576,123 @@ Kliknij aby edytować oznaczenia</value>
   <data name="StyleOption_TextAlignmentStart" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="PresetEditor_LinkPreset" xml:space="preserve">
+    <value>Połącz te ustawienia to rekwzytu sieciowego</value>
+  </data>
+  <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
+    <value>Odłącz te ustawienia od rekwzytu sieciowego</value>
+  </data>
+  <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
+    <value>Połączony</value>
+  </data>
+  <data name="Tool_InfoDragPointMode" xml:space="preserve">
+    <value>Przeciągnij punkty, aby zmienić przesunięcie</value>
+  </data>
+  <data name="Setting_HoldToMovePoint" xml:space="preserve">
+    <value>Przytrzymaj {0}, aby przesunąć punkt</value>
+  </data>
+  <data name="Settings_ApplyMarkingsFromAssets" xml:space="preserve">
+    <value>Automatycznie zastosuj oznaczenia z rekwizytu sieciowego</value>
+  </data>
+  <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
+    <value>Opuść tryb łączenia ustawień</value>
+  </data>
+  <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
+    <value>Czy chcesz opuścić tryb łączenia ustawień i połączyć te ustawienia do rekwizytu sieciowego?</value>
+  </data>
+  <data name="Tool_Link" xml:space="preserve">
+    <value>Połącz</value>
+  </data>
+  <data name="Tool_NotLink" xml:space="preserve">
+    <value>Nie łącz</value>
+  </data>
+  <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
+    <value>Zastosuj ustawienia dla wszystkich segmentów tego rekwizytu</value>
+  </data>
+  <data name="HeaderPanel_StyleReset" xml:space="preserve">
+    <value>Resetuj do domyślnych</value>
+  </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>Czy chcesz zastosować ustawienia dla wszystkich segmentów rekqizytu "{0}"?
+Może to zająć trochę czasu jeżeli jest dużo segmentów.</value>
+  </data>
+  <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
+    <value>Opuść tryb wklejania oznaczeń</value>
+  </data>
+  <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
+    <value>Czy chcesz zastosować oznaczenia?</value>
+  </data>
+  <data name="StyleOption_Density" xml:space="preserve">
+    <value>Gęstość</value>
+  </data>
+  <data name="StyleOption_Scale" xml:space="preserve">
+    <value>Skala</value>
+  </data>
+  <data name="StyleOption_Cracks" xml:space="preserve">
+    <value>Pęknięcia</value>
+  </data>
+  <data name="StyleOption_Voids" xml:space="preserve">
+    <value>Pustki</value>
+  </data>
+  <data name="StyleOption_Texture" xml:space="preserve">
+    <value>Gęstość tekstury</value>
+  </data>
+  <data name="StyleOptionCategory_Additional" xml:space="preserve">
+    <value>Dodatkowe</value>
+  </data>
+  <data name="StyleOptionCategory_Effect" xml:space="preserve">
+    <value>Efekty graficzne</value>
+  </data>
+  <data name="StyleOptionCategory_Main" xml:space="preserve">
+    <value>Główny</value>
+  </data>
+  <data name="HeaderPanel_ApplyAll" xml:space="preserve">
+    <value>Zastosuj do wszystkich przedmiotów</value>
+  </data>
+  <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
+    <value>Zastosuj do wszystkich zasad</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
+    <value>Zastosuj do wszystkich przejść dla pieszych</value>
+  </data>
+  <data name="HeaderPanel_ApplyCrosswalkType" xml:space="preserve">
+    <value>Zastosuj do wszystkich "{0}" przejść dla pieszych</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerAll" xml:space="preserve">
+    <value>Zastosuj do wszystkich wypełnień</value>
+  </data>
+  <data name="HeaderPanel_ApplyFillerType" xml:space="preserve">
+    <value>Zastosuj do wszystkich "{0}" wypełnień</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularAll" xml:space="preserve">
+    <value>Zastosuj do wszystkich linii</value>
+  </data>
+  <data name="HeaderPanel_ApplyRegularType" xml:space="preserve">
+    <value>Zastosuj do wszystkich "{0}" linii</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopAll" xml:space="preserve">
+    <value>Zastosuj do wszystkich linii zatrzymania</value>
+  </data>
+  <data name="HeaderPanel_ApplyStopType" xml:space="preserve">
+    <value>Zastosuj do wszystkich "{0}" linii zatrzymania</value>
+  </data>
+  <data name="HeaderPanel_CopyEffects" xml:space="preserve">
+    <value>Kopiuj efekty</value>
+  </data>
+  <data name="HeaderPanel_PasteEffects" xml:space="preserve">
+    <value>Wklej efekty</value>
+  </data>
+  <data name="StyleOption_FixedEndBoth" xml:space="preserve">
+    <value>Obydwa</value>
+  </data>
   <data name="StyleOption_FixedEndEnd" xml:space="preserve">
     <value>Koniec</value>
   </data>
   <data name="StyleOption_FixedEndStart" xml:space="preserve">
     <value>Początek</value>
+  </data>
+  <data name="StyleOption_FixedEnd" xml:space="preserve">
+    <value>Stały koniec</value>
   </data>
   <data name="StyleOption_Max" xml:space="preserve">
     <value>Maks</value>
@@ -1590,5 +1702,117 @@ Kliknij aby edytować oznaczenia</value>
   </data>
   <data name="StyleOption_ObjectLimits" xml:space="preserve">
     <value>Limity</value>
+  </data>
+  <data name="StyleOption_NotParallel" xml:space="preserve">
+    <value>Nie równoległy</value>
+  </data>
+  <data name="StyleOption_ParallelSlope" xml:space="preserve">
+    <value>Równoległy do linii i nachylenia i</value>
+  </data>
+  <data name="StyleOption_ParallelStraight" xml:space="preserve">
+    <value>Równoległy do linii i prostych końców</value>
+  </data>
+  <data name="StyleOption_ZebraDashesType" xml:space="preserve">
+    <value>Styl kresek</value>
+  </data>
+  <data name="StyleOption_InvertNetwork" xml:space="preserve">
+    <value>Odwróć sieć</value>
+  </data>
+  <data name="StyleOption_ObjectTwoDifferent" xml:space="preserve">
+    <value>Dwa różne</value>
+  </data>
+  <data name="Header_ExpandTooltip" xml:space="preserve">
+    <value>Przytrzymaj {0}, aby rozwinąć/zwinąć wszystkie zasady</value>
+  </data>
+  <data name="FillerStyle_Decal" xml:space="preserve">
+    <value>Naklejka</value>
+  </data>
+  <data name="StyleOption_AssetDecal" xml:space="preserve">
+    <value>Rekwizyt naklejka</value>
+  </data>
+  <data name="Settings_InvertChevrons" xml:space="preserve">
+    <value>Odwróć wszyskie szewrony</value>
+  </data>
+  <data name="Setting_Others" xml:space="preserve">
+    <value>Pozostałe</value>
+  </data>
+  <data name="StyleOption_AssetMissed" xml:space="preserve">
+    <value>Brakujący zaznaczony rekwizyt: "{0}"</value>
+  </data>
+  <data name="CrosswalkStyle_Decal" xml:space="preserve">
+    <value>Naklejka</value>
+  </data>
+  <data name="StyleOption_ScaleLock" xml:space="preserve">
+    <value>Zachowaj proporcje</value>
+  </data>
+  <data name="StyleOption_ScaleUnlock" xml:space="preserve">
+    <value>Własne proporcje</value>
+  </data>
+  <data name="StyleOption_ThemeMissed" xml:space="preserve">
+    <value>Brakujący zaznaczony motyw: "{0}"</value>
+  </data>
+  <data name="StyleOption_Theme" xml:space="preserve">
+    <value>Motyw mapy</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>Dodaj do ulubionych</value>
+  </data>
+  <data name="StyleOption_RemoveFromFavorites" xml:space="preserve">
+    <value>Usuń z ulubionych</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>Asfalt</value>
+  </data>
+  <data name="FillerStyle_TextureIsland" xml:space="preserve">
+    <value>Własna tekstura wyspy</value>
+  </data>
+  <data name="StyleOption_DefaultTheme" xml:space="preserve">
+    <value>Domyślny motyw mapy</value>
+  </data>
+  <data name="StyleOption_ObjectRandom" xml:space="preserve">
+    <value>Losowy</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Naklejka</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Rozmiar</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Tolerancja nachylenia</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Nachylanie</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Chodnik</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>Automatycznie zwijaj panel przedmiotów</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Linia #{0}</value>
+  </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>Poruszanie na wietrze</value>
+  </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Przytrzymaj {0}, aby rozwinąć/zwinąć wszystkie grupy</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_1" xml:space="preserve">
+    <value>[UPDATED] Wykończenia nowego UI.
+[FIXED] Przewijanie kółkiem myszy nad listą rozwijaną nie zmienia wartości..
+[FIXED] Lista rozwijana okienek nie może zostać zamknięta.
+[FIXED] Błą podczas renderowania niektórych sieci i wypełnień.
+[FIXED] Rekwizyty/drzewa/sieci nie podążają prawidłowo za segmentem.
+[FIXED] Naklejki nie zapisują ustawień kolorów.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[UPDATED] Dodano wsparcie dla DLC Hotele i Schroniska.
+[TRANSLATION] Dodano tłumaczenie brazylijskie.
+</value>
+  </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Przelicz ponownie wszystkie oznaczenia</value>
   </data>
 </root>

@@ -2084,4 +2084,7 @@
     <value>[UPDATED] 新增了对 Hotels &amp; Retreats DLC 更新的支持。
 [TRANSLATION] 新增了巴西葡萄牙语翻译。</value>
   </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>重新计算所有标线</value>
+  </data>
 </root>

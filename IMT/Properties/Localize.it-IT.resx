@@ -2107,4 +2107,7 @@ Può volerci del tempo se ci sono molti segmenti.</value>
 [TRANSLATION] Aggiunta la traduzione in Brasiliano.
 </value>
   </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Ricalcolo di tutte le marcature</value>
+  </data>
 </root>

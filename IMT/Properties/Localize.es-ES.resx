@@ -1920,4 +1920,7 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
     <value>[UPDATED] Se ha añadido el soporte DLC de Hotels&amp;Retreats.
 [TRANSLATION] Se han añadido traducciones al chino tradicional y tailandés.</value>
   </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Recalcular todas las marcas</value>
+  </data>
 </root>
