@@ -165,7 +165,7 @@ namespace IMT.UI.Editors
         {
             if(Preview != null)
             {
-                var x = Preview.Item.absolutePosition.x + Preview.Item.width;
+                var x = Preview.Item.absolutePosition.x + Preview.Item.width + VisibleScrollbarSize;
                 var y = Mathf.Min(Preview.Item.absolutePosition.y, Preview.parent.absolutePosition.y + Preview.parent.height - Preview.height);
                 Preview.absolutePosition = new Vector2(x, y);
             }

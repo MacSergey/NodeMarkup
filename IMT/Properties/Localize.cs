@@ -2874,5 +2874,10 @@ namespace IMT
 		/// [UPDATED] Added Hotels&Retreats DLC support.
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_14_2 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_2", Culture);
+
+		/// <summary>
+		/// Recalculate all markings
+		/// </summary>
+		public static string Settings_RecalculateMarkings => LocaleManager.GetString("Settings_RecalculateMarkings", Culture);
 	}
 }
