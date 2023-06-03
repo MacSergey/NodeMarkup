@@ -2114,4 +2114,9 @@
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>Пересчитать всю разметку</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
+    <value>[FIXED] Текстуры заполнителей обновляются при изменении темы карты в моде Theme Mixer.
+[FIXED] Предпросмотр трафарета не перекрывает полосу прокрутки.
+[NEW] Добавлена возможность пересчитать всю разметку на карте.</value>
+  </data>
 </root>

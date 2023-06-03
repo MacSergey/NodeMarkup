@@ -2110,4 +2110,9 @@ Può volerci del tempo se ci sono molti segmenti.</value>
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>Ricalcolo di tutte le marcature</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
+    <value>[FIXED] Aggiornata la texture dei riempimenti quando si cambia il tema della mappa nella mod Theme Mixer.
+[FIXED] L'anteprima dei preset non si sovrappone più alla barra di scorrimento.
+[NEW] Aggiunta la possibilità di ricalcolare tutte le marcature sulla mappa.</value>
+  </data>
 </root>

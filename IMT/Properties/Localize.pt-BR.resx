@@ -1813,4 +1813,9 @@ Pode demorar um pouco se tiver muitos segmentos.</value>
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>Recalcular todas as marcações</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
+    <value>[Corrigido] A textura dos preenchimentos atualiza quando o tema do mapa for alterado no Theme Mixer.
+[Corrigido] A pré-visualização da predefinição não ficará por cima da barra de rolagem.
+[Novo] Adicionada capacidade de recalcular todas as marcações no mapa.</value>
+  </data>
 </root>

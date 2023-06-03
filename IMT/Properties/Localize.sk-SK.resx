@@ -283,6 +283,145 @@ Pôvodné dáta prepíšu všetky existujúce značenia.</value>
   <data name="Tool_ClearMarkingsCaption" xml:space="preserve">
     <value>Odstrániť všetky značenia z tejto križovatky</value>
   </data>
+  <data name="Tool_ClearMarkingsMessage" xml:space="preserve">
+    <value>Naozaj chcete zmazať všetky značenia križovatky #{0}?</value>
+  </data>
+  <data name="Tool_InfoCreateLine" xml:space="preserve">
+    <value>Kliknite pre vytvorenie čiary</value>
+  </data>
+  <data name="Tool_InfoDeleteLine" xml:space="preserve">
+    <value>Kliknite pre zmazanie čiary</value>
+  </data>
+  <data name="Tool_InfoHoverNode" xml:space="preserve">
+    <value>Križovatka #{0}
+Kliknite pre zmenu značenia</value>
+  </data>
+  <data name="Tool_SelectInfo" xml:space="preserve">
+    <value>Vyberte križovatku alebo cestu pre zmenu značenia</value>
+  </data>
+  <data name="Tool_InfoSelectLineEndPoint" xml:space="preserve">
+    <value>Vyberte koncový bod pre vytvorenie čiary</value>
+  </data>
+  <data name="Tool_InfoSelectLineStartPoint" xml:space="preserve">
+    <value>Vyberte bod pre vytvorenie alebo zmazanie čiary</value>
+  </data>
+  <data name="Settings_Restore" xml:space="preserve">
+    <value>Obnoviť</value>
+  </data>
+  <data name="StyleOption_Invert" xml:space="preserve">
+    <value>Prevrátiť</value>
+  </data>
+  <data name="StyleOption_Width" xml:space="preserve">
+    <value>Šírka</value>
+  </data>
+  <data name="LineStyle_SolidAndDashed" xml:space="preserve">
+    <value>Plná a prerušovaná</value>
+  </data>
+  <data name="LineStyle_StopSolid" xml:space="preserve">
+    <value>Plná</value>
+  </data>
+  <data name="Tool_InfoDeleteStopLine" xml:space="preserve">
+    <value>Kliknite pre zmazanie hranice križovatky</value>
+  </data>
+  <data name="Tool_InfoCreateStopLine" xml:space="preserve">
+    <value>Kliknite pre vytvorenie hranice križovatky</value>
+  </data>
+  <data name="FillerEditor_Fillers" xml:space="preserve">
+    <value>Výplne</value>
+  </data>
+  <data name="FillerEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>výplň</value>
+  </data>
+  <data name="FillerStyle_Stripe" xml:space="preserve">
+    <value>Pruhy</value>
+  </data>
+  <data name="FillerStyle_Grid" xml:space="preserve">
+    <value>Mriežka</value>
+  </data>
+  <data name="LineStyle_StopDashed" xml:space="preserve">
+    <value>Prerušovaná</value>
+  </data>
+  <data name="StyleOption_Step" xml:space="preserve">
+    <value>Medzera</value>
+  </data>
+  <data name="StyleOption_Angle" xml:space="preserve">
+    <value>Uhol</value>
+  </data>
+  <data name="Tool_InfoFillerClickStart" xml:space="preserve">
+    <value>Kliknite pre vytvorenie výplne</value>
+  </data>
+  <data name="Tool_InfoFillerClickEnd" xml:space="preserve">
+    <value>Kliknite pre dokončenie výplne</value>
+  </data>
+  <data name="Tool_InfoFillerClickNext" xml:space="preserve">
+    <value>Kliknite pre výber ďalšieho bodu výplne</value>
+  </data>
+  <data name="Tool_InfoFillerSelectStart" xml:space="preserve">
+    <value>Vyberte bod pre vytvorenie výplne</value>
+  </data>
+  <data name="Tool_InfoFillerSelectNext" xml:space="preserve">
+    <value>Vyberte ďalší bod obvodu výplne</value>
+  </data>
+  <data name="Editor_ColorCopy" xml:space="preserve">
+    <value>Kopírovať</value>
+  </data>
+  <data name="Editor_ColorPaste" xml:space="preserve">
+    <value>Prilepiť</value>
+  </data>
+  <data name="Editor_ColorDefault" xml:space="preserve">
+    <value>Predvolená</value>
+  </data>
+  <data name="FillerStyle_Solid" xml:space="preserve">
+    <value>Plná</value>
+  </data>
+  <data name="Settings_ShortcutAddNewFiller" xml:space="preserve">
+    <value>Pridať novú výplň</value>
+  </data>
+  <data name="LineStyle_StopDouble" xml:space="preserve">
+    <value>Dvojitá plná</value>
+  </data>
+  <data name="LineStyle_StopDoubleDashed" xml:space="preserve">
+    <value>Dvojitá prerušovaná</value>
+  </data>
+  <data name="HeaderPanel_StyleCopy" xml:space="preserve">
+    <value>Kopírovať</value>
+  </data>
+  <data name="HeaderPanel_StylePaste" xml:space="preserve">
+    <value>Prilepiť</value>
+  </data>
+  <data name="FillerStyle_Chevron" xml:space="preserve">
+    <value>Lomené čiary</value>
+  </data>
+  <data name="StyleOption_AngleBetween" xml:space="preserve">
+    <value>Uhol medzi</value>
+  </data>
+  <data name="StyleOption_Turn" xml:space="preserve">
+    <value>Otočiť</value>
+  </data>
+  <data name="LineEditor_EmptyMessage" xml:space="preserve">
+    <value>Na tejto križovatke nie sú žiadne čiary. 
+Pre vytvorenie čiary spojte dva body.</value>
+  </data>
+  <data name="FillerEditor_EmptyMessage" xml:space="preserve">
+    <value>Na tejto križovatke nie sú žiadne výplne.
+Pre vytvorenie výplne držte {0}, alebo stlačte {1}.</value>
+  </data>
+  <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
+    <value>Nie sú vytvorené žiadne šablóny. 
+Pre vytvorenie šablóny, vyberte «{0}» pri úprave štýlu čiary, priechodu alebo výplne.</value>
+  </data>
+  <data name="StyleOption_Alignment" xml:space="preserve">
+    <value>Zarovnanie</value>
+  </data>
+  <data name="Tool_InfoCreateNormalLine" xml:space="preserve">
+    <value>Kliknite pre vytvorenie kolmej čiary</value>
+  </data>
+  <data name="Tool_InfoDeleteNormalLine" xml:space="preserve">
+    <value>Kliknite pre zmazanie kolmej čiary</value>
+  </data>
+  <data name="CrosswalkStyle_Zebra" xml:space="preserve">
+    <value>Zebra</value>
+  </data>
   <data name="CrosswalkStyle_Existent" xml:space="preserve">
     <value>Existujúci priechod</value>
   </data>
@@ -371,5 +510,162 @@ Skontrolujte začiatočné a koncové body ostatných pravidiel.</value>
   </data>
   <data name="CrosswalkStyle_ResetBorder" xml:space="preserve">
     <value>Resetovať</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkEndPoint" xml:space="preserve">
+    <value>Vyber koncový bod</value>
+  </data>
+  <data name="Tool_InfoSelectCrosswalkStartPoint" xml:space="preserve">
+    <value>Vyberte bod pre vytvorenie alebo zmazanie priechodu</value>
+  </data>
+  <data name="CrosswalkStyle_ParallelDashedLines" xml:space="preserve">
+    <value>Súbežné prerušované čiary</value>
+  </data>
+  <data name="CrosswalkStyle_Ladder" xml:space="preserve">
+    <value>Rebrík</value>
+  </data>
+  <data name="HeaderPanel_NoTemplates" xml:space="preserve">
+    <value>Žiadne šablóny</value>
+  </data>
+  <data name="CrosswalkStyle_Solid" xml:space="preserve">
+    <value>Plná</value>
+  </data>
+  <data name="LineStyle_CrosswalkLinesGroup" xml:space="preserve">
+    <value>Čiary priechodu</value>
+  </data>
+  <data name="CrossWalkEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>priechod</value>
+  </data>
+  <data name="FillerEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>výplň</value>
+  </data>
+  <data name="LineEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>čiara</value>
+  </data>
+  <data name="PointEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>bod</value>
+  </data>
+  <data name="TemplateEditor_DeleteMessageDescription" xml:space="preserve">
+    <value>šablóna</value>
+  </data>
+  <data name="Mod_LoadFailed" xml:space="preserve">
+    <value>Pri načítavaní sa vyskytli chyby.
+Nepodarilo sa načítať značenia pre {0} križovatiek.</value>
+  </data>
+  <data name="CrosswalkStyle_ChessBoard" xml:space="preserve">
+    <value>Šachovnica</value>
+  </data>
+  <data name="StyleOption_LineCount" xml:space="preserve">
+    <value>Počet čiar</value>
+  </data>
+  <data name="StyleOption_SharkToothBase" xml:space="preserve">
+    <value>Základňa trojuholníku</value>
+  </data>
+  <data name="StyleOption_SharkToothHeight" xml:space="preserve">
+    <value>Výška trojuholníku</value>
+  </data>
+  <data name="StyleOption_SharkToothSpace" xml:space="preserve">
+    <value>Medzera</value>
+  </data>
+  <data name="StyleOption_SquareSide" xml:space="preserve">
+    <value>Strana štvorca</value>
+  </data>
+  <data name="LineStyle_SharkTeeth" xml:space="preserve">
+    <value>Zuby</value>
+  </data>
+  <data name="LineStyle_StopSharkTeeth" xml:space="preserve">
+    <value>Zuby</value>
+  </data>
+  <data name="LineStyle_StopSolidAndDashed" xml:space="preserve">
+    <value>Plná a prerušovaná</value>
+  </data>
+  <data name="Panel_ClearMarking" xml:space="preserve">
+    <value>Odstrániť značenia</value>
+  </data>
+  <data name="Panel_CopyMarking" xml:space="preserve">
+    <value>Kopírovať značenia</value>
+  </data>
+  <data name="Panel_PasteMarking" xml:space="preserve">
+    <value>Prilepiť značenia</value>
+  </data>
+  <data name="Tool_PasteMarkingsCaption" xml:space="preserve">
+    <value>Prilepiť značenia</value>
+  </data>
+  <data name="Tool_PasteMarkingsMessage" xml:space="preserve">
+    <value>Naozaj chcete prilepiť značenia?</value>
+  </data>
+  <data name="Settings_CrosswalksModifier" xml:space="preserve">
+    <value>Klávesové skratky priechodov</value>
+  </data>
+  <data name="Settings_FillersModifier" xml:space="preserve">
+    <value>Klávesové skratky výplní</value>
+  </data>
+  <data name="Settings_RegularLinesModifier" xml:space="preserve">
+    <value>Klávesové skratky čiar</value>
+  </data>
+  <data name="Settings_StopLinesModifier" xml:space="preserve">
+    <value>Klávesové skratky hraníc križovatky</value>
+  </data>
+  <data name="Settings_StyleModifierNotSet" xml:space="preserve">
+    <value>Nenastavené</value>
+  </data>
+  <data name="Settings_StyleModifierWithout" xml:space="preserve">
+    <value>Bez skratky</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsAlways" xml:space="preserve">
+    <value>Vždy</value>
+  </data>
+  <data name="Settings_ShowDeleteWarningsOnlyDependences" xml:space="preserve">
+    <value>Iba ak budú ovplyvnené iné pravidlá</value>
+  </data>
+  <data name="Tool_DeleteDependence" xml:space="preserve">
+    <value>Závislosti budú odstránené:</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalkBorders" xml:space="preserve">
+    <value>Hranica priechodu - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceCrosswalks" xml:space="preserve">
+    <value>Priechody - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceFillers" xml:space="preserve">
+    <value>Výplne - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceLines" xml:space="preserve">
+    <value>Čiary - {0}</value>
+  </data>
+  <data name="Tool_DeleteDependenceRules" xml:space="preserve">
+    <value>Pravidlá - {0}</value>
+  </data>
+  <data name="Settings_BackupTab" xml:space="preserve">
+    <value>Záloha</value>
+  </data>
+  <data name="Settings_DisplayAndUsage" xml:space="preserve">
+    <value>Zobrazenie a použitie</value>
+  </data>
+  <data name="Settings_Groupings" xml:space="preserve">
+    <value>Zoskupovanie</value>
+  </data>
+  <data name="Settings_ShortcutsAndModifiersTab" xml:space="preserve">
+    <value>Klávesové skratky</value>
+  </data>
+  <data name="HeaderPanel_Duplicate" xml:space="preserve">
+    <value>Duplikovať</value>
+  </data>
+  <data name="Template_DuplicateTemplateSuffix" xml:space="preserve">
+    <value>Kopírovať</value>
+  </data>
+  <data name="StyleOption_Edge" xml:space="preserve">
+    <value>Okraj</value>
+  </data>
+  <data name="StyleOption_Vertex" xml:space="preserve">
+    <value>Vrchol</value>
+  </data>
+  <data name="Settings_ShortcutResetPointsOffset" xml:space="preserve">
+    <value>Resetovať odsadenie všetkých bodov</value>
+  </data>
+  <data name="Tool_ResetOffsetsCaption" xml:space="preserve">
+    <value>Resetovať odsadenie všetkých bodov</value>
+  </data>
+  <data name="Tool_ResetOffsetsMessage" xml:space="preserve">
+    <value>Naozaj chcete resetovať odsadenie všetkých bodov na križovatke #{0}?</value>
   </data>
 </root>

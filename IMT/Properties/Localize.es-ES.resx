@@ -1923,4 +1923,9 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>Recalcular todas las marcas</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
+    <value>[FIXED] Actualización de textura de rellenos cuando se cambia el tema con el mod Theme Mixer.
+[FIXED] La vista previa de los preajustes no se sobrepone en la barra de desplazamiento.
+[NEW] Ahora se puede recalcular todas las marcas en el mapa.</value>
+  </data>
 </root>

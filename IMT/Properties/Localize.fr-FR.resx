@@ -2111,4 +2111,7 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
 [TRANSLATION] Ajout de la traduction brésilienne.
 </value>
   </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Recalculer tous les marquages</value>
+  </data>
 </root>
