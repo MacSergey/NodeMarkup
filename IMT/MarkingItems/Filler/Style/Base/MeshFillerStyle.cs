@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public abstract class MeshFillerStyle : BaseFillerStyle
+    public abstract class MeshFillerStyle : BaseFillerStyle, IThemeFiller
     {
         public PropertyThemeValue PavementTheme { get; }
         public PropertyValue<float> Elevation { get; }

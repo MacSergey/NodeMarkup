@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class AsphaltFillerStyle : BaseFillerStyle, IColorStyle
+    public class AsphaltFillerStyle : BaseFillerStyle, IColorStyle, IThemeFiller
     {
         public override StyleType Type => StyleType.FillerAsphalt;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;

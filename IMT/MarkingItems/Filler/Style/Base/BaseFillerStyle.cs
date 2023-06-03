@@ -36,6 +36,7 @@ namespace IMT.Manager
     {
         PropertyValue<bool> FollowGuides { get; }
     }
+    public interface IThemeFiller { }
     public abstract class BaseFillerStyle : Style<BaseFillerStyle>, IFillerStyle
     {
         public static float DefaultAngle => 0f;

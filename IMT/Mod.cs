@@ -115,6 +115,8 @@ namespace IMT
             PatchNetInfo(ref success);
             PatchLoading(ref success);
 
+            success &= Patch_ThemeMixer_TerrainTexture();
+
             return success;
         }
 
@@ -623,6 +625,53 @@ namespace IMT
             }
             else
                 return true;
+        }
+
+        #endregion
+
+        #region OTHERS
+
+        private bool Patch_ThemeMixer_TerrainTexture()
+        {
+            if (AccessTools.TypeByName("ThemeMixer.Themes.Terrain.TerrainTexture") is Type type)
+                return AddPostfix(typeof(Mod), nameof(Mod.ThemeMixer_TerrainTexture_Postfix), type, "LoadValue");
+            else
+            {
+                Logger.Error($"Theme mixer is not found, patch skiped");
+                return true;
+            }
+        }
+        private static void ThemeMixer_TerrainTexture_Postfix()
+        {
+            if (SingletonManager<NodeMarkingManager>.Exist)
+            {
+                for (int i = 0; i < NetManager.MAX_NODE_COUNT; i += 1)
+                {
+                    if (SingletonManager<NodeMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                    {
+                        foreach (var filler in marking.Fillers)
+                        {
+                            if (filler.Style.Value is IThemeFiller)
+                                marking.Update(filler, true, false);
+                        }
+                    }
+                }
+            }
+
+            if (SingletonManager<SegmentMarkingManager>.Exist)
+            {
+                for (int i = 0; i < NetManager.MAX_SEGMENT_COUNT; i += 1)
+                {
+                    if (SingletonManager<SegmentMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                    {
+                        foreach (var filler in marking.Fillers)
+                        {
+                            if (filler.Style.Value is IThemeFiller)
+                                marking.Update(filler, true, false);
+                        }
+                    }
+                }
+            }
         }
 
         #endregion

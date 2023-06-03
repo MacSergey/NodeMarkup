@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public abstract class ThemeFillerStyle : CurbFillerStyle
+    public abstract class ThemeFillerStyle : CurbFillerStyle, IThemeFiller
     {
         public PropertyThemeValue Theme { get; }
         protected abstract ThemeHelper.TextureType TextureType { get; }
