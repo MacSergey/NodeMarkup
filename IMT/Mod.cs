@@ -32,6 +32,7 @@ namespace IMT
         protected override string IdRaw => "IntersectionMarkingTool";
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version(1,14,3), new DateTime(2023, 6, 13)),
             new ModVersion(new Version(1,14,2), new DateTime(2023, 5, 27)),
             new ModVersion(new Version(1,14,1), new DateTime(2023, 4, 15)),
             new ModVersion(new Version(1,14), new DateTime(2023, 4, 1)),
@@ -64,7 +65,7 @@ namespace IMT
             new ModVersion(new Version(1,1), new DateTime(2020, 7, 14)),
             new ModVersion(new Version(1,0), new DateTime(2020, 7, 7)),
         };
-        protected override Version RequiredGameVersion => new Version(1, 17, 0, 3);
+        protected override Version RequiredGameVersion => new Version(1, 17, 1, 2);
 
         public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;

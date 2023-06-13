@@ -2879,5 +2879,10 @@ namespace IMT
 		/// Recalculate all markings
 		/// </summary>
 		public static string Settings_RecalculateMarkings => LocaleManager.GetString("Settings_RecalculateMarkings", Culture);
+
+		/// <summary>
+		/// [FIXED] Update fillers texture when map theme is changed in Theme Mixer mod.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14_3 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_3", Culture);
 	}
 }

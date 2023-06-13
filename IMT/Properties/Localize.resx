@@ -2113,4 +2113,9 @@ It can take time if there are a lot of segments.</value>
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>Recalculate all markings</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
+    <value>[FIXED] Update fillers texture when map theme is changed in Theme Mixer mod.
+[FIXED] Preset preview does not overlap scrollbar anymore.
+[NEW] Added the ability to recalculate all marking on map.</value>
+  </data>
 </root>
