@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class CustomTextureFillerStyle : CurbFillerStyle
+    public class CustomTextureFillerStyle : CurbFillerStyle, IThemeFiller
     {
         public override StyleType Type => StyleType.FillerTexture;
         public override MarkingLOD SupportLOD => MarkingLOD.LOD0 | MarkingLOD.LOD1;

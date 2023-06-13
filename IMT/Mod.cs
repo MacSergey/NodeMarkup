@@ -32,6 +32,7 @@ namespace IMT
         protected override string IdRaw => "IntersectionMarkingTool";
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version(1,14,3), new DateTime(2023, 6, 13)),
             new ModVersion(new Version(1,14,2), new DateTime(2023, 5, 27)),
             new ModVersion(new Version(1,14,1), new DateTime(2023, 4, 15)),
             new ModVersion(new Version(1,14), new DateTime(2023, 4, 1)),
@@ -64,7 +65,7 @@ namespace IMT
             new ModVersion(new Version(1,1), new DateTime(2020, 7, 14)),
             new ModVersion(new Version(1,0), new DateTime(2020, 7, 7)),
         };
-        protected override Version RequiredGameVersion => new Version(1, 17, 0, 3);
+        protected override Version RequiredGameVersion => new Version(1, 17, 1, 2);
 
         public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
@@ -114,6 +115,8 @@ namespace IMT
             PatchNetSegment(ref success);
             PatchNetInfo(ref success);
             PatchLoading(ref success);
+
+            success &= Patch_ThemeMixer_TerrainTexture();
 
             return success;
         }
@@ -623,6 +626,53 @@ namespace IMT
             }
             else
                 return true;
+        }
+
+        #endregion
+
+        #region OTHERS
+
+        private bool Patch_ThemeMixer_TerrainTexture()
+        {
+            if (AccessTools.TypeByName("ThemeMixer.Themes.Terrain.TerrainTexture") is Type type)
+                return AddPostfix(typeof(Mod), nameof(Mod.ThemeMixer_TerrainTexture_Postfix), type, "LoadValue");
+            else
+            {
+                Logger.Error($"Theme mixer is not found, patch skiped");
+                return true;
+            }
+        }
+        private static void ThemeMixer_TerrainTexture_Postfix()
+        {
+            if (SingletonManager<NodeMarkingManager>.Exist)
+            {
+                for (int i = 0; i < NetManager.MAX_NODE_COUNT; i += 1)
+                {
+                    if (SingletonManager<NodeMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                    {
+                        foreach (var filler in marking.Fillers)
+                        {
+                            if (filler.Style.Value is IThemeFiller)
+                                marking.Update(filler, true, false);
+                        }
+                    }
+                }
+            }
+
+            if (SingletonManager<SegmentMarkingManager>.Exist)
+            {
+                for (int i = 0; i < NetManager.MAX_SEGMENT_COUNT; i += 1)
+                {
+                    if (SingletonManager<SegmentMarkingManager>.Instance.TryGetMarking((ushort)i, out var marking))
+                    {
+                        foreach (var filler in marking.Fillers)
+                        {
+                            if (filler.Style.Value is IThemeFiller)
+                                marking.Update(filler, true, false);
+                        }
+                    }
+                }
+            }
         }
 
         #endregion
