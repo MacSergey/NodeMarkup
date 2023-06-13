@@ -1530,6 +1530,9 @@ Klikněte pro změnu značení</value>
   <data name="Settings_CreateLaneEdgeLines" xml:space="preserve">
     <value>Automatické vytváření krajnice</value>
   </data>
+  <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
+    <value>Vyberte bod pro vytvoření čáry</value>
+  </data>
   <data name="StyleOption_Distribution" xml:space="preserve">
     <value>Distribuce</value>
   </data>

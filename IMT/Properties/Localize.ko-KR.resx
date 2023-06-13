@@ -1925,4 +1925,9 @@
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>모든 마킹 재계산</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
+    <value>[FIXED] Theme Mixer 모드에서 맵 테마가 변경된 경우 필러 텍스처가 바뀌도록 수정했습니다.
+[FIXED] 프리셋 미리보기와 스크롤 막대가 더 이상 겹치지 않습니다.
+[NEW] 맵의 모든 마킹을 재계산하는 기능을 추가했습니다.</value>
+  </data>
 </root>

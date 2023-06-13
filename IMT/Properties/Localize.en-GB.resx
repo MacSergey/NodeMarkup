@@ -141,6 +141,9 @@
   <data name="StyleOption_Color" xml:space="preserve">
     <value>Colour</value>
   </data>
+  <data name="StyleOption_DashedLength" xml:space="preserve">
+    <value>Dash Length</value>
+  </data>
   <data name="LineEditor_DeleteRuleCaption" xml:space="preserve">
     <value>Delete rule</value>
   </data>
@@ -165,6 +168,9 @@
   <data name="StyleOption_Offset" xml:space="preserve">
     <value>Offset</value>
   </data>
+  <data name="StyleOption_SpaceLength" xml:space="preserve">
+    <value>Space Length</value>
+  </data>
   <data name="Editor_Style" xml:space="preserve">
     <value>Style</value>
   </data>
@@ -173,6 +179,57 @@
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
     <value>Intersection with {0}</value>
+  </data>
+  <data name="LineRule_SelfEdgePoint" xml:space="preserve">
+    <value>Self-edge point {0}</value>
+  </data>
+  <data name="LineStyle_Dashed" xml:space="preserve">
+    <value>Dashed</value>
+  </data>
+  <data name="LineStyle_DoubleDashed" xml:space="preserve">
+    <value>Double Dashed</value>
+  </data>
+  <data name="LineStyle_DoubleSolid" xml:space="preserve">
+    <value>Double Solid</value>
+  </data>
+  <data name="LineStyle_Solid" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>Just do make markings at intersections</value>
+  </data>
+  <data name="Panel_NodeCaption" xml:space="preserve">
+    <value>Edit node #{0} markings</value>
+  </data>
+  <data name="PointEditor_DeleteCaptionDescription" xml:space="preserve">
+    <value>point</value>
+  </data>
+  <data name="PointEditor_Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="PointEditor_Points" xml:space="preserve">
+    <value>Points</value>
+  </data>
+  <data name="SelectPanel_NotSet" xml:space="preserve">
+    <value>Not set</value>
+  </data>
+  <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
+    <value>Add new line rule</value>
+  </data>
+  <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
+    <value>Delete all node lines</value>
+  </data>
+  <data name="Settings_DeleteMarkingButton" xml:space="preserve">
+    <value>Delete markings from all intersections</value>
+  </data>
+  <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
+    <value>Delete all markings</value>
+  </data>
+  <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
+    <value>Do you really want to remove all markings?</value>
+  </data>
+  <data name="Settings_DumpMarkingButton" xml:space="preserve">
+    <value>Dump markings data to file</value>
   </data>
   <data name="TemplateEditor_EmptyMessage" xml:space="preserve">
     <value>The list of templates is empty.

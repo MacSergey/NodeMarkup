@@ -2114,4 +2114,9 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>Recalculer tous les marquages</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
+    <value>[FIXED] Mise à jour de la texture des remplissages lorsque le thème de la carte est modifié dans le mod Theme Mixer.
+[FIXED] L'aperçu des préréglages n'empiète plus sur la barre de défilement.
+[NEW] Ajout de la possibilité de recalculer tous les marquages sur la carte.</value>
+  </data>
 </root>

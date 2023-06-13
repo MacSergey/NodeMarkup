@@ -2087,4 +2087,9 @@
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>重新计算所有标线</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
+    <value>[FIXED] 修复了在 Theme Mixer 模组中更改地图主题后，填充图案不会自动更新的问题。
+[FIXED] 修复了在预览预设时，预览窗格与滚动条重叠的问题。
+[NEW] 新增了重新计算地图上所有标线的功能。</value>
+  </data>
 </root>
