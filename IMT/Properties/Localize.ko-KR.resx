@@ -1930,4 +1930,7 @@
 [FIXED] 프리셋 미리보기와 스크롤 막대가 더 이상 겹치지 않습니다.
 [NEW] 맵의 모든 마킹을 재계산하는 기능을 추가했습니다.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[FIXED] 소소하게 버그를 수정했습니다.</value>
+  </data>
 </root>
