@@ -197,13 +197,14 @@ namespace IMT
         {
             var section = helper.AddOptionsSection(Localize.Settings_Groupings);
 
-            var groupPointToggle = section.AddToggle(Localize.Settings_GroupPoints, GroupPoints, OnChanged);
-            var groupLineToggle = section.AddToggle(Localize.Settings_GroupLines, GroupLines, OnChanged);
-            section.AddTogglePanel(Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnChanged);
-            var groupPresetToggle = section.AddToggle(Localize.Settings_GroupPresets, GroupPresets, OnChanged);
+            var groupPointToggle = section.AddToggle(Localize.Settings_GroupPoints, GroupPoints, OnStateChanged);
+            var groupLineToggle = section.AddToggle(Localize.Settings_GroupLines, GroupLines, OnStateChanged);
+            section.AddTogglePanel(Localize.Settings_GroupTemplates, GroupTemplates, GroupTemplatesType, new string[] { Localize.Settings_GroupTemplatesByType, Localize.Settings_GroupTemplatesByStyle }, OnStateChanged, OnValueChanged);
+            var groupPresetToggle = section.AddToggle(Localize.Settings_GroupPresets, GroupPresets, OnStateChanged);
             section.AddTogglePanel(Localize.Settings_GroupPointsOverlay, GroupPointsOverlay, GroupPointsOverlayType, new string[] { Localize.Settings_GroupPointsArrangeCircle, Localize.Settings_GroupPointsArrangeLine });
 
-            static void OnChanged(bool value) => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
+            static void OnStateChanged(bool value) => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
+            static void OnValueChanged(int value) => SingletonItem<IntersectionMarkingToolPanel>.Instance?.UpdatePanel();
         }
         private void AddSorting(UIComponent helper)
         {

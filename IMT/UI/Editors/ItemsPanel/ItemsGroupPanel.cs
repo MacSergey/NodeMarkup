@@ -98,6 +98,8 @@ namespace IMT.UI.Editors
                 group = ComponentPool.Get<GroupItemType>(this, zOrder: index >= 0 ? index : ~index);
                 group.Init(groupType);
                 group.width = this.width;
+                if (Editor is IItemsGroupingEditor<GroupType> groupingEditor && groupingEditor.GroupExpandList.TryGetValue(groupType, out var isExpand))
+                    group.IsExpand = isExpand;
                 group.Header.eventMouseEnter += GroupHover;
                 group.Header.eventMouseLeave += GroupLeave;
                 group.OnExpandChanged += GroupExpandChanged;
@@ -112,13 +114,25 @@ namespace IMT.UI.Editors
 
         private void GroupHover(UIComponent component, UIMouseEventParameter eventParam) => HoverGroup = component.parent as GroupItemType;
         private void GroupLeave(UIComponent component, UIMouseEventParameter eventParam) => HoverGroup = null;
-        private void GroupExpandChanged(bool isExpand)
+        private void GroupExpandChanged(GroupType groupType, bool isExpand, bool applyToAll)
         {
             PauseLayout(() =>
             {
-                foreach(var group in Groups.Values)
-                    group.IsExpand = isExpand;
+                if (applyToAll)
+                {
+                    foreach (var group in Groups.Values)
+                        Set(groupType, isExpand);
+                }
+                else
+                    Set(groupType, isExpand);
             });
+
+            void Set(GroupType groupType, bool isExpand)
+            {
+                Groups[groupType].IsExpand = isExpand;
+                if (Editor is IItemsGroupingEditor<GroupType> groupingEditor)
+                    groupingEditor.GroupExpandList[groupType] = isExpand;
+            }
         }
 
         #endregion

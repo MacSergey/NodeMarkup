@@ -70,7 +70,7 @@ namespace IMT.UI.Editors
         {
             get
             {
-                if (Editor.ExpandList.TryGetValue(Category.Name, out var isExpand))
+                if (Editor.CategoryExpandList.TryGetValue(Category.Name, out var isExpand))
                     return isExpand;
                 else
                     return null;
@@ -81,7 +81,7 @@ namespace IMT.UI.Editors
                 {
                     PauseLayout(() =>
                     {
-                        Editor.ExpandList[Category.Name] = value.Value;
+                        Editor.CategoryExpandList[Category.Name] = value.Value;
                         Header.IsExpand = value.Value;
                         PaddingBottom = value.Value ? 0 : 5;
 
@@ -116,7 +116,7 @@ namespace IMT.UI.Editors
             Header.Init(editor);
             Header.eventClick += HeaderClick;
 
-            IsExpand ??= category.IsExpand;
+            IsExpand = (IsExpand ?? category.IsExpand);
 
             BackgroundSprite = string.Empty;
 

@@ -202,7 +202,7 @@ namespace IMT.UI.Editors
                 return;
 
             SelectItem = item;
-            ScrollTo(item);
+            ScrollIntoView(item);
         }
 
         #endregion
@@ -250,11 +250,6 @@ namespace IMT.UI.Editors
         protected virtual int FindIndex(ObjectType editObject) => FindIndex(editObject, this);
         protected int FindIndex(ObjectType editObject, UIComponent parent) => Array.BinarySearch(parent.components.OfType<ItemType>().Select(i => i.EditObject).ToArray(), editObject, this);
 
-        public virtual void ScrollTo(ItemType item)
-        {
-            ScrollToEnd();
-            ScrollIntoView(item);
-        }
         public void RefreshSelectedItem() => SelectItem?.Refresh();
         public virtual void RefreshItems()
         {

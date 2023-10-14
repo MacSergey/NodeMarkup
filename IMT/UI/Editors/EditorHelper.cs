@@ -22,7 +22,7 @@ namespace IMT.UI.Editors
         Dictionary<string, IPropertyCategoryInfo> CategoryInfos { get; }
         Dictionary<string, CategoryItem> CategoryItems { get; }
         List<BaseEditorPanel> StyleProperties { get; }
-        Dictionary<string, bool> ExpandList { get; }
+        Dictionary<string, bool> CategoryExpandList { get; }
     }
 
     public static class PropertyEditorHelper
