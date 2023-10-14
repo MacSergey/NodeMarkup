@@ -1992,4 +1992,7 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
 [TRANSLATION] Brasilianische Übersetzung hinzugefügt.
 </value>
   </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Alle Markierungen löschen</value>
+  </data>
 </root>

@@ -860,7 +860,7 @@ Yeni ön ayar oluşturmak için panel başlığında {0} tuşunu kullanın.</val
     <value>Yeni ön ayar</value>
   </data>
   <data name="Tool_EndApplyPresetCaption" xml:space="preserve">
-    <value>Ön ayar modunu uygulamadan çık</value>
+    <value>Ön ayar uygulama modundan çık</value>
   </data>
   <data name="Tool_EndApplyPresetMessage" xml:space="preserve">
     <value>Bir ön ayar uygulamak istiyor musunuz?</value>
@@ -1048,6 +1048,9 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   </data>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Rehber için ikinci bir nokta seçin</value>
+  </data>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>İkinci rengi kullan</value>
   </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Panodan</value>
@@ -1586,7 +1589,7 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
     <value>Yol varlıklarından işaretleri otomatik olarak uygula</value>
   </data>
   <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
-    <value>Bağlama ön ayar modundan çık</value>
+    <value>Ön ayar bağlama modundan çık</value>
   </data>
   <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
     <value>Bağlantı ön ayarı modundan çıkmak ve bu ön ayarı yol varlığına bağlamak istiyor musunuz?</value>
@@ -1824,5 +1827,66 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   </data>
   <data name="StyleOption_ObjectRandom" xml:space="preserve">
     <value>Rastgele</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Çıkartma</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Boyut</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Eğim Toleransı</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Parke Taşı</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Kaldırım</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>Nesneler panelini otomatik olarak gizle</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Şerit #{0}</value>
+  </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>Rüzgarda Sallanma</value>
+  </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Tüm grupları daraltmak/genişletmek için {0} tuşunu basılı tutun</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_1" xml:space="preserve">
+    <value>[GÜNCELLENDİ] Yeni arayüzün iyileştirilmesi.
+[DÜZELTİLDİ] Mouse tekerleğinin açılır menü değerini değiştirmemesi düzeltildi.
+[DÜZELTİLDİ] Açılır menülerin kapatılamaması düzeltildi.
+[DÜZELTİLDİ] Bazı ağlar ve doldurucuların işlenmesi sırasında oluşan hatalar düzeltildi.
+[DÜZELTİLDİ] Cisimler/ağaçlar/ağların segmentleri düzgün takip etmemesi düzeltildi.
+[DÜZELTİLDİ] Çıkarmaların renk ayarlarını kaydetmemesi düzeltildi.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[GÜNCELLENDİ] Hotels&amp;Retreats DLC desteği.
+[ÇEVİRİ] Portekizce(Brezilya) eklendi.
+</value>
+  </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Tüm işaretlemeleri yeniden hesapla</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
+    <value>[FIXED] Theme Mixer modunda harita teması değiştirildiğinde dolgu dokusu güncelleniyor.
+[FIXED] Ön ayar önizlemesi artık kaydırma çubuğunun üzerine gelmiyor.
+[NEW] Haritadaki tüm işaretlemeleri yeniden hesaplama özelliği eklendi.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[DÜZELTİLDİ] Küçük hata düzeltmeleri.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_5" xml:space="preserve">
+    <value>[FIXED] Asset’lerin yüklenme işaretlemesi düzeltildi.
+[UPDATED] Dolgu, ağaç, obje (prop) ve ağların yükseklik özelliği sınırları güncellendi; aralık -100m’den +100m’ye çıkarıldı.</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
+    <value>Rastgele</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
+    <value>Ardışık</value>
   </data>
 </root>

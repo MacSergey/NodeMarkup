@@ -133,7 +133,7 @@
     <value>Definir como predefinição</value>
   </data>
   <data name="HeaderPanel_UnsetAsDefault" xml:space="preserve">
-    <value>Remover como predefinição</value>
+    <value>Remover como padrão</value>
   </data>
   <data name="LineEditor_AddRuleButton" xml:space="preserve">
     <value>Adicionar Regra</value>
@@ -148,7 +148,7 @@
     <value>Excluir a regra</value>
   </data>
   <data name="LineEditor_DeleteRuleMessage" xml:space="preserve">
-    <value>Deseja realmente excluir esta resposta?</value>
+    <value>Deseja realmente excluir esta regra?</value>
   </data>
   <data name="LineRule_From" xml:space="preserve">
     <value>De</value>
@@ -160,10 +160,10 @@
     <value>Selecione o ponto "Para" da regra</value>
   </data>
   <data name="LineEditor_DeleteCaptionDescription" xml:space="preserve">
-    <value>linha</value>
+    <value>faixa</value>
   </data>
   <data name="LineEditor_Lines" xml:space="preserve">
-    <value>Linhas</value>
+    <value>Faixas</value>
   </data>
   <data name="StyleOption_Offset" xml:space="preserve">
     <value>Deslocamento</value>
@@ -178,7 +178,7 @@
     <value>Para</value>
   </data>
   <data name="LineRule_IntersectWith" xml:space="preserve">
-    <value>Intersecção com {0}</value>
+    <value>Interseção com {0}</value>
   </data>
   <data name="LineRule_SelfEdgePoint" xml:space="preserve">
     <value>Ponto próprio {0}</value>
@@ -190,10 +190,10 @@
     <value>Tracejada dupla</value>
   </data>
   <data name="LineStyle_DoubleSolid" xml:space="preserve">
-    <value>Sólida dupla</value>
+    <value>Contínua dupla</value>
   </data>
   <data name="LineStyle_Solid" xml:space="preserve">
-    <value>Sólida</value>
+    <value>Continua</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
     <value>Faz apenas marcações nas intersecções</value>
@@ -214,22 +214,22 @@
     <value>Não definido</value>
   </data>
   <data name="Settings_ShortcutAddNewLineRule" xml:space="preserve">
-    <value>Adicionar nova regra à linha</value>
+    <value>Adicionar nova regra à faixa</value>
   </data>
   <data name="Settings_ShortcutDeleteAllNodeLines" xml:space="preserve">
-    <value>Remover todas as linhas deste nó</value>
+    <value>Remover todas as faixas deste nó</value>
   </data>
   <data name="Settings_DeleteMarkingButton" xml:space="preserve">
-    <value>Remover todas as marcações de todas a intersecções</value>
+    <value>Remover todas as marcações de todas as interseções</value>
   </data>
   <data name="Settings_DeleteMarkingCaption" xml:space="preserve">
     <value>Remover todas as marcações</value>
   </data>
   <data name="Settings_DeleteMarkingMessage" xml:space="preserve">
-    <value>Tem a certeza que quer mesmo remover todas as marcações?</value>
+    <value>Tem certeza que deseja remover todas as marcações?</value>
   </data>
   <data name="Settings_DumpMarkingButton" xml:space="preserve">
-    <value>Exportar dados de marcações para um ficheiro</value>
+    <value>Exportar dados de marcações para um arquivo</value>
   </data>
   <data name="Settings_CopyPathToClipboard" xml:space="preserve">
     <value>Copiar caminho para a área de transferência</value>
@@ -241,20 +241,20 @@
     <value>Exportação falhou</value>
   </data>
   <data name="Settings_DumpMessageSuccess" xml:space="preserve">
-    <value>Exportação guardada com sucesso</value>
+    <value>Exportação salva com sucesso</value>
   </data>
   <data name="Settings_RestoreMarkingButton" xml:space="preserve">
-    <value>Recuperar dados das marcações a partir dum ficheiro</value>
+    <value>Carregar dados das marcações a partir de um arquivo</value>
   </data>
   <data name="Settings_RestoreMarkingCaption" xml:space="preserve">
-    <value>Recuperar dados das marcações</value>
+    <value>Carregar dados das marcações</value>
   </data>
   <data name="Settings_RestoreMarkingMessage" xml:space="preserve">
     <value>Tem a certeza que quer recuperar as predefinições?
 As predefinições recuperadas vão substituir todas as predefinições existentes.</value>
   </data>
   <data name="Settings_RestoreMarkingMessageFailed" xml:space="preserve">
-    <value>A recuperação de dados falhou</value>
+    <value>O carregamento dos dados falhou</value>
   </data>
   <data name="Settings_RestoreMarkingMessageSuccess" xml:space="preserve">
     <value>Dados recuperados com sucesso</value>
@@ -1817,5 +1817,14 @@ Pode demorar um pouco se tiver muitos segmentos.</value>
     <value>[Corrigido] A textura dos preenchimentos atualiza quando o tema do mapa for alterado no Theme Mixer.
 [Corrigido] A pré-visualização da predefinição não ficará por cima da barra de rolagem.
 [Novo] Adicionada capacidade de recalcular todas as marcações no mapa.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[Corrigido] Bugs menores.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_5" xml:space="preserve">
+    <value>.</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
+    <value></value>
   </data>
 </root>
