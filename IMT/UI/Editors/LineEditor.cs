@@ -6,13 +6,12 @@ using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class LinesEditor : Editor<LineItemsPanel, MarkingLine>, IPropertyEditor
+    public class LinesEditor : Editor<LineItemsPanel, MarkingLine>, IPropertyEditor, IItemsGroupingEditor<LineType>
     {
         #region PROPERTIES
 
@@ -46,6 +45,8 @@ namespace IMT.UI.Editors
 
         object IPropertyEditor.EditObject => EditObject;
         bool IPropertyEditor.IsTemplate => false;
+
+        Dictionary<LineType, bool> IItemsGroupingEditor<LineType>.GroupExpandList { get; } = new Dictionary<LineType, bool>();
 
         #endregion
 

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class IntersectionTemplateEditor : BaseTemplateEditor<IntersectionTemplateItemsPanel, IntersectionTemplate, IntersectionTemplateHeaderPanel, EditIntersectionTemplateMode>
+    public class IntersectionTemplateEditor : BaseTemplateEditor<IntersectionTemplateItemsPanel, IntersectionTemplate, IntersectionTemplateHeaderPanel, EditIntersectionTemplateMode>, IItemsGroupingEditor<IntersectionTemplateFit>
     {
         public override string Name => IMT.Localize.PresetEditor_Presets;
         public override string EmptyMessage => string.Format(IMT.Localize.PresetEditor_EmptyMessage, IMT.Localize.Panel_SaveAsPreset);
@@ -26,6 +26,8 @@ namespace IMT.UI.Editors
         protected override string IsWorkshopWarningMessage => IMT.Localize.PresetEditor_IsWorkshopWarningMessage;
 
         private PropertyGroupPanel InfoGroup { get; set; }
+
+        Dictionary<IntersectionTemplateFit, bool> IItemsGroupingEditor<IntersectionTemplateFit>.GroupExpandList { get; } = new Dictionary<IntersectionTemplateFit, bool>();
 
         protected override IEnumerable<IntersectionTemplate> GetObjects() => SingletonManager<IntersectionTemplateManager>.Instance.Templates;
         protected override void OnObjectSelect(IntersectionTemplate editObject)

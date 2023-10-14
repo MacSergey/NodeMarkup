@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace IMT.UI.Editors
 {
-    public class PointsEditor : SimpleEditor<PointsItemsPanel, MarkingEnterPoint>
+    public class PointsEditor : SimpleEditor<PointsItemsPanel, MarkingEnterPoint>, IItemsGroupingEditor<Entrance>
     {
         public override string Name => IMT.Localize.PointEditor_Points;
         public override string EmptyMessage => string.Empty;
@@ -21,6 +21,8 @@ namespace IMT.UI.Editors
         private FloatPropertyPanel Offset { get; set; }
         private BoolPropertyPanel Split { get; set; }
         private FloatPropertyPanel Shift { get; set; }
+
+        Dictionary<Entrance, bool> IItemsGroupingEditor<Entrance>.GroupExpandList { get; } = new Dictionary<Entrance, bool>();
 
         protected override IEnumerable<MarkingEnterPoint> GetObjects() => Marking.Enters.SelectMany(e => e.EnterPoints);
         protected override void OnObjectSelect(MarkingEnterPoint point)

@@ -648,48 +648,56 @@ namespace IMT.Manager
 
             [Description(nameof(Localize.LineStyle_StopSolid))]
             [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             [Sprite(nameof(StopLineSolid))]
             [Sprite(nameof(StopLineSolid), "Group")]
             StopLineSolid,
 
             [Description(nameof(Localize.LineStyle_StopDashed))]
             [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             [Sprite(nameof(StopLineDashed))]
             [Sprite(nameof(StopLineDashed), "Group")]
             StopLineDashed,
 
             [Description(nameof(Localize.LineStyle_StopDouble))]
             [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             [Sprite(nameof(StopLineDoubleSolid))]
             [Sprite(nameof(StopLineDoubleSolid), "Group")]
             StopLineDoubleSolid,
 
             [Description(nameof(Localize.LineStyle_StopDoubleDashed))]
             [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             [Sprite(nameof(StopLineDoubleDashed))]
             [Sprite(nameof(StopLineDoubleDashed), "Group")]
             StopLineDoubleDashed,
 
             [Description(nameof(Localize.LineStyle_StopSolidAndDashed))]
             [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             [Sprite(nameof(StopLineSolidAndDashed))]
             [Sprite(nameof(StopLineSolidAndDashed), "Group")]
             StopLineSolidAndDashed,
 
             [Description(nameof(Localize.LineStyle_StopSharkTeeth))]
             [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             [Sprite(nameof(StopLineSharkTeeth))]
             [Sprite(nameof(StopLineSharkTeeth), "Group")]
             StopLineSharkTeeth,
 
             [Description(nameof(Localize.LineStyle_StopPavement))]
             [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             [Sprite(nameof(StopLinePavement))]
             [Sprite(nameof(StopLinePavement), "Group")]
             StopLinePavement,
 
             [Description(nameof(Localize.Style_FromClipboard))]
             [NetworkType(NetworkType.Road)]
+            [LineType(LineType.Stop)]
             [NotVisible]
             StopLineBuffer = Marking.Item.StopLine + 0x100 - 1,
 

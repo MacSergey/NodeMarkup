@@ -186,7 +186,7 @@ namespace IMT.Utilities
             spriteParams[CopyToSameButtonIcon] = new RectOffset();
 
 
-            foreach(var item in EnumExtension.GetEnumValues<Style.StyleType>().IsVisible())
+            foreach(var item in EnumExtension.GetEnumValues<Style.StyleType>())
             {
                 var sprite = item.Sprite();
                 if (!string.IsNullOrEmpty(sprite))

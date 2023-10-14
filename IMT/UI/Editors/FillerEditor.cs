@@ -30,7 +30,7 @@ namespace IMT.UI.Editors
         bool IPropertyEditor.IsTemplate => false;
         CustomUIPanel IPropertyContainer.MainPanel => PropertiesPanel;
         Style IPropertyContainer.Style => EditObject.Style.Value;
-        Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
+        Dictionary<string, bool> IPropertyContainer.CategoryExpandList { get; } = new Dictionary<string, bool>();
 
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();

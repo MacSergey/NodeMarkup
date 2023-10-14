@@ -21,6 +21,10 @@ namespace IMT.UI.Editors
         void Edit(ObjectType editObject);
         void RefreshEditor();
     }
+    public interface IItemsGroupingEditor<GroupType>
+    {
+        Dictionary<GroupType, bool> GroupExpandList { get; }
+    }
     public abstract class Editor : CustomUIPanel, ISupport
     {
         public IntersectionMarkingToolPanel Panel { get; private set; }

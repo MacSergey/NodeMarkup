@@ -1,5 +1,4 @@
-﻿using ColossalFramework.UI;
-using IMT.Manager;
+﻿using IMT.Manager;
 using IMT.Utilities;
 using ModsCommon;
 using ModsCommon.UI;
@@ -9,7 +8,7 @@ using UnityEngine;
 
 namespace IMT.UI.Editors
 {
-    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItemsPanel, StyleTemplate, StyleTemplateHeaderPanel, EditStyleTemplateMode>, IPropertyContainer
+    public class StyleTemplateEditor : BaseTemplateEditor<StyleTemplateItemsPanel, StyleTemplate, StyleTemplateHeaderPanel, EditStyleTemplateMode>, IPropertyContainer, IItemsGroupingEditor<Style.StyleType>
     {
         public override string Name => IMT.Localize.TemplateEditor_Templates;
         public override string EmptyMessage => string.Format(IMT.Localize.TemplateEditor_EmptyMessage, IMT.Localize.HeaderPanel_SaveAsTemplate);
@@ -28,7 +27,8 @@ namespace IMT.UI.Editors
         bool IPropertyEditor.IsTemplate => true;
         CustomUIPanel IPropertyContainer.MainPanel => PropertiesPanel;
         Style IPropertyContainer.Style => EditStyle;
-        Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
+        Dictionary<string, bool> IPropertyContainer.CategoryExpandList { get; } = new Dictionary<string, bool>();
+        Dictionary<Style.StyleType, bool> IItemsGroupingEditor<Style.StyleType>.GroupExpandList { get; } = new Dictionary<Style.StyleType, bool>();
 
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();

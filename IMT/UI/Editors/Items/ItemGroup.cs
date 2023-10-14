@@ -18,7 +18,7 @@ namespace IMT.UI.Editors
         Transform IReusable.CachedTransform { get => m_CachedTransform; set => m_CachedTransform = value; }
 
 
-        public event Action<bool> OnExpandChanged;
+        public event Action<GroupType, bool, bool> OnExpandChanged;
 
         private bool isExpand = true;
         public bool IsExpand
@@ -70,10 +70,7 @@ namespace IMT.UI.Editors
         protected abstract string GetSprite(GroupType group);
         private void ItemClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            if (Utility.ShiftIsPressed)
-                OnExpandChanged?.Invoke(!IsExpand);
-            else
-                IsExpand = !IsExpand;
+            OnExpandChanged?.Invoke(Selector, !IsExpand, Utility.ShiftIsPressed);
         }
 
         public virtual void Init(GroupType selector)

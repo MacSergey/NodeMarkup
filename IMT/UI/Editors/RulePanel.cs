@@ -43,7 +43,7 @@ namespace IMT.UI.Editors
         bool IPropertyEditor.IsTemplate => false;
         CustomUIPanel IPropertyContainer.MainPanel => this;
         Style IPropertyContainer.Style => Rule.Style;
-        Dictionary<string, bool> IPropertyContainer.ExpandList { get; } = new Dictionary<string, bool>();
+        Dictionary<string, bool> IPropertyContainer.CategoryExpandList { get; } = new Dictionary<string, bool>();
 
         Dictionary<string, IPropertyCategoryInfo> IPropertyContainer.CategoryInfos { get; } = new Dictionary<string, IPropertyCategoryInfo>();
         Dictionary<string, List<IPropertyInfo>> IPropertyContainer.PropertyInfos { get; } = new Dictionary<string, List<IPropertyInfo>>();
@@ -95,7 +95,7 @@ namespace IMT.UI.Editors
 
             isExpand = false;
 
-            (this as IPropertyContainer).ExpandList.Clear();
+            (this as IPropertyContainer).CategoryExpandList.Clear();
         }
         private void AddHeader()
         {
