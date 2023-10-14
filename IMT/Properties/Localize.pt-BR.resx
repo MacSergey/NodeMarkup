@@ -1818,4 +1818,7 @@ Pode demorar um pouco se tiver muitos segmentos.</value>
 [Corrigido] A pré-visualização da predefinição não ficará por cima da barra de rolagem.
 [Novo] Adicionada capacidade de recalcular todas as marcações no mapa.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[Corrigido] Bugs menores.</value>
+  </data>
 </root>
