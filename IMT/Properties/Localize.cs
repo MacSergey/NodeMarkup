@@ -2884,5 +2884,10 @@ namespace IMT
 		/// [FIXED] Update fillers texture when map theme is changed in Theme Mixer mod.
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_14_3 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_3", Culture);
+
+		/// <summary>
+		/// [FIXED] Minor bug fixes.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14_4 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_4", Culture);
 	}
 }
