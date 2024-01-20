@@ -1815,4 +1815,7 @@ Może to zająć trochę czasu jeżeli jest dużo segmentów.</value>
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>Przelicz ponownie wszystkie oznaczenia</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[FIXED] Drobne poprawki błędów.</value>
+  </data>
 </root>
