@@ -245,7 +245,7 @@ namespace IMT.UI.Editors
 
         protected virtual ItemType FindItem(ObjectType editObject) => components.OfType<ItemType>().FirstOrDefault(c => ReferenceEquals(c.EditObject, editObject));
         protected virtual ItemType FindItem(int index) => FindItem<ItemType>(index, this);
-        protected T FindItem<T>(int index, UIComponent parent) where T : UIComponent => index >= 0 && parent.components.Count > index ? parent.components[index] as T : null;
+        protected T FindItem<T>(int index, UIComponent parent) where T : UIComponent => index >= 0 ? parent.components.OfType<T>().Skip(index).FirstOrDefault() : null;
 
         protected virtual int FindIndex(ObjectType editObject) => FindIndex(editObject, this);
         protected int FindIndex(ObjectType editObject, UIComponent parent) => Array.BinarySearch(parent.components.OfType<ItemType>().Select(i => i.EditObject).ToArray(), editObject, this);

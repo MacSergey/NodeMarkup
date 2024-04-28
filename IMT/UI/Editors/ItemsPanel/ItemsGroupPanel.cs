@@ -68,13 +68,15 @@ namespace IMT.UI.Editors
         }
         public override void Select(ItemType item)
         {
+            if (item == null)
+                return;
+
             if (GroupingEnable)
             {
-                if (item == null)
-                    return;
-
                 var group = SelectGroup(item.EditObject);
-                Groups[group].IsExpand = true;
+                var groupItem = Groups[group];
+                groupItem.IsExpand = true;
+                ScrollIntoView(groupItem);
             }
 
             base.Select(item);
@@ -139,6 +141,13 @@ namespace IMT.UI.Editors
 
         #region ADDITIONAL
 
+        protected override ItemType FindItem(int index)
+        {
+            if (GroupingEnable)
+                return index >= 0 ? components.OfType<GroupItemType>().SelectMany(g => g.components).OfType<ItemType>().Skip(index).FirstOrDefault() : null;
+            else
+                return base.FindItem(index);
+        }
         protected override ItemType FindItem(ObjectType editObject)
         {
             if (GroupingEnable)

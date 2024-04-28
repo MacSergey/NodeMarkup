@@ -219,8 +219,8 @@ namespace IMT.UI.Panel
                     editor.Active = false;
 
                 var selectEditor = Editors[index];
-                selectEditor.Active = true;
                 SetEditorSize(selectEditor);
+                selectEditor.Active = true;
                 return selectEditor;
             }
             else
