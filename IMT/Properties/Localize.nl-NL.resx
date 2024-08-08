@@ -1921,4 +1921,12 @@ Het kan even duren als er veel segmenten zijn.</value>
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>Alle markeringen herberekenen</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
+    <value>[FIXED] Vernieuw de textuur van de vullers als het thema van de kaart wordt gewijzigd in Theme Mixer mod.
+[FIXED] De voorvertoning van de voorinstellingen overlappen de schuifbalk niet meer.
+[NEW] De mogelijkheid toegevoegd om alle markeringen op de kaart opnieuw te berekenen.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[FIXED] Kleine bugfixes.</value>
+  </data>
 </root>
