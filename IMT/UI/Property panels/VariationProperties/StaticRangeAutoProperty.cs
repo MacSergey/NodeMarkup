@@ -14,30 +14,30 @@ namespace IMT.UI
         protected override int FirstOptionIndex => 1;
         protected override int SecondOptionIndex => 2;
 
-        protected override void AddSelectorItems()
+        protected override void AddSelector1Items()
         {
-            AddItem(AutoIndex, new OptionData(IMT.Localize.StyleOption_ObjectAuto, IMTTextures.Atlas, IMTTextures.AutoButtonIcon));
-            base.AddSelectorItems();
+            AddItem1(AutoIndex, new OptionData(IMT.Localize.StyleOption_ObjectAuto, IMTTextures.Atlas, IMTTextures.AutoButtonIcon));
+            base.AddSelector1Items();
         }
 
         public void SetAuto()
         {
             FieldA.Value = default;
             FieldB.Value = default;
-            SelectedObject = AutoIndex;
+            SelectedObject1 = AutoIndex;
             Refresh();
         }
-        protected override void SelectorChangedImpl(int index)
+        protected override void Selector1ChangedImpl(int index)
         {
             if (index == AutoIndex)
                 OnAutoValue?.Invoke();
             else
-                base.SelectorChangedImpl(index);
+                base.Selector1ChangedImpl(index);
         }
 
         protected override void Refresh()
         {
-            if (SelectedObject == AutoIndex)
+            if (SelectedObject1 == AutoIndex)
             {
                 FieldB.isVisible = false;
                 FieldA.isEnabled = false;
@@ -47,8 +47,9 @@ namespace IMT.UI
             else
             {
                 FieldA.isEnabled = true;
-                base.Refresh();
             }
+
+            base.Refresh();
         }
 
         public override void DeInit()

@@ -2125,4 +2125,10 @@ It can take time if there are a lot of segments.</value>
     <value>[FIXED] Fixed loading marking assets.
 [UPDATED] Limits of elevation property of any fillers, trees, props, networks are expanded to range from -100m to +100m.</value>
   </data>
+  <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadSlope" xml:space="preserve">
+    <value>Slope</value>
+  </data>
 </root>

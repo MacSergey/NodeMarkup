@@ -72,7 +72,7 @@ namespace IMT.Manager
             Angle = GetAngleProperty(angle);
             FollowGuides = GetFollowGuidesProperty(followGuides);
         }
-        public override BaseFillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, Cracks, Voids, Texture, Offset, DefaultAngle, Step, FollowGuides);
+        public override BaseFillerStyle CopyStyle() => new StripeFillerStyle(Color, Width, Cracks, Voids, Texture, Offset, Angle, Step, FollowGuides);
         public override void CopyTo(BaseFillerStyle target)
         {
             base.CopyTo(target);

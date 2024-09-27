@@ -69,17 +69,17 @@ namespace IMT.Manager
             }
         }
 
-        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2? angle, Vector2 shift, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount, Vector2 tilt, Vector2? slope, Vector2 scale, Vector2 elevation) : base(prop, probability, step, angle, shift, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount, tilt, slope, scale, elevation)
+        public PropLineStyle(PropInfo prop, int probability, ColorOptionEnum colorOption, Color32 color, float? step, Vector2? angle, Spread angleSpread, Vector2 shift, Spread shiftSpread, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount, Vector2 tilt, Spread tiltSpread, Vector2? slope, Spread slopeSpread, Vector2 scale, Spread scaleSpread, Vector2 elevation, Spread elevationSpread) : base(prop, probability, step, angle, angleSpread, shift, shiftSpread, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount, tilt, tiltSpread, slope, slopeSpread, scale, scaleSpread, elevation, elevationSpread)
         {
             Color.Value = color;
             ColorOption = new PropertyEnumValue<ColorOptionEnum>("CO", StyleChanged, colorOption);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, Shift, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount, Tilt, Slope, Scale, Elevation);
+        public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, AngleSpread, Shift, ShiftSpread, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount, Tilt, TiltSpread, Slope, SlopeSpread, Scale, ScaleSpread, Elevation, ElevationSpread);
 
-        protected override void CalculateItem(ITrajectory trajectory, float t, PropInfo prop, ref MarkingObjectItemData item)
+        protected override void CalculateItem(ITrajectory trajectory, float t, float p, PropInfo prop, ref MarkingObjectItemData item)
         {
-            base.CalculateItem(trajectory, t, prop, ref item);
+            base.CalculateItem(trajectory, t, p, prop, ref item);
 
             switch (ColorOption.Value)
             {

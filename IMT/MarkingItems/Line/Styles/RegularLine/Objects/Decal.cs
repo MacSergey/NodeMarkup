@@ -67,7 +67,7 @@ namespace IMT.Manager
             }
         }
 
-        public DecalLineStyle(PropInfo prefab, int probability, float? step, Vector2? angle, Vector2 shift, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount, Color32? color, Vector2? size, Vector2 tiling, float height) : base(prefab, probability, step, angle, shift, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount)
+        public DecalLineStyle(PropInfo prefab, int probability, float? step, Vector2? angle, Spread angleSpread, Vector2 shift, Spread shiftSpread, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount, Color32? color, Vector2? size, Vector2 tiling, float height) : base(prefab, probability, step, angle, angleSpread, shift, shiftSpread, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount)
         {
             DecalColor = new PropertyNullableStructValue<Color32, PropertyColorValue>(new PropertyColorValue("DC", null), "DC", StyleChanged, color);
             Size = new PropertyNullableStructValue<Vector2, PropertyVector2Value>(new PropertyVector2Value(null, labelX: "SZX", labelY: "SZY"), "SZ", StyleChanged, size);
@@ -75,7 +75,7 @@ namespace IMT.Manager
             Height = new PropertyStructValue<float>("H", StyleChanged, height);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new DecalLineStyle(Prefab, Probability, Step, Angle, Shift, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount, DecalColor, Size, Tiling, Height);
+        public override RegularLineStyle CopyLineStyle() => new DecalLineStyle(Prefab, Probability, Step, Angle, AngleSpread, Shift, ShiftSpread, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount, DecalColor, Size, Tiling, Height);
         public override void CopyTo(LineStyle target)
         {
             base.CopyTo(target);

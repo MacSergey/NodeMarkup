@@ -226,6 +226,7 @@ namespace IMT.Manager
         public static int DefaultObjectProbability => 100;
         public static float DefaultObjectStep => 5f;
         public static float DefaultObjectAngle => 0f;
+        public static Spread DefaultObjectSpread => Spread.Random;
         public static float DefaultObjectShift => 0f;
         public static float DefaultObjectScale => 1f;
         public static float DefaultObjectElevation => 0f;

@@ -2894,5 +2894,15 @@ namespace IMT
 		/// [FIXED] Fixed loading marking assets.
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_14_5 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_5", Culture);
+
+		/// <summary>
+		/// Random
+		/// </summary>
+		public static string StyleOption_ObjectSpreadRandom => LocaleManager.GetString("StyleOption_ObjectSpreadRandom", Culture);
+
+		/// <summary>
+		/// Slope
+		/// </summary>
+		public static string StyleOption_ObjectSpreadSlope => LocaleManager.GetString("StyleOption_ObjectSpreadSlope", Culture);
 	}
 }

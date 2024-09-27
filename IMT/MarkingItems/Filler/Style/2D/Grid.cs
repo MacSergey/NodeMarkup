@@ -64,7 +64,7 @@ namespace IMT.Manager
             Angle = GetAngleProperty(angle);
         }
 
-        public override BaseFillerStyle CopyStyle() => new GridFillerStyle(Color, Width, Cracks, Voids, Texture, DefaultAngle, Step, Offset);
+        public override BaseFillerStyle CopyStyle() => new GridFillerStyle(Color, Width, Cracks, Voids, Texture, Angle, Step, Offset);
         public override void CopyTo(BaseFillerStyle target)
         {
             base.CopyTo(target);

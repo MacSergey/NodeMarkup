@@ -62,16 +62,16 @@ namespace IMT.Manager
             }
         }
 
-        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2? angle, Vector2 shift, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount, Vector2 tilt, Vector2? slope, Vector2 scale, Vector2 elevation, bool wind) : base(tree, probability, step, angle, shift, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount, tilt, slope, scale, elevation) 
+        public TreeLineStyle(TreeInfo tree, int probability, float? step, Vector2? angle, Spread angleSpread, Vector2 shift, Spread shiftSpread, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount, Vector2 tilt, Spread tiltSpread, Vector2? slope, Spread slopeSpread, Vector2 scale, Spread scaleSpread, Vector2 elevation, Spread elevationSpread, bool wind) : base(tree, probability, step, angle, angleSpread, shift, shiftSpread, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount, tilt, tiltSpread, slope, slopeSpread, scale, scaleSpread, elevation, elevationSpread) 
         {
             Wind = new PropertyBoolValue("WN", StyleChanged, wind);
         }
 
-        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, Shift, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount, Tilt, Slope, Scale, Elevation, Wind);
+        public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, AngleSpread, Shift, ShiftSpread, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount, Tilt, TiltSpread, Slope, SlopeSpread, Scale, ScaleSpread, Elevation, ElevationSpread, Wind);
 
-        protected override void CalculateItem(ITrajectory trajectory, float t, TreeInfo prefab, ref MarkingObjectItemData item)
+        protected override void CalculateItem(ITrajectory trajectory, float t, float p, TreeInfo prefab, ref MarkingObjectItemData item)
         {
-            base.CalculateItem(trajectory, t, prefab, ref item);
+            base.CalculateItem(trajectory, t, p, prefab, ref item);
             item.wind = Wind;
         }
         protected override void AddData(TreeInfo tree, MarkingObjectItemData[] items, MarkingLOD lod, Action<IStyleData> addData)

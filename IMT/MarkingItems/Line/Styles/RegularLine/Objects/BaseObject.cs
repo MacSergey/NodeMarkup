@@ -22,7 +22,9 @@ namespace IMT.Manager
         PropertyNullableStructValue<float, PropertyStructValue<float>> Step { get; }
         PropertyStructValue<int> Probability { get; }
         PropertyNullableStructValue<Vector2, PropertyVector2Value> Angle { get; }
+        PropertyEnumValue<Spread> AngleSpread { get; }
         PropertyVector2Value Shift { get; }
+        PropertyEnumValue<Spread> ShiftSpread { get; }
         PropertyStructValue<float> OffsetBefore { get; }
         PropertyStructValue<float> OffsetAfter { get; }
 
@@ -35,9 +37,13 @@ namespace IMT.Manager
     public interface I3DObject
     {
         PropertyVector2Value Tilt { get; }
+        PropertyEnumValue<Spread> TiltSpread { get; }
         PropertyNullableStructValue<Vector2, PropertyVector2Value> Slope { get; }
+        PropertyEnumValue<Spread> SlopeSpread { get; }
         PropertyVector2Value Scale { get; }
+        PropertyEnumValue<Spread> ScaleSpread { get; }
         PropertyVector2Value Elevation { get; }
+        PropertyEnumValue<Spread> ElevationSpread { get; }
     }
 
     public abstract class BaseObjectStyle<PrefabType, SelectPrefabType> : RegularLineStyle, IObjectStyle, IPrefabStyle<PrefabType>
@@ -51,7 +57,9 @@ namespace IMT.Manager
 
         public PropertyStructValue<int> Probability { get; }
         public PropertyNullableStructValue<Vector2, PropertyVector2Value> Angle { get; }
+        public PropertyEnumValue<Spread> AngleSpread { get; }
         public PropertyVector2Value Shift { get; }
+        public PropertyEnumValue<Spread> ShiftSpread { get; }
         public PropertyStructValue<float> OffsetBefore { get; }
         public PropertyStructValue<float> OffsetAfter { get; }
 
@@ -66,13 +74,15 @@ namespace IMT.Manager
         protected abstract Vector3 PrefabSize { get; }
         protected abstract string AssetPropertyName { get; }
 
-        public BaseObjectStyle(PrefabType prefab, int probability, float? step, Vector2? angle, Vector2 shift, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(default, default)
+        public BaseObjectStyle(PrefabType prefab, int probability, float? step, Vector2? angle, Spread angleSpread, Vector2 shift, Spread shiftSpread, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount) : base(default, default)
         {
             Prefab = new PropertyPrefabValue<PrefabType>("PRF", StyleChanged, prefab);
             Step = new PropertyNullableStructValue<float, PropertyStructValue<float>>(new PropertyStructValue<float>("S", null), "S", StyleChanged, step);
             Probability = new PropertyStructValue<int>("P", StyleChanged, probability);
             Angle = new PropertyNullableStructValue<Vector2, PropertyVector2Value>(new PropertyVector2Value(null, labelX: "AA", labelY: "AB"), "A", StyleChanged, angle);
+            AngleSpread = new PropertyEnumValue<Spread>("ASP", StyleChanged, angleSpread);
             Shift = new PropertyVector2Value(StyleChanged, shift, "SFA", "SFB");
+            ShiftSpread = new PropertyEnumValue<Spread>("SFSP", StyleChanged, shiftSpread);
             OffsetBefore = new PropertyStructValue<float>("OB", StyleChanged, offsetBefore);
             OffsetAfter = new PropertyStructValue<float>("OA", StyleChanged, offsetAfter);
             Distribution = new PropertyEnumValue<DistributionType>("PT", StyleChanged, distribution);
@@ -97,7 +107,9 @@ namespace IMT.Manager
                 objectTarget.Probability.Value = Probability;
                 objectTarget.Step.Value = Step;
                 objectTarget.Angle.Value = Angle;
+                objectTarget.AngleSpread.Value = AngleSpread;
                 objectTarget.Shift.Value = Shift;
+                objectTarget.ShiftSpread.Value = ShiftSpread;
                 objectTarget.OffsetBefore.Value = OffsetBefore;
                 objectTarget.OffsetAfter.Value = OffsetAfter;
                 objectTarget.Distribution.Value = Distribution;
@@ -112,12 +124,9 @@ namespace IMT.Manager
             if (Prefab.Value is not PrefabType prefab)
                 return;
 
-            var shift = (Shift.Value.x + Shift.Value.y) * 0.5f;
-
-            if (shift != 0)
-            {
-                trajectory = trajectory.Shift(shift, shift);
-            }
+            var middleShift = (Shift.Value.x + Shift.Value.y) * 0.5f;
+            if (middleShift != 0)
+                trajectory = trajectory.Shift(middleShift, middleShift);
 
             var length = trajectory.Length;
             if (OffsetBefore + OffsetAfter >= length)
@@ -157,9 +166,9 @@ namespace IMT.Manager
                         items = new MarkingObjectItemData[count + 2];
 
                         if (FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.Start)
-                            CalculateItem(trajectory, 0f, prefab, ref items[0]);
+                            CalculateItem(trajectory, 0f, 0f, prefab, ref items[0]);
                         if (FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.End)
-                            CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
+                            CalculateItem(trajectory, 1f, 1f, prefab, ref items[items.Length - 1]);
                         break;
                     }
                 case DistributionType.DynamicSpaceFreeEnd:
@@ -184,9 +193,9 @@ namespace IMT.Manager
                         items = new MarkingObjectItemData[count + 2];
 
                         if (FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.Start)
-                            CalculateItem(trajectory, 0f, prefab, ref items[0]);
+                            CalculateItem(trajectory, 0f, 0f, prefab, ref items[0]);
                         if (FixedEnd.Value == FixedEndType.Both || FixedEnd.Value == FixedEndType.End)
-                            CalculateItem(trajectory, 1f, prefab, ref items[items.Length - 1]);
+                            CalculateItem(trajectory, 1f, 1f, prefab, ref items[items.Length - 1]);
                         break;
                     }
                 default:
@@ -199,43 +208,53 @@ namespace IMT.Manager
                     continue;
 
                 float t;
+                float p;
                 if (count == 1)
+                {
                     t = 0.5f;
+                    p = 0.5f;
+                }
                 else
                 {
                     var distance = startOffset + stepValue * i;
                     t = trajectory.Travel(distance);
+                    p = distance / length;
                 }
 
-                CalculateItem(trajectory, t, prefab, ref items[i + startIndex]);
+                CalculateItem(trajectory, t, p, prefab, ref items[i + startIndex]);
             }
 
             AddData(prefab, items, lod, addData);
         }
-        protected virtual void CalculateItem(ITrajectory trajectory, float t, PrefabType prefab, ref MarkingObjectItemData item)
+        protected virtual void CalculateItem(ITrajectory trajectory, float t, float p, PrefabType prefab, ref MarkingObjectItemData item)
         {
             item.position = trajectory.Position(t);
 
-            var randomShift = SimulationManager.instance.m_randomizer.UInt32((uint)((Shift.Value.y - Shift.Value.x) * 1000f)) * 0.001f;
-            item.position += trajectory.Tangent(t).Turn90(true).MakeFlatNormalized() * (randomShift - (Shift.Value.y - Shift.Value.x) * 0.5f);
+            var shiftMiddle = (Shift.Value.y - Shift.Value.x) * 0.5f;
+            var shift = ShiftSpread.Value switch
+            { 
+                Spread.Random => SimulationManager.instance.m_randomizer.UInt32((uint)(Mathf.Abs(Shift.Value.y - Shift.Value.x) * 1000f)) * 0.001f - shiftMiddle,
+                Spread.Slope => Mathf.Lerp(Shift.Value.x, Shift.Value.y, p),
+                _ => 0f
+            };
+            item.position += trajectory.Tangent(t).Turn90(true).MakeFlatNormalized() * shift;
 
-            float minAngle;
-            float maxAngle;
-            if (Angle.HasValue)
-            {
-                var angle = Angle.Value.Value;
-                minAngle = Mathf.Min(angle.x, angle.y);
-                maxAngle = Mathf.Max(angle.x, angle.y);
-            }
-            else
-            {
-                minAngle = -180f;
-                maxAngle = 180f;
-            }
-
-            var randomAngle = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(maxAngle - minAngle));
+  
             item.absoluteAngle = trajectory.Tangent(t).AbsoluteAngle();
-            item.angle = (minAngle + randomAngle) * Mathf.Deg2Rad;
+            item.angle = AngleSpread.Value switch
+            {
+                Spread.Random => GetRandomAngle(),
+                Spread.Slope when Angle.HasValue => Mathf.Lerp(Angle.Value.Value.x, Angle.Value.Value.y, p),
+                _ => 0f,
+            } * Mathf.Deg2Rad;
+
+            float GetRandomAngle()
+            {
+                var xAngle = Angle.HasValue ? Angle.Value.Value.x : -180f;
+                var yAngle = Angle.HasValue ? Angle.Value.Value.y : 180f;
+
+                return Mathf.Min(xAngle, yAngle) + SimulationManager.instance.m_randomizer.UInt32((uint)Mathf.Abs(yAngle - xAngle));
+            }
         }
         protected abstract void AddData(PrefabType prefab, MarkingObjectItemData[] items, MarkingLOD lod, Action<IStyleData> addData);
 
@@ -348,8 +367,11 @@ namespace IMT.Manager
             else
                 angleProperty.SetRandom();
 
+            angleProperty.SetSpread(AngleSpread.Value);
+
             angleProperty.OnValueChanged += (valueA, valueB) => Angle.Value = new Vector2(valueA, valueB);
             angleProperty.OnRandomValue += () => Angle.Value = null;
+            angleProperty.OnSpreadChanged += value => AngleSpread.Value = value;
         }
         private void RefreshAngleRangeProperty(FloatStaticRangeRandomProperty angleProperty, EditorProvider provider)
         {
@@ -367,11 +389,13 @@ namespace IMT.Manager
             shiftProperty.CheckMax = true;
             shiftProperty.MinValue = -50;
             shiftProperty.MaxValue = 50;
-            shiftProperty.AllowInvert = false;
+            shiftProperty.AllowInvert = true;
             shiftProperty.CyclicalValue = false;
             shiftProperty.Init();
             shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
+            shiftProperty.SetSpread(ShiftSpread.Value);
             shiftProperty.OnValueChanged += (valueA, valueB) => Shift.Value = new Vector2(valueA, valueB);
+            shiftProperty.OnSpreadChanged += value => ShiftSpread.Value = value;
         }
         private void RefreshShiftProperty(FloatStaticRangeProperty shiftProperty, EditorProvider provider)
         {
@@ -473,7 +497,9 @@ namespace IMT.Manager
             Probability.ToXml(config);
             Step.ToXml(config);
             Angle.ToXml(config);
+            AngleSpread.ToXml(config);
             Shift.ToXml(config);
+            ShiftSpread.ToXml(config);
             OffsetBefore.ToXml(config);
             OffsetAfter.ToXml(config);
             Distribution.ToXml(config);
@@ -489,7 +515,9 @@ namespace IMT.Manager
             Probability.FromXml(config, DefaultObjectProbability);
             Step.FromXml(config, DefaultObjectStep);
             Angle.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
+            AngleSpread.FromXml(config, DefaultObjectSpread);
             Shift.FromXml(config, new Vector2(DefaultObjectShift, DefaultObjectShift));
+            ShiftSpread.FromXml(config, DefaultObjectSpread);
             if (config.TryGetAttrValue<float>("SF", out var shift))
                 Shift.Value = new Vector2(shift, shift);
             OffsetBefore.FromXml(config, DefaultObjectOffsetBefore);
@@ -525,16 +553,24 @@ namespace IMT.Manager
         where SelectPrefabType : EditorPropertyPanel, ISelectPrefabProperty<PrefabType>
     {
         public PropertyVector2Value Tilt { get; }
+        public PropertyEnumValue<Spread> TiltSpread { get; }
         public PropertyNullableStructValue<Vector2, PropertyVector2Value> Slope { get; }
+        public PropertyEnumValue<Spread> SlopeSpread { get; }
         public PropertyVector2Value Scale { get; }
+        public PropertyEnumValue<Spread> ScaleSpread { get; }
         public PropertyVector2Value Elevation { get; }
+        public PropertyEnumValue<Spread> ElevationSpread { get; }
 
-        public BaseObject3DObjectStyle(PrefabType prefab, int probability, float? step, Vector2? angle, Vector2 shift, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount, Vector2 tilt, Vector2? slope, Vector2 scale, Vector2 elevation) : base(prefab, probability, step, angle, shift, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount)
+        public BaseObject3DObjectStyle(PrefabType prefab, int probability, float? step, Vector2? angle, Spread angleSpread, Vector2 shift, Spread shiftSpread, float offsetBefore, float offsetAfter, DistributionType distribution, FixedEndType fixedEnd, int minCount, int maxCount, Vector2 tilt, Spread tiltSpread, Vector2? slope, Spread slopeSpread, Vector2 scale, Spread scaleSpread, Vector2 elevation, Spread elevationSpread) : base(prefab, probability, step, angle, angleSpread, shift, shiftSpread, offsetBefore, offsetAfter, distribution, fixedEnd, minCount, maxCount)
         {
             Scale = new PropertyVector2Value(StyleChanged, scale, "SCA", "SCB");
+            ScaleSpread = new PropertyEnumValue<Spread>("SCSP", StyleChanged, scaleSpread);
             Tilt = new PropertyVector2Value(StyleChanged, tilt, "TLA", "TLB");
+            TiltSpread = new PropertyEnumValue<Spread>("TLSP", StyleChanged, tiltSpread);
             Slope = new PropertyNullableStructValue<Vector2, PropertyVector2Value>(new PropertyVector2Value(null, labelX: "SLA", labelY: "SLB"), "SL", StyleChanged, slope);
+            SlopeSpread = new PropertyEnumValue<Spread>("SLSP", StyleChanged, slopeSpread);
             Elevation = new PropertyVector2Value(StyleChanged, elevation, "EA", "EB");
+            ElevationSpread = new PropertyEnumValue<Spread>("ESP", StyleChanged, elevationSpread);
         }
 
         public override void CopyTo(LineStyle target)
@@ -544,27 +580,43 @@ namespace IMT.Manager
             if (target is I3DObject target3DObject)
             {
                 target3DObject.Tilt.Value = Tilt;
+                target3DObject.TiltSpread.Value = TiltSpread;
                 target3DObject.Slope.Value = Slope;
+                target3DObject.SlopeSpread.Value = SlopeSpread;
                 target3DObject.Scale.Value = Scale;
+                target3DObject.ScaleSpread.Value = ScaleSpread;
                 target3DObject.Elevation.Value = Elevation;
+                target3DObject.ElevationSpread.Value = ElevationSpread;
             }
         }
 
-        protected override void CalculateItem(ITrajectory trajectory, float t, PrefabType prefab, ref MarkingObjectItemData item)
+        protected override void CalculateItem(ITrajectory trajectory, float t, float p, PrefabType prefab, ref MarkingObjectItemData item)
         {
-            base.CalculateItem(trajectory, t, prefab, ref item);
+            base.CalculateItem(trajectory, t, p, prefab, ref item);
 
-            var randomElevation = SimulationManager.instance.m_randomizer.UInt32((uint)((Elevation.Value.y - Elevation.Value.x) * 1000f)) * 0.001f;
-            item.position.y += Elevation.Value.x + randomElevation;
+            item.position.y += ElevationSpread.Value switch
+            {
+                Spread.Random => Mathf.Min(Elevation.Value.x, Elevation.Value.y) + SimulationManager.instance.m_randomizer.UInt32((uint)(Mathf.Abs(Elevation.Value.y - Elevation.Value.x) * 1000f)) * 0.001f,
+                Spread.Slope => Mathf.Lerp(Elevation.Value.x, Elevation.Value.y, p),
+                _ => 0f,
+            };
 
-            var randomTilt = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(Tilt.Value.y - Tilt.Value.x));
-            item.tilt += (Tilt.Value.x + randomTilt) * Mathf.Deg2Rad;
+            item.tilt = TiltSpread.Value switch
+            {
+                Spread.Random => Mathf.Min(Tilt.Value.x, Tilt.Value.y) + SimulationManager.instance.m_randomizer.UInt32((uint)Mathf.Abs(Tilt.Value.y - Tilt.Value.x)),
+                Spread.Slope => Mathf.Lerp(Tilt.Value.x, Tilt.Value.y, p),
+                _ => 0f,
+            } * Mathf.Deg2Rad;
 
             if (Slope.HasValue)
             {
                 var slopeValue = Slope.Value.Value;
-                var randomSlope = (float)SimulationManager.instance.m_randomizer.UInt32((uint)(slopeValue.y - slopeValue.x));
-                item.slope += (slopeValue.x + randomSlope) * Mathf.Deg2Rad;
+                item.slope = SlopeSpread.Value switch
+                {
+                    Spread.Random => Mathf.Min(slopeValue.x + slopeValue.y) + SimulationManager.instance.m_randomizer.UInt32((uint)Mathf.Abs(slopeValue.y - slopeValue.x)),
+                    Spread.Slope => Mathf.Lerp(slopeValue.x, slopeValue.y, p),
+                    _ => 0f,
+                } * Mathf.Deg2Rad;
             }
             else
             {
@@ -573,8 +625,12 @@ namespace IMT.Manager
                 item.slope = Mathf.Sign(direction.y) * Vector3.Angle(flatDirection, direction) * Mathf.Deg2Rad;
             }
 
-            var randomScale = SimulationManager.instance.m_randomizer.UInt32((uint)((Scale.Value.y - Scale.Value.x) * 1000f)) * 0.001f;
-            item.scale = Scale.Value.x + randomScale;
+            item.scale = ScaleSpread.Value switch
+            { 
+                Spread.Random => Mathf.Min(Scale.Value.x, Scale.Value.y) + SimulationManager.instance.m_randomizer.UInt32((uint)(Mathf.Abs(Scale.Value.y - Scale.Value.x) * 1000f)) * 0.001f,
+                Spread.Slope => Mathf.Lerp(Scale.Value.x, Scale.Value.y, p),
+                _ => 0f,
+            };
         }
 
         protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
@@ -597,11 +653,13 @@ namespace IMT.Manager
             tiltProperty.CheckMax = true;
             tiltProperty.MinValue = -90;
             tiltProperty.MaxValue = 90;
-            tiltProperty.AllowInvert = false;
+            tiltProperty.AllowInvert = true;
             tiltProperty.CyclicalValue = false;
             tiltProperty.Init();
             tiltProperty.SetValues(Tilt.Value.x, Tilt.Value.y);
+            tiltProperty.SetSpread(TiltSpread.Value);
             tiltProperty.OnValueChanged += (valueA, valueB) => Tilt.Value = new Vector2(valueA, valueB);
+            tiltProperty.OnSpreadChanged += value => TiltSpread.Value = value;
         }
         private void RefreshTiltRangeProperty(FloatStaticRangeProperty tiltProperty, EditorProvider provider)
         {
@@ -619,17 +677,21 @@ namespace IMT.Manager
             slopeProperty.CheckMax = true;
             slopeProperty.MinValue = -90;
             slopeProperty.MaxValue = 90;
-            slopeProperty.AllowInvert = false;
+            slopeProperty.AllowInvert = true;
             slopeProperty.CyclicalValue = false;
             slopeProperty.Init();
 
             if (Slope.HasValue)
+            {
                 slopeProperty.SetValues(Slope.Value.Value.x, Slope.Value.Value.y);
+                slopeProperty.SetSpread(SlopeSpread.Value);
+            }
             else
                 slopeProperty.SetAuto();
 
             slopeProperty.OnValueChanged += (valueA, valueB) => Slope.Value = new Vector2(valueA, valueB);
             slopeProperty.OnAutoValue += () => Slope.Value = null;
+            slopeProperty.OnSpreadChanged += value => SlopeSpread.Value = value;
         }
         private void RefreshSlopeRangeProperty(FloatStaticRangeAutoProperty slopeProperty, EditorProvider provider)
         {
@@ -647,11 +709,13 @@ namespace IMT.Manager
             scaleProperty.CheckMax = true;
             scaleProperty.MinValue = 1f;
             scaleProperty.MaxValue = 500f;
-            scaleProperty.AllowInvert = false;
+            scaleProperty.AllowInvert = true;
             scaleProperty.CyclicalValue = false;
             scaleProperty.Init();
             scaleProperty.SetValues(Scale.Value.x * 100f, Scale.Value.y * 100f);
+            scaleProperty.SetSpread(ScaleSpread.Value);
             scaleProperty.OnValueChanged += (valueA, valueB) => Scale.Value = new Vector2(valueA, valueB) * 0.01f;
+            scaleProperty.OnSpreadChanged += value => ScaleSpread.Value = value;
         }
         private void RefreshScaleRangeProperty(FloatStaticRangeProperty scaleProperty, EditorProvider provider)
         {
@@ -669,11 +733,13 @@ namespace IMT.Manager
             elevationProperty.CheckMax = true;
             elevationProperty.MinValue = -100;
             elevationProperty.MaxValue = 100;
-            elevationProperty.AllowInvert = false;
+            elevationProperty.AllowInvert = true;
             elevationProperty.CyclicalValue = false;
             elevationProperty.Init();
             elevationProperty.SetValues(Elevation.Value.x, Elevation.Value.y);
+            elevationProperty.SetSpread(ElevationSpread.Value);
             elevationProperty.OnValueChanged += (valueA, valueB) => Elevation.Value = new Vector2(valueA, valueB);
+            elevationProperty.OnSpreadChanged += value => ElevationSpread.Value = value;
         }
         private void RefreshElevationProperty(FloatStaticRangeProperty elevationProperty, EditorProvider provider)
         {
@@ -760,6 +826,16 @@ namespace IMT.Manager
         [Description(nameof(Localize.StyleOption_FixedEndEnd))]
         End,
     }
+
+    public enum Spread
+    {
+        [Description(nameof(Localize.StyleOption_ObjectSpreadRandom))]
+        Random,
+
+        [Description(nameof(Localize.StyleOption_ObjectSpreadSlope))]
+        Slope,
+    }
+
     public class FixedEndTypePanel : EnumOncePropertyPanel<FixedEndType, FixedEndTypePanel.FixedEndTypeSegmented>
     {
         protected override string GetDescription(FixedEndType value) => value.Description();
