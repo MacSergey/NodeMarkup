@@ -2889,5 +2889,10 @@ namespace IMT
 		/// [FIXED] Minor bug fixes.
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_14_4 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_4", Culture);
+
+		/// <summary>
+		/// [FIXED] Fixed loading marking assets.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14_5 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_5", Culture);
 	}
 }

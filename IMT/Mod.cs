@@ -32,6 +32,7 @@ namespace IMT
         protected override string IdRaw => "IntersectionMarkingTool";
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version(1,14,5), new DateTime(2024, 9, 27)),
             new ModVersion(new Version(1,14,4), new DateTime(2023, 10, 14)),
             new ModVersion(new Version(1,14,3), new DateTime(2023, 6, 13)),
             new ModVersion(new Version(1,14,2), new DateTime(2023, 5, 27)),
@@ -369,9 +370,9 @@ namespace IMT
             return AddTranspiler(typeof(Mod), nameof(Mod.LoadingManagerLoadCustomContentTranspiler), nestedType, "MoveNext");
         }
 
-        private const int gameObjectVarIndex = 29;
-        private const int component7VarIndex = 35;
-        private const int flagVarIndex = 36;
+        private const int gameObjectVarIndex = 38;
+        private const int component7VarIndex = 45;
+        private const int flagVarIndex = 46;
         private static IEnumerable<CodeInstruction> LoadingManagerLoadCustomContentTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var newInstructions = new List<CodeInstruction>(instructions);
