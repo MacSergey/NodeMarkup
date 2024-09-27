@@ -212,8 +212,8 @@ namespace IMT.Manager
             elevationProperty.WheelTip = Settings.ShowToolTip;
             elevationProperty.CheckMin = true;
             elevationProperty.CheckMax = true;
-            elevationProperty.MinValue = -10;
-            elevationProperty.MaxValue = 10;
+            elevationProperty.MinValue = -100;
+            elevationProperty.MaxValue = 100;
             elevationProperty.Init();
             elevationProperty.Value = Elevation;
             elevationProperty.OnValueChanged += (value) => Elevation.Value = value;

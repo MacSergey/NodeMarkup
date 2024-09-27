@@ -2122,6 +2122,7 @@ It can take time if there are a lot of segments.</value>
     <value>[FIXED] Minor bug fixes.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_14_5" xml:space="preserve">
-    <value>[FIXED] Fixed loading marking assets.</value>
+    <value>[FIXED] Fixed loading marking assets.
+[UPDATED] Limits of elevation property of any fillers, trees, props, networks are expanded to range from -100m to +100m.</value>
   </data>
 </root>

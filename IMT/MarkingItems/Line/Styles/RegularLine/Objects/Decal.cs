@@ -185,7 +185,7 @@ namespace IMT.Manager
             heightProperty.CheckMin = true;
             heightProperty.MinValue = 0.1f;
             heightProperty.CheckMax = true;
-            heightProperty.MaxValue = 10f;
+            heightProperty.MaxValue = 100f;
             heightProperty.Init();
             heightProperty.Value = Height * 0.5f;
             heightProperty.OnValueChanged += (value) => Height.Value = value * 2f;
