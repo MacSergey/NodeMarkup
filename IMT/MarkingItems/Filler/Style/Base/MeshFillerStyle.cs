@@ -217,31 +217,31 @@ namespace IMT.Manager
         private void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
             elevationProperty.Label = Localize.FillerStyle_Elevation;
-            elevationProperty.Format = Localize.NumberFormat_Meter;
-            elevationProperty.UseWheel = true;
-            elevationProperty.WheelStep = 0.1f;
-            elevationProperty.WheelTip = Settings.ShowToolTip;
-            elevationProperty.CheckMin = true;
-            elevationProperty.MinValue = -100f;
-            elevationProperty.CheckMax = true;
-            elevationProperty.MaxValue = 100f;
+            elevationProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            elevationProperty.FieldRef.UseWheel = true;
+            elevationProperty.FieldRef.WheelStep = 0.1f;
+            elevationProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            elevationProperty.FieldRef.CheckMin = true;
+            elevationProperty.FieldRef.MinValue = -100f;
+            elevationProperty.FieldRef.CheckMax = true;
+            elevationProperty.FieldRef.MaxValue = 100f;
             elevationProperty.Init();
-            elevationProperty.Value = Elevation;
+            elevationProperty.FieldRef.Value = Elevation;
             elevationProperty.OnValueChanged += (float value) => Elevation.Value = value;
         }
         private void AddCornerRadiusProperty(FloatPropertyPanel cornerRadiusProperty, EditorProvider provider)
         {
             cornerRadiusProperty.Label = Localize.FillerStyle_CornerRadius;
-            cornerRadiusProperty.Format = Localize.NumberFormat_Meter;
-            cornerRadiusProperty.UseWheel = true;
-            cornerRadiusProperty.WheelStep = 0.1f;
-            cornerRadiusProperty.WheelTip = Settings.ShowToolTip;
-            cornerRadiusProperty.CheckMin = true;
-            cornerRadiusProperty.MinValue = 0f;
-            cornerRadiusProperty.CheckMax = true;
-            cornerRadiusProperty.MaxValue = 10f;
+            cornerRadiusProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            cornerRadiusProperty.FieldRef.UseWheel = true;
+            cornerRadiusProperty.FieldRef.WheelStep = 0.1f;
+            cornerRadiusProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            cornerRadiusProperty.FieldRef.CheckMin = true;
+            cornerRadiusProperty.FieldRef.MinValue = 0f;
+            cornerRadiusProperty.FieldRef.CheckMax = true;
+            cornerRadiusProperty.FieldRef.MaxValue = 10f;
             cornerRadiusProperty.Init();
-            cornerRadiusProperty.Value = LineCornerRadius;
+            cornerRadiusProperty.FieldRef.Value = LineCornerRadius;
             cornerRadiusProperty.OnValueChanged += (float value) => CornerRadius.Value = new Vector2(value, value);
         }
         private void AddMedianCornerRadiusProperty(Vector2PropertyPanel cornerRadiusProperty, EditorProvider provider)

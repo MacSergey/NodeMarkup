@@ -130,56 +130,56 @@ namespace IMT.Manager
         {
             minAngleProperty.Label = "Min angle";
             minAngleProperty.CanCollapse = true;
-            minAngleProperty.CheckMax = true;
-            minAngleProperty.CheckMin = true;
-            minAngleProperty.MinValue = 1f;
-            minAngleProperty.MaxValue = 90f;
-            minAngleProperty.WheelStep = 1f;
-            minAngleProperty.UseWheel = true;
+            minAngleProperty.FieldRef.CheckMax = true;
+            minAngleProperty.FieldRef.CheckMin = true;
+            minAngleProperty.FieldRef.MinValue = 1f;
+            minAngleProperty.FieldRef.MaxValue = 90f;
+            minAngleProperty.FieldRef.WheelStep = 1f;
+            minAngleProperty.FieldRef.UseWheel = true;
             minAngleProperty.Init();
-            minAngleProperty.Value = MinAngle;
+            minAngleProperty.FieldRef.Value = MinAngle;
             minAngleProperty.OnValueChanged += (float value) => MinAngle.Value = value;
         }
         private void GetMinLength(FloatPropertyPanel minLengthProperty, EditorProvider provider)
         {
             minLengthProperty.Label = "Min length";
             minLengthProperty.CanCollapse = true;
-            minLengthProperty.CheckMax = true;
-            minLengthProperty.CheckMin = true;
-            minLengthProperty.MinValue = 0.1f;
-            minLengthProperty.MaxValue = 10f;
-            minLengthProperty.WheelStep = 0.1f;
-            minLengthProperty.UseWheel = true;
+            minLengthProperty.FieldRef.CheckMax = true;
+            minLengthProperty.FieldRef.CheckMin = true;
+            minLengthProperty.FieldRef.MinValue = 0.1f;
+            minLengthProperty.FieldRef.MaxValue = 10f;
+            minLengthProperty.FieldRef.WheelStep = 0.1f;
+            minLengthProperty.FieldRef.UseWheel = true;
             minLengthProperty.Init();
-            minLengthProperty.Value = MinLength;
+            minLengthProperty.FieldRef.Value = MinLength;
             minLengthProperty.OnValueChanged += (float value) => MinLength.Value = value;
         }
         private void GetMaxLength(FloatPropertyPanel maxLengthProperty, EditorProvider provider)
         {
             maxLengthProperty.Label = "Max length";
             maxLengthProperty.CanCollapse = true;
-            maxLengthProperty.CheckMax = true;
-            maxLengthProperty.CheckMin = true;
-            maxLengthProperty.MinValue = 1f;
-            maxLengthProperty.MaxValue = 100f;
-            maxLengthProperty.WheelStep = 0.1f;
-            maxLengthProperty.UseWheel = true;
+            maxLengthProperty.FieldRef.CheckMax = true;
+            maxLengthProperty.FieldRef.CheckMin = true;
+            maxLengthProperty.FieldRef.MinValue = 1f;
+            maxLengthProperty.FieldRef.MaxValue = 100f;
+            maxLengthProperty.FieldRef.WheelStep = 0.1f;
+            maxLengthProperty.FieldRef.UseWheel = true;
             maxLengthProperty.Init();
-            maxLengthProperty.Value = MaxLength;
+            maxLengthProperty.FieldRef.Value = MaxLength;
             maxLengthProperty.OnValueChanged += (float value) => MaxLength.Value = value;
         }
         private void GetMaxHeight(FloatPropertyPanel maxHeightProperty, EditorProvider provider)
         {
             maxHeightProperty.Label = "Max height";
             maxHeightProperty.CanCollapse = true;
-            maxHeightProperty.CheckMax = true;
-            maxHeightProperty.CheckMin = true;
-            maxHeightProperty.MinValue = 1f;
-            maxHeightProperty.MaxValue = 100f;
-            maxHeightProperty.WheelStep = 0.1f;
-            maxHeightProperty.UseWheel = true;
+            maxHeightProperty.FieldRef.CheckMax = true;
+            maxHeightProperty.FieldRef.CheckMin = true;
+            maxHeightProperty.FieldRef.MinValue = 1f;
+            maxHeightProperty.FieldRef.MaxValue = 100f;
+            maxHeightProperty.FieldRef.WheelStep = 0.1f;
+            maxHeightProperty.FieldRef.UseWheel = true;
             maxHeightProperty.Init();
-            maxHeightProperty.Value = MaxHeight;
+            maxHeightProperty.FieldRef.Value = MaxHeight;
             maxHeightProperty.OnValueChanged += (float value) => MaxHeight.Value = value;
         }
 #endif

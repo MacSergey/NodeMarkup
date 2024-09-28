@@ -110,7 +110,7 @@ namespace IMT.UI.Editors
                 authorProperty.FieldWidth = 230;
                 authorProperty.EnableControl = false;
                 authorProperty.Init();
-                authorProperty.Value = EditObject.Asset.Author;
+                authorProperty.FieldRef.Value = EditObject.Asset.Author;
             }
         }
         private void AddTemplateName()
@@ -119,9 +119,9 @@ namespace IMT.UI.Editors
             NameProperty.SetStyle(UIStyle.Default);
             NameProperty.Label = IMT.Localize.TemplateEditor_Name;
             NameProperty.FieldWidth = 230;
-            NameProperty.SubmitOnFocusLost = true;
+            NameProperty.FieldRef.SubmitOnFocusLost = true;
             NameProperty.Init();
-            NameProperty.Value = EditObject.Name;
+            NameProperty.FieldRef.Value = EditObject.Name;
             NameProperty.OnValueChanged += (name) => OnChanged();
         }
 
@@ -191,7 +191,7 @@ namespace IMT.UI.Editors
 
         private void SaveChanges()
         {
-            var name = NameProperty.Value;
+            var name = NameProperty.FieldRef.Value;
             if (!string.IsNullOrEmpty(name) && name != EditObject.Name && (EditObject.Manager as TemplateManager<TemplateType>).ContainsName(name, EditObject))
             {
                 var messageBox = MessageBox.Show<YesNoMessageBox>();
@@ -234,7 +234,7 @@ namespace IMT.UI.Editors
                 return true;
             }
         }
-        protected virtual void OnApplyChanges() => EditObject.Name = NameProperty.Value;
+        protected virtual void OnApplyChanges() => EditObject.Name = NameProperty.FieldRef.Value;
 
         private void NotSaveChanges()
         {
@@ -242,7 +242,7 @@ namespace IMT.UI.Editors
             AddAditionalProperties();
             EndEditTemplate();
         }
-        protected virtual void OnNotApplyChanges() => NameProperty.Value = EditObject.Name;
+        protected virtual void OnNotApplyChanges() => NameProperty.FieldRef.Value = EditObject.Name;
 
         private void DiscardTemplate()
         {

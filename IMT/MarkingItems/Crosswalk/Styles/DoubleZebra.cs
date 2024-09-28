@@ -164,14 +164,14 @@ namespace IMT.Manager
         protected void AddOffsetBetweenProperty(FloatPropertyPanel offsetBetweenProperty, EditorProvider provider)
         {
             offsetBetweenProperty.Label = Localize.StyleOption_OffsetBetween;
-            offsetBetweenProperty.Format = Localize.NumberFormat_Meter;
-            offsetBetweenProperty.UseWheel = true;
-            offsetBetweenProperty.WheelStep = 0.1f;
-            offsetBetweenProperty.CheckMin = true;
-            offsetBetweenProperty.MinValue = 0.1f;
-            offsetBetweenProperty.WheelTip = Settings.ShowToolTip;
+            offsetBetweenProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            offsetBetweenProperty.FieldRef.UseWheel = true;
+            offsetBetweenProperty.FieldRef.WheelStep = 0.1f;
+            offsetBetweenProperty.FieldRef.CheckMin = true;
+            offsetBetweenProperty.FieldRef.MinValue = 0.1f;
+            offsetBetweenProperty.FieldRef.WheelTip = Settings.ShowToolTip;
             offsetBetweenProperty.Init();
-            offsetBetweenProperty.Value = OffsetBetween;
+            offsetBetweenProperty.FieldRef.Value = OffsetBetween;
             offsetBetweenProperty.OnValueChanged += (float value) => OffsetBetween.Value = value;
         }
 

@@ -272,54 +272,54 @@ namespace IMT.Manager
         {
             ;
             sizeProperty.Label = Localize.StyleOption_ObjectScale;
-            sizeProperty.UseWheel = true;
-            sizeProperty.WheelStep = 0.1f;
-            sizeProperty.WheelTip = Settings.ShowToolTip;
-            sizeProperty.CheckMin = true;
-            sizeProperty.MinValue = 1f;
-            sizeProperty.CheckMax = true;
-            sizeProperty.MaxValue = 10f;
+            sizeProperty.FieldRef.UseWheel = true;
+            sizeProperty.FieldRef.WheelStep = 0.1f;
+            sizeProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            sizeProperty.FieldRef.CheckMin = true;
+            sizeProperty.FieldRef.MinValue = 1f;
+            sizeProperty.FieldRef.CheckMax = true;
+            sizeProperty.FieldRef.MaxValue = 10f;
             sizeProperty.Init();
-            sizeProperty.Value = Scale;
+            sizeProperty.FieldRef.Value = Scale;
             sizeProperty.OnValueChanged += (value) => Scale.Value = value;
         }
         protected void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
             angleProperty.Label = Localize.StyleOption_ObjectAngle;
-            angleProperty.Format = Localize.NumberFormat_Degree;
-            angleProperty.UseWheel = true;
-            angleProperty.WheelStep = 1f;
-            angleProperty.WheelTip = Settings.ShowToolTip;
-            angleProperty.CheckMin = true;
-            angleProperty.CheckMax = true;
-            angleProperty.MinValue = -180;
-            angleProperty.MaxValue = 180;
-            angleProperty.CyclicalValue = true;
+            angleProperty.FieldRef.Format = Localize.NumberFormat_Degree;
+            angleProperty.FieldRef.UseWheel = true;
+            angleProperty.FieldRef.WheelStep = 1f;
+            angleProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            angleProperty.FieldRef.CheckMin = true;
+            angleProperty.FieldRef.CheckMax = true;
+            angleProperty.FieldRef.MinValue = -180;
+            angleProperty.FieldRef.MaxValue = 180;
+            angleProperty.FieldRef.CyclicalValue = true;
             angleProperty.Init();
-            angleProperty.Value = Angle;
+            angleProperty.FieldRef.Value = Angle;
             angleProperty.OnValueChanged += (value) => Angle.Value = value;
         }
         protected void AddShiftProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
             offsetProperty.Label = Localize.StyleOption_ObjectShift;
-            offsetProperty.Format = Localize.NumberFormat_Meter;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.CheckMin = true;
-            offsetProperty.CheckMax = true;
-            offsetProperty.MinValue = -50;
-            offsetProperty.MaxValue = 50;
-            offsetProperty.CyclicalValue = false;
+            offsetProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            offsetProperty.FieldRef.UseWheel = true;
+            offsetProperty.FieldRef.WheelStep = 0.1f;
+            offsetProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            offsetProperty.FieldRef.CheckMin = true;
+            offsetProperty.FieldRef.CheckMax = true;
+            offsetProperty.FieldRef.MinValue = -50;
+            offsetProperty.FieldRef.MaxValue = 50;
+            offsetProperty.FieldRef.CyclicalValue = false;
             offsetProperty.Init();
-            offsetProperty.Value = Shift;
+            offsetProperty.FieldRef.Value = Shift;
             offsetProperty.OnValueChanged += (value) => Shift.Value = value;
         }
         protected void AddDirectionProperty(TextDirectionPanel directionProperty, EditorProvider provider)
         {
             directionProperty.Label = Localize.StyleOption_TextDirection;
-            directionProperty.Selector.AutoButtonSize = false;
-            directionProperty.Selector.ButtonWidth = 33f;
+            directionProperty.SelectorRef.AutoButtonSize = false;
+            directionProperty.SelectorRef.ButtonWidth = 33f;
             directionProperty.Init();
             directionProperty.SelectedObject = Direction;
             directionProperty.OnSelectObjectChanged += (value) => Direction.Value = value;
@@ -338,23 +338,23 @@ namespace IMT.Manager
         private new void AddOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
             offsetProperty.Label = Localize.StyleOption_Offset;
-            offsetProperty.Format = Localize.NumberFormat_Meter;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.CheckMin = true;
-            offsetProperty.CheckMax = true;
-            offsetProperty.MinValue = -100;
-            offsetProperty.MaxValue = 100;
-            offsetProperty.CyclicalValue = false;
+            offsetProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            offsetProperty.FieldRef.UseWheel = true;
+            offsetProperty.FieldRef.WheelStep = 0.1f;
+            offsetProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            offsetProperty.FieldRef.CheckMin = true;
+            offsetProperty.FieldRef.CheckMax = true;
+            offsetProperty.FieldRef.MinValue = -100;
+            offsetProperty.FieldRef.MaxValue = 100;
+            offsetProperty.FieldRef.CyclicalValue = false;
             offsetProperty.Init();
-            offsetProperty.Value = Offset;
+            offsetProperty.FieldRef.Value = Offset;
             offsetProperty.OnValueChanged += (value) => Offset.Value = value;
         }
         private void RefreshOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
-            offsetProperty.MinValue = Alignment.Value == TextAlignment.Middle ? -50f : 0f;
-            offsetProperty.MaxValue = Alignment.Value == TextAlignment.Middle ? 50f : 100f;
+            offsetProperty.FieldRef.MinValue = Alignment.Value == TextAlignment.Middle ? -50f : 0f;
+            offsetProperty.FieldRef.MaxValue = Alignment.Value == TextAlignment.Middle ? 50f : 100f;
             offsetProperty.SimulateEnterValue(Offset);
         }
 
@@ -379,14 +379,14 @@ namespace IMT.Manager
         protected void AddRatioProperty(FloatPropertyPanel sizeProperty, EditorProvider provider)
         {
             sizeProperty.Label = "Pixel ratio";
-            sizeProperty.Format = Localize.NumberFormat_Meter;
-            sizeProperty.UseWheel = true;
-            sizeProperty.WheelStep = 0.01f;
-            sizeProperty.WheelTip = Settings.ShowToolTip;
-            sizeProperty.CheckMin = true;
-            sizeProperty.MinValue = 0.005f;
+            sizeProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            sizeProperty.FieldRef.UseWheel = true;
+            sizeProperty.FieldRef.WheelStep = 0.01f;
+            sizeProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            sizeProperty.FieldRef.CheckMin = true;
+            sizeProperty.FieldRef.MinValue = 0.005f;
             sizeProperty.Init();
-            sizeProperty.Value = Ratio;
+            sizeProperty.FieldRef.Value = Ratio;
             sizeProperty.OnValueChanged += (value) => Ratio.Value = value;
         }
 #endif
@@ -435,15 +435,15 @@ namespace IMT.Manager
         public enum TextDirection
         {
             [Description(nameof(Localize.StyleOption_TextDirectionLtoR))]
-            [Sprite(nameof(IMTTextures.LeftToRightButtonIcon))]
+            [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.LeftToRightButtonIcon))]
             LeftToRight,
 
             [Description(nameof(Localize.StyleOption_TextDirectionTtoB))]
-            [Sprite(nameof(IMTTextures.TopToBottomButtonIcon))]
+            [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.TopToBottomButtonIcon))]
             TopToBottom,
 
             [Description(nameof(Localize.StyleOption_TextDirectionBtoT))]
-            [Sprite(nameof(IMTTextures.BottomToTopButtonIcon))]
+            [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.BottomToTopButtonIcon))]
             BottomToTop,
         }
         public enum TextAlignment
@@ -458,45 +458,33 @@ namespace IMT.Manager
             End,
         }
 
-        public class TextDirectionPanel : EnumOncePropertyPanel<TextDirection, TextDirectionPanel.TextDirectionSegmented>
+        public class TextDirectionPanel : AutoEnumSinglePropertyPanel<TextDirection, TextDirectionPanel.TextDirectionSegmented, TextDirectionPanel.TextDirectionSegmented.TextDirectionSegmentedRef>
         {
             protected override bool IsEqual(TextDirection first, TextDirection second) => first == second;
-            protected override string GetDescription(TextDirection value) => value.Description();
 
-            protected override void FillItems(Func<TextDirection, bool> selector)
+            public class TextDirectionSegmented : UISingleEnumSegmented<TextDirection, TextDirectionSegmented.TextDirectionSegmentedRef> 
             {
-                Selector.PauseLayout(() =>
+                protected override TextDirectionSegmentedRef CreateRef() => new(this);
+
+                public class TextDirectionSegmentedRef : SingleSegmentedRef<TextDirection, TextDirectionSegmented>
                 {
-                    foreach (var value in GetValues())
-                    {
-                        if (selector?.Invoke(value) != false)
-                        {
-                            var sprite = value.Sprite();
-                            if (string.IsNullOrEmpty(sprite))
-                                Selector.AddItem(value, new OptionData(GetDescription(value)));
-                            else
-                                Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
-                        }
-                    }
-                });
+                    public TextDirectionSegmentedRef(TextDirectionSegmented segmented) : base(segmented) { }
+                }
             }
-            public override void SetStyle(ControlStyle style)
-            {
-                Selector.SegmentedStyle = style.Segmented;
-            }
-
-            public class TextDirectionSegmented : UIOnceSegmented<TextDirection> { }
         }
-        public class TextAlignmentPanel : EnumOncePropertyPanel<TextAlignment, TextAlignmentPanel.TextAlignmentSegmented>
+        public class TextAlignmentPanel : AutoEnumSinglePropertyPanel<TextAlignment, TextAlignmentPanel.TextAlignmentSegmented, TextAlignmentPanel.TextAlignmentSegmented.TextAlignmentSegmentedRef>
         {
             protected override bool IsEqual(TextAlignment first, TextAlignment second) => first == second;
-            protected override string GetDescription(TextAlignment value) => value.Description();
-            public override void SetStyle(ControlStyle style)
-            {
-                Selector.SegmentedStyle = style.Segmented;
-            }
 
-            public class TextAlignmentSegmented : UIOnceSegmented<TextAlignment> { }
+            public class TextAlignmentSegmented : UISingleEnumSegmented<TextAlignment, TextAlignmentSegmented.TextAlignmentSegmentedRef> 
+            {
+                protected override TextAlignmentSegmentedRef CreateRef() => new(this);
+
+                public class TextAlignmentSegmentedRef : SingleSegmentedRef<TextAlignment, TextAlignmentSegmented>
+                {
+                    public TextAlignmentSegmentedRef(TextAlignmentSegmented segmented) : base(segmented) { }
+                }
+            }
         }
 
         public struct TextureId

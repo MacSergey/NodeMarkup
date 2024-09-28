@@ -157,14 +157,14 @@ namespace IMT.Manager
         protected void AddLineOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
             offsetProperty.Label = Localize.StyleOption_Offset;
-            offsetProperty.Format = Localize.NumberFormat_Meter;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0f;
+            offsetProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            offsetProperty.FieldRef.UseWheel = true;
+            offsetProperty.FieldRef.WheelStep = 0.1f;
+            offsetProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            offsetProperty.FieldRef.CheckMin = true;
+            offsetProperty.FieldRef.MinValue = 0f;
             offsetProperty.Init();
-            offsetProperty.Value = LineOffset;
+            offsetProperty.FieldRef.Value = LineOffset;
             offsetProperty.OnValueChanged += (float value) => Offset.Value = new Vector2(value, value);
         }
         private void AddMedianOffsetProperty(Vector2PropertyPanel offsetProperty, EditorProvider provider)
@@ -187,17 +187,17 @@ namespace IMT.Manager
             if (this is IRotateFiller rotateStyle)
             {
                 angleProperty.Label = Localize.StyleOption_Angle;
-                angleProperty.Format = Localize.NumberFormat_Degree;
-                angleProperty.UseWheel = true;
-                angleProperty.WheelStep = 1f;
-                angleProperty.WheelTip = Settings.ShowToolTip;
-                angleProperty.CheckMin = true;
-                angleProperty.MinValue = -90;
-                angleProperty.CheckMax = true;
-                angleProperty.MaxValue = 90;
-                angleProperty.CyclicalValue = true;
+                angleProperty.FieldRef.Format = Localize.NumberFormat_Degree;
+                angleProperty.FieldRef.UseWheel = true;
+                angleProperty.FieldRef.WheelStep = 1f;
+                angleProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+                angleProperty.FieldRef.CheckMin = true;
+                angleProperty.FieldRef.MinValue = -90;
+                angleProperty.FieldRef.CheckMax = true;
+                angleProperty.FieldRef.MaxValue = 90;
+                angleProperty.FieldRef.CyclicalValue = true;
                 angleProperty.Init();
-                angleProperty.Value = rotateStyle.Angle;
+                angleProperty.FieldRef.Value = rotateStyle.Angle;
                 angleProperty.OnValueChanged += (float value) => rotateStyle.Angle.Value = value;
             }
             else

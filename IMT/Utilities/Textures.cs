@@ -8,7 +8,7 @@ namespace IMT.Utilities
 {
     public static class IMTTextures
     {
-        public static UITextureAtlas Atlas;
+        public static UITextureAtlas Atlas { get; }
         public static Texture2D Texture => Atlas.texture;
 
         public static string ActivationButtonNormal => nameof(ActivationButtonNormal);

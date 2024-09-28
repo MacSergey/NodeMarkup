@@ -7,9 +7,17 @@ using System.Collections.Generic;
 
 namespace IMT.UI
 {
-    public abstract class StylePropertyPanel : EnumOncePropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown>
+    public abstract class StylePropertyPanel : EnumSinglePropertyPanel<Style.StyleType, StylePropertyPanel.StyleDropDown, StylePropertyPanel.StyleDropDown.StyleDropDownRef>
     {
-        public class StyleDropDown : SimpleDropDown<Style.StyleType, StyleEntity, StylePopup> { }
+        public class StyleDropDown : SimpleDropDown<Style.StyleType, StyleEntity, StylePopup, StyleDropDown.StyleDropDownRef> 
+        {
+            protected override StyleDropDownRef CreateRef() => new(this);
+
+            public class StyleDropDownRef : SimpleDropDownRef<Style.StyleType, StyleDropDown>
+            {
+                public StyleDropDownRef(StyleDropDown dropDown) : base(dropDown) { }
+            }
+        }
         public class StylePopup : SimplePopup<Style.StyleType, StyleEntity> { }
         public class StyleEntity : SimpleEntity<Style.StyleType> { }
 
@@ -27,7 +35,6 @@ namespace IMT.UI
                 yield return value.ToEnum<Style.StyleType, StyleType>();
         }
         protected override bool IsEqual(Style.StyleType first, Style.StyleType second) => first == second;
-        protected override string GetDescription(Style.StyleType value) => value.Description();
     }
     public class RegularStylePropertyPanel : StylePropertyPanel<RegularLineStyle.RegularLineType> { }
     public class StopStylePropertyPanel : StylePropertyPanel<StopLineStyle.StopLineType> { }
@@ -35,28 +42,38 @@ namespace IMT.UI
     public class FillerStylePropertyPanel : StylePropertyPanel<BaseFillerStyle.FillerType> { }
 
 
-    public class LineAlignmentPropertyPanel : EnumOncePropertyPanel<Alignment, LineAlignmentPropertyPanel.AlignmentSegmented>
+    public class LineAlignmentPropertyPanel : AutoEnumSinglePropertyPanel<Alignment, LineAlignmentPropertyPanel.AlignmentSegmented, LineAlignmentPropertyPanel.AlignmentSegmented.AlignmentSegmentedRef>
     {
         protected override bool IsEqual(Alignment first, Alignment second) => first == second;
-        public class AlignmentSegmented : UIOnceSegmented<Alignment> { }
-        protected override string GetDescription(Alignment value) => value.Description();
-        public override void SetStyle(ControlStyle style)
+
+        public class AlignmentSegmented : UISingleEnumSegmented<Alignment, AlignmentSegmented.AlignmentSegmentedRef> 
         {
-            Selector.SegmentedStyle = style.Segmented;
+            protected override AlignmentSegmentedRef CreateRef() => new(this);
+
+            public class AlignmentSegmentedRef : SingleSegmentedRef<Alignment, AlignmentSegmented>
+            {
+                public AlignmentSegmentedRef(AlignmentSegmented segmented) : base(segmented) { }
+            }
         }
     }
-    public class PropColorPropertyPanel : EnumOncePropertyPanel<PropLineStyle.ColorOptionEnum, PropColorPropertyPanel.PropColorDropDown>
+    public class PropColorPropertyPanel : EnumSinglePropertyPanel<PropLineStyle.ColorOptionEnum, PropColorPropertyPanel.PropColorDropDown, PropColorPropertyPanel.PropColorDropDown.PropColorDropDownRef>
     {
         protected override bool IsEqual(PropLineStyle.ColorOptionEnum first, PropLineStyle.ColorOptionEnum second) => first == second;
 
-        public class PropColorDropDown : SimpleDropDown<PropLineStyle.ColorOptionEnum, PropColorEntity, PropColorPopup> { }
+        public class PropColorDropDown : SimpleDropDown<PropLineStyle.ColorOptionEnum, PropColorEntity, PropColorPopup, PropColorDropDown.PropColorDropDownRef> 
+        {
+            protected override PropColorDropDownRef CreateRef() => new(this);
+
+            public class PropColorDropDownRef : SimpleDropDownRef<PropLineStyle.ColorOptionEnum, PropColorDropDown>
+            {
+                public PropColorDropDownRef(PropColorDropDown dropDown) : base(dropDown) { }
+            }
+        }
         public class PropColorEntity : SimpleEntity<PropLineStyle.ColorOptionEnum> { }
         public class PropColorPopup : SimplePopup<PropLineStyle.ColorOptionEnum, PropColorEntity> { }
         public override void SetStyle(ControlStyle style)
         {
             Selector.DropDownStyle = style.DropDown;
         }
-
-        protected override string GetDescription(PropLineStyle.ColorOptionEnum value) => value.Description();
     }
 }

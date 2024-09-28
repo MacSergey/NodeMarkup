@@ -116,20 +116,20 @@ namespace IMT.Manager
         protected void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
             angleProperty.Label = Localize.StyleOption_SharkToothAngle;
-            angleProperty.Format = Localize.NumberFormat_Degree;
-            angleProperty.UseWheel = true;
-            angleProperty.WheelStep = 1f;
-            angleProperty.CheckMin = true;
-            angleProperty.MinValue = -60f;
-            angleProperty.CheckMax = true;
-            angleProperty.MaxValue = 60f;
+            angleProperty.FieldRef.Format = Localize.NumberFormat_Degree;
+            angleProperty.FieldRef.UseWheel = true;
+            angleProperty.FieldRef.WheelStep = 1f;
+            angleProperty.FieldRef.CheckMin = true;
+            angleProperty.FieldRef.MinValue = -60f;
+            angleProperty.FieldRef.CheckMax = true;
+            angleProperty.FieldRef.MaxValue = 60f;
             angleProperty.Init();
-            angleProperty.Value = Angle;
+            angleProperty.FieldRef.Value = Angle;
             angleProperty.OnValueChanged += (value) => Angle.Value = value;
         }
         protected virtual void RefreshAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
-            angleProperty.Value = Angle;
+            angleProperty.FieldRef.Value = Angle;
         }
 
         new protected void AddInvertProperty(ButtonPanel invertButton, EditorProvider provider)

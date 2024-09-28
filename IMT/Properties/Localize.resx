@@ -2128,7 +2128,7 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
     <value>Random</value>
   </data>
-  <data name="StyleOption_ObjectSpreadSlope" xml:space="preserve">
-    <value>Slope</value>
+  <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
+    <value>Sequential</value>
   </data>
 </root>

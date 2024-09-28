@@ -33,14 +33,14 @@ namespace IMT.Manager
         protected void AddLineWidthProperty(FloatPropertyPanel widthProperty, EditorProvider provider)
         {
             widthProperty.Label = Localize.StyleOption_LineWidth;
-            widthProperty.Format = Localize.NumberFormat_Meter;
-            widthProperty.UseWheel = true;
-            widthProperty.WheelStep = 0.1f;
-            widthProperty.WheelTip = Settings.ShowToolTip;
-            widthProperty.CheckMin = true;
-            widthProperty.MinValue = 0.05f;
+            widthProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            widthProperty.FieldRef.UseWheel = true;
+            widthProperty.FieldRef.WheelStep = 0.1f;
+            widthProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            widthProperty.FieldRef.CheckMin = true;
+            widthProperty.FieldRef.MinValue = 0.05f;
             widthProperty.Init();
-            widthProperty.Value = LineWidth;
+            widthProperty.FieldRef.Value = LineWidth;
             widthProperty.OnValueChanged += (float value) => LineWidth.Value = value;
         }
 

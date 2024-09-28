@@ -2,79 +2,24 @@
 using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
+using Mono.Cecil;
 using System;
 
 namespace IMT.UI
 {
-    public abstract class StaticAutoProperty<ValueType, FieldType> : VariationProperty<int, IntSegmented>
-    where FieldType : ComparableUITextField<ValueType>
-    where ValueType : IComparable<ValueType>
+    public abstract class StaticAutoProperty<ValueType, FieldType, RefType> : VariationProperty<int, IntSegmented, IntSegmented.IntSegmentedRef>
+        where ValueType : IComparable<ValueType>
+        where FieldType : ComparableUITextField<ValueType, RefType>
+        where RefType : IFieldRef, IComparableField<ValueType> 
     {
-        protected FieldType Field { get; set; }
+        protected FieldType Field { get; private set; }
+        public RefType FieldRef => Field.Ref;
 
         protected virtual int AutoIndex => 0;
         protected virtual int StaticIndex => 1;
 
         public event Action<ValueType> OnValueChanged;
         public event Action OnAutoValue;
-
-        public bool SubmitOnFocusLost
-        {
-            get => Field.SubmitOnFocusLost;
-            set => Field.SubmitOnFocusLost = value;
-        }
-        public ValueType Value
-        {
-            get => Field.Value;
-            set
-            {
-                Field.Value = value;
-                Refresh();
-            }
-        }
-        public string Format
-        {
-            set => Field.Format = value;
-        }
-
-        public ValueType MinValue
-        {
-            get => Field.MinValue;
-            set => Field.MinValue = value;
-        }
-        public ValueType MaxValue
-        {
-            get => Field.MaxValue;
-            set => Field.MaxValue = value;
-        }
-        public bool CheckMin
-        {
-            get => Field.CheckMin;
-            set => Field.CheckMin = value;
-        }
-        public bool CheckMax
-        {
-            get => Field.CheckMax;
-            set => Field.CheckMax = value;
-        }
-        public bool CyclicalValue
-        {
-            get => Field.CyclicalValue;
-            set => Field.CyclicalValue = value;
-        }
-        public bool UseWheel
-        {
-            get => Field.UseWheel;
-            set => Field.UseWheel = value;
-        }
-        public ValueType WheelStep
-        {
-            set => Field.WheelStep = value;
-        }
-        public bool WheelTip
-        {
-            set => Field.WheelTip = value;
-        }
 
         public StaticAutoProperty()
         {
@@ -98,12 +43,6 @@ namespace IMT.UI
             OnValueChanged = null;
             OnAutoValue = null;
 
-            UseWheel = false;
-            WheelStep = default;
-            WheelTip = false;
-            SubmitOnFocusLost = true;
-            Format = null;
-
             Field.SetDefault();
         }
 
@@ -120,11 +59,15 @@ namespace IMT.UI
             Refresh();
         }
 
-        protected override void SelectorChangedImpl(int index)
+        protected override void SelectorChanged(int selectedItem)
         {
-            if (index == StaticIndex)
+            base.SelectorChanged(selectedItem);
+
+            Refresh();
+
+            if (selectedItem == StaticIndex)
                 OnValueChanged?.Invoke(Field.Value);
-            else if (index == AutoIndex)
+            else if (selectedItem == AutoIndex)
                 OnAutoValue?.Invoke();
         }
 
@@ -135,7 +78,7 @@ namespace IMT.UI
                 OnValueChanged?.Invoke(value);
         }
 
-        protected override void Refresh()
+        protected virtual void Refresh()
         {
             if (SelectedObject == StaticIndex)
                 Field.isEnabled = true;
@@ -151,5 +94,5 @@ namespace IMT.UI
             Field.TextFieldStyle = style.TextField;
         }
     }
-    public class FloatStaticAutoProperty : StaticAutoProperty<float, FloatUITextField> { }
+    public class FloatStaticAutoProperty : StaticAutoProperty<float, FloatUITextField, FloatUITextField.FloatFieldRef> { }
 }

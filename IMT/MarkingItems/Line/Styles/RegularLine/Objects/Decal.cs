@@ -178,16 +178,16 @@ namespace IMT.Manager
         private void AddHeightProperty(FloatPropertyPanel heightProperty, EditorProvider provider)
         {
             heightProperty.Label = Localize.StyleOption_SlopeTolerance;
-            heightProperty.Format = Localize.NumberFormat_Meter;
-            heightProperty.UseWheel = true;
-            heightProperty.WheelStep = 0.1f;
-            heightProperty.WheelTip = Settings.ShowToolTip;
-            heightProperty.CheckMin = true;
-            heightProperty.MinValue = 0.1f;
-            heightProperty.CheckMax = true;
-            heightProperty.MaxValue = 100f;
+            heightProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            heightProperty.FieldRef.UseWheel = true;
+            heightProperty.FieldRef.WheelStep = 0.1f;
+            heightProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            heightProperty.FieldRef.CheckMin = true;
+            heightProperty.FieldRef.MinValue = 0.1f;
+            heightProperty.FieldRef.CheckMax = true;
+            heightProperty.FieldRef.MaxValue = 100f;
             heightProperty.Init();
-            heightProperty.Value = Height * 0.5f;
+            heightProperty.FieldRef.Value = Height * 0.5f;
             heightProperty.OnValueChanged += (value) => Height.Value = value * 2f;
         }
         private void RefreshHeightProperty(FloatPropertyPanel heightProperty, EditorProvider provider)

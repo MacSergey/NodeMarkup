@@ -234,7 +234,7 @@ namespace IMT.Manager
             var shift = ShiftSpread.Value switch
             { 
                 Spread.Random => SimulationManager.instance.m_randomizer.UInt32((uint)(Mathf.Abs(Shift.Value.y - Shift.Value.x) * 1000f)) * 0.001f - shiftMiddle,
-                Spread.Slope => Mathf.Lerp(Shift.Value.x, Shift.Value.y, p),
+                Spread.Sequential => Mathf.Lerp(Shift.Value.x, Shift.Value.y, p) - shiftMiddle,
                 _ => 0f
             };
             item.position += trajectory.Tangent(t).Turn90(true).MakeFlatNormalized() * shift;
@@ -244,7 +244,7 @@ namespace IMT.Manager
             item.angle = AngleSpread.Value switch
             {
                 Spread.Random => GetRandomAngle(),
-                Spread.Slope when Angle.HasValue => Mathf.Lerp(Angle.Value.Value.x, Angle.Value.Value.y, p),
+                Spread.Sequential when Angle.HasValue => Mathf.Lerp(Angle.Value.Value.x, Angle.Value.Value.y, p),
                 _ => 0f,
             } * Mathf.Deg2Rad;
 
@@ -296,16 +296,16 @@ namespace IMT.Manager
         private void AddProbabilityProperty(IntPropertyPanel probabilityProperty, EditorProvider provider)
         {
             probabilityProperty.Label = Localize.StyleOption_ObjectProbability;
-            probabilityProperty.Format = Localize.NumberFormat_Percent;
-            probabilityProperty.UseWheel = true;
-            probabilityProperty.WheelStep = 1;
-            probabilityProperty.WheelTip = Settings.ShowToolTip;
-            probabilityProperty.CheckMin = true;
-            probabilityProperty.MinValue = 0;
-            probabilityProperty.CheckMax = true;
-            probabilityProperty.MaxValue = 100;
+            probabilityProperty.FieldRef.Format = Localize.NumberFormat_Percent;
+            probabilityProperty.FieldRef.UseWheel = true;
+            probabilityProperty.FieldRef.WheelStep = 1;
+            probabilityProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            probabilityProperty.FieldRef.CheckMin = true;
+            probabilityProperty.FieldRef.MinValue = 0;
+            probabilityProperty.FieldRef.CheckMax = true;
+            probabilityProperty.FieldRef.MaxValue = 100;
             probabilityProperty.Init();
-            probabilityProperty.Value = Probability;
+            probabilityProperty.FieldRef.Value = Probability;
             probabilityProperty.OnValueChanged += (value) => Probability.Value = value;
         }
         private void RefreshProbabilityProperty(IntPropertyPanel probabilityProperty, EditorProvider provider)
@@ -316,12 +316,12 @@ namespace IMT.Manager
         private void AddStepProperty(FloatStaticAutoProperty stepProperty, EditorProvider provider)
         {
             stepProperty.Label = Localize.StyleOption_ObjectStep;
-            stepProperty.Format = Localize.NumberFormat_Meter;
-            stepProperty.UseWheel = true;
-            stepProperty.WheelStep = 0.1f;
-            stepProperty.WheelTip = Settings.ShowToolTip;
-            stepProperty.CheckMin = true;
-            stepProperty.MinValue = 0.1f;
+            stepProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            stepProperty.FieldRef.UseWheel = true;
+            stepProperty.FieldRef.WheelStep = 0.1f;
+            stepProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            stepProperty.FieldRef.CheckMin = true;
+            stepProperty.FieldRef.MinValue = 0.1f;
             stepProperty.Init();
 
             if (Step.HasValue)
@@ -335,7 +335,7 @@ namespace IMT.Manager
                 Step.Value = null;
 
                 if (IsValid)
-                    stepProperty.Value = PrefabSize.x;
+                    stepProperty.FieldRef.Value = PrefabSize.x;
             };
         }
         private void RefreshStepProperty(FloatStaticAutoProperty stepProperty, EditorProvider provider)
@@ -350,27 +350,31 @@ namespace IMT.Manager
         private void AddAngleRangeProperty(FloatStaticRangeRandomProperty angleProperty, EditorProvider provider)
         {
             angleProperty.Label = Localize.StyleOption_ObjectAngle;
-            angleProperty.Format = Localize.NumberFormat_Degree;
-            angleProperty.UseWheel = true;
-            angleProperty.WheelStep = 1f;
-            angleProperty.WheelTip = Settings.ShowToolTip;
-            angleProperty.CheckMin = true;
-            angleProperty.CheckMax = true;
-            angleProperty.MinValue = -180;
-            angleProperty.MaxValue = 180;
-            angleProperty.AllowInvert = true;
-            angleProperty.CyclicalValue = true;
+            angleProperty.RangeRef.Format = Localize.NumberFormat_Degree;
+            angleProperty.RangeRef.UseWheel = true;
+            angleProperty.RangeRef.WheelStep = 1f;
+            angleProperty.RangeRef.WheelTip = Settings.ShowToolTip;
+            angleProperty.RangeRef.CheckMin = true;
+            angleProperty.RangeRef.CheckMax = true;
+            angleProperty.RangeRef.MinValue = -180;
+            angleProperty.RangeRef.MaxValue = 180;
+            angleProperty.RangeRef.AllowInvert = true;
+            angleProperty.RangeRef.CyclicalValue = true;
             angleProperty.Init();
 
             if (Angle.HasValue)
                 angleProperty.SetValues(Angle.Value.Value.x, Angle.Value.Value.y);
             else
-                angleProperty.SetRandom();
+                angleProperty.SetRandomValues();
 
             angleProperty.SetSpread(AngleSpread.Value);
 
             angleProperty.OnValueChanged += (valueA, valueB) => Angle.Value = new Vector2(valueA, valueB);
-            angleProperty.OnRandomValue += () => Angle.Value = null;
+            angleProperty.OnModeChanged += mode =>
+            {
+                if(mode == StaticRangeRandomMode.Random)
+                    Angle.Value = null;
+            };
             angleProperty.OnSpreadChanged += value => AngleSpread.Value = value;
         }
         private void RefreshAngleRangeProperty(FloatStaticRangeRandomProperty angleProperty, EditorProvider provider)
@@ -381,16 +385,16 @@ namespace IMT.Manager
         private void AddShiftProperty(FloatStaticRangeProperty shiftProperty, EditorProvider provider)
         {
             shiftProperty.Label = Localize.StyleOption_ObjectShift;
-            shiftProperty.Format = Localize.NumberFormat_Meter;
-            shiftProperty.UseWheel = true;
-            shiftProperty.WheelStep = 0.1f;
-            shiftProperty.WheelTip = Settings.ShowToolTip;
-            shiftProperty.CheckMin = true;
-            shiftProperty.CheckMax = true;
-            shiftProperty.MinValue = -50;
-            shiftProperty.MaxValue = 50;
-            shiftProperty.AllowInvert = true;
-            shiftProperty.CyclicalValue = false;
+            shiftProperty.RangeRef.Format = Localize.NumberFormat_Meter;
+            shiftProperty.RangeRef.UseWheel = true;
+            shiftProperty.RangeRef.WheelStep = 0.1f;
+            shiftProperty.RangeRef.WheelTip = Settings.ShowToolTip;
+            shiftProperty.RangeRef.CheckMin = true;
+            shiftProperty.RangeRef.CheckMax = true;
+            shiftProperty.RangeRef.MinValue = -50;
+            shiftProperty.RangeRef.MaxValue = 50;
+            shiftProperty.RangeRef.AllowInvert = true;
+            shiftProperty.RangeRef.CyclicalValue = false;
             shiftProperty.Init();
             shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
             shiftProperty.SetSpread(ShiftSpread.Value);
@@ -429,9 +433,8 @@ namespace IMT.Manager
         private void AddDistributionProperty(DistributionTypePanel distributionProperty, EditorProvider provider)
         {
             distributionProperty.Label = Localize.StyleOption_Distribution;
-            distributionProperty.Selector.AutoButtonSize = false;
-            distributionProperty.Selector.ButtonWidth = 57f;
-            distributionProperty.Selector.Atlas = IMTTextures.Atlas;
+            distributionProperty.SelectorRef.AutoButtonSize = false;
+            distributionProperty.SelectorRef.ButtonWidth = 57f;
             distributionProperty.Init();
             distributionProperty.SelectedObject = Distribution;
             distributionProperty.OnSelectObjectChanged += (value) =>
@@ -448,8 +451,7 @@ namespace IMT.Manager
         private void AddFixedEndProperty(FixedEndTypePanel fixedEndProperty, EditorProvider provider)
         {
             fixedEndProperty.Label = Localize.StyleOption_FixedEnd;
-            fixedEndProperty.Selector.AutoButtonSize = true;
-            fixedEndProperty.Selector.Atlas = IMTTextures.Atlas;
+            fixedEndProperty.SelectorRef.AutoButtonSize = true;
             fixedEndProperty.Init();
             fixedEndProperty.SelectedObject = FixedEnd;
             fixedEndProperty.OnSelectObjectChanged += (value) => FixedEnd.Value = value;
@@ -597,14 +599,14 @@ namespace IMT.Manager
             item.position.y += ElevationSpread.Value switch
             {
                 Spread.Random => Mathf.Min(Elevation.Value.x, Elevation.Value.y) + SimulationManager.instance.m_randomizer.UInt32((uint)(Mathf.Abs(Elevation.Value.y - Elevation.Value.x) * 1000f)) * 0.001f,
-                Spread.Slope => Mathf.Lerp(Elevation.Value.x, Elevation.Value.y, p),
+                Spread.Sequential => Mathf.Lerp(Elevation.Value.x, Elevation.Value.y, p),
                 _ => 0f,
             };
 
             item.tilt = TiltSpread.Value switch
             {
                 Spread.Random => Mathf.Min(Tilt.Value.x, Tilt.Value.y) + SimulationManager.instance.m_randomizer.UInt32((uint)Mathf.Abs(Tilt.Value.y - Tilt.Value.x)),
-                Spread.Slope => Mathf.Lerp(Tilt.Value.x, Tilt.Value.y, p),
+                Spread.Sequential => Mathf.Lerp(Tilt.Value.x, Tilt.Value.y, p),
                 _ => 0f,
             } * Mathf.Deg2Rad;
 
@@ -614,7 +616,7 @@ namespace IMT.Manager
                 item.slope = SlopeSpread.Value switch
                 {
                     Spread.Random => Mathf.Min(slopeValue.x + slopeValue.y) + SimulationManager.instance.m_randomizer.UInt32((uint)Mathf.Abs(slopeValue.y - slopeValue.x)),
-                    Spread.Slope => Mathf.Lerp(slopeValue.x, slopeValue.y, p),
+                    Spread.Sequential => Mathf.Lerp(slopeValue.x, slopeValue.y, p),
                     _ => 0f,
                 } * Mathf.Deg2Rad;
             }
@@ -628,7 +630,7 @@ namespace IMT.Manager
             item.scale = ScaleSpread.Value switch
             { 
                 Spread.Random => Mathf.Min(Scale.Value.x, Scale.Value.y) + SimulationManager.instance.m_randomizer.UInt32((uint)(Mathf.Abs(Scale.Value.y - Scale.Value.x) * 1000f)) * 0.001f,
-                Spread.Slope => Mathf.Lerp(Scale.Value.x, Scale.Value.y, p),
+                Spread.Sequential => Mathf.Lerp(Scale.Value.x, Scale.Value.y, p),
                 _ => 0f,
             };
         }
@@ -645,16 +647,16 @@ namespace IMT.Manager
         private void AddTiltRangeProperty(FloatStaticRangeProperty tiltProperty, EditorProvider provider)
         {
             tiltProperty.Label = Localize.StyleOption_Tilt;
-            tiltProperty.Format = Localize.NumberFormat_Degree;
-            tiltProperty.UseWheel = true;
-            tiltProperty.WheelStep = 1f;
-            tiltProperty.WheelTip = Settings.ShowToolTip;
-            tiltProperty.CheckMin = true;
-            tiltProperty.CheckMax = true;
-            tiltProperty.MinValue = -90;
-            tiltProperty.MaxValue = 90;
-            tiltProperty.AllowInvert = true;
-            tiltProperty.CyclicalValue = false;
+            tiltProperty.RangeRef.Format = Localize.NumberFormat_Degree;
+            tiltProperty.RangeRef.UseWheel = true;
+            tiltProperty.RangeRef.WheelStep = 1f;
+            tiltProperty.RangeRef.WheelTip = Settings.ShowToolTip;
+            tiltProperty.RangeRef.CheckMin = true;
+            tiltProperty.RangeRef.CheckMax = true;
+            tiltProperty.RangeRef.MinValue = -90;
+            tiltProperty.RangeRef.MaxValue = 90;
+            tiltProperty.RangeRef.AllowInvert = true;
+            tiltProperty.RangeRef.CyclicalValue = false;
             tiltProperty.Init();
             tiltProperty.SetValues(Tilt.Value.x, Tilt.Value.y);
             tiltProperty.SetSpread(TiltSpread.Value);
@@ -669,16 +671,16 @@ namespace IMT.Manager
         private void AddSlopeRangeProperty(FloatStaticRangeAutoProperty slopeProperty, EditorProvider provider)
         {
             slopeProperty.Label = Localize.StyleOption_Slope;
-            slopeProperty.Format = Localize.NumberFormat_Degree;
-            slopeProperty.UseWheel = true;
-            slopeProperty.WheelStep = 1f;
-            slopeProperty.WheelTip = Settings.ShowToolTip;
-            slopeProperty.CheckMin = true;
-            slopeProperty.CheckMax = true;
-            slopeProperty.MinValue = -90;
-            slopeProperty.MaxValue = 90;
-            slopeProperty.AllowInvert = true;
-            slopeProperty.CyclicalValue = false;
+            slopeProperty.RangeRef.Format = Localize.NumberFormat_Degree;
+            slopeProperty.RangeRef.UseWheel = true;
+            slopeProperty.RangeRef.WheelStep = 1f;
+            slopeProperty.RangeRef.WheelTip = Settings.ShowToolTip;
+            slopeProperty.RangeRef.CheckMin = true;
+            slopeProperty.RangeRef.CheckMax = true;
+            slopeProperty.RangeRef.MinValue = -90;
+            slopeProperty.RangeRef.MaxValue = 90;
+            slopeProperty.RangeRef.AllowInvert = true;
+            slopeProperty.RangeRef.CyclicalValue = false;
             slopeProperty.Init();
 
             if (Slope.HasValue)
@@ -687,10 +689,14 @@ namespace IMT.Manager
                 slopeProperty.SetSpread(SlopeSpread.Value);
             }
             else
-                slopeProperty.SetAuto();
+                slopeProperty.SetAutoValues();
 
             slopeProperty.OnValueChanged += (valueA, valueB) => Slope.Value = new Vector2(valueA, valueB);
-            slopeProperty.OnAutoValue += () => Slope.Value = null;
+            slopeProperty.OnModeChanged += mode =>
+            {
+                if (mode == StaticRangeAutoMode.Auto)
+                    Slope.Value = null;
+            };
             slopeProperty.OnSpreadChanged += value => SlopeSpread.Value = value;
         }
         private void RefreshSlopeRangeProperty(FloatStaticRangeAutoProperty slopeProperty, EditorProvider provider)
@@ -701,16 +707,16 @@ namespace IMT.Manager
         private void AddScaleRangeProperty(FloatStaticRangeProperty scaleProperty, EditorProvider provider)
         {
             scaleProperty.Label = Localize.StyleOption_ObjectScale;
-            scaleProperty.Format = Localize.NumberFormat_Percent;
-            scaleProperty.UseWheel = true;
-            scaleProperty.WheelStep = 1f;
-            scaleProperty.WheelTip = Settings.ShowToolTip;
-            scaleProperty.CheckMin = true;
-            scaleProperty.CheckMax = true;
-            scaleProperty.MinValue = 1f;
-            scaleProperty.MaxValue = 500f;
-            scaleProperty.AllowInvert = true;
-            scaleProperty.CyclicalValue = false;
+            scaleProperty.RangeRef.Format = Localize.NumberFormat_Percent;
+            scaleProperty.RangeRef.UseWheel = true;
+            scaleProperty.RangeRef.WheelStep = 1f;
+            scaleProperty.RangeRef.WheelTip = Settings.ShowToolTip;
+            scaleProperty.RangeRef.CheckMin = true;
+            scaleProperty.RangeRef.CheckMax = true;
+            scaleProperty.RangeRef.MinValue = 1f;
+            scaleProperty.RangeRef.MaxValue = 500f;
+            scaleProperty.RangeRef.AllowInvert = true;
+            scaleProperty.RangeRef.CyclicalValue = false;
             scaleProperty.Init();
             scaleProperty.SetValues(Scale.Value.x * 100f, Scale.Value.y * 100f);
             scaleProperty.SetSpread(ScaleSpread.Value);
@@ -725,16 +731,16 @@ namespace IMT.Manager
         private void AddElevationProperty(FloatStaticRangeProperty elevationProperty, EditorProvider provider)
         {
             elevationProperty.Label = Localize.LineStyle_Elevation;
-            elevationProperty.Format = Localize.NumberFormat_Meter;
-            elevationProperty.UseWheel = true;
-            elevationProperty.WheelStep = 0.1f;
-            elevationProperty.WheelTip = Settings.ShowToolTip;
-            elevationProperty.CheckMin = true;
-            elevationProperty.CheckMax = true;
-            elevationProperty.MinValue = -100;
-            elevationProperty.MaxValue = 100;
-            elevationProperty.AllowInvert = true;
-            elevationProperty.CyclicalValue = false;
+            elevationProperty.RangeRef.Format = Localize.NumberFormat_Meter;
+            elevationProperty.RangeRef.UseWheel = true;
+            elevationProperty.RangeRef.WheelStep = 0.1f;
+            elevationProperty.RangeRef.WheelTip = Settings.ShowToolTip;
+            elevationProperty.RangeRef.CheckMin = true;
+            elevationProperty.RangeRef.CheckMax = true;
+            elevationProperty.RangeRef.MinValue = -100;
+            elevationProperty.RangeRef.MaxValue = 100;
+            elevationProperty.RangeRef.AllowInvert = true;
+            elevationProperty.RangeRef.CyclicalValue = false;
             elevationProperty.Init();
             elevationProperty.SetValues(Elevation.Value.x, Elevation.Value.y);
             elevationProperty.SetSpread(ElevationSpread.Value);
@@ -770,49 +776,34 @@ namespace IMT.Manager
     public enum DistributionType
     {
         [Description(nameof(Localize.StyleOption_DistributionFixedFree))]
-        [Sprite(nameof(IMTTextures.FixedFreeButtonIcon))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.FixedFreeButtonIcon))]
         FixedSpaceFreeEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionFixedFixed))]
-        [Sprite(nameof(IMTTextures.FixedFixedButtonIcon))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.FixedFixedButtonIcon))]
         FixedSpaceFixedEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionDynamicFree))]
-        [Sprite(nameof(IMTTextures.DynamicFreeButtonIcon))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.DynamicFreeButtonIcon))]
         DynamicSpaceFreeEnd,
 
         [Description(nameof(Localize.StyleOption_DistributionDynamicFixed))]
-        [Sprite(nameof(IMTTextures.DynamicFixedButtonIcon))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.DynamicFixedButtonIcon))]
         DynamicSpaceFixedEnd,
     }
-    public class DistributionTypePanel : EnumOncePropertyPanel<DistributionType, DistributionTypePanel.DistributionTypeSegmented>
+    public class DistributionTypePanel : AutoEnumSinglePropertyPanel<DistributionType, DistributionTypePanel.DistributionTypeSegmented, DistributionTypePanel.DistributionTypeSegmented.DistributionTypeSegmentedRef>
     {
-        protected override string GetDescription(DistributionType value) => value.Description();
         protected override bool IsEqual(DistributionType first, DistributionType second) => first == second;
 
-        protected override void FillItems(Func<DistributionType, bool> selector)
+        public class DistributionTypeSegmented : UISingleEnumSegmented<DistributionType, DistributionTypeSegmented.DistributionTypeSegmentedRef> 
         {
-            Selector.PauseLayout(() =>
-            {
-                foreach (var value in GetValues())
-                {
-                    if (selector?.Invoke(value) != false)
-                    {
-                        var sprite = value.Sprite();
-                        if (string.IsNullOrEmpty(sprite))
-                            Selector.AddItem(value, new OptionData(GetDescription(value)));
-                        else
-                            Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
-                    }
-                }
-            });
-        }
-        public override void SetStyle(ControlStyle style)
-        {
-            Selector.SegmentedStyle = style.Segmented;
-        }
+            protected override DistributionTypeSegmentedRef CreateRef() => new(this);
 
-        public class DistributionTypeSegmented : UIOnceSegmented<DistributionType> { }
+            public class DistributionTypeSegmentedRef : SingleSegmentedRef<DistributionType, DistributionTypeSegmented>
+            {
+                public DistributionTypeSegmentedRef(DistributionTypeSegmented segmented) : base(segmented) { }
+            }
+        }
     }
 
     public enum FixedEndType
@@ -827,24 +818,106 @@ namespace IMT.Manager
         End,
     }
 
+    public class FixedEndTypePanel : AutoEnumSinglePropertyPanel<FixedEndType, FixedEndTypePanel.FixedEndTypeSegmented, FixedEndTypePanel.FixedEndTypeSegmented.FixedEndTypeSegmentedRef>
+    {
+        protected override bool IsEqual(FixedEndType first, FixedEndType second) => first == second;
+
+        public class FixedEndTypeSegmented : UISingleEnumSegmented<FixedEndType, FixedEndTypeSegmented.FixedEndTypeSegmentedRef> 
+        {
+            protected override FixedEndTypeSegmentedRef CreateRef() => new(this);
+
+            public class FixedEndTypeSegmentedRef : SingleSegmentedRef<FixedEndType, FixedEndTypeSegmented>
+            {
+                public FixedEndTypeSegmentedRef(FixedEndTypeSegmented segmented) : base(segmented) { }
+            }
+        }
+    }
+
     public enum Spread
     {
         [Description(nameof(Localize.StyleOption_ObjectSpreadRandom))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RandomButtonIcon))]
         Random,
 
-        [Description(nameof(Localize.StyleOption_ObjectSpreadSlope))]
-        Slope,
+        [Description(nameof(Localize.StyleOption_ObjectSpreadSequential))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.LeftToRightButtonIcon))]
+        Sequential,
+    }
+    public class SpreadSegmented : UISingleEnumSegmented<Spread, SpreadSegmented.SpreadSegmentedRef> 
+    {
+        protected override SpreadSegmentedRef CreateRef() => new(this);
+
+        public class SpreadSegmentedRef : SingleSegmentedRef<Spread, SpreadSegmented>
+        {
+            public SpreadSegmentedRef(SpreadSegmented segmented) : base(segmented) { }
+        }
     }
 
-    public class FixedEndTypePanel : EnumOncePropertyPanel<FixedEndType, FixedEndTypePanel.FixedEndTypeSegmented>
+    public enum StaticRangeMode
     {
-        protected override string GetDescription(FixedEndType value) => value.Description();
-        protected override bool IsEqual(FixedEndType first, FixedEndType second) => first == second;
-        public override void SetStyle(ControlStyle style)
-        {
-            Selector.SegmentedStyle = style.Segmented;
-        }
+        [Description(nameof(Localize.StyleOption_ObjectStatic))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.SingleButtonIcon))]
+        Static,
 
-        public class FixedEndTypeSegmented : UIOnceSegmented<FixedEndType> { }
+        [Description(nameof(Localize.StyleOption_ObjectRange))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RangeButtonIcon))]
+        Range,
+    }
+    public class StaticRangeModeSegmented : UISingleEnumSegmented<StaticRangeMode, StaticRangeModeSegmented.StaticRangeModeSegmentedRef> 
+    {
+        protected override StaticRangeModeSegmentedRef CreateRef() => new(this);
+
+        public class StaticRangeModeSegmentedRef : SingleSegmentedRef<StaticRangeMode, StaticRangeModeSegmented>
+        {
+            public StaticRangeModeSegmentedRef(StaticRangeModeSegmented segmented) : base(segmented) { }
+        }
+    }
+
+    public enum StaticRangeRandomMode
+    {
+        [Description(nameof(Localize.StyleOption_ObjectRandom))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RandomButtonIcon))]
+        Random,
+
+        [Description(nameof(Localize.StyleOption_ObjectStatic))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.SingleButtonIcon))]
+        Static,
+
+        [Description(nameof(Localize.StyleOption_ObjectRange))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RangeButtonIcon))]
+        Range,
+    }
+    public class StaticRangeRandomModeSegmented : UISingleEnumSegmented<StaticRangeRandomMode, StaticRangeRandomModeSegmented.StaticRangeRandomModeSegmentedRef> 
+    {
+        protected override StaticRangeRandomModeSegmentedRef CreateRef() => new(this);
+
+        public class StaticRangeRandomModeSegmentedRef : SingleSegmentedRef<StaticRangeRandomMode, StaticRangeRandomModeSegmented>
+        {
+            public StaticRangeRandomModeSegmentedRef(StaticRangeRandomModeSegmented segmented) : base(segmented) { }
+        }
+    }
+
+    public enum StaticRangeAutoMode
+    {
+        [Description(nameof(Localize.StyleOption_ObjectAuto))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.AutoButtonIcon))]
+        Auto,
+
+        [Description(nameof(Localize.StyleOption_ObjectStatic))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.SingleButtonIcon))]
+        Static,
+
+        [Description(nameof(Localize.StyleOption_ObjectRange))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RangeButtonIcon))]
+        Range,
+    }
+    public class StaticRangeAutoModeSegmented : UISingleEnumSegmented<StaticRangeAutoMode, StaticRangeAutoModeSegmented.StaticRangeAutoModeSegmentedRef> 
+    {
+        protected override StaticRangeAutoModeSegmentedRef CreateRef() => new(this);
+
+        public class StaticRangeAutoModeSegmentedRef : SingleSegmentedRef<StaticRangeAutoMode, StaticRangeAutoModeSegmented>
+        {
+            public StaticRangeAutoModeSegmentedRef(StaticRangeAutoModeSegmented segmented) : base(segmented) { }
+        }
     }
 }

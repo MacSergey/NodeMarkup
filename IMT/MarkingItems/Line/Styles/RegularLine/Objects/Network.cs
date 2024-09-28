@@ -183,15 +183,15 @@ namespace IMT.Manager
         private void AddShiftProperty(FloatSingleDoubleInvertedProperty shiftProperty, EditorProvider provider)
         {
             shiftProperty.Label = Localize.StyleOption_ObjectShift;
-            shiftProperty.FieldWidth = 100f;
-            shiftProperty.Format = Localize.NumberFormat_Meter;
-            shiftProperty.UseWheel = true;
-            shiftProperty.WheelStep = 0.1f;
-            shiftProperty.WheelTip = Settings.ShowToolTip;
-            shiftProperty.CheckMin = true;
-            shiftProperty.CheckMax = true;
-            shiftProperty.MinValue = -50;
-            shiftProperty.MaxValue = 50;
+            shiftProperty.RangeRef.FieldWidth = 100f;
+            shiftProperty.RangeRef.Format = Localize.NumberFormat_Meter;
+            shiftProperty.RangeRef.UseWheel = true;
+            shiftProperty.RangeRef.WheelStep = 0.1f;
+            shiftProperty.RangeRef.WheelTip = Settings.ShowToolTip;
+            shiftProperty.RangeRef.CheckMin = true;
+            shiftProperty.RangeRef.CheckMax = true;
+            shiftProperty.RangeRef.MinValue = -50;
+            shiftProperty.RangeRef.MaxValue = 50;
             shiftProperty.Init
                 (new OptionData(Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcon),
                 new OptionData(Localize.StyleOption_ObjectTwoDifferent, IMTTextures.Atlas, IMTTextures.DoubleButtonIcon));
@@ -206,16 +206,16 @@ namespace IMT.Manager
         new private void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
         {
             elevationProperty.Label = Localize.LineStyle_Elevation;
-            elevationProperty.Format = Localize.NumberFormat_Meter;
-            elevationProperty.UseWheel = true;
-            elevationProperty.WheelStep = 0.1f;
-            elevationProperty.WheelTip = Settings.ShowToolTip;
-            elevationProperty.CheckMin = true;
-            elevationProperty.CheckMax = true;
-            elevationProperty.MinValue = -100;
-            elevationProperty.MaxValue = 100;
+            elevationProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            elevationProperty.FieldRef.UseWheel = true;
+            elevationProperty.FieldRef.WheelStep = 0.1f;
+            elevationProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            elevationProperty.FieldRef.CheckMin = true;
+            elevationProperty.FieldRef.CheckMax = true;
+            elevationProperty.FieldRef.MinValue = -100;
+            elevationProperty.FieldRef.MaxValue = 100;
             elevationProperty.Init();
-            elevationProperty.Value = Elevation;
+            elevationProperty.FieldRef.Value = Elevation;
             elevationProperty.OnValueChanged += (value) => Elevation.Value = value;
         }
         private void RefreshElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
@@ -226,16 +226,16 @@ namespace IMT.Manager
         private void AddScaleProperty(FloatPropertyPanel scaleProperty, EditorProvider provider)
         {
             scaleProperty.Label = Localize.StyleOption_NetWidthScale;
-            scaleProperty.Format = Localize.NumberFormat_Percent;
-            scaleProperty.UseWheel = true;
-            scaleProperty.WheelStep = 10f;
-            scaleProperty.WheelTip = Settings.ShowToolTip;
-            scaleProperty.CheckMin = true;
-            scaleProperty.CheckMax = true;
-            scaleProperty.MinValue = 1f;
-            scaleProperty.MaxValue = 1000f;
+            scaleProperty.FieldRef.Format = Localize.NumberFormat_Percent;
+            scaleProperty.FieldRef.UseWheel = true;
+            scaleProperty.FieldRef.WheelStep = 10f;
+            scaleProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            scaleProperty.FieldRef.CheckMin = true;
+            scaleProperty.FieldRef.CheckMax = true;
+            scaleProperty.FieldRef.MinValue = 1f;
+            scaleProperty.FieldRef.MaxValue = 1000f;
             scaleProperty.Init();
-            scaleProperty.Value = Scale.Value * 100f;
+            scaleProperty.FieldRef.Value = Scale.Value * 100f;
             scaleProperty.OnValueChanged += (value) => Scale.Value = value * 0.01f;
         }
         private void RefreshScaleProperty(FloatPropertyPanel scaleProperty, EditorProvider provider)
@@ -246,16 +246,16 @@ namespace IMT.Manager
         private void AddRepeatDistanceProperty(IntPropertyPanel repeatDistanceProperty, EditorProvider provider)
         {
             repeatDistanceProperty.Label = Localize.StyleOption_NetRepeatDistance;
-            repeatDistanceProperty.Format = Localize.NumberFormat_Meter;
-            repeatDistanceProperty.UseWheel = true;
-            repeatDistanceProperty.WheelStep = 1;
-            repeatDistanceProperty.WheelTip = Settings.ShowToolTip;
-            repeatDistanceProperty.CheckMin = true;
-            repeatDistanceProperty.CheckMax = true;
-            repeatDistanceProperty.MinValue = 1;
-            repeatDistanceProperty.MaxValue = 100;
+            repeatDistanceProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            repeatDistanceProperty.FieldRef.UseWheel = true;
+            repeatDistanceProperty.FieldRef.WheelStep = 1;
+            repeatDistanceProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            repeatDistanceProperty.FieldRef.CheckMin = true;
+            repeatDistanceProperty.FieldRef.CheckMax = true;
+            repeatDistanceProperty.FieldRef.MinValue = 1;
+            repeatDistanceProperty.FieldRef.MaxValue = 100;
             repeatDistanceProperty.Init();
-            repeatDistanceProperty.Value = RepeatDistance.Value;
+            repeatDistanceProperty.FieldRef.Value = RepeatDistance.Value;
             repeatDistanceProperty.OnValueChanged += (value) => RepeatDistance.Value = value;
         }
         private void RefreshRepeatDistanceProperty(IntPropertyPanel repeatDistanceProperty, EditorProvider provider)

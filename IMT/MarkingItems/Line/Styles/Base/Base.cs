@@ -76,14 +76,14 @@ namespace IMT.Manager
             if (this is IDoubleLine doubleStyle)
             {
                 offsetProperty.Label = Localize.StyleOption_OffsetBetween;
-                offsetProperty.Format = Localize.NumberFormat_Meter;
-                offsetProperty.UseWheel = true;
-                offsetProperty.WheelStep = 0.1f;
-                offsetProperty.WheelTip = Settings.ShowToolTip;
-                offsetProperty.CheckMin = true;
-                offsetProperty.MinValue = 0.05f;
+                offsetProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+                offsetProperty.FieldRef.UseWheel = true;
+                offsetProperty.FieldRef.WheelStep = 0.1f;
+                offsetProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+                offsetProperty.FieldRef.CheckMin = true;
+                offsetProperty.FieldRef.MinValue = 0.05f;
                 offsetProperty.Init();
-                offsetProperty.Value = doubleStyle.Offset;
+                offsetProperty.FieldRef.Value = doubleStyle.Offset;
                 offsetProperty.OnValueChanged += (value) => doubleStyle.Offset.Value = value;
             }
             else
@@ -118,14 +118,14 @@ namespace IMT.Manager
             if (this is ISharkLine sharkTeethStyle)
             {
                 spaceProperty.Label = Localize.StyleOption_SharkToothSpace;
-                spaceProperty.Format = Localize.NumberFormat_Meter;
-                spaceProperty.UseWheel = true;
-                spaceProperty.WheelStep = 0.1f;
-                spaceProperty.WheelTip = Settings.ShowToolTip;
-                spaceProperty.CheckMin = true;
-                spaceProperty.MinValue = 0.1f;
+                spaceProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+                spaceProperty.FieldRef.UseWheel = true;
+                spaceProperty.FieldRef.WheelStep = 0.1f;
+                spaceProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+                spaceProperty.FieldRef.CheckMin = true;
+                spaceProperty.FieldRef.MinValue = 0.1f;
                 spaceProperty.Init();
-                spaceProperty.Value = sharkTeethStyle.Space;
+                spaceProperty.FieldRef.Value = sharkTeethStyle.Space;
                 spaceProperty.OnValueChanged += (value) => sharkTeethStyle.Space.Value = value;
             }
             else
@@ -148,15 +148,15 @@ namespace IMT.Manager
             if (this is I3DLine line3DStyle)
             {
                 elevationProperty.Label = Localize.LineStyle_Elevation;
-                elevationProperty.Format = Localize.NumberFormat_Meter;
-                elevationProperty.UseWheel = true;
-                elevationProperty.WheelStep = 0.1f;
-                elevationProperty.CheckMin = true;
-                elevationProperty.MinValue = 0f;
-                elevationProperty.CheckMax = true;
-                elevationProperty.MaxValue = 1f;
+                elevationProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+                elevationProperty.FieldRef.UseWheel = true;
+                elevationProperty.FieldRef.WheelStep = 0.1f;
+                elevationProperty.FieldRef.CheckMin = true;
+                elevationProperty.FieldRef.MinValue = 0f;
+                elevationProperty.FieldRef.CheckMax = true;
+                elevationProperty.FieldRef.MaxValue = 1f;
                 elevationProperty.Init();
-                elevationProperty.Value = line3DStyle.Elevation;
+                elevationProperty.FieldRef.Value = line3DStyle.Elevation;
                 elevationProperty.OnValueChanged += (value) => line3DStyle.Elevation.Value = value;
             }
             else

@@ -57,7 +57,7 @@ namespace IMT.UI
         }
     }
 
-    public class ModifierDropDown : SimpleDropDown<StyleModifier, ModifierDropDown.ModifierEntity, ModifierDropDown.ModifierPopup>
+    public class ModifierDropDown : SimpleDropDown<StyleModifier, ModifierDropDown.ModifierEntity, ModifierDropDown.ModifierPopup, ModifierDropDown.ModifierDropDownRef>
     {
         public event Action<ModifierDropDown, StyleModifier> OnValueChanged;
 
@@ -72,6 +72,8 @@ namespace IMT.UI
             SelectedObject = StyleModifier.NotSet;
         }
 
+        protected override ModifierDropDownRef CreateRef() => new(this);
+
         protected override void SelectObject(DropDownItem<StyleModifier> item) => OnValueChanged?.Invoke(this, item.value);
         protected override void SetPopupStyle() => Popup.PopupSettingsStyle<DropDownItem<StyleModifier>, ModifierEntity, ModifierPopup>(height);
 
@@ -79,6 +81,10 @@ namespace IMT.UI
         public class ModifierPopup : SimplePopup<StyleModifier, ModifierEntity> 
         {
             protected override void SetEntityStyle(ModifierEntity entity) => entity.EntitySettingsStyle<DropDownItem<StyleModifier>, ModifierEntity>();
+        }
+        public class ModifierDropDownRef : SimpleDropDownRef<StyleModifier, ModifierDropDown>
+        {
+            public ModifierDropDownRef(ModifierDropDown dropDown) : base(dropDown) { }
         }
     }
 

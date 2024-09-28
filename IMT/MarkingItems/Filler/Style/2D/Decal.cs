@@ -144,14 +144,14 @@ namespace IMT.Manager
         private void AddTilingProperty(FloatSingleDoubleProperty tilingProperty, EditorProvider provider)
         {
             tilingProperty.Label = Localize.StyleOption_Scale;
-            tilingProperty.Format = Localize.NumberFormat_Percent;
-            tilingProperty.FieldWidth = 100f;
-            tilingProperty.CheckMax = true;
-            tilingProperty.CheckMin = true;
-            tilingProperty.MinValue = 10f;
-            tilingProperty.MaxValue = 1000f;
-            tilingProperty.WheelStep = 10f;
-            tilingProperty.UseWheel = true;
+            tilingProperty.RangeRef.Format = Localize.NumberFormat_Percent;
+            tilingProperty.RangeRef.FieldWidth = 100f;
+            tilingProperty.RangeRef.CheckMax = true;
+            tilingProperty.RangeRef.CheckMin = true;
+            tilingProperty.RangeRef.MinValue = 10f;
+            tilingProperty.RangeRef.MaxValue = 1000f;
+            tilingProperty.RangeRef.WheelStep = 10f;
+            tilingProperty.RangeRef.UseWheel = true;
             tilingProperty.Init
                 (new OptionData(Localize.StyleOption_ScaleLock, IMTTextures.Atlas, IMTTextures.LockButtonIcon),
                 new OptionData(Localize.StyleOption_ScaleUnlock, IMTTextures.Atlas, IMTTextures.UnlockButtonIcon));
@@ -166,17 +166,17 @@ namespace IMT.Manager
         private new void AddAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
             angleProperty.Label = Localize.StyleOption_ObjectAngle;
-            angleProperty.Format = Localize.NumberFormat_Degree;
-            angleProperty.UseWheel = true;
-            angleProperty.WheelStep = 1f;
-            angleProperty.WheelTip = Settings.ShowToolTip;
-            angleProperty.CheckMin = true;
-            angleProperty.CheckMax = true;
-            angleProperty.MinValue = -180;
-            angleProperty.MaxValue = 180;
-            angleProperty.CyclicalValue = true;
+            angleProperty.FieldRef.Format = Localize.NumberFormat_Degree;
+            angleProperty.FieldRef.UseWheel = true;
+            angleProperty.FieldRef.WheelStep = 1f;
+            angleProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            angleProperty.FieldRef.CheckMin = true;
+            angleProperty.FieldRef.CheckMax = true;
+            angleProperty.FieldRef.MinValue = -180;
+            angleProperty.FieldRef.MaxValue = 180;
+            angleProperty.FieldRef.CyclicalValue = true;
             angleProperty.Init();
-            angleProperty.Value = Angle;
+            angleProperty.FieldRef.Value = Angle;
             angleProperty.OnValueChanged += (value) => Angle.Value = value;
         }
         private void RefreshAngleProperty(FloatPropertyPanel angleProperty, EditorProvider provider)

@@ -59,31 +59,31 @@ namespace IMT.UI.Editors
             var position = ComponentPool.Get<FloatPropertyPanel>(DebugPanel, "Position");
             position.SetStyle(UIStyle.Default);
             position.Label = "Position";
-            position.Format = IMT.Localize.NumberFormat_Meter;
+            position.FieldRef.Format = IMT.Localize.NumberFormat_Meter;
             position.EnableControl = false;
             position.Init();
-            position.Value = point.GetRelativePosition();
+            position.FieldRef.Value = point.GetRelativePosition();
 
             var isInverted = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "isInverted");
             isInverted.SetStyle(UIStyle.Default);
             isInverted.Label = "Is inverted";
             isInverted.EnableControl = false;
             isInverted.Init();
-            isInverted.Value = point.Enter.IsLaneInvert.ToString();
+            isInverted.FieldRef.Value = point.Enter.IsLaneInvert.ToString();
 
             var location = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Location");
             location.SetStyle(UIStyle.Default);
             location.Label = "Location";
             location.EnableControl = false;
             location.Init();
-            location.Value = point.Source.Location.ToString();
+            location.FieldRef.Value = point.Source.Location.ToString();
 
             var networkType = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "NetworkType");
             networkType.SetStyle(UIStyle.Default);
             networkType.Label = "Network type";
             networkType.EnableControl = false;
             networkType.Init();
-            networkType.Value = point.Source.NetworkType.ToString();
+            networkType.FieldRef.Value = point.Source.NetworkType.ToString();
 
             if (point.Source is NetInfoPointSource source)
             {
@@ -94,28 +94,28 @@ namespace IMT.UI.Editors
                     index.Label = "Left Index";
                     index.EnableControl = false;
                     index.Init();
-                    index.Value = source.LeftLane.Index.ToString();
+                    index.FieldRef.Value = source.LeftLane.Index.ToString();
 
                     var id = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Id");
                     id.SetStyle(UIStyle.Default);
                     id.Label = "Left Id";
                     id.EnableControl = false;
                     id.Init();
-                    id.Value = source.LeftLane.LaneId.ToString();
+                    id.FieldRef.Value = source.LeftLane.LaneId.ToString();
 
                     var pos = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Position");
                     pos.SetStyle(UIStyle.Default);
                     pos.Label = "Left position";
                     pos.EnableControl = false;
                     pos.Init();
-                    pos.Value = source.LeftLane.Position.ToString();
+                    pos.FieldRef.Value = source.LeftLane.Position.ToString();
 
                     var width = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Left Width");
                     width.SetStyle(UIStyle.Default);
                     width.Label = "Left half width";
                     width.EnableControl = false;
                     width.Init();
-                    width.Value = source.LeftLane.HalfWidth.ToString();
+                    width.FieldRef.Value = source.LeftLane.HalfWidth.ToString();
                 }
 
                 if (source.RightLane != null)
@@ -125,28 +125,28 @@ namespace IMT.UI.Editors
                     index.Label = "Right Index";
                     index.EnableControl = false;
                     index.Init();
-                    index.Value = source.RightLane.Index.ToString();
+                    index.FieldRef.Value = source.RightLane.Index.ToString();
 
                     var id = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Id");
                     id.SetStyle(UIStyle.Default);
                     id.Label = "Right Id";
                     id.EnableControl = false;
                     id.Init();
-                    id.Value = source.RightLane.LaneId.ToString();
+                    id.FieldRef.Value = source.RightLane.LaneId.ToString();
 
                     var pos = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Position");
                     pos.SetStyle(UIStyle.Default);
                     pos.Label = "Right position";
                     pos.EnableControl = false;
                     pos.Init();
-                    pos.Value = source.RightLane.Position.ToString();
+                    pos.FieldRef.Value = source.RightLane.Position.ToString();
 
                     var width = ComponentPool.Get<StringPropertyPanel>(DebugPanel, "Right Width");
                     width.SetStyle(UIStyle.Default);
                     width.Label = "Right half width";
                     width.EnableControl = false;
                     width.Init();
-                    width.Value = source.RightLane.HalfWidth.ToString();
+                    width.FieldRef.Value = source.RightLane.HalfWidth.ToString();
                 }
             }
         }
@@ -156,12 +156,12 @@ namespace IMT.UI.Editors
             Offset = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Offset));
             Offset.SetStyle(UIStyle.Default);
             Offset.Label = IMT.Localize.PointEditor_Offset;
-            Offset.Format = IMT.Localize.NumberFormat_Meter;
-            Offset.UseWheel = true;
-            Offset.WheelStep = 0.1f;
-            Offset.WheelTip = Settings.ShowToolTip;
+            Offset.FieldRef.Format = IMT.Localize.NumberFormat_Meter;
+            Offset.FieldRef.UseWheel = true;
+            Offset.FieldRef.WheelStep = 0.1f;
+            Offset.FieldRef.WheelTip = Settings.ShowToolTip;
             Offset.Init();
-            Offset.Value = point.Offset;
+            Offset.FieldRef.Value = point.Offset;
             Offset.OnValueChanged += OffsetChanged;
         }
         private void AddSplit(MarkingEnterPoint point)
@@ -178,14 +178,14 @@ namespace IMT.UI.Editors
             Shift = ComponentPool.Get<FloatPropertyPanel>(PropertiesPanel, nameof(Shift));
             Shift.SetStyle(UIStyle.Default);
             Shift.Label = IMT.Localize.PointEditor_SplitOffset;
-            Shift.Format = IMT.Localize.NumberFormat_Meter;
-            Shift.UseWheel = true;
-            Shift.WheelStep = 0.1f;
-            Shift.WheelTip = Settings.ShowToolTip;
-            Shift.CheckMin = true;
-            Shift.MinValue = 0f;
+            Shift.FieldRef.Format = IMT.Localize.NumberFormat_Meter;
+            Shift.FieldRef.UseWheel = true;
+            Shift.FieldRef.WheelStep = 0.1f;
+            Shift.FieldRef.WheelTip = Settings.ShowToolTip;
+            Shift.FieldRef.CheckMin = true;
+            Shift.FieldRef.MinValue = 0f;
             Shift.Init();
-            Shift.Value = point.SplitOffset;
+            Shift.FieldRef.Value = point.SplitOffset;
             Shift.OnValueChanged += (value) => point.SplitOffset.Value = value;
             Shift.isVisible = point.Split;
         }
@@ -197,7 +197,7 @@ namespace IMT.UI.Editors
             roadNameProperty.FieldWidth = 230;
             roadNameProperty.EnableControl = false;
             roadNameProperty.Init();
-            roadNameProperty.Value = point.Enter.GetSegment().Info.name;
+            roadNameProperty.FieldRef.Value = point.Enter.GetSegment().Info.name;
         }
         private void AddTemplate(MarkingEnterPoint point)
         {
@@ -250,7 +250,7 @@ namespace IMT.UI.Editors
         protected override void OnObjectUpdate(MarkingEnterPoint editObject)
         {
             Offset.OnValueChanged -= OffsetChanged;
-            Offset.Value = EditObject.Offset;
+            Offset.FieldRef.Value = EditObject.Offset;
             Offset.OnValueChanged += OffsetChanged;
         }
 
@@ -259,7 +259,7 @@ namespace IMT.UI.Editors
             EditObject.Offset.Value = value;
 #if DEBUG
             if (DebugPanel.Find<FloatPropertyPanel>("Position") is FloatPropertyPanel position)
-                position.Value = EditObject.GetRelativePosition();
+                position.FieldRef.Value = EditObject.GetRelativePosition();
 #endif
         }
 

@@ -101,16 +101,16 @@ namespace IMT.Manager
         private void AddCurbSizeProperty(FloatPropertyPanel curbSizeProperty, EditorProvider provider)
         {
             curbSizeProperty.Label = Localize.FillerStyle_CurbSize;
-            curbSizeProperty.Format = Localize.NumberFormat_Meter;
-            curbSizeProperty.UseWheel = true;
-            curbSizeProperty.WheelStep = 0.1f;
-            curbSizeProperty.WheelTip = Settings.ShowToolTip;
-            curbSizeProperty.CheckMin = true;
-            curbSizeProperty.MinValue = 0f;
-            curbSizeProperty.CheckMax = true;
-            curbSizeProperty.MaxValue = 10f;
+            curbSizeProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            curbSizeProperty.FieldRef.UseWheel = true;
+            curbSizeProperty.FieldRef.WheelStep = 0.1f;
+            curbSizeProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            curbSizeProperty.FieldRef.CheckMin = true;
+            curbSizeProperty.FieldRef.MinValue = 0f;
+            curbSizeProperty.FieldRef.CheckMax = true;
+            curbSizeProperty.FieldRef.MaxValue = 10f;
             curbSizeProperty.Init();
-            curbSizeProperty.Value = LineCurbSize;
+            curbSizeProperty.FieldRef.Value = LineCurbSize;
             curbSizeProperty.OnValueChanged += (float value) => CurbSize.Value = new Vector2(value, value);
         }
         private void AddMedianCurbSizeProperty(Vector2PropertyPanel curbSizeProperty, EditorProvider provider)

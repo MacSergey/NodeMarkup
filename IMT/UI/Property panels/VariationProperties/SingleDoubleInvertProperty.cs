@@ -5,9 +5,12 @@ using System;
 
 namespace IMT.UI
 {
-    public abstract class SingleDoubleInvertedProperty<ValueType, FieldType> : SingleDoubleProperty<ValueType, FieldType>
-            where FieldType : ComparableUITextField<ValueType>
-            where ValueType : IComparable<ValueType>
+    public abstract class SingleDoubleInvertedProperty<ValueType, FieldType, FieldRefType, RangeType, RangeRefType> : SingleDoubleProperty<ValueType, FieldType, FieldRefType, RangeType, RangeRefType>
+        where ValueType : IComparable<ValueType>
+        where FieldType : ComparableUITextField<ValueType, FieldRefType>
+        where FieldRefType : IFieldRef, IComparableField<ValueType>
+        where RangeType : ValueFieldRange<ValueType, FieldType, FieldRefType, RangeRefType>
+        where RangeRefType : IFieldRef, IValueFieldRange<ValueType, FieldRefType>
     {
         protected CustomUIButton Invert { get; }
 
@@ -23,14 +26,13 @@ namespace IMT.UI
 
         private void InvertClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            FieldA.Value = InvertValue(FieldA.Value);
-            FieldB.Value = InvertValue(FieldB.Value);
-
-            Refresh();
+            Range.ValueA = InvertValue(Range.ValueA);
+            Range.ValueB = InvertValue(Range.ValueB);
+            
             if (SelectedObject == FirstOptionIndex)
-                ValueChanged(FieldA.Value, FieldA.Value);
+                ValueChanged(Range.ValueA, Range.ValueA);
             else if (SelectedObject == SecondOptionIndex)
-                ValueChanged(FieldA.Value, FieldB.Value);
+                ValueChanged(Range.ValueA, Range.ValueB);
         }
         protected abstract ValueType InvertValue(ValueType value);
 
@@ -54,7 +56,7 @@ namespace IMT.UI
             Invert.AllIconSprites = CommonTextures.PlusMinusButton;
         }
     }
-    public class FloatSingleDoubleInvertedProperty : SingleDoubleInvertedProperty<float, FloatUITextField>
+    public class FloatSingleDoubleInvertedProperty : SingleDoubleInvertedProperty<float, FloatUITextField, FloatUITextField.FloatFieldRef, FloatRangeField, FloatRangeField.FloatRangeFieldRef>
     {
         protected override float InvertValue(float value) => -value;
     }

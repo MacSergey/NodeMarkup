@@ -124,26 +124,26 @@ namespace IMT.Manager
         protected void AddSquareSideProperty(FloatPropertyPanel squareSideProperty, EditorProvider provider)
         {
             squareSideProperty.Label = Localize.StyleOption_SquareSide;
-            squareSideProperty.Format = Localize.NumberFormat_Meter;
-            squareSideProperty.UseWheel = true;
-            squareSideProperty.WheelStep = 0.1f;
-            squareSideProperty.WheelTip = Settings.ShowToolTip;
-            squareSideProperty.CheckMin = true;
-            squareSideProperty.MinValue = 0.1f;
+            squareSideProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            squareSideProperty.FieldRef.UseWheel = true;
+            squareSideProperty.FieldRef.WheelStep = 0.1f;
+            squareSideProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            squareSideProperty.FieldRef.CheckMin = true;
+            squareSideProperty.FieldRef.MinValue = 0.1f;
             squareSideProperty.Init();
-            squareSideProperty.Value = SquareSide;
+            squareSideProperty.FieldRef.Value = SquareSide;
             squareSideProperty.OnValueChanged += (float value) => SquareSide.Value = value;
         }
         protected void AddLineCountProperty(IntPropertyPanel lineCountProperty, EditorProvider provider)
         {
             lineCountProperty.Label = Localize.StyleOption_LineCount;
-            lineCountProperty.UseWheel = true;
-            lineCountProperty.WheelStep = 1;
-            lineCountProperty.WheelTip = Settings.ShowToolTip;
-            lineCountProperty.CheckMin = true;
-            lineCountProperty.MinValue = DefaultCrosswalkLineCount;
+            lineCountProperty.FieldRef.UseWheel = true;
+            lineCountProperty.FieldRef.WheelStep = 1;
+            lineCountProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            lineCountProperty.FieldRef.CheckMin = true;
+            lineCountProperty.FieldRef.MinValue = DefaultCrosswalkLineCount;
             lineCountProperty.Init();
-            lineCountProperty.Value = LineCount;
+            lineCountProperty.FieldRef.Value = LineCount;
             lineCountProperty.OnValueChanged += (int value) => LineCount.Value = value;
         }
 

@@ -251,23 +251,23 @@ namespace IMT.UI.Editors
     public enum IntersectionTemplateFit
     {
         [Description(nameof(Localize.PresetEditor_PresetFit_Linked))]
-        [Sprite(nameof(LinkFit))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(LinkFit))]
         LinkFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Perfect))]
-        [Sprite(nameof(PerfectFit))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(PerfectFit))]
         PerfectFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Close))]
-        [Sprite(nameof(CloseFit))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(CloseFit))]
         CloseFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Possible))]
-        [Sprite(nameof(PossibleFit))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(PossibleFit))]
         PossibleFit,
 
         [Description(nameof(Localize.PresetEditor_PresetFit_Poor))]
-        [Sprite(nameof(PoorFit))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(PoorFit))]
         PoorFit,
     }
 

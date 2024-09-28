@@ -140,27 +140,27 @@ namespace IMT.Manager
         protected void AddStepProperty(FloatPropertyPanel stepProperty, EditorProvider provider)
         {
             stepProperty.Label = Localize.StyleOption_ZigzagStep;
-            stepProperty.Format = Localize.NumberFormat_Meter;
-            stepProperty.UseWheel = true;
-            stepProperty.WheelStep = 0.1f;
-            stepProperty.WheelTip = Settings.ShowToolTip;
-            stepProperty.CheckMin = true;
-            stepProperty.MinValue = 0.3f;
+            stepProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            stepProperty.FieldRef.UseWheel = true;
+            stepProperty.FieldRef.WheelStep = 0.1f;
+            stepProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            stepProperty.FieldRef.CheckMin = true;
+            stepProperty.FieldRef.MinValue = 0.3f;
             stepProperty.Init();
-            stepProperty.Value = Step;
+            stepProperty.FieldRef.Value = Step;
             stepProperty.OnValueChanged += (value) => Step.Value = value;
         }
         new protected void AddOffsetProperty(FloatPropertyPanel offsetProperty, EditorProvider provider)
         {
             offsetProperty.Label = Localize.StyleOption_ZigzagOffset;
-            offsetProperty.Format = Localize.NumberFormat_Meter;
-            offsetProperty.UseWheel = true;
-            offsetProperty.WheelStep = 0.1f;
-            offsetProperty.WheelTip = Settings.ShowToolTip;
-            offsetProperty.CheckMin = true;
-            offsetProperty.MinValue = 0.1f;
+            offsetProperty.FieldRef.Format = Localize.NumberFormat_Meter;
+            offsetProperty.FieldRef.UseWheel = true;
+            offsetProperty.FieldRef.WheelStep = 0.1f;
+            offsetProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            offsetProperty.FieldRef.CheckMin = true;
+            offsetProperty.FieldRef.MinValue = 0.1f;
             offsetProperty.Init();
-            offsetProperty.Value = Offset;
+            offsetProperty.FieldRef.Value = Offset;
             offsetProperty.OnValueChanged += (value) => Offset.Value = value;
         }
         protected void AddSideProperty(BoolListPropertyPanel sideProperty, EditorProvider provider)

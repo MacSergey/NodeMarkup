@@ -257,9 +257,8 @@ namespace IMT.Manager
         protected void AddDashEndProperty(DashEndPanel dashEndProperty, EditorProvider provider)
         {
             dashEndProperty.Label = Localize.StyleOption_ZebraDashesType;
-            dashEndProperty.Selector.AutoButtonSize = false;
-            dashEndProperty.Selector.ButtonWidth = 60f;
-            dashEndProperty.Selector.Atlas = IMTTextures.Atlas;
+            dashEndProperty.SelectorRef.AutoButtonSize = false;
+            dashEndProperty.SelectorRef.ButtonWidth = 60f;
             dashEndProperty.Init();
             dashEndProperty.SelectedObject = DashType;
             dashEndProperty.OnSelectObjectChanged += (value) => DashType.Value = value;
@@ -318,46 +317,31 @@ namespace IMT.Manager
         public enum DashEnd
         {
             [Description(nameof(Localize.StyleOption_NotParallel))]
-            [Sprite(nameof(IMTTextures.NotParallelButtonIcon))]
+            [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.NotParallelButtonIcon))]
             NotParallel,
 
             [Description(nameof(Localize.StyleOption_ParallelStraight))]
-            [Sprite(nameof(IMTTextures.StraightButtonIcon))]
+            [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.StraightButtonIcon))]
             ParallelStraight,
 
             [Description(nameof(Localize.StyleOption_ParallelSlope))]
-            [Sprite(nameof(IMTTextures.SlopeButtonIcon))]
+            [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.SlopeButtonIcon))]
             ParallelSlope,
         }
 
-        public class DashEndPanel : EnumOncePropertyPanel<DashEnd, DashEndPanel.DashEndSegmented>
+        public class DashEndPanel : AutoEnumSinglePropertyPanel<DashEnd, DashEndPanel.DashEndSegmented, DashEndPanel.DashEndSegmented.DashEndSegmentedRef>
         {
             protected override bool IsEqual(DashEnd first, DashEnd second) => first == second;
-            protected override string GetDescription(DashEnd value) => value.Description();
 
-            protected override void FillItems(Func<DashEnd, bool> selector)
+            public class DashEndSegmented : UISingleEnumSegmented<DashEnd, DashEndSegmented.DashEndSegmentedRef> 
             {
-                Selector.PauseLayout(() =>
+                protected override DashEndSegmentedRef CreateRef() => new(this);
+
+                public class DashEndSegmentedRef : SingleSegmentedRef<DashEnd, DashEndSegmented>
                 {
-                    foreach (var value in GetValues())
-                    {
-                        if (selector?.Invoke(value) != false)
-                        {
-                            var sprite = value.Sprite();
-                            if (string.IsNullOrEmpty(sprite))
-                                Selector.AddItem(value, new OptionData(GetDescription(value)));
-                            else
-                                Selector.AddItem(value, new OptionData(GetDescription(value), IMTTextures.Atlas, sprite));
-                        }
-                    }
-                });
+                    public DashEndSegmentedRef(DashEndSegmented segmented) : base(segmented) { }
+                }
             }
-            public override void SetStyle(ControlStyle style)
-            {
-                Selector.SegmentedStyle = style.Segmented;
-            }
-
-            public class DashEndSegmented : UIOnceSegmented<DashEnd> { }
         }
     }
 }

@@ -107,16 +107,16 @@ namespace IMT.Manager
         protected void AddAngleBetweenProperty(FloatPropertyPanel angleProperty, EditorProvider provider)
         {
             angleProperty.Label = Localize.StyleOption_AngleBetween;
-            angleProperty.Format = Localize.NumberFormat_Degree;
-            angleProperty.UseWheel = true;
-            angleProperty.WheelStep = 1f;
-            angleProperty.WheelTip = Settings.ShowToolTip;
-            angleProperty.CheckMin = true;
-            angleProperty.MinValue = 30;
-            angleProperty.CheckMax = true;
-            angleProperty.MaxValue = 150;
+            angleProperty.FieldRef.Format = Localize.NumberFormat_Degree;
+            angleProperty.FieldRef.UseWheel = true;
+            angleProperty.FieldRef.WheelStep = 1f;
+            angleProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            angleProperty.FieldRef.CheckMin = true;
+            angleProperty.FieldRef.MinValue = 30;
+            angleProperty.FieldRef.CheckMax = true;
+            angleProperty.FieldRef.MaxValue = 150;
             angleProperty.Init();
-            angleProperty.Value = AngleBetween;
+            angleProperty.FieldRef.Value = AngleBetween;
             angleProperty.OnValueChanged += (float value) => AngleBetween.Value = value;
         }
         new protected void AddInvertProperty(ButtonPanel buttonsPanel, EditorProvider provider)

@@ -230,19 +230,19 @@ namespace IMT.Manager
     public enum LineType
     {
         [Description(nameof(Localize.LineStyle_RegularLinesGroup))]
-        [Sprite(nameof(Regular) + nameof(LineType))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(Regular) + nameof(LineType))]
         Regular = Marking.Item.RegularLine,
 
         [Description(nameof(Localize.LineStyle_StopLinesGroup))]
-        [Sprite(nameof(Stop) + nameof(LineType))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(Stop) + nameof(LineType))]
         Stop = Marking.Item.StopLine,
 
         [Description(nameof(Localize.LineStyle_CrosswalkLinesGroup))]
-        [Sprite(nameof(Crosswalk) + nameof(LineType))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(Crosswalk) + nameof(LineType))]
         Crosswalk = Marking.Item.Crosswalk,
 
         [Description(nameof(Localize.LineStyle_LaneGroup))]
-        [Sprite(nameof(Lane) + nameof(LineType))]
+        [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(Lane) + nameof(LineType))]
         Lane = Marking.Item.Lane,
 
         [NotVisible]

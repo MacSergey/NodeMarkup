@@ -76,13 +76,13 @@ namespace IMT.Manager
         private void GetRenderOnlyProperty(IntPropertyPanel property, EditorProvider provider)
         {
             property.Label = "Render only";
-            property.UseWheel = true;
-            property.WheelStep = 1;
-            property.WheelTip = Settings.ShowToolTip;
-            property.CheckMin = true;
-            property.MinValue = -1;
+            property.FieldRef.UseWheel = true;
+            property.FieldRef.WheelStep = 1;
+            property.FieldRef.WheelTip = Settings.ShowToolTip;
+            property.FieldRef.CheckMin = true;
+            property.FieldRef.MinValue = -1;
             property.Init();
-            property.Value = RenderOnly;
+            property.FieldRef.Value = RenderOnly;
             property.OnValueChanged += (int value) => RenderOnly.Value = value;
         }
         protected void AddStartProperty(BoolPropertyPanel property, EditorProvider provider)
@@ -117,13 +117,13 @@ namespace IMT.Manager
         protected void AddStepProperty(FloatPropertyPanel stepProperty, EditorProvider provider)
         {
             stepProperty.Label = Localize.StyleOption_Step;
-            stepProperty.UseWheel = true;
-            stepProperty.WheelStep = 0.1f;
-            stepProperty.WheelTip = Settings.ShowToolTip;
-            stepProperty.CheckMin = true;
-            stepProperty.MinValue = 1.5f;
+            stepProperty.FieldRef.UseWheel = true;
+            stepProperty.FieldRef.WheelStep = 0.1f;
+            stepProperty.FieldRef.WheelTip = Settings.ShowToolTip;
+            stepProperty.FieldRef.CheckMin = true;
+            stepProperty.FieldRef.MinValue = 1.5f;
             stepProperty.Init();
-            stepProperty.Value = Step;
+            stepProperty.FieldRef.Value = Step;
             stepProperty.OnValueChanged += (float value) => Step.Value = value;
         }
 

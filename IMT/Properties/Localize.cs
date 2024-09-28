@@ -2901,8 +2901,8 @@ namespace IMT
 		public static string StyleOption_ObjectSpreadRandom => LocaleManager.GetString("StyleOption_ObjectSpreadRandom", Culture);
 
 		/// <summary>
-		/// Slope
+		/// Sequential
 		/// </summary>
-		public static string StyleOption_ObjectSpreadSlope => LocaleManager.GetString("StyleOption_ObjectSpreadSlope", Culture);
+		public static string StyleOption_ObjectSpreadSequential => LocaleManager.GetString("StyleOption_ObjectSpreadSequential", Culture);
 	}
 }

@@ -234,7 +234,15 @@ namespace IMT.UI
             base.InitPopup();
         }
     }
-    public class FontStyleSegmented : UIOnceSegmented<FontStyle> { }
+    public class FontStyleSegmented : UISingleSegmented<FontStyle, FontStyleSegmented.FontStyleSegmentedRef> 
+    {
+        protected override FontStyleSegmentedRef CreateRef() => new(this);
+
+        public class FontStyleSegmentedRef : SingleSegmentedRef<FontStyle, FontStyleSegmented>
+        {
+            public FontStyleSegmentedRef(FontStyleSegmented segmented) : base(segmented) { }
+        }
+    }
 
     public class FontPopup : SearchPopup<string, FontEntity>
     {

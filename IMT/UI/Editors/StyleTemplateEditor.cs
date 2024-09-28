@@ -52,7 +52,7 @@ namespace IMT.UI.Editors
             styleProperty.FieldWidth = 230;
             styleProperty.EnableControl = false;
             styleProperty.Init();
-            styleProperty.Value = EditStyle.Type.Description();
+            styleProperty.FieldRef.Value = EditStyle.Type.Description();
         }
 
         void IPropertyEditor.RefreshProperties() => PropertyEditorHelper.RefreshProperties(this);

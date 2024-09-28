@@ -1,14 +1,38 @@
 ﻿using ModsCommon.UI;
 using System;
+using UnityEngine;
 
 namespace IMT.UI
 {
-    public abstract class SingleDoubleProperty<ValueType, FieldType> : BaseVariationProperty<ValueType, FieldType>
-        where FieldType : ComparableUITextField<ValueType>
+    public abstract class SingleDoubleProperty<ValueType, FieldType, FieldRefType, RangeType, RangeRefType> : VariationProperty<int, IntSegmented, IntSegmented.IntSegmentedRef>
         where ValueType : IComparable<ValueType>
+        where FieldType : ComparableUITextField<ValueType, FieldRefType>
+        where FieldRefType : IFieldRef, IComparableField<ValueType>
+        where RangeType : ValueFieldRange<ValueType, FieldType, FieldRefType, RangeRefType>
+        where RangeRefType : IFieldRef, IValueFieldRange<ValueType, FieldRefType>
     {
+
         private OptionData FirstOptionData { get; set; }
         private OptionData SecondOptionData { get; set; }
+
+        protected virtual int FirstOptionIndex => 0;
+        protected virtual int SecondOptionIndex => 1;
+
+        public event Action<ValueType, ValueType> OnValueChanged;
+
+        protected RangeType Range { get; private set; }
+
+        public RangeRefType RangeRef => Range.Ref;
+
+        protected override void FillContent()
+        {
+            base.FillContent();
+
+            Range = Content.AddUIComponent<RangeType>();
+            Range.SetDefaultStyle();
+            Range.name = nameof(Range);
+            Range.OnValueChanged += ValueChanged;
+        }
 
         public void Init(OptionData firstOptionData, OptionData secondOptionData) 
         {
@@ -22,69 +46,32 @@ namespace IMT.UI
             AddItem(SecondOptionIndex, SecondOptionData);
         }
 
-        protected override void OnSetValue()
+        protected void ValueChanged(ValueType valueA, ValueType valueB)
         {
-            SelectedObject = FieldA.Value.CompareTo(FieldB.Value) == 0 ? FirstOptionIndex : SecondOptionIndex;
+            OnValueChanged?.Invoke(valueA, valueB);
         }
 
-        protected override void SelectorChangedImpl(int index)
+        public void SetValues(ValueType valueA, ValueType valueB) => SetValues(valueA.CompareTo(valueB) == 0 ? FirstOptionIndex : SecondOptionIndex, valueA, valueB);
+        private void SetValues(int index, ValueType valueA, ValueType valueB)
         {
-            if (index == FirstOptionIndex)
-                ValueChanged(FieldA.Value, FieldA.Value);
-            else if (index == SecondOptionIndex)
-                ValueChanged(FieldA.Value, FieldB.Value);
-        }
-        protected override void OnValueAChanged(ValueType value)
-        {
-            if (SelectedObject == FirstOptionIndex)
-                ValueChanged(value, value);
-            else if (SelectedObject == SecondOptionIndex)
-                ValueChanged(value, FieldB.Value);
+            Range.Mode = valueA.CompareTo(valueB) == 0 ? RangeMode.Single : RangeMode.Range;
+            Selector.SelectedObject = index;
+            Range.SetValues(valueA, valueB);
         }
 
-        protected override void OnValueBChanged(ValueType value)
+        protected override void SelectorChanged(int index)
         {
-            if (SelectedObject == FirstOptionIndex)
-                ValueChanged(FieldA.Value, FieldA.Value);
-            else if (SelectedObject == SecondOptionIndex)
-                ValueChanged(FieldA.Value, value);
+            base.SelectorChanged(index);
+
+            SetValues(index, Range.ValueA, Range.ValueB);
+            ValueChanged(Range.ValueA, Range.ValueB);
         }
 
-        protected override void Refresh()
+        public override void SetStyle(ControlStyle style)
         {
-            if (SelectedObject == FirstOptionIndex)
-            {
-                FieldB.isVisible = false;
-                FieldA.width = FieldWidth;
-
-                FieldA.CheckMin = CheckMin;
-                FieldA.CheckMax = CheckMax;
-                FieldA.MinValue = MinValue;
-                FieldA.MaxValue = MaxValue;
-                FieldA.CyclicalValue = CyclicalValue;
-                FieldA.Value = FieldA.Value;
-            }
-            else if (SelectedObject == SecondOptionIndex)
-            {
-                FieldB.isVisible = true;
-                FieldA.width = (FieldWidth - Content.AutoLayoutSpace) * 0.5f;
-                FieldB.width = (FieldWidth - Content.AutoLayoutSpace) * 0.5f;
-
-                FieldA.CheckMin = CheckMin;
-                FieldA.CheckMax = CheckMax;
-                FieldA.MinValue = MinValue;
-                FieldA.MaxValue = MaxValue;
-                FieldA.CyclicalValue = CyclicalValue;
-                FieldA.Value = FieldA.Value;
-
-                FieldB.CheckMin = CheckMin;
-                FieldB.CheckMax = CheckMax;
-                FieldB.MinValue = MinValue;
-                FieldB.MaxValue = MaxValue;
-                FieldB.CyclicalValue = CyclicalValue;
-                FieldB.Value = FieldB.Value;
-            }
+            base.SetStyle(style);
+            Range.SetStyle(style);
         }
     }
-    public class FloatSingleDoubleProperty : SingleDoubleProperty<float, FloatUITextField> { }   
+    public class FloatSingleDoubleProperty : SingleDoubleProperty<float, FloatUITextField, FloatUITextField.FloatFieldRef, FloatRangeField, FloatRangeField.FloatRangeFieldRef> { }   
 }
