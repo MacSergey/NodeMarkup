@@ -2119,4 +2119,7 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
 [FIXED] L'aperçu des préréglages n'empiète plus sur la barre de défilement.
 [NEW] Ajout de la possibilité de recalculer tous les marquages sur la carte.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[FIXED] Corrections de bugs mineurs.</value>
+  </data>
 </root>
