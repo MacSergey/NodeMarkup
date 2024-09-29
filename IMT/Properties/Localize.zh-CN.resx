@@ -2095,4 +2095,10 @@
   <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
     <value>[FIXED] 修复了一些小问题。</value>
   </data>
+  <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
+    <value>随机</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
+    <value>连续的</value>
+  </data>
 </root>
