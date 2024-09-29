@@ -259,7 +259,7 @@ namespace IMT.Manager
         }
 
 #if DEBUG_PERIODIC_FILLER
-        protected abstract List<Part> GetParts(ITrajectory guide, EdgeSetGroup contours, MarkingLOD lod, Action<IStyleData> addData);
+        protected abstract List<Part> GetParts(ITrajectory guide, ContourGroup contours, MarkingLOD lod, Action<IStyleData> addData);
 #else
         protected abstract List<Part> GetParts(ITrajectory guide, ContourGroup contours, MarkingLOD lod);
 #endif

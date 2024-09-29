@@ -458,11 +458,11 @@ namespace IMT.Manager
             End,
         }
 
-        public class TextDirectionPanel : AutoEnumSinglePropertyPanel<TextDirection, TextDirectionPanel.TextDirectionSegmented, TextDirectionPanel.TextDirectionSegmented.TextDirectionSegmentedRef>
+        public class TextDirectionPanel : EnumSingleSegmentedPropertyPanel<TextDirection, TextDirectionPanel.TextDirectionSegmented, TextDirectionPanel.TextDirectionSegmented.TextDirectionSegmentedRef>
         {
             protected override bool IsEqual(TextDirection first, TextDirection second) => first == second;
 
-            public class TextDirectionSegmented : UISingleEnumSegmented<TextDirection, TextDirectionSegmented.TextDirectionSegmentedRef> 
+            public class TextDirectionSegmented : UIEnumSegmented<TextDirection, TextDirectionSegmented.TextDirectionSegmentedRef> 
             {
                 protected override TextDirectionSegmentedRef CreateRef() => new(this);
 
@@ -472,11 +472,11 @@ namespace IMT.Manager
                 }
             }
         }
-        public class TextAlignmentPanel : AutoEnumSinglePropertyPanel<TextAlignment, TextAlignmentPanel.TextAlignmentSegmented, TextAlignmentPanel.TextAlignmentSegmented.TextAlignmentSegmentedRef>
+        public class TextAlignmentPanel : EnumSingleSegmentedPropertyPanel<TextAlignment, TextAlignmentPanel.TextAlignmentSegmented, TextAlignmentPanel.TextAlignmentSegmented.TextAlignmentSegmentedRef>
         {
             protected override bool IsEqual(TextAlignment first, TextAlignment second) => first == second;
 
-            public class TextAlignmentSegmented : UISingleEnumSegmented<TextAlignment, TextAlignmentSegmented.TextAlignmentSegmentedRef> 
+            public class TextAlignmentSegmented : UIEnumSegmented<TextAlignment, TextAlignmentSegmented.TextAlignmentSegmentedRef> 
             {
                 protected override TextAlignmentSegmentedRef CreateRef() => new(this);
 

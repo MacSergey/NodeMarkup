@@ -148,11 +148,13 @@ namespace IMT.Manager
         private void AddPrefabProperty(SelectNetworkProperty prefabProperty, EditorProvider provider)
         {
             prefabProperty.Label = Localize.StyleOption_AssetNetwork;
-            prefabProperty.SelectPredicate = IsValidNetwork;
-            prefabProperty.SortPredicate = (objA, objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
+            prefabProperty.Selector = IsValidNetwork;
+            prefabProperty.Comparer = new Utilities.Utilities.NetComparer();
             prefabProperty.Init();
             prefabProperty.Prefab = Prefab;
             prefabProperty.RawName = Prefab.RawName;
+            prefabProperty.UseWheel = true;
+            prefabProperty.WheelTip = true;
             prefabProperty.OnValueChanged += (value) =>
             {
                 var oldPrefab = Prefab.Value;

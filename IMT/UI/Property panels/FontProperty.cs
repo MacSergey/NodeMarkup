@@ -66,6 +66,8 @@ namespace IMT.UI
             FontFamilySelector.name = nameof(FontFamilySelector);
             FontFamilySelector.DropDownDefaultStyle();
             FontFamilySelector.height = 20f;
+            FontFamilySelector.UseWheel = true;
+            FontFamilySelector.WheelTip = true;
             FontFamilySelector.OnSelectObject += FontFamilyChanged;
 
             FontStyleSelector = Content.AddUIComponent<FontStyleSegmented>();
@@ -213,7 +215,7 @@ namespace IMT.UI
     {
         public float PopupWidth { get; set; }
         protected override Func<string, bool> Selector => null;
-        protected override Func<string, string, int> Sorter => (nameA, nameB) => nameA.CompareTo(nameB);
+        protected override IComparer<string> Comparer => null;
 
         public FontDropDown() : base()
         {

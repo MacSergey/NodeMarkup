@@ -4,6 +4,7 @@ using IMT.UI;
 using ModsCommon;
 using ModsCommon.Utilities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Alignment = IMT.Manager.Alignment;
 
@@ -56,6 +57,30 @@ namespace IMT.Utilities
                 return Locale.Get("NET_TITLE", network.name);
             else
                 return network.name;
+        }
+
+        public struct PropComparer : IComparer<PropInfo>
+        {
+            public int Compare(PropInfo x, PropInfo y)
+            {
+                return GetPrefabName(x).CompareTo(GetPrefabName(y));
+            }
+        }
+
+        public struct TreeComparer : IComparer<TreeInfo>
+        {
+            public int Compare(TreeInfo x, TreeInfo y)
+            {
+                return GetPrefabName(x).CompareTo(GetPrefabName(y));
+            }
+        }
+
+        public struct NetComparer : IComparer<NetInfo>
+        {
+            public int Compare(NetInfo x, NetInfo y)
+            {
+                return GetPrefabName(x).CompareTo(GetPrefabName(y));
+            }
         }
     }
     public class NotExistEnterException : Exception

@@ -16,7 +16,7 @@
   </PropertyGroup>
 	
   <PropertyGroup>
-    <AssemblyVersion>1.14.0.1274</AssemblyVersion>
+    <AssemblyVersion>1.14.0.1266</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
@@ -51,7 +51,7 @@
     <Optimize>false</Optimize>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    <DefineConstants>$(DefineConstants);DEBUG_PERIODIC_FILLER</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

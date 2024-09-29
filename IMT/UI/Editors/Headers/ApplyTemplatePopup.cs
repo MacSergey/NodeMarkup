@@ -19,37 +19,7 @@ namespace IMT.UI.Editors
 
         protected override IEnumerable<StyleTemplate> Objects => SingletonManager<StyleTemplateManager>.Instance.GetTemplates(StyleGroup);
         protected override Func<StyleTemplate, bool> Selector => null;
-        protected override Func<StyleTemplate, StyleTemplate, int> Sorter => (x, y) =>
-        {
-            var result = Settings.DefaultTemlatesFirst ? SortByDefault(x, y) : 0;
-
-            if (result == 0)
-            {
-                if (Settings.SortApplyType == 0)
-                {
-                    if ((result = SortByAuthor(x, y)) == 0)
-                        if ((result = SortByType(x, y)) == 0)
-                            result = SortByName(x, y);
-                }
-                else if (Settings.SortApplyType == 1)
-                {
-                    if ((result = SortByType(x, y)) == 0)
-                        result = SortByName(x, y);
-                }
-                else if (Settings.SortApplyType == 2)
-                {
-                    if ((result = SortByName(x, y)) == 0)
-                        result = SortByType(x, y);
-                }
-            }
-
-            return result;
-
-            static int SortByDefault(StyleTemplate x, StyleTemplate y) => -x.IsDefault.CompareTo(y.IsDefault);
-            static int SortByAuthor(StyleTemplate x, StyleTemplate y) => (x.Asset?.Author ?? string.Empty).CompareTo(y.Asset?.Author ?? string.Empty);
-            static int SortByType(StyleTemplate x, StyleTemplate y) => x.Style.Type.CompareTo(y.Style.Type);
-            static int SortByName(StyleTemplate x, StyleTemplate y) => x.Name.CompareTo(y.Name);
-        };
+        protected override IComparer<StyleTemplate> Comparer => new TemplateComparer();
 
         public ApplyTemplateHeaderButton()
         {
@@ -102,6 +72,41 @@ namespace IMT.UI.Editors
         {
             p.Use();
             base.OnClick(p);
+        }
+
+        private struct TemplateComparer : IComparer<StyleTemplate>
+        {
+            public int Compare(StyleTemplate x, StyleTemplate y)
+            {
+                var result = Settings.DefaultTemlatesFirst ? SortByDefault(x, y) : 0;
+
+                if (result == 0)
+                {
+                    if (Settings.SortApplyType == 0)
+                    {
+                        if ((result = SortByAuthor(x, y)) == 0)
+                            if ((result = SortByType(x, y)) == 0)
+                                result = SortByName(x, y);
+                    }
+                    else if (Settings.SortApplyType == 1)
+                    {
+                        if ((result = SortByType(x, y)) == 0)
+                            result = SortByName(x, y);
+                    }
+                    else if (Settings.SortApplyType == 2)
+                    {
+                        if ((result = SortByName(x, y)) == 0)
+                            result = SortByType(x, y);
+                    }
+                }
+
+                return result;
+
+                static int SortByDefault(StyleTemplate x, StyleTemplate y) => -x.IsDefault.CompareTo(y.IsDefault);
+                static int SortByAuthor(StyleTemplate x, StyleTemplate y) => (x.Asset?.Author ?? string.Empty).CompareTo(y.Asset?.Author ?? string.Empty);
+                static int SortByType(StyleTemplate x, StyleTemplate y) => x.Style.Type.CompareTo(y.Style.Type);
+                static int SortByName(StyleTemplate x, StyleTemplate y) => x.Name.CompareTo(y.Name);
+            }
         }
     }
 

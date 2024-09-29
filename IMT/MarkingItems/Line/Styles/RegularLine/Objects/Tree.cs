@@ -19,6 +19,7 @@ namespace IMT.Manager
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
         public PropertyBoolValue Wind { get; }
         protected override string AssetPropertyName => Localize.StyleOption_AssetTree;
+        protected override IComparer<TreeInfo> Comparer => new Utilities.Utilities.TreeComparer();
 
         private static Dictionary<string, int> PropertyIndicesDic { get; } = CreatePropertyIndices(PropertyIndicesList);
         private static IEnumerable<string> PropertyIndicesList
@@ -98,7 +99,6 @@ namespace IMT.Manager
         }
 
         public override bool IsValidPrefab(TreeInfo info) => info != null;
-        protected override int SortPredicate(TreeInfo objA, TreeInfo objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
 
         public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
         {

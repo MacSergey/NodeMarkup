@@ -68,7 +68,7 @@ namespace IMT.UI
     public class ThemeDropDown : SelectItemDropDown<ThemeHelper.IThemeData, ThemeEntity, ThemePopup>
     {
         protected override Func<ThemeHelper.IThemeData, bool> Selector => null;
-        protected override Func<ThemeHelper.IThemeData, ThemeHelper.IThemeData, int> Sorter => null;
+        protected override IComparer<ThemeHelper.IThemeData> Comparer => null;
 
         private ThemeHelper.TextureType textureType;
         public ThemeHelper.TextureType TextureType
@@ -112,10 +112,10 @@ namespace IMT.UI
         private static string SearchCache { get; set; } = string.Empty;
         public ThemeHelper.TextureType TextureType { get; set; }
 
-        public override void Init(IEnumerable<ThemeHelper.IThemeData> values, Func<ThemeHelper.IThemeData, bool> selector, Func<ThemeHelper.IThemeData, ThemeHelper.IThemeData, int> sorter)
+        public override void Init(IEnumerable<ThemeHelper.IThemeData> values, Func<ThemeHelper.IThemeData, bool> selector, IComparer<ThemeHelper.IThemeData> comparer)
         {
             Search.text = SearchCache;
-            base.Init(values, selector, sorter);
+            base.Init(values, selector, comparer);
         }
         public override void DeInit()
         {

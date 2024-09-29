@@ -14,11 +14,12 @@ namespace IMT.UI
     {
         public event Action<PrefabType> OnValueChanged;
 
-        public abstract PrefabType Prefab { get; set; }
-        public abstract string RawName { get; set; }
-        public abstract Func<PrefabType, bool> SelectPredicate { get; set; }
-        public abstract Func<PrefabType, PrefabType, int> SortPredicate { get; set; }
-
+        public PrefabType Prefab { get; set; }
+        public string RawName { get; set; }
+        public Func<PrefabType, bool> Selector { get; set; }
+        public IComparer<PrefabType> Comparer { get; set; }
+        bool UseWheel {  get; set; }
+        bool WheelTip { set; }
     }
     public abstract class SelectPrefabProperty<PrefabType, EntityType, PopupType, DropDownType> : EditorPropertyPanel, IReusable, ISelectPrefabProperty<PrefabType>
         where PrefabType : PrefabInfo
@@ -39,24 +40,24 @@ namespace IMT.UI
             get => DropDown.RawName;
             set => DropDown.RawName = value;
         }
-        public Func<PrefabType, bool> SelectPredicate
+        public Func<PrefabType, bool> Selector
         {
-            get => DropDown.SelectPredicate;
-            set => DropDown.SelectPredicate = value;
+            get => DropDown.ItemSelector;
+            set => DropDown.ItemSelector = value;
         }
-        public Func<PrefabType, PrefabType, int> SortPredicate
+        public IComparer<PrefabType> Comparer
         {
-            get => DropDown.SortPredicate;
-            set => DropDown.SortPredicate = (objA, objB) =>
-            {
-                var isFavoriteA = SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(objA.name);
-                var isFavoriteB = SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(objB.name);
-
-                if (isFavoriteA != isFavoriteB)
-                    return isFavoriteB.CompareTo(isFavoriteA);
-                else
-                    return value(objA, objB);
-            };
+            get => DropDown.ItemComparer;
+            set => DropDown.ItemComparer = new PrefabComparer(value);
+        }
+        public bool UseWheel
+        {
+            get => DropDown.UseWheel;
+            set => DropDown.UseWheel = value;
+        }
+        public bool WheelTip
+        {
+            set => DropDown.WheelTip = value;
         }
 
         protected override void FillContent()
@@ -80,7 +81,7 @@ namespace IMT.UI
             base.DeInit();
             OnValueChanged = null;
             DropDown.Clear();
-            SelectPredicate = null;
+            Selector = null;
         }
 
         protected void ValueChanged(PrefabType prefab) => OnValueChanged?.Invoke(prefab);
@@ -88,6 +89,25 @@ namespace IMT.UI
         public override void SetStyle(ControlStyle style)
         {
             DropDown.DropDownStyle = style.DropDown;
+        }
+
+        private struct PrefabComparer : IComparer<PrefabType>
+        {
+            private IComparer<PrefabType> defaultComparer;
+            public PrefabComparer(IComparer<PrefabType> defaultComparer)
+            {
+                this.defaultComparer = defaultComparer;
+            }
+            public int Compare(PrefabType x, PrefabType y)
+            {
+                var isFavoriteA = SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(x.name);
+                var isFavoriteB = SingletonManager<FavoritePrefabsManager>.Instance.IsFavorite(y.name);
+
+                if (isFavoriteA != isFavoriteB)
+                    return isFavoriteB.CompareTo(isFavoriteA);
+                else
+                    return defaultComparer.Compare(x, y);
+            }
         }
     }
 
@@ -105,10 +125,6 @@ namespace IMT.UI
             get => Entity.RawName;
             set => Entity.RawName = value;
         }
-        public Func<PrefabType, bool> SelectPredicate { get; set; }
-        public Func<PrefabType, PrefabType, int> SortPredicate { get; set; }
-        protected override Func<PrefabType, bool> Selector => SelectPredicate;
-        protected override Func<PrefabType, PrefabType, int> Sorter => SortPredicate;
 
         public PrefabDropDown()
         {
@@ -149,10 +165,10 @@ namespace IMT.UI
         protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchCache { get; set; } = string.Empty;
 
-        public override void Init(IEnumerable<PropInfo> values, Func<PropInfo, bool> selector, Func<PropInfo, PropInfo, int> sorter)
+        public override void Init(IEnumerable<PropInfo> values, Func<PropInfo, bool> selector, IComparer<PropInfo> comparer)
         {
             Search.text = SearchCache;
-            base.Init(values, selector, sorter);
+            base.Init(values, selector, comparer);
         }
         public override void DeInit()
         {
@@ -166,10 +182,10 @@ namespace IMT.UI
         protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchCache { get; set; } = string.Empty;
 
-        public override void Init(IEnumerable<TreeInfo> values, Func<TreeInfo, bool> selector, Func<TreeInfo, TreeInfo, int> sorter)
+        public override void Init(IEnumerable<TreeInfo> values, Func<TreeInfo, bool> selector, IComparer<TreeInfo> comparer)
         {
             Search.text = SearchCache;
-            base.Init(values, selector, sorter);
+            base.Init(values, selector, comparer);
         }
         public override void DeInit()
         {
@@ -183,10 +199,10 @@ namespace IMT.UI
         protected override string EmptyText => IMT.Localize.AssetPopup_NothingFound;
         private static string SearchCache { get; set; } = string.Empty;
 
-        public override void Init(IEnumerable<NetInfo> values, Func<NetInfo, bool> selector, Func<NetInfo, NetInfo, int> sorter)
+        public override void Init(IEnumerable<NetInfo> values, Func<NetInfo, bool> selector, IComparer<NetInfo> comparer)
         {
             Search.text = SearchCache;
-            base.Init(values, selector, sorter);
+            base.Init(values, selector, comparer);
         }
         public override void DeInit()
         {

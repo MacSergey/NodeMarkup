@@ -19,6 +19,7 @@ namespace IMT.Manager
         protected override string AssetPropertyName => Localize.StyleOption_AssetDecal;
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
         private Vector2 DefaultSize => IsValid ? Prefab.Value.m_material.GetVector("_DecalSize").XZ() : Vector2.zero;
+        protected override IComparer<PropInfo> Comparer => new Utilities.Utilities.PropComparer();
 
 
         public PropertyNullableStructValue<Color32, PropertyColorValue> DecalColor { get; }
@@ -211,7 +212,6 @@ namespace IMT.Manager
             base.RefreshVoidsProperty(voidProperty, provider);
         }
 
-        protected override int SortPredicate(PropInfo objA, PropInfo objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
         public override bool IsValidPrefab(PropInfo info) => info != null && info.m_isDecal && !info.m_isMarker;
         public override void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees)
         {

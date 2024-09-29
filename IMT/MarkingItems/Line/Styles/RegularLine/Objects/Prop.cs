@@ -22,6 +22,7 @@ namespace IMT.Manager
         protected override Vector3 PrefabSize => IsValid ? Prefab.Value.m_generatedInfo.m_size : Vector3.zero;
         protected bool IsDecal => IsValid && Prefab.Value.m_isDecal;
         protected override string AssetPropertyName => Localize.StyleOption_AssetProp;
+        protected override IComparer<PropInfo> Comparer => new Utilities.Utilities.PropComparer();
 
         PropertyEnumValue<ColorOptionEnum> ColorOption { get; }
 
@@ -146,7 +147,6 @@ namespace IMT.Manager
         }
 
         public override bool IsValidPrefab(PropInfo info) => info != null && !info.m_isMarker;
-        protected override int SortPredicate(PropInfo objA, PropInfo objB) => Utilities.Utilities.GetPrefabName(objA).CompareTo(Utilities.Utilities.GetPrefabName(objB));
 
         public override XElement ToXml()
         {

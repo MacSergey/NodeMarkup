@@ -5,6 +5,7 @@ using IMT.Utilities;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Linq;
 using UnityEngine;
@@ -70,6 +71,7 @@ namespace IMT.Manager
         public PropertyStructValue<int> MaxCount { get; }
         protected bool EnableCount => MinCount != -1 && MaxCount != -1;
 
+        protected abstract IComparer<PrefabType> Comparer { get; }
         protected virtual bool IsValid => IsValidPrefab(Prefab.Value);
         protected abstract Vector3 PrefabSize { get; }
         protected abstract string AssetPropertyName { get; }
@@ -92,7 +94,6 @@ namespace IMT.Manager
         }
 
         public abstract bool IsValidPrefab(PrefabType info);
-        protected abstract int SortPredicate(PrefabType objA, PrefabType objB);
 
         public override void CopyTo(LineStyle target)
         {
@@ -275,11 +276,13 @@ namespace IMT.Manager
         protected void AddPrefabProperty(SelectPrefabType prefabProperty, EditorProvider provider)
         {
             prefabProperty.Label = AssetPropertyName;
-            prefabProperty.SelectPredicate = IsValidPrefab;
-            prefabProperty.SortPredicate = SortPredicate;
+            prefabProperty.Selector = IsValidPrefab;
+            prefabProperty.Comparer = Comparer;
             prefabProperty.Init();
             prefabProperty.Prefab = Prefab;
             prefabProperty.RawName = Prefab.RawName;
+            prefabProperty.UseWheel = true;
+            prefabProperty.WheelTip = true;
             prefabProperty.OnValueChanged += (newPrefab) =>
                 {
                     var oldPrefab = Prefab.Value;
@@ -791,11 +794,11 @@ namespace IMT.Manager
         [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.DynamicFixedButtonIcon))]
         DynamicSpaceFixedEnd,
     }
-    public class DistributionTypePanel : AutoEnumSinglePropertyPanel<DistributionType, DistributionTypePanel.DistributionTypeSegmented, DistributionTypePanel.DistributionTypeSegmented.DistributionTypeSegmentedRef>
+    public class DistributionTypePanel : EnumSingleSegmentedPropertyPanel<DistributionType, DistributionTypePanel.DistributionTypeSegmented, DistributionTypePanel.DistributionTypeSegmented.DistributionTypeSegmentedRef>
     {
         protected override bool IsEqual(DistributionType first, DistributionType second) => first == second;
 
-        public class DistributionTypeSegmented : UISingleEnumSegmented<DistributionType, DistributionTypeSegmented.DistributionTypeSegmentedRef> 
+        public class DistributionTypeSegmented : UIEnumSegmented<DistributionType, DistributionTypeSegmented.DistributionTypeSegmentedRef> 
         {
             protected override DistributionTypeSegmentedRef CreateRef() => new(this);
 
@@ -818,11 +821,11 @@ namespace IMT.Manager
         End,
     }
 
-    public class FixedEndTypePanel : AutoEnumSinglePropertyPanel<FixedEndType, FixedEndTypePanel.FixedEndTypeSegmented, FixedEndTypePanel.FixedEndTypeSegmented.FixedEndTypeSegmentedRef>
+    public class FixedEndTypePanel : EnumSingleSegmentedPropertyPanel<FixedEndType, FixedEndTypePanel.FixedEndTypeSegmented, FixedEndTypePanel.FixedEndTypeSegmented.FixedEndTypeSegmentedRef>
     {
         protected override bool IsEqual(FixedEndType first, FixedEndType second) => first == second;
 
-        public class FixedEndTypeSegmented : UISingleEnumSegmented<FixedEndType, FixedEndTypeSegmented.FixedEndTypeSegmentedRef> 
+        public class FixedEndTypeSegmented : UIEnumSegmented<FixedEndType, FixedEndTypeSegmented.FixedEndTypeSegmentedRef> 
         {
             protected override FixedEndTypeSegmentedRef CreateRef() => new(this);
 
@@ -843,7 +846,7 @@ namespace IMT.Manager
         [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.LeftToRightButtonIcon))]
         Sequential,
     }
-    public class SpreadSegmented : UISingleEnumSegmented<Spread, SpreadSegmented.SpreadSegmentedRef> 
+    public class SpreadSegmented : UIEnumSegmented<Spread, SpreadSegmented.SpreadSegmentedRef> 
     {
         protected override SpreadSegmentedRef CreateRef() => new(this);
 
@@ -863,7 +866,7 @@ namespace IMT.Manager
         [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RangeButtonIcon))]
         Range,
     }
-    public class StaticRangeModeSegmented : UISingleEnumSegmented<StaticRangeMode, StaticRangeModeSegmented.StaticRangeModeSegmentedRef> 
+    public class StaticRangeModeSegmented : UIEnumSegmented<StaticRangeMode, StaticRangeModeSegmented.StaticRangeModeSegmentedRef> 
     {
         protected override StaticRangeModeSegmentedRef CreateRef() => new(this);
 
@@ -887,7 +890,7 @@ namespace IMT.Manager
         [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RangeButtonIcon))]
         Range,
     }
-    public class StaticRangeRandomModeSegmented : UISingleEnumSegmented<StaticRangeRandomMode, StaticRangeRandomModeSegmented.StaticRangeRandomModeSegmentedRef> 
+    public class StaticRangeRandomModeSegmented : UIEnumSegmented<StaticRangeRandomMode, StaticRangeRandomModeSegmented.StaticRangeRandomModeSegmentedRef> 
     {
         protected override StaticRangeRandomModeSegmentedRef CreateRef() => new(this);
 
@@ -911,7 +914,7 @@ namespace IMT.Manager
         [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RangeButtonIcon))]
         Range,
     }
-    public class StaticRangeAutoModeSegmented : UISingleEnumSegmented<StaticRangeAutoMode, StaticRangeAutoModeSegmented.StaticRangeAutoModeSegmentedRef> 
+    public class StaticRangeAutoModeSegmented : UIEnumSegmented<StaticRangeAutoMode, StaticRangeAutoModeSegmented.StaticRangeAutoModeSegmentedRef> 
     {
         protected override StaticRangeAutoModeSegmentedRef CreateRef() => new(this);
 
