@@ -1934,4 +1934,10 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
   <data name="Mod_WhatsNewMessage1_14_5" xml:space="preserve">
     <value>[FIXED] Corregida la carga de assets de marcado.</value>
   </data>
+  <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
+    <value>Aleatorio</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
+    <value>Secuencial</value>
+  </data>
 </root>
