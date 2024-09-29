@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace IMT.UI
 {
-    public abstract class SingleDoubleProperty<ValueType, FieldType, FieldRefType, RangeType, RangeRefType> : VariationProperty<int, IntSegmented, IntSegmented.IntSegmentedRef>
+    public abstract class SingleDoubleProperty<ValueType, FieldType, RangeType, RefType> : VariationProperty<int, IntSegmented, ISingleSegmented<int>>
         where ValueType : IComparable<ValueType>
-        where FieldType : ComparableUITextField<ValueType, FieldRefType>
-        where FieldRefType : IFieldRef, IComparableField<ValueType>
-        where RangeType : ValueFieldRange<ValueType, FieldType, FieldRefType, RangeRefType>
-        where RangeRefType : IFieldRef, IValueFieldRange<ValueType, FieldRefType>
+        where FieldType : ComparableUITextField<ValueType>
+        where RangeType : ValueFieldRange<ValueType, FieldType, RefType>, RefType
+        where RefType : IValueFieldRange<ValueType>
     {
 
         private OptionData FirstOptionData { get; set; }
@@ -22,7 +21,7 @@ namespace IMT.UI
 
         protected RangeType Range { get; private set; }
 
-        public RangeRefType RangeRef => Range.Ref;
+        public RefType RangeRef => Range;
 
         protected override void FillContent()
         {
@@ -73,5 +72,5 @@ namespace IMT.UI
             Range.SetStyle(style);
         }
     }
-    public class FloatSingleDoubleProperty : SingleDoubleProperty<float, FloatUITextField, FloatUITextField.FloatFieldRef, FloatRangeField, FloatRangeField.FloatRangeFieldRef> { }   
+    public class FloatSingleDoubleProperty : SingleDoubleProperty<float, FloatUITextField, FloatRangeField, IValueFieldRange<float>> { }   
 }

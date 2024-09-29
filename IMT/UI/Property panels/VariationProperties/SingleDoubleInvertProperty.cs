@@ -5,12 +5,11 @@ using System;
 
 namespace IMT.UI
 {
-    public abstract class SingleDoubleInvertedProperty<ValueType, FieldType, FieldRefType, RangeType, RangeRefType> : SingleDoubleProperty<ValueType, FieldType, FieldRefType, RangeType, RangeRefType>
+    public abstract class SingleDoubleInvertedProperty<ValueType, FieldType, RangeType, RefType> : SingleDoubleProperty<ValueType, FieldType, RangeType, RefType>
         where ValueType : IComparable<ValueType>
-        where FieldType : ComparableUITextField<ValueType, FieldRefType>
-        where FieldRefType : IFieldRef, IComparableField<ValueType>
-        where RangeType : ValueFieldRange<ValueType, FieldType, FieldRefType, RangeRefType>
-        where RangeRefType : IFieldRef, IValueFieldRange<ValueType, FieldRefType>
+        where FieldType : ComparableUITextField<ValueType>
+        where RangeType : ValueFieldRange<ValueType, FieldType, RefType>, RefType
+        where RefType : IValueFieldRange<ValueType>
     {
         protected CustomUIButton Invert { get; }
 
@@ -56,7 +55,7 @@ namespace IMT.UI
             Invert.AllIconSprites = CommonTextures.PlusMinusButton;
         }
     }
-    public class FloatSingleDoubleInvertedProperty : SingleDoubleInvertedProperty<float, FloatUITextField, FloatUITextField.FloatFieldRef, FloatRangeField, FloatRangeField.FloatRangeFieldRef>
+    public class FloatSingleDoubleInvertedProperty : SingleDoubleInvertedProperty<float, FloatUITextField, FloatRangeField, IValueFieldRange<float>>
     {
         protected override float InvertValue(float value) => -value;
     }

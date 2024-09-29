@@ -794,19 +794,11 @@ namespace IMT.Manager
         [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.DynamicFixedButtonIcon))]
         DynamicSpaceFixedEnd,
     }
-    public class DistributionTypePanel : EnumSingleSegmentedPropertyPanel<DistributionType, DistributionTypePanel.DistributionTypeSegmented, DistributionTypePanel.DistributionTypeSegmented.DistributionTypeSegmentedRef>
+    public class DistributionTypePanel : EnumSingleSegmentedPropertyPanel<DistributionType, DistributionTypePanel.DistributionTypeSegmented, ISingleSegmented<DistributionType>>
     {
         protected override bool IsEqual(DistributionType first, DistributionType second) => first == second;
 
-        public class DistributionTypeSegmented : UIEnumSegmented<DistributionType, DistributionTypeSegmented.DistributionTypeSegmentedRef> 
-        {
-            protected override DistributionTypeSegmentedRef CreateRef() => new(this);
-
-            public class DistributionTypeSegmentedRef : SingleSegmentedRef<DistributionType, DistributionTypeSegmented>
-            {
-                public DistributionTypeSegmentedRef(DistributionTypeSegmented segmented) : base(segmented) { }
-            }
-        }
+        public class DistributionTypeSegmented : UIEnumSegmented<DistributionType> { }
     }
 
     public enum FixedEndType
@@ -821,19 +813,11 @@ namespace IMT.Manager
         End,
     }
 
-    public class FixedEndTypePanel : EnumSingleSegmentedPropertyPanel<FixedEndType, FixedEndTypePanel.FixedEndTypeSegmented, FixedEndTypePanel.FixedEndTypeSegmented.FixedEndTypeSegmentedRef>
+    public class FixedEndTypePanel : EnumSingleSegmentedPropertyPanel<FixedEndType, FixedEndTypePanel.FixedEndTypeSegmented, ISingleSegmented<FixedEndType>>
     {
         protected override bool IsEqual(FixedEndType first, FixedEndType second) => first == second;
 
-        public class FixedEndTypeSegmented : UIEnumSegmented<FixedEndType, FixedEndTypeSegmented.FixedEndTypeSegmentedRef> 
-        {
-            protected override FixedEndTypeSegmentedRef CreateRef() => new(this);
-
-            public class FixedEndTypeSegmentedRef : SingleSegmentedRef<FixedEndType, FixedEndTypeSegmented>
-            {
-                public FixedEndTypeSegmentedRef(FixedEndTypeSegmented segmented) : base(segmented) { }
-            }
-        }
+        public class FixedEndTypeSegmented : UIEnumSegmented<FixedEndType> { }
     }
 
     public enum Spread
@@ -846,15 +830,7 @@ namespace IMT.Manager
         [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.LeftToRightButtonIcon))]
         Sequential,
     }
-    public class SpreadSegmented : UIEnumSegmented<Spread, SpreadSegmented.SpreadSegmentedRef> 
-    {
-        protected override SpreadSegmentedRef CreateRef() => new(this);
-
-        public class SpreadSegmentedRef : SingleSegmentedRef<Spread, SpreadSegmented>
-        {
-            public SpreadSegmentedRef(SpreadSegmented segmented) : base(segmented) { }
-        }
-    }
+    public class SpreadSegmented : UIEnumSegmented<Spread> { }
 
     public enum StaticRangeMode
     {
@@ -866,15 +842,7 @@ namespace IMT.Manager
         [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RangeButtonIcon))]
         Range,
     }
-    public class StaticRangeModeSegmented : UIEnumSegmented<StaticRangeMode, StaticRangeModeSegmented.StaticRangeModeSegmentedRef> 
-    {
-        protected override StaticRangeModeSegmentedRef CreateRef() => new(this);
-
-        public class StaticRangeModeSegmentedRef : SingleSegmentedRef<StaticRangeMode, StaticRangeModeSegmented>
-        {
-            public StaticRangeModeSegmentedRef(StaticRangeModeSegmented segmented) : base(segmented) { }
-        }
-    }
+    public class StaticRangeModeSegmented : UIEnumSegmented<StaticRangeMode> { }
 
     public enum StaticRangeRandomMode
     {
@@ -890,15 +858,7 @@ namespace IMT.Manager
         [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RangeButtonIcon))]
         Range,
     }
-    public class StaticRangeRandomModeSegmented : UIEnumSegmented<StaticRangeRandomMode, StaticRangeRandomModeSegmented.StaticRangeRandomModeSegmentedRef> 
-    {
-        protected override StaticRangeRandomModeSegmentedRef CreateRef() => new(this);
-
-        public class StaticRangeRandomModeSegmentedRef : SingleSegmentedRef<StaticRangeRandomMode, StaticRangeRandomModeSegmented>
-        {
-            public StaticRangeRandomModeSegmentedRef(StaticRangeRandomModeSegmented segmented) : base(segmented) { }
-        }
-    }
+    public class StaticRangeRandomModeSegmented : UIEnumSegmented<StaticRangeRandomMode> { }
 
     public enum StaticRangeAutoMode
     {
@@ -914,13 +874,5 @@ namespace IMT.Manager
         [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(IMTTextures.RangeButtonIcon))]
         Range,
     }
-    public class StaticRangeAutoModeSegmented : UIEnumSegmented<StaticRangeAutoMode, StaticRangeAutoModeSegmented.StaticRangeAutoModeSegmentedRef> 
-    {
-        protected override StaticRangeAutoModeSegmentedRef CreateRef() => new(this);
-
-        public class StaticRangeAutoModeSegmentedRef : SingleSegmentedRef<StaticRangeAutoMode, StaticRangeAutoModeSegmented>
-        {
-            public StaticRangeAutoModeSegmentedRef(StaticRangeAutoModeSegmented segmented) : base(segmented) { }
-        }
-    }
+    public class StaticRangeAutoModeSegmented : UIEnumSegmented<StaticRangeAutoMode> { }
 }

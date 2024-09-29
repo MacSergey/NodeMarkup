@@ -8,12 +8,11 @@ using UnityEngine;
 
 namespace IMT.UI
 {
-    public abstract class StaticRangeRandomProperty<ValueType, FieldType, FieldRefType, RangeType, RangeRefType> : EditorPropertyPanel, IReusable
+    public abstract class StaticRangeRandomProperty<ValueType, FieldType, RangeType, RefType> : EditorPropertyPanel, IReusable
         where ValueType : IComparable<ValueType>
-        where FieldType : ComparableUITextField<ValueType, FieldRefType>
-        where FieldRefType : IFieldRef, IComparableField<ValueType>
-        where RangeType : ValueFieldRange<ValueType, FieldType, FieldRefType, RangeRefType>
-        where RangeRefType : IFieldRef, IValueFieldRange<ValueType, FieldRefType>
+        where FieldType : ComparableUITextField<ValueType>
+        where RangeType : ValueFieldRange<ValueType, FieldType, RefType>, RefType
+        where RefType : IValueFieldRange<ValueType>
     {
         bool IReusable.InCache { get; set; }
         Transform IReusable.CachedTransform { get => m_CachedTransform; set => m_CachedTransform = value; }
@@ -26,7 +25,7 @@ namespace IMT.UI
         protected SpreadSegmented Spread { get; private set; }
         protected RangeType Range { get; private set; }
 
-        public RangeRefType RangeRef => Range.Ref;
+        public RefType RangeRef => Range;
 
         protected override void FillContent()
         {
@@ -116,5 +115,5 @@ namespace IMT.UI
         }
     }
 
-    public class FloatStaticRangeRandomProperty : StaticRangeRandomProperty<float, FloatUITextField, FloatUITextField.FloatFieldRef, FloatRangeField, FloatRangeField.FloatRangeFieldRef> { }
+    public class FloatStaticRangeRandomProperty : StaticRangeRandomProperty<float, FloatUITextField, FloatRangeField, IValueFieldRange<float>> { }
 }

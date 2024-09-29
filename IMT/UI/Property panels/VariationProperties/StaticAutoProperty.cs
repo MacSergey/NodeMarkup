@@ -7,13 +7,13 @@ using System;
 
 namespace IMT.UI
 {
-    public abstract class StaticAutoProperty<ValueType, FieldType, RefType> : VariationProperty<int, IntSegmented, IntSegmented.IntSegmentedRef>
+    public abstract class StaticAutoProperty<ValueType, FieldType, RefType> : VariationProperty<int, IntSegmented, ISingleSegmented<int>>
         where ValueType : IComparable<ValueType>
-        where FieldType : ComparableUITextField<ValueType, RefType>
-        where RefType : IFieldRef, IComparableField<ValueType> 
+        where FieldType : ComparableUITextField<ValueType>, RefType
+        where RefType : IComparableField<ValueType> 
     {
         protected FieldType Field { get; private set; }
-        public RefType FieldRef => Field.Ref;
+        public RefType FieldRef => Field;
 
         protected virtual int AutoIndex => 0;
         protected virtual int StaticIndex => 1;
@@ -94,5 +94,5 @@ namespace IMT.UI
             Field.TextFieldStyle = style.TextField;
         }
     }
-    public class FloatStaticAutoProperty : StaticAutoProperty<float, FloatUITextField, FloatUITextField.FloatFieldRef> { }
+    public class FloatStaticAutoProperty : StaticAutoProperty<float, FloatUITextField, IComparableField<float>> { }
 }

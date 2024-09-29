@@ -329,19 +329,11 @@ namespace IMT.Manager
             ParallelSlope,
         }
 
-        public class DashEndPanel : EnumSingleSegmentedPropertyPanel<DashEnd, DashEndPanel.DashEndSegmented, DashEndPanel.DashEndSegmented.DashEndSegmentedRef>
+        public class DashEndPanel : EnumSingleSegmentedPropertyPanel<DashEnd, DashEndPanel.DashEndSegmented, ISingleSegmented<DashEnd>>
         {
             protected override bool IsEqual(DashEnd first, DashEnd second) => first == second;
 
-            public class DashEndSegmented : UIEnumSegmented<DashEnd, DashEndSegmented.DashEndSegmentedRef>
-            {
-                protected override DashEndSegmentedRef CreateRef() => new(this);
-
-                public class DashEndSegmentedRef : SingleSegmentedRef<DashEnd, DashEndSegmented>
-                {
-                    public DashEndSegmentedRef(DashEndSegmented segmented) : base(segmented) { }
-                }
-            }
+            public class DashEndSegmented : UIEnumSegmented<DashEnd> { }
         }
     }
 }

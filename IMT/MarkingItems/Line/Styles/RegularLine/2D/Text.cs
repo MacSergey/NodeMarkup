@@ -458,33 +458,17 @@ namespace IMT.Manager
             End,
         }
 
-        public class TextDirectionPanel : EnumSingleSegmentedPropertyPanel<TextDirection, TextDirectionPanel.TextDirectionSegmented, TextDirectionPanel.TextDirectionSegmented.TextDirectionSegmentedRef>
+        public class TextDirectionPanel : EnumSingleSegmentedPropertyPanel<TextDirection, TextDirectionPanel.TextDirectionSegmented, ISingleSegmented<TextDirection>>
         {
             protected override bool IsEqual(TextDirection first, TextDirection second) => first == second;
 
-            public class TextDirectionSegmented : UIEnumSegmented<TextDirection, TextDirectionSegmented.TextDirectionSegmentedRef> 
-            {
-                protected override TextDirectionSegmentedRef CreateRef() => new(this);
-
-                public class TextDirectionSegmentedRef : SingleSegmentedRef<TextDirection, TextDirectionSegmented>
-                {
-                    public TextDirectionSegmentedRef(TextDirectionSegmented segmented) : base(segmented) { }
-                }
-            }
+            public class TextDirectionSegmented : UIEnumSegmented<TextDirection> { }
         }
-        public class TextAlignmentPanel : EnumSingleSegmentedPropertyPanel<TextAlignment, TextAlignmentPanel.TextAlignmentSegmented, TextAlignmentPanel.TextAlignmentSegmented.TextAlignmentSegmentedRef>
+        public class TextAlignmentPanel : EnumSingleSegmentedPropertyPanel<TextAlignment, TextAlignmentPanel.TextAlignmentSegmented, ISingleSegmented<TextAlignment>>
         {
             protected override bool IsEqual(TextAlignment first, TextAlignment second) => first == second;
 
-            public class TextAlignmentSegmented : UIEnumSegmented<TextAlignment, TextAlignmentSegmented.TextAlignmentSegmentedRef> 
-            {
-                protected override TextAlignmentSegmentedRef CreateRef() => new(this);
-
-                public class TextAlignmentSegmentedRef : SingleSegmentedRef<TextAlignment, TextAlignmentSegmented>
-                {
-                    public TextAlignmentSegmentedRef(TextAlignmentSegmented segmented) : base(segmented) { }
-                }
-            }
+            public class TextAlignmentSegmented : UIEnumSegmented<TextAlignment> { }
         }
 
         public struct TextureId
