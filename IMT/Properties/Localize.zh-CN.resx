@@ -2095,6 +2095,10 @@
   <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
     <value>[FIXED] 修复了一些小问题。</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_5" xml:space="preserve">
+    <value>[FIXED] 修复了加载标线资产的问题。
+[UPDATED] 所有填充图案、树木、摆件、网络的高度限制扩大为 -100m 至 +100m 范围。</value>
+  </data>
   <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
     <value>随机</value>
   </data>
