@@ -1932,7 +1932,8 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
     <value>[FIXED] Correcciones menores.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_14_5" xml:space="preserve">
-    <value>[FIXED] Corregida la carga de assets de marcado.</value>
+    <value>[FIXED] Corregida la carga de assets de marcado.
+[UPDATED] Límites de propiedades en la elevación de rellenos, árboles, decoraciones, redes se pueden expandir entre -100 m hasta 100 m.</value>
   </data>
   <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
     <value>Aleatorio</value>
