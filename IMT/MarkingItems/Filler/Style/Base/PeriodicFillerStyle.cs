@@ -478,7 +478,7 @@ namespace IMT.Manager
 
             public static Border GetBorder(in StraightTrajectory trajectory, Type type, Intersection.Side side, ContourGroup contours)
             {
-                var intersections = new HashSet<Intersection>();
+                var intersections = new HashSet<IndexedIntersection>();
 
                 foreach (var contour in contours)
                 {
@@ -487,15 +487,15 @@ namespace IMT.Manager
                 }
 
                 if (trajectory.StartLimited && intersections.Count % 2 == 1)
-                    intersections.Add(new Intersection(0f, 0f));
+                    intersections.Add(new IndexedIntersection(0f, 0f));
 
                 if (intersections.Count >= 2)
                 {
-                    var sortedIntersections = intersections.OrderBy(i => i, Intersection.FirstComparer).ToArray();
+                    var sortedIntersections = intersections.OrderBy(i => i, IndexedIntersection.FirstComparer).ToArray();
                     for (int i = 1; i < sortedIntersections.Length; i += 1)
                     {
-                        var startT = sortedIntersections[i - 1].firstT;
-                        var endT = sortedIntersections[i].firstT;
+                        var startT = sortedIntersections[i - 1].FirstT;
+                        var endT = sortedIntersections[i].FirstT;
 
                         if (startT * endT <= 0)
                         {

@@ -130,9 +130,21 @@ namespace IMT.UI
             TurnButton.isEnabled = isEnabled;
         }
 
-        protected virtual void ButtonClick(UIComponent component, UIMouseEventParameter eventParam) => OnSelect?.Invoke(component as SelectGuideButton);
-        protected virtual void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam) => OnEnter?.Invoke(component as SelectGuideButton);
-        protected virtual void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam) => OnLeave?.Invoke(component as SelectGuideButton);
+        protected virtual void ButtonClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (component.isEnabled)
+                OnSelect?.Invoke(component as SelectGuideButton);
+        }
+        protected virtual void ButtonMouseEnter(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if(component.isEnabled)
+                OnEnter?.Invoke(component as SelectGuideButton);
+        }
+        protected virtual void ButtonMouseLeave(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            if (component.isEnabled)
+                OnLeave?.Invoke(component as SelectGuideButton);
+        }
 
         protected virtual void TurnClick(UIComponent component, UIMouseEventParameter eventParam)
         {

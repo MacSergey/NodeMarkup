@@ -173,7 +173,7 @@ namespace IMT.Manager
             if (Count <= 1)
                 return new ContourGroup();
 
-            HashSet<Intersection> intersections = GetIntersections(line);
+            HashSet<IndexedIntersection> intersections = GetIntersections(line);
 
             if (intersections.Count <= 1)
             {
@@ -220,17 +220,17 @@ namespace IMT.Manager
             }
         }
 
-        private List<IntersectionPairEdge> GetCutPairs(ITrajectory line, Intersection.Side cutSide, HashSet<Intersection> intersections)
+        private List<IntersectionPairEdge> GetCutPairs(ITrajectory line, Intersection.Side cutSide, HashSet<IndexedIntersection> intersections)
         {
-            var linePoints = intersections.OrderBy(i => i, Intersection.FirstComparer).ToArray();
-            var setPoints = intersections.OrderBy(i => i, Intersection.SecondComparer).ToArray();
+            var linePoints = intersections.OrderBy(i => i, IndexedIntersection.FirstComparer).ToArray();
+            var setPoints = intersections.OrderBy(i => i, IndexedIntersection.SecondComparer).ToArray();
             var pairs = new List<IntersectionPairEdge>();
 
             for (int i = 1; i < linePoints.Length; i += 2)
                 pairs.Add(new IntersectionPairEdge(false, linePoints[i - 1], linePoints[i]));
 
-            var edgeIndex = Mathf.FloorToInt(setPoints[0].secondT);
-            var t = setPoints[0].secondT - edgeIndex;
+            var index = SimulationManager.instance.m_randomizer.Int32(0, setPoints.Length);
+            var edgeIndex = setPoints[index].GetSecondIndex(out var t);
             var edgeSide = Intersection.GetSide(line.Direction, this[edgeIndex].trajectory.Tangent(t));
             if (edgeSide == cutSide)
             {
@@ -262,13 +262,13 @@ namespace IMT.Manager
                     area.Add(current);
 
                     var searchFor = current.pair.to.GetReverse();
-                    var nextIndex = pairs.FindIndex(i => oneDir ? i.pair.from == searchFor : i.pair.Contain(searchFor));
+                    var nextIndex = pairs.FindIndex(i => oneDir ? i.pair.from.Equals(searchFor) : i.pair.Contain(searchFor));
                     if (nextIndex == -1)
                         break;
 
-                    var next = pairs[nextIndex].pair.from == searchFor ? pairs[nextIndex] : pairs[nextIndex].Reverse;
+                    var next = pairs[nextIndex].pair.from.Equals(searchFor) ? pairs[nextIndex] : pairs[nextIndex].GetReversed();
 
-                    if (!oneDir || next.pair.from.firstT <= next.pair.to.firstT)
+                    if (!oneDir || next.pair.from.FirstT <= next.pair.to.FirstT)
                     {
                         current = next;
                         index = nextIndex;
@@ -284,7 +284,7 @@ namespace IMT.Manager
                 if (area.Count <= 1)
                     continue;
 
-                if (area[area.Count - 1].pair.to != area[0].pair.from.GetReverse())
+                if (!area[area.Count - 1].pair.to.Equals(area[0].pair.from.GetReverse()))
                     continue;
 
                 var newSet = new Contour();
@@ -292,30 +292,25 @@ namespace IMT.Manager
                 {
                     if (areaPart.isContour)
                     {
-                        var startIndex = Mathf.FloorToInt(areaPart.pair.from.firstT);
-                        var endIndex = Mathf.FloorToInt(areaPart.pair.to.firstT);
+                        var startIndex = areaPart.pair.from.GetFirstIndex(out var startT);
+                        var endIndex = areaPart.pair.to.GetFirstIndex(out var endT);
 
-                        if (!areaPart.Inverted)
+                        if (!areaPart.pair.inverted)
                         {
-                            if (endIndex < startIndex || (endIndex == startIndex && areaPart.pair.to.firstT < areaPart.pair.from.firstT))
+                            if (endIndex < startIndex || (endIndex == startIndex && endT < startT))
                                 endIndex += contour.Count;
                         }
                         else
                         {
-                            if (startIndex < endIndex || (startIndex == endIndex && areaPart.pair.from.firstT < areaPart.pair.to.firstT))
+                            if (startIndex < endIndex || (startIndex == endIndex && startT < endT))
                                 startIndex += contour.Count;
                         }
 
-                        var k = startIndex;
-                        while (true)
+                        
+                        for (var k = startIndex; true; k += areaPart.pair.inverted ? -1 : 1)
                         {
-                            var fromT = k == startIndex ?
-                                areaPart.pair.from.firstT - (startIndex % contour.Count) :
-                                (!areaPart.Inverted ? 0f : 1f);
-
-                            var toT = k == endIndex ?
-                                areaPart.pair.to.firstT - (endIndex % contour.Count) :
-                                (!areaPart.Inverted ? 1f : 0f);
+                            var fromT = k == startIndex ? startT : (areaPart.pair.inverted ? 1f : 0f);
+                            var toT = k == endIndex ? endT : (areaPart.pair.inverted ? 0f : 1f);
 
                             var trajectory = contour[k % contour.Count].trajectory.Cut(fromT, toT);
                             if (trajectory is CombinedTrajectory combined)
@@ -331,18 +326,12 @@ namespace IMT.Manager
 
                             if (k == endIndex)
                                 break;
-                            else if (!areaPart.Inverted)
-                                k += 1;
-                            else
-                                k -= 1;
                         }
                     }
                     else
                     {
-                        var startIndex = Mathf.FloorToInt(areaPart.pair.from.secondT);
-                        var endIndex = Mathf.FloorToInt(areaPart.pair.to.secondT);
-                        var startT = areaPart.pair.from.secondT - startIndex;
-                        var endT = areaPart.pair.to.secondT - endIndex;
+                        var startIndex = areaPart.pair.from.GetSecondIndex(out var startT);
+                        var endIndex = areaPart.pair.to.GetSecondIndex(out var endT);
                         var startPos = contour[startIndex].trajectory.Position(startT);
                         var endPos = contour[endIndex].trajectory.Position(endT);
                         newSet.Add(new ContourEdge(new StraightTrajectory(startPos, endPos)));
@@ -716,17 +705,14 @@ namespace IMT.Manager
             }
         }
 
-        public HashSet<Intersection> GetIntersections(ITrajectory line)
+        public HashSet<IndexedIntersection> GetIntersections(ITrajectory line)
         {
-            HashSet<Intersection> intersections = new HashSet<Intersection>();
+            HashSet<IndexedIntersection> intersections = new HashSet<IndexedIntersection>();
             for (int i = 0; i < Count; i += 1)
             {
                 foreach (var inter in Intersection.Calculate(line, this[i].trajectory))
                 {
-                    var index = inter.secondT + i;
-                    if (Mathf.Abs(index - Count) < float.Epsilon)
-                        index = 0f;
-                    intersections.Add(new Intersection(inter.firstT, index));
+                    intersections.Add(new IndexedIntersection(inter.firstT, 0, inter.secondT, i));
                 }
             }
             return intersections;
@@ -752,15 +738,14 @@ namespace IMT.Manager
         public readonly bool isContour;
         public readonly IntersectionPair pair;
 
-        public bool Inverted => pair.Inverted;
-        public IntersectionPairEdge Reverse => new IntersectionPairEdge(isContour, pair.Reverse);
-
         public IntersectionPairEdge(bool isContour, IntersectionPair pair)
         {
             this.isContour = isContour;
             this.pair = pair;
         }
-        public IntersectionPairEdge(bool isContour, Intersection from, Intersection to) : this(isContour, new IntersectionPair(from, to)) { }
+        public IntersectionPairEdge(bool isContour, IIntersection from, IIntersection to) : this(isContour, new IntersectionPair(from, to)) { }
+
+        public IntersectionPairEdge GetReversed() => new IntersectionPairEdge(isContour, pair.GetReversed());
 
         public override string ToString() => $"{(isContour ? "Contour" : "Straight")} {pair}";
     }
