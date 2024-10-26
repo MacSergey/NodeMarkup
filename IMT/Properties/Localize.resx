@@ -2131,4 +2131,8 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_ObjectSpreadSlope" xml:space="preserve">
     <value>Slope</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_6" xml:space="preserve">
+    <value>[UPDATED] Updated required game version to 1.18.1-f3
+</value>
+  </data>
 </root>

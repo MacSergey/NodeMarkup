@@ -2904,5 +2904,10 @@ namespace IMT
 		/// Slope
 		/// </summary>
 		public static string StyleOption_ObjectSpreadSlope => LocaleManager.GetString("StyleOption_ObjectSpreadSlope", Culture);
+
+		/// <summary>
+		/// [UPDATED] Updated required game version to 1.18.1-f3
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14_6 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_6", Culture);
 	}
 }
