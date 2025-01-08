@@ -1821,4 +1821,10 @@ Pode demorar um pouco se tiver muitos segmentos.</value>
   <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
     <value>[Corrigido] Bugs menores.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_5" xml:space="preserve">
+    <value>.</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
+    <value></value>
+  </data>
 </root>
