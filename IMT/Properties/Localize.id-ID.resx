@@ -1578,6 +1578,9 @@ mode bawah tanah</value>
   <data name="HeaderPanel_StyleReset" xml:space="preserve">
     <value>Setel ulang ke awal</value>
   </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value></value>
+  </data>
   <data name="StyleOption_Density" xml:space="preserve">
     <value>Kerapatan</value>
   </data>
