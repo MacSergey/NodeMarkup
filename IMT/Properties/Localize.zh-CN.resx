@@ -1103,7 +1103,7 @@
     <value>编辑段落 #{0} 的地标线</value>
   </data>
   <data name="FillerStyle_GrassIsland" xml:space="preserve">
-    <value>草地纹理交通岛</value>
+    <value>碎石纹理交通岛</value>
   </data>
   <data name="FillerStyle_PavementIsland" xml:space="preserve">
     <value>人行道纹理交通岛</value>
@@ -2091,5 +2091,18 @@
     <value>[FIXED] 修复了在 Theme Mixer 模组中更改地图主题后，填充图案不会自动更新的问题。
 [FIXED] 修复了在预览预设时，预览窗格与滚动条重叠的问题。
 [NEW] 新增了重新计算地图上所有标线的功能。</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[FIXED] 修复了一些小问题。</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_5" xml:space="preserve">
+    <value>[FIXED] 修复了加载标线资产的问题。
+[UPDATED] 所有填充图案、树木、摆件、网络的高度限制扩大为 -100m 至 +100m 范围。</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
+    <value>随机</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
+    <value>连续的</value>
   </data>
 </root>

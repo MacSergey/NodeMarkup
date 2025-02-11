@@ -2120,4 +2120,7 @@
 [FIXED] Preset preview does not overlap scrollbar anymore.
 [NEW] Added the ability to recalculate all marking on map.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[FIXED] Minor bug fixes.</value>
+  </data>
 </root>

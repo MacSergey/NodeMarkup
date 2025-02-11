@@ -1928,4 +1928,17 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
 [FIXED] La vista previa de los preajustes no se sobrepone en la barra de desplazamiento.
 [NEW] Ahora se puede recalcular todas las marcas en el mapa.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[FIXED] Correcciones menores.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_5" xml:space="preserve">
+    <value>[FIXED] Corregida la carga de assets de marcado.
+[UPDATED] Límites de propiedades en la elevación de rellenos, árboles, decoraciones, redes se pueden expandir entre -100 m hasta 100 m.</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
+    <value>Aleatorio</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
+    <value>Secuencial</value>
+  </data>
 </root>

@@ -1578,6 +1578,10 @@ mode bawah tanah</value>
   <data name="HeaderPanel_StyleReset" xml:space="preserve">
     <value>Setel ulang ke awal</value>
   </data>
+  <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
+    <value>Maukah kamu menerapkan preset ke semua segmen aset {0}?
+Ini banyak makan waktu jika ada banyak segmen.</value>
+  </data>
   <data name="StyleOption_Density" xml:space="preserve">
     <value>Kerapatan</value>
   </data>
@@ -1598,5 +1602,11 @@ mode bawah tanah</value>
   </data>
   <data name="Setting_Others" xml:space="preserve">
     <value>Lainnya</value>
+  </data>
+  <data name="StyleOption_AddToFavorites" xml:space="preserve">
+    <value>Tambah ke favorit</value>
+  </data>
+  <data name="FillerStyle_Asphalt" xml:space="preserve">
+    <value>Aspal</value>
   </data>
 </root>

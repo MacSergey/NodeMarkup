@@ -1049,6 +1049,9 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="FillerEditor_InfoSelectRailSecond" xml:space="preserve">
     <value>Rehber için ikinci bir nokta seçin</value>
   </data>
+  <data name="StyleOption_UseSecondColor" xml:space="preserve">
+    <value>İkinci rengi kullan</value>
+  </data>
   <data name="Style_FromClipboard" xml:space="preserve">
     <value>Panodan</value>
   </data>
@@ -1824,5 +1827,51 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   </data>
   <data name="StyleOption_ObjectRandom" xml:space="preserve">
     <value>Rastgele</value>
+  </data>
+  <data name="LineStyle_Decal" xml:space="preserve">
+    <value>Çıkartma</value>
+  </data>
+  <data name="StyleOption_Size" xml:space="preserve">
+    <value>Boyut</value>
+  </data>
+  <data name="StyleOption_SlopeTolerance" xml:space="preserve">
+    <value>Eğim Toleransı</value>
+  </data>
+  <data name="StyleOption_Tiling" xml:space="preserve">
+    <value>Parke Taşı</value>
+  </data>
+  <data name="StyleOption_PavementTheme" xml:space="preserve">
+    <value>Kaldırım</value>
+  </data>
+  <data name="Settings_AutoCollapseItemsPanel" xml:space="preserve">
+    <value>Nesneler panelini otomatik olarak gizle</value>
+  </data>
+  <data name="StyleOption_LineNumber" xml:space="preserve">
+    <value>Şerit #{0}</value>
+  </data>
+  <data name="StyleOption_Wind" xml:space="preserve">
+    <value>Rüzgarda Sallanma</value>
+  </data>
+  <data name="Header_ExpandGroupTooltip" xml:space="preserve">
+    <value>Tüm grupları daraltmak/genişletmek için {0} tuşunu basılı tutun</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_1" xml:space="preserve">
+    <value>[GÜNCELLENDİ] Yeni arayüzün iyileştirilmesi.
+[DÜZELTİLDİ] Mouse tekerleğinin açılır menü değerini değiştirmemesi düzeltildi.
+[DÜZELTİLDİ] Açılır menülerin kapatılamaması düzeltildi.
+[DÜZELTİLDİ] Bazı ağlar ve doldurucuların işlenmesi sırasında oluşan hatalar düzeltildi.
+[DÜZELTİLDİ] Cisimler/ağaçlar/ağların segmentleri düzgün takip etmemesi düzeltildi.
+[DÜZELTİLDİ] Çıkarmaların renk ayarlarını kaydetmemesi düzeltildi.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_2" xml:space="preserve">
+    <value>[GÜNCELLENDİ] Hotels&amp;Retreats DLC desteği.
+[ÇEVİRİ] Portekizce(Brezilya) eklendi.
+</value>
+  </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Tüm işaretlemeleri yeniden hesapla</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[DÜZELTİLDİ] Küçük hata düzeltmeleri.</value>
   </data>
 </root>
