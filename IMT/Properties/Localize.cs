@@ -2909,5 +2909,10 @@ namespace IMT
 		/// [UPDATED] Updated required game version to 1.18.1-f3
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_14_6 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_6", Culture);
+
+		/// <summary>
+		/// [UPDATED] Updated required game version to 1.19.2-f3.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14_7 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_7", Culture);
 	}
 }
