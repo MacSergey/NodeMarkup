@@ -2137,4 +2137,9 @@ It can take time if there are a lot of segments.</value>
   <data name="Mod_WhatsNewMessage1_14_7" xml:space="preserve">
     <value>[UPDATED] Updated required game version to 1.19.2-f3</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_7" xml:space="preserve">
+    <value>[UPDATED] Updated required game version to 1.19.2-f3.
+[FIXED] Incorrect props/trees shift calculation.
+[FIXED] Mode of shift, elevation, tilt, slope property was not saved.</value>
+  </data>
 </root>
