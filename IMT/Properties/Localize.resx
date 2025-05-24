@@ -2132,7 +2132,9 @@ It can take time if there are a lot of segments.</value>
     <value>Slope</value>
   </data>
   <data name="Mod_WhatsNewMessage1_14_6" xml:space="preserve">
-    <value>[UPDATED] Updated required game version to 1.18.1-f3
-</value>
+    <value>[UPDATED] Updated required game version to 1.18.1-f3</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_7" xml:space="preserve">
+    <value>[UPDATED] Updated required game version to 1.19.2-f3</value>
   </data>
 </root>
