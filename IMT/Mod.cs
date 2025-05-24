@@ -371,9 +371,9 @@ namespace IMT
             return AddTranspiler(typeof(Mod), nameof(Mod.LoadingManagerLoadCustomContentTranspiler), nestedType, "MoveNext");
         }
 
-        private const int gameObjectVarIndex = 38;
-        private const int component7VarIndex = 45;
-        private const int flagVarIndex = 46;
+        private const int gameObjectVarIndex = 44;
+        private const int component7VarIndex = 51;
+        private const int flagVarIndex = 52;
         private static IEnumerable<CodeInstruction> LoadingManagerLoadCustomContentTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var newInstructions = new List<CodeInstruction>(instructions);
