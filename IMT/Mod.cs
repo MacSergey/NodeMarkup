@@ -69,7 +69,7 @@ namespace IMT
             new ModVersion(new Version(1,1), new DateTime(2020, 7, 14)),
             new ModVersion(new Version(1,0), new DateTime(2020, 7, 7)),
         };
-        protected override Version RequiredGameVersion => new Version(1, 19, 2, 3);
+        protected override Version RequiredGameVersion => new Version(1, 20, 1, 1);
 
         public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
