@@ -32,6 +32,7 @@ namespace IMT
         protected override string IdRaw => "IntersectionMarkingTool";
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version(1,14,8), new DateTime(2025, 9, 29)),
             new ModVersion(new Version(1,14,7), new DateTime(2025, 5, 23)),
             new ModVersion(new Version(1,14,6), new DateTime(2024, 10, 26)),
             new ModVersion(new Version(1,14,5), new DateTime(2024, 9, 27)),
@@ -69,7 +70,7 @@ namespace IMT
             new ModVersion(new Version(1,1), new DateTime(2020, 7, 14)),
             new ModVersion(new Version(1,0), new DateTime(2020, 7, 7)),
         };
-        protected override Version RequiredGameVersion => new Version(1, 19, 2, 3);
+        protected override Version RequiredGameVersion => new Version(1, 20, 1, 1);
 
         public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
@@ -372,9 +373,9 @@ namespace IMT
             return AddTranspiler(typeof(Mod), nameof(Mod.LoadingManagerLoadCustomContentTranspiler), nestedType, "MoveNext");
         }
 
-        private const int gameObjectVarIndex = 44;
-        private const int component7VarIndex = 51;
-        private const int flagVarIndex = 52;
+        private const int gameObjectVarIndex = 47;
+        private const int component7VarIndex = 54;
+        private const int flagVarIndex = 55;
         private static IEnumerable<CodeInstruction> LoadingManagerLoadCustomContentTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var newInstructions = new List<CodeInstruction>(instructions);

@@ -2140,4 +2140,7 @@ It can take time if there are a lot of segments.</value>
 [FIXED] Incorrect props/trees shift calculation.
 [FIXED] Mode of shift, elevation, tilt, slope property was not saved.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_8" xml:space="preserve">
+    <value>[UPDATED] Updated required game version to 1.20.1-f1.</value>
+  </data>
 </root>
