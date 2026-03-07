@@ -2901,6 +2901,11 @@ namespace IMT
 		public static string StyleOption_ObjectSpreadRandom => LocaleManager.GetString("StyleOption_ObjectSpreadRandom", Culture);
 
 		/// <summary>
+		/// Sequential
+		/// </summary>
+		public static string StyleOption_ObjectSpreadSequential => LocaleManager.GetString("StyleOption_ObjectSpreadSequential", Culture);
+
+		/// <summary>
 		/// [UPDATED] Updated required game version to 1.18.1-f3
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_14_6 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_6", Culture);
@@ -2914,11 +2919,6 @@ namespace IMT
 		/// [UPDATED] Updated required game version to 1.20.1-f1.
 		/// </summary>
 		public static string Mod_WhatsNewMessage1_14_8 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_8", Culture);
-
-		/// <summary>
-		/// Sequential
-		/// </summary>
-		public static string StyleOption_ObjectSpreadSequential => LocaleManager.GetString("StyleOption_ObjectSpreadSequential", Culture);
 
 		/// <summary>
 		/// Invert

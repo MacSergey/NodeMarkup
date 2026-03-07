@@ -1998,4 +1998,7 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
   <data name="Editor_MirrorValue" xml:space="preserve">
     <value />
   </data>
+  <data name="Settings_RecalculateMarkings" xml:space="preserve">
+    <value>Alle Markierungen löschen</value>
+  </data>
 </root>

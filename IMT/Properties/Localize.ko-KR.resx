@@ -1930,6 +1930,19 @@
 [FIXED] 프리셋 미리보기와 스크롤 막대가 더 이상 겹치지 않습니다.
 [NEW] 맵의 모든 마킹을 재계산하는 기능을 추가했습니다.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
+    <value>[FIXED] 소소하게 버그를 수정했습니다.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_5" xml:space="preserve">
+    <value>[FIXED] 마킹 에셋을 불러오는 과정을 수정했습니다.
+[UPDATED] 모든 필러, 나무, 프롭, 네트워크의 고도 한계가 -100m부터 +100m까지로 확장되었습니다.</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
+    <value>무작위</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
+    <value>순차적</value>
+  </data>
   <data name="Editor_InvertValue" xml:space="preserve">
     <value />
   </data>
