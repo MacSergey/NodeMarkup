@@ -164,7 +164,7 @@ namespace IMT.Utilities
             foreach (var data in Datas)
             {
                 CalculateMatrix(data.trajectory, width * 0.5f * scale, groupPosition, out var left, out var right);
-                NetSegment.PopulateGroupData(Info, data.segment, left, right, Scale, default, ref vertexIndex, ref triangleIndex, groupPosition, renderData, ref requireSurfaceMaps);
+                NetSegment.PopulateGroupData(Info, data.segment, left, right, Scale, default, ref vertexIndex, ref triangleIndex, groupPosition, renderData, ref requireSurfaceMaps, Vector2.zero);
             }
         }
     }

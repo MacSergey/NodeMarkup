@@ -30,9 +30,9 @@ namespace IMT.UI
         protected override void SelectorChangedImpl(int index)
         {
             if (index == FirstOptionIndex)
-                ValueChanged(FieldA.Value, FieldA.Value);
-            else if (index == SecondOptionIndex)
-                ValueChanged(FieldA.Value, FieldB.Value);
+                FieldB.Value = FieldA.Value;
+
+            ValueChanged(FieldA.Value, FieldB.Value);
         }
         protected override void OnValueAChanged(ValueType value)
         {

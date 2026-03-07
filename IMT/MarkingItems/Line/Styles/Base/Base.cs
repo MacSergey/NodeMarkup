@@ -54,6 +54,10 @@ namespace IMT.Manager
     {
         PropertyValue<float> Elevation { get; }
     }
+    public interface INetworkLine
+    {
+        public PropertyVector2Value Elevation { get; }
+    }
 
     public abstract class LineStyle : Style<LineStyle>
     {

@@ -1,5 +1,4 @@
-﻿using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
@@ -28,6 +27,8 @@ namespace IMT.Manager
             base.CopyTo(target);
             if (target is I3DLine line3DTarget)
                 line3DTarget.Elevation.Value = Elevation;
+            if(target is INetworkLine networkTarget)
+                networkTarget.Elevation.Value = new Vector2(Elevation, Elevation);
         }
 
         protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
