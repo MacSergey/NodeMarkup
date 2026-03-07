@@ -1,6 +1,4 @@
-﻿using ColossalFramework.Math;
-using IMT.Utilities;
-using ModsCommon;
+﻿using IMT.Utilities;
 using ModsCommon.Utilities;
 using System;
 using System.Collections;
@@ -119,6 +117,15 @@ namespace IMT.Manager
         public bool IsStart(MarkingPoint point) => Start == point;
         public bool IsEnd(MarkingPoint point) => End == point;
         public Alignment GetAlignment(MarkingPoint point) => PointPair.ContainsPoint(point) && point.IsSplit ? (IsStart(point) ? Alignment : Alignment.Invert()) : Alignment.Centre;
+
+
+        public bool SupportStyleType(Style.StyleType styleType)
+        {
+            var networkType = styleType.GetNetworkType();
+            var lineType = styleType.GetLineType();
+            return (PointPair.NetworkType & networkType) != 0 && (PointPair.LineType & lineType) != 0;
+        }
+
 
 
         public virtual XElement ToXml()
