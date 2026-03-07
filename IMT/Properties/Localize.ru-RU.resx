@@ -2119,4 +2119,10 @@
 [FIXED] Предпросмотр трафарета не перекрывает полосу прокрутки.
 [NEW] Добавлена возможность пересчитать всю разметку на карте.</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

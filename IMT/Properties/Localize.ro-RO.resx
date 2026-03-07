@@ -1599,4 +1599,10 @@ O să necesite timp dacă sunt prezente multe segmente.</value>
   <data name="Tool_EndPasteMArkingMessage" xml:space="preserve">
     <value>Doriți să aplicați marcajele?</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

@@ -2120,4 +2120,10 @@
 [FIXED] Preset preview does not overlap scrollbar anymore.
 [NEW] Added the ability to recalculate all marking on map.</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

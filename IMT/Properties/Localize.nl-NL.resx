@@ -1921,4 +1921,10 @@ Het kan even duren als er veel segmenten zijn.</value>
   <data name="Settings_RecalculateMarkings" xml:space="preserve">
     <value>Alle markeringen herberekenen</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

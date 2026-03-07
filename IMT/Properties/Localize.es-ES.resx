@@ -1928,4 +1928,10 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
 [FIXED] La vista previa de los preajustes no se sobrepone en la barra de desplazamiento.
 [NEW] Ahora se puede recalcular todas las marcas en el mapa.</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

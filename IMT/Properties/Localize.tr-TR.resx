@@ -1825,4 +1825,10 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="StyleOption_ObjectRandom" xml:space="preserve">
     <value>Rastgele</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

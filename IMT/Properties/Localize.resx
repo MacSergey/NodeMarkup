@@ -2128,9 +2128,6 @@ It can take time if there are a lot of segments.</value>
   <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
     <value>Random</value>
   </data>
-  <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
-    <value>Sequential</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_14_6" xml:space="preserve">
     <value>[UPDATED] Updated required game version to 1.18.1-f3
 </value>
@@ -2143,14 +2140,13 @@ It can take time if there are a lot of segments.</value>
   <data name="Mod_WhatsNewMessage1_14_8" xml:space="preserve">
     <value>[UPDATED] Updated required game version to 1.20.1-f1.</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_14_9" xml:space="preserve">
-    <value>[UPDATED] Updated required game version to 1.21.5-f1.
-[FIXED] Broken Additional options button on the panel header.
-[UPDATED] Props max shift changed to 100m
-[UPDATED] Props max rotation changed to 360.
-[NEW] Added the ability to set different height for start and end of decorative network.
-[NEW] Added the ability to add decals to tracks.
-[FIXED] Dont allow to paste unsupported style type to a rule.
-[FIXED] Getting incorrect default style for tracks.</value>
+  <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
+    <value>Sequential</value>
+  </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value>Invert</value>
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value>Mirror</value>
   </data>
 </root>

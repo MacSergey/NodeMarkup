@@ -1818,4 +1818,10 @@ Pode demorar um pouco se tiver muitos segmentos.</value>
 [Corrigido] A pré-visualização da predefinição não ficará por cima da barra de rolagem.
 [Novo] Adicionada capacidade de recalcular todas as marcações no mapa.</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

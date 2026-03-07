@@ -12,7 +12,7 @@ namespace IMT.UI
     public class IMTColorPropertyPanel : ColorPropertyPanel<IMTColorPicker, IMTColorPickerPopup>
     {
         private static Color32? Buffer { get; set; }
-        //private static Queue<Color32> History = new Queue<Color32>();
+        private static Queue<Color32> History = new Queue<Color32>();
 
         Color32? defaultColor;
         public Color32 DefaultColor
@@ -58,20 +58,20 @@ namespace IMT.UI
 
             popup.CanPaste = Buffer.HasValue;
 
-            //popup.FillColorHistory(History.ToArray());
+            popup.FillColorHistory(History.ToArray());
         }
         private void ColorPickerPopupClose(IMTColorPickerPopup popup)
         {
-            //foreach (var item in History)
-            //{
-            //    if (Equals(item, popup.SelectedColor))
-            //        return;
-            //}
+            foreach (var item in History)
+            {
+                if (Equals(item, popup.SelectedColor))
+                    return;
+            }
 
-            //History.Enqueue(popup.SelectedColor);
+            History.Enqueue(popup.SelectedColor);
 
-            //if (History.Count > 10)
-            //    History.Dequeue();
+            if (History.Count > 10)
+                History.Dequeue();
         }
 
         public void Init(Color32? defaultColor = null)
@@ -122,7 +122,7 @@ namespace IMT.UI
         private CustomUIButton CopyButton { get; set; }
         private CustomUIButton PasteButton { get; set; }
         private CustomUIButton DefaultButton { get; set; }
-        //private CustomUIPanel SamplesPanel { get; set; }
+        private CustomUIPanel SamplesPanel { get; set; }
 
         public bool CanPaste
         {
@@ -145,17 +145,6 @@ namespace IMT.UI
         {
             base.FillPopup();
 
-            //SamplesPanel = AddUIComponent<CustomUIPanel>();
-            //SamplesPanel.AutoLayout = AutoLayout.Horizontal;
-            //SamplesPanel.AutoChildrenHorizontally = AutoLayoutChildren.Fit;
-            //SamplesPanel.AutoChildrenVertically = AutoLayoutChildren.Fit;
-            //SamplesPanel.AutoLayoutSpace = 8;
-            //SamplesPanel.Padding = new RectOffset(10, 10, 10, 10);
-
-            //SamplesPanel.Atlas = CommonTextures.Atlas;
-            //SamplesPanel.BackgroundSprite = CommonTextures.PanelBig;
-            //SamplesPanel.BgColors = ComponentStyle.DarkPrimaryColor25;
-
             var buttonPanel = AddUIComponent<CustomUIPanel>();
             buttonPanel.PauseLayout(() =>
             {
@@ -173,6 +162,17 @@ namespace IMT.UI
                 DefaultButton = CreateButton(buttonPanel, IMT.Localize.Editor_ColorDefault);
                 DefaultButton.eventClick += SetDefault;
             });
+
+            SamplesPanel = AddUIComponent<CustomUIPanel>();
+            SamplesPanel.AutoLayout = AutoLayout.Horizontal;
+            SamplesPanel.AutoChildrenHorizontally = AutoLayoutChildren.Fit;
+            SamplesPanel.AutoChildrenVertically = AutoLayoutChildren.Fit;
+            SamplesPanel.AutoLayoutSpace = 6;
+            SamplesPanel.Padding = new RectOffset(5, 5, 5, 5);
+
+            SamplesPanel.Atlas = CommonTextures.Atlas;
+            SamplesPanel.BackgroundSprite = CommonTextures.PanelBig;
+            SamplesPanel.BgColors = ComponentStyle.DarkPrimaryColor35;
         }
 
         public override void DeInit()
@@ -183,14 +183,14 @@ namespace IMT.UI
             OnPaste = null;
             OnDefault = null;
 
-            //SamplesPanel.PauseLayout(() =>
-            //{
-            //    foreach (var item in SamplesPanel.components.ToArray())
-            //    {
-            //        SamplesPanel.RemoveUIComponent(item);
-            //        Destroy(item);
-            //    }
-            //}, false);
+            SamplesPanel.PauseLayout(() =>
+            {
+                foreach (var item in SamplesPanel.components.ToArray())
+                {
+                    SamplesPanel.RemoveUIComponent(item);
+                    Destroy(item);
+                }
+            }, false);
         }
 
         private CustomUIButton CreateButton(UIComponent parent, string text)
@@ -209,27 +209,48 @@ namespace IMT.UI
         private void SetDefault(UIComponent component, UIMouseEventParameter eventParam) => OnDefault?.Invoke();
 
 
-        //public void FillColorHistory(Color32[] colors)
-        //{
-        //    SamplesPanel.PauseLayout(() =>
-        //    {
-        //        foreach (var color in colors)
-        //        {
-        //            var button = SamplesPanel.AddUIComponent<CustomUIButton>();
-        //            button.size = new Vector2(20f, 20f);
-        //            button.SpritePadding = new RectOffset(2, 2, 2, 2);
+        public void FillColorHistory(Color32[] colors)
+        {
+            if(colors.Length == 0)
+            {
+                SamplesPanel.isVisible = false;
+                return;
+            }
 
-        //            button.Atlas = CommonTextures.Atlas;
-        //            button.BgSprites = new SpriteSet(default, CommonTextures.Circle, CommonTextures.Circle, default, default);
-        //            button.FgSprites = CommonTextures.Circle;
+            SamplesPanel.isVisible = true;
+            SamplesPanel.PauseLayout(() =>
+            {
+                foreach (var color in colors)
+                {
+                    var button = SamplesPanel.AddUIComponent<CustomUIButton>();
+                    button.tooltip = $"{color.r} {color.g} {color.b} {color.a}";
+                    button.size = new Vector2(22f, 22f);
+                    button.canFocus = false;
+                    button.IconPadding = new RectOffset(5, 5, 5, 5);
 
-        //            var fgColor = color;
-        //            fgColor.a = 255;
-        //            button.FgColors = fgColor;
-        //            button.eventClick += (_, _) => ColorChanged(color, true, OnValueChanged);
-        //        }
-        //    });
-        //}
+                    button.Atlas = CommonTextures.Atlas;
+                    button.BgSprites = CommonTextures.Circle;
+                    button.FgSprites = CommonTextures.Circle;
+                    button.IconSprites = new SpriteSet(default, CommonTextures.Circle, CommonTextures.Circle, default, default);
+
+                    var fgColor = color;
+                    fgColor.a = 255;
+                    button.FgColors = fgColor;
+
+                    if (Color.white.GetContrast(color) >= CommonColors.DefaultContrast)
+                    {
+                        button.BgColors = button.IconColors = ComponentStyle.DarkPrimaryColor90;
+                        button.ForegroundPadding = new RectOffset(1, 1, 1, 1);
+                    }
+                    else
+                    {
+                        button.BgColors = button.IconColors = ComponentStyle.DarkPrimaryColor10;
+                        button.ForegroundPadding = new RectOffset(2, 2, 2, 2);
+                    }
+                    button.eventClick += (_, _) => ColorChanged(color, true, OnValueChanged);
+                }
+            });
+        }
     }
 }
 

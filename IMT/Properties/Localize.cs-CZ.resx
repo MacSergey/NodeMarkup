@@ -1752,4 +1752,10 @@ Klikněte pro změnu značení</value>
   <data name="Header_ExpandGroupTooltip" xml:space="preserve">
     <value>Podržením {0} sbalíte/rozbalíte všechny skupiny</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

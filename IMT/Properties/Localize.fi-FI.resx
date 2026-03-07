@@ -1200,4 +1200,10 @@ Napauta muokataksesi merkintöjä</value>
   <data name="PointEditor_RoadName" xml:space="preserve">
     <value>Tien nimi</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

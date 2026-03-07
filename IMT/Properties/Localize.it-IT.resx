@@ -2115,4 +2115,10 @@ Può volerci del tempo se ci sono molti segmenti.</value>
 [FIXED] L'anteprima dei preset non si sovrappone più alla barra di scorrimento.
 [NEW] Aggiunta la possibilità di ricalcolare tutte le marcature sulla mappa.</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

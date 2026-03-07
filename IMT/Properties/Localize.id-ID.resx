@@ -1599,4 +1599,10 @@ mode bawah tanah</value>
   <data name="Setting_Others" xml:space="preserve">
     <value>Lainnya</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

@@ -1992,4 +1992,10 @@ Dies kann einige Zeit dauern, wenn es viele Segmente gibt.</value>
 [TRANSLATION] Brasilianische Übersetzung hinzugefügt.
 </value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>

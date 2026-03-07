@@ -2900,15 +2900,10 @@ namespace IMT
 		/// </summary>
 		public static string StyleOption_ObjectSpreadRandom => LocaleManager.GetString("StyleOption_ObjectSpreadRandom", Culture);
 
-        /// <summary>
-        /// Sequential
-        /// </summary>
-        public static string StyleOption_ObjectSpreadSequential => LocaleManager.GetString("StyleOption_ObjectSpreadSequential", Culture);
-
-        /// <summary>
-        /// [UPDATED] Updated required game version to 1.18.1-f3
-        /// </summary>
-        public static string Mod_WhatsNewMessage1_14_6 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_6", Culture);
+		/// <summary>
+		/// [UPDATED] Updated required game version to 1.18.1-f3
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14_6 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_6", Culture);
 
 		/// <summary>
 		/// [UPDATED] Updated required game version to 1.19.2-f3.
@@ -2921,8 +2916,18 @@ namespace IMT
 		public static string Mod_WhatsNewMessage1_14_8 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_8", Culture);
 
 		/// <summary>
-		/// [UPDATED] Updated required game version to 1.21.5-f1.
+		/// Sequential
 		/// </summary>
-		public static string Mod_WhatsNewMessage1_14_9 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_9", Culture);
+		public static string StyleOption_ObjectSpreadSequential => LocaleManager.GetString("StyleOption_ObjectSpreadSequential", Culture);
+
+		/// <summary>
+		/// Invert
+		/// </summary>
+		public static string Editor_InvertValue => LocaleManager.GetString("Editor_InvertValue", Culture);
+
+		/// <summary>
+		/// Mirror
+		/// </summary>
+		public static string Editor_MirrorValue => LocaleManager.GetString("Editor_MirrorValue", Culture);
 	}
 }

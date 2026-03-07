@@ -337,4 +337,10 @@ crossings:</value>
   <data name="StyleOption_SecondColor" xml:space="preserve">
     <value>Second colour</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
 </root>
