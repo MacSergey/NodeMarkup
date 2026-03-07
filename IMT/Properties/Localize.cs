@@ -2900,9 +2900,24 @@ namespace IMT
 		/// </summary>
 		public static string StyleOption_ObjectSpreadRandom => LocaleManager.GetString("StyleOption_ObjectSpreadRandom", Culture);
 
+        /// <summary>
+        /// Sequential
+        /// </summary>
+        public static string StyleOption_ObjectSpreadSequential => LocaleManager.GetString("StyleOption_ObjectSpreadSequential", Culture);
+
+        /// <summary>
+        /// [UPDATED] Updated required game version to 1.18.1-f3
+        /// </summary>
+        public static string Mod_WhatsNewMessage1_14_6 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_6", Culture);
+
 		/// <summary>
-		/// Sequential
+		/// [UPDATED] Updated required game version to 1.19.2-f3.
 		/// </summary>
-		public static string StyleOption_ObjectSpreadSequential => LocaleManager.GetString("StyleOption_ObjectSpreadSequential", Culture);
+		public static string Mod_WhatsNewMessage1_14_7 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_7", Culture);
+
+		/// <summary>
+		/// [UPDATED] Updated required game version to 1.20.1-f1.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14_8 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_8", Culture);
 	}
 }

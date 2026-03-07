@@ -231,7 +231,7 @@ namespace IMT.Manager
         {
             item.position = trajectory.Position(t);
 
-            var shiftMiddle = (Shift.Value.y - Shift.Value.x) * 0.5f;
+            var shiftMiddle = (Shift.Value.y + Shift.Value.x) * 0.5f;
             var shift = ShiftSpread.Value switch
             { 
                 Spread.Random => SimulationManager.instance.m_randomizer.UInt32((uint)(Mathf.Abs(Shift.Value.y - Shift.Value.x) * 1000f)) * 0.001f - shiftMiddle,
@@ -759,20 +759,28 @@ namespace IMT.Manager
         {
             var config = base.ToXml();
             Tilt.ToXml(config);
+            TiltSpread.ToXml(config);
             Slope.ToXml(config);
+            SlopeSpread.ToXml(config);
             Scale.ToXml(config);
+            ScaleSpread.ToXml(config);
             Elevation.ToXml(config);
+            ElevationSpread.ToXml(config);
             return config;
         }
         public override void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
             base.FromXml(config, map, invert, typeChanged);
             Tilt.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
+            TiltSpread.FromXml(config, DefaultObjectSpread);
             Slope.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
+            SlopeSpread.FromXml(config, DefaultObjectSpread);
             Scale.FromXml(config, new Vector2(DefaultObjectAngle, DefaultObjectAngle));
+            ScaleSpread.FromXml(config, DefaultObjectSpread);
             Elevation.FromXml(config, new Vector2(DefaultObjectElevation, DefaultObjectElevation));
             if (config.TryGetAttrValue<float>("E", out var elevation))
                 Elevation.Value = new Vector2(elevation, elevation);
+            ElevationSpread.FromXml(config, DefaultObjectSpread);
         }
     }
 
