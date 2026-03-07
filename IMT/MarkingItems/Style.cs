@@ -1,6 +1,4 @@
-﻿using ColossalFramework.DataBinding;
-using ColossalFramework.UI;
-using IMT.API;
+﻿using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -10,10 +8,8 @@ using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
 using System.Xml.Linq;
 using UnityEngine;
-using static RenderManager;
 
 namespace IMT.Manager
 {
@@ -604,7 +600,7 @@ namespace IMT.Manager
             LineText,
 
             [Description(nameof(Localize.LineStyle_Decal))]
-            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway)]
+            [NetworkType(NetworkType.Road | NetworkType.Path | NetworkType.Taxiway | NetworkType.Track)]
             [LineType(LineType.Regular | LineType.Crosswalk | LineType.Lane)]
             [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(LineDecal))]
             [Sprite(typeof(IMTTextures), nameof(IMTTextures.Atlas), nameof(LineDecal), "Group")]

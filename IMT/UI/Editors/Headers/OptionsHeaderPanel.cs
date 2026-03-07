@@ -85,7 +85,18 @@ namespace IMT.UI.Editors
             if (group == StyleGroup)
                 SetPasteEnabled();
         }
-        private void SetPasteEnabled() => PasteButton.Enable = SingletonTool<IntersectionMarkingTool>.Instance.IsStyleInBuffer(StyleGroup);
+        private void SetPasteEnabled() => PasteButton.Enable = IsPasteEnabled();
+
+        private bool IsPasteEnabled()
+        {
+            if (!SingletonTool<IntersectionMarkingTool>.Instance.TryGetStyleTypeInBuffer(StyleGroup, out var type))
+                return false;
+
+            if(Editor.EditObject is MarkingLineRawRule rule)
+                return rule.Line.SupportStyleType(type);
+
+            return true;
+        }
 
         public override void DeInit()
         {
@@ -123,6 +134,8 @@ namespace IMT.UI.Editors
                     }
                     break;
             }
+
+            SetPasteEnabled();
 
             base.Refresh();
         }

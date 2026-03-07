@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace IMT.Manager
 {
-    public class NetworkLineStyle : RegularLineStyle, IAsymLine, I3DLine
+    public class NetworkLineStyle : RegularLineStyle, IAsymLine, INetworkLine
     {
         public static bool IsValidNetwork(NetInfo info) => info != null && info.m_segments.Length != 0 && info.m_netAI is DecorationWallAI;
         public override StyleType Type => StyleType.LineNetwork;
@@ -24,7 +24,7 @@ namespace IMT.Manager
         public PropertyPrefabValue<NetInfo> Prefab { get; }
         public PropertyNullableStructValue<Color32, PropertyColorValue> NetworkColor { get; }
         public PropertyVector2Value Shift { get; }
-        public PropertyValue<float> Elevation { get; }
+        public PropertyVector2Value Elevation { get; }
         public PropertyValue<float> OffsetBefore { get; }
         public PropertyValue<float> OffsetAfter { get; }
         public PropertyValue<float> Scale { get; }
@@ -53,7 +53,7 @@ namespace IMT.Manager
             {
                 yield return new StylePropertyDataProvider<NetInfo>(nameof(Prefab), Prefab);
                 yield return new StylePropertyDataProvider<Vector2>(nameof(Shift), Shift);
-                yield return new StylePropertyDataProvider<float>(nameof(Elevation), Elevation);
+                yield return new StylePropertyDataProvider<Vector2>(nameof(Elevation), Elevation);
                 yield return new StylePropertyDataProvider<float>(nameof(Scale), Scale);
                 yield return new StylePropertyDataProvider<int>(nameof(RepeatDistance), RepeatDistance);
                 yield return new StylePropertyDataProvider<float>(nameof(OffsetBefore), OffsetBefore);
@@ -62,12 +62,12 @@ namespace IMT.Manager
             }
         }
 
-        public NetworkLineStyle(NetInfo prefab, Color32? color, Vector2 shift, float elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(default, 0f)
+        public NetworkLineStyle(NetInfo prefab, Color32? color, Vector2 shift, Vector2 elevation, float scale, float offsetBefore, float offsetAfter, int repeatDistance, bool invert) : base(default, 0f)
         {
             Prefab = new PropertyPrefabValue<NetInfo>("PRF", StyleChanged, prefab);
             NetworkColor = new PropertyNullableStructValue<Color32, PropertyColorValue>(new PropertyColorValue("NC", null), "NC", StyleChanged, color);
             Shift = new PropertyVector2Value(StyleChanged, shift, "SFA", "SFB");
-            Elevation = new PropertyStructValue<float>("E", StyleChanged, elevation);
+            Elevation = new PropertyVector2Value(StyleChanged, elevation, "EA", "EB");
             OffsetBefore = new PropertyStructValue<float>("OB", StyleChanged, offsetBefore);
             OffsetAfter = new PropertyStructValue<float>("OA", StyleChanged, offsetAfter);
             Scale = new PropertyStructValue<float>("SC", StyleChanged, scale);
@@ -81,7 +81,7 @@ namespace IMT.Manager
         {
             base.CopyTo(target);
             if (target is I3DLine line3DTarget)
-                line3DTarget.Elevation.Value = Elevation;
+                line3DTarget.Elevation.Value = (Elevation.Value.x + Elevation.Value.y) * 0.5f;
             if (target is IAsymLine asymTarget)
                 asymTarget.Invert.Value = Invert;
             if (target is NetworkLineStyle networkTarget)
@@ -100,11 +100,10 @@ namespace IMT.Manager
             if (!IsValid)
                 return;
 
-            var shift = Shift.Value;
-            if (shift != Vector2.zero)
-            {
-                trajectory = trajectory.Shift(shift.x, shift.y);
-            }
+            if (Shift.Value != Vector2.zero)
+                trajectory = trajectory.Shift(Shift.Value.x, Shift.Value.y);
+            if(Elevation.Value != Vector2.zero)
+                trajectory = trajectory.Elevate(Elevation.Value.x, Elevation.Value.y);
 
             var length = trajectory.Length;
             if (OffsetBefore + OffsetAfter >= length)
@@ -121,14 +120,16 @@ namespace IMT.Manager
             var count = Mathf.CeilToInt(trajectory.Length / RepeatDistance);
             var trajectories = new ITrajectory[count];
             if (count == 1)
+            {
                 trajectories[0] = trajectory;
+            }
             else
             {
                 for (int i = 0; i < count; i += 1)
                     trajectories[i] = trajectory.Cut(1f / count * i, 1f / count * (i + 1));
             }
 
-            addData(new MarkingNetworkData(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, Elevation, NetworkColor.Value ?? Prefab.Value.m_color));
+            addData(new MarkingNetworkData(Prefab, trajectories, Prefab.Value.m_halfWidth * 2f, Prefab.Value.m_segmentLength, Scale, NetworkColor.Value ?? Prefab.Value.m_color));
         }
 
         protected override void GetUIComponents(MarkingRegularLine line, EditorProvider provider)
@@ -138,7 +139,7 @@ namespace IMT.Manager
             provider.AddProperty(new PropertyInfo<SelectNetworkProperty>(this, nameof(Prefab), MainCategory, AddPrefabProperty));
             provider.AddProperty(new PropertyInfo<IMTColorPropertyPanel>(this, nameof(NetworkColor), AdditionalCategory, AddNetworkColorProperty, RefreshNetworkColorProperty));
             provider.AddProperty(new PropertyInfo<FloatSingleDoubleInvertedProperty>(this, nameof(Shift), MainCategory, AddShiftProperty, RefreshShiftProperty));
-            provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
+            provider.AddProperty(new PropertyInfo<FloatSingleDoubleProperty>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), AdditionalCategory, AddScaleProperty, RefreshScaleProperty));
             provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RepeatDistance), AdditionalCategory, AddRepeatDistanceProperty, RefreshRepeatDistanceProperty));
             provider.AddProperty(new PropertyInfo<Vector2PropertyPanel>(this, nameof(Offset), AdditionalCategory, AddOffsetProperty, RefreshOffsetProperty));
@@ -192,8 +193,9 @@ namespace IMT.Manager
             shiftProperty.RangeRef.WheelTip = Settings.ShowToolTip;
             shiftProperty.RangeRef.CheckMin = true;
             shiftProperty.RangeRef.CheckMax = true;
-            shiftProperty.RangeRef.MinValue = -50;
-            shiftProperty.RangeRef.MaxValue = 50;
+            shiftProperty.RangeRef.MinValue = -100;
+            shiftProperty.RangeRef.MaxValue = 100;
+            shiftProperty.RangeRef.AllowInvert = true;
             shiftProperty.Init
                 (new OptionData(Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcon),
                 new OptionData(Localize.StyleOption_ObjectTwoDifferent, IMTTextures.Atlas, IMTTextures.DoubleButtonIcon));
@@ -205,22 +207,25 @@ namespace IMT.Manager
             shiftProperty.IsHidden = !IsValid;
         }
 
-        new private void AddElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
+        private void AddElevationProperty(FloatSingleDoubleProperty elevationProperty, EditorProvider provider)
         {
             elevationProperty.Label = Localize.LineStyle_Elevation;
-            elevationProperty.FieldRef.Format = Localize.NumberFormat_Meter;
-            elevationProperty.FieldRef.UseWheel = true;
-            elevationProperty.FieldRef.WheelStep = 0.1f;
-            elevationProperty.FieldRef.WheelTip = Settings.ShowToolTip;
-            elevationProperty.FieldRef.CheckMin = true;
-            elevationProperty.FieldRef.CheckMax = true;
-            elevationProperty.FieldRef.MinValue = -100;
-            elevationProperty.FieldRef.MaxValue = 100;
-            elevationProperty.Init();
-            elevationProperty.FieldRef.Value = Elevation;
-            elevationProperty.OnValueChanged += (value) => Elevation.Value = value;
+            elevationProperty.RangeRef.Format = Localize.NumberFormat_Meter;
+            elevationProperty.RangeRef.UseWheel = true;
+            elevationProperty.RangeRef.WheelStep = 0.1f;
+            elevationProperty.RangeRef.WheelTip = Settings.ShowToolTip;
+            elevationProperty.RangeRef.CheckMin = true;
+            elevationProperty.RangeRef.CheckMax = true;
+            elevationProperty.RangeRef.MinValue = -100;
+            elevationProperty.RangeRef.MaxValue = 100;
+            elevationProperty.RangeRef.AllowInvert = true;
+            elevationProperty.Init
+                (new OptionData(Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcon),
+                new OptionData(Localize.StyleOption_ObjectTwoDifferent, IMTTextures.Atlas, IMTTextures.DoubleButtonIcon));
+            elevationProperty.SetValues(Elevation.Value.x, Elevation.Value.y);
+            elevationProperty.OnValueChanged += (valueA, valueB) => Elevation.Value = new Vector2(valueA, valueB);
         }
-        private void RefreshElevationProperty(FloatPropertyPanel elevationProperty, EditorProvider provider)
+        private void RefreshElevationProperty(FloatSingleDoubleProperty elevationProperty, EditorProvider provider)
         {
             elevationProperty.IsHidden = !IsValid || Prefab.Value.m_segments[0].m_segmentMaterial.shader.name == "Custom/Net/Fence";
         }
@@ -325,7 +330,9 @@ namespace IMT.Manager
             Shift.FromXml(config, new Vector2(DefaultObjectShift, DefaultObjectShift));
             if (config.TryGetAttrValue<float>("SF", out var shift))
                 Shift.Value = new Vector2(shift, shift);
-            Elevation.FromXml(config, DefaultObjectElevation);
+            Elevation.FromXml(config, new Vector2(DefaultObjectElevation, DefaultObjectElevation));
+            if (config.TryGetAttrValue<float>("E", out var elevation))
+                Elevation.Value = new Vector2(elevation, elevation);
             Scale.FromXml(config, DefaultNetworkScale);
             RepeatDistance.FromXml(config, DefaultRepeatDistance);
             OffsetBefore.FromXml(config, DefaultObjectOffsetBefore);

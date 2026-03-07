@@ -1,6 +1,5 @@
 ﻿using ModsCommon.UI;
 using System;
-using UnityEngine;
 
 namespace IMT.UI
 {
@@ -53,17 +52,22 @@ namespace IMT.UI
         public void SetValues(ValueType valueA, ValueType valueB) => SetValues(valueA.CompareTo(valueB) == 0 ? FirstOptionIndex : SecondOptionIndex, valueA, valueB);
         private void SetValues(int index, ValueType valueA, ValueType valueB)
         {
-            Range.Mode = valueA.CompareTo(valueB) == 0 ? RangeMode.Single : RangeMode.Range;
             Selector.SelectedObject = index;
+            if (index == FirstOptionIndex)
+                Range.Mode = RangeMode.Single;
+            else if (index == SecondOptionIndex)
+                Range.Mode = RangeMode.Range;
+            else
+                Range.Mode = default;
             Range.SetValues(valueA, valueB);
         }
 
         protected override void SelectorChanged(int index)
         {
-            base.SelectorChanged(index);
-
             SetValues(index, Range.ValueA, Range.ValueB);
             ValueChanged(Range.ValueA, Range.ValueB);
+
+            base.SelectorChanged(index);
         }
 
         public override void SetStyle(ControlStyle style)

@@ -197,12 +197,7 @@ namespace IMT.UI.Editors
             Style.SelectedObject = Rule.Style.Value.Type;
             Style.OnSelectObjectChanged += StyleChanged;
         }
-        private bool StyleSelector(Style.StyleType styleType)
-        {
-            var networkType = styleType.GetNetworkType();
-            var lineType = styleType.GetLineType();
-            return (Line.PointPair.NetworkType & networkType) != 0 && (Line.PointPair.LineType & lineType) != 0;
-        }
+        private bool StyleSelector(Style.StyleType styleType) => Line.SupportStyleType(styleType);
 
         private void AddStyleProperties()
         {
@@ -243,6 +238,10 @@ namespace IMT.UI.Editors
         {
             if (Editor.Tool.FromStyleBuffer<LineStyle>(Rule.Style.Value.Type.GetGroup(), out var style))
             {
+                var networkType = style.Type.GetNetworkType();
+                if ((Line.PointPair.NetworkType & networkType) == 0)
+                    return;
+
                 ApplyStyle(style);
                 IsExpand = true;
             }

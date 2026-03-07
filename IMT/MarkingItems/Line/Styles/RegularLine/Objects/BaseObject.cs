@@ -359,8 +359,8 @@ namespace IMT.Manager
             angleProperty.RangeRef.WheelTip = Settings.ShowToolTip;
             angleProperty.RangeRef.CheckMin = true;
             angleProperty.RangeRef.CheckMax = true;
-            angleProperty.RangeRef.MinValue = -180;
-            angleProperty.RangeRef.MaxValue = 180;
+            angleProperty.RangeRef.MinValue = -360;
+            angleProperty.RangeRef.MaxValue = 360;
             angleProperty.RangeRef.AllowInvert = true;
             angleProperty.RangeRef.CyclicalValue = true;
             angleProperty.Init();
@@ -394,8 +394,8 @@ namespace IMT.Manager
             shiftProperty.RangeRef.WheelTip = Settings.ShowToolTip;
             shiftProperty.RangeRef.CheckMin = true;
             shiftProperty.RangeRef.CheckMax = true;
-            shiftProperty.RangeRef.MinValue = -50;
-            shiftProperty.RangeRef.MaxValue = 50;
+            shiftProperty.RangeRef.MinValue = -100;
+            shiftProperty.RangeRef.MaxValue = 100;
             shiftProperty.RangeRef.AllowInvert = true;
             shiftProperty.RangeRef.CyclicalValue = false;
             shiftProperty.Init();

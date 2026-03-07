@@ -872,7 +872,7 @@ namespace IMT.Tools
 
             {
                 var defaultStyle = ifNotFound.ToEnum<Style.StyleType, TStyleType>();
-                if ((defaultStyle.GetNetworkType() & networkType) == 0 && (defaultStyle.GetLineType() & lineType) == 0)
+                if ((defaultStyle.GetNetworkType() & networkType) == 0 || (defaultStyle.GetLineType() & lineType) == 0)
                 {
                     foreach (var style in EnumExtension.GetEnumValues<TStyleType>().ToEnum<Style.StyleType, TStyleType>())
                     {
@@ -954,6 +954,19 @@ namespace IMT.Tools
             }
         }
         public bool IsStyleInBuffer(Style.StyleType type) => StyleBuffer.ContainsKey(type.GetGroup());
+        public bool TryGetStyleTypeInBuffer(Style.StyleType typeGroup, out Style.StyleType type)
+        {
+            if (StyleBuffer.TryGetValue(typeGroup.GetGroup(), out var style))
+            {
+                type = style.Type;
+                return true;
+            }
+            else
+            {
+                type = default;
+                return false;
+            }
+        }
 
         #endregion
     }
