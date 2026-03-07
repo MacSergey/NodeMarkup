@@ -32,7 +32,7 @@ namespace IMT.Utilities
         float width;
         float scale;
 
-        public MarkingNetworkData(NetInfo info, ITrajectory[] trajectories, float width, float length, float scale, float elevation, Color32 color) : base(MarkingLOD.NoLOD, width, length)
+        public MarkingNetworkData(NetInfo info, ITrajectory[] trajectories, float width, float length, float scale, Color32 color) : base(MarkingLOD.NoLOD, width, length)
         {
             Info = info;
             this.width = width;
@@ -45,7 +45,6 @@ namespace IMT.Utilities
             {
                 var position = (trajectories[i].StartPosition + trajectories[i].EndPosition) * 0.5f;
                 CalculateMatrix(trajectories[i], width * 0.5f * scale, position, out var left, out var right);
-                position += Vector3.up * elevation;
 
                 int j = 0;
                 foreach (var segment in info.m_segments)
