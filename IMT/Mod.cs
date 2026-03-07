@@ -32,6 +32,7 @@ namespace IMT
         protected override string IdRaw => "IntersectionMarkingTool";
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version(1,14,9), new DateTime(2026, 3, 7)),
             new ModVersion(new Version(1,14,8), new DateTime(2025, 9, 29)),
             new ModVersion(new Version(1,14,7), new DateTime(2025, 5, 23)),
             new ModVersion(new Version(1,14,6), new DateTime(2024, 10, 26)),
@@ -70,7 +71,7 @@ namespace IMT
             new ModVersion(new Version(1,1), new DateTime(2020, 7, 14)),
             new ModVersion(new Version(1,0), new DateTime(2020, 7, 7)),
         };
-        protected override Version RequiredGameVersion => new Version(1, 20, 1, 1);
+        protected override Version RequiredGameVersion => new Version(1, 21, 1, 5);
 
         public override string NameRaw => "Intersection Marking Tool";
         public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
@@ -291,7 +292,7 @@ namespace IMT
                 else if (instruction.opcode == OpCodes.Call && instruction.operand == updateLanes)
                 {
                     yield return instruction;
-                    yield return new CodeInstruction(OpCodes.Ldloc_S, 13);
+                    yield return new CodeInstruction(OpCodes.Ldloc_S, 15);
                     yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MarkingManager), nameof(MarkingManager.UpdateSegment)));
                 }
                 else

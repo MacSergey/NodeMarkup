@@ -38,7 +38,7 @@ namespace IMT.Utilities
             this.width = width;
             this.scale = scale;
 
-            var count = info.m_segments.Count(s => s.CheckFlags(NetSegment.Flags.None, out _));
+            var count = info.m_segments.Count(s => s.CheckFlags(NetSegment.Flags.None, NetSegment.Flags2.None, out _));
             Datas = new Data[trajectories.Length * count];
 
             for (int i = 0; i < trajectories.Length; i += 1)
@@ -50,7 +50,7 @@ namespace IMT.Utilities
                 int j = 0;
                 foreach (var segment in info.m_segments)
                 {
-                    if (segment.CheckFlags(NetSegment.Flags.None, out _))
+                    if (segment.CheckFlags(NetSegment.Flags.None, NetSegment.Flags2.None, out _))
                     {
                         int index = i * count + j;
 
@@ -164,7 +164,7 @@ namespace IMT.Utilities
             foreach (var data in Datas)
             {
                 CalculateMatrix(data.trajectory, width * 0.5f * scale, groupPosition, out var left, out var right);
-                NetSegment.PopulateGroupData(Info, data.segment, left, right, Scale, default, ref vertexIndex, ref triangleIndex, groupPosition, renderData, ref requireSurfaceMaps);
+                NetSegment.PopulateGroupData(Info, data.segment, left, right, Scale, default, ref vertexIndex, ref triangleIndex, groupPosition, renderData, ref requireSurfaceMaps, Vector2.zero);
             }
         }
     }
