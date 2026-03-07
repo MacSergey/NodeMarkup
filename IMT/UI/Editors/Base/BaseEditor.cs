@@ -144,13 +144,13 @@ namespace IMT.UI.Editors
                         ItemsPanel.Focus();
                         var time = 0.2f * (max - current) / (max - min);
                         if (min < max && current != max)
-                            ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, max, time, EasingType.CubicEaseOut));
+                            ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, max, time, EasingType.CircEaseInOut));
                     }
                     else
                     {
                         var time = 0.2f * (current - min) / (max - min);
                         if (current != min)
-                            ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, min, time, EasingType.CubicEaseOut));
+                            ValueAnimator.Animate(AnimationId, SetItemPanelWidth, new AnimatedFloat(current, min, time, EasingType.CircEaseInOut));
                     }
                 }
             }

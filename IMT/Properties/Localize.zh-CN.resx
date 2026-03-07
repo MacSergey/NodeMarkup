@@ -2111,4 +2111,7 @@
   <data name="Editor_MirrorValue" xml:space="preserve">
     <value />
   </data>
+  <data name="Header_RemoveRule" xml:space="preserve">
+    <value />
+  </data>
 </root>

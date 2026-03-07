@@ -1825,12 +1825,15 @@ Pode demorar um pouco se tiver muitos segmentos.</value>
     <value>.</value>
   </data>
   <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Editor_InvertValue" xml:space="preserve">
     <value />
   </data>
   <data name="Editor_MirrorValue" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Header_RemoveRule" xml:space="preserve">
     <value />
   </data>
 </root>

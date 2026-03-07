@@ -848,6 +848,13 @@ namespace IMT.Manager
             if (config.TryGetAttrValue<float>("E", out var elevation))
                 Elevation.Value = new Vector2(elevation, elevation);
             ElevationSpread.FromXml(config, DefaultObjectSpread);
+
+            if (map.Invert ^ invert ^ typeChanged)
+            {
+                Tilt.Value = new Vector2(-Tilt.Value.y, -Tilt.Value.x);
+                if(Slope.HasValue)
+                    Slope.Value = new Vector2(-Slope.Value.Value.y, -Slope.Value.Value.x);
+            }
         }
     }
 

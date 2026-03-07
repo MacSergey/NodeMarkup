@@ -2138,4 +2138,7 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
   <data name="Editor_MirrorValue" xml:space="preserve">
     <value />
   </data>
+  <data name="Header_RemoveRule" xml:space="preserve">
+    <value />
+  </data>
 </root>

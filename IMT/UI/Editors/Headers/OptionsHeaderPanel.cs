@@ -203,6 +203,8 @@ namespace IMT.UI.Editors
             Separator.color = new Color32(0, 0, 0, 128);
             Separator.zOrder = 2;
             SetItemMargin(Separator, new RectOffset(10, 5, 0, 0));
+
+            DeleteButton.tooltip = IMT.Localize.Header_RemoveRule;
         }
         protected override void FillContent()
         {
