@@ -1,4 +1,5 @@
-﻿using IMT.API;
+﻿using ColossalFramework.Math;
+using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -95,7 +96,7 @@ namespace IMT.Manager
                 networkTarget.RepeatDistance.Value = RepeatDistance;
             }
         }
-        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void CalculateImpl(ref Randomizer randomizer, MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             if (!IsValid)
                 return;
@@ -138,7 +139,7 @@ namespace IMT.Manager
 
             provider.AddProperty(new PropertyInfo<SelectNetworkProperty>(this, nameof(Prefab), MainCategory, AddPrefabProperty));
             provider.AddProperty(new PropertyInfo<IMTColorPropertyPanel>(this, nameof(NetworkColor), AdditionalCategory, AddNetworkColorProperty, RefreshNetworkColorProperty));
-            provider.AddProperty(new PropertyInfo<FloatSingleDoubleInvertedProperty>(this, nameof(Shift), MainCategory, AddShiftProperty, RefreshShiftProperty));
+            provider.AddProperty(new PropertyInfo<FloatSingleDoubleProperty>(this, nameof(Shift), MainCategory, AddShiftProperty, RefreshShiftProperty));
             provider.AddProperty(new PropertyInfo<FloatSingleDoubleProperty>(this, nameof(Elevation), MainCategory, AddElevationProperty, RefreshElevationProperty));
             provider.AddProperty(new PropertyInfo<FloatPropertyPanel>(this, nameof(Scale), AdditionalCategory, AddScaleProperty, RefreshScaleProperty));
             provider.AddProperty(new PropertyInfo<IntPropertyPanel>(this, nameof(RepeatDistance), AdditionalCategory, AddRepeatDistanceProperty, RefreshRepeatDistanceProperty));
@@ -183,7 +184,7 @@ namespace IMT.Manager
                 colorProperty.DefaultColor = Prefab.Value.m_color;
         }
 
-        private void AddShiftProperty(FloatSingleDoubleInvertedProperty shiftProperty, EditorProvider provider)
+        private void AddShiftProperty(FloatSingleDoubleProperty shiftProperty, EditorProvider provider)
         {
             shiftProperty.Label = Localize.StyleOption_ObjectShift;
             shiftProperty.RangeRef.FieldWidth = 100f;
@@ -195,14 +196,16 @@ namespace IMT.Manager
             shiftProperty.RangeRef.CheckMax = true;
             shiftProperty.RangeRef.MinValue = -100;
             shiftProperty.RangeRef.MaxValue = 100;
-            shiftProperty.RangeRef.AllowInvert = true;
+            shiftProperty.RangeRef.AllowReverse = true;
+            shiftProperty.RangeRef.CanInvert = true;
+            shiftProperty.RangeRef.CanMirror = true;
             shiftProperty.Init
                 (new OptionData(Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcon),
                 new OptionData(Localize.StyleOption_ObjectTwoDifferent, IMTTextures.Atlas, IMTTextures.DoubleButtonIcon));
             shiftProperty.SetValues(Shift.Value.x, Shift.Value.y);
             shiftProperty.OnValueChanged += (valueA, valueB) => Shift.Value = new Vector2(valueA, valueB);
         }
-        private void RefreshShiftProperty(FloatSingleDoubleInvertedProperty shiftProperty, EditorProvider provider)
+        private void RefreshShiftProperty(FloatSingleDoubleProperty shiftProperty, EditorProvider provider)
         {
             shiftProperty.IsHidden = !IsValid;
         }
@@ -218,7 +221,9 @@ namespace IMT.Manager
             elevationProperty.RangeRef.CheckMax = true;
             elevationProperty.RangeRef.MinValue = -100;
             elevationProperty.RangeRef.MaxValue = 100;
-            elevationProperty.RangeRef.AllowInvert = true;
+            elevationProperty.RangeRef.AllowReverse = true;
+            elevationProperty.RangeRef.CanInvert = true;
+            elevationProperty.RangeRef.CanMirror = true;
             elevationProperty.Init
                 (new OptionData(Localize.StyleOption_ObjectStatic, IMTTextures.Atlas, IMTTextures.SingleButtonIcon),
                 new OptionData(Localize.StyleOption_ObjectTwoDifferent, IMTTextures.Atlas, IMTTextures.DoubleButtonIcon));

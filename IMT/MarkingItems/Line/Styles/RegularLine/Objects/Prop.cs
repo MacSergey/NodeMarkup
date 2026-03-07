@@ -1,4 +1,5 @@
-﻿using IMT.API;
+﻿using ColossalFramework.Math;
+using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -78,9 +79,9 @@ namespace IMT.Manager
 
         public override RegularLineStyle CopyLineStyle() => new PropLineStyle(Prefab.Value, Probability, ColorOption, Color, Step, Angle, AngleSpread, Shift, ShiftSpread, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount, Tilt, TiltSpread, Slope, SlopeSpread, Scale, ScaleSpread, Elevation, ElevationSpread);
 
-        protected override void CalculateItem(ITrajectory trajectory, float t, float p, PropInfo prop, ref MarkingObjectItemData item)
+        protected override void CalculateItem(ref Randomizer randomizer, ITrajectory trajectory, float t, float p, PropInfo prop, ref MarkingObjectItemData item)
         {
-            base.CalculateItem(trajectory, t, p, prop, ref item);
+            base.CalculateItem(ref randomizer, trajectory, t, p, prop, ref item);
 
             switch (ColorOption.Value)
             {
@@ -97,7 +98,7 @@ namespace IMT.Manager
                     item.color = prop.m_color3;
                     break;
                 case ColorOptionEnum.Random:
-                    item.color = prop.GetColor(ref SimulationManager.instance.m_randomizer);
+                    item.color = prop.GetColor(ref randomizer);
                     break;
                 case ColorOptionEnum.Custom:
                     item.color = Color;

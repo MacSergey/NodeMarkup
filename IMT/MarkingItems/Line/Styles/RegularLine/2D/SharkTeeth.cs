@@ -1,4 +1,5 @@
-﻿using IMT.API;
+﻿using ColossalFramework.Math;
+using IMT.API;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
@@ -66,7 +67,7 @@ namespace IMT.Manager
             Invert = GetInvertProperty(true);
             Angle = GetAngleProperty(angle);
         }
-        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void CalculateImpl(ref Randomizer randomizer, MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             if (CheckDashedLod(lod, Height, Base))
             {

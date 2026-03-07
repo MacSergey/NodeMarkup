@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.Math;
+using ColossalFramework.UI;
 using IMT.API;
 using IMT.Utilities;
 using IMT.Utilities.API;
@@ -46,7 +47,7 @@ namespace IMT.Manager
 
         public override RegularLineStyle CopyLineStyle() => new SolidLineStyle(Color, Width, Cracks, Voids, Texture);
 
-        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void CalculateImpl(ref Randomizer randomizer, MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             var borders = line.Borders;
             var parts = StyleHelper.CalculateSolid(trajectory, lod, StyleHelper.SplitParams.Default);

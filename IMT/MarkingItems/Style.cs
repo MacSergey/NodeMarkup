@@ -1,4 +1,5 @@
-﻿using IMT.API;
+﻿using ColossalFramework.Math;
+using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -107,6 +108,8 @@ namespace IMT.Manager
         public Action OnStyleChanged { private get; set; }
         public string XmlSection => XmlName;
         public abstract StyleType Type { get; }
+        protected uint Seed { get; private set; }
+        protected virtual bool NeedSeed => false;
         public abstract MarkingLOD SupportLOD { get; }
 
         protected virtual void StyleChanged() => OnStyleChanged?.Invoke();
@@ -165,6 +168,7 @@ namespace IMT.Manager
 
         public Style(Color32 color, float width, Vector2 cracks, Vector2 voids, float texture)
         {
+
             Color = GetColorProperty(color);
             Width = GetWidthProperty(width);
             Cracks = new PropertyVector2Value(StyleChanged, cracks, "ST", "SS");
@@ -393,6 +397,8 @@ namespace IMT.Manager
         public virtual XElement ToXml()
         {
             var config = BaseToXml();
+            if (NeedSeed && Seed != 0)
+                config.Add(new XAttribute("SEED", Seed));
             Color.ToXml(config);
             Width.ToXml(config);
             if (this is IEffectStyle)
@@ -405,6 +411,8 @@ namespace IMT.Manager
         }
         public virtual void FromXml(XElement config, ObjectsMap map, bool invert, bool typeChanged)
         {
+            if (config.TryGetAttrValue<uint>("SEED", out var seed))
+                Seed = seed;
             Color.FromXml(config, DefaultMarkingColor);
             Width.FromXml(config, DefaultWidth);
             if (this is IEffectStyle)
@@ -415,6 +423,7 @@ namespace IMT.Manager
             }
         }
 
+        protected void UpdateSeed() => Seed = SimulationManager.instance.m_randomizer.UInt32(uint.MaxValue);
         public virtual void GetUsedAssets(HashSet<string> networks, HashSet<string> props, HashSet<string> trees) { }
 
         public override string ToString() => Type.ToString();

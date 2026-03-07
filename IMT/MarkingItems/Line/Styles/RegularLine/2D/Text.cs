@@ -1,4 +1,5 @@
-﻿using IMT.API;
+﻿using ColossalFramework.Math;
+using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -179,7 +180,7 @@ namespace IMT.Manager
 
         public override RegularLineStyle CopyLineStyle() => new RegularLineStyleText(Color, Cracks, Voids, Texture, Font, Text, Scale, Angle, Shift, Direction, Spacing, Alignment, Offset);
 
-        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void CalculateImpl(ref Randomizer randomizer, MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             if (string.IsNullOrEmpty(Text))
                 return;

@@ -1,4 +1,5 @@
-﻿using IMT.API;
+﻿using ColossalFramework.Math;
+using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -70,9 +71,9 @@ namespace IMT.Manager
 
         public override RegularLineStyle CopyLineStyle() => new TreeLineStyle(Prefab.Value, Probability, Step, Angle, AngleSpread, Shift, ShiftSpread, OffsetBefore, OffsetAfter, Distribution, FixedEnd, MinCount, MaxCount, Tilt, TiltSpread, Slope, SlopeSpread, Scale, ScaleSpread, Elevation, ElevationSpread, Wind);
 
-        protected override void CalculateItem(ITrajectory trajectory, float t, float p, TreeInfo prefab, ref MarkingObjectItemData item)
+        protected override void CalculateItem(ref Randomizer randomizer, ITrajectory trajectory, float t, float p, TreeInfo prefab, ref MarkingObjectItemData item)
         {
-            base.CalculateItem(trajectory, t, p, prefab, ref item);
+            base.CalculateItem(ref randomizer, trajectory, t, p, prefab, ref item);
             item.wind = Wind;
         }
         protected override void AddData(TreeInfo tree, MarkingObjectItemData[] items, MarkingLOD lod, Action<IStyleData> addData)

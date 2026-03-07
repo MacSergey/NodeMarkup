@@ -1,4 +1,5 @@
-﻿using IMT.API;
+﻿using ColossalFramework.Math;
+using IMT.API;
 using IMT.UI.Editors;
 using IMT.Utilities;
 using IMT.Utilities.API;
@@ -77,7 +78,7 @@ namespace IMT.Manager
             }
         }
 
-        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void CalculateImpl(ref Randomizer randomizer, MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             var count = Mathf.FloorToInt(trajectory.Length / Step.Value);
             var startOffset = (trajectory.Length - Step.Value * count) * 0.5f;

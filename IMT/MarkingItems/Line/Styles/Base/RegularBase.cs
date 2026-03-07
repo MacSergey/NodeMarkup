@@ -1,4 +1,5 @@
-﻿using IMT.UI.Editors;
+﻿using ColossalFramework.Math;
+using IMT.UI.Editors;
 using IMT.Utilities;
 using ModsCommon.Utilities;
 using System;
@@ -42,11 +43,14 @@ namespace IMT.Manager
                 foreach (var lod in EnumExtension.GetEnumValues<MarkingLOD>())
                 {
                     if ((SupportLOD & lod) != 0)
-                        CalculateImpl(regularLine, trajectory, lod, addData);
+                    {
+                        var randomizer = new Randomizer(Seed);
+                        CalculateImpl(ref randomizer, regularLine, trajectory, lod, addData);
+                    }
                 }
             }
         }
-        protected abstract void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData);
+        protected abstract void CalculateImpl(ref Randomizer randomizer, MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData);
 
         public sealed override void GetUIComponents(EditorProvider provider)
         {

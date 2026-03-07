@@ -1,4 +1,5 @@
-﻿using ColossalFramework.UI;
+﻿using ColossalFramework.Math;
+using ColossalFramework.UI;
 using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
@@ -78,7 +79,7 @@ namespace IMT.Manager
                 doubleAlignmentTarget.Alignment.Value = Alignment;
         }
 
-        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void CalculateImpl(ref Randomizer randomizer, MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             var borders = line.Borders;
             var parts = StyleHelper.CalculateSolid(trajectory, lod, StyleHelper.SplitParams.Default);

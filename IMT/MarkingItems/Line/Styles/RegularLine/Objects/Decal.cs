@@ -161,7 +161,6 @@ namespace IMT.Manager
             tilingProperty.Label = Localize.StyleOption_Tiling;
             tilingProperty.SetLabels(Localize.StyleOption_Width, Localize.StyleOption_Length);
             tilingProperty.FieldsWidth = 50f;
-            //tilingProperty.Format = Localize.NumberFormat_Meter;
             tilingProperty.UseWheel = true;
             tilingProperty.WheelStep = Vector2.one;
             tilingProperty.WheelTip = Settings.ShowToolTip;

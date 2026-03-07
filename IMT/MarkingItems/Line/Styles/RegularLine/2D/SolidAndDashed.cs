@@ -1,4 +1,5 @@
-﻿using IMT.API;
+﻿using ColossalFramework.Math;
+using IMT.API;
 using IMT.UI;
 using IMT.UI.Editors;
 using IMT.Utilities;
@@ -86,7 +87,7 @@ namespace IMT.Manager
             Invert.Value = value == Manager.Alignment.Right;
         }
 
-        protected override void CalculateImpl(MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
+        protected override void CalculateImpl(ref Randomizer randomizer, MarkingRegularLine line, ITrajectory trajectory, MarkingLOD lod, Action<IStyleData> addData)
         {
             var solidOffset = CenterSolid ? 0 : Invert ? Offset : -Offset;
             var dashedOffset = (Invert ? -Offset : Offset) * (CenterSolid ? 2 : 1);
