@@ -2929,5 +2929,10 @@ namespace IMT
 		/// Mirror
 		/// </summary>
 		public static string Editor_MirrorValue => LocaleManager.GetString("Editor_MirrorValue", Culture);
+
+		/// <summary>
+		/// [UPDATED] Updated required game version to 1.21.5-f1.
+		/// </summary>
+		public static string Mod_WhatsNewMessage1_14_9 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_9", Culture);
 	}
 }
