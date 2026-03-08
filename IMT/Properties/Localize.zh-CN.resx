@@ -2105,4 +2105,34 @@
   <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
     <value>连续的</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_6" xml:space="preserve">
+    <value>[UPDATED] 将所需游戏版本更新为 1.18.1-f3</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_7" xml:space="preserve">
+    <value>[UPDATED] 将所需游戏版本更新为 1.19.2-f3。
+[修复]摆件/树的移动计算错误问题。
+[修复]平移模式、高度、倾斜度、坡度属性未保存问题。</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_8" xml:space="preserve">
+    <value>[UPDATED] 将所需游戏版本更新为 1.20.1-f1。</value>
+  </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value>反转</value>
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value>镜像</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_9" xml:space="preserve">
+    <value>[更新] 将所需游戏版本更新为 1.21.5-f1.
+[修复] 修复了面板标题栏上的“附加选项”按钮失效问题。
+[更新] 将摆件最大位移量改为 100 米。
+[更新] 将摆件最大旋转角度改为 360 度。
+[新增] 新增设置装饰网络起点和终点高度的功能。
+[新增] 新增为轨道添加贴花的功能。
+[修复] 修复了不允许将不支持的样式类型粘贴到规则中的问题。
+[修复] 修复了轨道默认样式错误的问题。</value>
+  </data>
+  <data name="Header_RemoveRule" xml:space="preserve">
+    <value>删除规则</value>
+  </data>
 </root>
