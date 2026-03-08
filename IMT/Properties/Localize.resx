@@ -2159,4 +2159,7 @@ It can take time if there are a lot of segments.</value>
 [FIXED] Don't allow to paste unsupported style type to a rule.
 [FIXED] Getting incorrect default style for tracks.</value>
   </data>
+  <data name="Header_RemoveRule" xml:space="preserve">
+    <value>Remove rule</value>
+  </data>
 </root>
