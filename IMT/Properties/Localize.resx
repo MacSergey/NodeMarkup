@@ -2149,14 +2149,18 @@ It can take time if there are a lot of segments.</value>
   <data name="Editor_MirrorValue" xml:space="preserve">
     <value>Mirror</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_14_9" xml:space="preserve">
-    <value>[UPDATED] Updated required game version to 1.21.5-f1.
-[FIXED] Broken Additional options button on the panel header.
-[UPDATED] Props max shift changed to 100m
-[UPDATED] Props max rotation changed to 360.
+  <data name="Mod_WhatsNewMessage1_15" xml:space="preserve">
+    <value>[UPDATED] The mod is compatible with the game version 1.21.1-f5.
+[NEW] Added 10 recently selected colors to the color selected panel.
+[NEW] Random placement of props are preserved between the game loadings.
 [NEW] Added the ability to set different height for start and end of decorative network.
 [NEW] Added the ability to add decals to tracks.
+[NEW] Added invers and mirror buttons to properties with range.
+[UPDATED] Props max shift changed to 100m
+[UPDATED] Props max rotation changed to 360.
+[FIXED] Broken Additional options button on the panel header.
 [FIXED] Don't allow to paste unsupported style type to a rule.
-[FIXED] Getting incorrect default style for tracks.</value>
+[FIXED] Getting incorrect default style for tracks.
+[FIXED] Incorrect placement of props when random shift is set.</value>
   </data>
 </root>

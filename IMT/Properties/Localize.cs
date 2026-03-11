@@ -2931,8 +2931,8 @@ namespace IMT
 		public static string Editor_MirrorValue => LocaleManager.GetString("Editor_MirrorValue", Culture);
 
 		/// <summary>
-		/// [UPDATED] Updated required game version to 1.21.5-f1.
+		/// [UPDATED] The mod is compatible with the game version 1.21.1-f5.
 		/// </summary>
-		public static string Mod_WhatsNewMessage1_14_9 => LocaleManager.GetString("Mod_WhatsNewMessage1_14_9", Culture);
+		public static string Mod_WhatsNewMessage1_15 => LocaleManager.GetString("Mod_WhatsNewMessage1_15", Culture);
 	}
 }

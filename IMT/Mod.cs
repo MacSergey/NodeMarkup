@@ -32,7 +32,7 @@ namespace IMT
         protected override string IdRaw => "IntersectionMarkingTool";
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
-            new ModVersion(new Version(1,14,9), new DateTime(2026, 3, 7)),
+            new ModVersion(new Version(1,15), new DateTime(2026, 3, 11)),
             new ModVersion(new Version(1,14,8), new DateTime(2025, 9, 29)),
             new ModVersion(new Version(1,14,7), new DateTime(2025, 5, 23)),
             new ModVersion(new Version(1,14,6), new DateTime(2024, 10, 26)),
