@@ -1941,4 +1941,23 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
   <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
     <value>Secuencial</value>
   </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value>Invertir</value>
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value>Reflejar</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_9" xml:space="preserve">
+    <value>[ACTUALIZADO] Se actualizó la versión requerida del juego a la 1.21.5-f1.
+[CORREGIDO] El botón de opciones adicionales en el encabezado del panel no funcionaba.
+[ACTUALIZADO] El desplazamiento máximo de los props se cambió a 100m.
+[ACTUALIZADO] La rotación máxima de los props se cambió a 360°.
+[NUEVO] Se añadió la capacidad de establecer diferentes alturas para el inicio y el final de la red decorativa.
+[NUEVO] Se añadió la capacidad de agregar decals a las vías.
+[CORREGIDO] Ya no se permite pegar tipos de estilo no compatibles en una regla.
+[CORREGIDO] Error al obtener el estilo predeterminado incorrecto para las vías.</value>
+  </data>
+  <data name="Header_RemoveRule" xml:space="preserve">
+    <value>Eliminar regla</value>
+  </data>
 </root>
