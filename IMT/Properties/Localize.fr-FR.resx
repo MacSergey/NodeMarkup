@@ -2132,4 +2132,35 @@ Cela peut prendre du temps s'il y a beaucoup de segments.</value>
   <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
     <value>Séquentiel</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_6" xml:space="preserve">
+    <value>[MIS A JOUR] Mise à jour nécessaire du jeu à la version 1.18.1-f3
+</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_7" xml:space="preserve">
+    <value>[MIS A JOUR] Mise à jour nécessaire du jeu à la version 1.19.2-f3.
+[CORRIGÉ] Calcul incorrect du déplacement des éléments et des arbres.
+[CORRIGÉ] Les paramètres de déplacement, d'élévation, d'inclinaison et de pente n'était pas enregistrés.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_8" xml:space="preserve">
+    <value>[MIS A JOUR] Mise à jour nécessaire du jeu à la version 1.20.1-f1.</value>
+  </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value>Inversé</value>
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value>Miroir</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_9" xml:space="preserve">
+    <value>[MIS A JOUR] Mise à jour nécessaire du jeu à la version 1.21.5-f1.
+[CORRIGÉ] Le bouton « Options supplémentaires » dans l'en-tête du panneau ne fonctionnait pas.
+[MIS A JOUR] Le décalage maximal des éléments est désormais de 100 m.
+[MIS A JOUR] La rotation maximal des éléments est désormais de 360°.
+[NOUVEAU] Ajout de la possibilité de définir une hauteur différente pour le début et la fin d’un réseau décoratif.
+[NOUVEAU] Ajout de la possibilité d’ajouter des décalcomanies aux chemins.
+[CORRIGÉ] Empêche de coller un type de style non pris en charge dans une règle.
+[CORRIGÉ] Correction d’un style par défaut incorrect appliqué aux chemins.</value>
+  </data>
+  <data name="Header_RemoveRule" xml:space="preserve">
+    <value>Retirer la règle</value>
+  </data>
 </root>
