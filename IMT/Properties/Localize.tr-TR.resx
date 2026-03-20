@@ -1889,4 +1889,7 @@ Tüm kesişimlerin işaretleri yüklenemedi.</value>
   <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
     <value>Ardışık</value>
   </data>
+  <data name="Header_RemoveRule" xml:space="preserve">
+    <value>Kuralı kaldır</value>
+  </data>
 </root>
