@@ -1128,7 +1128,7 @@ Kliknij aby edytować oznaczenia</value>
     <value>Wyspa ze żwirem</value>
   </data>
   <data name="FillerStyle_CliffIsland" xml:space="preserve">
-    <value>Wyspa z klifem</value>
+    <value>Wyspa z urwiskiem</value>
   </data>
   <data name="FillerStyle_RuinedIsland" xml:space="preserve">
     <value>Zrujnowana wyspa</value>
@@ -1397,7 +1397,7 @@ Kliknij aby edytować oznaczenia</value>
     <value>Więcej opcji</value>
   </data>
   <data name="Settings_CollapseRules" xml:space="preserve">
-    <value>Zwiń panele z zasadami linii</value>
+    <value>Zwiń panele z regułami linii</value>
   </data>
   <data name="StyleOption_MainColor" xml:space="preserve">
     <value>Główny kolor</value>
@@ -1520,7 +1520,7 @@ Kliknij aby edytować oznaczenia</value>
     <value>Twórz automatycznie linie pasów ruchu</value>
   </data>
   <data name="Tool_InfoSelectLaneEndPoint" xml:space="preserve">
-    <value>Wybierz punkt końcowy aby stworzyć pas</value>
+    <value>Wybierz punkt końcowy, aby stworzyć pas</value>
   </data>
   <data name="StyleOption_Distribution" xml:space="preserve">
     <value>Rozkład</value>
@@ -1577,10 +1577,10 @@ Kliknij aby edytować oznaczenia</value>
     <value>Start</value>
   </data>
   <data name="PresetEditor_LinkPreset" xml:space="preserve">
-    <value>Połącz te ustawienia to rekwzytu sieciowego</value>
+    <value>Połącz ten wzorzec do rekwizytu sieciowego</value>
   </data>
   <data name="PresetEditor_UnlinkPreset" xml:space="preserve">
-    <value>Odłącz te ustawienia od rekwzytu sieciowego</value>
+    <value>Odłącz ten wzorzec od rekwizytu sieciowego</value>
   </data>
   <data name="PresetEditor_PresetFit_Linked" xml:space="preserve">
     <value>Połączony</value>
@@ -1595,26 +1595,26 @@ Kliknij aby edytować oznaczenia</value>
     <value>Automatycznie zastosuj oznaczenia z rekwizytu sieciowego</value>
   </data>
   <data name="Tool_EndLinkPresetCaption" xml:space="preserve">
-    <value>Opuść tryb łączenia ustawień</value>
+    <value>Opuść tryb łączenia wzorców</value>
   </data>
   <data name="Tool_EndLinkPresetMessage" xml:space="preserve">
-    <value>Czy chcesz opuścić tryb łączenia ustawień i połączyć te ustawienia do rekwizytu sieciowego?</value>
+    <value>Czy chcesz opuścić tryb łączenia wzorców i podłączyć ten wzorzec do zasobu sieci?</value>
   </data>
   <data name="Tool_Link" xml:space="preserve">
-    <value>Połącz</value>
+    <value>Łącz</value>
   </data>
   <data name="Tool_NotLink" xml:space="preserve">
     <value>Nie łącz</value>
   </data>
   <data name="PresetEditor_ApplyAllPreset" xml:space="preserve">
-    <value>Zastosuj ustawienia dla wszystkich segmentów tego rekwizytu</value>
+    <value>Zastosuj wzorzec dla wszystkich segmentów tego rekwizytu</value>
   </data>
   <data name="HeaderPanel_StyleReset" xml:space="preserve">
-    <value>Resetuj do domyślnych</value>
+    <value>Przywróć do domyślnych</value>
   </data>
   <data name="Tool_EndApplyAllPresetMessage" xml:space="preserve">
-    <value>Czy chcesz zastosować ustawienia dla wszystkich segmentów rekqizytu "{0}"?
-Może to zająć trochę czasu jeżeli jest dużo segmentów.</value>
+    <value>Czy chcesz zastosować wzorzec dla wszystkich segmentów rekwizytu "{0}"?
+Może to zająć trochę czasu, jeżeli jest dużo segmentów.</value>
   </data>
   <data name="Tool_EndPasteMarkingCaption" xml:space="preserve">
     <value>Opuść tryb wklejania oznaczeń</value>
@@ -1650,7 +1650,7 @@ Może to zająć trochę czasu jeżeli jest dużo segmentów.</value>
     <value>Zastosuj do wszystkich przedmiotów</value>
   </data>
   <data name="HeaderPanel_ApplyAllRules" xml:space="preserve">
-    <value>Zastosuj do wszystkich zasad</value>
+    <value>Zastosuj do wszystkich reguł</value>
   </data>
   <data name="HeaderPanel_ApplyCrosswalkAll" xml:space="preserve">
     <value>Zastosuj do wszystkich przejść dla pieszych</value>
@@ -1695,10 +1695,10 @@ Może to zająć trochę czasu jeżeli jest dużo segmentów.</value>
     <value>Stały koniec</value>
   </data>
   <data name="StyleOption_Max" xml:space="preserve">
-    <value>Maks</value>
+    <value>Maks.</value>
   </data>
   <data name="StyleOption_Min" xml:space="preserve">
-    <value>Min</value>
+    <value>Min.</value>
   </data>
   <data name="StyleOption_ObjectLimits" xml:space="preserve">
     <value>Limity</value>
@@ -1722,7 +1722,7 @@ Może to zająć trochę czasu jeżeli jest dużo segmentów.</value>
     <value>Dwa różne</value>
   </data>
   <data name="Header_ExpandTooltip" xml:space="preserve">
-    <value>Przytrzymaj {0}, aby rozwinąć/zwinąć wszystkie zasady</value>
+    <value>Przytrzymaj {0}, aby rozwinąć/zwinąć wszystkie reguły</value>
   </data>
   <data name="FillerStyle_Decal" xml:space="preserve">
     <value>Naklejka</value>
@@ -1816,11 +1816,26 @@ Może to zająć trochę czasu jeżeli jest dużo segmentów.</value>
     <value>Przelicz ponownie wszystkie oznaczenia</value>
   </data>
   <data name="Mod_WhatsNewMessage1_14_3" xml:space="preserve">
-    <value>[FIXED] Aktualizowanie tekstur wypełnień kiedy zmieniany jest motyw mapy w modyfikacji Theme Mixer.
-[FIXED] Podgląd presetów nie nachodzi już na pasek przewijania.
+    <value>[FIXED] Aktualizowanie tekstur wypełnień, kiedy zmieniany jest motyw mapy w modyfikacji Theme Mixer.
+[FIXED] Podgląd wzorów nie nachodzi już na pasek przewijania.
 [NEW] Dodano możliwość ponownego przeliczenia wszystkich oznakowań na mapie.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_14_4" xml:space="preserve">
     <value>[FIXED] Drobne poprawki błędów.</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadRandom" xml:space="preserve">
+    <value>Losowo</value>
+  </data>
+  <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
+    <value>Powtarzalnie</value>
+  </data>
+  <data name="Editor_InvertValue" xml:space="preserve">
+    <value>Odwróć</value>
+  </data>
+  <data name="Editor_MirrorValue" xml:space="preserve">
+    <value>Odbij</value>
+  </data>
+  <data name="Header_RemoveRule" xml:space="preserve">
+    <value>Usuń regułę</value>
   </data>
 </root>
