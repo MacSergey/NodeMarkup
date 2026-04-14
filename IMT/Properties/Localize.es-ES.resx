@@ -1941,6 +1941,18 @@ Puede demorar un tiempo si hay muchos segmentos.</value>
   <data name="StyleOption_ObjectSpreadSequential" xml:space="preserve">
     <value>Secuencial</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_14_6" xml:space="preserve">
+    <value>[UPDATED] Actualizada la versión de juego requerida a 1.18.1-f3
+</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_7" xml:space="preserve">
+    <value>[UPDATED] Actualizado para la versión 1.19.2-f3.
+[CORREGIDO] Calculo incorrecto de desplazamiento de decoraciones y árboles.
+[CORREGIDO] Modo de desplazamiento, elevación, inclinación, pendiente no eran guardados apropiadamente.</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_14_8" xml:space="preserve">
+    <value>[UPDATED] Actualizada la versión de juego requerida a 1.20.1-f1.</value>
+  </data>
   <data name="Editor_InvertValue" xml:space="preserve">
     <value>Invertir</value>
   </data>
